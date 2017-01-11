@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('siftScience', siftScience);
 
-function siftScience ($sce, $rootScope) {
+function siftScience ($sce, $rootScope, Options) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -33,7 +33,16 @@ function siftScience ($sce, $rootScope) {
       console.error('sift-science(trade-id) missing');
       return;
     }
-    scope.url = $sce.trustAsResourceUrl(`http://localhost:8081/helper-app/sift-science/#/key/3884e5fae5/user/${ scope.userId }/trade/${ scope.tradeId }`);
+
+    let processOptions = (options) => {
+      scope.url = $sce.trustAsResourceUrl(`http://localhost:8081/helper-app/sift-science/#/key/${options.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`);
+    };
+
+    if (Options.didFetch) {
+      processOptions(Options.options);
+    } else {
+      Options.get().then(processOptions);
+    }
 
     let receiveMessage = (e) => {
       if (!e.data.command) return;

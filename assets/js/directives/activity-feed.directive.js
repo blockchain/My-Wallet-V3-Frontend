@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('activityFeed', activityFeed);
 
-activityFeed.$inject = ['$http', 'Wallet', 'MyWallet', 'Activity', 'Options', 'buyStatus'];
+activityFeed.$inject = ['$http', 'Wallet', 'MyWallet', 'Activity', 'buyStatus'];
 
-function activityFeed ($http, Wallet, MyWallet, Activity, Options, buyStatus) {
+function activityFeed ($http, Wallet, MyWallet, Activity, buyStatus) {
   const directive = {
     restrict: 'E',
     replace: true,

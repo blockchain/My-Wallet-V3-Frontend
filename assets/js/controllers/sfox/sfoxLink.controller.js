@@ -2,9 +2,19 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $timeout, sfox, modals) {
+function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
+
+  let processOptions = (options) => {
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/helper-app/plaid/#/key/${options.partners.sfox.plaid}`);
+  };
+
+  if (Options.didFetch) {
+    processOptions(Options.options);
+  } else {
+    Options.get().then(processOptions);
+  }
 
   $scope.types = ['checking', 'savings'];
   $scope.openBankHelper = modals.openBankHelper;

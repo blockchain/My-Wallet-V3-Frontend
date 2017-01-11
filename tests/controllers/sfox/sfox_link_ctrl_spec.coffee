@@ -29,9 +29,13 @@ describe "SfoxLinkController", ->
         }
       }]
 
+      $httpBackend = $injector.get("$httpBackend")
+
+      $httpBackend.expectGET('/Resources/wallet-options.json').respond({partners: {sfox: {plaid: "1"}}})
+
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
-    scope.vm = 
+    scope.vm =
       exchange:
         profile: {}
         getBuyMethods: () -> $q.resolve().then(scope.state.accounts = ['1']).finally(scope.free())
@@ -67,7 +71,7 @@ describe "SfoxLinkController", ->
     it "should call free", ->
       spyOn(scope, 'free');
       scope.link()
-      expect(scope.free).toHaveBeenCalled()      
+      expect(scope.free).toHaveBeenCalled()
 
   describe "verify()", ->
     beforeEach ->
