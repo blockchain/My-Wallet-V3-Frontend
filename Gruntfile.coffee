@@ -534,6 +534,15 @@ module.exports = (grunt) ->
             "sfox.api.production = #{ p }"
         }]
 
+      helper_app_url:
+        src: ['build/js/wallet.js'],
+        overwrite: true,
+        replacements: [{
+          from: 'http://localhost:8081'
+          to: () =>
+            @helperAppUrl
+        }]
+
       api_domain:
         src: ['build/js/wallet.js'],
         overwrite: true,
@@ -620,6 +629,11 @@ module.exports = (grunt) ->
     apiDomain = grunt.option('apiDomain')
     network = grunt.option('network')
 
+    @helperAppUrl = grunt.option('helperAppUrl')
+    if !@helperAppUrl
+      console.log('Helper App URL missing')
+      exit(1)
+
     if !versionFrontend
       versionFrontend = "intermediate"
     else if versionFrontend[0] != "v"
@@ -650,6 +664,7 @@ module.exports = (grunt) ->
       "replace:buy_sell_debug"
       "replace:buy_sell_coinify"
       "replace:buy_sell_sfox"
+      "replace:helper_app_url"
     ]
 
     if apiDomain

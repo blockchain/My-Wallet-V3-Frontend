@@ -38,7 +38,7 @@ endif
 
 dist: build
 	DIST=1 ./node_modules/.bin/webpack
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL)
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(HELPER_APP_URL)
 	mv helperApp/dist dist/helper-app
 	npm shrinkwrap --dev
 

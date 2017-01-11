@@ -15,7 +15,7 @@ var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
-var helperAppFrameDomain = `http://localhost:${ helperAppPort }`;
+var helperAppFrameDomain = process.env.HELPER_APP_URL || `http://localhost:${ helperAppPort }`;
 
 // App configuration
 var rootApp = express();
