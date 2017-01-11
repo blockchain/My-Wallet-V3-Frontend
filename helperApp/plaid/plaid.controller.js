@@ -11,7 +11,7 @@ function PlaidController ($scope, $routeParams) {
 
   var linkHandler = window.Plaid.create({
     product: 'auth',
-    env: 'production',
+    env: $routeParams.env,
     clientName: 'SFOX',
     key: $routeParams.apiKey,
     onLoad: function () {},
