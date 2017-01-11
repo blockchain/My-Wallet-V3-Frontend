@@ -33,7 +33,7 @@ function siftScience ($sce, $rootScope) {
       console.error('sift-science(trade-id) missing');
       return;
     }
-    scope.url = $sce.trustAsResourceUrl(`http://localhost:8081/sift-science/#/key/3884e5fae5/user/${ scope.userId }/trade/${ scope.tradeId }`);
+    scope.url = $sce.trustAsResourceUrl(`http://localhost:8081/helper-app/sift-science/#/key/3884e5fae5/user/${ scope.userId }/trade/${ scope.tradeId }`);
 
     let receiveMessage = (e) => {
       if (!e.data.command) return;
