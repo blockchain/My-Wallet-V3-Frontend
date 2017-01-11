@@ -1203,7 +1203,7 @@
   "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "VERIFICATION_NEEDED": "Verification Needed",
-  "VERIFICATION_NEEDED_EXPLAIN": "Please bear with us as our exchange partner verifies your credit card information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>",
+  "VERIFICATION_NEEDED_EXPLAIN": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>",
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
   "BUY_BITCOIN_EXPLAIN": "You can now buy Bitcoin with your Blockchain wallet!",
