@@ -6,6 +6,7 @@ describe "walletServices", () ->
   MyBlockchainSettings = undefined
   MyBlockchainApi = undefined
   $rootScope = undefined
+  Options = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -16,6 +17,10 @@ describe "walletServices", () ->
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
       MyBlockchainApi = $injector.get("MyBlockchainApi")
       Alerts = $injector.get('Alerts')
+      Options = $injector.get("Options")
+
+      Options.get = () ->
+        Promise.resolve({})
 
       spyOn($cookies, "get").and.callFake((name) ->
         if name == "session"
