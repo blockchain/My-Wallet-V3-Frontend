@@ -7,7 +7,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
   let accounts = $scope.vm.accounts;
 
   let processOptions = (options) => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/helper-app/plaid/#/key/${options.partners.sfox.plaid}/env/${options.partners.sfox.plaidEnv}`);
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${options.partners.sfox.plaidEnv}`);
   };
 
   if (Options.didFetch) {

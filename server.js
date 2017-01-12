@@ -79,7 +79,7 @@ app.use(function (req, res, next) {
 
 helperApp.use(function (req, res, next) {
   var cspHeader;
-  if (req.url === '/helper-app/plaid/') {
+  if (req.url === '/wallet-helper/plaid/') {
     cspHeader = ([
       "img-src 'none'",
       "style-src 'self'",
@@ -97,7 +97,7 @@ helperApp.use(function (req, res, next) {
     // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
     res.render('plaid/index.html');
     return;
-  } else if (req.url === '/helper-app/sift-science/') {
+  } else if (req.url === '/wallet-helper/sift-science/') {
     cspHeader = ([
       'img-src https://hexagon-analytics.com',
       "style-src 'none'",
@@ -142,15 +142,15 @@ if (dist) {
   app.use(express.static('dist'));
   app.set('views', path.join(__dirname, 'dist'));
 
-  helperApp.use('/helper-app', express.static('dist/helper-app'));
-  helperApp.set('views', path.join(__dirname, 'dist/helper-app'));
+  helperApp.use('/wallet-helper', express.static('dist/wallet-helper'));
+  helperApp.set('views', path.join(__dirname, 'dist/wallet-helper'));
 } else {
   console.log('Development mode: multiple javascript files, not cached');
   app.use(express.static(__dirname));
   app.set('view engine', 'jade');
   app.set('views', __dirname);
 
-  helperApp.use('/helper-app', express.static(path.join(__dirname, 'helperApp/build')));
+  helperApp.use('/wallet-helper', express.static(path.join(__dirname, 'helperApp/build')));
   helperApp.set('views', path.join(__dirname, 'helperApp/build'));
 }
 
@@ -174,7 +174,7 @@ rootApp.listen(port, function () {
 });
 
 helperApp.listen(helperAppPort, function () {
-  console.log('Helper App running on http://localhost:%d/helper-app/', helperAppPort);
+  console.log('Helper App running on http://localhost:%d/wallet-helper/', helperAppPort);
 });
 
 // Helper functions
