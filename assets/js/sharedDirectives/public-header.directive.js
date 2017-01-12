@@ -9,9 +9,9 @@ function publicHeader ($rootScope, $location, languages) {
     restrict: 'E',
     replace: true,
     template: `
-    <div role="navigation" class="navbar navbar-default navbar-inverse bc-header" data-preflight-tag="PublicHeader">
+    <div role="navigation" class="navbar navbar-default navbar-inverse bc-header bc-public-header" data-preflight-tag="PublicHeader">
       <div class="container-fluid container-max-width">
-        <div class="navbar-header flex-between"><a href="{{rootURL}}" class="navbar-brand"><img id="logo" src="img/blockchain-logo.svg" alt="Blockchain"/></a>
+        <div class="navbar-header flex-between"><a href="{{rootURL}}" class="navbar-brand"><img id="logo" src="img/blockchain-info-vector.svg" alt="Blockchain"/></a>
           <button type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span ng-show="navCollapsed" class="ti-angle-down white h4"></span><span ng-show="!navCollapsed" class="ti-angle-up white h4"></span></button>
         </div>
         <div ng-class="{'in bg-blue' : !navCollapsed}" ng-click="navCollapsed=true" class="navbar-collapse collapse">
