@@ -52,6 +52,9 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     tx.feeBounds = data.absoluteFeeBounds;
     tx.sweepFees = data.sweepFees;
     tx.size = data.txSize;
+    if (tx.fee > data.balance) {
+      tx.fee = data.sweepFee === 0 ? Math.min(...data.sweepFees) : data.sweepFee;
+    }
     $scope.$safeApply();
   });
 
