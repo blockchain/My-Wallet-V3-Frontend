@@ -4,11 +4,11 @@
       img(ng-show="balance == null" src="img/spinner.gif") 
   span(ng-show="getTotal() != null")
     span(ng-hide="isBitCurrency(settings.displayCurrency)")
-      h1.mvn.em-600.pos-rel.minw-190
+      h1.mvn.em-600.pos-rel
         fiat(btc="getTotal()")
     span(ng-show="isBitCurrency(settings.displayCurrency)")
       h1.mvn.em-600.pos-rel {{ getTotal() | toBitCurrency:settings.btcCurrency }}
-    p.mvn.type-h4.em-300.align-offset.pos-rel.minw-190
+    p.mvn.type-h4.em-300.align-offset.pos-rel
       fiat(btc="getTotal()", ng-show="isBitCurrency(settings.displayCurrency)")
       span(ng-hide="isBitCurrency(settings.displayCurrency)")
         span {{ getTotal() | toBitCurrency:settings.btcCurrency }}

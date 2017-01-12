@@ -30,12 +30,6 @@ body {
   }
 }
 
-.center-self { 
-  transform: translate(-50%,-50%); 
-  -ms-transform: translate(-50%,-50%); 
-  -webkit-transform: translate(-50%,-50%); 
-  -moz-transform: translate(-50%,-50%); 
-}
 .display-block { display: block; }
 .display-inline-block { display: inline-block; }
 
@@ -88,8 +82,6 @@ noscript {
 .ph-form { padding: 0 2em; }
 
 .mw { max-width: 100%; }
-
-.minw-190 { min-width: 190px; }
 
 .tilda-before {
   &:before {
