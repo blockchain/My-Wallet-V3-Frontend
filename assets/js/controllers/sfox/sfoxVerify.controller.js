@@ -8,12 +8,9 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';
-    let { level, required_docs = [] } = exchange.profile.verificationStatus;
+    let { required_docs = [] } = exchange.profile.verificationStatus;
 
-    let verificationInProgress = level === 'pending' && required_docs.length === 0;
-    let needsSSN = !exchange.profile.identity.number && !verificationInProgress;
-
-    return needsSSN ? 'ssn' : required_docs[0];
+    return required_docs[0] ? required_docs[0] : 'ssn';
   };
 
   $scope.state = {
@@ -51,25 +48,14 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.upload = () => {
     $scope.lock();
     let { signedURL, file } = $scope.state;
-    let profile = exchange.profile;
-
-    // Need to override testing-docs-*
-    if ($scope.SFOXDebugDocs.indexOf(profile.address.street.line2) > -1) {
-      profile.setAddress(
-        profile.address.street.line1,
-        '2',
-        profile.address.city,
-        profile.address.state,
-        profile.address.zipcode
-      );
-    }
 
     Upload.http({
       method: 'PUT',
       url: signedURL,
       data: file,
       headers: { 'content-type': 'application/octet-stream' }
-    }).then(() => $scope.verify())
+    }).then(() => exchange.fetchProfile())
+      .then(() => $scope.setState())
       .catch(sfox.displayError);
   };
 
@@ -104,9 +90,19 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
     }
   };
 
+  let watchVerificationStatusLevel = (level) => {
+    let { required_docs = [] } = exchange.profile.verificationStatus;
+    let complete;
+
+    if (level === 'verified') complete = true;
+    if (level === 'pending' && !required_docs[0]) complete = true;
+
+    complete && $scope.vm.goTo('link');
+  };
+
   $scope.installLock();
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
-  $scope.$watch('state.verificationStatus.level', (newVal) => newVal === 'verified' && $scope.vm.goTo('link'));
+  $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
   $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
