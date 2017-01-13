@@ -74,7 +74,7 @@ function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySe
 
     let whitelisted;
 
-    if (country.code === 'US') {
+    if (country.Code === 'US') {
       whitelisted = $scope.onWhitelist(country.Code) && state && $scope.onStateWhitelist(state.Code);
     } else {
       whitelisted = $scope.onWhitelist(country.Code);
