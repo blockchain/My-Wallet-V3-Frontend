@@ -430,10 +430,10 @@ i.ti-credit-card.bank {
   height: 350px;
 }
 
-.pl7em {
-  padding-left: 2em;
-  @media(min-width: 992px) {
-    padding-left: 7em;
+.table-indent {
+  text-indent: 2%;
+  @media(max-width: 991px) {
+    text-indent: 0;
   }
 }
 .cc-shadow {
