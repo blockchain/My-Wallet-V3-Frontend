@@ -1,4 +1,4 @@
-describe "BuySellSelectPartnerController", ->
+fdescribe "BuySellSelectPartnerController", ->
   $rootScope = undefined
   $controller = undefined
   $state = undefined
@@ -37,7 +37,7 @@ describe "BuySellSelectPartnerController", ->
           countries: ["GB"]
         sfox:
           countries: ["US"]
-          states: ["AL"]
+          states: ["AL", "GA"]
 
     $controller "BuySellSelectPartnerController",
       $scope: $scope
@@ -47,6 +47,8 @@ describe "BuySellSelectPartnerController", ->
       state: {
         stateCodes: [
           {Code: 'AL'}
+          {Code: 'NY'}
+          {Code: 'GA'}
         ]
       }
       country: {
@@ -111,8 +113,16 @@ describe "BuySellSelectPartnerController", ->
 
     it "should not guess SFOX in the USA for excluded states", ->
       accountInfo.countryCodeGuess = "US"
-      scope.state = 'NY'
       scope = getControllerScope()
+      scope.state = {Code: 'NY'}
+      scope.$digest()
+      expect(scope.partner).toEqual(null)
+
+
+    it "should guess SFOX in the USA for included states", ->
+      accountInfo.countryCodeGuess = "US"
+      scope = getControllerScope()
+      scope.state = {Code: 'GA'}
       scope.$digest()
       expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}))
 
