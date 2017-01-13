@@ -1,5 +1,5 @@
 tr.border
-  td.type-lbl.paml
+  td.type-lbl.paml.table-indent
     span.mrm(ng-if="buySellDebug" uib-dropdown)
       i.ti-search.pointer.blue(uib-dropdown-toggle)
       ul.dropdown-menu(uib-dropdown-menu)
@@ -7,14 +7,14 @@ tr.border
         li.pointer.pas(ng-click="trade.fakeAchSuccess()" ng-show="pending") Fake ACH Success
         li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
 
-    span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
-    span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
-    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
-    span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
+    span.state.mrm.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
+    span.state.mrm.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
+    span.state.italic.mrm(ng-show="completed && success && !trade.bitcoinReceived") Pending
+    span.state.italic.mrm.capitalize(ng-show="pending") {{ trade.state | translate }}
     
-    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
-    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="trade.state !== 'awaiting_transfer_in'") View details
-  td.type-lbl.pvml
+    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()" ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
+    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()" ng-show="trade.state !== 'awaiting_transfer_in'") View details
+  td.type-lbl.pvml.center-align
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml.center-align(ng-hide="status.gettingQuote")
     span(ng-hide="!trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
@@ -25,7 +25,7 @@ tr.border
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
-    span.display-inline-block.mlm(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl.center-align
     span(ng-hide="status.gettingQuote")
       span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
