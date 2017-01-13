@@ -1,4 +1,4 @@
-fdescribe "BuySellSelectPartnerController", ->
+describe "BuySellSelectPartnerController", ->
   $rootScope = undefined
   $controller = undefined
   $state = undefined
@@ -117,7 +117,6 @@ fdescribe "BuySellSelectPartnerController", ->
       scope.state = {Code: 'NY'}
       scope.$digest()
       expect(scope.partner).toEqual(null)
-
 
     it "should guess SFOX in the USA for included states", ->
       accountInfo.countryCodeGuess = "US"
