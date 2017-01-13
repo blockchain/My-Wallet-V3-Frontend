@@ -63,14 +63,22 @@ function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySe
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
-  $scope.$watch('country', (c) => {
-    let whitelisted = $scope.onWhitelist(c.Code);
-    $scope.blacklisted = !whitelisted;
-    $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
-  });
+  $scope.$watchGroup(['country', 'state'], (newValues) => {
+    country = newValues[0];
+    state = newValues[1];
 
-  $scope.$watch('state', (s) => {
-    let whitelisted = s && $scope.onStateWhitelist(s.Code);
+    if (!country) { // This should normally not happen
+      $scope.blacklisted = true;
+      return;
+    }
+
+    let whitelisted;
+
+    if (country.code === 'US') {
+      whitelisted = $scope.onWhitelist(country.Code) && state && $scope.onStateWhitelist(state.Code);
+    } else {
+      whitelisted = $scope.onWhitelist(country.Code);
+    }
     $scope.blacklisted = !whitelisted;
     $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
   });
