@@ -1,7 +1,9 @@
 .transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
+    a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
+      i.ti-export
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
-    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mvl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
+    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mbl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
       ui-select.mbl(
         ng-show="accounts.length > 1"
