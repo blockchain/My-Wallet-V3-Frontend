@@ -21,10 +21,27 @@ function Adverts ($http, $rootScope) {
   }
 
   function fetch () {
+    if (!$rootScope.apiDomain.endsWith('blockchain.info/')) {
+      return;
+    }
+
     let advertsFeed = $rootScope.apiDomain + 'ads/get?wallet=true&n=2';
     $http.get(advertsFeed)
-      .success(data => {
-        service.ads.push.apply(service.ads, data);
+      .success(function (data) {
+        data.forEach(function (ad) {
+          var a = document.createElement('a');
+          a.href = ad.url;
+
+          if (!a.protocol.startsWith('http') ||
+              a.host === '' ||
+              a.host === window.location.host ||
+              !/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) ||
+              !a.hostname.endsWith('blockchain.info')) {
+            return;
+          }
+
+          service.ads.push(ad);
+        });
       });
   }
 }
