@@ -4,10 +4,17 @@ describe "BuySellSelectPartnerController", ->
   $state = undefined
   MyWallet = undefined
   scope = undefined
+  sfox = undefined
+  coinify = undefined
+  accountInfo = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
+    accountInfo = {
+      countryCodeGuess: "US"
+    }
+
     angular.mock.inject ($injector, _$rootScope_, _$controller_, _$state_) ->
       $rootScope = _$rootScope_
       $controller = _$controller_
@@ -16,7 +23,7 @@ describe "BuySellSelectPartnerController", ->
       MyWallet = $injector.get("MyWallet")
 
       MyWallet.wallet =
-        accountInfo: countryCodeGuess: "US"
+        accountInfo: accountInfo
 
   getControllerScope = () ->
     $scope = $rootScope.$new()
@@ -24,24 +31,44 @@ describe "BuySellSelectPartnerController", ->
     $scope.vm =
       base: "base"
 
-    options = partners:
-      coinify: countries: ["GB"]
-      sfox: countries: ["US"]
+    options =
+      partners:
+        coinify:
+          countries: ["GB"]
+        sfox:
+          countries: ["US"]
+          states: ["AL"]
 
     $controller "BuySellSelectPartnerController",
       $scope: $scope
       options: options
+      buyStatus:
+        canBuy: () -> Promise.resolve(true)
+      state: {
+        stateCodes: [
+          {Code: 'AL'}
+        ]
+      }
+      country: {
+        countryCodes: [
+          {Code: "US"},
+          {Code: "GB", Name: "United Kingdom"}
+          {Code: "RU"}
+        ]
+      }
 
     return $scope
 
   it "should try to guess the country code", ->
-    MyWallet.wallet.accountInfo.countryCodeGuess = "GB"
+    accountInfo.countryCodeGuess = "GB"
     scope = getControllerScope()
+    scope.$digest()
     expect(scope.country.Name).toEqual("United Kingdom")
 
   it "should continue if the country can't be guessed", ->
-    MyWallet.wallet.accountInfo.countryCodeGuess = null
+    accountInfo.countryCodeGuess = null
     scope = getControllerScope()
+    scope.$digest()
     expect(scope.country).not.toBeDefined()
 
   describe ".selectPartner()", ->
@@ -49,11 +76,11 @@ describe "BuySellSelectPartnerController", ->
       scope = getControllerScope()
       spyOn($state, "go")
 
-    it "should select 'coinify'", ->
+    it "should go to 'coinify' signup", ->
       scope.selectPartner(scope.partners["coinify"], "GB")
       expect($state.go).toHaveBeenCalledWith("base.coinify", countryCode: "GB")
 
-    it "should select 'sfox'", ->
+    it "should go to 'sfox' signup", ->
       scope.selectPartner(scope.partners["sfox"], "US")
       expect($state.go).toHaveBeenCalledWith("base.sfox", countryCode: "US")
 
@@ -69,3 +96,60 @@ describe "BuySellSelectPartnerController", ->
 
     it "should know if a country is not on any whitelist", ->
       expect(scope.onWhitelist("CZ")).toEqual(false)
+
+  describe "partner guess", ->
+    it "should guess Coinify in Europe", ->
+      accountInfo.countryCodeGuess = "GB"
+      scope = getControllerScope()
+      scope.$digest()
+      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'Coinify'}))
+
+    it "should guess SFOX in the USA", ->
+      scope = getControllerScope()
+      scope.$digest()
+      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}))
+
+    it "should not guess SFOX in the USA for excluded states", ->
+      accountInfo.countryCodeGuess = "US"
+      scope.state = 'NY'
+      scope = getControllerScope()
+      scope.$digest()
+      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}))
+
+    it "should guess SFOX when user selects US for US IP address", ->
+      accountInfo.countryCodeGuess = "US"
+      scope = getControllerScope()
+      scope.$digest()
+      scope.country = {Code: "GB"} # User selects other country
+      scope.$digest()
+      scope.country = {Code: "US"} # User selects US again
+      scope.$digest()
+      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}))
+
+    it "should not guess SFOX when user selects US for non-US IP address", -> # Temporary measure
+      accountInfo.countryCodeGuess = "GB"
+      scope = getControllerScope()
+      scope.$digest()
+      scope.country = {Code: "US"} # User selects US
+      scope.$digest()
+      expect(scope.partner).toEqual(null)
+
+    it "should guess nothing for other countries", ->
+      accountInfo.countryCodeGuess = "RU"
+      scope = getControllerScope()
+      scope.$digest()
+      expect(scope.partner).toEqual(null)
+
+    it "should guess Coinify if user switches country to Europe", ->
+      scope = getControllerScope()
+      scope.$digest()
+      scope.country = {Code: "GB"}
+      scope.$digest()
+      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'Coinify'}))
+
+    it "should guess nothing if user switches country to other", ->
+      scope = getControllerScope()
+      scope.$digest()
+      scope.country = {Code: "RU"}
+      scope.$digest()
+      expect(scope.partner).toEqual(null)
