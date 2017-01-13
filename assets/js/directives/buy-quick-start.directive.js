@@ -3,9 +3,9 @@ angular.module('walletApp')
 
 const ONE_DAY_MS = 86400000;
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
 
-function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, modals) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -14,7 +14,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
       limits: '=',
       disabled: '=',
       tradingDisabled: '=',
-      isPendingTrade: '=',
+      tradingDisabledReason: '=',
       openPendingTrade: '&',
       pendingTrade: '=',
       modalOpen: '=',
@@ -91,7 +91,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
       Alerts.confirm('CONFIRM_CANCEL_TRADE', {
         action: 'CANCEL_TRADE',
         cancel: 'GO_BACK'
-      }).then(() => scope.pendingTrade.cancel(), () => {})
+      }).then(() => scope.pendingTrade.cancel().then(() => buySell.fetchProfile()), () => {})
         .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); })
         .finally(() => scope.disabled = false);
     };
@@ -108,9 +108,6 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
     scope.$on('$destroy', stopFetchingQuote);
     scope.$watch('modalOpen', (modalOpen) => {
       modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
-    });
-    scope.$watch('pendingTrade.state', (state) => {
-      scope.canCancelTrade = state === 'awaiting_transfer_in';
     });
   }
 }
