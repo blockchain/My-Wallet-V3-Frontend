@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount) {
+function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -16,6 +16,9 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
   $scope.confirmationStep = false;
   $scope.advanced = false;
   $scope.building = false;
+
+  $scope.inputMetricTypes = ['qr', 'paste', 'uri', 'dropdown'];
+  $scope.inputMetric = null;
 
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
@@ -158,6 +161,10 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
       $uibModalInstance.close('');
       Wallet.beep();
 
+      if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
+        $scope.sendInputMetrics($scope.inputMetric);
+      }
+
       let note = $scope.transaction.note;
       if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
@@ -177,6 +184,11 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
 
     Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
       .then(transactionSucceeded).catch(transactionFailed);
+  };
+
+  $scope.sendInputMetrics = (metric) => {
+    let root = $rootScope.rootURL ? $rootScope.rootURL : '/';
+    $http.get(`${root}event?name=wallet_web_tx_from_${metric}`);
   };
 
   $scope.getToLabels = () => {
@@ -235,6 +247,7 @@ function SendCtrl ($scope, $log, Wallet, Alerts, currency, $uibModal, $uibModalI
     $scope.originsLoaded = true;
 
     if (paymentRequest.address) {
+      $scope.inputMetric = 'uri';
       $scope.applyPaymentRequest(paymentRequest, 0);
     } else if (paymentRequest.toAccount != null) {
       $scope.transaction.destinations[0] = format.origin(paymentRequest.toAccount);
