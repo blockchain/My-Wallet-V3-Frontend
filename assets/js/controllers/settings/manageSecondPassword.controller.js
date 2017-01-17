@@ -71,42 +71,28 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   };
 
   $scope.recoveryModal = () => {
+    $scope.promptForRecovery = true;
     const openModal = () => $uibModal.open({
       templateUrl: 'partials/recovery-before-second-password.jade',
-      controller: 'RecoveryBeforeSecondPasswordCtrl',
+      controller: 'ManageSecondPasswordCtrl',
+      windowClass: 'bc-modal'
+    });
+
+    const openRecovery = () => $uibModal.open({
+      templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+      controller: 'ConfirmRecoveryPhraseCtrl',
       windowClass: 'bc-modal'
     });
 
     if (!Wallet.status.didConfirmRecoveryPhrase && !Wallet.settings.secondPassword) {
-      openModal();
-    }
-  };
-
-  $scope.showButton = () => {
-    const confirmed = $scope.walletStatus.didConfirmRecoveryPhrase;
-    const dismissed = $scope.walletStatus.dismissedRecoveryPrompt;
-    const secondPW = Wallet.settings.secondPassword;
-
-    if (confirmed) {
-      return true;
-    } else if (dismissed && secondPW) {
-      return true;
-    }
-  };
-
-  $scope.hideButton = () => {
-    const confirmed = $scope.walletStatus.didConfirmRecoveryPhrase;
-    const dismissed = $scope.walletStatus.dismissedRecoveryPrompt;
-    const secondPW = Wallet.settings.secondPassword;
-
-    if (confirmed && !secondPW) {
-      return false;
-    } else if (secondPW) {
-      return true;
-    } else if (!dismissed || !confirmed) {
-      return true;
-    } else if (dismissed && secondPW) {
-      return true;
+      openModal().result
+      .then(() => {
+        openRecovery();
+      })
+      .catch((e) => {
+        if (e === 'backdrop click' || e === 'escape key press') return;
+        $scope.active = true;
+      });
     }
   };
 }

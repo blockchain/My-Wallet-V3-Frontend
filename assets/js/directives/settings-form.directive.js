@@ -12,20 +12,12 @@ function settingsForm () {
       scope.$parent.active = false;
       scope.$parent.reset();
 
-      scope.$parent.promptRecovery = () => {
-        scope.$parent.promptForRecovery = true;
-        scope.$parent.recoveryModal();
-      };
-
       scope.$parent.activate = () => {
         scope.$parent.active = true;
       };
 
       scope.$parent.deactivate = () => {
         scope.$parent.active = false;
-        if (scope.$parent.walletStatus) {
-          scope.$parent.walletStatus.dismissedRecoveryPrompt = false;
-        }
         scope.$parent.reset();
       };
 
