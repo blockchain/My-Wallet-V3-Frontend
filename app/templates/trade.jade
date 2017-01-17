@@ -1,5 +1,5 @@
 tr.border
-  td.type-lbl.paml.table-indent
+  td.type-lbl.paml.center-align
     span.mrm(ng-if="buySellDebug" uib-dropdown)
       i.ti-search.pointer.blue(uib-dropdown-toggle)
       ul.dropdown-menu(uib-dropdown-menu)
@@ -20,8 +20,8 @@ tr.border
     span(ng-hide="!trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
       span.display-inline-block.left-align
         quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
+      br
       span(ng-if="buySellDebug")
-        br
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br

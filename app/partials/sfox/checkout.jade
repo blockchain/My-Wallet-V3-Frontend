@@ -88,9 +88,9 @@
     h4.type-h4(translate="ORDER_HISTORY")
     table.width-100
       tr.border.bg-light-blue
-        th.plvl.prl.pvs.width-30.table-indent(translate="STATUS")
-        th.phml.pvs.width-25.center-align(translate="DATE")
-        th.phml.pvs.center-align.width-25 BTC
+        th.phml.pvs.center-align.width-20(translate="STATUS")
+        th.phml.pvs.center-align.width-30(translate="DATE")
+        th.phml.pvs.center-align.width-30 BTC
         th.phml.pvs.center-align.width-20(translate="TOTAL")
       tr(
         ng-repeat="trade in trades | orderBy:'createdAt':true"
