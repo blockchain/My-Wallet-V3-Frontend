@@ -55,6 +55,9 @@
     transition: opacity .3s ease-in-out;
     opacity: .5;
     margin-right: 1em;
+    &.spaced {
+      margin-right: 2em;
+    }
     &:last-child {
       margin-right: 0;
     }
