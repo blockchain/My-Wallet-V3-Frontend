@@ -87,6 +87,10 @@
     "BODY": "You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically."
   },
   "LOG_ME_OUT": "Log me out",
+  "CONFIRM_CANCEL_BANK_TRADE": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "Are you sure you want to cancel this trade? <br><br> <strong>Note:</strong> if you have already sent funds from your bank account to Coinify, this trade will still be processed when they receive your transfer and you will be sent the bitcoin you purchased."
+  },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
