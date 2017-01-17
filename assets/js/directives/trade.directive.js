@@ -34,8 +34,10 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
 
     scope.cancel = (trade) => {
+      let cancelMessage = 'CONFIRM_CANCEL_TRADE';
+      if (scope.trade.medium === 'bank') cancelMessage = 'CONFIRM_CANCEL_BANK_TRADE';
       scope.status.canceling = true;
-      Alerts.confirm('CONFIRM_CANCEL_TRADE', {
+      Alerts.confirm(cancelMessage, {
         action: 'CANCEL_TRADE',
         cancel: 'GO_BACK'
       }).then(() => trade.cancel(), () => {})
