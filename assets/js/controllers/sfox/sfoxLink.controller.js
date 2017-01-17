@@ -2,15 +2,26 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, sfox, modals) {
+function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
+
+  let processOptions = (options) => {
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${options.partners.sfox.plaidEnv}`);
+  };
+
+  if (Options.didFetch) {
+    processOptions(Options.options);
+  } else {
+    Options.get().then(processOptions);
+  }
 
   $scope.types = ['checking', 'savings'];
   $scope.openBankHelper = modals.openBankHelper;
   $scope.openDepositHelper = modals.openDepositHelper;
 
   let state = $scope.state = {
+    plaid: {},
     terms: false,
     accounts: accounts
   };
@@ -21,7 +32,8 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
     nickname: '',
     routingNumber: undefined,
     accountNumber: undefined,
-    type: 'checking'
+    type: 'checking',
+    bankAccount: undefined
   };
 
   $scope.displayInlineError = (error) => {
@@ -71,6 +83,45 @@ function SfoxLinkController ($scope, $q, sfox, modals) {
       .catch($scope.displayInlineError)
       .finally($scope.free);
   };
+
+  $scope.getBankAccounts = (token) => {
+    $scope.token = token;
+    $q.resolve(exchange.bankLink.getAccounts($scope.token))
+      .then((bankAccounts) => $scope.state.bankAccounts = bankAccounts)
+      .then(() => $scope.fields.bankAccount = $scope.state.bankAccounts[0])
+      .catch(sfox.displayError);
+  };
+
+  $scope.setBankAccount = () => {
+    let obj = {
+      token: $scope.token,
+      id: $scope.fields.bankAccount._id,
+      lastName: exchange.profile.lastName || null,
+      firstName: exchange.profile.firstName || null
+    };
+
+    $q.resolve(exchange.bankLink.setAccount(obj))
+      .then(() => $scope.vm.goTo('buy'))
+      .catch(sfox.displayError)
+      .finally($scope.free);
+  };
+
+  $scope.enablePlaid = () => $scope.state.plaid.enabled = true;
+  $scope.disablePlaid = () => $scope.state.plaid = {};
+  $scope.plaidWhitelist = ['enablePlaid', 'disablePlaid', 'getBankAccounts'];
+
+  let receiveMessage = (e) => {
+    if (!e.data.command) return;
+    if (e.data.from !== 'plaid') return;
+    if (e.data.to !== 'exchange') return;
+    if (e.origin !== 'http://localhost:8081') return;
+    if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
+
+    e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
+    $scope.$safeApply();
+  };
+
+  window.addEventListener('message', receiveMessage, false);
 
   $scope.installLock();
 }

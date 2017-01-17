@@ -7,10 +7,18 @@
                     "IM", "IT", "JE", "LV", "LI", "LT", "LU", "MT", "MQ", "YT",
                     "MC", "NL", "NO", "PL", "PT", "RE", "BL", "MF", "PM", "SM",
                     "SK", "SI", "ES", "SE", "CH"
-                  ]
+                  ],
+      "partnerId": 19,
+      "iSignThisDomain": "https://verify.isignthis.com"
     },
     "sfox": {
-      "countries": []
+      "countries": [],
+      "states": ["AL", "AZ", "CA", "CO", "GA", "KS", "MD", "MA", "MO", "MT", "SC", "TX"],
+      "inviteFormFraction": 0.1,
+      "apiKey": "f31614a7-5074-49f2-8c2a-bfb8e55de2bd",
+      "plaid": "0b041cd9e9fbf1e7d93a0d5a39f5b9",
+      "plaidEnv": "production",
+      "siftScience": "a19cc360a1"
     }
   }
 }
