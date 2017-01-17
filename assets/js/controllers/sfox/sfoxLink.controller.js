@@ -93,15 +93,6 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
   };
 
   $scope.setBankAccount = () => {
-    let account;
-
-    let addAccount = (methods) => methods.ach.addAccount(
-      account.routing_number,
-      account.account_number,
-      account.bank_name,
-      $scope.fields.bankAccount.subtype
-    );
-
     let obj = {
       token: $scope.token,
       id: $scope.fields.bankAccount._id,
@@ -110,9 +101,6 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
     };
 
     $q.resolve(exchange.bankLink.setAccount(obj))
-      .then((res) => account = res.bankAccount)
-      .then(exchange.getBuyMethods()
-      .then((methods) => addAccount))
       .then(() => $scope.vm.goTo('buy'))
       .catch(sfox.displayError)
       .finally($scope.free);
