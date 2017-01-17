@@ -57,7 +57,8 @@
     transaction-description {
       .progress {
         @extend .mbn;
-        background: rgba(0,0,0,0.2);
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.4);
       }
       .progress-bar {
         background-color: $blue;

@@ -74,72 +74,21 @@ describe "SfoxCheckoutController", ->
     $compile(template)(scope)
     scope
 
-  it "should not initialize if there are no accounts", ->
-    scope = getControllerScope()
-    scope.$digest()
-    expect(scope.state).not.toBeDefined()
-
   it "should set scope.openSfoxSignup on init", ->
     scope = getControllerScope([{status:'active'}])
     spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
 
-  it "should get an initial quote but only set the rate", ->
-    scope = getControllerScope([{status:'active'}])
-    scope.$digest()
-    expect(scope.quote).not.toBeDefined()
-    expect(scope.state.rate).toEqual(mockQuote().rate)
-
-  describe "hasMultipleAccounts", ->
-    it "should be false for one account", ->
-      spyOn(Wallet, "accounts").and.returnValue([{active: true}])
-      scope = getControllerScope([{status:'active'}])
-      expect(scope.hasMultipleAccounts).toEqual(false)
-
-    it "should be true for more than one account", ->
-      spyOn(Wallet, "accounts").and.returnValue([{active: true}, {active: true}])
-      scope = getControllerScope([{status:'active'}])
-      expect(scope.hasMultipleAccounts).toEqual(true)
-
-  describe ".enableBuy()", ->
-    it "should enable buy()", ->
-      scope.enableBuy()
-      expect(scope.enabled).toBe(true)
-
-  describe ".disableBuy()", ->
-    it "should disable buy()", ->
-      scope.disableBuy()
-      expect(scope.enabled).toBe(false)
-
-  describe ".buy()", ->
+  describe ".buyHandler()", ->
     beforeEach ->
       scope = getControllerScope([{status:'active'}])
-      scope.quote = mockQuote()
-
-    it "should lock the scope while buying", ->
-      scope.buy()
-      expect(scope.locked).toEqual(true)
-      scope.$digest()
-      expect(scope.locked).toEqual(false)
-
-    it "should reset the form fields after buying", ->
-      spyOn(scope, "resetFields")
-      scope.buy()
-      scope.$digest()
-      expect(scope.resetFields).toHaveBeenCalled()
-
-    it "should disable buy again", ->
-      spyOn(scope, "disableBuy")
-      scope.buy()
-      scope.$digest()
-      expect(scope.disableBuy).toHaveBeenCalled()
 
     it "should watch the trade for completion and close the first modal", ->
       dismissSpy = jasmine.createSpy("dismiss")
       spyOn(modals, "openTradeSummary").and.returnValue(dismiss: dismissSpy)
       spyOn(sfox, "watchTrade").and.callFake((trade, cb) -> cb())
-      scope.buy()
+      scope.buyHandler(mockQuote())
       scope.$digest()
       trade = jasmine.objectContaining({ id: "TRADE" })
       expect(sfox.watchTrade).toHaveBeenCalledWith(trade, jasmine.any(Function))
@@ -147,131 +96,13 @@ describe "SfoxCheckoutController", ->
 
     it "should open the trade summary modal", ->
       spyOn(modals, "openTradeSummary").and.callThrough()
-      scope.buy()
+      scope.buyHandler(mockQuote())
       scope.$digest()
       trade = jasmine.objectContaining({ id: "TRADE" })
       expect(modals.openTradeSummary).toHaveBeenCalledWith(trade, 'initiated')
 
     it "should show an alert in case of error", ->
       spyOn(Alerts, "displayError")
-      scope.quote = mockQuote('NETWORK_ERROR')
-      scope.buy()
+      scope.buyHandler(mockQuote('NETWORK_ERROR'))
       scope.$digest()
       expect(Alerts.displayError).toHaveBeenCalled()
-
-  describe ".getQuoteArgs()", ->
-    beforeEach ->
-      scope = getControllerScope([{status:'active'}])
-
-    it "should get args for a USD->BTC quote", ->
-      scope.state.baseCurr = scope.dollars
-      scope.state.fiat = 150
-      expect(scope.getQuoteArgs(scope.state)).toEqual([7500, "USD", "BTC"])
-
-    it "should get args for a BTC->USD quote", ->
-      scope.state.baseCurr = scope.bitcoin
-      scope.state.btc = 350000
-      expect(scope.getQuoteArgs(scope.state)).toEqual([350000, "BTC", "USD"])
-
-    it "should get the correct fiat arg with a number js has trouble with", ->
-      scope.state.baseCurr = scope.dollars
-      scope.state.fiat = 2.2
-      expect(scope.getQuoteArgs(scope.state)).toEqual([110, "USD", "BTC"])
-
-  describe ".cancelRefresh()", ->
-    beforeEach ->
-      scope = getControllerScope([{status:'active'}])
-
-    it "should cancel the refresh timeout", ->
-      spyOn($timeout, "cancel")
-      scope.refreshTimeout = 'TIMEOUT'
-      scope.cancelRefresh()
-      expect($timeout.cancel).toHaveBeenCalledWith(scope.refreshTimeout)
-
-  describe ".refreshQuote()", ->
-    beforeEach ->
-      scope = getControllerScope([{status:'active'}])
-
-    it "should reset the refresh timeout", ->
-      spyOn(scope, 'cancelRefresh')
-      scope.refreshQuote()
-      expect(scope.cancelRefresh).toHaveBeenCalled()
-
-    it "should call exchange.getBuyQuote()", ->
-      spyOn(scope.vm.external.sfox, "getBuyQuote")
-      scope.refreshQuote()
-      expect(scope.vm.external.sfox.getBuyQuote).toHaveBeenCalled()
-
-    describe "success", ->
-      quote = undefined
-
-      beforeEach ->
-        quote = mockQuote()
-        quoteP = $q.resolve(quote)
-        spyOn(scope.vm.external.sfox, "getBuyQuote").and.returnValue(quoteP)
-        scope.state.btc = 1
-        scope.refreshQuote()
-
-      it "should set the new quote on the scope", ->
-        scope.$digest()
-        expect(scope.quote).toEqual(quote)
-
-      it "should set the quote rate to the scope state", ->
-        scope.$digest()
-        expect(scope.state.rate).toEqual(mockQuote().rate)
-
-      it "should have loadFailed set to false", ->
-        scope.$digest()
-        expect(scope.state.loadFailed).toBeFalsy()
-
-      it "should set state.btc to quoteAmount if in baseFiat", ->
-        scope.state.baseCurr = scope.dollars
-        scope.$digest()
-        expect(scope.state.btc).toEqual(150)
-
-      it "should set state.fiat to quoteAmount if not in baseFiat", ->
-        scope.state.baseCurr = scope.bitcoin
-        scope.$digest()
-        expect(scope.state.fiat).toEqual(3)
-
-    describe "failure", ->
-      beforeEach ->
-        errorP = $q.reject('ERROR')
-        spyOn(scope.vm.external.sfox, "getBuyQuote").and.returnValue(errorP)
-        scope.refreshQuote()
-        scope.$digest()
-
-      it "should have loadFailed set to true", ->
-        expect(scope.state.loadFailed).toEqual(true)
-
-  describe "$watchers", ->
-    beforeEach ->
-      scope = getControllerScope([{status:'active'}])
-      scope.$digest()
-      spyOn(scope, "refreshIfValid")
-
-    describe "fiat", ->
-      it "should refresh if base fiat", ->
-        scope.state.fiat = 20
-        scope.state.baseCurr = scope.dollars
-        scope.$digest()
-        expect(scope.refreshIfValid).toHaveBeenCalled()
-
-      it "should not refresh if not base fiat", ->
-        scope.state.fiat = 20
-        scope.state.baseCurr = scope.bitcoin
-        scope.$digest()
-        expect(scope.refreshIfValid).not.toHaveBeenCalled()
-
-    describe "btc", ->
-      it "should not refresh if base fiat", ->
-        scope.state.btc = 200000
-        scope.state.baseCurr = scope.dollars
-        scope.$digest()
-        expect(scope.refreshIfValid).not.toHaveBeenCalled()
-
-      it "should refresh if not base fiat", ->
-        scope.state.btc = 200000
-        scope.state.baseCurr = scope.bitcoin
-        scope.$digest()
-        expect(scope.refreshIfValid).toHaveBeenCalled()

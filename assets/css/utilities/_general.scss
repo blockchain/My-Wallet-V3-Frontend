@@ -30,12 +30,6 @@ body {
   }
 }
 
-.center-self { 
-  transform: translate(-50%,-50%); 
-  -ms-transform: translate(-50%,-50%); 
-  -webkit-transform: translate(-50%,-50%); 
-  -moz-transform: translate(-50%,-50%); 
-}
 .display-block { display: block; }
 .display-inline-block { display: inline-block; }
 
@@ -85,7 +79,12 @@ noscript {
 
 .lh1 { line-height: 1; }
 
-.ph-form { padding: 0 2em; }
+.ph-form {
+  @media(max-width: 375px) {
+    padding: 0 0;
+  } 
+  padding: 0 2em; 
+}
 
 .mw { max-width: 100%; }
 
