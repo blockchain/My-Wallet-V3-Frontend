@@ -105,7 +105,7 @@
       &.checked { display: none; }
     }
   }
-  input:checked ~ .flex-column img {
+  input:checked ~ .flex-column img:not(.cc-shadow) {
     display: none;
     &.checked { display: inline-block; }
   }
@@ -435,4 +435,8 @@ i.ti-credit-card.bank {
   @media(min-width: 992px) {
     padding-left: 7em;
   }
+}
+.cc-shadow {
+  box-shadow: 0px 4px 5px 1px #CCC;
+  width: 30px;
 }
