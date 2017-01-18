@@ -2,10 +2,11 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
+function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, MyWalletHelpers, buyStatus) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
+  const lastViewedDefaultTime = 1231469665000;
   $scope.whatsNewTemplate = 'templates/whats-new.jade';
   $scope.lastViewedWhatsNew = null;
 
@@ -13,77 +14,29 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
 
   $scope.getTheme = () => $scope.settings.theme;
 
-  const lastViewedDefaultTime = 1231469665000;
+  let asyncAssert = (value) => value ? $q.resolve(value) : $q.reject();
 
-  $scope.initialize = (mockFailure) => {
-    const fetchLastViewed = () => {
-      if (!Wallet.settings.secondPassword) {
-        $scope.metaData = MyWallet.wallet.metadata(2, mockFailure);
-        $scope.metaData.fetch().then((res) => {
-          if (res !== null) {
-            $scope.lastViewedWhatsNew = res.lastViewed;
-          } else {
-            $scope.metaData.create({
-              lastViewed: lastViewedDefaultTime
-            }).then(() => {
-              $scope.lastViewedWhatsNew = lastViewedDefaultTime;
-            });
-          }
-        }).catch((e) => {
-          // Fall back to cookies if metadata service is down
-          $scope.lastViewedWhatsNew = $cookies.get('whatsNewViewed') || lastViewedDefaultTime;
-        });
-      } else {
-        // Metadata service doesn't work with 2nd password
-        $scope.lastViewedWhatsNew = $cookies.get('whatsNewViewed') || lastViewedDefaultTime;
-      }
-    };
+  $scope.fetchLastViewed = () =>
+    asyncAssert($scope.metaData && !Wallet.settings.secondPassword)
+      .then(() =>
+        $scope.metaData.fetch()
+          .then(asyncAssert)
+          .then(res => res.lastViewed)
+          .catch(() => $scope.metaData.create({ lastViewed: lastViewedDefaultTime }))
+      )
+      .catch(() => $cookies.get('whatsNewViewed'))
+      .then(value => value || lastViewedDefaultTime);
 
-    if ($scope.status.isLoggedIn) {
-      if ($scope.status.didUpgradeToHd) {
-        fetchLastViewed();
-      } else {
-        // Wait for upgrade:
-        const watcher = $scope.$watch('status.didUpgradeToHd', (newValue) => {
-          if (newValue) {
-            watcher();
-            fetchLastViewed();
-          }
-        });
-      }
-    }
+  $scope.viewedWhatsNew = () => {
+    let lastViewed = $scope.lastViewedWhatsNew = Date.now();
+    asyncAssert($scope.metaData && !Wallet.settings.secondPassword)
+      .then(() => $scope.metaData.update({ lastViewed }))
+      .finally(() => $cookies.put('whatsNewViewed', lastViewed));
   };
 
-  if (!$rootScope.mock) $scope.initialize();
-
-  let nLatestFeats = null;
-  $scope.nLatestFeats = () => {
-    if (!$scope.feats) {
-      return 0;
-    } else if (nLatestFeats === null && $scope.lastViewedWhatsNew !== null) {
-      nLatestFeats = $scope.feats.filter(({ date }) => date > $scope.lastViewedWhatsNew).length;
-    }
-    return nLatestFeats;
-  };
-
-  $scope.viewedWhatsNew = () => $timeout(() => {
-    if ($scope.viewedWhatsNew === null) {
-      return;
-    }
-    nLatestFeats = 0;
-    let lastViewed = Date.now();
-    $scope.lastViewedWhatsNew = lastViewed;
-    if (!Wallet.settings.secondPassword) {
-      // Set cookie as a fallback in case metadata service is down
-      $cookies.put('whatsNewViewed', lastViewed);
-      $scope.metaData.update({
-        lastViewed: lastViewed
-      });
-    } else {
-      // Metadata service doesn't work with 2nd password
-      $cookies.put('whatsNewViewed', lastViewed);
-    }
-  });
+  $scope.nLatestFeats = MyWalletHelpers.memoize((feats = [], lastViewed) =>
+    feats.filter(({ date }) => date > lastViewed).length
+  );
 
   $scope.subscribe = () => {
     $uibModal.open({
@@ -128,6 +81,15 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   $interval(() => {
     if (Wallet.status.isLoggedIn) currency.fetchExchangeRate();
   }, 15 * 60000);
+
+  if ($scope.status.isLoggedIn) {
+    const watcher = $scope.$watch('status.didUpgradeToHd', (didUpgrade) => {
+      if (!didUpgrade) return;
+      watcher();
+      if (!Wallet.settings.secondPassword) $scope.metaData = MyWallet.wallet.metadata(2);
+      $scope.fetchLastViewed().then(lastViewed => { $scope.lastViewedWhatsNew = lastViewed; });
+    });
+  }
 
   buyStatus.canBuy().then(canBuy => {
     let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
