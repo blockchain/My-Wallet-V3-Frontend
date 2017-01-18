@@ -19,7 +19,7 @@
       form.width-100(ng-submit="openSfoxSignup()")
         button.btn.button-primary.full(type="submit" focus-when="!selectedTab" ng-disabled="modalOpen") Continue
   .flex-column(ng-show="selectedTab === 'BUY_BITCOIN'")
-    buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
+    buy-checkout.width-45.border.pt-30.pb-30.pl-15.pr-15(
       buy-limit="buyLimit"
       buy-account="account"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
