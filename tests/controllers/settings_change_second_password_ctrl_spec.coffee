@@ -4,6 +4,8 @@ describe "ManageSecondPasswordCtrl", ->
   MyWallet = undefined
   modal =
     open: ->
+    close: ->
+    dismiss: ->
   modalInstance =
     close: ->
     dismiss: ->
@@ -26,7 +28,7 @@ describe "ManageSecondPasswordCtrl", ->
       $controller "ManageSecondPasswordCtrl",
         $scope: scope,
         $uibModalInstance: modalInstance,
-        $uibModal: modal
+        # $uibModal: modal
 
       scope.model = { fields: {} }
       $compile(template)(scope)
@@ -34,41 +36,44 @@ describe "ManageSecondPasswordCtrl", ->
 
   describe "recovery phrase prompt modal", ->
 
-    it "should open if recovery phrase and second pw are false", ->
-      spyOn(modal, "open")
+    it "should open if called", inject(($uibModal) ->
+      spyOn($uibModal, "open").and.callThrough()
+      Wallet.status.didConfirmRecoveryPhrase = false
+      Wallet.settings.secondPassword = false
       scope.recoveryModal()
-      expect(modal.open).toHaveBeenCalled()
+      expect($uibModal.open).toHaveBeenCalled()
+    )
 
-    it "should not open if recovery phrase has been backed up", ->
-      spyOn(modal, "open")
+    it "should close the modal on dismissal and open recovery", inject(($uibModal, $q) ->
+      spyOn($uibModal, "open").and.returnValue( {result: $q.resolve()} )
+      spyOn(scope, "openRecovery")
+      scope.recoveryModal()
+      scope.$digest()
+      expect(scope.openRecovery).toHaveBeenCalled()
+    )
+
+    it "should not open if recovery phrase has been backed up", inject(($uibModal, $q) ->
+      spyOn($uibModal, "open")
       Wallet.status.didConfirmRecoveryPhrase = true
-      expect(modal.open).not.toHaveBeenCalled()
+      scope.recoveryModal()
+      scope.$digest()
+      expect($uibModal.open).not.toHaveBeenCalled()
+    )
 
-    it "should not open if second password has been set already", ->
+    it "should not open if second password has been set already", inject(($uibModal, $q) ->
       spyOn(modal, "open")
       Wallet.settings.secondPassword = true
+      scope.recoveryModal()
       expect(modal.open).not.toHaveBeenCalled()
+    )
 
-    it "should activate the form if user dismisses prompt", ->
-      Wallet.dismissedRecoveryPrompt()
+    it "should activate the form if user dismisses prompt", inject(($uibModal, $q) ->
+      spyOn($uibModal, "open").and.returnValue( {result: $q.reject()} )      
+      scope.recoveryModal()
+      modalInstance.dismiss()
       scope.$digest()
       expect(scope.active).toEqual(true)
-
-  describe "buttons", ->
-
-    it "should show if recovery phrase has been backed up", ->
-      scope.walletStatus.didConfirmRecoveryPhrase = true
-      expect(scope.showButton()).toEqual(true)
-
-    it "should hide if prompt was dismissed and second PW is present", ->
-      scope.walletStatus.dismissedRecoveryPrompt = true
-      Wallet.settings.secondPassword = true
-      expect(scope.hideButton()).toEqual(true)
-
-    it "should not hide if recovery phrase confirmed but no second PW", ->
-      scope.walletStatus.didConfirmRecoveryPhrase = true
-      Wallet.settings.secondPassword = false
-      expect(scope.hideButton()).toEqual(false)
+    )
 
   describe "password", ->
 

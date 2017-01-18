@@ -14,7 +14,6 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   };
 
   $scope.walletStatus = Wallet.status;
-  $scope.promptForRecovery = false;
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
   $scope.validateSecondPassword = Wallet.validateSecondPassword;
 
@@ -26,12 +25,6 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
       confirmation: ''
     };
   };
-
-  $scope.$watch('walletStatus.dismissedRecoveryPrompt', (newVal, oldVal) => {
-    if ($scope.walletStatus.dismissedRecoveryPrompt) {
-      $scope.active = true;
-    }
-  });
 
   $scope.removeSecondPassword = () => {
     if ($scope.status.waiting) return;
@@ -70,24 +63,23 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
     Wallet.setSecondPassword($scope.fields.password, success);
   };
 
+  $scope.openRecovery = () => $uibModal.open({
+    templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+    controller: 'ConfirmRecoveryPhraseCtrl',
+    windowClass: 'bc-modal'
+  });
+
   $scope.recoveryModal = () => {
-    $scope.promptForRecovery = true;
     const openModal = () => $uibModal.open({
       templateUrl: 'partials/recovery-before-second-password.jade',
       controller: 'ManageSecondPasswordCtrl',
       windowClass: 'bc-modal'
     });
 
-    const openRecovery = () => $uibModal.open({
-      templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
-      controller: 'ConfirmRecoveryPhraseCtrl',
-      windowClass: 'bc-modal'
-    });
-
     if (!Wallet.status.didConfirmRecoveryPhrase && !Wallet.settings.secondPassword) {
       openModal().result
       .then(() => {
-        openRecovery();
+        $scope.openRecovery();
       })
       .catch((e) => {
         if (e === 'backdrop click' || e === 'escape key press') return;
