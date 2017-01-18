@@ -436,6 +436,17 @@ i.ti-credit-card.bank {
   width: 30px;
 }
 
+.signup-steps {
+  @media (max-width: 767px) {
+    .pt-70 {
+      padding-top: 25px;
+      .width-80 {
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
 #plaid {
   border-width: 0px;
   height: 42px;

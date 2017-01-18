@@ -36,7 +36,7 @@
             label Social Security Number
             input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" format-input="xxx-xx-xxxx" required)
             span.error(translate="Required field")
-          .item.width-33
+          .item.width-33.flex-between-mobile
             label Date of Birth
             input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow(state.dob)" required)
             span.error(translate="Required field")

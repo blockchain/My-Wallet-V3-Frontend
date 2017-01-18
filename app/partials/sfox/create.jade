@@ -1,22 +1,22 @@
 .flex-row.flex-column-mobile
   .width-40
     .width-80
-      div(ng-show="viewing('summary')")
+      div.mbl(ng-show="viewing('summary')")
         h4.f-20.em-500.mvn.mb-10(translate="Create SFOX Account")
         span.f-16(translate="Please confirm your email and phone number to create your SFOX exchange account.")
 
-      div(ng-show="viewing('email')")
+      div.mbl(ng-show="viewing('email')")
         h4.f-20.em-500.mvn.mb-10(translate="Verify Email Address")
         span.f-16(ng-hide="state.sentEmailCode" translate="Please verify your preferred email to associate with your SFOX exchange account.")
         span.f-16(ng-show="state.sentEmailCode" translate="We just sent a verification code to your email address. Please enter the verification code to create your SFOX exchange account.")
 
-      div(ng-show="viewing('mobile')")
+      div.mbl(ng-show="viewing('mobile')")
         h4.f-20.em-500.mvn.mb-10(translate="Verify Phone Number")
         span.f-16(ng-hide="state.sentMobileCode" translate="Please add your phone number to create your SFOX exchange account.")
         span.f-16(ng-show="state.sentMobileCode" translate="We just sent a verification code to your phone. Please enter the verification code to continue creating your SFOX exchange account.")
 
   .width-60.flex-justify(ng-show="viewing('summary')")
-    form.bc-form.width-60(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
+    form.bc-form.width-60.width-100-mobile(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.pb-30
           .item
@@ -46,7 +46,7 @@
           button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue
 
   .width-60.flex-justify(ng-show="viewing('email')")
-    form.bc-form.width-60(name="emailForm" ng-submit="state.sentEmailCode ? verifyEmail() : changeEmail(); emailForm.$setUntouched();" novalidate autocomplete="off")
+    form.bc-form.width-60.width-100-mobile(name="emailForm" ng-submit="state.sentEmailCode ? verifyEmail() : changeEmail(); emailForm.$setUntouched();" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
           .item
@@ -65,7 +65,7 @@
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
   .width-60.flex-justify(ng-show="viewing('mobile')")
-    form.bc-form.width-60(name="mobileForm" ng-submit="state.sentMobileCode ? verifyMobile() : changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
+    form.bc-form.width-60.width-100-mobile(name="mobileForm" ng-submit="state.sentMobileCode ? verifyMobile() : changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
           .item

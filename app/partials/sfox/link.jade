@@ -9,7 +9,8 @@
   .width-40(ng-show="state.bankAccounts")
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Select Payment Account")
-      span.f-16(translate="Please select your preferred bank account to make bitcoin purchases.")
+      .mbl
+        span.f-16(translate="Please select your preferred bank account to make bitcoin purchases.")
 
   .width-60.flex-justify(ng-show="state.bankAccounts")
     .width-90.width-100-mobile
@@ -56,7 +57,7 @@
               span.error(ng-hide="bankAccountForm.accountNumber.$error.value" translate="Required field")
             .help(ng-show="bankAccountForm.accountNumber.$error.value")
               span.state-danger-text Invalid account number.
-          .group.full.mbl.mb-30
+          .group.full.mb-30
             label Account Type
             ui-select(ng-model="fields.type" tagging)
               ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
@@ -65,14 +66,15 @@
                 span.capitalize(ng-bind-html="type | highlight: $select.search")
           .group.full
             button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
-.flex-row.flex-column-mobile.mtl(ng-show="state.accounts.length")
+.flex-row.flex-column-mobile(ng-show="state.accounts.length")
   .width-40
     .width-80
       .flex-row.flex-center.mb-10
         h4.f-20.em-500.mvn(translate="Verify Bank Account")
         button.helper(ng-click="openDepositHelper()" type="button" tabindex="-1")
           span ?
-      span.f-16(translate="To protect against fraud, SFOX will send (and withdraw) 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. Please enter these amounts in any order to verify your account.")
+      .mbl
+        span.f-16(translate="To protect against fraud, SFOX will send (and withdraw) 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. Please enter these amounts in any order to verify your account.")
   .width-60.flex-justify
     form.bc-form.width-90.width-100-mobile(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
