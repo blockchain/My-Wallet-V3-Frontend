@@ -65,7 +65,7 @@
                 span.capitalize(ng-bind-html="type | highlight: $select.search")
           .group.full
             button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
-.flex-row.mtl(ng-show="state.accounts.length")
+.flex-row.flex-column-mobile.mtl(ng-show="state.accounts.length")
   .width-40
     .width-80
       .flex-row.flex-center.mb-10
@@ -76,18 +76,17 @@
   .width-60.flex-justify
     form.bc-form.width-90.width-100-mobile(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
-        .group.full.mb-30
-          .item
+        .group.inline.mb-30
+          .item.width-50.width-50-mobile
             label Deposit 1
             input(ng-model="fields.deposit1" name="deposit1" ng-change="clearInlineErrors(verifyBankAccountForm, 'deposit1', 'deposit2')" type="number" min="0.01" step="0.01" required)
             span.error(ng-hide="verifyBankAccountForm.deposit1.$error.value" translate="Required field")
-        .group.full.mb-30
-          .item
+            .help(ng-show="verifyBankAccountForm.deposit1.$error.value")
+              span.state-danger-text Deposits incorrect. Please try again.
+          .item.width-50.width-50-mobile
             label Deposit 2
             input(ng-model="fields.deposit2" name="deposit2" ng-change="clearInlineErrors(verifyBankAccountForm, 'deposit1', 'deposit2')" type="number" min="0.01" step="0.01" required)
             span.error(ng-hide="verifyBankAccountForm.deposit1.$error.value" translate="Required field")
-          .help(ng-show="verifyBankAccountForm.deposit1.$error.value")
-            span.state-danger-text Deposits incorrect. Please try again.
         .group.full
           button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid") Verify
           a.display-block.center.mtl(ng-click="$dismiss()") Finish Later
