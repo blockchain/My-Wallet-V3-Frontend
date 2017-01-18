@@ -27,10 +27,10 @@
         span Coinify Account: {{ exchange.profile.email }}
       table.width-100
         tr.border.bg-light-blue
-          th.phml.pvs.center-align.width-20(translate="STATUS")
-          th.phml.pvs.center-align.width-30(translate="DATE")
-          th.phml.pvs.center-align.width-30 BTC
-          th.phml.pvs.center-align.width-20(translate="TOTAL")
+          th.phml.pvs.width-30(translate="STATUS")
+          th.pvs.width-30(translate="DATE")
+          th.pvs.width-25 BTC
+          th.pvs.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
           trade="trade"

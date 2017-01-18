@@ -33,10 +33,10 @@
         p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="selectTab('BUY_BITCOIN')")
     table.width-100(ng-show="trades.length")
       tr.border.bg-light-blue
-        th.phml.pvs.center-align.width-20(translate="STATUS")
-        th.phml.pvs.center-align.width-30(translate="DATE")
-        th.phml.pvs.center-align.width-30 BTC
-        th.phml.pvs.center-align.width-20(translate="TOTAL")
+        th.phml.pvs.width-30(translate="STATUS")
+        th.pvs.width-30(translate="DATE")
+        th.pvs.width-25 BTC
+        th.pvs.width-15(translate="TOTAL")
       tr(
         ng-repeat="trade in trades | orderBy:'createdAt':true track by $index"
         trade="trade"
