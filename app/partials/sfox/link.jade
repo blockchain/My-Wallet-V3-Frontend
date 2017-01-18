@@ -11,58 +11,60 @@
       h4.f-20.em-500.mvn.mb-10(translate="Select Payment Account")
       span.f-16(translate="Please select your preferred bank account to make bitcoin purchases.")
 
-  .width-50(ng-show="state.bankAccounts")
-    label.f-14.colon(translate="Select Account")
-    form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
-      .radio-group
-        .radio-label(ng-repeat="bankAccount in state.bankAccounts")
-          input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
-          label(for="{{bankAccount._id}}")
-            include ../banks
-            .flex-column
-              span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
-              span.f-14.capitalize {{ bankAccount.institution_type }} Bank
-      button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
+  .width-60.flex-justify(ng-show="state.bankAccounts")
+    .width-90.width-100-mobile
+      label.f-14.colon(translate="Select Account")
+      form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
+        .radio-group
+          .radio-label(ng-repeat="bankAccount in state.bankAccounts")
+            input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
+            label(for="{{bankAccount._id}}")
+              include ../banks
+              .flex-column
+                span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
+                span.f-14.capitalize {{ bankAccount.institution_type }} Bank
+        button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
 
-  .width-50(ng-hide="state.bankAccounts" id="wallet")
-    iframe(
-      ng-src='{{ plaidUrl }}'
-      sandbox='allow-same-origin allow-scripts allow-forms'
-      ng-class='{enabled: state.plaid.enabled}'
-      scrolling = 'no'
-      id='plaid'
-    )
-    .mvvl
-      span.or-horizontal.flex-justify(translate="OR")
-    form.bc-form(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
-      fieldset(ng-disabled="locked")
-        .group.full.mb-30
-          .item
-            label Routing Number
-              button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
-                span ?
-            input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(bankAccountForm, 'routingNumber')" required)
-            span.error(ng-hide="bankAccountForm.routingNumber.$error.value" translate="Required field")
-          .help(ng-show="bankAccountForm.routingNumber.$error.value")
-            span.state-danger-text Invalid routing number.
-        .group.full.mb-30
-          .item
-            label Account Number
-              button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
-                span ?
-            input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(bankAccountForm, 'accountNumber')" required)
-            span.error(ng-hide="bankAccountForm.accountNumber.$error.value" translate="Required field")
-          .help(ng-show="bankAccountForm.accountNumber.$error.value")
-            span.state-danger-text Invalid account number.
-        .group.full.mbl.mb-30
-          label Account Type
-          ui-select(ng-model="fields.type" tagging)
-            ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
-              span.capitalize {{ $select.selected }}
-            ui-select-choices(repeat="type in types")
-              span.capitalize(ng-bind-html="type | highlight: $select.search")
-        .group.full
-          button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
+  .width-60.flex-justify(ng-hide="state.bankAccounts" id="wallet")
+    .width-90.width-100-mobile
+      iframe(
+        ng-src='{{ plaidUrl }}'
+        sandbox='allow-same-origin allow-scripts allow-forms'
+        ng-class='{enabled: state.plaid.enabled}'
+        scrolling = 'no'
+        id='plaid'
+      )
+      .mvvl
+        span.or-horizontal.flex-justify(translate="OR")
+      form.bc-form(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
+        fieldset(ng-disabled="locked")
+          .group.full.mb-30
+            .item
+              label Routing Number
+                button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
+                  span ?
+              input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(bankAccountForm, 'routingNumber')" required)
+              span.error(ng-hide="bankAccountForm.routingNumber.$error.value" translate="Required field")
+            .help(ng-show="bankAccountForm.routingNumber.$error.value")
+              span.state-danger-text Invalid routing number.
+          .group.full.mb-30
+            .item
+              label Account Number
+                button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
+                  span ?
+              input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(bankAccountForm, 'accountNumber')" required)
+              span.error(ng-hide="bankAccountForm.accountNumber.$error.value" translate="Required field")
+            .help(ng-show="bankAccountForm.accountNumber.$error.value")
+              span.state-danger-text Invalid account number.
+          .group.full.mbl.mb-30
+            label Account Type
+            ui-select(ng-model="fields.type" tagging)
+              ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+                span.capitalize {{ $select.selected }}
+              ui-select-choices(repeat="type in types")
+                span.capitalize(ng-bind-html="type | highlight: $select.search")
+          .group.full
+            button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
 .flex-row.mtl(ng-show="state.accounts.length")
   .width-40
     .width-80
@@ -71,8 +73,8 @@
         button.helper(ng-click="openDepositHelper()" type="button" tabindex="-1")
           span ?
       span.f-16(translate="To protect against fraud, SFOX will send (and withdraw) 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. Please enter these amounts in any order to verify your account.")
-  .width-50
-    form.bc-form(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
+  .width-60.flex-justify
+    form.bc-form.width-90.width-100-mobile(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.full.mb-30
           .item
