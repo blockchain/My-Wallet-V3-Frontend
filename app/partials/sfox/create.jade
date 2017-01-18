@@ -16,7 +16,7 @@
         span.f-16(ng-show="state.sentMobileCode" translate="We just sent a verification code to your phone. Please enter the verification code to continue creating your SFOX exchange account.")
 
   .width-60.flex-justify(ng-show="viewing('summary')")
-    form.bc-form.width-80(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
+    form.bc-form.width-60(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group.pb-30
           .item
