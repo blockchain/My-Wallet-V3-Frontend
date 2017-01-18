@@ -72,6 +72,7 @@ describe "walletServices", () ->
           currency: "USD"
         external:
           sfox: { monitorPayments: -> }
+        loadExternal: () -> $q.resolve()
 
       return
 
@@ -89,9 +90,8 @@ describe "walletServices", () ->
   describe "language", ->
 
     it "should be set after loading", inject((Wallet) ->
-
       Wallet.login()
-
+      $rootScope.$digest()
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"})
     )
 
@@ -115,6 +115,7 @@ describe "walletServices", () ->
 
     it "should be set after loading", inject((Wallet) ->
       Wallet.login()
+      $rootScope.$digest()
       expect(Wallet.settings.currency.code).toEqual("USD")
     )
 
@@ -139,6 +140,7 @@ describe "walletServices", () ->
 
     it "should be set after loading", inject((Wallet) ->
       Wallet.login()
+      $rootScope.$digest()
       expect(Wallet.user.email).toEqual("steve@me.com")
     )
 
@@ -158,6 +160,7 @@ describe "walletServices", () ->
 
     it "should be set after loading", inject((Wallet) ->
       Wallet.login()
+      $rootScope.$digest()
       expect(Wallet.user.mobileNumber).toEqual("+1234")
     )
 
@@ -205,6 +208,7 @@ describe "walletServices", () ->
 
     it "should be set after loading", inject((Wallet) ->
       Wallet.login()
+      $rootScope.$digest()
       expect(Wallet.user.passwordHint).toEqual("Same as username")
     )
 
