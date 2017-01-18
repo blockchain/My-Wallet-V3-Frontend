@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
   let exchange = $scope.vm.external.sfox;
 
   $scope.openSfoxSignup = () => {
@@ -25,6 +25,18 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
   $scope.inspectTrade = modals.openTradeSummary;
   $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
 
+  $scope.tabs = ['BUY_BITCOIN', /* 'SELL_BITCOIN', */ 'ORDER_HISTORY'];
+  $scope.selectedTab = $scope.signupCompleted ? $stateParams.selectedTab || 'BUY_BITCOIN' : null;
+
+  $scope.selectTab = (tab) => {
+    $scope.selectedTab = $scope.selectedTab ? tab : null;
+  };
+
+  $scope.moveTab = (offset) => (event) => {
+    let nextTab = $scope.tabs[$scope.tabs.indexOf($scope.selectedTab) + offset];
+    if (nextTab) $scope.selectTab(nextTab);
+  };
+
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
   $scope.buyLimit = exchange.profile && exchange.profile.limits.buy;
@@ -36,6 +48,7 @@ function SfoxCheckoutController ($scope, $timeout, $q, Wallet, MyWalletHelpers, 
         // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
         $scope.siftScienceEnabled = true;
         $scope.tradeId = trade.id;
+        $scope.selectTab('ORDER_HISTORY');
         let modalInstance = modals.openTradeSummary(trade, 'initiated');
         sfox.watchTrade(trade, () => modalInstance.dismiss());
       })

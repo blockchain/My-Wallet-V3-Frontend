@@ -301,6 +301,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.jade',
       controller: 'SfoxCheckoutController',
+      params: { selectedTab: null },
       resolve: {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');

@@ -1,34 +1,44 @@
-.buy-sell.mbvl
-  .flex-row.flex-column-tablet(ng-hide="signupCompleted")
+.filter-bar.flex-center.flex-between(capture-key="{'ArrowLeft': moveTab(-1), 'ArrowRight': moveTab(1)}")
+  .filter-buttons
+    a.spaced.black.em-400.em-alt.f-16(
+      ng-repeat="tab in tabs"
+      ng-class="{active: selectedTab === tab}"
+      ng-click="selectTab(tab)"
+      translate="{{tab}}")
+  .sfox-logo
+    span.mrs.type-sm(translate="POWERED_BY")
+    a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
+      img.mbs(src="img/sfox-logo-trans.png")
+.buy-sell.mt-60.mbvl
+  .flex-row.flex-column-tablet(ng-hide="selectedTab")
     .width-50.border.mrl.pal.flex-column.flex-between.flex-center
       span.type-h4.width-100 Just a few steps away!
       .mvl.flex-column.flex-center.blue.type-h4
         i.type-lrg(ng-class="stepDescription().i")
         span(translate="{{stepDescription().text}}")
       form.width-100(ng-submit="openSfoxSignup()")
-        button.btn.button-primary.full(type="submit" focus-when="!signupCompleted" ng-disabled="modalOpen") Continue
-  .flex-column(ng-show="signupCompleted")
-    .flex-row.flex-between
-      span.f-20.em-500 Buy Bitcoin
-      .sfox-logo
-        span.mrs.type-sm(translate="POWERED_BY")
-        a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
-          img.mbs(src="img/sfox-logo.png")
-    buy-checkout.width-50.border.mt-15.pt-30.pb-30.pl-15.pr-15(
+        button.btn.button-primary.full(type="submit" focus-when="!selectedTab" ng-disabled="modalOpen") Continue
+  .flex-column(ng-show="selectedTab === 'BUY_BITCOIN'")
+    buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
       buy-limit="buyLimit"
       buy-account="account"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       handle-buy="buyHandler(quote)")
-  .flex-column.mtl(ng-show="trades.length")
-    h4.type-h4(translate="ORDER_HISTORY")
-    table.width-100
+  .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="trades.length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="selectTab('BUY_BITCOIN')")
+    table.width-100(ng-show="trades.length")
       tr.border.bg-light-blue
         th.phml.pvs.center-align.width-20(translate="STATUS")
         th.phml.pvs.center-align.width-30(translate="DATE")
         th.phml.pvs.center-align.width-30 BTC
         th.phml.pvs.center-align.width-20(translate="TOTAL")
       tr(
-        ng-repeat="trade in trades | orderBy:'createdAt':true"
+        ng-repeat="trade in trades | orderBy:'createdAt':true track by $index"
         trade="trade"
         buy="inspectTrade"
         usa="true")

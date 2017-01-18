@@ -49,7 +49,9 @@ function modals ($state, $uibModal, $ocLazyLoad) {
           : $q.resolve([]);
       }
     }
-  }).finally(() => {
+  }).then(() => {
+    $state.go('wallet.common.buy-sell.sfox', { selectedTab: 'ORDER_HISTORY' });
+  }).catch(() => {
     let base = 'wallet.common.buy-sell';
     let goingToBuySellState = $state.current.name.indexOf(base) === 0;
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
