@@ -45,7 +45,7 @@
           a(href="{{rootURL}}api", translate="API" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
           a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank" rel="noopener noreferrer")
-        li.whats-new.item.hidden-xs(uib-dropdown  ng-if="status.didUpgradeToHd" ng-click="viewedWhatsNew()")
+        li.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
           a(uib-popover-template="::whatsNewTemplate"
             popover-class="whats-new-popover"
             popover-placement="bottom"
