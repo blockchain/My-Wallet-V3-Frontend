@@ -82,19 +82,15 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     states
   };
 
-  let unwatch = $rootScope.$watch(service.getExchange, (exchange) => {
-    if (exchange) init(exchange).then(unwatch).then(initialized.resolve);
-  });
-
   return service;
 
-  function init (exchange) {
-    if (exchange.trades) setTrades(exchange.trades);
-    // Make sure this does not get called before the API key is set above
-    Options.get().then(() => {
-      exchange.monitorPayments();
+  function init (coinify) {
+    return Options.get().then(options => {
+      coinify.partnerId = options.partners.coinify.apiKey;
+      if (coinify.trades) setTrades(coinify.trades);
+      coinify.monitorPayments();
+      initialized.resolve();
     });
-    return $q.resolve();
   }
 
   function getQuote (amt, curr, quoteCurr) {
