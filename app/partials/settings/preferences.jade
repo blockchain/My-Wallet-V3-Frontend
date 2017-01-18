@@ -56,7 +56,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       .list-group.list-group-horizontal
-        a.list-group-item.text-left(ng-repeat="currency in btcCurrencies" ng-class="settings.btcCurrency.code === '{{currency.code}}' ? 'active' : ''" ng-click="changeCurrency(currency)") {{ currency.code }} ({{ currency.btcValue }})
+        a.list-group-item.text-left.brdrn(ng-repeat="currency in btcCurrencies" ng-class="settings.btcCurrency.code === '{{currency.code}}' ? 'active' : ''" ng-click="changeCurrency(currency)") {{ currency.code }} ({{ currency.btcValue }})
 
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="NotificationSettings")
     .col-sm-12.col-md-6
