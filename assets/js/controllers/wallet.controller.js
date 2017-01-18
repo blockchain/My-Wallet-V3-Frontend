@@ -24,7 +24,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.lastAction = Date.now();
   $scope.onAction = () => $scope.lastAction = Date.now();
-  $scope.getTheme = () => $scope.settings.theme.class;
+  $scope.getTheme = () => $scope.settings.theme && $scope.settings.theme.class;
 
   $scope.inactivityCheck = () => {
     if (!Wallet.status.isLoggedIn) return;
