@@ -437,11 +437,18 @@ i.ti-credit-card.bank {
 }
 
 .signup-steps {
-  @media (max-width: 767px) {
+  @media (max-width: 991px) {
     .pt-70 {
       padding-top: 25px;
       .width-80 {
         margin-bottom: 30px;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    .pt-70 {
+      .width-80 {
+        padding: 0px 30px;
       }
     }
   }

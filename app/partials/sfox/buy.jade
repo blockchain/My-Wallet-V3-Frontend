@@ -1,4 +1,4 @@
-.flex-row.flex-column-mobile
+.flex-row.flex-column-tablet
   .width-40
     .width-80(ng-hide="trade")
       h4.f-20.em-500.mvn.mb-10(translate="Buy Bitcoin")
@@ -12,7 +12,7 @@
       .mbl
         span.f-16(translate="TX_INITIATED.BODY" translate-values="{email:user.email}")
   .width-60.flex-justify(ng-if="!trade")
-    .width-80.width-100-mobile
+    .width-80.width-100-tablet.width-100-mobile
       buy-checkout(
         buy-limit="buyLimit"
         buy-account="account"
@@ -20,6 +20,6 @@
         handle-buy="buyHandler(quote)"
         collapse-summary="summaryCollapsed")
   .width-60.flex-justify(ng-if="trade")
-    .width-80.width-100-mobile
+    .width-80.width-100-tablet.width-100-mobile
       order-details(formatted-trade="trade")
       button.btn.button-primary.full(type="button" ng-click="$close()" focus-when="trade") Close
