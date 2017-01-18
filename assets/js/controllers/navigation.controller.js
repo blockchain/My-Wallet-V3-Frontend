@@ -22,7 +22,6 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
         $scope.metaData.fetch()
           .then(asyncAssert)
           .then(res => res.lastViewed)
-          .catch(() => $scope.metaData.create({ lastViewed: lastViewedDefaultTime }))
       )
       .catch(() => $cookies.get('whatsNewViewed'))
       .then(value => value || lastViewedDefaultTime);
@@ -74,21 +73,21 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
       .then(() => Wallet.logout());
   };
 
-  if (Wallet.goal.firstTime) {
-    $scope.viewedWhatsNew();
-  }
-
   $interval(() => {
     if (Wallet.status.isLoggedIn) currency.fetchExchangeRate();
   }, 15 * 60000);
 
   if ($scope.status.isLoggedIn) {
-    const watcher = $scope.$watch('status.didUpgradeToHd', (didUpgrade) => {
-      if (!didUpgrade) return;
-      watcher();
-      if (!Wallet.settings.secondPassword) $scope.metaData = MyWallet.wallet.metadata(2);
-      $scope.fetchLastViewed().then(lastViewed => { $scope.lastViewedWhatsNew = lastViewed; });
-    });
+    if (Wallet.goal.firstTime) {
+      $scope.viewedWhatsNew();
+    } else {
+      const watcher = $scope.$watch('status.didUpgradeToHd', (didUpgrade) => {
+        if (!didUpgrade) return;
+        watcher();
+        if (!Wallet.settings.secondPassword) $scope.metaData = MyWallet.wallet.metadata(2);
+        $scope.fetchLastViewed().then(lastViewed => { $scope.lastViewedWhatsNew = lastViewed; });
+      });
+    }
   }
 
   buyStatus.canBuy().then(canBuy => {
