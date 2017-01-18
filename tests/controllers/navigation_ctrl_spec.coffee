@@ -1,6 +1,7 @@
 describe "NavigationCtrl", ->
   scope = undefined
   Wallet = undefined
+  $timeout = undefined
   mockFailure = undefined
 
   whatsNew = [
@@ -12,6 +13,7 @@ describe "NavigationCtrl", ->
 
   beforeEach ->
     angular.mock.inject ($cookies, $injector, $rootScope, $controller, $q) ->
+      $timeout = $injector.get("$timeout")
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Alerts = $injector.get("Alerts")
@@ -107,16 +109,18 @@ describe "NavigationCtrl", ->
         expect(scope.lastViewedWhatsNew).toEqual(3)
 
       it "should calculate the correct number of latest feats", ->
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(1)
+        $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(1)
 
       it "should update metadata service when new is viewed", inject(($timeout) ->
         spyOn(scope.metaData, 'update')
         spyOn(Date, 'now').and.returnValue(4)
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(1)
+        $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(1)
         scope.viewedWhatsNew()
         $timeout.flush()
         expect(scope.metaData.update).toHaveBeenCalledWith({lastViewed: 4})
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(0)
+        expect(scope.nLatestFeats).toEqual(0)
       )
 
     describe "without 2nd password if metadata service is down", ->
@@ -128,16 +132,19 @@ describe "NavigationCtrl", ->
         expect(scope.lastViewedWhatsNew).toEqual(2)
 
       it "should calculate the correct number of latest feats", ->
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(1)
+        $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(1)
 
       it "should set new cookie when whats new is viewed", inject(($cookies, $timeout) ->
         spyOn($cookies, 'put')
         spyOn(Date, 'now').and.returnValue(4)
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(1)
-        scope.viewedWhatsNew()
         $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(1)
+        scope.viewedWhatsNew()
+        scope.$digest()
         expect($cookies.put).toHaveBeenCalledWith('whatsNewViewed', 4)
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(0)
+        $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(0)
       )
 
     describe "when 2nd password is enabled", ->
@@ -149,16 +156,19 @@ describe "NavigationCtrl", ->
         expect(scope.lastViewedWhatsNew).toEqual(2)
 
       it "should calculate the correct number of latest feats", ->
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(1)
+        $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(1)
 
       it "should set new cookie when whats new is viewed", inject(($cookies, $timeout) ->
         spyOn($cookies, 'put')
         spyOn(Date, 'now').and.returnValue(4)
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(1)
-        scope.viewedWhatsNew()
         $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(1)
+        scope.viewedWhatsNew()
+        scope.$digest()
         expect($cookies.put).toHaveBeenCalledWith('whatsNewViewed', 4)
-        expect(scope.nLatestFeats(scope.feats, scope.lastViewedWhatsNew)).toEqual(0)
+        $timeout.flush()
+        expect(scope.nLatestFeats).toEqual(0)
       )
 
     describe "for a v2 wallet", ->

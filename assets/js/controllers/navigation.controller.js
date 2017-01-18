@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, MyWalletHelpers, buyStatus) {
+function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -33,8 +33,8 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
       .finally(() => $cookies.put('whatsNewViewed', lastViewed));
   };
 
-  $scope.nLatestFeats = MyWalletHelpers.memoize((feats = [], lastViewed) =>
-    feats.filter(({ date }) => date > lastViewed).length
+  $scope.getNLatestFeats = (feats = [], lastViewed) => (
+    (lastViewed && feats.filter(({ date }) => date > lastViewed).length) || 0
   );
 
   $scope.subscribe = () => {
@@ -94,4 +94,8 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
     let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
     $scope.feats = whatsNew.filter(filterBuy);
   });
+
+  $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {
+    $scope.nLatestFeats = $scope.getNLatestFeats($scope.feats, lastViewed);
+  }));
 }

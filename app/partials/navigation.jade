@@ -52,8 +52,8 @@
             popover-title="{{:: ('WHATS_NEW' | translate) + '?' }}"
             popover-trigger="outsideClick")
             i.ti-gift
-            span.whats-new-icon(ng-show="nLatestFeats(feats, lastViewedWhatsNew) > 0")
-              span {{ nLatestFeats(feats, lastViewedWhatsNew) }}
+            span.whats-new-icon(ng-show="nLatestFeats > 0")
+              span {{ nLatestFeats }}
         li.item
           a(ng-click="refresh()" ng-class="{'rotating': refreshing}").refresh
             img(src="img/refresh.svg" ng-show="getTheme().name !== 'dev'")
