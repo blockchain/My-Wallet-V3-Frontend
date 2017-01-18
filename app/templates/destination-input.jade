@@ -3,7 +3,7 @@
     ng-model="model"
     ng-model-options="{}"
     ng-show="selectOpen"
-    on-select="setModel($select.selected)"
+    on-select="setModel($select.selected); setInputMetric({metric: 'dropdown'})"
     ui-select-open="$parent.selectOpen"
     ui-select-on-close="$parent.selectOpen=false; focusInput()"
     tagging)
@@ -25,6 +25,7 @@
       ng-model="model.address"
       ng-show="model.type === 'External'"
       ng-blur="blur()"
+      ng-paste="setInputMetric({metric: 'paste'})"
       autofocus)
     .input-group-btn
       qr-scan(on-scan="onAddressScan")
