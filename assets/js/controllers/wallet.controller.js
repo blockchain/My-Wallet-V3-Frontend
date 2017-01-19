@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, $cookies, MyWallet, currency, $translate, $window, buyStatus) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, $cookies, MyWallet, currency, $translate, $window, buyStatus, modals) {
   $scope.goal = Wallet.goal;
 
   $scope.status = Wallet.status;
@@ -43,9 +43,9 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
-  $scope.request = () => {
+  $scope.request = modals.openOnce(() => {
     Alerts.clear();
-    $uibModal.open({
+    return $uibModal.open({
       templateUrl: 'partials/request.jade',
       windowClass: 'bc-modal auto',
       controller: 'RequestCtrl',
@@ -54,11 +54,11 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         focus: () => false
       }
     });
-  };
+  });
 
-  $scope.send = () => {
+  $scope.send = modals.openOnce(() => {
     Alerts.clear();
-    $uibModal.open({
+    return $uibModal.open({
       templateUrl: 'partials/send.jade',
       windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
@@ -72,7 +72,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         }
       }
     });
-  };
+  });
 
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
