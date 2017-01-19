@@ -163,7 +163,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
     }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
-      .catch((e) => { debugger; Alerts.displayError('ERROR_TRADE_CANCEL'); });
+      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
   function pollUserLevel (kyc) {
