@@ -19,6 +19,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     kyc,
     error,
     success,
+    checkDKK,
     bank_transfer
   };
 
@@ -131,14 +132,15 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function bank_transfer (trade) {
-    // temp fix until Coinify updates their API
-    let i = 'IBAN';
-    let b = 'BIC';
-    if (trade.inCurrency === 'DKK') {
-      i = 'Reg. Number';
-      b = 'Account Number';
+  function checkDKK (currency) {
+    if (currency === 'DKK') {
+      return { i: 'Reg. Number', b: 'Account Number' };
     }
+    return { i: 'IBAN', b: 'BIC' };
+  }
+
+  function bank_transfer (trade) {
+    const labels = checkDKK(trade.inCurrency);
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
@@ -149,8 +151,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
           trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
           trade.bankAccount.holderAddress.country
         ].join(', '),
-        [i]: trade.bankAccount.number,
-        [b]: trade.bankAccount.bic,
+        [labels.i]: trade.bankAccount.number,
+        [labels.b]: trade.bankAccount.bic,
         'Bank': [
           trade.bankAccount.bankName,
           trade.bankAccount.bankAddress.street,
