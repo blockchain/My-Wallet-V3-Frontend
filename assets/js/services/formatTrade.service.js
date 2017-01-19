@@ -132,6 +132,13 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   }
 
   function bank_transfer (trade) {
+    // temp fix until Coinify updates their API
+    let i = 'IBAN';
+    let b = 'BIC';
+    if (trade.inCurrency === 'DKK') {
+      i = 'Reg. Number';
+      b = 'Account Number';
+    }
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
@@ -142,8 +149,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
           trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
           trade.bankAccount.holderAddress.country
         ].join(', '),
-        'IBAN': trade.bankAccount.number,
-        'BIC': trade.bankAccount.bic,
+        [i]: trade.bankAccount.number,
+        [b]: trade.bankAccount.bic,
         'Bank': [
           trade.bankAccount.bankName,
           trade.bankAccount.bankAddress.street,
