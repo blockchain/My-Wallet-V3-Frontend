@@ -1012,7 +1012,7 @@
   "SOLD_VIA": "Sold via {{exchange}}",
   "TX_ERROR_STATE": {
     "TITLE": "Transaction {{::state}}",
-    "BODY": "Your purchase has been {{::state}}."
+    "BODY": ""
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
