@@ -15,7 +15,7 @@
             span.flex-row
               span.em-400(translate="CARD_TRANSFER.TITLE")
       helper-button.mb-5(content="CARD_TRANSFER.COPY")
-  .mlm.mbl.em-300.width-70(ng-show="medium === 'card' && !userHasExchangeAcct")
+  .mlm.mbl.em-300.width-70(ng-show="showNote('card')")
     span(translate="VERIFY_CARD_NOTE")
   .flex-row.flex-center.pointer
     input.man(type="radio" name="inMedium" id="bank" ng-model="$parent.medium" value="bank" ng-disabled="status.waiting")
@@ -30,5 +30,5 @@
             span.flex-row
               span.em-400(translate="BANK_TRANSFER.TITLE")
       helper-button.mb-5(content="BANK_TRANSFER.COPY")
-  .mlm.mbl.em-300.width-70(ng-hide="exchange.profile.level.name >= 2 || medium !== 'bank'")
+  .mlm.mbl.em-300.width-70(ng-show="showNote('bank')")
     span(translate="VERIFY_ID_NOTE")
