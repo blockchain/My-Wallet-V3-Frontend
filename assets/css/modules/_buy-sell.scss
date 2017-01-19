@@ -100,12 +100,12 @@
 
 .payment-methods {
   input {
-    & ~ .flex-column img {
+    & ~ .flex-row img {
       width: 30px;
       &.checked { display: none; }
     }
   }
-  input:checked ~ .flex-column img:not(.cc-shadow) {
+  input:checked ~ .flex-row img:not(.cc-shadow) {
     display: none;
     &.checked { display: inline-block; }
   }
