@@ -1189,7 +1189,9 @@
     "OPTION2": "State issued identification card",
     "OPTION3": "Passport",
     "OPTION4": "Government issued identification",
-    "UPLOAD_TITLE": "Photo Identification"
+    "UPLOAD_TITLE": "Photo ID",
+    "UPLOAD_SELECT": "Select Upload Method",
+    "HELP": "Capture the front side of ID, clearly displaying your identification number."
   },
   "address_ID": {
     "TITLE": "Upload A Proof of Address",
@@ -1198,7 +1200,9 @@
     "OPTION2": "First page and signature page of lease",
     "OPTION3": "First page of your bank statement",
     "OPTION4": "DMV or voter registration",
-    "UPLOAD_TITLE": "Proof of Address"
+    "UPLOAD_TITLE": "Proof of Address",
+    "UPLOAD_SELECT": "Select Upload Method",
+    "HELP": "Make sure the snapshot clearly displays your address."
   },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",

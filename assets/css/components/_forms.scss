@@ -232,22 +232,45 @@ form.bc-form {
 .file-upload,
 .webcam {
   @extend .center;
-  @extend .border;
-  @extend .width-100;
-  @extend .flex-column;
-  @extend .flex-around;
+  @extend .pos-rel;
   @extend .flex-center;
-  max-height: 330px;
-  height: 330px;
+  border: 1px solid #ebebeb;
+  max-height: 360px;
+  height: 360px;
   &.disabled {
     background: rgba(0, 0 , 0, 0.44);
   }
 }
 
+.file-upload {
+  @extend .width-100;
+  @extend .flex-column;
+  @extend .flex-around;
+  img.file {
+    height: 180px;
+  }
+  &.dragover {
+    border: 1px dashed $blue;
+  }
+}
+
 .webcam {
+  overflow: hidden;
+  span.help {
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    color: white;
+    height: 35px;
+    position: absolute;
+    background: rgba(0, 0 , 0, 0.44);
+    @extend .f-14;
+    @extend .flex-center;
+    @extend .flex-justify;
+    @extend .center-align;
+  }
   video {
-    height: 100% !important;
-    width: 100% !important;
+    display: block;
   }
 }
 

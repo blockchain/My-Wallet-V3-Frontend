@@ -91,5 +91,4 @@
           label.em-400.type-lbl.mls(for="verify-doc") Check this box if you want this doc to be approved right away.
 
   .width-60
-    label.f-14(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
-    bc-file-upload(state="state" on-upload="upload")
+    bc-file-upload(file="state.file" id-type="state.idType" on-upload="upload")
