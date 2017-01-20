@@ -102,6 +102,7 @@
   "TRANSACTIONS" : "Transactions",
   "TRANSACTION" : "Transaction",
   "WALLETS" : "Wallets",
+  "LOAD_VAL_FAILED": "Failed to load value",
   "COUNTRIES_SERVED" : "Countries Served",
   "TRANSACTIONS_AMT" : "60 Million+",
   "WALLETS_AMT" : "11 Million+",

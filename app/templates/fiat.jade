@@ -1,0 +1,5 @@
+span
+  span(ng-show="fiat.amount == null")
+    img(ng-show="status.loading" src="img/spinner.gif" width="35")
+    span.security-red(ng-hide="status.loading" translate="LOAD_VAL_FAILED")
+  span(ng-hide="fiat.amount == null") {{ fiat.currencySymbol }}{{ fiat.amount }}
