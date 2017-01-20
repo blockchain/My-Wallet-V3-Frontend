@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('adverts', adverts);
 
-adverts.$inject = ['Adverts', '$window'];
+adverts.$inject = ['Adverts', '$window', '$rootScope'];
 
-function adverts (Adverts, $window) {
+function adverts (Adverts, $window, $rootScope) {
   const directive = {
     restrict: 'E',
     replace: 'true',
@@ -20,7 +20,8 @@ function adverts (Adverts, $window) {
     Adverts.fetchOnce();
 
     scope.visit = (ad) => {
-      $window.open(ad.url, '_blank');
+      var url = $rootScope.apiDomain + 'ads/out?id=' + ad.id;
+      $window.open(url, '_blank');
     };
   }
 }

@@ -21,7 +21,7 @@ function Adverts ($http, $rootScope) {
   }
 
   function fetch () {
-    if (!$rootScope.apiDomain.endsWith('blockchain.info/')) {
+    if (!$rootScope.apiDomain.endsWith('.blockchain.info/')) {
       return;
     }
 
@@ -29,14 +29,7 @@ function Adverts ($http, $rootScope) {
     $http.get(advertsFeed)
       .success(function (data) {
         data.forEach(function (ad) {
-          var a = document.createElement('a');
-          a.href = ad.url;
-
-          if (!a.protocol.startsWith('http') ||
-              a.host === '' ||
-              a.host === window.location.host ||
-              !/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) ||
-              !a.hostname.endsWith('blockchain.info')) {
+          if (!/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) || !angular.isNumber(ad.id)) {
             return;
           }
 
