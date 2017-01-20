@@ -12,7 +12,7 @@ describe "formatTrade service", () ->
 
 			formatTrade = $injector.get("formatTrade")
 
-			spyOn(formatTrade, "checkDKK").and.callThrough()
+			spyOn(formatTrade, "labelsForCurrency").and.callThrough()
 
 	trade = (currency) ->
 		state: "awaiting_transfer_in"
@@ -50,5 +50,5 @@ describe "formatTrade service", () ->
 			trade = trade("DKK")	
 			formatTrade.bank_transfer(trade)
 			expect(formatTrade.bank_transfer).toHaveBeenCalled()
-			result = formatTrade.checkDKK(trade.inCurrency)
-			expect(result).toEqual({i: "Reg. Number", b: "Account Number"})
+			result = formatTrade.labelsForCurrency(trade.inCurrency)
+			expect(result).toEqual({accountNumber: "Reg. Number", bankCode: "Account Number"})

@@ -19,7 +19,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     kyc,
     error,
     success,
-    checkDKK,
+    labelsForCurrency,
     bank_transfer
   };
 
@@ -132,15 +132,15 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function checkDKK (currency) {
+  function labelsForCurrency (currency) {
     if (currency === 'DKK') {
-      return { i: 'Reg. Number', b: 'Account Number' };
+      return { accountNumber: 'Reg. Number', bankCode: 'Account Number' };
     }
-    return { i: 'IBAN', b: 'BIC' };
+    return { accountNumber: 'IBAN', bankCode: 'BIC' };
   }
 
   function bank_transfer (trade) {
-    const labels = checkDKK(trade.inCurrency);
+    const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
@@ -151,8 +151,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
           trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
           trade.bankAccount.holderAddress.country
         ].join(', '),
-        [labels.i]: trade.bankAccount.number,
-        [labels.b]: trade.bankAccount.bic,
+        [labels.accountNumber]: trade.bankAccount.number,
+        [labels.bankCode]: trade.bankAccount.bic,
         'Bank': [
           trade.bankAccount.bankName,
           trade.bankAccount.bankAddress.street,
