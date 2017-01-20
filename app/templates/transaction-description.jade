@@ -1,5 +1,5 @@
 .flex-column
-  .flex-start.flex-between
+  .flex-start.flex-between.flex-center
     div.mrl.width-20
       span.timestamp.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
@@ -13,9 +13,11 @@
         span(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
     .flex-1-0.width-30.mtm.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       transaction-destinations(transaction="tx" search="search")
-    .flex-2.width-30.hidden-sm.hidden-xs.mtm
+    //- .flex-2.width-30.hidden-sm.hidden-xs.mtm
+    .flex-2.width-30.hidden-sm.hidden-xs  
       transaction-note(transaction="tx", account="account" search="search")
-    .flex-1.width-20.mrl.mtm
+    //- .flex-1.width-20.mrl.mtm
+    .flex-1.width-20.mrl
       div.center-align(ng-show="txDirection === 'SENT' && !complete" uib-tooltip="{{'PENDING_TX_SENDER' | translate}}" tooltip-placement="top" tooltip-append-to-body="true")
         span.italic.aaa.prs(translate="PENDING_LOWERCASE")
         img(src="img/pending_clock.png")
