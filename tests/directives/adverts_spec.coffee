@@ -36,8 +36,7 @@ describe "Adverts Directive", ->
     expect(isoScope.ads.length).toBe(1)
   )
 
-  it "should redirect to the advertisers page, in a new tab", inject((Adverts, $window) ->
-    spyOn($window, "open")
-    isoScope.visit(Adverts.ads[0])
-    expect($window.open).toHaveBeenCalledWith("https://api.blockchain.info/ads/out?id=1337", "_blank")
+  it "should redirect to the advertisers page, in a new tab", inject((Adverts) ->
+    Adverts.fetchOnce()
+    expect(element.html()).toContain "<a ng-href=\"https://api.blockchain.info/ads/out?id=1337\" rel=\"noopener noreferrer\" target=\"_blank\""
   )
