@@ -29,7 +29,9 @@ function Adverts ($http, $rootScope) {
     $http.get(advertsFeed)
       .success(function (data) {
         data.forEach(function (ad) {
-          if (!/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) || !angular.isNumber(ad.id)) {
+          if (!/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) ||
+              !angular.isNumber(ad.id) ||
+              !/^[0-9a-zA-Z ]*$/.test(ad.name)) {
             return;
           }
 
