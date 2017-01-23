@@ -297,7 +297,7 @@ module.exports = (grunt) ->
 
       helper:
         files: ['helperApp/plaid/**/*', 'helperApp/sift-science/**/*']
-        tasks: ['shell:webpack']
+        tasks: ['build', 'shell:webpack']
         options:
           spawn: false
 
@@ -558,7 +558,6 @@ module.exports = (grunt) ->
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
-    "shell:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"
