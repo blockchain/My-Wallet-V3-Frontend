@@ -220,7 +220,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.formatTrade = (state) => {
-    if ($scope.isKYC || $scope.needsKyc()) state = 'kyc';
     $scope.formattedTrade = formatTrade[state]($scope.trade);
 
     if ($scope.needsKyc()) {
