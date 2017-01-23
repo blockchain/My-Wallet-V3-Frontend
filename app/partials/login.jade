@@ -17,7 +17,7 @@
       .form-group(ng-class="{'has-error': errors.uid}")
         label.em-500(translate="UID" for="UID_input")
         div
-          input#UID_input.form-control(type="text" ng-model="uid" name="UID_input" focus-when="!uidAvailable" required)
+          input#UID_input.form-control(type="text" ng-model="uid" name="UID_input" focus-when="!uidAvailable" ng-change="errors.uid = null" required)
           span.help-block(ng-show="errors.uid" ui-sref="public.reminder" translate="{{ errors.uid }}")
           span.help-block.info.hidden-xs(translate="FIND_GUID_EXPLAIN")
       .form-group(ng-class="{'has-error': errors.password}")
