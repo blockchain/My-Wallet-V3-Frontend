@@ -17,8 +17,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
   }
 
   $scope.types = ['checking', 'savings'];
-  $scope.openBankHelper = modals.openBankHelper;
-  $scope.openDepositHelper = modals.openDepositHelper;
+  $scope.openHelper = modals.openHelper;
 
   let state = $scope.state = {
     plaid: {},

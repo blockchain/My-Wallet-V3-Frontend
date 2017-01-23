@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modals, Upload, QA) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
+
+  $scope.openHelper = modals.openHelper;
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';

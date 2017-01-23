@@ -18,13 +18,9 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     };
   };
 
-  service.openBankHelper = () => open({
-    templateUrl: 'partials/bank-check-modal.jade',
-    windowClass: 'bc-modal medium'
-  });
-
-  service.openDepositHelper = () => open({
-    templateUrl: 'partials/bank-deposit-modal.jade',
+  service.openHelper = (helper) => open({
+    controller ($scope) { $scope.helper = helper; },
+    templateUrl: 'partials/helper-modal.jade',
     windowClass: 'bc-modal medium'
   });
 

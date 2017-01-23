@@ -1182,7 +1182,7 @@
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
-    "TITLE": "Upload A Photo ID",
+    "TITLE": "Photo ID Verification",
     "COPY": "To verify your identity, we need one of the following government-issued forms of identification showing your country of residence:",
     "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
     "OPTION1": "State issued driver’s license",
@@ -1194,7 +1194,7 @@
     "HELP": "Capture the front side of ID, clearly displaying your identification number."
   },
   "address_ID": {
-    "TITLE": "Upload A Proof of Address",
+    "TITLE": "Proof of Address Verification",
     "COPY": "Please upload one of the following documents clearly displaying your address dated within the past 6 months:",
     "OPTION1": "Utility bill (except mobile phone bills)",
     "OPTION2": "First page and signature page of lease",
@@ -1203,6 +1203,22 @@
     "UPLOAD_TITLE": "Proof of Address",
     "UPLOAD_SELECT": "Select Upload Method",
     "HELP": "Make sure the snapshot clearly displays your address."
+  },
+  "bank-check-helper": {
+    "TITLE": "Routing and Account Number",
+    "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."
+  },
+  "bank-deposit-helper": {
+    "TITLE": "Bank Deposits",
+    "COPY": "SFOX sent 2 small deposits to your bank account. Deposits will appear in your account as “SFOX” in 1-2 days."
+  },
+  "id-id-helper": {
+    "TITLE": "Acceptable Photo IDs",
+    "COPY": "You may submit a valid state issued driver license, state issued identification card, passport, or government issued identification. Make sure the identifation number is clearly visible."
+  },
+  "address-id-helper": {
+    "TITLE": "Acceptable Proof of Address",
+    "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
