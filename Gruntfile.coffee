@@ -273,7 +273,7 @@ module.exports = (grunt) ->
     watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
-        tasks: ['build']
+        tasks: ['html2js', 'concat:wallet']
         options:
           spawn: false
 
@@ -297,7 +297,7 @@ module.exports = (grunt) ->
 
       helper:
         files: ['helperApp/plaid/**/*', 'helperApp/sift-science/**/*']
-        tasks: ['build', 'shell:webpack']
+        tasks: ['shell:webpack']
         options:
           spawn: false
 
@@ -558,6 +558,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
+    "shell:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"
