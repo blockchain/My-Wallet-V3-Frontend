@@ -66,13 +66,13 @@ describe "WalletCtrl", ->
   )
 
   it "should open a popup to send",  inject(($uibModal) ->
-    spyOn($uibModal, "open")
+    spyOn($uibModal, "open").and.callThrough()
     scope.send()
     expect($uibModal.open).toHaveBeenCalled()
   )
 
   it "should open a popup to request",  inject(($uibModal) ->
-    spyOn($uibModal, "open")
+    spyOn($uibModal, "open").and.callThrough()
     scope.request()
     expect($uibModal.open).toHaveBeenCalled()
   )

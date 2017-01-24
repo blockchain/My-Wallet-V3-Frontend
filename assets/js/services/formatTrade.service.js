@@ -19,6 +19,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     kyc,
     error,
     success,
+    labelsForCurrency,
     bank_transfer
   };
 
@@ -27,6 +28,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     'rejected': 'rejected',
     'expired': 'expired'
   };
+
+  let isKYC = (trade) => trade.constructor.name === 'CoinifyKYC';
 
   let getState = (state) => errorStates[state] || state;
 
@@ -59,6 +62,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function error (trade, state) {
     let tx = addTradeDetails(trade);
+    if (isKYC(trade)) { return service.kyc(trade, 'rejected'); }
 
     return {
       tx: tx,
@@ -98,6 +102,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function reviewing (trade) {
     let tx = addTradeDetails(trade);
+    if (isKYC(trade)) { return service.kyc(trade, 'reviewing'); }
 
     return {
       tx: tx,
@@ -121,17 +126,28 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function kyc (trade) {
+  function kyc (trade, state) {
+    let classname = state === 'reviewing' ? 'blue' : 'state-danger-text';
+    let namespace = state === 'reviewing' ? 'TX_KYC_REVIEWING' : 'TX_KYC_REJECTED';
+
     return {
-      class: 'blue',
-      namespace: 'TX_KYC_PENDING',
+      class: classname,
+      namespace: namespace,
       values: {
         date: $filter('date')(trade.createdAt, 'MM/dd')
       }
     };
   }
 
+  function labelsForCurrency (currency) {
+    if (currency === 'DKK') {
+      return { accountNumber: 'Reg. Number', bankCode: 'Account Number' };
+    }
+    return { accountNumber: 'IBAN', bankCode: 'BIC' };
+  }
+
   function bank_transfer (trade) {
+    const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
@@ -142,8 +158,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
           trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
           trade.bankAccount.holderAddress.country
         ].join(', '),
-        'IBAN': trade.bankAccount.number,
-        'BIC': trade.bankAccount.bic,
+        [labels.accountNumber]: trade.bankAccount.number,
+        [labels.bankCode]: trade.bankAccount.bic,
         'Bank': [
           trade.bankAccount.bankName,
           trade.bankAccount.bankAddress.street,

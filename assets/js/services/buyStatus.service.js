@@ -17,8 +17,8 @@ function buyStatus (Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
     // Coinify countries are no longer invite-only
-    isCoinifyCountry = options.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-    isSFOXCountry = options.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isCoinifyCountry = accountInfo && options.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isSFOXCountry = accountInfo && options.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
     let whitelist = options.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
@@ -88,7 +88,7 @@ function buyStatus (Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts
   };
 
   service.userHasAccount = () => {
-    let external = MyWallet.wallet.external;
+    let external = MyWallet.wallet && MyWallet.wallet.external;
 
     return external && (
       (external.coinify && external.coinify.hasAccount) ||
