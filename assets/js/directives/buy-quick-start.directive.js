@@ -34,6 +34,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.format = currency.formatCurrencyForView;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
+    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
 
     scope.getExchangeRate = () => {
       stopFetchingQuote();
