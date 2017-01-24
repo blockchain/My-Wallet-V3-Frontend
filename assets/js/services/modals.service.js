@@ -9,6 +9,15 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     $uibModal.open(angular.merge(options, defaults))
   );
 
+  service.openOnce = (modalOpener) => {
+    let modalInstance = null;
+    return (...args) => {
+      if (modalInstance) return;
+      modalInstance = modalOpener(...args);
+      modalInstance.result.finally(() => { modalInstance = null; });
+    };
+  };
+
   service.openBankHelper = () => open({
     templateUrl: 'partials/bank-check-modal.jade',
     windowClass: 'bc-modal medium'

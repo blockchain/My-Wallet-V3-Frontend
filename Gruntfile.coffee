@@ -273,7 +273,7 @@ module.exports = (grunt) ->
     watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
-        tasks: ['build']
+        tasks: ['html2js', 'concat:wallet']
         options:
           spawn: false
 
