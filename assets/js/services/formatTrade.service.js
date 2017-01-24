@@ -19,6 +19,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     kyc,
     error,
     success,
+    labelsForCurrency,
     bank_transfer
   };
 
@@ -138,7 +139,15 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
+  function labelsForCurrency (currency) {
+    if (currency === 'DKK') {
+      return { accountNumber: 'Reg. Number', bankCode: 'Account Number' };
+    }
+    return { accountNumber: 'IBAN', bankCode: 'BIC' };
+  }
+
   function bank_transfer (trade) {
+    const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
@@ -149,8 +158,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
           trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
           trade.bankAccount.holderAddress.country
         ].join(', '),
-        'IBAN': trade.bankAccount.number,
-        'BIC': trade.bankAccount.bic,
+        [labels.accountNumber]: trade.bankAccount.number,
+        [labels.bankCode]: trade.bankAccount.bic,
         'Bank': [
           trade.bankAccount.bankName,
           trade.bankAccount.bankAddress.street,
