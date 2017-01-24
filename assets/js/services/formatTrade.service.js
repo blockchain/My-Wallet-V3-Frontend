@@ -28,6 +28,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     'expired': 'expired'
   };
 
+  let isKYC = (trade) => trade.constructor.name === 'CoinifyKYC';
+
   let getState = (state) => errorStates[state] || state;
 
   let getLabel = (trade) => {
@@ -59,6 +61,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function error (trade, state) {
     let tx = addTradeDetails(trade);
+    if (isKYC(trade)) { return service.kyc(trade, 'rejected'); }
 
     return {
       tx: tx,
@@ -98,6 +101,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function reviewing (trade) {
     let tx = addTradeDetails(trade);
+    if (isKYC(trade)) { return service.kyc(trade, 'reviewing'); }
 
     return {
       tx: tx,
@@ -121,10 +125,13 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function kyc (trade) {
+  function kyc (trade, state) {
+    let classname = state === 'reviewing' ? 'blue' : 'state-danger-text';
+    let namespace = state === 'reviewing' ? 'TX_KYC_REVIEWING' : 'TX_KYC_REJECTED';
+
     return {
-      class: 'blue',
-      namespace: 'TX_KYC_PENDING',
+      class: classname,
+      namespace: namespace,
       values: {
         date: $filter('date')(trade.createdAt, 'MM/dd')
       }
