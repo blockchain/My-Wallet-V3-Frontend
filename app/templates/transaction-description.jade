@@ -1,5 +1,5 @@
 .flex-column
-  .flex-between.flex-center
+  .flex-between.width-100
     div.mrl.width-20
       span.timestamp.type-sm.basic-grey
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
@@ -38,12 +38,12 @@
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-2.flex-column.flex-align-end.mtvl
-      .flex-row(ng-show="settings.currency.code === 'USD' && tx.confirmations > 5")
+      .flex-row(ng-class="{fade: tx.confirmations <= 5 || settings.currency.code !== 'USD'}")
         p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
         p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
         | :&nbsp;
         fiat.em-600(btc=":: tx.amount" date=":: tx.time" abs)
-      .flex-row.fee(ng-hide=":: tx.txType === 'received'")
+      .flex-row.fee(ng-class="{hide: tx.txType === 'received', fade: tx.confirmations <= 5}")
         helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
