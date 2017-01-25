@@ -27,7 +27,7 @@
   .width-50(ng-hide="state.bankAccounts" id="wallet")
     iframe(
       ng-src='{{ plaidUrl }}'
-      sandbox='allow-same-origin allow-scripts allow-forms'
+      sandbox='allow-same-origin allow-scripts allow-forms allow-popups'
       ng-class='{enabled: state.plaid.enabled}'
       scrolling = 'no'
       id='plaid'
