@@ -480,17 +480,6 @@ module.exports = (grunt) ->
           to: () =>
             "customWebSocketURL = '#{ @webSocketURL }'"
         }]
-      debug:
-        src: ['build/js/app.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'isProduction = false'
-          to: () =>
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              'isProduction = true'
-            else
-              'isProduction = false'
-        }]
       helper_app_url:
         src: ['build/js/wallet.js'],
         overwrite: true,
@@ -618,7 +607,6 @@ module.exports = (grunt) ->
       "replace:root_url"
       "replace:web_socket_url"
       "replace:helper_app_url"
-      "replace:debug"
     ]
 
     if apiDomain

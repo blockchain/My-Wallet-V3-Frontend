@@ -117,9 +117,9 @@ angular.module('walletApp', modules)
     // These are set by grunt dist:
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
-    $rootScope.isProduction = false;
 
     // Not set by grunt dist:
+    $rootScope.isProduction = $rootScope.rootURL === 'https://blockchain.info/' || $rootScope.rootURL === '/';
     $rootScope.buySellDebug = false;
 
     console.info(
