@@ -40,6 +40,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
   $scope.buyLimit = exchange.profile && exchange.profile.limits.buy;
+  $scope.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buyHandler = (...args) => {

@@ -44,9 +44,14 @@ form.bc-form(
               transform-currency="bitcoin"
               required)
             span.mhm {{bitcoin.code}}
-        .text.mts
-          span.f-12(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | Your daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}
+        .f-12.mts
+          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+            | Your daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
+            | 
+          span.blue.pointer(popup
+                            popup-name="sfox-identity"
+                            ng-if="$ctrl.buyLevel === 'pending'"
+                            translate="WHY")
     .group.mtl(ng-hide="$ctrl.collapseSummary")
       .item
         .mbm
