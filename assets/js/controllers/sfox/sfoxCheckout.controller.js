@@ -26,7 +26,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
 
   $scope.tabs = ['BUY_BITCOIN', /* 'SELL_BITCOIN', */ 'ORDER_HISTORY'];
-  $scope.selectedTab = $scope.signupCompleted ? $stateParams.selectedTab || 'BUY_BITCOIN' : null;
+  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
 
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
