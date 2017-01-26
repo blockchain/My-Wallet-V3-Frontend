@@ -47,7 +47,7 @@ dist_fixed_domain: build
 	npm shrinkwrap --dev
 
 changelog: node_modules
-	node_modules/git-changelog/tasks/command.js $(TAG_ARG) -f "Changelog.md" -g "^fix|^feat|^docs|^refactor|^chore|^test|^build|BREAKING" -i "" -a "Blockchain Wallet V3 Frontend" --repo_url "https://github.com/blockchain/My-Wallet-V3-Frontend"
+	node_modules/git-changelog/tasks/command.js $(TAG_ARG) -f "Changelog.md" -g "^fix|^feat|^docs|^refactor|^chore|^test|^build|^dev|BREAKING" -i "" -a "Blockchain Wallet V3 Frontend" --repo_url "https://github.com/blockchain/My-Wallet-V3-Frontend"
 
 .env:
 	echo "DIST=1\nAUTO_RELOAD=0\nPORT=8080\nROOT_URL=https://blockchain.info\nWEB_SOCKET_URL=wss://ws.blockchain.info/inv\nAPI_DOMAIN=https://api.blockchain.info" >> .env
