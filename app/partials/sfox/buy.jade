@@ -12,7 +12,7 @@
   .width-60.flex-justify(ng-if="!trade")
     .width-80
       buy-checkout(
-        buy-limit="buyLimit"
+        buy-limit="state.buyLimit"
         buy-account="account"
         handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
         handle-buy="buyHandler(quote)"

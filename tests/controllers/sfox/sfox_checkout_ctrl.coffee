@@ -66,6 +66,7 @@ describe "SfoxCheckoutController", ->
         limits: buy: 100
         verificationStatus: level: "unverified"
       getBuyQuote: () -> $q.resolve(mockQuote())
+      fetchProfile: () -> $q.resolve()
     }
     template = $templateCache.get('partials/sfox/checkout.jade')
     $controller "SfoxCheckoutController",

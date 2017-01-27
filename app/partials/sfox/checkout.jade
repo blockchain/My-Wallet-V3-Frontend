@@ -20,25 +20,25 @@
         button.btn.button-primary.full(type="submit" focus-when="!selectedTab" ng-disabled="modalOpen") Continue
   .flex-column(ng-show="signupCompleted && selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
-      buy-limit="buyLimit"
-      buy-account="account"
+      buy-limit="state.buyLimit"
+      buy-account="state.account"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       handle-buy="buyHandler(quote)")
   .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
-    .flex-center.flex-justify.flex-column.mtvl(ng-hide="trades.length")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
           i.ti-direction-alt.h3.mrm
           h3.em-100(translate="NO_TRADES")
         p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="selectTab('BUY_BITCOIN')")
-    table.width-100(ng-show="trades.length")
+    table.width-100(ng-show="state.trades.length")
       tr.border.bg-light-blue
         th.phml.pvs.width-30(translate="STATUS")
         th.pvs.width-30(translate="DATE")
         th.pvs.width-25 BTC
         th.pvs.width-15(translate="TOTAL")
       tr(
-        ng-repeat="trade in trades | orderBy:'createdAt':true track by $index"
+        ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
         trade="trade"
         buy="inspectTrade"
         usa="true")

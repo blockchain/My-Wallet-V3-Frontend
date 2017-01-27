@@ -10,6 +10,17 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     modals.openSfoxSignup(exchange).finally(() => { $scope.modalOpen = false; });
   };
 
+  $scope.state = {
+    account: accounts[0],
+    trades: exchange.trades,
+    buyLimit: exchange.profile && exchange.profile.limits.buy
+  };
+
+  $scope.setState = () => {
+    $scope.state.trades = exchange.trades;
+    $scope.state.buyLimit = exchange.profile && exchange.profile.limits.buy;
+  };
+
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
@@ -39,7 +50,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
-  $scope.buyLimit = exchange.profile && exchange.profile.limits.buy;
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buyHandler = (...args) => {
@@ -52,6 +62,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
         let modalInstance = modals.openTradeSummary(trade, 'initiated');
         sfox.watchTrade(trade, () => modalInstance.dismiss());
       })
+      .then(() => exchange.fetchProfile())
+      .then(() => $scope.setState())
       .catch(() => {
         Alerts.displayError('Error connecting to our exchange partner');
       });
