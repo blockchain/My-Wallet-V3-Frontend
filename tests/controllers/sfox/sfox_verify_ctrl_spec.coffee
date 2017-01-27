@@ -94,6 +94,9 @@ describe "SfoxVerifyController", ->
       expect(scope.vm.exchange.profile.getSignedURL).toHaveBeenCalled()
 
   describe "verify", ->
+    beforeEach ->
+      scope.state.state =
+        'Code': 'NY'
 
     it "should verify a users identity", ->
       spyOn(scope, 'setState')
