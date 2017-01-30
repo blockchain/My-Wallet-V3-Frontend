@@ -29,6 +29,7 @@
 }
 
 .main-container {
+  width: 100%;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -66,8 +67,12 @@
 
 @media (max-width: 767px) {
   .left-nav {
+    position: absolute;
+    left: -270px;
+    width: 270px;
     z-index: 11; //just enough to be visible
     transition: all .3s ease-in-out;
+    &.toggled { left: 0; }
   }
   .top-view {
     width: 100%;
