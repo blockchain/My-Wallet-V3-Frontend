@@ -55,6 +55,7 @@
 .right-container {
   background: white;
   flex-grow: 1;
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch; // smooth scrolling on ios
@@ -63,6 +64,10 @@
 .overflow-scroll {
   overflow-y: scroll !important;
   height: 100%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 @media (max-width: 767px) {
