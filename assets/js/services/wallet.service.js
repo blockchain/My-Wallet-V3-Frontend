@@ -88,7 +88,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     $window.disableQA = () => reloadWithDebug(false);
   }
 
-  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
+  $window.activateMobileBuy = (guid, sharedKey, password) => $timeout(() => {
+    $rootScope.inMobileBuy = true;
+    let success = () => { $state.go('wallet.common.buy-sell'); };
+    wallet.login(guid, password, null, null, success, null, sharedKey);
+  });
+
+  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback, sharedKey) => {
     let didLogin = (result) => {
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
@@ -176,7 +182,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         password,
         {
           twoFactor: two_factor,
-          sessionToken: sessionToken
+          sessionToken: sessionToken,
+          sharedKey
         },
         {
           newSessionToken: newSessionToken,
