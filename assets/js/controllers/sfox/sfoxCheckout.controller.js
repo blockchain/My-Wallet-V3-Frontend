@@ -49,8 +49,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
         $scope.siftScienceEnabled = true;
         $scope.tradeId = trade.id;
         $scope.selectTab('ORDER_HISTORY');
-        let modalInstance = modals.openTradeSummary(trade, 'initiated');
-        sfox.watchTrade(trade, () => modalInstance.dismiss());
+        modals.openTradeSummary(trade, 'initiated');
+        sfox.watchTrade(trade);
       })
       .catch(() => {
         Alerts.displayError('Error connecting to our exchange partner');
