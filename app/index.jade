@@ -4,10 +4,10 @@ html(
   ng-app='walletApp'
   ng-init=production ? undefined : "autoCreate='#{ process.env.AUTO_CREATE || ''}';\
   autoReload=#{ process.env.AUTO_RELOAD || false };\
-  rootURL='#{ process.env.ROOT_URL }/';\
-  webSocketURL='#{ process.env.WEB_SOCKET_URL }';\
-  apiDomain='#{ process.env.API_DOMAIN }/';\
-  network='#{ process.env.NETWORK }';\
+  rootURL='#{ process.env.ROOT_URL || '' }/';\
+  webSocketURL='#{ process.env.WEB_SOCKET_URL || '' }';\
+  apiDomain='#{ process.env.API_DOMAIN || '' }/';\
+  network='#{ process.env.NETWORK || '' }';\
   helperAppDomain='http://localhost:#{ (process.env.PORT || 80) + 1 }'"
   ng-csp
   ng-class="{'not-fixed': outOfApp}"
