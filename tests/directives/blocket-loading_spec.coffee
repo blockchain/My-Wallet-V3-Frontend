@@ -7,11 +7,8 @@ describe "Blocket loading directive", ->
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->
-
     $compile = _$compile_
     $rootScope = _$rootScope_
-
-    return
   )
 
   beforeEach ->
@@ -21,7 +18,7 @@ describe "Blocket loading directive", ->
     isoScope.$digest()
 
   it "should engage liftoff", inject(($timeout) ->
-    isoScope.docIsReady()
+    isoScope.launch()
     $timeout.flush()
     expect(isoScope.liftoff).toBe(true)
     expect(isoScope.orbiting).toBe(true)
