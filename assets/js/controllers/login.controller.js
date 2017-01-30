@@ -29,10 +29,10 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
       $state.go('wallet.common.home');
     };
 
-    let error = (field, message) => $timeout(() => {
+    let error = ({ type, message } = {}) => $timeout(() => {
       $scope.status.busy = false;
-      $scope.errors[field] = message;
-      if (field !== 'twoFactor' && $scope.didAsk2FA) {
+      $scope.errors[type] = message;
+      if (type !== 'twoFactor' && $scope.didAsk2FA) {
         $scope.didEnterCorrect2FA = true;
         $scope.errors.twoFactor = null;
       }
