@@ -51,6 +51,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
+  let loadWalletModule = ($ocLazyLoad) => (
+    $ocLazyLoad.load('walletLazyLoad')
+  );
+
   $stateProvider
     .state('wallet', {
       views: {
@@ -60,13 +64,24 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
-        }
+        loadWalletModule
       }
     })
     .state('wallet.common', {
       views: commonViews
+    });
+
+  $stateProvider
+    .state('intermediate', {
+      url: '/intermediate',
+      views: {
+        body: {
+          template: '<blocket-loading loading="true"></blocket-loading>'
+        }
+      },
+      resolve: {
+        loadWalletModule
+      }
     });
 
   $stateProvider
@@ -86,9 +101,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
-        }
+        loadWalletModule
       }
     })
     .state('public.login-no-uid', {
