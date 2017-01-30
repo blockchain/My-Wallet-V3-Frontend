@@ -85,6 +85,11 @@ angular.module('walletApp', modules)
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
+  $rootScope.safeWindowOpen = (url) => {
+    let otherWindow = window.open(url, '_blank');
+    otherWindow.opener = null;
+  };
+
   $rootScope.browserCanExecCommand = (
     (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
     (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
