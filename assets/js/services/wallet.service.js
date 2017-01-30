@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'modals'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, modals) {
   const wallet = {
     goal: {
       auth: false,
@@ -90,7 +90,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     $window.disableQA = () => reloadWithDebug(false);
   }
 
-  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
+  wallet.login = (uid, password, { secondPassword, needsSecondPasswordCb, twoFactorCode, needsTwoFactorCb } = {}) => $q((resolve, reject) => {
     let didLogin = (result) => {
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
       if (wallet.my.wallet.isUpgradedToHD) {
@@ -171,8 +171,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           let { sfox } = external;
           if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
         }
-        $rootScope.$safeApply();
-        successCallback && successCallback(result.guid);
+        resolve(result.guid);
       });
       $rootScope.$safeApply();
     };
@@ -185,34 +184,33 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       // 4: Google Authenticator
       // 5: SMS
 
-      needsTwoFactorCallback(method);
+      needsTwoFactorCb(method);
 
       wallet.settings.twoFactorMethod = method;
       $rootScope.$safeApply();
     };
 
     let wrongTwoFactorCode = (message) => {
-      errorCallback('twoFactor', message);
+      reject({ type: 'twoFactor', message });
       $rootScope.$safeApply();
     };
 
     let loginError = (error) => {
-      console.log(error);
       if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
-        errorCallback('uid', 'UNKNOWN_IDENTIFIER');
+        reject({ type: 'uid', message: 'UNKNOWN_IDENTIFIER' });
       } else if (error.length && error.indexOf('password') > -1) {
-        errorCallback('password', error);
+        reject({ type: 'password', message: error });
       } else {
         Alerts.displayError(error.message || error, true);
-        errorCallback();
+        reject();
       }
       $rootScope.$safeApply();
     };
 
-    if (two_factor_code != null && two_factor_code !== '') {
+    if (twoFactorCode != null && twoFactorCode !== '') {
       wallet.settings.needs2FA = true;
     } else {
-      two_factor_code = null;
+      twoFactorCode = null;
     }
 
     let authorizationProvided = () => {
@@ -226,11 +224,15 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       $rootScope.$safeApply();
     };
 
-    var two_factor = null;
+    let needsSecondPassword = () => {
+      needsSecondPasswordCb && needsSecondPasswordCb();
+    };
+
+    var twoFactor = null;
     if (wallet.settings.twoFactorMethod) {
-      two_factor = {
+      twoFactor = {
         type: wallet.settings.twoFactorMethod,
-        code: two_factor_code
+        code: twoFactorCode
       };
     }
 
@@ -251,14 +253,16 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         uid,
         password,
         {
-          twoFactor: two_factor,
-          sessionToken: sessionToken
+          twoFactor,
+          sessionToken,
+          secondPassword
         },
         {
-          newSessionToken: newSessionToken,
-          needsTwoFactorCode: needsTwoFactorCode,
-          wrongTwoFactorCode: wrongTwoFactorCode,
-          authorizationRequired: authorizationRequired
+          newSessionToken,
+          needsTwoFactorCode,
+          wrongTwoFactorCode,
+          authorizationRequired,
+          needsSecondPassword
         }
       ).then(didLogin).catch(loginError);
     };
@@ -270,7 +274,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     doLogin(uid, sessionGuid, sessionToken);
 
     currency.fetchExchangeRate();
-  };
+  });
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
     let success = () => {
@@ -335,23 +339,19 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(() => ({ index, address, label }));
   };
 
-  wallet.create = (password, email, currency, language, success_callback) => {
+  wallet.create = (password, email, currency, language, successCallback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
       $cookies.put('session', sessionToken);
       $cookies.put('uid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid);
       wallet.goal.firstTime = true;
 
-      let loginSuccess = (guid) => {
-        success_callback(uid);
-      };
-
       let loginError = (error) => {
         console.log(error);
         Alerts.displayError('Unable to login to new wallet');
       };
 
-      wallet.login(uid, password, null, null, loginSuccess, loginError);
+      wallet.login(uid, password).then(successCallback, loginError);
     };
 
     let error = (error) => {
@@ -376,14 +376,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       });
   };
 
-  wallet.askForSecondPasswordIfNeeded = () => {
-    let defer = $q.defer();
-    if (wallet.my.wallet.isDoubleEncrypted) {
-      $rootScope.$broadcast('requireSecondPassword', defer);
-    } else {
-      defer.resolve(null);
-    }
-    return defer.promise;
+  wallet.askForSecondPasswordIfNeeded = (insist) => {
+    return wallet.my.wallet.isDoubleEncrypted
+      ? modals.askForSecondPassword(insist)
+      : $q.resolve(null);
   };
 
   wallet.askForMainPasswordConfirmation = () => (

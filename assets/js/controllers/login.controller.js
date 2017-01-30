@@ -17,7 +17,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     $scope.password = $cookies.get('password');
   }
 
-  $scope.login = () => {
+  $scope.login = (secondPassword) => {
     $scope.status.busy = true;
     Alerts.clear();
 
@@ -29,10 +29,10 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
       $state.go('wallet.common.home');
     };
 
-    let error = (field, message) => $timeout(() => {
+    let error = ({ type, message } = {}) => $timeout(() => {
       $scope.status.busy = false;
-      $scope.errors[field] = message;
-      if (field !== 'twoFactor' && $scope.didAsk2FA) {
+      $scope.errors[type] = message;
+      if (type !== 'twoFactor' && $scope.didAsk2FA) {
         $scope.didEnterCorrect2FA = true;
         $scope.errors.twoFactor = null;
       }
@@ -43,14 +43,22 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
       $scope.didAsk2FA = true;
     });
 
+    let needsSecondPasswordCb = () => $timeout(() => {
+      Wallet.askForSecondPasswordIfNeeded().then($scope.login);
+    });
+
     $timeout(() =>
       Wallet.login(
         $scope.uid,
         $scope.password,
-        $scope.settings.needs2FA ? $scope.twoFactorCode : null,
-        $scope.settings.needs2FA ? () => {} : needs2FA,
-        success, error
-    ), 150);
+        {
+          secondPassword,
+          needsSecondPasswordCb,
+          twoFactorCode: $scope.settings.needs2FA ? $scope.twoFactorCode : null,
+          needsTwoFactorCb: $scope.settings.needs2FA ? () => {} : needs2FA
+        }
+      ).then(success, error)
+    , 150);
   };
 
   $scope.resend = () => {

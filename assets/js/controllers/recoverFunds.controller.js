@@ -35,9 +35,7 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
       };
 
       $timeout(() => {
-        Wallet.login(
-          result.guid, result.password, null, null, loginSuccess, loginError
-        );
+        Wallet.login(result.guid, result.password).then(loginSuccess, loginError);
       }, 4000);
     };
 

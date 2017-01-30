@@ -91,5 +91,16 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     }
   }));
 
+  service.askForSecondPassword = (insist = false) => {
+    return $uibModal.open({
+      templateUrl: 'partials/second-password.jade',
+      controller: 'SecondPasswordCtrl',
+      backdrop: insist ? 'static' : null,
+      keyboard: insist,
+      windowClass: 'bc-modal',
+      resolve: { insist: () => insist }
+    }).result;
+  };
+
   return service;
 }

@@ -74,21 +74,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     });
   });
 
-  $scope.$on('requireSecondPassword', (notification, defer, insist) => {
-    const modalInstance = $uibModal.open({
-      templateUrl: 'partials/second-password.jade',
-      controller: 'SecondPasswordCtrl',
-      backdrop: insist ? 'static' : null,
-      keyboard: insist,
-      windowClass: 'bc-modal',
-      resolve: {
-        insist: () => insist,
-        defer: () => defer
-      }
-    });
-    modalInstance.result.then(() => {}, () => defer.reject());
-  });
-
   $scope.isPublicState = (stateName) => (
     stateName.split('.')[0] === 'public' ||
     ['landing', 'open', 'wallet.common.unsubscribe'].indexOf(stateName) > -1
