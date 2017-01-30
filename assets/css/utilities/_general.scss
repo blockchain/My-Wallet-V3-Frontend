@@ -20,6 +20,9 @@ body {
 .wallet-top-navigation.navbar-inverse {
   flex: 0 0 60px;
   width: 100%;
+  @media (max-width: 767px) {
+    flex: 0 0 50px;
+  }
 }
 
 .display-block { display: block; }
