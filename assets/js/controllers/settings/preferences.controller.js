@@ -39,10 +39,6 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
     }
   });
 
-  $scope.changeCurrency = (currency) => {
-    Wallet.changeBTCCurrency(currency);
-  };
-
   $scope.setHandleBitcoinLinks = () => Wallet.handleBitcoinLinks();
   $scope.canHandleBitcoinLinks = () => $window.navigator.registerProtocolHandler != null;
 
