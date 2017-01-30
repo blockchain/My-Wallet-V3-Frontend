@@ -1225,5 +1225,6 @@
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, click here to start buying bitcoin.",
+  "SECOND_PASSWORD_NEEDED": "Please enter your second password to log into your wallet",
   "": ""
 }

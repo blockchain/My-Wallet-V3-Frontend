@@ -116,12 +116,12 @@ describe "walletServices", () ->
       spyOn(callbacks, "needs2FA")
 
     it "should ask for a code", inject((Wallet) ->
-      Wallet.login("test-2FA", "password", null, callbacks.needs2FA, (()->), (()->))
+      Wallet.login("test-2FA", "password", needsTwoFactorCb: callbacks.needs2FA)
       expect(callbacks.needs2FA).toHaveBeenCalled()
     )
 
     it "should specify the 2FA method", inject((Wallet) ->
-      Wallet.login("test-2FA", "password", null, callbacks.needs2FA, (()->), (()->))
+      Wallet.login("test-2FA", "password", needsTwoFactorCb: callbacks.needs2FA)
       expect(callbacks.needs2FA).toHaveBeenCalledWith(4)
     )
 
@@ -130,7 +130,7 @@ describe "walletServices", () ->
         then: () -> # Do nothing, so execution stops
       }
       Wallet.settings.twoFactorMethod = 4
-      Wallet.login("test-2FA", "password", "1234567", (() ->), (()->), (()->))
+      Wallet.login("test-2FA", "password", twoFactorCode: "1234567")
       expect(Wallet.my.wallet.fetchAccountInfo).toHaveBeenCalled()
     )
 

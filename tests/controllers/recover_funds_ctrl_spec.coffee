@@ -5,10 +5,10 @@ describe "RecoverFundsCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $q) ->
       Wallet = $injector.get("Wallet")
 
-      Wallet.login = (guid, pw, success, error) -> success()
+      Wallet.login = (guid, pw) -> $q.resolve(guid)
       Wallet.my.recoverFromMnemonic = (email, password, mnemonic, bip39, success, error) ->
         success({email,password,mnemonic,bip39})
 
@@ -51,7 +51,7 @@ describe "RecoverFundsCtrl", ->
     describe "performImport function", ->
 
       it "should stop 'working' after callback", inject(($timeout) ->
-        spyOn(Wallet, "login")
+        spyOn(Wallet, "login").and.callThrough()
         scope.performImport()
         $timeout.flush()
         $timeout.flush()
