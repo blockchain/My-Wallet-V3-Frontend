@@ -64,7 +64,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   function error (trade, state) {
     let tx = addTradeDetails(trade);
     if (isKYC(trade)) { return service.kyc(trade, 'rejected'); }
-    if (!isKYC(trade) && (state === 'rejected' && trade.medium === 'card')) { return service.reject_card(trade, 'rejected'); }
+    if (state === 'rejected' && trade.medium === 'card') { return service.reject_card(trade, 'rejected'); }
 
     return {
       tx: tx,
