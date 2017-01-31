@@ -168,6 +168,12 @@
     -ms-flex-direction: column;
     flex-direction: column;
   }
+  .flex-between-tablet {
+    -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+  }
 }
 
 @media (max-width: 767px) {

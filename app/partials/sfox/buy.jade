@@ -1,16 +1,18 @@
-.flex-row.flex-column-mobile
+.flex-row.flex-column-tablet
   .width-40
     .width-80(ng-hide="trade")
       h4.f-20.em-500.mvn.mb-10(translate="Buy Bitcoin")
-      span.f-16(ng-show="summaryCollapsed" translate="How much bitcoin would you like to buy? You can enter in either USD or BTC.")
-      span.f-16(ng-hide="summaryCollapsed" translate="You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete.")
+      .mbl
+        span.f-16(ng-show="summaryCollapsed" translate="How much bitcoin would you like to buy? You can enter in either USD or BTC.")
+        span.f-16(ng-hide="summaryCollapsed" translate="You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete.")
     .width-80(ng-show="trade")
       h4.f-20.em-500.mvn.mb-10.success
         span(translate="TX_INITIATED.TITLE")
         | !
-      span.f-16(translate="TX_INITIATED.BODY" translate-values="{email:user.email}")
+      .mbl
+        span.f-16(translate="TX_INITIATED.BODY" translate-values="{email:user.email}")
   .width-60.flex-justify(ng-if="!trade")
-    .width-80
+    .width-80.width-100-tablet.width-100-mobile
       buy-checkout(
         buy-limit="buyLimit"
         buy-level="buyLevel"
@@ -19,6 +21,6 @@
         handle-buy="buyHandler(quote)"
         collapse-summary="summaryCollapsed")
   .width-60.flex-justify(ng-if="trade")
-    .width-80
+    .width-80.width-100-tablet.width-100-mobile
       order-details(formatted-trade="trade")
       button.btn.button-primary.full(type="button" ng-click="$close()" focus-when="trade") Close
