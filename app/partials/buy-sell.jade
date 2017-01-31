@@ -33,6 +33,7 @@
           th.pvs.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
+          disabled="status.disabled"
           trade="trade"
           buy="buy"
           in-view="$last && scrollTrades()")

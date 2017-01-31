@@ -9,6 +9,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     restrict: 'A',
     replace: true,
     scope: {
+      disabled: '=',
       trade: '=',
       buy: '=',
       usa: '='
@@ -33,16 +34,9 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
 
-    scope.cancel = (trade) => {
-      let cancelMessage = 'CONFIRM_CANCEL_TRADE';
-      if (scope.trade.medium === 'bank') cancelMessage = 'CONFIRM_CANCEL_BANK_TRADE';
-      scope.status.canceling = true;
-      Alerts.confirm(cancelMessage, {
-        action: 'CANCEL_TRADE',
-        cancel: 'GO_BACK'
-      }).then(() => trade.cancel(), () => {})
-        .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); })
-        .finally(() => scope.status.canceling = false);
+    scope.cancel = () => {
+      scope.disabled = true;
+      buySell.cancelTrade(scope.trade).finally(() => scope.disabled = false);
     };
 
     scope.triggerBuy = () => {
@@ -74,9 +68,9 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       if (newVal) scope.updateBTCExpected();
       else scope.status = {};
     });
-    scope.$watchGroup(['status.canceling', 'trade.state'], () => {
+    scope.$watchGroup(['disabled', 'trade.state'], () => {
       scope.canCancel =
-        !scope.status.canceling &&
+        !scope.disabled &&
         scope.trade.state === 'awaiting_transfer_in' &&
         angular.isFunction(scope.trade.cancel);
     });

@@ -78,6 +78,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     signupForAccess,
     submitFeedback,
     tradeStateIn,
+    cancelTrade,
     states
   };
 
@@ -152,6 +153,17 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         $state.go('wallet.common.buy-sell');
         $uibModalStack.dismissAll();
       });
+  }
+
+  function cancelTrade (trade) {
+    let msg = 'CONFIRM_CANCEL_TRADE';
+    if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
+
+    return Alerts.confirm(msg, {
+      action: 'CANCEL_TRADE',
+      cancel: 'GO_BACK'
+    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
   function pollUserLevel (kyc) {
