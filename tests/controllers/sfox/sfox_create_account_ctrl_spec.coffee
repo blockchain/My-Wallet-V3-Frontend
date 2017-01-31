@@ -29,6 +29,8 @@ describe "SfoxCreateAccountController", ->
     scope.$$childHead = scope.$new()
     scope.$$childHead.accountForm =
       email: $setValidity: ->
+    scope.$$childHead.emailForm =
+      emailCode: $setValidity: ->
     scope.$$childHead.mobileForm =
       mobileCode: $setValidity: ->
     scope.vm = {exchange: 'SFOX'}
