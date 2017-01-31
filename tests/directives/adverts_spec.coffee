@@ -1,6 +1,6 @@
 describe "Adverts Directive", ->
   $compile = undefined
-  $rootScope = undefined
+  rootScope = undefined
   element = undefined
   isoScope = undefined
 
@@ -11,15 +11,18 @@ describe "Adverts Directive", ->
         ads: [{link: "http://www.google.com/"}]
       return
 
-    inject((_$compile_, _$rootScope_, Adverts) ->
+    inject((_$compile_, $rootScope, Adverts) ->
         spyOn(Adverts, "fetchOnce")
 
+        rootScope = $rootScope;
+
         $compile = _$compile_
-        $rootScope = _$rootScope_
+        scope = $rootScope.$new()
 
-        element = $compile("<adverts></adverts>")($rootScope)
+        element = $compile("<adverts></adverts>")(scope)
 
-        $rootScope.$digest()
+        scope.$digest()
+
         isoScope = element.isolateScope()
         isoScope.$digest()
 
@@ -35,8 +38,8 @@ describe "Adverts Directive", ->
     expect(isoScope.ads.length).toBe(1)
   )
 
-  it "should redirect to the advertisers page, in a new tab", inject((Adverts, $window) ->
-    spyOn($window, "open")
+  it "should redirect to the advertisers page, in a new tab", inject((Adverts) ->
+    spyOn(rootScope, "safeWindowOpen")
     isoScope.visit(Adverts.ads[0])
-    expect($window.open).toHaveBeenCalledWith("http://www.google.com/", "_blank")
+    expect(rootScope.safeWindowOpen).toHaveBeenCalledWith("http://www.google.com/")
   )

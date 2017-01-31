@@ -13,14 +13,6 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
   $scope.uid = $stateParams.uid || Wallet.guid || $cookies.get('uid');
   $scope.uidAvailable = !!$scope.uid;
 
-  let didJustLogout = $window.name === 'blockchain-logout';
-  let canDeauth = $cookies.get('session') != null;
-
-  if (didJustLogout && canDeauth) {
-    $window.name = 'blockchain';
-    $state.go('public.logout');
-  }
-
   if ($cookies.get('password')) {
     $scope.password = $cookies.get('password');
   }

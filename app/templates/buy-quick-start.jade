@@ -62,7 +62,7 @@
             span  
             span.blue.pointer(ng-click="openVerificationNeeded()" translate="WHY")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
-          span.pos-abs.type-sm
+          span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')")
             span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")
             | 
             span(translate="OR")
@@ -73,6 +73,8 @@
             | 
             span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
             | .
+          span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")
+            span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
       .flex-end.mtvl.pos-rel
         span.coinify-logo.coinify-logo-left
           span.mrs.type-sm(translate="POWERED_BY")

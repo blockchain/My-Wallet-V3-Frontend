@@ -1222,34 +1222,16 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     const didDecrypt = () => {
       // Check which metadata service features we use:
 
-      // whatsNew
       // This falls back to cookies if 2nd password is enabled:
-      let whatsNewViewed = $cookies.get('whatsNewViewed');
-      if (whatsNewViewed) {
-        // let whatsNew = new MyWalletMetadata(2);
-        let whatsNew = wallet.my.wallet.metadata(2);
+      let lastViewed = $cookies.get('whatsNewViewed');
 
-        whatsNew.fetch().then((res) => {
-          if (res === null) {
-            whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
-              // TODO: uncomment once cookie fallback is removed
-              // $cookies.remove('whatsNewViewed');
-              success();
-            });
-          } else {
-            whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
-              // TODO: uncomment once cookie fallback is removed
-              // $cookies.remove('whatsNewViewed');
-              success();
-            });
-          }
-        }).catch(() => {
-          // The What's New section may be marked (partially) unread at the
-          // next login.
-          success();
-        });
-      } else {
-        success();
+      if (lastViewed) {
+        let whatsNew = wallet.my.wallet.metadata(2);
+        whatsNew.fetch()
+          .then(res => res ? $q.resolve(res) : $q.reject())
+          .then(() => whatsNew.update({ lastViewed }))
+          .catch(() => whatsNew.create({ lastViewed }))
+          .finally(success);
       }
     };
 

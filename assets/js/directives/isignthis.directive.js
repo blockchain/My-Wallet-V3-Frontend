@@ -111,7 +111,7 @@ function isignthis ($sce, Options) {
         eventer(messageEvent, function (e) {
           // Check for the domain who sent the messageEvent
           var origin = e.origin || e.originalEvent.origin;
-          if (origin !== 'https://stage-verify.isignthis.com') {
+          if (origin !== iSignThisDomain) {
             // Event not generated from ISX, simply return
             return;
           }

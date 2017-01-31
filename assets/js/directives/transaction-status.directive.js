@@ -17,7 +17,7 @@ function transactionStatus ($rootScope) {
 
   function link (scope, elem, attrs) {
     scope.verify = () => {
-      window.open($rootScope.rootURL + 'tx/' + scope.transaction.hash, '_blank');
+      $rootScope.safeWindowOpen($rootScope.rootURL + 'tx/' + scope.transaction.hash);
     };
 
     scope.$watch('transaction.confirmations', () => {
