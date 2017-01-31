@@ -15,6 +15,7 @@ describe "SettingsPreferencesCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
+      MyBlockchainSettings = $injector.get("MyBlockchainSettings")
 
       Wallet.status.isLoggedIn = true
 
@@ -22,6 +23,8 @@ describe "SettingsPreferencesCtrl", ->
 
       Wallet.settings_api =
         changeEmail: (email, success, error) -> success()
+
+      Wallet.settings_api = MyBlockchainSettings
 
       Wallet.settings.languages = [
         {code: "en", name: "English"}
@@ -33,8 +36,19 @@ describe "SettingsPreferencesCtrl", ->
         {code: "EUR", name: "Euro"}
       ]
 
+      Wallet.settings.displayCurrency = [
+        {code: "BTC", btcValue: "1 BTC", serverCode: "BTC"}
+      ]
+
+      Wallet.settings.btcCurrencies = [
+        {code: "BTC", serverCode: "BTC"}
+        {code: "mBTC", serverCode: "mBTC"}
+        {code: "bits", serverCode: "UBC"}
+      ]
+
       Wallet.settings_api.changeLanguage = (-> )
       Wallet.settings_api.changeLocalCurrency = (-> )
+      Wallet.settings_api.changeBTCCurrency = (-> )
 
       Wallet.setLanguage(Wallet.settings.languages[0])
       Wallet.changeCurrency(Wallet.settings.currencies[0])
@@ -42,6 +56,7 @@ describe "SettingsPreferencesCtrl", ->
       spyOn(Wallet, "setLanguage").and.callThrough()
       spyOn(Wallet, "changeLanguage").and.callThrough()
       spyOn(Wallet, "changeCurrency").and.callThrough()
+      spyOn(Wallet, "changeBTCCurrency").and.callThrough()
 
       scope = $rootScope.$new()
 
@@ -113,6 +128,17 @@ describe "SettingsPreferencesCtrl", ->
       scope.settings.currency = scope.currencies[1]
       scope.changeCurrency(scope.settings.currency)
       expect(Wallet.changeCurrency).toHaveBeenCalledWith(scope.currencies[1])
+    )
+
+  describe "btc unit display", ->
+    beforeEach ->
+      scope.$digest()
+
+    it "can change with a selection", inject((Wallet) ->
+      expect(scope.btcCurrencies.length).toBeGreaterThan(2)
+      expect(scope.settings.displayCurrency).not.toBeNull()
+      scope.changeBTCCurrency(scope.btcCurrencies[1])
+      expect(Wallet.changeBTCCurrency).toHaveBeenCalledWith(scope.btcCurrencies[1])
     )
 
   describe "handling of bitcoin links", ->

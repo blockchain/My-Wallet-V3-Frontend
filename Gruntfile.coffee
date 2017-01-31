@@ -52,11 +52,6 @@ module.exports = (grunt) ->
         }
       }
 
-      html:
-        expand: true
-        src: ['build/index.html']
-        dest: ''
-
       js:
         expand: true
         src: ['build/js/app.js']
@@ -273,7 +268,7 @@ module.exports = (grunt) ->
     watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
-        tasks: ['html2js', 'concat:wallet']
+        tasks: ['html2js', 'includeSource', 'concat:wallet']
         options:
           spawn: false
 
@@ -305,6 +300,9 @@ module.exports = (grunt) ->
       html:
         options:
           client: false
+          pretty: true
+          data:
+            production: true
         files:
           "build/index.html": "app/index.jade"
           "build/landing.html": "app/landing.jade"
@@ -629,7 +627,6 @@ module.exports = (grunt) ->
       "uglify:bcQrReader"
       "uglify:bcPhoneNumber"
       "jade"
-      "preprocess:html"
       "copy:main"
       "copy:blockchainWallet"
       "copy:css_dist"

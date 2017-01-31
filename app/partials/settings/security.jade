@@ -18,9 +18,10 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
           label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
           span.label.label-success(translate="PASSWORD_SET")
         p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
-      .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
+      .col-sm-0.col-md-2
+      .col-sm-12.col-md-4.setting-result.mtm(ng-hide="active")
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-      .col-sm-12.col-md-6(ng-show="active")
+      .col-sm-12.col-md-4(ng-show="active")
         include ./change-password.jade
   .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-class="{'has-error':errors.passwordHint}" ng-controller="ChangePasswordHintCtrl" data-preflight-tag="ChangePasswordHint")
     div(settings-form)
@@ -30,10 +31,11 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
           span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
           span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
         p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
-      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+      .col-sm-0.col-md-2
+      .col-sm-12.col-md-4.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ user.passwordHint }}
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-      .col-sm-12.col-md-6(ng-show="active")
+      .col-sm-12.col-md-4(ng-show="active")
         include ./change-password-hint.jade
       
   .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-controller="ManageSecondPasswordCtrl" data-preflight-tag="ManageSecondPassword")
@@ -45,10 +47,11 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
           span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
         p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN" ng-hide="userHasExchangeAcct")    
         p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
-      .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
+      .col-sm-0.col-md-2
+      .col-sm-12.col-md-4.setting-result(ng-hide="active || removing")
         button.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword" ng-disabled="userHasExchangeAcct")
         button.button-primary.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
-      .col-sm-12.col-md-6(ng-show="active")
+      .col-sm-12.col-md-4(ng-show="active")
         include ./manage-second-password.jade
    
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ManageTwoFactor")

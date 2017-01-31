@@ -1227,5 +1227,6 @@
   "NO_TRADES": "Your Order History",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, click here to start buying bitcoin.",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
+  "NEED_HELP": "Need help?",
   "": ""
 }
