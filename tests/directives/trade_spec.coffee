@@ -59,36 +59,3 @@ describe "Trade Directive", ->
       isoScope.trade.state = "expired"
       isoScope.$digest()
       expect(isoScope.completed).toEqual(true)
-
-  describe "cancel()", ->
-    trade = undefined
-    beforeEach ->
-      trade = { cancel: () -> }
-      spyOn(Alerts, "displayError")
-
-    it "should confirm before canceling", ->
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve())
-      isoScope.cancel(trade)
-      expect(Alerts.confirm).toHaveBeenCalled()
-
-    it "should not cancel if confirm was rejected", ->
-      spyOn(trade, "cancel").and.returnValue($q.resolve())
-      spyOn(Alerts, "confirm").and.returnValue($q.reject())
-      isoScope.cancel(trade)
-      isoScope.$digest()
-      expect(trade.cancel).not.toHaveBeenCalled()
-
-    it "should show an error if the cancel fails", ->
-      spyOn(trade, "cancel").and.returnValue($q.reject("ERROR_TRADE_CANCEL"))
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve())
-      isoScope.cancel(trade)
-      isoScope.$digest()
-      expect(Alerts.displayError).toHaveBeenCalledWith("ERROR_TRADE_CANCEL")
-
-    it "should reset the scope status", ->
-      spyOn(trade, "cancel").and.returnValue($q.resolve())
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve())
-      isoScope.cancel(trade)
-      expect(isoScope.status.canceling).toEqual(true)
-      isoScope.$digest()
-      expect(isoScope.status.canceling).toEqual(false)

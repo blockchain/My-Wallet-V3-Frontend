@@ -52,11 +52,6 @@ module.exports = (grunt) ->
         }
       }
 
-      html:
-        expand: true
-        src: ['build/index.html']
-        dest: ''
-
       js:
         expand: true
         src: ['build/js/app.js']
@@ -273,7 +268,7 @@ module.exports = (grunt) ->
     watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
-        tasks: ['build']
+        tasks: ['html2js', 'includeSource', 'concat:wallet']
         options:
           spawn: false
 
@@ -297,7 +292,7 @@ module.exports = (grunt) ->
 
       helper:
         files: ['helperApp/plaid/**/*', 'helperApp/sift-science/**/*']
-        tasks: ['build', 'shell:webpack']
+        tasks: ['shell:webpack']
         options:
           spawn: false
 
@@ -305,6 +300,9 @@ module.exports = (grunt) ->
       html:
         options:
           client: false
+          pretty: true
+          data:
+            production: true
         files:
           "build/index.html": "app/index.jade"
           "build/landing.html": "app/landing.jade"
@@ -480,17 +478,6 @@ module.exports = (grunt) ->
           to: () =>
             "customWebSocketURL = '#{ @webSocketURL }'"
         }]
-      debug:
-        src: ['build/js/app.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'isProduction = false'
-          to: () =>
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              'isProduction = true'
-            else
-              'isProduction = false'
-        }]
       helper_app_url:
         src: ['build/js/wallet.js'],
         overwrite: true,
@@ -558,6 +545,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
+    "shell:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"
@@ -617,7 +605,6 @@ module.exports = (grunt) ->
       "replace:root_url"
       "replace:web_socket_url"
       "replace:helper_app_url"
-      "replace:debug"
     ]
 
     if apiDomain
@@ -640,7 +627,6 @@ module.exports = (grunt) ->
       "uglify:bcQrReader"
       "uglify:bcPhoneNumber"
       "jade"
-      "preprocess:html"
       "copy:main"
       "copy:blockchainWallet"
       "copy:css_dist"

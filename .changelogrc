@@ -44,6 +44,10 @@
             "grep": "^dev"
         },
         {
+            "title": "Build Process",
+            "grep": "^build"
+        },
+        {
             "title": "Chore",
             "grep": "^chore"
         },

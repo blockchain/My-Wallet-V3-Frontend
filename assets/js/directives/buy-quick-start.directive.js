@@ -34,6 +34,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.format = currency.formatCurrencyForView;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
+    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
 
     scope.getExchangeRate = () => {
       stopFetchingQuote();
@@ -88,12 +89,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
     scope.cancelTrade = () => {
       scope.disabled = true;
-      Alerts.confirm('CONFIRM_CANCEL_TRADE', {
-        action: 'CANCEL_TRADE',
-        cancel: 'GO_BACK'
-      }).then(() => scope.pendingTrade.cancel().then(() => buySell.fetchProfile()), () => {})
-        .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); })
-        .finally(() => scope.disabled = false);
+      buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
     };
 
     scope.openVerificationNeeded = () => {

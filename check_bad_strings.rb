@@ -14,3 +14,18 @@ Dir.glob(['locales/*.json', 'app/**/*.jade', 'assets/js/**/*.js']) do |path|
   end
 end
 exit 1 if didMatch
+
+didMatch = false
+regex = /window\.open/
+Dir.glob(['assets/js/**/*.js']) do |path|
+  matches = File.read(path).match(regex)
+  if matches
+    if path == "assets/js/app.js" && matches.length <= 1
+      break
+    end
+    puts path + " contains window.open, use $rootScope.safeWindowOpen() instaed"
+    puts ""
+    didMatch = true
+  end
+end
+exit 1 if didMatch

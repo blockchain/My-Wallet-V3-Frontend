@@ -63,7 +63,7 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    res.render(dist ? 'index.html' : 'build/index.jade');
+    res.render(dist ? 'index.html' : 'build/index.jade', {pretty: true});
     return;
   } else if (req.url === '/landing.html') {
     res.render(dist ? 'landing.html' : 'build/landing.jade');

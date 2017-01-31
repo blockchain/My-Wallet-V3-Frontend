@@ -1,4 +1,4 @@
-angular.module('walletApp.core').factory 'MyBlockchainSettings', () ->
+angular.module('walletApp.core').factory 'MyBlockchainSettings', ($q) ->
   {
     unsetTwoFactor: (success, error) -> success()
     setTwoFactorSMS: (success, error) -> success()
@@ -11,4 +11,5 @@ angular.module('walletApp.core').factory 'MyBlockchainSettings', () ->
     disableRememberTwoFactor: (success, error) -> success()
     toggleSave2FA: (flag, success, error) -> success()
     sendConfirmationCode: (success, error) -> success()
+    changeBtcCurrency: (currency) -> $q.resolve()
   }

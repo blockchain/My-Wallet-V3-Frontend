@@ -220,7 +220,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.formatTrade = (state) => {
-    if ($scope.isKYC || $scope.needsKyc()) state = 'kyc';
     $scope.formattedTrade = formatTrade[state]($scope.trade);
 
     if ($scope.needsKyc()) {
@@ -265,7 +264,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
       [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
       let openSurvey = () => {
         $scope.cancel();
-        $window.open(link);
+        $rootScope.safeWindowOpen(link);
         $cookies.putObject('survey-opened', {index: index});
       };
       Alerts.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'}).then(openSurvey, $scope.cancel);
