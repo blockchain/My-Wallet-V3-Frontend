@@ -966,7 +966,6 @@
   "BUY_BITCOIN": "Buy Bitcoin",
   "SELL_BITCOIN": "Sell Bitcoin",
   "BANK_TRANSFER_HEADING": "Bank Transfer",
-  "BANK_TRANSFER_NEXT_STEPS": "Bank transfers can take a day or more depending on your bank. Once the transfer is complete, your bitcoin will be sent to <b>{{::label}}</b>.",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin purchase. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -1044,7 +1043,7 @@
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
-    "BODY": "Send <b>{{::amt}} {{::curr}}</b> from your bank account held in your own name within <b>the next 48 hours</b>. Coinify will reject any transfers from third party accounts."
+    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to the following account within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1108,6 +1107,7 @@
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
   "CONFIRM_YOUR_ORDER": "Confirm your order:",
   "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
+  "ORDER_CONFIRMATION_BANK_COPY": "Please confirm your order details before continuing. Bank transfers can take a day or more to complete depending on your bank, and the displayed bitcoin rate may change depending on the current exchange rate when processed.",
   "ERROR_DAILY_LIMIT": "Error: Exceeds Daily Limit",
   "ERROR_MIN_LIMIT": "Error: Below Minimum Limit",
   "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange {{max}} {{code}} more today. Please update your order to proceed.",
@@ -1118,7 +1118,7 @@
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
   "ORDER_DETAILS": "Order Details:",
   "BANK_ORDER_DETAILS": "Send your funds to the following bank account:",
-  "ORDER_ID_REFERENCE": "Make sure to include the reference / Order ID as a message in the payment.",
+  "ORDER_ID_REFERENCE": "*Must be included in your transfer*",
   "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
@@ -1142,6 +1142,7 @@
   },
   "SPEND_IMPORTED_ADDRESS": "Spend",
   "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
+  "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
   "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet secure and seamless.",
   "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
@@ -1256,6 +1257,7 @@
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
+  "BTC_APPROX_RATE": "BTC (approximate rate):",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='blue'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
   "": ""

@@ -18,9 +18,7 @@ function CoinifyMediumController ($scope, Alerts, buySell) {
   };
 
   $scope.$parent.confirmOrContinue = () => {
-    let bankBuyMax = $scope.exchange.profile.currentLimits.bank.inRemaining;
-    let belowBuyLimit = $scope.transaction.fiat <= bankBuyMax;
-    let skipConfirm = $scope.needsKyc() || (belowBuyLimit && $scope.isMedium('bank'));
+    let skipConfirm = $scope.needsKyc();
     skipConfirm ? $scope.buy() : $scope.goTo('summary');
   };
 }

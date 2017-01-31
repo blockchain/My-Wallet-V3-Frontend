@@ -88,6 +88,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.tempFiat = $scope.transaction.fiat;
   });
 
+  $scope.$watch('rateForm', () => {
+    $scope.$parent.rateForm = $scope.rateForm;
+  });
+
   $scope.$watch('step', () => {
     if ($scope.onStep('summary')) {
       $scope.getMaxMin($scope.tempCurrency);

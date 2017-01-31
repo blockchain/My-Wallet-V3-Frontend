@@ -9,7 +9,8 @@
     ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max"
     translate="ERROR_MIN_LIMIT")
   p.mvm
-    span(translate="ORDER_CONFIRMATION_COPY" ng-hide="isBankTransfer() && tempFiatForm.$invalid")
+    span(translate="ORDER_CONFIRMATION_COPY" ng-if="tempFiatForm.$valid" ng-hide="isBankTransfer()")
+    span(translate="ORDER_CONFIRMATION_BANK_COPY" ng-if="tempFiatForm.$valid" ng-hide="!isBankTransfer()")
     span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, max: limits.available}")
     span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, min: limits.min}")
   .flex-center.flex-between.flex-row-reverse
@@ -22,8 +23,10 @@
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.min && !tempFiatForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempCurrency.code, min: limits.min}")
   .border.pam(ng-class="{'bg-light-grey': editAmount}")
     .flex-row.flex-between.pam.border-bottom-light
-      span(translate="BTC:")
-      span.success(uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
+      span(ng-hide="isBankTransfer()" translate="BTC:")
+      span(ng-show="isBankTransfer()" translate="BTC_APPROX_RATE")
+      span.success(ng-hide="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
+      span.success.tilda-before(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
     .flex-row.flex-between.pam.pos-rel
       span(translate="AMOUNT:")
       span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
@@ -60,9 +63,15 @@
                  ng-click="changeTempCurrency(currency);"
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
-    .flex-row.flex-between.pam.border-bottom-light(ng-hide="isBankTransfer()")
+    .flex-row.flex-between.pam.border-bottom-light
       span(translate="PAYMENT_FEE")
       span {{ transaction.methodFee | format }} {{ transaction.currency.code }}
-    .flex-row.flex-between.pam(ng-hide="isBankTransfer()")
+    .flex-row.flex-between.pam
       span.em-500(translate="TOTAL_COST:")
       span {{ currencySymbol.symbol }}{{ transaction.total }} {{ transaction.currency.code }}
+  form.clearfix(ng-show="isBankTransfer()" name="rateForm" role="form" novalidate)
+    .flex-row.flex-start.mtl
+      div
+        input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
+      div
+        label.mlm.em-400(translate="ACCEPT_COINIFY_RATE" for="rate")
