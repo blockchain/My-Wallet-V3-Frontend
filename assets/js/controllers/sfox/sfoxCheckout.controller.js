@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope) {
   let exchange = $scope.vm.external.sfox;
 
   $scope.openSfoxSignup = () => {
@@ -40,12 +40,16 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
   $scope.buyLimit = exchange.profile && exchange.profile.limits.buy;
+  $scope.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buyHandler = (...args) => {
     return sfox.buy($scope.account, ...args)
       .then(trade => {
         // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+        if ($rootScope.buySellDebug) {
+          console.info('Load Sift Science iframe');
+        }
         $scope.siftScienceEnabled = true;
         $scope.tradeId = trade.id;
         $scope.selectTab('ORDER_HISTORY');

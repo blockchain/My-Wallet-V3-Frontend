@@ -60,7 +60,10 @@
           span.pos-abs.type-sm
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
             span  
-            span.blue.pointer(ng-click="openVerificationNeeded()" translate="WHY")
+            span.blue.pointer(popup
+                              popup-days="{{getDays()}}"
+                              popup-name="coinify-verification"
+                              translate="WHY")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
           span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')")
             span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")

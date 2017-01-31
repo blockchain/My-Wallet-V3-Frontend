@@ -92,12 +92,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
     };
 
-    scope.openVerificationNeeded = () => {
+    scope.getDays = () => {
       let verifyDate = buySell.getExchange().profile.canTradeAfter;
-      console.log('verifyDate', verifyDate);
-      let days = isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
-      let options = { windowClass: 'bc-modal sm' };
-      modals.openTemplate('partials/verification-needed-modal.jade', { days }, options);
+      return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
     };
 
     scope.getExchangeRate();

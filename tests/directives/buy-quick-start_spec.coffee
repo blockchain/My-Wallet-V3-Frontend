@@ -58,11 +58,9 @@ describe "buyQuickStart", ->
       isoScope.$digest()
       expect(isoScope.getQuote).toHaveBeenCalled()
 
-  describe "openVerificationNeeded", ->
+  describe "getDays()", ->
     it "should calculate the correct number of days", ->
-      spyOn(modals, "openTemplate")
       spyOn(Date, "now").and.returnValue(new Date('12/20/2016'))
       spyOn(buySell, "getExchange").and.returnValue
-        profile: { canTradeAfter: new Date('1/1/2017') }
-      isoScope.openVerificationNeeded()
-      expect(modals.openTemplate).toHaveBeenCalledWith('partials/verification-needed-modal.jade', { days: 12 }, { windowClass: 'bc-modal sm'})
+        profile: { canTradeAfter: new Date('12/21/2016') }
+      expect(isoScope.getDays()).toBe(1);
