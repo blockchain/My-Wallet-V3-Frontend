@@ -2,13 +2,13 @@ doctype
 html(
   lang='en'
   ng-app='walletApp'
-  ng-init=production ? undefined : `autoCreate='#{ process.env.AUTO_CREATE || ''}';\
-  autoReload=#{ process.env.AUTO_RELOAD || false };\
-  rootURL='#{ process.env.ROOT_URL || '' }/';\
-  webSocketURL='#{ process.env.WEB_SOCKET_URL || '' }';\
-  apiDomain='#{ process.env.API_DOMAIN || '' }/';\
-  network='#{ process.env.NETWORK || '' }';\
-  helperAppDomain='http://localhost:#{ (process.env.PORT || 80) + 1 }'\
+  ng-init=production ? undefined : `autoCreate='${ process.env.AUTO_CREATE || '' }';\
+  autoReload=${ process.env.AUTO_RELOAD || false };\
+  rootURL='${ process.env.ROOT_URL }/';\
+  webSocketURL='${ process.env.WEB_SOCKET_URL }';\
+  apiDomain='${ process.env.API_DOMAIN }/';\
+  network='${ process.env.NETWORK || '' }';\
+  helperAppDomain='http://localhost:${ (process.env.PORT || 80) + 1 }';\
   sfoxUseStaging=${ process.env.SFOX_USE_STAGING || null };\
   sfoxApiKey='${ process.env.SFOX_API_KEY || ''}';\
   sfoxPlaidEnv='${ process.env.SFOX_PLAID_ENV || ''}';\
