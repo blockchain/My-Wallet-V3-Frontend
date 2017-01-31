@@ -37,10 +37,13 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   $scope.mobileCodeSent = () => { state.sentMobileCode = true; };
 
   $scope.displayInlineError = (error) => {
-    let form = $scope.$$childHead.accountForm;
+    let { accountForm, mobileForm } = $scope.$$childHead;
     switch (sfox.interpretError(error)) {
       case 'user is already registered':
-        form.email.$setValidity('registered', false);
+        accountForm.email.$setValidity('registered', false);
+        break;
+      case 'Could not verify mobile number.':
+        mobileForm.mobileCode.$setValidity('correct', false);
         break;
       default:
         sfox.displayError(error);
@@ -48,8 +51,9 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   };
 
   $scope.clearInlineErrors = () => {
-    let form = $scope.$$childHead.accountForm;
-    form.email.$setValidity('registered', true);
+    let { accountForm, mobileForm } = $scope.$$childHead;
+    accountForm.email.$setValidity('registered', true);
+    mobileForm.mobileCode.$setValidity('correct', true);
   };
 
   $scope.changeEmail = () => {
@@ -83,7 +87,7 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   $scope.verifyMobile = () => {
     $scope.lock();
     $q(Wallet.verifyMobile.bind(null, state.mobileCode))
-      .then($scope.setState, sfox.displayError).finally($scope.free);
+      .then($scope.setState, $scope.displayInlineError).finally($scope.free);
   };
 
   $scope.createAccount = () => {

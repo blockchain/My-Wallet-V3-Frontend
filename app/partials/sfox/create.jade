@@ -79,6 +79,8 @@
           .group.pt-30
             .item
               label Enter verification code sent to your mobile phone:
-              input(ng-model="state.mobileCode" name="mobileCode" required)
+              input(ng-model="state.mobileCode" name="mobileCode" ng-change="clearInlineErrors()" required)
+            .help(ng-show="mobileForm.mobileCode.$error.correct")
+              span.state-danger-text Verification code incorrect.
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue
