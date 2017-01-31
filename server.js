@@ -16,6 +16,8 @@ var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 var helperAppFrameDomain = process.env.HELPER_APP_URL || `http://localhost:${ helperAppPort }`;
+var sfoxUseStaging = process.env.SFOX_USE_STAGING === '1';
+var sfoxProduction = sfoxUseStaging ? false : production;
 
 // App configuration
 var rootApp = express();
@@ -53,9 +55,9 @@ app.use(function (req, res, next) {
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
         'https://app-api.coinify.com',
-        `https://api.${production ? '' : 'staging.'}sfox.com`,
-        `https://quotes.${production ? '' : 'staging.'}sfox.com`,
-        `https://sfox-kyc${production ? '' : 'test'}.s3.amazonaws.com`
+        `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
+        `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
+        `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",
@@ -63,7 +65,7 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    res.render(dist ? 'index.html' : 'build/index.jade');
+    res.render(dist ? 'index.html' : 'build/index.jade', {pretty: true});
     return;
   } else if (req.url === '/landing.html') {
     res.render(dist ? 'landing.html' : 'build/landing.jade');

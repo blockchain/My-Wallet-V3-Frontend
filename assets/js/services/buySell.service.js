@@ -27,7 +27,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, $rootScope.buySellDebug);
       if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
-        _buySellMyWallet.exchanges.sfox.api.production = $rootScope.isProduction;
+        _buySellMyWallet.exchanges.sfox.api.production = $rootScope.sfoxUseStaging === null ? $rootScope.isProduction : !Boolean($rootScope.sfoxUseStaging);
 
         // This can safely be done asynchrnously, because:
         // * the buy-sell tab won't appear until Options is loaded
@@ -38,7 +38,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         //     promise)
         let processOptions = (options) => {
           _buySellMyWallet.exchanges.coinify.partnerId = options.partners.coinify.partnerId;
-          _buySellMyWallet.exchanges.sfox.api.apiKey = options.partners.sfox.apiKey;
+          _buySellMyWallet.exchanges.sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
         };
         if (Options.didFetch) {
           processOptions(Options.options);
@@ -78,6 +78,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     signupForAccess,
     submitFeedback,
     tradeStateIn,
+    cancelTrade,
     states
   };
 
@@ -152,6 +153,17 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         $state.go('wallet.common.buy-sell');
         $uibModalStack.dismissAll();
       });
+  }
+
+  function cancelTrade (trade) {
+    let msg = 'CONFIRM_CANCEL_TRADE';
+    if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
+
+    return Alerts.confirm(msg, {
+      action: 'CANCEL_TRADE',
+      cancel: 'GO_BACK'
+    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
   function pollUserLevel (kyc) {
@@ -251,14 +263,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function signupForAccess (email, country, state) {
-    let url = 'https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + country + '&entry.387129390=' + state;
-    let otherWindow = window.open(url);
-    otherWindow.opener = null;
+    $rootScope.safeWindowOpen('https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + country + '&entry.387129390=' + state);
   }
 
   function submitFeedback (rating) {
-    let url = 'https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating;
-    let otherWindow = window.open(url);
-    otherWindow.opener = null;
+    $rootScope.safeWindowOpen('https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating);
   }
 }

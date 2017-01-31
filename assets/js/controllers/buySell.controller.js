@@ -62,8 +62,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         $scope.getMaxMin();
 
         let pending = buySell.trades.pending;
-        let pendingUserAction = pending.filter((t) => t.state === 'awaiting_transfer_in');
-        $scope.pendingTrade = pendingUserAction.sort((a, b) => b.id - a.id)[0];
+        $scope.pendingTrade = pending.sort((a, b) => b.id - a.id)[0];
 
         if ($scope.exchange) {
           if (+$scope.exchange.profile.level.name < 2) {

@@ -51,6 +51,8 @@ describe "SfoxBuyController", ->
         profile:
           limits:
             buy: 100
+          verificationStatus:
+            level: 'verified'
 
     $controller "SfoxBuyController",
       $scope: scope

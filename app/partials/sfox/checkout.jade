@@ -21,6 +21,7 @@
   .flex-column(ng-show="signupCompleted && selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
       buy-limit="state.buyLimit"
+      buy-level="state.buyLevel"
       buy-account="state.account"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       handle-buy="buyHandler(quote)")
@@ -42,4 +43,5 @@
         trade="trade"
         buy="inspectTrade"
         usa="true")
+  contact-support-footer
   sift-science(ng-if='siftScienceEnabled' user-id='userId' trade-id='tradeId')

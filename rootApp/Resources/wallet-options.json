@@ -1,5 +1,5 @@
 {
-  "showBuySellTab": ["GB", "SE", "DK", "NO", "NL", "DE"],
+  "showBuySellTab": ["GB", "SE", "DK", "NO", "NL", "DE", "US"],
   "partners": {
     "coinify": {
       "countries": ["GB", "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI",
@@ -12,7 +12,7 @@
       "iSignThisDomain": "https://verify.isignthis.com"
     },
     "sfox": {
-      "countries": [],
+      "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "GA", "IN", "KS", "MD", "MA", "MO", "MT", "SC", "TX"],
       "inviteFormFraction": 0.1,
       "apiKey": "f31614a7-5074-49f2-8c2a-bfb8e55de2bd",

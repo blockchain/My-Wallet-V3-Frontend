@@ -3,7 +3,8 @@ angular
   .module('walletApp')
   .component('buyCheckout', {
     bindings: {
-      buyLimit: '=',
+      buyLimit: '<',
+      buyLevel: '<',
       buyAccount: '<',
       collapseSummary: '=',
       handleQuote: '&',

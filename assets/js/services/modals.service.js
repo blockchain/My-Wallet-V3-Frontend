@@ -9,13 +9,26 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     $uibModal.open(angular.merge(options, defaults))
   );
 
-  service.openBankHelper = () => open({
-    templateUrl: 'partials/bank-check-modal.jade',
-    windowClass: 'bc-modal medium'
-  });
+  service.openOnce = (modalOpener) => {
+    let modalInstance = null;
+    return (...args) => {
+      if (modalInstance) return;
+      modalInstance = modalOpener(...args);
+      modalInstance.result.finally(() => { modalInstance = null; });
+    };
+  };
 
-  service.openDepositHelper = () => open({
-    templateUrl: 'partials/bank-deposit-modal.jade',
+  service.dismissPrevious = (modalOpener) => {
+    let modalInstance = null;
+    return (...args) => {
+      if (modalInstance) modalInstance.dismiss('overridden');
+      modalInstance = modalOpener(...args);
+    };
+  };
+
+  service.openHelper = (helper) => open({
+    controller ($scope) { $scope.helper = helper; },
+    templateUrl: 'partials/helper-modal.jade',
     windowClass: 'bc-modal medium'
   });
 
@@ -57,7 +70,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
-  service.openTradeSummary = (trade, state) => open({
+  service.openTradeSummary = service.dismissPrevious((trade, state) => open({
     templateUrl: 'partials/trade-modal.jade',
     windowClass: 'bc-modal trade-summary',
     controller ($scope, trade, formatTrade, accounts) {
@@ -72,7 +85,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
           : $q.resolve([]);
       }
     }
-  });
+  }));
 
   return service;
 }

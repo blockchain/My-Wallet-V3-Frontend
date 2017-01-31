@@ -85,16 +85,6 @@ describe "SfoxCheckoutController", ->
     beforeEach ->
       scope = getControllerScope([{status:'active'}])
 
-    it "should watch the trade for completion and close the first modal", ->
-      dismissSpy = jasmine.createSpy("dismiss")
-      spyOn(modals, "openTradeSummary").and.returnValue(dismiss: dismissSpy)
-      spyOn(sfox, "watchTrade").and.callFake((trade, cb) -> cb())
-      scope.buyHandler(mockQuote())
-      scope.$digest()
-      trade = jasmine.objectContaining({ id: "TRADE" })
-      expect(sfox.watchTrade).toHaveBeenCalledWith(trade, jasmine.any(Function))
-      expect(dismissSpy).toHaveBeenCalled()
-
     it "should open the trade summary modal", ->
       spyOn(modals, "openTradeSummary").and.callThrough()
       scope.buyHandler(mockQuote())

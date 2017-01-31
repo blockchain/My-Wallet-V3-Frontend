@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LogoutController', LogoutController);
 
-function LogoutController ($scope, $cookies, $q, $timeout, $interval, $state, Wallet, Alerts) {
+function LogoutController ($scope, $cookies, $q, $timeout, $interval, $state, $window, Wallet, Alerts) {
   $scope.timeToRedirect = 10;
   $scope.toLogin = () => { $state.go('public.login-no-uid'); };
 
@@ -23,5 +23,6 @@ function LogoutController ($scope, $cookies, $q, $timeout, $interval, $state, Wa
     if (--$scope.timeToRedirect === 0) $scope.toLogin();
   }, 1000);
 
+  $window.name = 'blockchain';
   $scope.$on('$destroy', () => $interval.cancel($scope.redirectInterval));
 }

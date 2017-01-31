@@ -10,11 +10,13 @@ function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
   $scope.quoteHandler = (...args) => sfox.fetchQuote(exchange, ...args);
 
   $scope.state = {
-    buyLimit: exchange.profile.limits.buy
+    buyLimit: exchange.profile.limits.buy,
+    buyLevel: exchange.profile.verificationStatus.level
   };
 
   $scope.setState = () => {
     $scope.state.buyLimit = exchange.profile.limits.buy;
+    $scope.state.buyLevel = exchange.profile.verificationStatus.level;
   };
 
   $scope.buyHandler = (...args) => {

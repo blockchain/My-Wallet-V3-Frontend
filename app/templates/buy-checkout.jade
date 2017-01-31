@@ -4,13 +4,13 @@ form.bc-form(
   novalidate
   autocomplete="off")
   fieldset(ng-disabled="locked")
-    .group.mts
+    .group
       .item
         .flex-between.flex-baseline.mbs
           span.f-16.em-500.colon Enter Amount
           span
             div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed")
-              span 1 {{ bitcoin.code }} = ${{ state.rate }}
+              span 1 {{ bitcoin.code }} = ${{ format(state.rate, dollars, false) }}
               helper-button(content="EXCHANGE_RATE_HELPER")
             .state-danger-text(ng-show="state.loadFailed")
               i.ti-alert
@@ -23,7 +23,7 @@ form.bc-form(
               ng-model="state.fiat"
               ng-max="max"
               ng-min="min"
-              ng-focus="state.baseCurr = dollars"
+              ng-change="state.baseCurr = dollars"
               step="1"
               prevent-event="mousewheel"
               transform-currency="dollars"
@@ -38,15 +38,20 @@ form.bc-form(
               ng-model="state.btc"
               ng-max="max"
               ng-min="min"
-              ng-focus="state.baseCurr = bitcoin"
+              ng-change="state.baseCurr = bitcoin"
               step="0.01"
               prevent-event="mousewheel"
               transform-currency="bitcoin"
               required)
             span.mhm {{bitcoin.code}}
-        .text.mts
-          span.f-12(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | Your daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}
+        .f-12.mts
+          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+            | Your daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
+            | 
+          span.blue.pointer(popup
+                            popup-name="sfox-identity"
+                            ng-if="$ctrl.buyLevel === 'pending'"
+                            translate="WHY")
     .group.mtl(ng-hide="$ctrl.collapseSummary")
       .item
         .mbm

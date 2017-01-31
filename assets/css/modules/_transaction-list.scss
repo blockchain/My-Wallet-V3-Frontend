@@ -39,7 +39,7 @@
      color: $transfer-blue;
     }
     .tx-toggle {
-      top: 31px;
+      top: 25px;
       left: 10px;
       position: absolute;
     }
@@ -79,6 +79,9 @@
         &:hover {
           color: $blue;
         }
+      }
+      .pending-clock {
+        width: 17px;
       }
     }
   }

@@ -86,10 +86,11 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
       windowClass: 'bc-modal confirm top',
       backdrop: 'static',
       keyboard: false,
-      controller: function ($scope, $interval, $uibModalInstance, Wallet) {
-        let tick = () => Wallet.isSynchronizedWithServer() && $uibModalInstance.close(true);
-        $scope.timer = $interval(tick, 500);
-        $scope.$on('$destroy', () => $interval.cancel($scope.timer));
+      controller: function ($uibModalInstance, MyWallet) {
+        let sync = () => $q(MyWallet.syncWallet)
+          .then(() => $uibModalInstance.close(true))
+          .catch(() => sync());
+        sync();
       }
     }).result;
   }
