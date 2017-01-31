@@ -31,7 +31,7 @@ button.full {
   }
 }
 
-@mixin button($name, $background:white, $color:white, $max-width:none) {
+@mixin button($name, $background:white, $color:white, $max-width:none, $border:none) {
   .btn:focus {
     color: $color;
   }
@@ -48,6 +48,11 @@ button.full {
       background: $background;
       color: $color;
       max-width: $max-width;
+      @if $border != none {
+        -webkit-box-shadow:inset 0px 0px 0px 2px $border;
+        -moz-box-shadow:inset 0px 0px 0px 2px $border;
+        box-shadow:inset 0px 0px 0px 2px $border;
+      }
       &:hover {
         background: darken($background, 5%);
         color: $color;
@@ -74,12 +79,13 @@ button.full {
 
 @include button($false, white, $black);
 @include button('primary', $blue, white);
+@include button('primary-inverse', white, $blue, none, $blue);
 @include button('success', $receive-green, white);
 @include button('success-alt', $security-green, white);
 @include button('default', white, $black);
 @include button('info', $light-grey, white);
 @include button('danger', #E28081, white);
-@include button('transfer', $transfer-blue, white)
+@include button('transfer', $transfer-blue, white);
 
 .button-sm {
   padding: .3125em .625em;

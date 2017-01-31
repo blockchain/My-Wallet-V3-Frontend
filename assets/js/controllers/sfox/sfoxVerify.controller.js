@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modals, Upload, QA) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
+
+  $scope.openHelper = modals.openHelper;
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';
@@ -103,7 +105,6 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.installLock();
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
-  $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
   // QA Tool

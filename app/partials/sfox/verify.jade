@@ -68,7 +68,10 @@
 .flex-row.flex-start.flex-column-tablet(ng-if="state.idType === 'id' || state.idType === 'address'")
   .width-40
     .width-80
-      h4.f-20.em-500.mvn.mb-10(translate="{{state.idType + '_ID'}}.TITLE")
+      .flex-row.flex-center.mb-10
+        h4.f-20.em-500.mvn(translate="{{state.idType + '_ID'}}.TITLE")
+        button.helper(ng-click="openHelper(state.idType + '-id-helper')" type="button" tabindex="-1")
+          span ?
       .mbl
         span.f-16(translate="{{state.idType + '_ID'}}.COPY")
       ul.mbl.pln.pl-20.f-16
@@ -91,5 +94,4 @@
           label.em-400.type-lbl.mls(for="verify-doc") Check this box if you want this doc to be approved right away.
 
   .width-60
-    label.f-14(translate="{{state.idType + '_ID'}}.UPLOAD_TITLE")
-    bc-file-upload(state="state" on-upload="upload")
+    bc-file-upload(file="state.file" id-type="state.idType" on-upload="upload")

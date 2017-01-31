@@ -42,7 +42,7 @@
           .group.full.mb-30
             .item
               label Routing Number
-                button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
+                button.helper(ng-click="openHelper('bank-check-helper')" type="button" tabindex="-1")
                   span ?
               input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(bankAccountForm, 'routingNumber')" required)
               span.error(ng-hide="bankAccountForm.routingNumber.$error.value" translate="Required field")
@@ -51,7 +51,7 @@
           .group.full.mb-30
             .item
               label Account Number
-                button.helper(ng-click="openBankHelper()" type="button" tabindex="-1")
+                button.helper(ng-click="openHelper('bank-check-helper')" type="button" tabindex="-1")
                   span ?
               input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(bankAccountForm, 'accountNumber')" required)
               span.error(ng-hide="bankAccountForm.accountNumber.$error.value" translate="Required field")
@@ -71,7 +71,7 @@
     .width-80
       .flex-row.flex-center.mb-10
         h4.f-20.em-500.mvn(translate="Verify Bank Account")
-        button.helper(ng-click="openDepositHelper()" type="button" tabindex="-1")
+        button.helper(ng-click="openHelper('bank-deposit-helper')" type="button" tabindex="-1")
           span ?
       .mbl
         span.f-16(translate="To protect against fraud, SFOX will send (and withdraw) 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. Please enter these amounts in any order to verify your account.")
