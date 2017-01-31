@@ -21,6 +21,7 @@
   .flex-column(ng-show="selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
       buy-limit="buyLimit"
+      buy-level="buyLevel"
       buy-account="account"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       handle-buy="buyHandler(quote)")

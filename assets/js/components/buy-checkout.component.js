@@ -4,6 +4,7 @@ angular
   .component('buyCheckout', {
     bindings: {
       buyLimit: '<',
+      buyLevel: '<',
       buyAccount: '<',
       collapseSummary: '=',
       handleQuote: '&',

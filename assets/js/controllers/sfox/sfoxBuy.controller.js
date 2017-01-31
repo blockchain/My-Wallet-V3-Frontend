@@ -8,6 +8,7 @@ function SfoxBuyController ($scope, Wallet, sfox, formatTrade) {
   $scope.summaryCollapsed = true;
   $scope.user = Wallet.user;
   $scope.buyLimit = exchange.profile.limits.buy;
+  $scope.buyLevel = exchange.profile.verificationStatus.level;
   $scope.quoteHandler = (...args) => sfox.fetchQuote(exchange, ...args);
 
   $scope.buyHandler = (...args) => {

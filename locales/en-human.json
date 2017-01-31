@@ -1220,8 +1220,16 @@
   "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
-  "VERIFICATION_NEEDED": "Verification Needed",
-  "VERIFICATION_NEEDED_EXPLAIN": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>",
+  "coinify-verification": {
+    "ICON": "ti-lock",
+    "TITLE": "Verification Needed",
+    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>"
+  },
+  "sfox-identity": {
+    "ICON": "ti-id-badge",
+    "TITLE": "Identification In Review",
+    "COPY": "SFOX is currently verifying your identity. This can take up to 2 days. Your limit will increase once you are verified."
+  },
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
   "BUY_BITCOIN_EXPLAIN": "You can now buy Bitcoin with your Blockchain wallet!",
