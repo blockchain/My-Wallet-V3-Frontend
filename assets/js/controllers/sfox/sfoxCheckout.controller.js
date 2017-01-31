@@ -10,6 +10,19 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     modals.openSfoxSignup(exchange).finally(() => { $scope.modalOpen = false; });
   };
 
+  $scope.state = {
+    account: accounts[0],
+    trades: exchange.trades,
+    buyLimit: exchange.profile && exchange.profile.limits.buy,
+    buyLevel: exchange.profile && exchange.profile.verificationStatus.level
+  };
+
+  $scope.setState = () => {
+    $scope.state.trades = exchange.trades;
+    $scope.state.buyLimit = exchange.profile && exchange.profile.limits.buy;
+    $scope.state.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
+  };
+
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
@@ -26,7 +39,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
 
   $scope.tabs = ['BUY_BITCOIN', /* 'SELL_BITCOIN', */ 'ORDER_HISTORY'];
-  $scope.selectedTab = $scope.signupCompleted ? $stateParams.selectedTab || 'BUY_BITCOIN' : null;
+  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
 
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
@@ -39,8 +52,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
-  $scope.buyLimit = exchange.profile && exchange.profile.limits.buy;
-  $scope.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buyHandler = (...args) => {
@@ -56,6 +67,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
         modals.openTradeSummary(trade, 'initiated');
         sfox.watchTrade(trade);
       })
+      .then(() => exchange.fetchProfile())
+      .then(() => $scope.setState())
       .catch(() => {
         Alerts.displayError('Error connecting to our exchange partner');
       });

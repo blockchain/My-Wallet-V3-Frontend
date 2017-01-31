@@ -22,8 +22,6 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
-  $scope.max = currency.convertToSatoshi(this.buyLimit, $scope.dollars);
-  $scope.min = currency.convertToSatoshi(0.01, $scope.dollars);
 
   let state = $scope.state = {
     fiat: null,
@@ -96,6 +94,12 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
     this.handleBuy({ quote }).finally($scope.resetFields).finally($scope.free);
   };
 
+  $scope.setLimits = (limit) => {
+    $scope.min = currency.convertToSatoshi(0.01, $scope.dollars);
+    $scope.max = currency.convertToSatoshi(limit, $scope.dollars);
+  };
+
+  $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watchGroup(['state.fiat', 'state.btc'], () => $scope.disableBuy());
