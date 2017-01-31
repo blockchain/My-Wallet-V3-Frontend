@@ -13,6 +13,7 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
     removed: false
   };
 
+  $scope.walletStatus = Wallet.status;
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
   $scope.validateSecondPassword = Wallet.validateSecondPassword;
 
@@ -60,5 +61,30 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
 
     $scope.status.waiting = true;
     Wallet.setSecondPassword($scope.fields.password, success);
+  };
+
+  $scope.openRecovery = () => $uibModal.open({
+    templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+    controller: 'ConfirmRecoveryPhraseCtrl',
+    windowClass: 'bc-modal'
+  });
+
+  $scope.recoveryModal = () => {
+    const openModal = () => $uibModal.open({
+      templateUrl: 'partials/recovery-before-second-password.jade',
+      controller: 'ManageSecondPasswordCtrl',
+      windowClass: 'bc-modal'
+    });
+
+    if (!Wallet.status.didConfirmRecoveryPhrase && !Wallet.settings.secondPassword) {
+      openModal().result
+      .then(() => {
+        $scope.openRecovery();
+      })
+      .catch((e) => {
+        if (e === 'backdrop click' || e === 'escape key press') return;
+        $scope.active = true;
+      });
+    }
   };
 }
