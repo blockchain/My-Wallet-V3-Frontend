@@ -124,6 +124,13 @@ form.bc-form {
     background: white;
     @extend .form-control;
     border: 1px solid #ccc;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-size: 12px;
+    background-repeat: no-repeat;
+    background-position: center right 10px;
+    background-image: url('../img/select-arrow.png');
   }
 
   input,
@@ -215,7 +222,7 @@ form.bc-form {
 
   .help {
     position: relative;
-    span { 
+    span {
       @extend .f-12;
       position: absolute;
     }

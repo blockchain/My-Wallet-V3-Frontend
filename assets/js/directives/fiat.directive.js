@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('fiat', fiat);
 
-fiat.$inject = ['$rootScope', 'Wallet', 'currency'];
+fiat.$inject = ['$rootScope', '$q', 'Wallet', 'currency'];
 
-function fiat ($rootScope, Wallet, currency) {
+function fiat ($rootScope, $q, Wallet, currency) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -16,8 +16,9 @@ function fiat ($rootScope, Wallet, currency) {
     },
     template: `
       <span>
-        <img ng-show="fiat.amount == null" src="img/spinner.gif" width="35" />
-        <span ng-hide="fiat.amount == null">{{ fiat.currencySymbol }}{{ fiat.amount }}</span>
+        <img ng-show="fiat.amount == null && !loadFailed" src="img/spinner.gif" width="35" />
+        <span ng-show="fiat.amount == null && loadFailed">N/A</span>
+        <span ng-show="fiat.amount != null">{{ fiat.currencySymbol }}{{ fiat.amount }}</span>
       <span>
     `,
     link: link
@@ -46,10 +47,9 @@ function fiat ($rootScope, Wallet, currency) {
       scope.fiat.currencySymbol = conversion.symbol;
 
       if (scope.date) {
-        currency.getFiatAtTime(scope.date, btc, curr.code).then((fiat) => {
-          scope.fiat.amount = currency.commaSeparate(fiat);
-          scope.$root.$safeApply(scope);
-        });
+        $q.resolve(currency.getFiatAtTime(scope.date, btc, curr.code))
+          .then((fiat) => { scope.fiat.amount = currency.commaSeparate(fiat); })
+          .catch(() => { scope.loadFailed = true; });
       } else {
         let fiat = currency.convertFromSatoshi(btc, curr);
         scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));

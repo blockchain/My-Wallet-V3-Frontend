@@ -221,6 +221,7 @@
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
+  "SET_SECOND_PW_ANYWAY": "Set Second Password Anyway",
   "NEXT_STEP" : "Next Step",
   "NEXT" : "Next",
   "EMAIL" : "Email",
@@ -237,8 +238,8 @@
   "PENDING" : "Pending",
   "PENDING_LOWERCASE": "pending",
   "PENDING_TX": "Your transaction is being confirmed by the blockchain! If you see that your transaction has been pending for a while- don’t worry. Depending on the used fee and network traffic, confirmation time can sometimes take a little longer.",
-  "PENDING_TX_SENDER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used, and network traffic. If the transaction is rejected, the funds will remain in your wallet.",
-  "PENDING_TX_RECEIVER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used, and network traffic. If the transaction is rejected, the funds will remain with the sending party.",
+  "PENDING_TX_SENDER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain in your wallet.",
+  "PENDING_TX_RECEIVER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain with the sending party.",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
@@ -319,6 +320,9 @@
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
   "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Please contact support.",
+  "RECOVERY_BEFORE_SECOND_PASSWORD": "Backup your funds first!",
+  "RECOVERY_BEFORE_SECOND_EXPLAINER": "We highly recommend you backup your wallet's recovery phrase before setting a second password. Backing up your wallet will ensure your bitcoins are safe in case you lose your password. For your security, we do not keep any passwords on file.",
+  "BACKUP_NOW": "Backup Now",
   "REMEMBER_2FA" : "Remember 2-step Verification",
   "REMEMBER_2FA_EXPLAIN" : "Your browser will be remembered for a short period of time, allowing you to login again without having to re-authenticate. Disable this to require full authentication every time you login. This will not affect your current browser until you delete all cookies.",
   "BLOCK_TOR" : "Wallet Access via Tor",
@@ -421,7 +425,7 @@
   "IP_WHITELIST_RESTRICT" : "Login IP Restriction",
   "IP_WHITELIST_RESTRICT_EXPLAIN" : "Only allow login from IP address in the whitelist. If you do not have a static IP address, this may lock you out of your wallet. If you have verified your email address, you will be notified of any suspicious login attempts.",
   "IP_WHITELIST" : "IP Whitelist",
-  "IP_WHITELIST_EXPLAIN" : "Allow login without email verification from the following list of comma-separated IP addresses. Use % as a wildcard.",
+  "IP_WHITELIST_EXPLAIN" : "Allow login without email authentication from the following list of comma-separated IP addresses. Use % as a wildcard.",
   "IP_WHITELIST_ERROR": "Failed to update IP Whitelist",
   "IP_INVALID": "Invalid IP Address",
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
@@ -1030,9 +1034,13 @@
     "TITLE": "Transaction expired.",
     "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
   },
-  "TX_KYC_PENDING": {
+  "TX_KYC_REVIEWING": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
     "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
+  },
+  "TX_KYC_REJECTED": {
+    "TITLE": "@:KYC_DENIED.TITLE",
+    "BODY": "There was an issue verifying your identity. Please try again. Bank transfers are unavailable until we can successfully verify your identity."
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
@@ -1221,5 +1229,6 @@
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, click here to start buying bitcoin.",
+  "NEED_HELP": "Need help?",
   "": ""
 }

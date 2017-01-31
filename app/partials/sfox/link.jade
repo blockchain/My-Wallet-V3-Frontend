@@ -60,10 +60,10 @@
           .group.full.mb-30
             label Account Type
             ui-select(ng-model="fields.type" tagging)
-              ui-select-match(placeholder="{{'SEARCH' | translate}}...") 
+              ui-select-match
                 span.capitalize {{ $select.selected }}
               ui-select-choices(repeat="type in types")
-                span.capitalize(ng-bind-html="type | highlight: $select.search")
+                span.capitalize(ng-bind-html="type")
           .group.full
             button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
 .flex-row.flex-column-tablet(ng-show="state.accounts.length")

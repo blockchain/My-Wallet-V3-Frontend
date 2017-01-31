@@ -85,6 +85,11 @@ angular.module('walletApp', modules)
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
+  $rootScope.safeWindowOpen = (url) => {
+    let otherWindow = window.open(url, '_blank');
+    otherWindow.opener = null;
+  };
+
   $rootScope.browserCanExecCommand = (
     (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
     (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
@@ -117,9 +122,9 @@ angular.module('walletApp', modules)
     // These are set by grunt dist:
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
-    $rootScope.isProduction = false;
 
     // Not set by grunt dist:
+    $rootScope.isProduction = $rootScope.rootURL === 'https://blockchain.info/' || $rootScope.rootURL === '/';
     $rootScope.buySellDebug = false;
 
     console.info(
