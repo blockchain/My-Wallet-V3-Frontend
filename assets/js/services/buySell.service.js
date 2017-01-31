@@ -27,7 +27,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, $rootScope.buySellDebug);
       if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
-        _buySellMyWallet.exchanges.sfox.api.production = $rootScope.isProduction;
+        _buySellMyWallet.exchanges.sfox.api.production = $rootScope.sfoxUseStaging === null ? $rootScope.isProduction : !Boolean($rootScope.sfoxUseStaging);
 
         // This can safely be done asynchrnously, because:
         // * the buy-sell tab won't appear until Options is loaded
@@ -38,7 +38,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         //     promise)
         let processOptions = (options) => {
           _buySellMyWallet.exchanges.coinify.partnerId = options.partners.coinify.partnerId;
-          _buySellMyWallet.exchanges.sfox.api.apiKey = options.partners.sfox.apiKey;
+          _buySellMyWallet.exchanges.sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
         };
         if (Options.didFetch) {
           processOptions(Options.options);
@@ -78,6 +78,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     signupForAccess,
     submitFeedback,
     tradeStateIn,
+    cancelTrade,
     states
   };
 
@@ -152,6 +153,17 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         $state.go('wallet.common.buy-sell');
         $uibModalStack.dismissAll();
       });
+  }
+
+  function cancelTrade (trade) {
+    let msg = 'CONFIRM_CANCEL_TRADE';
+    if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
+
+    return Alerts.confirm(msg, {
+      action: 'CANCEL_TRADE',
+      cancel: 'GO_BACK'
+    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
   function pollUserLevel (kyc) {
