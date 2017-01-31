@@ -40,6 +40,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
   $scope.buyLimit = exchange.profile && exchange.profile.limits.buy;
+  $scope.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buyHandler = (...args) => {
@@ -52,8 +53,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
         $scope.siftScienceEnabled = true;
         $scope.tradeId = trade.id;
         $scope.selectTab('ORDER_HISTORY');
-        let modalInstance = modals.openTradeSummary(trade, 'initiated');
-        sfox.watchTrade(trade, () => modalInstance.dismiss());
+        modals.openTradeSummary(trade, 'initiated');
+        sfox.watchTrade(trade);
       })
       .catch(() => {
         Alerts.displayError('Error connecting to our exchange partner');

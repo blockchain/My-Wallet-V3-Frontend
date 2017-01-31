@@ -7,6 +7,7 @@ describe "buySell service", () ->
   $q = undefined
   $uibModal = undefined
   exchange = undefined
+  Alerts = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -18,6 +19,7 @@ describe "buySell service", () ->
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
       Options = $injector.get("Options")
+      Alerts = $injector.get("Alerts")
 
       Options.get = () ->
         Promise.resolve({
@@ -148,3 +150,28 @@ describe "buySell service", () ->
     it "should open otherwise", ->
       buySell.openBuyView()
       expect($uibModal.open).toHaveBeenCalled()
+
+  describe "cancelTrade", ->
+    trade = undefined
+    beforeEach ->
+      trade = { cancel: () -> }
+      spyOn(Alerts, "displayError")
+
+    it "should confirm before canceling", ->
+      spyOn(Alerts, "confirm").and.returnValue($q.resolve())
+      buySell.cancelTrade(trade)
+      expect(Alerts.confirm).toHaveBeenCalled()
+
+    it "should not cancel if confirm was rejected", ->
+      spyOn(trade, "cancel").and.returnValue($q.resolve())
+      spyOn(Alerts, "confirm").and.returnValue($q.reject())
+      buySell.cancelTrade(trade)
+      $rootScope.$digest()
+      expect(trade.cancel).not.toHaveBeenCalled()
+
+    it "should show an error if the cancel fails", ->
+      spyOn(trade, "cancel").and.returnValue($q.reject("ERROR_TRADE_CANCEL"))
+      spyOn(Alerts, "confirm").and.returnValue($q.resolve())
+      buySell.cancelTrade(trade)
+      $rootScope.$digest()
+      expect(Alerts.displayError).toHaveBeenCalledWith("ERROR_TRADE_CANCEL")
