@@ -17,7 +17,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
       modalInstance.result.finally(() => { modalInstance = null; });
     };
   };
-  
+
   service.dismissPrevious = (modalOpener) => {
     let modalInstance = null;
     return (...args) => {
