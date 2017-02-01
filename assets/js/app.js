@@ -132,6 +132,10 @@ angular.module('walletApp', modules)
       $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
     );
 
+    if ($rootScope.sfoxUseStaging === undefined) {
+      $rootScope.sfoxUseStaging = null;
+    }
+
     if ($rootScope.sfoxUseStaging) {
       console.info(
         'Using SFOX staging environment with API key %s, Plaid environment %s and Sift Science key %s.',
