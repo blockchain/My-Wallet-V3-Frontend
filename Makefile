@@ -3,6 +3,7 @@ all: clean node_modules test pgp dist changelog
 node_modules:
 	npm install -g grunt-cli coffee-script
 	npm update
+	node_modules/bower/bin/bower install
 
 build: node_modules
 	grunt build
