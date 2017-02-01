@@ -43,7 +43,7 @@ function sfox ($q, Alerts, modals) {
   function determineStep (exchange, accounts) {
     let profile = exchange.profile;
     if (!profile) {
-      return 'create';
+      return 'buy';
     } else {
       let { level, required_docs = [] } = profile.verificationStatus;
       let didVerify = (level === 'verified') || (level === 'pending' && required_docs.length === 0);

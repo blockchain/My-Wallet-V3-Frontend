@@ -3,8 +3,8 @@
     .width-80(ng-hide="trade")
       h4.f-20.em-500.mvn.mb-10(translate="Buy Bitcoin")
       .mbl
-        span.f-16(ng-show="summaryCollapsed" translate="How much bitcoin would you like to buy? You can enter in either USD or BTC.")
-        span.f-16(ng-hide="summaryCollapsed" translate="You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete.")
+        span.f-16(ng-hide="state.buyReady" translate="How much bitcoin would you like to buy? You can enter in either USD or BTC.")
+        span.f-16(ng-show="state.buyReady" translate="You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete.")
     .width-80(ng-show="trade")
       h4.f-20.em-500.mvn.mb-10.success
         span(translate="TX_INITIATED.TITLE")
@@ -17,9 +17,11 @@
         buy-limit="state.buyLimit"
         buy-level="state.buyLevel"
         buy-account="account"
+        fiat-amount="fiatAmount"
+        update-amount="updateAmount(amount)"
         handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
         handle-buy="buyHandler(quote)"
-        collapse-summary="summaryCollapsed")
+        buy-ready="buyReady(ready)")
   .width-60.flex-justify(ng-if="trade")
     .width-80.width-100-tablet.width-100-mobile
       order-details(formatted-trade="trade")

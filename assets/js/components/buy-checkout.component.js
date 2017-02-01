@@ -6,9 +6,11 @@ angular
       buyLimit: '<',
       buyLevel: '<',
       buyAccount: '<',
-      collapseSummary: '=',
+      fiatAmount: '<',
+      updateAmount: '&',
       handleQuote: '&',
-      handleBuy: '&'
+      handleBuy: '&',
+      buyReady: '&'
     },
     templateUrl: 'templates/buy-checkout.jade',
     controller: BuyCheckoutController,
@@ -24,7 +26,7 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   $scope.btcAccount = Wallet.getDefaultAccount();
 
   let state = $scope.state = {
-    fiat: null,
+    fiat: this.fiatAmount,
     btc: null,
     rate: null,
     baseCurr: $scope.dollars,
@@ -56,12 +58,14 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
     $scope.cancelRefresh();
 
     let fetchSuccess = (quote) => {
+      this.summaryCollapsed = true;
+      this.buyReady({ready: true});
+
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
       let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
-      this.collapseSummary = false;
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = currency.convertToSatoshi(quote.quoteAmount, $scope.dollars) / 100;
     };
@@ -99,6 +103,7 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
     $scope.max = currency.convertToSatoshi(limit, $scope.dollars);
   };
 
+  $scope.$watch('state.fiat', () => this.updateAmount({amount: state.fiat}));
   $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
