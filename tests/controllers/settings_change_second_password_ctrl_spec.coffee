@@ -2,6 +2,10 @@ describe "ManageSecondPasswordCtrl", ->
   scope = undefined
   Wallet = undefined
   MyWallet = undefined
+  modal =
+    open: ->
+    close: ->
+    dismiss: ->
   modalInstance =
     close: ->
     dismiss: ->
@@ -23,11 +27,53 @@ describe "ManageSecondPasswordCtrl", ->
 
       $controller "ManageSecondPasswordCtrl",
         $scope: scope,
-        $uibModalInstance: modalInstance
+        $uibModalInstance: modalInstance,
+        # $uibModal: modal
 
       scope.model = { fields: {} }
       $compile(template)(scope)
       scope.$digest()
+
+  describe "recovery phrase prompt modal", ->
+
+    it "should open if called", inject(($uibModal) ->
+      spyOn($uibModal, "open").and.callThrough()
+      Wallet.status.didConfirmRecoveryPhrase = false
+      Wallet.settings.secondPassword = false
+      scope.recoveryModal()
+      expect($uibModal.open).toHaveBeenCalled()
+    )
+
+    it "should close the modal on dismissal and open recovery", inject(($uibModal, $q) ->
+      spyOn($uibModal, "open").and.returnValue( {result: $q.resolve()} )
+      spyOn(scope, "openRecovery")
+      scope.recoveryModal()
+      scope.$digest()
+      expect(scope.openRecovery).toHaveBeenCalled()
+    )
+
+    it "should not open if recovery phrase has been backed up", inject(($uibModal, $q) ->
+      spyOn($uibModal, "open")
+      Wallet.status.didConfirmRecoveryPhrase = true
+      scope.recoveryModal()
+      scope.$digest()
+      expect($uibModal.open).not.toHaveBeenCalled()
+    )
+
+    it "should not open if second password has been set already", inject(($uibModal, $q) ->
+      spyOn(modal, "open")
+      Wallet.settings.secondPassword = true
+      scope.recoveryModal()
+      expect(modal.open).not.toHaveBeenCalled()
+    )
+
+    it "should activate the form if user dismisses prompt", inject(($uibModal, $q) ->
+      spyOn($uibModal, "open").and.returnValue( {result: $q.reject()} )      
+      scope.recoveryModal()
+      modalInstance.dismiss()
+      scope.$digest()
+      expect(scope.active).toEqual(true)
+    )
 
   describe "password", ->
 

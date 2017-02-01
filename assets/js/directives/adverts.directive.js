@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .directive('adverts', adverts);
 
-adverts.$inject = ['Adverts', '$window', '$rootScope'];
+adverts.$inject = ['Adverts', '$rootScope'];
 
-function adverts (Adverts, $window, $rootScope) {
+function adverts (Adverts, $rootScope) {
   const directive = {
     restrict: 'E',
     replace: 'true',

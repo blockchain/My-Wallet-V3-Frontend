@@ -52,11 +52,6 @@ module.exports = (grunt) ->
         }
       }
 
-      html:
-        expand: true
-        src: ['build/index.html']
-        dest: ''
-
       js:
         expand: true
         src: ['build/js/app.js']
@@ -273,7 +268,7 @@ module.exports = (grunt) ->
     watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
-        tasks: ['build']
+        tasks: ['html2js', 'includeSource', 'concat:wallet']
         options:
           spawn: false
 
@@ -295,14 +290,22 @@ module.exports = (grunt) ->
         options:
           spawn: false
 
+      helper:
+        files: ['helperApp/plaid/**/*', 'helperApp/sift-science/**/*']
+        tasks: ['shell:webpack']
+        options:
+          spawn: false
+
     jade:
       html:
         options:
           client: false
+          pretty: true
+          data:
+            production: true
         files:
           "build/index.html": "app/index.jade"
           "build/landing.html": "app/landing.jade"
-
 
     babel:
       options:
@@ -440,6 +443,10 @@ module.exports = (grunt) ->
         command: (newVersion, message) ->
           "git tag -a -s #{ newVersion } -m '#{ message }' && git push origin #{ newVersion }"
 
+      webpack:
+        command: () ->
+          './node_modules/.bin/webpack'
+
     coveralls:
       options:
         debug: true
@@ -471,58 +478,13 @@ module.exports = (grunt) ->
           to: () =>
             "customWebSocketURL = '#{ @webSocketURL }'"
         }]
-      buy_sell_debug:
-        src: ['build/js/app.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'isProduction = false'
-          to: () =>
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              'isProduction = true'
-            else
-              'isProduction = false'
-        }]
-      buy_sell_coinify:
+      helper_app_url:
         src: ['build/js/wallet.js'],
         overwrite: true,
         replacements: [{
-          from: 'partnerId = 18'
+          from: 'http://localhost:8081'
           to: () =>
-            partnerId = 18
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              partnerId = 19
-            console.log "Coinify partner ID: #{ partnerId }"
-            "partnerId = #{ partnerId }"
-        },
-        {
-          from: 'stage-verify.isignthis.com'
-          to: () =>
-            domain = 'stage-verify.isignthis.com'
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              domain = 'verify.isignthis.com'
-            console.log "iSignThis domain: #{ domain }"
-            domain
-        }]
-      buy_sell_sfox:
-        src: ['build/js/wallet.js'],
-        overwrite: true,
-        replacements: [{
-          from: "sfox.api.apiKey = '6CD61A0E965D48A7B1883A860490DC9E'"
-          to: () =>
-            apiKey = '6CD61A0E965D48A7B1883A860490DC9E'
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              apiKey = 'f31614a7-5074-49f2-8c2a-bfb8e55de2bd'
-            console.log "SFOX API key: #{ apiKey }"
-            "sfox.api.apiKey = '#{ apiKey }'"
-        },
-        {
-          from: 'sfox.api.production = false'
-          to: () =>
-            p = 'false'
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              p = 'true'
-            console.log "SFOX production: #{ p }"
-            "sfox.api.production = #{ p }"
+            @helperAppUrl
         }]
 
       api_domain:
@@ -551,7 +513,6 @@ module.exports = (grunt) ->
           to: () =>
             "versionFrontend = '" + @versionFrontend + "'"
         }]
-
       version_my_wallet:
         src: ['build/js/app.js'],
         overwrite: true,
@@ -584,6 +545,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build", [
     "html2js"
     "babel:build"
+    "shell:webpack"
     "concat:wallet"
     "concat:qrReader"
     "concat:bcPhoneNumber"
@@ -609,6 +571,11 @@ module.exports = (grunt) ->
     webSocketURL = grunt.option('webSocketURL')
     apiDomain = grunt.option('apiDomain')
     network = grunt.option('network')
+
+    @helperAppUrl = grunt.option('helperAppUrl')
+    if !@helperAppUrl
+      console.log('Helper App URL missing')
+      exit(1)
 
     if !versionFrontend
       versionFrontend = "intermediate"
@@ -637,9 +604,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:root_url"
       "replace:web_socket_url"
-      "replace:buy_sell_debug"
-      "replace:buy_sell_coinify"
-      "replace:buy_sell_sfox"
+      "replace:helper_app_url"
     ]
 
     if apiDomain
@@ -662,7 +627,6 @@ module.exports = (grunt) ->
       "uglify:bcQrReader"
       "uglify:bcPhoneNumber"
       "jade"
-      "preprocess:html"
       "copy:main"
       "copy:blockchainWallet"
       "copy:css_dist"

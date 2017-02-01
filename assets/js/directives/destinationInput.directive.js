@@ -12,7 +12,8 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       model: '=ngModel',
       change: '&ngChange',
       onPaymentRequest: '&onPaymentRequest',
-      ignore: '='
+      ignore: '=',
+      setInputMetric: '&'
     },
     templateUrl: 'templates/destination-input.jade',
     link: link
@@ -36,6 +37,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       let address = Wallet.parsePaymentRequest(result);
       scope.model = format.destination(address, 'External');
       scope.onPaymentRequest({request: address});
+      scope.setInputMetric({metric: 'qr'});
       $timeout(scope.change);
     };
 

@@ -11,6 +11,8 @@ function sfox ($q, Alerts, modals) {
     displayError,
     determineStep,
     fetchExchangeData,
+    fetchQuote,
+    buy,
     watchTrades,
     watchTrade
   };
@@ -62,17 +64,26 @@ function sfox ($q, Alerts, modals) {
       .then(service.watchTrades);
   }
 
+  function fetchQuote (exchange, amount, baseCurr, quoteCurr) {
+    let quoteP = exchange.getBuyQuote(amount, baseCurr, quoteCurr);
+    return $q.resolve(quoteP);
+  }
+
+  function buy (account, quote) {
+    return $q.resolve(quote.getPaymentMediums())
+      .then(mediums => mediums.ach.buy(account));
+  }
+
   function watchTrades (trades) {
     trades
       .filter(t => !t.bitcoinReceived && !watching[t.receiveAddress])
       .forEach(service.watchTrade);
   }
 
-  function watchTrade (trade, completedCallback) {
+  function watchTrade (trade) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeSummary(trade, 'success'); })
-      .then(completedCallback);
+      .then(() => { modals.openTradeSummary(trade, 'success'); });
   }
 }

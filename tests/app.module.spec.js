@@ -36,6 +36,8 @@ angular.module('walletApp', modules).run(($rootScope) => {
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
+  $rootScope.safeWindowOpen = () => {};
+
   $rootScope.scheduleRefresh = () => {};
   $rootScope.cancelRefresh = () => {};
 

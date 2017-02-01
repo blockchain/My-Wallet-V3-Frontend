@@ -15,7 +15,7 @@
                         modal-open="status.modalOpen"
                         change-currency="changeCurrency(currency)"
                         trading-disabled="getIsTradingDisabled()"
-                        is-pending-trade="getIsPurchasePending()"
+                        trading-disabled-reason="getIsTradingDisabledReason()"
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
@@ -27,12 +27,13 @@
         span Coinify Account: {{ exchange.profile.email }}
       table.width-100
         tr.border.bg-light-blue
-          th.phml.pvs.width-35.pl7em(translate="STATUS")
-          th.phml.pvs(translate="DATE")
-          th.phml.right-align.pvs.center-align BTC
-          th.phml.right-align.pvs.center-align.width-15(translate="TOTAL")
+          th.phml.pvs.width-30(translate="STATUS")
+          th.pvs.width-30(translate="DATE")
+          th.pvs.width-25 BTC
+          th.pvs.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
+          disabled="status.disabled"
           trade="trade"
           buy="buy"
           in-view="$last && scrollTrades()")
@@ -42,8 +43,4 @@
           span.type-h5.security-red(translate=".DISAGREE")
           span.type-h5.mhm.pointer(uib-rating ng-model="rating" max="5" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" ng-click="submitFeedback(rating)")
           span.type-h5.success(translate=".AGREE")
-    .bottom-right-footer.flex-end.pal
-      .em-500
-        span Need help?
-        | &nbsp;
-        a.underline(href="https://support.blockchain.com/hc/en-us/requests/new" target="_blank" rel="noopener noreferrer" translate="CONTACT_SUPPORT")
+    contact-support-footer

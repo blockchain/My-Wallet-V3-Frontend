@@ -7,6 +7,7 @@ describe "SendCtrl", ->
   fees = undefined
   scope = undefined
   $q = undefined
+  $httpBackend = undefined
 
   askForSecondPassword = undefined
 
@@ -22,6 +23,7 @@ describe "SendCtrl", ->
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, _$q_) ->
       $q = _$q_
+      $httpBackend = $injector.get("$httpBackend")
       MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
       MyWalletPayment = $injector.get("MyWalletPayment")
@@ -521,6 +523,33 @@ describe "SendCtrl", ->
           expect(Wallet.setNote).not.toHaveBeenCalled()
         )
 
+        describe "address input metrics", ->
+          beforeEach ->
+            spyOn(scope, "sendInputMetrics")
+
+          it "should not send if inputMetric is null", ->
+            scope.send()
+            scope.$digest()
+            expect(scope.sendInputMetrics).not.toHaveBeenCalled()
+
+          it "should not send if inputMetric is not valid", ->
+            scope.inputMetric = "asdf"
+            scope.send()
+            scope.$digest()
+            expect(scope.sendInputMetrics).not.toHaveBeenCalled()
+
+          it "should send if inputMetric is valid", ->
+            scope.inputMetric = "paste"
+            scope.send()
+            scope.$digest()
+            expect(scope.sendInputMetrics).toHaveBeenCalledWith("paste")
+
+    describe "sendInputMetrics", ->
+      it "should record the event correctly", ->
+        $httpBackend.expectGET("/event?name=wallet_web_tx_from_paste").respond('success')
+        scope.sendInputMetrics("paste")
+        $httpBackend.verifyNoOutstandingExpectation()
+
     describe "resetSendForm", ->
 
       beforeEach ->
@@ -753,7 +782,7 @@ describe "SendCtrl", ->
         expect(Alerts.prompt).toHaveBeenCalledWith('NEED_BIP38', jasmine.any(Object))
 
     describe "with a pasted custom bitcoin url", ->
-      
+
       it "should parse the url and update scope", inject (($timeout) ->
         pasteEvent = { target: { value:  'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'} }
         scope.transaction.destinations = [{address: 'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'}]

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell) {
+function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -27,9 +27,24 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, $rootScope.buySellDebug);
       if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
-        _buySellMyWallet.exchanges.coinify.partnerId = 18; // Replaced by Grunt for production
-        _buySellMyWallet.exchanges.sfox.api.apiKey = '6CD61A0E965D48A7B1883A860490DC9E'; // Replaced by Grunt for production
-        _buySellMyWallet.exchanges.sfox.api.production = false; // Replaced by Grunt for production
+        _buySellMyWallet.exchanges.sfox.api.production = $rootScope.sfoxUseStaging === null ? $rootScope.isProduction : !Boolean($rootScope.sfoxUseStaging);
+
+        // This can safely be done asynchrnously, because:
+        // * the buy-sell tab won't appear until Options is loaded
+        // * no information is fetched from partner API's until:
+        //   * the buy-sell tab is shown; or
+        //   * monitorPayments() is called and finds a new transaction (which is
+        //     why the monitorPayments call below is wrapped in an Options.get()
+        //     promise)
+        let processOptions = (options) => {
+          _buySellMyWallet.exchanges.coinify.partnerId = options.partners.coinify.partnerId;
+          _buySellMyWallet.exchanges.sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
+        };
+        if (Options.didFetch) {
+          processOptions(Options.options);
+        } else {
+          Options.get().then(processOptions);
+        }
       }
     }
     return _buySellMyWallet;
@@ -63,6 +78,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     signupForAccess,
     submitFeedback,
     tradeStateIn,
+    cancelTrade,
     states
   };
 
@@ -74,7 +90,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function init (exchange) {
     if (exchange.trades) setTrades(exchange.trades);
-    exchange.monitorPayments();
+    // Make sure this does not get called before the API key is set above
+    Options.get().then(() => {
+      exchange.monitorPayments();
+    });
     return $q.resolve();
   }
 
@@ -134,6 +153,17 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         $state.go('wallet.common.buy-sell');
         $uibModalStack.dismissAll();
       });
+  }
+
+  function cancelTrade (trade) {
+    let msg = 'CONFIRM_CANCEL_TRADE';
+    if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
+
+    return Alerts.confirm(msg, {
+      action: 'CANCEL_TRADE',
+      cancel: 'GO_BACK'
+    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
   function pollUserLevel (kyc) {
@@ -233,14 +263,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function signupForAccess (email, country, state) {
-    let url = 'https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + country + '&entry.387129390=' + state;
-    let otherWindow = window.open(url);
-    otherWindow.opener = null;
+    $rootScope.safeWindowOpen('https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + country + '&entry.387129390=' + state);
   }
 
   function submitFeedback (rating) {
-    let url = 'https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating;
-    let otherWindow = window.open(url);
-    otherWindow.opener = null;
+    $rootScope.safeWindowOpen('https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating);
   }
 }

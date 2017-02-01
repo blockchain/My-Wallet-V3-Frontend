@@ -12,21 +12,21 @@ tr.border
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
     
-    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
-    span.type-sm.blue.underline.pointer(ng-click="triggerBuy()" ng-show="trade.state !== 'awaiting_transfer_in'") View details
+    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()" ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
+    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()" ng-show="trade.state !== 'awaiting_transfer_in'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
-  td.type-lbl.pvml.center-align(ng-hide="status.gettingQuote")
+  td.type-lbl.pvml(ng-hide="status.gettingQuote")
     span(ng-hide="!trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
       span.display-inline-block.left-align
         quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
+      br
       span(ng-if="buySellDebug")
-        br
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
-    span.display-inline-block.mlm(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
-  td.type-lbl.center-align
+    span.display-inline-block(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
+  td.type-lbl
     span(ng-hide="status.gettingQuote")
       span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
       i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade)" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")

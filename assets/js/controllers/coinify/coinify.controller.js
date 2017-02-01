@@ -30,6 +30,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
   $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
   $scope.isPendingBankTransfer = () => $scope.medium === 'bank' && $scope.trade && $scope.trade.state === 'awaiting_transfer_in';
+  $scope.hideBuySteps = () => $scope.trades.completed.length >= 1;
 
   $scope.expiredQuote = $scope.trade && new Date() > $scope.trade.quoteExpireTime && $scope.trade.id;
   let updateBTCExpected = (quote) => { $scope.status.gettingQuote = false; $scope.btcExpected = quote; };
@@ -206,6 +207,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     } else if ($scope.onStep('select-payment-medium')) {
       return !$scope.quote || !$scope.medium;
     } else if ($scope.onStep('summary')) {
+      if ($scope.isMedium('bank') && !$scope.rateForm.$valid) {
+        return true;
+      }
       return $scope.editAmount || !$scope.limits.max;
     }
   };
@@ -220,7 +224,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.formatTrade = (state) => {
-    if ($scope.isKYC || $scope.needsKyc()) state = 'kyc';
     $scope.formattedTrade = formatTrade[state]($scope.trade);
 
     if ($scope.needsKyc()) {
@@ -265,7 +268,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
       [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
       let openSurvey = () => {
         $scope.cancel();
-        $window.open(link);
+        $rootScope.safeWindowOpen(link);
         $cookies.putObject('survey-opened', {index: index});
       };
       Alerts.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'}).then(openSurvey, $scope.cancel);

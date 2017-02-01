@@ -39,7 +39,7 @@
      color: $transfer-blue;
     }
     .tx-toggle {
-      top: 31px;
+      top: 25px;
       left: 10px;
       position: absolute;
     }
@@ -57,7 +57,8 @@
     transaction-description {
       .progress {
         @extend .mbn;
-        background: rgba(0,0,0,0.2);
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.4);
       }
       .progress-bar {
         background-color: $blue;
@@ -78,6 +79,9 @@
         &:hover {
           color: $blue;
         }
+      }
+      .pending-clock {
+        width: 17px;
       }
     }
   }

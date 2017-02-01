@@ -1,7 +1,9 @@
 .transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
+    a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
+      i.ti-export
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
-    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mvl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
+    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mbl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
       ui-select.mbl(
         ng-show="accounts.length > 1"
@@ -70,11 +72,11 @@
       i.ti-search.h1.mrm
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
-    .transaction(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
-      .tx-toggle.pointer.hidden-xs(ng-click="tx.toggled = !tx.toggled")
+    .transaction.flex-center(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
+      .tx-toggle.pointer.hidden-xs.mtm(ng-click="tx.toggled = !tx.toggled")
         i.ti-arrow-circle-right.h4.aaa(ng-show="!tx.toggled")
         i.ti-arrow-circle-down.h4.aaa(ng-show="tx.toggled")
-      .tx-details.mll.mvm
+      .tx-details.width-100.mll.mvm
         span 
           transaction-description(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")
     .row

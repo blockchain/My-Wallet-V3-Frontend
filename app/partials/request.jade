@@ -89,7 +89,6 @@
           p.form-control-static.bitcoin-address
             img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
             span(ng-show="status.didInitializeHD" single-click-select)
-              | 
               button.clipboard.btn.button-default
               span(ng-hide="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestAddress() }}
               span(ng-show="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestURL() }}

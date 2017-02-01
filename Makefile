@@ -37,7 +37,9 @@ export API_DOMAIN:=api.blockchain.info
 endif
 
 dist: build
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL)
+	DIST=1 ./node_modules/.bin/webpack
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(HELPER_APP_URL)
+	mv helperApp/dist dist/wallet-helper
 	npm shrinkwrap --dev
 
 dist_fixed_domain: build
@@ -45,7 +47,7 @@ dist_fixed_domain: build
 	npm shrinkwrap --dev
 
 changelog: node_modules
-	node_modules/git-changelog/tasks/command.js $(TAG_ARG) -f "Changelog.md" -g "^fix|^feat|^docs|^refactor|^chore|^test|BREAKING" -i "" -a "Blockchain Wallet V3 Frontend" --repo_url "https://github.com/blockchain/My-Wallet-V3-Frontend"
+	node_modules/git-changelog/tasks/command.js $(TAG_ARG) -f "Changelog.md" -g "^fix|^feat|^docs|^refactor|^chore|^test|^build|^dev|BREAKING" -i "" -a "Blockchain Wallet V3 Frontend" --repo_url "https://github.com/blockchain/My-Wallet-V3-Frontend"
 
 .env:
 	echo "DIST=1\nAUTO_RELOAD=0\nPORT=8080\nROOT_URL=https://blockchain.info\nWEB_SOCKET_URL=wss://ws.blockchain.info/inv\nAPI_DOMAIN=https://api.blockchain.info" >> .env
@@ -54,5 +56,5 @@ server: .env dist_fixed_domain
 	npm start
 
 clean:
-	rm -rf build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache
+	rm -rf build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache helperApp/build helperApp/dist
 	npm cache clean

@@ -1,6 +1,6 @@
 describe "Adverts Directive", ->
   $compile = undefined
-  $rootScope = undefined
+  rootScope = undefined
   element = undefined
   isoScope = undefined
 
@@ -11,16 +11,20 @@ describe "Adverts Directive", ->
         ads: [{id: 1337}]
       return
 
-    inject((_$compile_, _$rootScope_, Adverts) ->
+    inject((_$compile_, $rootScope, Adverts) ->
         spyOn(Adverts, "fetchOnce")
 
+        rootScope = $rootScope;
+
         $compile = _$compile_
-        $rootScope = _$rootScope_
+
+        scope = $rootScope.$new()
         $rootScope.apiDomain = "https://api.blockchain.info/"
 
-        element = $compile("<adverts></adverts>")($rootScope)
+        element = $compile("<adverts></adverts>")(scope)
 
-        $rootScope.$digest()
+        scope.$digest()
+
         isoScope = element.isolateScope()
         isoScope.$digest()
 

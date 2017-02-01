@@ -2,7 +2,7 @@
   transaction-warning(transaction="transaction")
   .flex-row.flex-between
     i.pointer.ti-new-window.blue(ng-click="verify()" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
-    helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning" append="true")
+    helper-button(content="{{ 'TRANSACTION_WILL_COMPLETE_IN' | translate:{minutes: minutesRemaining } }}" ng-if="!frugalWarning" append="true" linktext="LEARN_MORE_LOWER" link="https://support.blockchain.com/hc/en-us/articles/217116406-Why-hasn-t-my-transaction-confirmed-yet-")
     helper-button(content="{{ 'TRANSACTION_FRUGAL' | translate }}" ng-if="frugalWarning" append="true")
   uib-progressbar.mts(value="transaction.confirmations" max="3")
     span.plm(translate="PENDING")

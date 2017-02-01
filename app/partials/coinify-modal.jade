@@ -9,7 +9,7 @@
         .flex-column.flex-align-end(ng-hide="status.gettingQuote"
                                     uib-tooltip="{{getQuoteHelper() | translate}}" 
                                     tooltip-append-to-body="true"
-                                    tooltip-placement="right"
+                                    tooltip-placement="top"
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500
             span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }} BTC
@@ -28,7 +28,7 @@
                 before-step="beforeStep"
                 payment-info="paymentInfo"
                 exchange-acct="userHasExchangeAcct"
-                ng-hide="status.loading || isPendingBankTransfer()"
+                ng-hide="status.loading || isPendingBankTransfer() || hideBuySteps()"
                 currency-symbol="currencySymbol"
                 trade-obj="trade")
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")

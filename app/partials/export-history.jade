@@ -6,7 +6,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
 
   .modal-body
     .ph-form.flex-row
-      .flex-1
+      .flex-1.hidden-sm.hidden-xs
       .flex-4
         .form-group.pal(ng-show="activeCount > 1")
           ui-select.send-from-dropdown(
@@ -28,6 +28,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
               datepicker-options="options"
               is-open="start.open"
               placeholder="{{'START_DATE'|translate}}"
+              popup-placement="auto"
               required)
             span.pxs.ti-calendar.pointer(ng-click="start.open=true")
           i.ti-arrow-right.blue.pll.prl
@@ -40,9 +41,10 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
               datepicker-options="options"
               is-open="end.open"
               placeholder="{{'END_DATE'|translate}}"
+              popup-placement="auto"
               required)
             span.pxs.ti-calendar.pointer(ng-click="end.open=true")
-      .flex-1
+      .flex-1.hidden-sm.hidden-xs  
 
   .modal-footer
     button.button-muted.mrm(

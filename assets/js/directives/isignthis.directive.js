@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('isignthis', isignthis);
 
-function isignthis ($sce) {
+function isignthis ($sce, Options) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -31,11 +31,23 @@ function isignthis ($sce) {
       }
     });
 
+    let iSignThisDomain;
+
+    let processOptions = (options) => {
+      iSignThisDomain = options.partners.coinify.iSignThisDomain;
+    };
+
+    if (Options.didFetch) {
+      processOptions(Options.options);
+    } else {
+      Options.get().then(processOptions);
+    }
+
     scope.iSignThisFrame = (iSignThisID) => {
       // TODO: use elem or avoid usage alltogether:
       var e = document.getElementById('isx-iframe');
 
-      scope.url = $sce.trustAsResourceUrl('https://stage-verify.isignthis.com/landing/' + iSignThisID + '?embed=true');
+      scope.url = $sce.trustAsResourceUrl(`${iSignThisDomain}/landing/${iSignThisID}?embed=true`);
 
       // iSignThis iframe contoller code, TODO:
       // * Angularize
@@ -99,7 +111,7 @@ function isignthis ($sce) {
         eventer(messageEvent, function (e) {
           // Check for the domain who sent the messageEvent
           var origin = e.origin || e.originalEvent.origin;
-          if (origin !== 'https://stage-verify.isignthis.com') {
+          if (origin !== iSignThisDomain) {
             // Event not generated from ISX, simply return
             return;
           }

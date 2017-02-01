@@ -87,6 +87,10 @@
     "BODY": "You've been inactive for {{::minutes}} minutes. Click \"Cancel\" if you don't want to be logged out automatically."
   },
   "LOG_ME_OUT": "Log me out",
+  "CONFIRM_CANCEL_BANK_TRADE": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "Are you sure you want to cancel this trade? <br><br> <strong>Note:</strong> if you have already sent funds from your bank account to Coinify, this trade will still be processed when they receive your transfer and you will be sent the bitcoin you purchased."
+  },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
@@ -137,6 +141,7 @@
   "RECEIVED" : "Received",
   "GENERATED_ADDRESS": "A new address is generated every time you receive Bitcoin. Don’t worry, you can continue using your previously used addresses. ",
   "LEARN_MORE": "Learn More",
+  "LEARN_MORE_LOWER": "Learn more",
   "SENT" : "Sent",
   "MOVED_BITCOIN_TO" : "Transferred",
   "TRANSFERRED" : "Transferred",
@@ -216,6 +221,7 @@
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
+  "SET_SECOND_PW_ANYWAY": "Set Second Password Anyway",
   "NEXT_STEP" : "Next Step",
   "NEXT" : "Next",
   "EMAIL" : "Email",
@@ -230,6 +236,10 @@
   "MANAGE_ADDRESSES" : "Manage",
   "ACCOUNT_XPUB_MODAL_TITLE" : "Extended Public Key",
   "PENDING" : "Pending",
+  "PENDING_LOWERCASE": "pending",
+  "PENDING_TX": "Your transaction is being confirmed by the blockchain! If you see that your transaction has been pending for a while- don’t worry. Depending on the used fee and network traffic, confirmation time can sometimes take a little longer.",
+  "PENDING_TX_SENDER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain in your wallet.",
+  "PENDING_TX_RECEIVER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain with the sending party.",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
@@ -310,6 +320,9 @@
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
   "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Please contact support.",
+  "RECOVERY_BEFORE_SECOND_PASSWORD": "Backup your funds first!",
+  "RECOVERY_BEFORE_SECOND_EXPLAINER": "We highly recommend you backup your wallet's recovery phrase before setting a second password. Backing up your wallet will ensure your bitcoins are safe in case you lose your password. For your security, we do not keep any passwords on file.",
+  "BACKUP_NOW": "Backup Now",
   "REMEMBER_2FA" : "Remember 2-step Verification",
   "REMEMBER_2FA_EXPLAIN" : "Your browser will be remembered for a short period of time, allowing you to login again without having to re-authenticate. Disable this to require full authentication every time you login. This will not affect your current browser until you delete all cookies.",
   "BLOCK_TOR" : "Wallet Access via Tor",
@@ -321,7 +334,7 @@
   "BLOCKED" : "Blocked",
   "RENAME_ACCOUNT" : "Name",
   "RENAME" : "Rename",
-  "TRANSACTION_WILL_COMPLETE_IN" : "This transaction will complete in approximately {{ minutes }} minutes after it has 3 confirmations.",
+  "TRANSACTION_WILL_COMPLETE_IN" : "Your transaction will be complete after it has 3 confirmations.",
   "EXPORT_HISTORY" : "Export History",
   "EXPORT_HISTORY_EXPLAIN" : "Export the transaction history of your addresses in CSV format",
   "DEV_THEMES": "Dev Themes",
@@ -412,7 +425,7 @@
   "IP_WHITELIST_RESTRICT" : "Login IP Restriction",
   "IP_WHITELIST_RESTRICT_EXPLAIN" : "Only allow login from IP address in the whitelist. If you do not have a static IP address, this may lock you out of your wallet. If you have verified your email address, you will be notified of any suspicious login attempts.",
   "IP_WHITELIST" : "IP Whitelist",
-  "IP_WHITELIST_EXPLAIN" : "Allow login without email verification from the following list of comma-separated IP addresses. Use % as a wildcard.",
+  "IP_WHITELIST_EXPLAIN" : "Allow login without email authentication from the following list of comma-separated IP addresses. Use % as a wildcard.",
   "IP_WHITELIST_ERROR": "Failed to update IP Whitelist",
   "IP_INVALID": "Invalid IP Address",
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
@@ -511,7 +524,7 @@
   "JUST_RECEIVED_BITCOIN" : "You've just received Bitcoin!",
   "SUCCESS" : "Success!",
   "COPY_SUCCESS": "Successfully copied to your clipboard!",
-  "BITCOIN_SENT" : "You've successfully sent bitcoin",
+  "BITCOIN_SENT" : "Your transaction is being confirmed!",
   "BITCOIN_SENT_TOR" : "You've successfully sent bitcoin. Please refresh your TOR browser to see it.",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
@@ -953,7 +966,6 @@
   "BUY_BITCOIN": "Buy Bitcoin",
   "SELL_BITCOIN": "Sell Bitcoin",
   "BANK_TRANSFER_HEADING": "Bank Transfer",
-  "BANK_TRANSFER_NEXT_STEPS": "Bank transfers can take a day or more depending on your bank. Once the transfer is complete, your bitcoin will be sent to <b>{{::label}}</b>.",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<span class='blue'>Click here.</span>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin purchase. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -1003,7 +1015,7 @@
   "SOLD_VIA": "Sold via {{exchange}}",
   "TX_ERROR_STATE": {
     "TITLE": "Transaction {{::state}}",
-    "BODY": "Your purchase has been {{::state}}."
+    "BODY": ""
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
@@ -1021,13 +1033,21 @@
     "TITLE": "Transaction expired.",
     "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
   },
-  "TX_KYC_PENDING": {
+  "TX_KYC_REVIEWING": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
     "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
   },
+  "TX_KYC_REJECTED": {
+    "TITLE": "@:KYC_DENIED.TITLE",
+    "BODY": "There was an issue verifying your identity. Please try again. Bank transfers are unavailable until we can successfully verify your identity."
+  },
+  "TX_CARD_REJECTED": {
+    "TITLE": "Transaction {{::state}}",
+    "BODY": "Your purchase was rejected and unfortunately the reason cannot be disclosed. A refund has been issued and should appear in your card statement within a few days. We apologize for the inconvenience."
+  },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
-    "BODY": "Send <b>{{::amt}} {{::curr}}</b> from your bank account held in your own name within <b>the next 48 hours</b>. Coinify will reject any transfers from third party accounts."
+    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to the following account within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1091,6 +1111,7 @@
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
   "CONFIRM_YOUR_ORDER": "Confirm your order:",
   "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
+  "ORDER_CONFIRMATION_BANK_COPY": "Please confirm your order details before continuing. Bank transfers can take a day or more to complete depending on your bank, and the displayed bitcoin rate may change depending on the current exchange rate when processed.",
   "ERROR_DAILY_LIMIT": "Error: Exceeds Daily Limit",
   "ERROR_MIN_LIMIT": "Error: Below Minimum Limit",
   "ERROR_DAILY_LIMIT_COPY": "The amount selected exceeds your daily buy limit. For bank transfers, you can exchange {{max}} {{code}} more today. Please update your order to proceed.",
@@ -1101,7 +1122,7 @@
   "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
   "ORDER_DETAILS": "Order Details:",
   "BANK_ORDER_DETAILS": "Send your funds to the following bank account:",
-  "ORDER_ID_REFERENCE": "Make sure to include the reference / Order ID as a message in the payment.",
+  "ORDER_ID_REFERENCE": "*Must be included in your transfer*",
   "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
@@ -1125,6 +1146,7 @@
   },
   "SPEND_IMPORTED_ADDRESS": "Spend",
   "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
+  "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
   "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet secure and seamless.",
   "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
@@ -1164,7 +1186,7 @@
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
   "ENTER_AMOUNT:": "Enter amount:",
-  "BUY_BITCOIN_ALERT": "You can now buy Bitcoin with your Blockchain wallet! Click below to get started.",
+  "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "COINIFY_SURVEY": {
@@ -1173,23 +1195,43 @@
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
-    "TITLE": "Upload A Photo ID",
+    "TITLE": "Photo ID Verification",
     "COPY": "To verify your identity, we need one of the following government-issued forms of identification showing your country of residence:",
     "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
     "OPTION1": "State issued driver’s license",
     "OPTION2": "State issued identification card",
     "OPTION3": "Passport",
     "OPTION4": "Government issued identification",
-    "UPLOAD_TITLE": "Photo Identification"
+    "UPLOAD_TITLE": "Photo ID",
+    "UPLOAD_SELECT": "Select Upload Method",
+    "HELP": "Capture the front side of ID, clearly displaying your identification number."
   },
   "address_ID": {
-    "TITLE": "Upload A Proof of Address",
+    "TITLE": "Proof of Address Verification",
     "COPY": "Please upload one of the following documents clearly displaying your address dated within the past 6 months:",
     "OPTION1": "Utility bill (except mobile phone bills)",
     "OPTION2": "First page and signature page of lease",
     "OPTION3": "First page of your bank statement",
     "OPTION4": "DMV or voter registration",
-    "UPLOAD_TITLE": "Proof of Address"
+    "UPLOAD_TITLE": "Proof of Address",
+    "UPLOAD_SELECT": "Select Upload Method",
+    "HELP": "Make sure the snapshot clearly displays your address."
+  },
+  "bank-check-helper": {
+    "TITLE": "Routing and Account Number",
+    "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."
+  },
+  "bank-deposit-helper": {
+    "TITLE": "Bank Deposits",
+    "COPY": "SFOX sent 2 small deposits to your bank account. Deposits will appear in your account as “SFOX” in 1-2 days."
+  },
+  "id-id-helper": {
+    "TITLE": "Acceptable Photo IDs",
+    "COPY": "You may submit a valid state issued driver license, state issued identification card, passport, or government issued identification. Make sure the identifation number is clearly visible."
+  },
+  "address-id-helper": {
+    "TITLE": "Acceptable Proof of Address",
+    "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1199,15 +1241,28 @@
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
-  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your Bitcoin purchases. Click Continue to begin buying bitcoin.",
-  "SFOX_EXPLAIN": "Our partner SFOX will process your Bitcoin purchases. You will need to provide some information and link a payment method.",
+  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying bitcoin.",
+  "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
-  "VERIFICATION_NEEDED": "Verification Needed",
-  "VERIFICATION_NEEDED_EXPLAIN": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>",
+  "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
+  "coinify-verification": {
+    "ICON": "ti-lock",
+    "TITLE": "Verification Needed",
+    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>"
+  },
+  "sfox-identity": {
+    "ICON": "ti-id-badge",
+    "TITLE": "Identification In Review",
+    "COPY": "SFOX is currently verifying your identity. This can take up to 2 days. Your limit will increase once you are verified."
+  },
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
   "BUY_BITCOIN_EXPLAIN": "You can now buy Bitcoin with your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
+  "NO_TRADES": "Your Order History",
+  "BTC_APPROX_RATE": "BTC (approximate rate):",
+  "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='blue'>click here to start</span> buying bitcoin.",
+  "NEED_HELP": "Need help?",
   "": ""
 }

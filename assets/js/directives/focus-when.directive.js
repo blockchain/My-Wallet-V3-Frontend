@@ -6,13 +6,10 @@ angular
 function focusWhen ($timeout) {
   return {
     restrict: 'A',
-    scope: {
-      trigger: '=focusWhen'
-    },
     link: link
   };
   function link (scope, elem, attrs) {
-    scope.$watch('trigger', (value) => {
+    scope.$watch(attrs.focusWhen, (value) => {
       if (value) $timeout(() => elem[0].focus(), 100);
     });
   }

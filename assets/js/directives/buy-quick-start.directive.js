@@ -3,9 +3,9 @@ angular.module('walletApp')
 
 const ONE_DAY_MS = 86400000;
 
-buyQuickStart.$inject = ['currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
 
-function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, modals) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -14,7 +14,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
       limits: '=',
       disabled: '=',
       tradingDisabled: '=',
-      isPendingTrade: '=',
+      tradingDisabledReason: '=',
       openPendingTrade: '&',
       pendingTrade: '=',
       modalOpen: '=',
@@ -34,6 +34,7 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
     scope.format = currency.formatCurrencyForView;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
+    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
 
     scope.getExchangeRate = () => {
       stopFetchingQuote();
@@ -88,29 +89,18 @@ function buyQuickStart (currency, buySell, Alerts, $interval, $timeout, modals) 
 
     scope.cancelTrade = () => {
       scope.disabled = true;
-      Alerts.confirm('CONFIRM_CANCEL_TRADE', {
-        action: 'CANCEL_TRADE',
-        cancel: 'GO_BACK'
-      }).then(() => scope.pendingTrade.cancel(), () => {})
-        .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); })
-        .finally(() => scope.disabled = false);
+      buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
     };
 
-    scope.openVerificationNeeded = () => {
+    scope.getDays = () => {
       let verifyDate = buySell.getExchange().profile.canTradeAfter;
-      console.log('verifyDate', verifyDate);
-      let days = isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
-      let options = { windowClass: 'bc-modal sm' };
-      modals.openTemplate('partials/verification-needed-modal.jade', { days }, options);
+      return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
     };
 
     scope.getExchangeRate();
     scope.$on('$destroy', stopFetchingQuote);
     scope.$watch('modalOpen', (modalOpen) => {
       modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
-    });
-    scope.$watch('pendingTrade.state', (state) => {
-      scope.canCancelTrade = state === 'awaiting_transfer_in';
     });
   }
 }

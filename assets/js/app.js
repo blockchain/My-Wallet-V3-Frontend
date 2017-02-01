@@ -85,6 +85,11 @@ angular.module('walletApp', modules)
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   };
 
+  $rootScope.safeWindowOpen = (url) => {
+    let otherWindow = window.open(url, '_blank');
+    otherWindow.opener = null;
+  };
+
   $rootScope.browserCanExecCommand = (
     (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
     (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
@@ -117,15 +122,24 @@ angular.module('walletApp', modules)
     // These are set by grunt dist:
     $rootScope.versionFrontend = null;
     $rootScope.versionMyWallet = null;
-    $rootScope.isProduction = false;
 
     // Not set by grunt dist:
+    $rootScope.isProduction = $rootScope.rootURL === 'https://blockchain.info/' || $rootScope.rootURL === '/';
     $rootScope.buySellDebug = false;
 
     console.info(
       'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
       $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
     );
+
+    if ($rootScope.sfoxUseStaging) {
+      console.info(
+        'Using SFOX staging environment with API key %s, Plaid environment %s and Sift Science key %s.',
+        $rootScope.sfoxApiKey,
+        $rootScope.sfoxPlaidEnv,
+        $rootScope.sfoxSiftScienceKey
+      );
+    }
   });
 
   let code = languages.parseFromUrl($location.absUrl());
