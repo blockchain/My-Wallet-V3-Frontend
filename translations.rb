@@ -72,7 +72,7 @@ def create_context(name, parent)
   return response["results"]["uuid"]
 end
 
-def get_phrase_keys(context)
+def get_phrases(context)
   url = generate_context_url('phrases', context)
   res = Net::HTTP.get(url)
   response = JSON.parse(res)
@@ -82,7 +82,18 @@ def get_phrase_keys(context)
     exit(1)
   end
 
-  return response["results"].collect{|result| result["phrase_key"] }
+  return response["results"]
+end
+
+def get_phrase_keys(context)
+  return get_phrases(context).collect{|result| result["phrase_key"] }
+end
+
+def find_phrase(phrase_key, remote_phrases)
+  for phrase_obj in remote_phrases
+    return phrase_obj if phrase_obj["phrase_key"] == phrase_key
+  end
+  return nil
 end
 
 def post_phrase(key, english, context)
@@ -114,6 +125,19 @@ def post_translation(key, language, translation, context)
     puts "Post #{ language } translation #{ key } failed:"
     puts response["errors"]
     exit(1)
+  end
+end
+
+def invalidate_translation(key, language, context)
+  if language == "zh-cn"
+    language = "zh-cn-cmn-s"
+  end
+  url = generate_context_url("phrase/#{ key }", context)
+  res = Net::HTTP.post_form(url, target_language: language, invalidate: 1)
+  response = JSON.parse(res.body)
+  if response["status"]["code"] != 0
+    puts "Invalidating #{ language } translation #{ key } failed:"
+    puts response["errors"]
   end
 end
 
@@ -208,38 +232,68 @@ when "upload"
     translations[language] = JSON.load(File.read(path))
   end
 
-  def process_phrase_or_context(n, key, obj, translations, context_key=nil, context=nil)
+  context_tree = get_context_tree(ARGV[1])
+
+  def process_phrase_or_context(n, key, obj, local_translations, remote_translations, context_tree, context_key=nil, context=nil)
     if obj.is_a?(String)
-      puts "#{ "  " * n }#{ key }"
-      post_phrase(key, obj, context)
-      for language in OTHER_LANGUAGES
-        translation = translations[language][key]
-        if !translation.nil?
-          post_translation(key, language, translation, context)
-        else
-          puts "#{ "  " * n } No #{ language } translation for #{ key }."
+      remote_phrase = find_phrase(key, remote_translations)
+      if !remote_phrase # New phrase
+        if obj[0..1] == "@:"
+          puts "Skip referencing phrase: #{ key }"
+          return
         end
+        puts "#{ "  " * n }New phrase: #{ key } - #{ obj }"
+        post_phrase(key, obj, context)
+        for language in OTHER_LANGUAGES
+          local_translation = local_translations[language][key]
+          if !local_translation.nil?
+            puts "#{ "  " * n }Add existing #{ language } translation"
+            post_translation(key, language, local_translation, context)
+          end
+        end
+      elsif remote_phrase["source_text"] != obj  # modified?
+        puts "#{ "  " * n }Phrase #{ key } modified"
+        puts "#{ "  " * n }  From - #{ remote_phrase['source_text'] }"
+        puts "#{ "  " * n }  To   - #{ obj }"
+        if remote_phrase["invalid"].length == 0
+          for language in OTHER_LANGUAGES
+            invalidate_translation(key, language, context)
+          end
+        end
+      else
+        # Unchanged
       end
     else
-      c = create_context(key, context)
-      puts "#{ "  " * n }Context created: #{ c } - #{ key }"
-
-      sub_translations = {}
-      for language in OTHER_LANGUAGES
-        sub_translations[language] = translations[language][key]
+      if !context_tree[key] # new context?
+        c = create_context(key, context)
+        puts "#{ "  " * n }Context created: #{ c } - #{ key }"
+      else
+        c = context_tree[key][:uuid]
       end
+
+
+
+      local_sub_translations = {}
+      for language in OTHER_LANGUAGES
+        local_sub_translations[language] = local_translations[language][key] || {}
+      end
+
+      remote_sub_translations = get_phrases(c)
 
       for sub_key, sub_obj in obj
         if !EXCEPTIONS.include?(sub_key)
-          process_phrase_or_context(n + 1, sub_key, sub_obj, sub_translations, key, c)
+          # TODO: fetch remove phrases first, for exising context
+          process_phrase_or_context(n + 1, sub_key, sub_obj, local_sub_translations, remote_sub_translations, context_tree[key], key, c)
         end
       end
     end
   end
 
+  remote_translations = get_phrases(ARGV[1])
+
   for key, obj in JSON.parse(File.read('locales/en-human.json'))
     if !EXCEPTIONS.include?(key)
-      process_phrase_or_context(0, key, obj, translations, nil, ARGV[1])
+      process_phrase_or_context(0, key, obj, translations, remote_translations, context_tree["wallet_web"], nil, ARGV[1])
     end
   end
 when "new_contexts"
