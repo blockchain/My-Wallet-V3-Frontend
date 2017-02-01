@@ -2,7 +2,7 @@ all: clean node_modules test pgp dist changelog
 
 node_modules:
 	npm install -g grunt-cli coffee-script
-	npm install
+	npm update
 
 build: node_modules
 	grunt build

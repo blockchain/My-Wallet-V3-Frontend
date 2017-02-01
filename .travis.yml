@@ -1,6 +1,9 @@
 language: node_js
 node_js:
 - 5.10
+cache:
+- node_modules
+- bower_components
 before_install:
 - npm install -g grunt-cli snazzy
 - gem install sass
