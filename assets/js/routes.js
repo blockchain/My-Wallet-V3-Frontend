@@ -296,7 +296,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.jade',
       controller: 'BuySellCtrl',
-      params: { countryCode: null }
+      params: { countryCode: null },
+      resolve: {
+        options (Options) { return Options.get(); }
+      }
     })
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.jade',

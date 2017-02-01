@@ -1264,5 +1264,6 @@
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='blue'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
+  "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
   "": ""
 }
