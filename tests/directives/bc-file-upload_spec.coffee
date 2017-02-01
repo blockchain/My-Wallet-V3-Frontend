@@ -25,23 +25,21 @@ describe "BC File Upload Directive", ->
 
   describe "enableWebcam()", ->
 
-    it "should start streaming the webcam", ->
+    it "should activate the webcam", ->
       isoScope.enableWebcam()
-      expect(isoScope.state.webcam.streaming).toBe(true)
+      expect(isoScope.state.webcam.active).toBe(true)
 
   describe "disableWebcam()", ->
 
-    it "should stop the webcam from streaming", ->
+    it "should deactivate the webcam", ->
       isoScope.disableWebcam()
-      expect(isoScope.state.webcam.streaming).toBe(undefined)
+      expect(isoScope.state.webcam.active).toBe(undefined)
 
   describe "upload()", ->
 
     it "should toggle the webcam", ->
-      spyOn(isoScope, 'enableWebcam')
       spyOn(isoScope, 'disableWebcam')
       isoScope.upload()
-      expect(isoScope.enableWebcam).toHaveBeenCalled()
       expect(isoScope.disableWebcam).toHaveBeenCalled()
 
     it "should call onUpload()", ->
@@ -51,7 +49,6 @@ describe "BC File Upload Directive", ->
 
   describe "webcamError()", ->
 
-    it "should disable the cam", ->
-      spyOn(isoScope, 'disableWebcam')
+    it "should set the webcam error state", ->
       isoScope.webcamError()
-      expect(isoScope.disableWebcam).toHaveBeenCalled()
+      expect(isoScope.state.webcam.error).toBe(true)

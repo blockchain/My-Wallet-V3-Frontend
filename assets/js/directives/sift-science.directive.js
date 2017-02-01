@@ -35,7 +35,12 @@ function siftScience ($sce, $rootScope, Options) {
     }
 
     let processOptions = (options) => {
-      scope.url = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/sift-science/#/key/${options.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`);
+      let url = `http://localhost:8081/wallet-helper/sift-science/#/key/${$rootScope.sfoxSiftScienceKey || options.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
+      scope.url = $sce.trustAsResourceUrl(url);
+
+      if ($rootScope.buySellDebug) {
+        console.info(url);
+      }
     };
 
     if (Options.didFetch) {
@@ -52,6 +57,9 @@ function siftScience ($sce, $rootScope, Options) {
       switch (e.data.command) {
         case 'done':
           // Remove Sift Science iframe:
+          if ($rootScope.buySellDebug) {
+            console.info('Dismiss Sift Science iframe');
+          }
           scope.enabled = false;
           break;
         default:

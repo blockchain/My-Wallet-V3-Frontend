@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA) {
+function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modals, Upload, QA) {
   $scope.states = state.stateCodes;
   let exchange = $scope.vm.exchange;
+
+  $scope.openHelper = modals.openHelper;
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';
@@ -66,18 +68,18 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
       let fields = $scope.state;
       let profile = exchange.profile;
 
-      profile.firstName = profile.firstName || fields.first;
-      profile.middleName = profile.middleName || fields.middle;
-      profile.lastName = profile.lastName || fields.last;
-      profile.dateOfBirth = profile.dateOfBirth || new Date(fields.dob);
-      profile.setSSN(profile.identity.number || fields.ssn);
+      profile.firstName = fields.first;
+      profile.middleName = fields.middle;
+      profile.lastName = fields.last;
+      profile.dateOfBirth = new Date(fields.dob);
+      profile.setSSN(fields.ssn);
 
       profile.setAddress(
-        profile.address.street.line1 || fields.addr1,
-        profile.address.street.line2 || fields.addr2,
-        profile.address.city || fields.city,
-        profile.address.state || fields.state.Code,
-        profile.address.zipcode || fields.zipcode
+        fields.addr1,
+        fields.addr2,
+        fields.city,
+        fields.state.Code,
+        fields.zipcode
       );
 
       $q.resolve(profile.verify())
@@ -103,7 +105,6 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
   $scope.installLock();
   $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
-  $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
   // QA Tool

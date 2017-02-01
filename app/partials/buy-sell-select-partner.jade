@@ -2,15 +2,15 @@
   .flex-row.flex-column-tablet
     .find-partner.width-50.mrl.mtl.flex-column
       span.f-20.em-500(translate="Buy Bitcoin")
-      .mt-15.pt-20.pb-20.pl-25.pr-25.phm.border(ng-class="{'ui-select-border-red': blacklisted}")
+      .mt-15.pt-20.pb-20.pl-25.pr-25.phm.border
         .f-20.blue.lh1.center(translate="SIMPLE_SECURE_SEAMLESS")
         .f-14.mt-10(translate="BUY_SIMPLE_STEPS")
-        .mt-20
+        .mt-20(ng-class="{'ui-select-border-red': !onWhitelist(country.Code)}")
           span.f-14.em-500.colon(translate="SELECT_YOUR_COUNTRY")
           ui-select.mtm(ng-model="$parent.country" tagging)
             ui-select-match(placeholder="Select country") {{$select.selected.Name}}
             ui-select-choices(repeat="c in countries | filter:$select.search track by c.Name") {{c.Name}}
-        .mt-10(ng-show="country.Code === 'US'")
+        .mt-10(ng-show="country.Code === 'US'" ng-class="{'ui-select-border-red': !onStateWhitelist(state.Code)}")
           span.f-14.em-500.colon(translate="SELECT_YOUR_STATE")
           ui-select.mtm(ng-model="$parent.state" tagging)
             ui-select-match(placeholder="Select state") {{$select.selected.Name}}

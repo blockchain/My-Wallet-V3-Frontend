@@ -174,3 +174,85 @@ pre {
    }
   }
 }
+
+//override tooltip
+$transparent-border: 10px solid transparent !important;
+$transparent-border-after: 9px solid transparent;
+$tt-top-default: 10px;
+$tt-left-default: 9px;
+$tt-position-default: -14px !important;
+
+.tooltip-inner {
+  @extend .popover-content;
+  background-color: $light-blue !important;
+  color: $black !important;
+  border: 1px solid $mid-grey !important;
+  border-radius: 7px !important;
+  box-shadow: 0 3px 8px 0 rgba(158, 158, 158, 0.65) !important;
+}
+
+.tooltip.in {
+  opacity: 1 !important;
+}
+.tooltip.top {
+  .tooltip-arrow {
+    left: 46% !important;
+  }
+  .tooltip-arrow {
+    bottom: $tt-position-default;
+    width: 0 !important;
+    height: 0 !important;
+    border-top: 10px solid $mid-grey !important;
+    border-bottom: $transparent-border;
+    border-right: $transparent-border;
+    border-left: $transparent-border;
+  }
+  .tooltip-arrow::after {
+    display: block;
+    position: relative;
+    top: -$tt-top-default;
+    left: -$tt-left-default;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 9px solid $light-blue;
+    border-bottom: $transparent-border-after;
+    border-right: $transparent-border-after;
+    border-left: $transparent-border-after;
+  }
+}
+
+.tooltip {
+  &.right {
+    .tooltip-arrow {
+      left: $tt-position-default;
+      top: 42% !important;
+      bottom: -14px !important;
+      width: 0 !important;
+      height: 0 !important;
+      border-top: $transparent-border;
+      border-bottom: $transparent-border;
+      border-right: 10px solid $mid-grey !important;
+      border-left: $transparent-border;
+    }
+    .tooltip-arrow::after {
+      display: block;
+      position: relative;
+      top: -$tt-top-default + 1px;
+      left: -$tt-left-default + 1px;
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: $transparent-border-after;
+      border-bottom: $transparent-border-after;
+      border-right: 9px solid $light-blue;
+      border-left: $transparent-border-after;
+    }
+  }
+}
+
+// do not affect security center tooltips
+.level-badge a .tooltip.top .tooltip-arrow {
+  border-bottom: none !important;
+  bottom: -4px !important;
+}

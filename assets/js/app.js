@@ -131,6 +131,15 @@ angular.module('walletApp', modules)
       'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
       $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
     );
+
+    if ($rootScope.sfoxUseStaging) {
+      console.info(
+        'Using SFOX staging environment with API key %s, Plaid environment %s and Sift Science key %s.',
+        $rootScope.sfoxApiKey,
+        $rootScope.sfoxPlaidEnv,
+        $rootScope.sfoxSiftScienceKey
+      );
+    }
   });
 
   let code = languages.parseFromUrl($location.absUrl());

@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) {
+function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, $rootScope) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
   let processOptions = (options) => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${options.partners.sfox.plaidEnv}`);
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${$rootScope.sfoxPlaidEnv || options.partners.sfox.plaidEnv}`);
   };
 
   if (Options.didFetch) {
@@ -17,8 +17,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
   }
 
   $scope.types = ['checking', 'savings'];
-  $scope.openBankHelper = modals.openBankHelper;
-  $scope.openDepositHelper = modals.openDepositHelper;
+  $scope.openHelper = modals.openHelper;
 
   let state = $scope.state = {
     plaid: {},
