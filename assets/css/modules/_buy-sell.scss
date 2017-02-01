@@ -1,7 +1,7 @@
 .buy-sell {
   position: relative;
   padding: 20px 30px 0 30px;
-  margin-bottom: 60px;
+  flex-grow: 1;
   @media (max-width: 991px) {
     padding: 10px 10px 0 10px;
     .width-50 {

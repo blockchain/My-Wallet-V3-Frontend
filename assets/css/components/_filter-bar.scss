@@ -1,12 +1,8 @@
 .filter-bar {
-  z-index: 1;
-  top: 175px;
-  left: 270px;
-  height: 60px;
-  position: fixed;
+  flex: 0 0 60px;
   padding: 0px 30px;
   background: $grey;
-  width: calc(100% - 270px);
+  width: 100%;
   border-bottom: 1px solid $border-grey;
   @media (max-width: 767px) {
     padding: 0 10px;
@@ -37,15 +33,8 @@
     @extend .border-bottom-light;
   }
   @media (max-width: 991px) {
-    &.open {
-      height: 235px;
-      display: block;
-      .pointer {
-        padding-top: 4px;
-      }
-      .ui-select-container {
-        width: 100%;
-      }
+    &.open .ui-select-container {
+      width: 100%;
     }
   }
 }

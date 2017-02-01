@@ -1,10 +1,11 @@
-.transactions(ng-if="status.isLoggedIn")
-  .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
-    a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
-      i.icon-export
-    .hidden-md.hidden-lg.pointer.blue.right-align.width-100(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
-    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mbl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
-    .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
+.transactions.flex-column.height-100(ng-if="status.isLoggedIn")
+  .filter-bar.hidden-md.hidden-lg(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
+    .flex-between.pvm.mtm
+      a.blue.pointer(ng-click="exportHistory()")
+        i.icon-export
+      .pointer.blue.right-align(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
+      .pointer.blue.right-align.mbl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
+    .hidden-md.hidden-lg(ng-show="isFilterOpen")
       ui-select.mbl(
         ng-show="accounts.length > 1"
         ng-model="filterBy.account"
@@ -23,7 +24,7 @@
           span {{$select.selected | translate}}
         ui-select-choices(repeat="filter in filterTypes")
           span {{ filter | translate }}
-      .filter-search.input-group.width-100
+      .filter-search.input-group.width-100.mbl
         input.form-control.width-100(
           type="text"
           placeholder="{{::'SEARCH' | translate}}"
@@ -31,7 +32,8 @@
           ng-model-options="{ debounce: 250 }")
         i.ti-search
 
-    .flex-between.width-100.hidden-xs.hidden-sm
+  .filter-bar.flex-center.hidden-xs.hidden-sm(data-preflight-tag="TxsOptions")
+    .flex-between.width-100
       .flex-row.flex-center
         ui-select.mrl(
           ng-show="accounts.length > 1"
@@ -59,13 +61,13 @@
             ng-model="$parent.searchText"
             ng-model-options="{ debounce: 250 }")
           i.ti-search
-  .transaction-feed(data-preflight-tag="TxsFeed")
+  .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
           i.icon-tx.h3.mrm
-          h3.montserrat.em-300(translate="NO_TRANSACTIONS_YET")
-        p.montserrat.em-300(translate="DESCRIBE_TRANSACTIONS")
+          h3.montserrat.em-300.center-align(translate="NO_TRANSACTIONS_YET")
+        p.montserrat.em-300.center-align(translate="DESCRIBE_TRANSACTIONS")
       .flex.flex-center-mobile
         button.btn.button-default.button-short-wide.type-h5.mrm(ng-click="send()")
           i.mrs.media-middle.icon-send

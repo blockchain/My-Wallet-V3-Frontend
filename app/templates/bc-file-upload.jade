@@ -9,11 +9,11 @@ div
       div.flex-column.width-50
         button.btn.button-primary(ng-click="enableWebcam()" ng-disabled="!browserWithCamera")
           i.mr-10.ti-camera
-          span Capture Using Webcam
+          span Capture Using Camera
         .or-horizontal.mv-30 Or
         button.btn.button-primary-inverse(ngf-select ng-model="file" ngf-pattern="'image/*'")
           i.mr-10.ti-upload
-          span Upload From Computer
+          span Upload From Device
   
   div(ng-if="state.webcam.active")
     div.webcam(ng-if="!state.webcam.error")

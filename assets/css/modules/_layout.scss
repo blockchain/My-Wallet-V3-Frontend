@@ -170,10 +170,6 @@
 .vat { vertical-align: top; }
 
 .bottom-right-footer {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  left: 270px;
   padding: 15px 30px;
   background-color: $grey-transparent;
   @media (max-width: 767px) {
