@@ -30,7 +30,7 @@
         .group.pb-40
           .item
             label Phone Number
-            input(ng-model="state.mobile" name="mobile" disabled)
+            bc-phone-number(ng-model="state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")
         .group.pb-30
           .item.check
             input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
@@ -70,7 +70,7 @@
         .group
           .item
             label Add phone number:
-            bc-phone-number(ng-model="state.mobile" ng-change="state.sentMobileCode = false" name="mobile" default-country="us" preferred-countries="us ca gb au" required)
+            bc-phone-number(ng-model="state.mobile" ng-change="state.sentMobileCode = false" name="mobile" preferred-countries="us ca gb au" required)
         div(ng-hide="state.sentMobileCode")
           .group.pt-25
             button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
