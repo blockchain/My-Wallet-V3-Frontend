@@ -542,21 +542,31 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-text-replace')
   grunt.loadNpmTasks('grunt-include-source')
 
-  grunt.registerTask "build", [
-    "html2js"
-    "babel:build"
-    "shell:webpack"
-    "concat:wallet"
-    "concat:qrReader"
-    "concat:bcPhoneNumber"
-    "sass"
-    "concat_css:app"
-    "copy:fonts"
-    "autoprefixer"
-    "includeSource"
-    "copy:images"
-    "merge-json"
-  ]
+  grunt.registerTask "build", () =>
+    skipWebpack = grunt.option('skipWebpack')
+
+    grunt.task.run [
+      "html2js"
+      "babel:build"
+    ]
+
+    if !skipWebpack
+      grunt.task.run [
+        "shell:webpack"
+      ]
+
+    grunt.task.run [
+      "concat:wallet"
+      "concat:qrReader"
+      "concat:bcPhoneNumber"
+      "sass"
+      "concat_css:app"
+      "copy:fonts"
+      "autoprefixer"
+      "includeSource"
+      "copy:images"
+      "merge-json"
+    ]
 
   grunt.registerTask "default", [
     "build"

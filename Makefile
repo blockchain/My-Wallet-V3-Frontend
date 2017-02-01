@@ -5,7 +5,6 @@ node_modules:
 	npm install
 
 build: node_modules
-	./check_bad_strings.rb
 	grunt build
 
 test: build
@@ -36,15 +35,19 @@ ifndef API_DOMAIN
 export API_DOMAIN:=api.blockchain.info
 endif
 
-dist: build
+helperApp/dist:
+	rm -rf helperApp/dist
 	DIST=1 ./node_modules/.bin/webpack
+
+dist: helperApp/dist
+	./check_bad_strings.rb
+	grunt build --skipWebpack=1
+
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(HELPER_APP_URL)
-	mv helperApp/dist dist/wallet-helper
-	npm shrinkwrap --dev
+	cp -r helperApp/dist dist/wallet-helper
 
 dist_fixed_domain: build
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --network=${NETWORK}
-	npm shrinkwrap --dev
 
 changelog: node_modules
 	node_modules/git-changelog/tasks/command.js $(TAG_ARG) -f "Changelog.md" -g "^fix|^feat|^docs|^refactor|^chore|^test|^build|^dev|BREAKING" -i "" -a "Blockchain Wallet V3 Frontend" --repo_url "https://github.com/blockchain/My-Wallet-V3-Frontend"
@@ -57,4 +60,4 @@ server: .env dist_fixed_domain
 
 clean:
 	rm -rf build dist node_modules bower_components npm-shrinkwrap.json coverage .sass-cache helperApp/build helperApp/dist
-	npm cache clean
+	# npm cache clean
