@@ -117,8 +117,8 @@ def post_translation(key, language, translation, context)
   end
 end
 
-def move_phrase_to_context(new_context)
-  url = generate_context_url("phrase/#{ key }", context)
+def move_phrase_to_context(key, old_context, new_context)
+  url = generate_context_url("phrase/#{ key }", old_context)
   res = Net::HTTP.post_form(url, context: new_context)
   response = JSON.parse(res.body)
   if response["status"]["code"] != 0
@@ -262,6 +262,9 @@ when "new_contexts"
 
   post_new_contexts(contexts["wallet_web"], local_phrases)
 
+when "list_contexts"
+  pp list_contexts()
+
 when "delete"
   exit 1 if !ARGV[1]
   # Run first:
@@ -276,8 +279,6 @@ when "delete"
 
   contexts = get_context_tree(ARGV[1])
 
-  pp contexts
-
   def find_context_for_phrase(phrase_key, contexts, local_phrases)
     throw "local_phrases missing" if !local_phrases
     for key, value in contexts
@@ -285,7 +286,7 @@ when "delete"
         if !local_phrases[key] # orphaned context
           next
         else
-          puts "Recurse into context #{ value }"
+          # puts "Recurse into context #{ value }"
           res = find_context_for_phrase(phrase_key, value, local_phrases[key])
           if res
             return res
@@ -294,17 +295,14 @@ when "delete"
       else
         res = local_phrases[phrase_key]
         if res
-          return res[:uuid]
+          return value # the uuid
         end
       end
     end
     return nil
   end
 
-  # PENDING API ISSUE, CHECK IF THIS WORKS BEFORE RUNNING THE SCRIPT BELOW
-  puts find_context_for_phrase("WHAT_IS_BITCOIN", contexts["wallet_web"], local_phrases)
-  exit(0)
-  ######################
+  # puts find_context_for_phrase("PURCHASE_PENDING_CANT_CANCEL", contexts["wallet_web"], local_phrases)
 
   def delete_unused_phrases_and_contexts(name, contexts, local_phrases)
     for key, value in contexts
@@ -324,11 +322,11 @@ when "delete"
               c = find_context_for_phrase(phrase_key, contexts, local_phrases)
               if c && !["Q", "A"].include?(phrase_key)
                 puts "Moving #{phrase_key} to #{ c }"
-                move_phrase_to_context(c)
+                move_phrase_to_context(phrase_key, value,c)
                 next
               end
             end
-            puts "Delete #{ phrase_key } (SKIP)"
+            puts "Delete #{ phrase_key }"
             delete_phrase(value, phrase_key)
           end
         end
@@ -349,9 +347,11 @@ when "cleanup"
   # end
 else
   puts "Usage: ./translations.rb [orphaned|upload]"
+  puts "  list_contexts"
   puts "  format: rewrite locales files to clean up formatting"
-  puts "  orphaned: remove orphaned strings"
-  puts "  upload: submit new strings, update modifed strings"
+  puts "  orphaned: remove orphaned strings locally"
+  puts "  new_contexts: "
   puts "  delete: remove orphaned strings, check for moves to a different context"
+  puts "  upload: submit new strings, update modifed strings"
   exit 1
 end
