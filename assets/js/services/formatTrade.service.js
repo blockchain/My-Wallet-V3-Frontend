@@ -16,6 +16,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     completed_test,
     initiated,
 
+    reject_card,
     kyc,
     error,
     success,
@@ -63,6 +64,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   function error (trade, state) {
     let tx = addTradeDetails(trade);
     if (isKYC(trade)) { return service.kyc(trade, 'rejected'); }
+    if (state === 'rejected' && trade.medium === 'card') { return service.reject_card(trade, 'rejected'); }
 
     return {
       tx: tx,
@@ -123,6 +125,20 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
         email: Wallet.user.email
       },
       namespace: 'TX_INITIATED'
+    };
+  }
+
+  function reject_card (trade, state) {
+    let namespace = 'TX_CARD_REJECTED';
+    let tx = addTradeDetails(trade);
+
+    return {
+      tx: tx,
+      class: 'state-danger-text',
+      namespace: namespace,
+      values: {
+        state: state || getState(trade.state)
+      }
     };
   }
 
