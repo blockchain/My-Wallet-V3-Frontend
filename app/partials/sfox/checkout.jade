@@ -23,6 +23,8 @@
       buy-limit="state.buyLimit"
       buy-level="state.buyLevel"
       buy-account="state.account"
+      fiat-amount="fiatAmount"
+      summary-collapsed="summaryCollapsed"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       handle-buy="buyHandler(quote)")
   .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")

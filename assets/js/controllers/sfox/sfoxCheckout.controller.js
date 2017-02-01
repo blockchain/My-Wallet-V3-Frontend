@@ -5,6 +5,9 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope) {
   let exchange = $scope.vm.external.sfox;
 
+  $scope.fiatAmount = null;
+  $scope.summaryCollapsed = true;
+
   $scope.openSfoxSignup = () => {
     $scope.modalOpen = true;
     modals.openSfoxSignup(exchange).finally(() => { $scope.modalOpen = false; });

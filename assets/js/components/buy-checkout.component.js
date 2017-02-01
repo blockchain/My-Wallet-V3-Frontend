@@ -7,6 +7,7 @@ angular
       buyLevel: '<',
       buyAccount: '<',
       fiatAmount: '<',
+      summaryCollapsed: '<',
       updateAmount: '&',
       handleQuote: '&',
       handleBuy: '&',
@@ -26,9 +27,9 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   $scope.btcAccount = Wallet.getDefaultAccount();
 
   let state = $scope.state = {
-    fiat: this.fiatAmount,
     btc: null,
     rate: null,
+    fiat: this.fiatAmount,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
     get baseFiat () { return this.baseCurr === $scope.dollars; },
