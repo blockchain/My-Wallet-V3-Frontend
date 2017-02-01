@@ -563,10 +563,12 @@
 
   @media (max-width: 767px) {
     left: 0px;
+    top: 100%;
+    margin-top: 0px;
     &.fade {
       &.ng-enter,
       &.in {
-        top: 140px;
+        top: 0px;
       }
     }
 
