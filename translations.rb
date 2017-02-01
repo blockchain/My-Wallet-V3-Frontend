@@ -154,6 +154,17 @@ def get_context_tree(parent)
 end
 
 case ARGV[0]
+when "format"
+  puts "Don't forget to run 'make dist' first..."
+  js_files = Dir.entries("dist/js").keep_if{ |entry| entry.start_with?("wallet-") || entry.start_with?("landing-") }
+  js1 = File.read("dist/js/" + js_files[0])
+  js2 = File.read("dist/js/" + js_files[1])
+
+  for file in human_translation_files
+    path = "locales/" + file
+    translations = JSON.load(File.read(path))
+    File.write(path, JSON.pretty_generate(translations) + "\n")
+  end
 when "orphaned"
   puts "Don't forget to run 'make dist' first..."
   js_files = Dir.entries("dist/js").keep_if{ |entry| entry.start_with?("wallet-") || entry.start_with?("landing-") }
@@ -338,6 +349,7 @@ when "cleanup"
   # end
 else
   puts "Usage: ./translations.rb [orphaned|upload]"
+  puts "  format: rewrite locales files to clean up formatting"
   puts "  orphaned: remove orphaned strings"
   puts "  upload: submit new strings, update modifed strings"
   puts "  delete: remove orphaned strings, check for moves to a different context"
