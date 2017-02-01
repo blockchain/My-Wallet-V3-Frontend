@@ -33,7 +33,7 @@
         .group.pb-40
           .item
             label Phone Number
-            input(ng-model="state.mobile" name="mobile" disabled)
+            bc-phone-number(ng-model="state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")
         .group.pb-30
           .item.check
             input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
@@ -63,14 +63,16 @@
           .group
             .item
               label Enter verification code sent to your email:
-              input(ng-model="state.emailCode" name="emailCode" required)
-            .item
+              input(ng-model="state.emailCode" name="emailCode" ng-change="clearInlineErrors()" required)
+            .item(ng-hide="emailForm.emailCode.$error.correct")
               span.f-14.mt-5(ng-hide="state.resentEmailCode")
                 | Didn't receive the email? 
                 a(ng-click="sendEmailCode(); state.resentEmailCode = true;") Resend 
                 | or 
                 a(ng-click="state.sentEmailCode = false") change email
               span.f-14.mt-5(ng-show="state.resentEmailCode") Another code has been sent!
+            .help(ng-show="emailForm.emailCode.$error.correct")
+              span.state-danger-text Verification code incorrect.
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
@@ -80,7 +82,7 @@
         .group
           .item
             label Add phone number:
-            bc-phone-number(ng-model="state.mobile" ng-change="state.resentMobileCode = state.sentMobileCode = false" name="mobile" default-country="us" preferred-countries="us ca gb au" required)
+            bc-phone-number(ng-model="state.mobile" ng-change="state.resentMobileCode = state.sentMobileCode = false" name="mobile" preferred-countries="us ca gb au" required)
         div(ng-hide="state.sentMobileCode")
           .group.pt-25
             button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
@@ -89,11 +91,13 @@
           .group.pt-30
             .item
               label Enter verification code sent to your mobile phone:
-              input(ng-model="state.mobileCode" name="mobileCode" required)
-            .item
+              input(ng-model="state.mobileCode" name="mobileCode" ng-change="clearInlineErrors()" required)
+            .item(ng-hide="mobileForm.mobileCode.$error.correct")
               span.f-14.mt-5(ng-hide="state.resentMobileCode")
                 | Didn't receive the code? 
                 a(ng-click="sendMobileCode(); state.resentMobileCode = true;") Resend 
               span.f-14.mt-5(ng-show="state.resentMobileCode") Another code has been sent!
+            .help(ng-show="mobileForm.mobileCode.$error.correct")
+              span.state-danger-text Verification code incorrect.
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue
