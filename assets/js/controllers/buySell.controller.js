@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies) {
+function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, options) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -131,14 +131,18 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
   $scope.getIsTradingDisabled = () => {
     let profile = $scope.exchange && $scope.exchange.profile;
+    let disabled = options.partners.coinify.disabled;
     let canTrade = profile && profile.canTrade;
 
-    return canTrade === false;
+    return canTrade === false || disabled;
   };
 
   $scope.getIsTradingDisabledReason = () => {
+    let disabled = options.partners.coinify.disabled;
     let profile = $scope.exchange && $scope.exchange.profile;
     let cannotTradeReason = profile && profile.cannotTradeReason;
+
+    if (disabled) cannotTradeReason = 'disabled';
 
     return cannotTradeReason;
   };
