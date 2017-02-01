@@ -2,18 +2,18 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout) {
   let exchange = $scope.vm.external.sfox;
 
-  $scope.openSfoxSignup = () => {
+  $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
-    modals.openSfoxSignup(exchange).finally(() => { $scope.modalOpen = false; });
+    modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
   };
 
   $scope.state = {
     account: accounts[0],
     trades: exchange.trades,
-    buyLimit: exchange.profile && exchange.profile.limits.buy,
+    buyLimit: exchange.profile && exchange.profile.limits.buy || 100,
     buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
@@ -32,11 +32,12 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     return stepDescriptions[step];
   };
 
-  $scope.siftScienceEnabled = false;
   $scope.userId = exchange.user;
+  $scope.siftScienceEnabled = false;
+
+  $scope.showCheckout = $scope.userId || showCheckout;
 
   $scope.inspectTrade = modals.openTradeSummary;
-  $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
 
   $scope.tabs = ['BUY_BITCOIN', /* 'SELL_BITCOIN', */ 'ORDER_HISTORY'];
   $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
