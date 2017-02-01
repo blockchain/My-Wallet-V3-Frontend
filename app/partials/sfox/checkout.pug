@@ -6,10 +6,10 @@
       ng-click="selectTab(tab)"
       translate="{{tab}}")
   .sfox-logo
-    span.mrs.type-sm(translate="POWERED_BY")
+    span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
     a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
       img.mbs(src="img/sfox-logo-trans.png")
-.buy-sell.mt-60.mbvl
+.buy-sell.overflow-scroll
   .flex-row.flex-column-tablet(ng-show="!showCheckout && selectedTab === 'BUY_BITCOIN'")
     .width-50.border.mrl.pal.flex-column.flex-between.flex-center
       span.type-h4.width-100 Just a few steps away!
@@ -18,7 +18,7 @@
         span(translate="{{stepDescription().text}}")
       form.width-100(ng-submit="openSfoxSignup()")
         button.btn.button-primary.full(type="submit" focus-when="!selectedTab" ng-disabled="modalOpen") Continue
-  .flex-column(ng-show="showCheckout && selectedTab === 'BUY_BITCOIN'")
+  .flex-column.pbvl(ng-show="showCheckout && selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
       user-id="userId"
       buy-limit="state.buyLimit"
@@ -28,7 +28,7 @@
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       buy-success="userId ? buySuccess(trade) : openSfoxSignup(quote)"
       buy-error="buyError()")
-  .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
+  .flex-column.pbvl(ng-show="selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
@@ -46,4 +46,4 @@
         trade="trade"
         buy="inspectTrade"
         usa="true")
-  contact-support-footer
+contact-support-footer
