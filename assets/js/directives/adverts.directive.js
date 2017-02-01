@@ -17,10 +17,7 @@ function adverts (Adverts, $rootScope) {
 
   function link (scope, elem, attrs) {
     scope.ads = Adverts.ads;
+    scope.baseUrl = $rootScope.apiDomain + 'ads/out?id=';
     Adverts.fetchOnce();
-
-    scope.visit = (ad) => {
-      $rootScope.safeWindowOpen(ad.link);
-    };
   }
 }

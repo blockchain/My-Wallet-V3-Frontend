@@ -8,7 +8,7 @@ describe "Adverts Directive", ->
     module "walletApp", ($provide) ->
       $provide.value 'Adverts',
         fetchOnce:  () ->
-        ads: [{link: "http://www.google.com/"}]
+        ads: [{id: 1337}]
       return
 
     inject((_$compile_, $rootScope, Adverts) ->
@@ -17,7 +17,9 @@ describe "Adverts Directive", ->
         rootScope = $rootScope;
 
         $compile = _$compile_
+
         scope = $rootScope.$new()
+        $rootScope.apiDomain = "https://api.blockchain.info/"
 
         element = $compile("<adverts></adverts>")(scope)
 
@@ -39,7 +41,6 @@ describe "Adverts Directive", ->
   )
 
   it "should redirect to the advertisers page, in a new tab", inject((Adverts) ->
-    spyOn(rootScope, "safeWindowOpen")
-    isoScope.visit(Adverts.ads[0])
-    expect(rootScope.safeWindowOpen).toHaveBeenCalledWith("http://www.google.com/")
+    Adverts.fetchOnce()
+    expect(element.html()).toContain "<a ng-href=\"https://api.blockchain.info/ads/out?id=1337\" target=\"_blank\" rel=\"noopener noreferrer\""
   )
