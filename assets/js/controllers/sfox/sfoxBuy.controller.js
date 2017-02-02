@@ -5,8 +5,9 @@ angular
 function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
   let exchange = $scope.vm.exchange;
 
-  $scope.summaryCollapsed = true;
   $scope.user = Wallet.user;
+  $scope.summaryCollapsed = true;
+  $scope.quote = $scope.vm.quote;
   $scope.quoteHandler = (...args) => sfox.fetchQuote(exchange, ...args);
 
   $scope.state = {

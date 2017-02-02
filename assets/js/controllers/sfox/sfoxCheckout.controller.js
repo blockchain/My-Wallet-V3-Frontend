@@ -35,7 +35,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
 
-  $scope.showCheckout = $scope.userId || showCheckout;
+  let signupCompleted = accounts[0] && accounts[0].status === 'active';
+  $scope.showCheckout = signupCompleted || (showCheckout && !$scope.userId);
 
   $scope.inspectTrade = modals.openTradeSummary;
 

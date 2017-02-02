@@ -59,7 +59,7 @@ describe "SfoxCheckoutController", ->
       currency = $injector.get("currency")
       currency.conversions["USD"] = { conversion: 2 }
 
-  getControllerScope = (accounts) ->
+  getControllerScope = (accounts, showCheckout) ->
     scope = $rootScope.$new()
     scope.vm = external: { sfox:
       profile:
@@ -72,6 +72,7 @@ describe "SfoxCheckoutController", ->
     $controller "SfoxCheckoutController",
       $scope: scope
       accounts: accounts || []
+      showCheckout: showCheckout || {}
     $compile(template)(scope)
     scope
 
@@ -79,7 +80,7 @@ describe "SfoxCheckoutController", ->
     scope = getControllerScope([{status:'active'}])
     spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
     scope.openSfoxSignup()
-    expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
+    expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox, undefined)
 
   describe ".buyHandler()", ->
     beforeEach ->

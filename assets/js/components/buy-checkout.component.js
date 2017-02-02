@@ -3,6 +3,7 @@ angular
   .module('walletApp')
   .component('buyCheckout', {
     bindings: {
+      quote: '<',
       buyLimit: '<',
       buyLevel: '<',
       buyAccount: '<',
@@ -17,6 +18,7 @@ angular
 
 function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWalletHelpers) {
   $scope.format = currency.formatCurrencyForView;
+  $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
@@ -24,14 +26,22 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   $scope.btcAccount = Wallet.getDefaultAccount();
 
   let state = $scope.state = {
-    fiat: null,
     btc: null,
+    fiat: null,
     rate: null,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
     get baseFiat () { return this.baseCurr === $scope.dollars; },
     get total () { return this.fiat; }
   };
+
+  // cached quote from checkout first
+  let quote = this.quote;
+  if (quote) {
+    state.baseCurr = quote.baseCurrency === 'BTC' ? $scope.bitcoin : $scope.dollars;
+    state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / 100 : null;
+    state.btc = !state.baseFiat ? quote.baseAmount : null;
+  }
 
   $scope.enableBuy = () => $scope.enabled = true;
   $scope.disableBuy = () => $scope.enabled = false;
@@ -42,7 +52,7 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? currency.convertFromSatoshi(state.fiat, $scope.dollars) * 100 | 0 : state.btc,
+    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * 100 | 0 : state.btc,
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });
@@ -63,7 +73,7 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
       this.collapseSummary = false;
       if (state.baseFiat) state.btc = quote.quoteAmount;
-      else state.fiat = currency.convertToSatoshi(quote.quoteAmount, $scope.dollars) / 100;
+      else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
     };
 
     this.handleQuote($scope.getQuoteArgs(state))
@@ -95,8 +105,8 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   };
 
   $scope.setLimits = (limit) => {
-    $scope.min = currency.convertToSatoshi(0.01, $scope.dollars);
-    $scope.max = currency.convertToSatoshi(limit, $scope.dollars);
+    $scope.min = $scope.toSatoshi(0.01, $scope.dollars);
+    $scope.max = $scope.toSatoshi(limit, $scope.dollars);
   };
 
   $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
