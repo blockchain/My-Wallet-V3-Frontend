@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($state, $uibModal, $ocLazyLoad) {
+function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   const service = {};
 
   let open = (defaults, options = {}) => (
@@ -58,7 +58,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
 
   service.expandTray = (options) => open({
     backdrop: false, windowClass: 'tray'
-  }, options).result;
+  }, options);
 
   service.openSfoxSignup = (exchange, quote) => service.expandTray({
     templateUrl: 'partials/sfox/signup.jade',
@@ -73,7 +73,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
           : $q.resolve([]);
       }
     }
-  }).then(() => {
+  }).result.then(() => {
     $state.go('wallet.common.buy-sell.sfox', { selectedTab: 'ORDER_HISTORY' });
   }).catch(() => {
     let base = 'wallet.common.buy-sell';
@@ -81,22 +81,26 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
-  service.openTradeSummary = service.dismissPrevious((trade, state) => open({
-    templateUrl: 'partials/trade-modal.jade',
-    windowClass: 'bc-modal trade-summary',
-    controller ($scope, trade, formatTrade, accounts) {
-      $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
-    },
-    resolve: {
-      trade: () => trade,
-      accounts ($q, MyWallet) {
-        let exchange = MyWallet.wallet.external.sfox;
-        return exchange.hasAccount
-          ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
-          : $q.resolve([]);
+  service.openTradeSummary = service.dismissPrevious((trade, state) => {
+    let accounts = ($q, MyWallet) => {
+      let exchange = MyWallet.wallet.external.sfox;
+      return exchange.hasAccount
+        ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+        : $q.resolve([]);
+    };
+    let config = {
+      templateUrl: 'partials/trade-modal.jade',
+      windowClass: 'bc-modal trade-summary',
+      controller ($scope, trade, formatTrade, accounts) {
+        $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
+      },
+      resolve: {
+        trade: () => trade,
+        accounts
       }
-    }
-  }));
+    };
+    return $rootScope.inMobileBuy ? service.expandTray(config) : open(config);
+  });
 
   return service;
 }
