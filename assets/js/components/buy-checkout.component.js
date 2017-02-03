@@ -7,7 +7,7 @@ angular
       buyLimit: '<',
       buyLevel: '<',
       buyAccount: '<',
-      collapseSummary: '=',
+      collapseSummary: '<',
       handleQuote: '&',
       handleBuy: '&'
     },
@@ -71,7 +71,7 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
       state.loadFailed = false;
       let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
-      this.collapseSummary = false;
+      this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
     };
@@ -109,10 +109,10 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
     $scope.max = $scope.toSatoshi(limit, $scope.dollars);
   };
 
+  $scope.$watchGroup(['state.fiat', 'state.btc'], () => this.buyAccount ? $scope.disableBuy() : $scope.enableBuy());
   $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
-  $scope.$watchGroup(['state.fiat', 'state.btc'], () => $scope.disableBuy());
   $scope.$on('$destroy', $scope.cancelRefresh);
   $scope.$root.installLock.call($scope);
   $scope.getInitialQuote();

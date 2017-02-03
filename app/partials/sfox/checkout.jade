@@ -24,6 +24,7 @@
         buy-limit="state.buyLimit"
         buy-level="state.buyLevel"
         buy-account="state.account"
+        collapse-summary="signupCompleted"
         handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
         handle-buy="userId ? buyHandler(quote) : openSfoxSignup(quote)")
   div(ng-show="selectedTab === 'ORDER_HISTORY'")
