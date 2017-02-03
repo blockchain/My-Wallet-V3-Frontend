@@ -16,7 +16,7 @@
       "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "GA", "IN", "KS", "MD", "MA", "MO", "MT", "SC", "TX"],
       "inviteFormFraction": 0.1,
-      "showCheckoutFraction": 1,
+      "showCheckoutFraction": 0,
       "apiKey": "f31614a7-5074-49f2-8c2a-bfb8e55de2bd",
       "plaid": "0b041cd9e9fbf1e7d93a0d5a39f5b9",
       "plaidEnv": "production",
