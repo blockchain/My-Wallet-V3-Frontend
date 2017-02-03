@@ -72,7 +72,7 @@ describe "SfoxCheckoutController", ->
     $controller "SfoxCheckoutController",
       $scope: scope
       accounts: accounts || []
-      showCheckout: showCheckout || {}
+      showCheckout: showCheckout || undefined
     $compile(template)(scope)
     scope
 
@@ -81,6 +81,14 @@ describe "SfoxCheckoutController", ->
     spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
     scope.openSfoxSignup()
     expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox, undefined)
+
+  describe ".openSfoxSignup()", ->
+    it "should set modalOpen to false", ->
+      scope = getControllerScope([{status:'active'}], true)
+      spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
+      scope.openSfoxSignup()
+      scope.$digest()
+      expect(scope.modalOpen).toBe(false)
 
   describe ".buyHandler()", ->
     beforeEach ->
@@ -98,3 +106,17 @@ describe "SfoxCheckoutController", ->
       scope.buyHandler(mockQuote('NETWORK_ERROR'))
       scope.$digest()
       expect(Alerts.displayError).toHaveBeenCalled()
+
+  describe "showCheckout", ->
+    beforeEach ->
+      scope = getControllerScope([{}], true)
+
+    it "should show if signup is completed", ->
+      scope.signupCompleted = true
+      scope.$digest()
+      expect(scope.showCheckout).toBe(true)
+
+    it "should show if signup is not completed but showCheckout is true", ->
+      scope.signupCompleted = false
+      scope.$digest()
+      expect(scope.showCheckout).toBe(true)
