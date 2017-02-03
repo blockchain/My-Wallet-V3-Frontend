@@ -30,7 +30,8 @@
 .break-word { word-break: break-word; }
 .long-input { overflow-wrap: break-word; }
 .text { font-size: 14px; } //use pixels to normalize with Bootstrap instead of em's
-.colon:after { content: ':' }
+.colon:after { content: ':'; }
+.period:after { content: '.';}
 .capitalize { text-transform: capitalize; }
 .upper { text-transform: uppercase; }
 .italic { font-style: italic; }
