@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options) {
+function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, modals) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -209,7 +209,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function openBuyView (trade = null, options = {}) {
-    return $uibModal.open({
+    let config = {
       templateUrl: 'partials/coinify-modal.pug',
       windowClass: 'bc-modal auto buy',
       controller: 'CoinifyController',
@@ -219,7 +219,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         trade: () => trade && trade.refresh().then(() => trade),
         buyOptions: () => options
       }
-    }).result;
+    };
+    let modalInstance = $rootScope.inMobileBuy
+      ? modals.expandTray(config) : $uibModal.open(config);
+    return modalInstance.result;
   }
 
   function getCurrency (trade) {

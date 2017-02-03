@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buyStatus', buyStatus);
 
-function buyStatus (Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts, $state, $q) {
+function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts, $state, $q) {
   const service = {};
 
   let isCountryWhitelisted = null;
@@ -65,8 +65,9 @@ function buyStatus (Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts
     let timeHasPassed = buyReminder ? new Date() > buyReminder.when : true;
     let shownTwice = buyReminder ? buyReminder.index >= 2 : false;
     let firstTime = Wallet.goal.firstTime;
+    let mobileBuy = $rootScope.inMobileBuy;
 
-    return (!firstTime && !shownTwice && timeHasPassed) || (!firstTime && !buyReminder);
+    return !mobileBuy && !firstTime && (!shownTwice && timeHasPassed || !buyReminder);
   };
 
   service.showBuyReminder = () => {
