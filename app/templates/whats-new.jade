@@ -7,5 +7,4 @@ li(
   p
     span(translate="{{::feat.desc}}")
     |  
-    span.blue.pointer(translate="LEARN_MORE" ng-if="::feat.ref" ui-sref="{{::feat.ref}}")
-    | .
+    span.blue.pointer.period(translate="LEARN_MORE" ng-if="::feat.ref" ng-click="$event.stopPropagation()" ui-sref="{{feat.ref}}")
