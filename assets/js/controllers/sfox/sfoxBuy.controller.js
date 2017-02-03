@@ -24,6 +24,8 @@ function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
   $scope.buySuccess = (trade) => {
     exchange.fetchProfile().then($scope.setState);
     $scope.trade = formatTrade.initiated(trade, [$scope.account]);
+    let pendingTrades = sfox.trades.filter(t => !t.bitcoinReceived);
+    Wallet.webkitNotify('buyCompleted', pendingTrades.map(t => t.toJSON()));
   };
 
   $scope.buyError = () => {
