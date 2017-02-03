@@ -60,6 +60,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     $scope.selectTab('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
+    let pendingTrades = sfox.trades.filter(t => !t.bitcoinReceived);
+    Wallet.webkitNotify('buyCompleted', pendingTrades.map(t => t.toJSON()));
   };
 
   $scope.buyError = () => {

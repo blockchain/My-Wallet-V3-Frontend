@@ -96,6 +96,15 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.login(guid, password, null, null, success, null, sharedKey);
   });
 
+  wallet.webkitNotify = (handlerName, data) => {
+    let wk = $window.webkit;
+    if (wk) {
+      let handler = wk.messageHandlers[handlerName];
+      if (handler) handler.postMessage(data);
+      else console.error('Unknown webkit message handler:', handlerName);
+    }
+  };
+
   wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback, sharedKey) => {
     let didLogin = (result) => {
       wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
