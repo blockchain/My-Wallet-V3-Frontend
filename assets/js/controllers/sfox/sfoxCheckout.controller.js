@@ -7,7 +7,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
-    modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
+    return modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
   };
 
   $scope.state = {
