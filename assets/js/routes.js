@@ -322,16 +322,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet, sfox) {
+        // Using Options.get is a hack to prevent route error while waiting for sfox api key
+        _loadExchangeData ($q, MyWallet, sfox, Options) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? sfox.fetchExchangeData(exchange)
+            ? Options.get().then(() => sfox.fetchExchangeData(exchange))
             : $q.resolve();
         },
-        accounts ($q, MyWallet) {
+        accounts ($q, MyWallet, Options) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.hasAccount
-            ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+            ? Options.get().then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
             : $q.resolve([]);
         },
         options (Options) { return Options.get(); },
