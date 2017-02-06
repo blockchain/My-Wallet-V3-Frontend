@@ -249,7 +249,7 @@ module.exports = (grunt) ->
         files: [
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/monteserrat", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
 
         ]

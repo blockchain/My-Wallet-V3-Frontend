@@ -14,12 +14,16 @@
 @include declare-font-face('bc-icons', 'BlockchainFontIcons', 'bc-icons');
 @include declare-font-face('themify', 'ThemifyIcons', 'themify');
 
-//Roboto
-@include declare-font-face('roboto', 'Roboto', 'Roboto-Thin', 100);
-@include declare-font-face('roboto', 'Roboto', 'Roboto-Light', 300);
-@include declare-font-face('roboto', 'Roboto', 'Roboto-Regular', 400);
-@include declare-font-face('roboto', 'Roboto', 'Roboto-Medium', 500);
-@include declare-font-face('roboto', 'Roboto', 'Roboto-Bold', 700);
+//Monteserrat
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Thin', 100);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-ExtraLight', 200);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Light', 300);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Medium', 400);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Regular', 500);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-SemiBold', 600);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Bold', 700);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-ExtraBold', 800);
+@include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Black', 900);
 
 
 [class^="bc-icon-"],
