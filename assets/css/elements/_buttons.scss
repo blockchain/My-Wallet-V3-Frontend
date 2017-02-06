@@ -9,16 +9,21 @@ button.full {
 }
 
 %button-base {
-  border-radius: 5px;
+  @extend .f-14;
+  @extend .em-400;
   border: none;
-  padding: .8em 1.2em;
-  transition: all .2s ease-in-out;
-  margin-bottom: 0;
-  text-align: center;
-  vertical-align: middle;
+  height: 40px;
   cursor: pointer;
+  margin-bottom: 0;
+  padding: 10px 15px;
+  border-radius: 3px;
+  text-align: center;
   text-decoration: none;
-  text-transform: capitalize;
+  vertical-align: middle;
+  letter-spacing: 0.05em;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  transition: all .2s ease-in-out;
   &:focus {
     outline: none;
     text-decoration: none;
@@ -78,8 +83,9 @@ button.full {
 }
 
 @include button($false, white, $black);
-@include button('primary', $blue, white);
-@include button('primary-inverse', white, $blue, none, $blue);
+@include button('blue', $blue, white);
+@include button('primary', $primary, white);
+@include button('primary-inverse', white, $primary, none, $primary);
 @include button('success', $receive-green, white);
 @include button('success-alt', $security-green, white);
 @include button('default', white, $black);

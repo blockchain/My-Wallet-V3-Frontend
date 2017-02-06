@@ -15,6 +15,8 @@
 .f-14 { font-size: 14px; }
 .f-12 { font-size: 12px; }
 
+.gillsans { font-family: 'GillSans'; }
+
 .title { font-size: 3.5em; }
 .underline { text-decoration: underline; &:hover { text-decoration: underline; } }
 .underline-blue { border-bottom: 2px solid $blue; }
@@ -32,6 +34,7 @@
 .text { font-size: 14px; } //use pixels to normalize with Bootstrap instead of em's
 .colon:after { content: ':'; }
 .period:after { content: '.';}
+.exclaim:after { content: '!';}
 .capitalize { text-transform: capitalize; }
 .upper { text-transform: uppercase; }
 .italic { font-style: italic; }
