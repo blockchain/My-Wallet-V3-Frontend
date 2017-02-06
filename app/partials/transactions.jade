@@ -1,7 +1,7 @@
 .transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
     a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
-      img(src="img/export.svg")
+      i.icon-export
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mbl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
@@ -51,7 +51,7 @@
             translate="{{::f}}")
       .flex-center
         a.black.mhl.em-500.em-alt.hidden-xs.hidden-sm(ng-click="exportHistory()")
-          img(src="img/export.svg")
+          i.icon-export
         .filter-search.input-group
           input.form-control(
             type="text"
@@ -73,8 +73,8 @@
       h3.em-100.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
     .transaction.flex-center(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
-      .tx-toggle.pointer.hidden-xs.mtm(ng-click="tx.toggled = !tx.toggled")
-        img(src="img/expand.svg" ng-class="{rotated: tx.toggled}")
+      .tx-toggle.pointer.hidden-xs.mtm(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
+        i.icon-down_arrow
       .tx-details.width-100.mll.mvm
         span 
           transaction-description(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")

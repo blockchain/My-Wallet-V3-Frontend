@@ -42,6 +42,7 @@
       top: 25px;
       left: 10px;
       position: absolute;
+      font-size: 8px;
     }
     button.amount {
       padding: 10px;
@@ -123,7 +124,7 @@
   font-family: GillSans-Light;
 
   .rotated {
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
   }
 }
 
