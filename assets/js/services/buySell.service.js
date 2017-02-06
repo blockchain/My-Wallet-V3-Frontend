@@ -39,6 +39,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         let processOptions = (options) => {
           _buySellMyWallet.exchanges.coinify.partnerId = options.partners.coinify.partnerId;
           _buySellMyWallet.exchanges.sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
+          console.log('options processed');
         };
         if (Options.didFetch) {
           processOptions(Options.options);

@@ -142,6 +142,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   };
 
   $scope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
+    console.log(error.message);
     let message = typeof error === 'string' ? error : 'ROUTE_ERROR';
     Alerts.displayError(message);
   });

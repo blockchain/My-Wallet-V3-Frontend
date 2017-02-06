@@ -43,10 +43,13 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openTemplate = (templateUrl, scope, options) => {
-    open({
+    let config = angular.merge({
       templateUrl,
       controller ($scope) { angular.merge($scope, scope); }
-    }, options).result;
+    }, options);
+    let modalInstance = $rootScope.inMobileBuy
+      ? service.expandTray(config) : open(config);
+    return modalInstance.result;
   };
 
   service.openTransfer = (addresses) => open({

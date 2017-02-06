@@ -28,7 +28,7 @@
         tr.border.bg-grey
           th.phml.pvs.width-30(translate="STATUS")
           th.pvs.width-30(translate="DATE")
-          th.pvs.width-25 BTC
+          th.pvs.width-25(ng-hide="inMobileBuy") BTC
           th.pvs.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
@@ -42,4 +42,4 @@
           span.type-h5.security-red(translate=".DISAGREE")
           span.type-h5.mhm.pointer(uib-rating ng-model="rating" max="5" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" ng-click="submitFeedback(rating)")
           span.type-h5.success(translate=".AGREE")
-contact-support-footer
+contact-support-footer(ng-hide="inMobileBuy")

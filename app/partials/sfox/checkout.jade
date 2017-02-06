@@ -4,6 +4,7 @@
       ng-repeat="tab in tabs"
       ng-class="{active: selectedTab === tab}"
       ng-click="selectTab(tab)"
+      ng-hide="inMobileBuy && selectedTab === tab"
       translate="{{tab}}")
   .sfox-logo
     span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
@@ -39,11 +40,11 @@
       tr.border.bg-grey
         th.phml.pvs.width-30(translate="STATUS")
         th.pvs.width-30(translate="DATE")
-        th.pvs.width-25 BTC
+        th.pvs.width-25(ng-hide="inMobileBuy") BTC
         th.pvs.width-15(translate="TOTAL")
       tr(
         ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
         trade="trade"
         buy="inspectTrade"
         usa="true")
-contact-support-footer
+contact-support-footer(ng-hide="inMobileBuy")
