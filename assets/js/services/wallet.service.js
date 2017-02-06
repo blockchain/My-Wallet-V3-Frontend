@@ -88,13 +88,16 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     $window.disableQA = () => reloadWithDebug(false);
   }
 
-  $window.activateMobileBuy = (guid, sharedKey, password) => $timeout(() => {
-    $rootScope.inMobileBuy = true;
-    let success = () => { $state.go('wallet.common.buy-sell'); };
-    Options.get().then(() => {
-      wallet.login(guid, password, null, null, success, null, sharedKey);
+  $window.activateMobileBuy = (guid, sharedKey, password) => {
+    $timeout(() => {
+      $rootScope.inMobileBuy = true;
+      let success = () => { $state.go('wallet.common.buy-sell'); };
+      Options.get().then(() => {
+        wallet.login(guid, password, null, null, success, null, sharedKey);
+      });
     });
-  });
+    return { guid, sharedKey, password };
+  };
 
   wallet.webkitNotify = (handlerName, data) => {
     let wk = $window.webkit;
