@@ -42,6 +42,7 @@
       top: 25px;
       left: 10px;
       position: absolute;
+      font-size: 8px;
     }
     button.amount {
       padding: 10px;
@@ -116,6 +117,14 @@
   .tx-warning {
     left: -37px;
     bottom: -2px;
+  }
+
+  font-size: 16px;
+  font-weight: 300;
+  font-family: GillSans-Light;
+
+  .rotated {
+    transform: rotate(-90deg);
   }
 }
 
@@ -254,6 +263,7 @@ a.date,p.date { color: $black; }
   float: none;
   min-width: 130px;
   text-transform: none;
+  padding: 7px 9px 7px 10px;
 }
 
 .from, .to{
