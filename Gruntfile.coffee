@@ -250,7 +250,7 @@ module.exports = (grunt) ->
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/montserrat", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/gillsans", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/icomoon", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
 
         ]

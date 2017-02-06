@@ -2,11 +2,11 @@
   ul.aside.flex-1-0
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
-        i.ti-home
+        i.icon-home
         span(translate="HOME")
     li.scroll-parent.header(ui-sref-active="current")
       a(ui-sref="wallet.common.transactions")
-        i.ti-layout-list-post
+        i.icon-tx
         span(translate="MY_TRANSACTIONS")
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-show="canBuy || shouldShowInviteForm")
@@ -20,11 +20,11 @@
       a(ng-hide="shouldShowInviteForm"
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
-        i.ti-direction-alt
+        i.icon-bitcoin
         span(translate="BUY_BITCOIN")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
-        i.ti-direction-alt
+        i.icon-bitcoin
         span(translate="BUY_BITCOIN")
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
@@ -36,15 +36,15 @@
         route="wallet.common.security-center"
         color="red")
       a(ui-sref="wallet.common.security-center")
-        i.bc-icon-security.security-red(ng-show="security.level <= 2")
-        i.bc-icon-security.security-yellow(ng-show="security.level > 2 && security.level < 6")
-        i.bc-icon-security.security-green(ng-show="security.level == 6")
+        i.icon-lock.security-red(ng-show="security.level <= 2")
+        i.icon-lock.security-yellow(ng-show="security.level > 2 && security.level < 6")
+        i.icon-lock.security-green(ng-show="security.level == 6")
         span(translate="SECURITY_CENTER")
         .progress-bar-wrapper.mlm.flex-1(ng-hide="security.level == 6")
           .bar(ng-class="'level-' + security.level")
     li.scroll-parent.header.mbm(ui-sref-active="current")
       a(ui-sref="wallet.common.settings")
-        i.ti-settings
+        i.icon-settings
         span(translate="SETTINGS")
       ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
         li.mts.mbm(ui-sref-active="active")
@@ -61,7 +61,7 @@
             span(translate="MENU_ACCOUNTS_AND_ADDRESSES")
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.faq")
-        i.ti-help-alt
+        i.icon-help
         span(translate="FAQ")
   ul.aside.wallet-footer
     li.header.adverts.mbm

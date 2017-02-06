@@ -10,9 +10,10 @@
     font-stretch: $font-stretch;
   }
 }
+
 //Icon Fonts
-@include declare-font-face('bc-icons', 'BlockchainFontIcons', 'bc-icons');
 @include declare-font-face('themify', 'ThemifyIcons', 'themify');
+@include declare-font-face('icomoon', 'icomoon', 'icomoon');
 
 //Montserrat
 @include declare-font-face('monteserrat', 'Montserrat', 'Montserrat-Thin', 100);
@@ -31,12 +32,11 @@
 @include declare-font-face('gillsans', 'GillSans', 'GillSans-Bold', 700);
 @include declare-font-face('gillsans', 'GillSans', 'GillSans-UltraBold', 800);
 
-[class^="bc-icon-"],
-[class*=" bc-icon-"],
+[class^="icon-"],
+[class*="icon-"],
 [class^="ti-"],
-[class*=" ti-"]  {
+[class*="ti-"]  {
   &:before {
-    font-family: 'BlockchainFontIcons';
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -49,67 +49,19 @@
   }
 }
 
-[class^="ti-"], [class*=" ti-"] {
+[class^="ti-"],
+[class*=" ti-"] {
   &:before {
     font-family: 'ThemifyIcons';
   }
 }
 
-////////////////////////////////
-//Blockchain font icon unicode//
-///////////////////////////////
-
-.bc-icon-helpdesk:before {
-  content: "\e60b";
+[class^="icon-"],
+[class*="icon-"] {
+  &:before {
+    font-family: 'icomoon';
+  }
 }
-
-.bc-icon-address:before {
-  content: "\e600";
-}
-
-.bc-icon-home:before {
-  content: "\e601";
-}
-
-.bc-icon-location:before {
-  content: "\e602";
-}
-
-.bc-icon-logo:before {
-  content: "\e603";
-}
-
-.bc-icon-menu:before {
-  content: "\e604";
-}
-
-.bc-icon-money:before {
-  content: "\e605";
-}
-
-.bc-icon-profile:before {
-  content: "\e606";
-}
-
-.bc-icon-qr-code:before {
-  content: "\e607";
-}
-
-.bc-icon-receive:before {
-  content: "\e608";
-}
-
-.bc-icon-security:before {
-  content: "\e609";
-}
-
-.bc-icon-send:before {
-  content: "\e60a";
-}
-
-///////////////////////
-//Themify font icons//
-//////////////////////
 
 .ti-home:before {
   content: "\e69b";
@@ -1180,4 +1132,107 @@
 }
 .ti-rss-alt:before {
   content: "\e75f";
+}
+
+.icon-bank:before {
+  content: "\e900";
+}
+
+.icon-bitcoin:before {
+  content: "\e901";
+}
+
+.icon-card:before {
+  content: "\e902";
+}
+
+.icon-down_arrow:before {
+  content: "\e903";
+}
+
+.icon-export:before {
+  content: "\e904";
+}
+
+.icon-help:before {
+  content: "\e905";
+}
+
+.icon-home:before {
+  content: "\e906";
+}
+
+.icon-id:before {
+  content: "\e907";
+}
+
+.icon-left_arrow:before {
+  content: "\e908";
+}
+
+.icon-lock:before {
+  content: "\e909";
+}
+
+.icon-mail .path1:before {
+  content: "\e90a";
+  color: rgb(16, 173, 228);
+}
+
+.icon-mail .path2:before {
+  content: "\e90b";
+  margin-left: -1.37890625em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-mobile:before {
+  content: "\e90c";
+}
+
+.icon-present:before {
+  content: "\e90d";
+}
+
+.icon-receive:before {
+  content: "\e90e";
+}
+
+.icon-right_arrow:before {
+  content: "\e90f";
+}
+
+.icon-search:before {
+  content: "\e910";
+}
+
+.icon-send:before {
+  content: "\e911";
+}
+
+.icon-settings:before {
+  content: "\e912";
+}
+
+.icon-success:before {
+  content: "\e913";
+}
+
+.icon-trash:before {
+  content: "\e914";
+}
+
+.icon-tx:before {
+  content: "\e915";
+}
+
+.icon-up_arrow:before {
+  content: "\e916";
+}
+
+.icon-user:before {
+  content: "\e917";
+}
+
+.icon-wallet:before {
+  content: "\e918";
 }
