@@ -60,11 +60,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     $scope.selectTab('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
-    let pendingTrades = sfox.trades.filter(t => !t.bitcoinReceived);
-    Wallet.webkitNotify('buyCompleted', pendingTrades.map(t => t.toJSON()));
+    Wallet.webkitNotify('buyCompleted', null);
   };
 
   $scope.buyError = () => {
-    Alerts.displayError('Error connecting to our exchange partner');
+    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
 }
