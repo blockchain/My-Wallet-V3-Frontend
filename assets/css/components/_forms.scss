@@ -226,6 +226,11 @@ form.bc-form {
       @extend .f-12;
       position: absolute;
     }
+    &.block {
+      span {
+        position: relative;
+      }
+    }
   }
 }
 
