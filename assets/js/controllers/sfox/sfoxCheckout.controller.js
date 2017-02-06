@@ -59,7 +59,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     exchange.fetchProfile().then($scope.setState);
   };
 
-  $scope.buyFailure = () => {
+  $scope.buyError = () => {
     Alerts.displayError('Error connecting to our exchange partner');
   };
 }
