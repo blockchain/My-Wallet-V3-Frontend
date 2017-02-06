@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options) {
   const wallet = {
     goal: {
       auth: false,
@@ -91,7 +91,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   $window.activateMobileBuy = (guid, sharedKey, password) => $timeout(() => {
     $rootScope.inMobileBuy = true;
     let success = () => { $state.go('wallet.common.buy-sell'); };
-    wallet.login(guid, password, null, null, success, null, sharedKey);
+    Options.get().then(() => {
+      wallet.login(guid, password, null, null, success, null, sharedKey);
+    });
   });
 
   wallet.webkitNotify = (handlerName, data) => {
