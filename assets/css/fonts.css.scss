@@ -25,6 +25,11 @@
 @include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-ExtraBold', 800);
 @include declare-font-face('monteserrat', 'Monteserrat', 'Monteserrat-Black', 900);
 
+@include declare-font-face('gillsans', 'GillSans', 'GillSans-Light', 200);
+@include declare-font-face('gillsans', 'GillSans', 'GillSans-Regular', 400);
+@include declare-font-face('gillsans', 'GillSans', 'GillSans-SemiBold', 500);
+@include declare-font-face('gillsans', 'GillSans', 'GillSans-Bold', 700);
+@include declare-font-face('gillsans', 'GillSans', 'GillSans-UltraBold', 800);
 
 [class^="bc-icon-"],
 [class*=" bc-icon-"],
