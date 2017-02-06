@@ -1,4 +1,4 @@
-tr.border
+tr.border(ng-click="inMobileBuy && triggerBuy()")
   td.type-lbl.paml
     span.mrm(ng-if="buySellDebug" uib-dropdown)
       i.ti-search.pointer.blue(uib-dropdown-toggle)
@@ -11,15 +11,17 @@ tr.border
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
-    
-    span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(ng-class="{disabled: isTradingDisabled}"
-                                                            ng-click="!isTradingDisabled && triggerBuy()" 
-                                                            ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
-    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()"
-                                                    ng-show="trade.state !== 'awaiting_transfer_in'") View details
+    span(ng-hide="inMobileBuy")
+      span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
+        ng-class="{disabled: isTradingDisabled}"
+        ng-click="!isTradingDisabled && triggerBuy()" 
+        ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
+      span.type-sm.blue.underline.pointer.text-nowrap(
+        ng-click="triggerBuy()"
+        ng-show="trade.state !== 'awaiting_transfer_in'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
-  td.type-lbl.pvml(ng-hide="status.gettingQuote")
+  td.type-lbl.pvml(ng-hide="status.gettingQuote || inMobileBuy")
     span(ng-hide="!trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
       span.display-inline-block.left-align
         quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
