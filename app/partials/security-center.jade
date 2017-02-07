@@ -4,7 +4,7 @@
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_1")
       p.text.em-300.mvn(translate="LEVEL_1_TITLE")
     ul.flex.flex-start.pln.mbn
-      li.level-header.bg-light-blue.flex-center.flex-justify
+      li.level-header.bg-grey.flex-center.flex-justify
         img(src="img/security-icon-1.png")
       li.level-badge(ng-click="user.isEmailVerified || toggle('email')", ng-class="{'active' : display.action == 'email', 'badge-active': user.isEmailVerified}")
         a
@@ -22,7 +22,7 @@
         div(ng-show="display.action == 'email' && !display.editingEmail")
           .verify-email
             p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-            verify-email(button-class="button-success")
+            verify-email(button-class="button-primary")
             p(ng-hide="user.isEmailVerified")
               span(translate="DIDNT_RECEIVE_EMAIL")
               span 
@@ -69,13 +69,13 @@
               input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
               span.help-block {{::errorMessage}}
             .width-50.mll.pll
-              button.button-success(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
+              button.button-primary(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
 
     .badge-panel.hidden-xs(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
         .verify-email
           p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
-          verify-email(button-class="button-success")
+          verify-email(button-class="button-primary")
           p(ng-hide="user.isEmailVerified")
             span(translate="DIDNT_RECEIVE_EMAIL")
             | &nbsp;
@@ -103,7 +103,7 @@
               input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
               span.help-block {{::errorMessage}}
             .width-50.mll.pll
-              button.button-success(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
+              button.button-primary(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
 
 
   section.level.level_two
@@ -111,7 +111,7 @@
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_2")
       p.text.em-300.mvn(translate="LEVEL_2_TITLE")
     ul.flex.flex-start.pln.mbn
-      li.level-header.bg-light-blue.flex-center.flex-justify
+      li.level-header.bg-grey.flex-center.flex-justify
         img(src="img/security-icon-2.png")
       li.level-badge(ng-click="user.isMobileVerified || toggle('mobilenumber')", ng-class="{'active' : display.action == 'mobilenumber', 'badge-active': user.isMobileVerified }")
         a
@@ -164,7 +164,7 @@
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_3")
       p.text.em-300.mvn(translate="LEVEL_3_TITLE")
     ul.flex.flex-start.pln.mbn
-      li.level-header.bg-light-blue.flex-center.flex-justify
+      li.level-header.bg-grey.flex-center.flex-justify
         img(src="img/security-icon-3.png")
       li.level-badge(ng-click="settings.blockTOR || toggle('blocktor')", ng-class="{'active' : display.action == 'blocktor', 'badge-active': settings.blockTOR }")
         a
@@ -182,10 +182,10 @@
           .flex-center(ng-show="display.action == 'blocktor'")
             p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
             .mll.pll.block-tor-actions
-              tor(button-class="button-success")
+              tor(button-class="button-primary")
 
     .badge-panel.hidden-xs(ng-show="display.action == 'blocktor'")
       .flex-center(ng-show="display.action == 'blocktor'")
         p.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
         .mll.pll.block-tor-actions
-          tor(button-class="button-success")
+          tor(button-class="button-primary")

@@ -30,7 +30,7 @@ form.bc-form(
               focus-when="true"
               required)
             span.mhm {{dollars.code}}
-          i.ti-arrows-horizontal.h4.aaa.phm
+          i.ti-arrows-horizontal.h4.border-grey.phm
           .flex-1.flex-center.border
             input.form-control.no-border(
               type="number"
@@ -56,23 +56,23 @@ form.bc-form(
       .item
         .mbm
           span.f-16.em-500.colon Order Summary
-        .border.flex-column.bg-light-blue
+        .border.flex-column.bg-grey
           div(ng-show="hasMultipleAccounts")
-            .flex-between.flex-center.form-control.bg-light-blue.no-border
+            .flex-between.flex-center.form-control.bg-grey.no-border
               span.colon Send To
               span {{ btcAccount.label }}
             .border-bottom-thick.mhm
-          .flex-between.flex-center.form-control.bg-light-blue.no-border
+          .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon BTC Order
             span {{ format(fromSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
           .border-bottom-thick.mhm
-          .flex-between.flex-center.form-control.bg-light-blue.no-border
+          .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon Payment Method
             span.capitalize {{ $ctrl.buyAccount.accountType }} ({{ $ctrl.buyAccount.accountNumber }})
           .border-bottom-thick.mhm
-          .flex-between.flex-center.form-control.bg-light-blue.no-border.em-500
+          .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
     .group.mtl(ng-hide="$ctrl.collapseSummary")
       button.btn.button-primary.full(type="submit" ng-hide="enabled" ng-disabled="!quote || checkoutForm.$invalid || state.loadFailed") Buy Bitcoin
-      button.btn.button-success.full(type="submit" ng-show="enabled" ng-disabled="!quote") Confirm Purchase
+      button.btn.button-blue.full(type="submit" ng-show="enabled" ng-disabled="!quote") Confirm Purchase

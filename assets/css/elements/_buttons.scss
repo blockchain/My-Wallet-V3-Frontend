@@ -1,16 +1,8 @@
 $false: nil;
 
-button[disabled] {
-  opacity: .6;
-}
-
-button.full {
-  width: 100%;
-}
-
 %button-base {
   @extend .f-14;
-  @extend .em-400;
+  @extend .em-300;
   border: none;
   height: 40px;
   cursor: pointer;
@@ -20,9 +12,7 @@ button.full {
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
-  letter-spacing: 0.05em;
   letter-spacing: normal;
-  text-transform: uppercase;
   transition: all .2s ease-in-out;
   &:focus {
     outline: none;
@@ -84,14 +74,31 @@ button.full {
 
 @include button($false, white, $black);
 @include button('blue', $blue, white);
-@include button('primary', $primary, white);
-@include button('primary-inverse', white, $primary, none, $primary);
-@include button('success', $receive-green, white);
-@include button('success-alt', $security-green, white);
+@include button('info', $grey, white);
+@include button('sent', $sent, white);
 @include button('default', white, $black);
-@include button('info', $light-grey, white);
-@include button('danger', #E28081, white);
-@include button('transfer', $transfer-blue, white);
+@include button('primary', $primary, white);
+@include button('danger', $mahogany, white);
+@include button('success-alt', $jade, white);
+@include button('success', $iris-green, white);
+@include button('received', $iris-green, white);
+@include button('transferred', $bali-hai, white);
+@include button('primary-inverse', white, $primary, none, $primary);
+@include button('purple', $mariner, white);
+
+button[disabled] {
+  opacity: .6;
+}
+
+button.full {
+  width: 100%;
+}
+
+.button-heavy {
+  @extend .em-400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
 
 .button-sm {
   padding: .3125em .625em;
@@ -104,39 +111,28 @@ button.full {
   font-size: 1.4em;
   width: 100%;
 }
+
+.button-sm,
+.button-lg,
+.button-vlg {
+  height: auto;
+}
+
 .button-muted {
   border: none;
   background: transparent;
-  color: $dark-grey;
+  color: $basic-grey;
   &:hover {
-    color: darken($dark-grey, 10%);
+    color: darken($basic-grey, 10%);
   }
 }
+
 .button-muted-off {
   @extend .button-muted;
   color: $security-red;
   &:hover {
     color: darken($security-red, 10%);
   }
-}
-.button-transparent {
-  background: transparent;
-  color: white;
-  border: none;
-  &:hover {
-    color: white !important;
-    background: transparent !important;
-  }
-}
-.button-default { border: 1px solid #e0e0e0; }
-.button-border { border: 1px solid white; }
-.button-nowrap { white-space: nowrap; }
-.button-short {
-  padding: .25em;
-}
-.button-short-wide {
-  padding: .25em;
-  min-width: 100px;
 }
 
 .btn-inverse {
@@ -148,4 +144,28 @@ button.full {
   &:visited {
     color: white;
   }
+}
+
+.button-transparent {
+  background: transparent;
+  color: white;
+  border: none;
+  &:hover {
+    color: white !important;
+    background: transparent !important;
+  }
+}
+
+.button-default { border: 1px solid #e0e0e0; }
+.button-border { border: 1px solid white; }
+.button-nowrap { white-space: nowrap; }
+
+.button-short,
+.button-short-wide {
+  height: 35px;
+  padding: 5px;
+}
+
+.button-short-wide {
+  min-width: 100px;
 }

@@ -145,7 +145,7 @@
       margin-top: 40px;
       min-height: 335px;
       position: relative;
-      background: $light-grey;
+      background: $grey;
       @media (max-width: 767px) {
         margin-top: 20px;
         min-height: 300px;
@@ -268,7 +268,7 @@
           width: 12px !important;
         }
         &.active {
-          background: $dark-grey;
+          background: $basic-grey;
         }
       }
     }

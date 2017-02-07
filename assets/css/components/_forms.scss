@@ -44,7 +44,7 @@
         display: inline-block;
         background: transparent;
         box-shadow: none !important;
-        border-bottom: 1px solid $aaa;
+        border-bottom: 1px solid $border-grey;
         @include transition(width 0.1s);
         @media (min-width: 768px) {
           width: 50%;
