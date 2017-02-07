@@ -191,17 +191,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       $rootScope.$safeApply();
     };
 
-    let wrongTwoFactorCode = (message) => {
-      errorCallback('twoFactor', message);
-      $rootScope.$safeApply();
-    };
-
     let loginError = (error) => {
       console.log(error);
       if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
         errorCallback('uid', 'UNKNOWN_IDENTIFIER');
       } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
+      } else if (error.length && error.indexOf('Invalid authentication code') > -1) {
+        errorCallback('twoFactor', error);
       } else {
         Alerts.displayError(error.message || error, true);
         errorCallback();
@@ -215,13 +212,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       two_factor_code = null;
     }
 
-    let authorizationProvided = () => {
+    let authorizationRequired = () => {
       wallet.goal.auth = true;
-      $rootScope.$safeApply();
-    };
-
-    let authorizationRequired = (callback) => {
-      callback(authorizationProvided());
       Alerts.displayWarning('CHECK_EMAIL_VERIFY_BROWSER', true);
       $rootScope.$safeApply();
     };
@@ -257,7 +249,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         {
           newSessionToken: newSessionToken,
           needsTwoFactorCode: needsTwoFactorCode,
-          wrongTwoFactorCode: wrongTwoFactorCode,
           authorizationRequired: authorizationRequired
         }
       ).then(didLogin).catch(loginError);
