@@ -49,7 +49,7 @@
                 max="2100000000000000"
               )
               span.lh1 {{ settings.btcCurrency.code }}
-            i.ti-arrows-horizontal.h4.aaa.center.flex-1
+            i.ti-arrows-horizontal.h4.border-grey.center.flex-1
             .flex-center.border-bottom.flex-2
               input.form-control.pln.pbn.no-border(
                 type="number"
@@ -83,7 +83,7 @@
                                                  tooltip-append-to-body="true")
           h4.mbl(translate="COPY_AND_SHARE")
           span.flex-align-self-end.phs.pvs.pointer(ng-show="fields.amount || fields.label && advanced" 
-                                                   ng-class="{'bg-light-blue': showPaymentRequestURL}"
+                                                   ng-class="{'bg-grey': showPaymentRequestURL}"
                                                    ng-click="showPaymentRequestURL = !showPaymentRequestURL")
             i.ti-link
           p.form-control-static.bitcoin-address
@@ -111,7 +111,7 @@
     button.btn.button-default(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
   .flex-center.flex-end
     button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
-    a.dark-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
+    a.basic-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
     button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
                               uib-tooltip="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
                               tooltip-append-to-body="true")

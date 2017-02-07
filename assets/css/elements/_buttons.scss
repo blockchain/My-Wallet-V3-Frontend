@@ -86,12 +86,14 @@ button.full {
 @include button('blue', $blue, white);
 @include button('primary', $primary, white);
 @include button('primary-inverse', white, $primary, none, $primary);
-@include button('success', $receive-green, white);
-@include button('success-alt', $security-green, white);
+@include button('success', $iris-green, white);
+@include button('success-alt', $jade, white);
 @include button('default', white, $black);
-@include button('info', $light-grey, white);
-@include button('danger', #E28081, white);
-@include button('transfer', $transfer-blue, white);
+@include button('info', $grey, white);
+@include button('danger', $mahogany, white);
+@include button('transferred', $bali-hai, white);
+@include button('received', $iris-green, white);
+@include button('sent', $sent, white);
 
 .button-sm {
   padding: .3125em .625em;
@@ -108,9 +110,9 @@ button.full {
 .button-muted {
   border: none;
   background: transparent;
-  color: $dark-grey;
+  color: $basic-grey;
   &:hover {
-    color: darken($dark-grey, 10%);
+    color: darken($basic-grey, 10%);
   }
 }
 .button-muted-off {

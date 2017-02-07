@@ -1,56 +1,3 @@
-//Blockchain Pillar Colors
-$blue: #004a7c;
-$primary: #10ADE4;
-$send-red: #f06d5c;
-$receive-green: #0bbabb;
-$transfer-blue: #7b9eb1;
-$pending-red: #ffbcbd;
-$pale-yellow: #fff7e5;
-
-//Blockchain Blue Tints
-$hover-blue: #edf6fc;
-$light-blue: #F5F7F9;
-$light-blue-2: #eaeff4;
-$tertiary-blue: #D0E0E8;
-$dark-blue: #1476ab;
-$deep-blue: #005380;
-$deeper-blue: #177EC1;
-$baby-blue: #edf6fd;
-$light-blue-transparent: rgba(245, 247, 249, 0.9);
-
-//Blockchain Text
-$black: #4B4D4E;
-$text: #5f5f5f;
-
-//Blockchain Greys
-$light-grey: #f7f7f7;
-$grey: #EEEEEE;
-$mid-grey: #b0b0b0;
-$dark-grey: #757575;
-$border-grey: #ddd;
-$pale-grey: #bababa;
-$basic-grey: #757575;
-$steel: #6c6c6c;
-
-//Did You Know
-$feature: #039BD3;
-$educational: #54C29F;
-$partner: #E02771;
-
-//Button colors
-$default: #3F3F3F;
-$success: #8CCA6A;
-$eee: #EEEEEE;
-$ccc: #CCCCCC;
-$aaa: #AAAAAA;
-$a7a7a7: #a7a7a7;
-
-//Security Badge Colors
-$security-red: #E47F7F;
-$security-yellow: #FCCC65;
-$security-green: #3CC476;
-$bright-green:  #3CC476 !important; //override Security Center nested css selectors
-
 //Color Mixin
 @mixin color($name, $color) {
   .#{$name} {
@@ -59,36 +6,6 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
   }
 }
 
-@include color('blue', $blue);
-@include color('white', white);
-@include color('dark-blue', $dark-blue);
-@include color('deep-blue', $deep-blue);
-@include color('black', $black);
-@include color('grey', $light-grey);
-@include color('light-grey', $light-grey);
-@include color('mid-grey', $mid-grey);
-@include color('basic-grey', $basic-grey);
-@include color('dark-grey', $dark-grey);
-@include color('send-red', $send-red);
-@include color('receive-green', $receive-green);
-@include color('transfer-blue', $transfer-blue);
-@include color('security-red', $security-red);
-@include color('security-yellow', $security-yellow);
-@include color('security-green', $security-green);
-@include color('ccc', $ccc);
-@include color('aaa', $aaa);
-@include color('success', $success);
-@include color('bright-green', $bright-green);
-@include color('feature', $feature);
-@include color('educational', $educational);
-@include color('partner', $partner);
-@include color('transfer', $transfer-blue);
-@include color('sent', $send-red);
-@include color('received', $receive-green);
-@include color('tertiary-blue', $tertiary-blue);
-@include color('text-color', $text);
-@include color('state-danger-text', $state-danger-text);
-
 //Background Mixin
 @mixin bg-color($name, $color) {
   .bg-#{$name} {
@@ -96,12 +13,71 @@ $bright-green:  #3CC476 !important; //override Security Center nested css select
   }
 }
 
+// Primary
+$iris: #10ADE4;
+$mariner: #3558A8;
+$bali-hai: #799EB2;
+$regal-blue: #153A62;
+$light-blue: #B2D5E5;
+$blue: $regal-blue;
+$primary: $iris;
+
+// Secondary
+$spray: #84D0D3;
+$rosebud: #F9B0A1;
+$moccasin: #FFE6B4;
+$dandelion: #FFCF62;
+$iris-green: #00BABC;
+$bittersweet: #F26C57;
+
+// Product
+$jade: #00A76F;
+$mahogany: #CA3A3C;
+
+// Greys
+$grey: #F5F7F9;
+$text: #5f5f5f;
+$black: #4B4D4E;
+$border-grey: #DDD;
+$mid-grey: #b0b0b0;
+$basic-grey: #757575;
+$grey-transparent: rgba(245, 247, 249, 0.9);
+
+// Transaction Colors
+$sent: $bittersweet;
+$received: $iris-green;
+$transferred: $bali-hai;
+
+//Security Badge Colors
+$security-red: $mahogany;
+$security-green: $jade;
+$security-yellow: $dandelion;
+$bright-green:  $jade !important; //override Security Center nested css selectors
+
+@include color('blue', $blue);
+@include color('white', white);
+@include color('black', $black);
+@include color('grey', $grey);
+@include color('mid-grey', $mid-grey);
+@include color('basic-grey', $basic-grey);
+@include color('border-grey', $border-grey);
+@include color('security-red', $security-red);
+@include color('security-yellow', $security-yellow);
+@include color('security-green', $security-green);
+@include color('bright-green', $jade);
+@include color('success', $jade);
+@include color('text-color', $text);
+@include color('state-danger-text', $security-red);
+@include color('transferred', $bali-hai);
+@include color('received', $iris-green);
+@include color('sent', $bittersweet);
+
+@include bg-color('transferred', $bali-hai);
+@include bg-color('received', $iris-green);
+@include bg-color('sent', $bittersweet);
+@include bg-color('grey', $grey);
 @include bg-color('blue', $blue);
 @include bg-color('black', $black);
-@include bg-color('deeper-blue', $deeper-blue);
-@include bg-color('dark-grey', $dark-grey);
-@include bg-color('light-grey', $light-grey);
 @include bg-color('light-blue', $light-blue);
 @include bg-color('mid-grey', $mid-grey);
-@include bg-color('success', $success);
-@include bg-color('grey', $grey);
+@include bg-color('success', $jade);
