@@ -36,9 +36,7 @@
         route="wallet.common.security-center"
         color="red")
       a(ui-sref="wallet.common.security-center")
-        i.icon-lock.security-red(ng-show="security.level <= 2")
-        i.icon-lock.security-yellow(ng-show="security.level > 2 && security.level < 6")
-        i.icon-lock.security-green(ng-show="security.level == 6")
+        i.icon-lock
         span(translate="SECURITY_CENTER")
         .progress-bar-wrapper.mlm.flex-1(ng-hide="security.level == 6")
           .bar(ng-class="'level-' + security.level")
