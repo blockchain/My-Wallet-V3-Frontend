@@ -1,23 +1,5 @@
 .landing-page(translate-namespace="LANDING")
   public-header(i18n-loaded='i18nLoaded')
-  .quickstart
-    #intro-header
-      .flex-center.flex-row.flex-column-mobile.container
-        .flex-center.flex-between.center.flex-column.pvl.phl
-          div
-            h5.flex-1.mtn(translate="NEW_USERS")
-            p.flex-1(translate="NEW_USERS_COPY")
-          button.button-primary(ui-sref="public.signup" translate="CREATE_NEW")
-        .flex-center.flex-between.center.flex-column.pvl.phl.border-left
-          div
-            h5.flex-1.mtn(translate="EXISTING_USERS")
-            p.flex-1(translate="EXISTING_USERS_COPY")
-          button.button-blue(ui-sref="public.login-no-uid" translate="LOGIN_NOW")
-        .flex-center.flex-between.center.flex-column.pvl.phl.hidden-xs.border-left
-          div
-            h5.flex-1.mtn(translate="HOW_IT_WORKS")
-            p.flex-1(translate='HOW_IT_WORKS_COPY')
-          a.button-default(href="{{rootURL}}wallet/how-it-works" translate="HOW_IT_WORKS" target="_blank" rel="noopener noreferrer")
   .banner(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
       div.width-100
@@ -37,10 +19,12 @@
           button.button-primary.btn.button-vlg.button-heavy.mtl(
             type="submit"
             ui-sref="public.signup"
-            translate="CREATE_YOUR_WALLET") 
-          span.type-h5.mtm
-            span(translate="ALREADY_HAVE_WALLET") 
-            a.mls.em-500.white.underline(ui-sref="public.login-no-uid" translate="LOG_IN")
+            translate="CREATE_YOUR_WALLET")
+          span.f-20.mtm(translate="OR")
+          button.button-purple.button-heavy.upper.btn.button-vlg.mtm(
+            type="submit"
+            ui-sref="public.login-no-uid"
+            translate="LOGIN_NOW")
   .newtobitcoin.container
     #newToBTC.container-max-width.container-fluid.width-100
       .flex-column.flex-justify.flex-center.mvvl
@@ -161,7 +145,7 @@
           ng-model="fields.email"
           placeholder="jane@doe.com"
           required)
-        button.button-purple.btn.button-vlg.button-heavy.mtl(
+        button.button-primary.btn.button-vlg.button-heavy.mtl(
           type="submit"
           ng-disabled="signupForm.$invalid"
           translate="GET_STARTED")

@@ -84,6 +84,7 @@ $false: nil;
 @include button('received', $iris-green, white);
 @include button('transferred', $bali-hai, white);
 @include button('primary-inverse', white, $primary, none, $primary);
+@include button('purple', $mariner, white);
 
 button[disabled] {
   opacity: .6;
@@ -107,7 +108,6 @@ button.full {
   font-size: 1.2em;
 }
 .button-vlg {
-  padding: 0.8em 1.6em;
   font-size: 1.4em;
   width: 100%;
 }
