@@ -44,13 +44,13 @@
             span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
               label-origin(origin="::account" highlight="$select.search")
         .filter-buttons
-          a.black.em-500.em-alt(
+          a.black.em-500.upper(
             ng-repeat="f in filterTypes track by f"
             ng-click="setFilterType($index)"
             ng-class="{'active': isFilterType($index)}"
             translate="{{::f}}")
       .flex-center
-        a.black.mhl.em-500.em-alt.hidden-xs.hidden-sm(ng-click="exportHistory()")
+        a.black.mhl.em-500.upper.hidden-xs.hidden-sm(ng-click="exportHistory()")
           i.icon-export
         .filter-search.input-group
           input.form-control(
@@ -63,7 +63,7 @@
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
-          i.ti-layout-list-post.h3.mrm
+          i.icon-tx.h3.mrm
           h3.em-100(translate="NO_TRANSACTIONS_YET")
         p.em-400(translate="DESCRIBE_TRANSACTIONS")
       h3.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")

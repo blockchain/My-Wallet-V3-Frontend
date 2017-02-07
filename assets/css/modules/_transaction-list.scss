@@ -29,13 +29,13 @@
     .feed-info {
       width: 120px;
     }
-    .action.incoming_tx{
+    .incoming_tx{
       color: $received;
     }
-    .action.outgoing_tx{
+    .outgoing_tx{
       color: $sent;
     }
-    .action.local_tx{
+    .local_tx{
      color: $transferred;
     }
     .tx-toggle {
@@ -252,10 +252,12 @@ button {
 a.date,p.date { color: $black; }
 
 .amountTotal {
+  font-family: Montserrat;
+  font-weight: 300;
   float: none;
   min-width: 130px;
   text-transform: none;
-  padding: 7px 9px 7px 10px;
+  padding: 7px 8px 7px 8px;
 }
 
 .from, .to{

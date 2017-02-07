@@ -110,8 +110,8 @@
                               tooltip-append-to-body="true")
     button.btn.button-default(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
   .flex-center.flex-end
-    button.button-success.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
+    button.button-primary.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
     a.basic-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
-    button.button-success.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
+    button.button-primary.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
                               uib-tooltip="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
                               tooltip-append-to-body="true")

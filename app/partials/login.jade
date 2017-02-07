@@ -46,7 +46,7 @@
               img(ng-show="status.resending" src="img/spinner.gif")
               a(ng-click="resend()" ng-hide="status.resending" translate="RESEND") 
       .group.full.mt-15
-        button.button-primary(
+        button.button-primary.button-heavy(
           type="submit"
           ui-ladda="status.busy"
           ladda-translate="LOG_IN"

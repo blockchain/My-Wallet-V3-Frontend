@@ -15,7 +15,7 @@ form(role="form" name="form" novalidate ng-submit="form.$valid && setLogoutTime(
         span(ng-show="form.logoutTime.$error.max" translate="LOGOUT_LESS_THAN_1440")
   .form-group.mbn.has-error.pull-right.right-align
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
-    button.button-success(
+    button.button-primary(
       ui-ladda="status.waiting"
       ng-disabled="form.$invalid"
       ladda-translate="CHANGE"
