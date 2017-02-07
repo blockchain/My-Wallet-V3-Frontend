@@ -34,15 +34,16 @@
 }
 .af-marker {
   position: relative;
-  right: 19px;
-  top: 4px;
+  right: 15px;
+  top: 5px;
   color: #ffffff;
-  height: 40px;
-  width: 40px;
   i {
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
-    background-color: #004a7c;
-    padding: 8px;
+    background-color: $blue;
+    @extend .flex-center;
+    @extend .flex-justify;
   }
   &:after {
     content: '';
