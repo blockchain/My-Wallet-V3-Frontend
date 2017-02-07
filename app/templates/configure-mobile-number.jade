@@ -1,5 +1,5 @@
 .edit-mobile(ng-class="{'offset-flag': fullWidth}")
-  p(translate="ENABLE_2FA_ENTER_MOBILE")
+  p.gillsans.f-16(translate="ENABLE_2FA_ENTER_MOBILE")
   form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
     span(ng-hide="status.disableChangeBecause2FA()")
       bc-phone-number(

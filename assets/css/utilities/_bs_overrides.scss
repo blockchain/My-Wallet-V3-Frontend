@@ -175,6 +175,13 @@ pre {
   }
 }
 
+//popover font
+.popover-content {
+  font-family: 'Gillsans' !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+}
+
 //override tooltip
 $transparent-border: 10px solid transparent !important;
 $transparent-border-after: 9px solid transparent;
