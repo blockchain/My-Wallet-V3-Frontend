@@ -21,7 +21,7 @@ form.bc-form(role="form" name="accountForm" ng-submit="submit()" autocomplete="o
       translate="CLOSE"
       ng-hide="status.busy"
       ng-click="$dismiss()")
-    button.button-success(
+    button.button-primary(
       type="submit"
       ladda-translate="{{status.edit ? 'RENAME':'CREATE_ACCOUNT'}}"
       ui-ladda="status.busy"
