@@ -19,8 +19,9 @@
           button.button-primary.btn.button-vlg.mtl(
             type="submit"
             ui-sref="public.signup"
-            translate="CREATE_YOUR_WALLET") 
-          button.button-primary.btn.button-vlg.mtl(
+            translate="CREATE_YOUR_WALLET")
+          span.f-20.mtm(translate="OR")
+          button.button-primary.btn.button-vlg.mtm(
             type="submit"
             ui-sref="public.login-no-uid"
             translate="LOGIN_NOW")
@@ -144,7 +145,7 @@
           ng-model="fields.email"
           placeholder="jane@doe.com"
           required)
-        button.button-success.btn.button-vlg.mtl(
+        button.button-primary.btn.button-vlg.mtl(
           type="submit"
           ng-disabled="signupForm.$invalid"
           translate="GET_STARTED")
