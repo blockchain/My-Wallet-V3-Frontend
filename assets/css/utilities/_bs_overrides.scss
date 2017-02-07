@@ -180,7 +180,7 @@ $transparent-border: 10px solid transparent !important;
 $transparent-border-after: 9px solid transparent;
 $tt-top-default: 10px;
 $tt-left-default: 9px;
-$tt-position-default: -14px !important;
+$tt-position-default: -4px !important;
 
 .tooltip-inner {
   @extend .popover-content;
@@ -203,9 +203,10 @@ $tt-position-default: -14px !important;
     width: 0 !important;
     height: 0 !important;
     border-top: 10px solid $mid-grey !important;
-    border-bottom: $transparent-border;
     border-right: $transparent-border;
     border-left: $transparent-border;
+    border-bottom-width: 0px !important; 
+    border-width: $tt-top-default;
   }
   .tooltip-arrow::after {
     display: block;
@@ -216,9 +217,9 @@ $tt-position-default: -14px !important;
     width: 0;
     height: 0;
     border-top: 9px solid $light-blue;
-    border-bottom: $transparent-border-after;
     border-right: $transparent-border-after;
     border-left: $transparent-border-after;
+    border-bottom-width: 0px;
   }
 }
 
