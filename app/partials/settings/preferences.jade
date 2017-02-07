@@ -8,8 +8,8 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
           label.em-400.type-h5.mbn.mrm(translate="EMAIL_ADDRESS")
           span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isEmailVerified")
           span.label.label-success(translate="VERIFIED", ng-show="user.isEmailVerified")
-        p.text.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
-        p.text.em-400.hidden-xs.security-red(translate="CHANGE_EMAIL_NOT_EXCHANGE" ng-show="userHasExchangeAcct && active")
+        p.gillsans.f-16.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
+        p.gillsans.f-16.em-400.hidden-xs.security-red(translate="CHANGE_EMAIL_NOT_EXCHANGE" ng-show="userHasExchangeAcct && active")
       .col-sm-0.col-md-2
       .col-sm-12.col-md-4.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ user.email }}
@@ -25,7 +25,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         label.em-400.type-h5.mbn.mrm(translate="MOBILE_NUMBER")
         span.label.label-warning(translate="UNVERIFIED", ng-show="!user.isMobileVerified")
         span.label.label-success(translate="VERIFIED", ng-show="user.isMobileVerified")
-      p.text.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
+      p.gillsans.f-16.em-300.hidden-xs(translate="MOBILE_NUMBER_EXPLAIN")    
     .col-sm-0.col-md-2
     .col-sm-12.col-md-4.setting-result
       div(ng-show="mobileNumber.step == 0")
@@ -38,7 +38,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ChangeLanguage")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="LANGUAGE")
-      p.text.em-300.hidden-xs(translate="LANGUAGE_EXPLAIN")   
+      p.gillsans.f-16.em-300.hidden-xs(translate="LANGUAGE_EXPLAIN")   
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       async-select(selected="settings.language" range="languages" display-prop="name" on-change="changeLanguage")
@@ -46,7 +46,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ChangeCurrency")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="CURRENCY")
-      p.text.em-300.hidden-xs(translate="CURRENCY_EXPLAIN")    
+      p.gillsans.f-16.em-300.hidden-xs(translate="CURRENCY_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       async-select(selected="settings.currency" range="currencies" display-prop="name" display-optional="code" on-change="changeCurrency")
@@ -54,7 +54,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ChangeBitcoinCurrency")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="BITCOIN_CURRENCY")
-      p.text.em-300.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
+      p.gillsans.f-16.em-300.hidden-xs(translate="BITCOIN_CURRENCY_EXPLAIN")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       .list-group.list-group-horizontal
@@ -63,7 +63,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="NotificationSettings")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="NOTIFICATIONS")
-      p.text.em-300.hidden-xs(translate="NOTIFICATIONS_EXPLAIN")    
+      p.gillsans.f-16.em-300.hidden-xs(translate="NOTIFICATIONS_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       label.em-400.type-h5.colon(translate="RECEIVE_BY")
@@ -79,17 +79,17 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-show="browserCanHandleBitcoinLinks" data-preflight-tag="HandleLinks")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="HANDLE_BITCOIN_LINKS")
-      p.text.em-300.hidden-xs(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
+      p.gillsans.f-16.em-300.hidden-xs(translate="HANDLE_BITCOIN_LINKS_EXPLAIN")    
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
-      p.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
+      p.gillsans.f-14.settingtext.mtl(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
 
   .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-controller="ChangeLogoutTimeCtrl" data-preflight-tag="ChangeLogoutTime")
     div(settings-form)
       .col-sm-12.col-md-6
         label.type-h5.em-400(translate="AUTO_LOGOUT")
-        p.em-300.text.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
+        p.em-300.gillsans.f-16.hidden-sm.hidden-xs(translate="AUTO_LOGOUT_EXPLAIN") 
       .col-sm-0.col-md-3
       .col-sm-12.col-md-3.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ settings.logoutTimeMinutes }} minutes
@@ -100,7 +100,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ChangeTheme")
     .col-sm-12.col-md-6
       label.em-400.type-h5(translate="Themes")
-      p.text.em-300.hidden-xs(translate="Try out different themes for the wallet.")
+      p.gillsans.f-16.em-300.hidden-xs(translate="Try out different themes for the wallet.")
     .col-sm-6.col-md-3
     .col-sm-6.col-md-3.setting-result
       async-select.capitalize(selected="settings.theme" range="themes" display-prop="display-name" on-change="changeTheme")

@@ -64,13 +64,13 @@
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
           i.icon-tx.h3.mrm
-          h3.em-100(translate="NO_TRANSACTIONS_YET")
-        p.em-400(translate="DESCRIBE_TRANSACTIONS")
-      h3.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
-      h3.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
+          h3.montserrat.em-300(translate="NO_TRANSACTIONS_YET")
+        p.montserrat.em-300(translate="DESCRIBE_TRANSACTIONS")
+      h3.montserrat.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
+      h3.montserrat.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
     .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")
       i.ti-search.h1.mrm
-      h3.em-100.mbl(translate="SORRY_ZERO_TXS")
+      h3.montserrat.em-300.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
     .transaction.flex-center(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
       .tx-toggle.pointer.hidden-xs.mtm(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
