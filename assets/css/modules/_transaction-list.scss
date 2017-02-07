@@ -29,13 +29,13 @@
     .feed-info {
       width: 120px;
     }
-    .action.incoming_tx{
+    .incoming_tx{
       color: $receive-green;
     }
-    .action.outgoing_tx{
+    .outgoing_tx{
      color: $send-red;
     }
-    .action.local_tx{
+    .local_tx{
      color: $transfer-blue;
     }
     .tx-toggle {
