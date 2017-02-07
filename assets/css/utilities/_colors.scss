@@ -75,6 +75,7 @@ $bright-green:  $jade !important; //override Security Center nested css selector
 @include bg-color('transferred', $bali-hai);
 @include bg-color('received', $iris-green);
 @include bg-color('sent', $bittersweet);
+@include bg-color('red', $mahogany);
 @include bg-color('grey', $grey);
 @include bg-color('blue', $blue);
 @include bg-color('black', $black);

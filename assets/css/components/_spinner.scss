@@ -1,54 +1,21 @@
 .spinner {
-  font-size: 10px;
-  margin: 0 auto;
-  text-indent: -9999em;
   width: 16px;
   height: 16px;
-  border-radius: 100%;
-  background: white;
-  background: -moz-linear-gradient(left, white 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, white 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, white 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, white 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 50%);
+  margin: 0 auto;
   position: relative;
-  -webkit-animation: loading 1.4s infinite linear;
-  animation: loading 1.4s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-}
-.spinner:after {
-  background: transparent;
-  width: 75%;
-  height: 75%;
-  border-radius: 50%;
-  content: '';
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  border-radius: 100%;
+  &:after {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    margin: auto;
+    position: absolute;
+    background-image: url('../img/puff-white.svg');
+  }
 }
 
-@-webkit-keyframes loading {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes loading {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+img.loader { width: 70px;
+  &.small { width: 40px; }
 }

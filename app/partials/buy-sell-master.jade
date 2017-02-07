@@ -1,11 +1,10 @@
 .height-100.pbvl.flex-center.flex-around(ng-if="state.transitioning")
 
   .flex-column.flex-justify.flex-center.height-100(ng-show="state.loading")
-    blocket-troposphere(status="burn_baby_burn")
+    img.loader(src="img/puff.svg")
     span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
 
   .flex-column.flex-justify.flex-center.height-100(ng-show="state.error")
-    blocket-troposphere(status="of_course_i_still_love_you")
-    span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
+    span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
 
 ui-view(ng-hide="state.transitioning")
