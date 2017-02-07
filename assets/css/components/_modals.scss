@@ -287,7 +287,7 @@
     }
     h5 {
       font-weight: 300;
-      color: darken($ccc, 30%);
+      color: darken($border-grey, 30%);
       margin: 5px 0;
     }
     img {
@@ -312,7 +312,7 @@
       border: none;
       box-shadow: none;
       border-radius: 0;
-      border-bottom: 1px solid $ccc;
+      border-bottom: 1px solid $border-grey;
       &:focus {
         border-color: none;
         box-shadow: none
@@ -326,7 +326,7 @@
     border-color: #a94442 !important;
   }
   .fa-arrows-h {
-    color: $ccc;
+    color: $border-grey;
     padding: 0px 10px;
   }
 
@@ -336,7 +336,7 @@
   }
 
   .usd-amount, .btc-amount {
-    border-bottom: 1px solid $ccc;
+    border-bottom: 1px solid $border-grey;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -357,7 +357,7 @@
     li {
       display: inline-block;
       margin: 0 10px;
-      color: $ccc;
+      color: $border-grey;
       &.active {
         color: $blue;
         font-weight: 700;
@@ -395,7 +395,7 @@
     }
   }
   .conversion {
-    border-bottom: 1px solid $eee;
+    border-bottom: 1px solid $border-grey;
     padding-bottom: 5px;
   }
   input[type=number]::-webkit-inner-spin-button,
@@ -404,7 +404,7 @@
     margin: 0;
   }
   ::-webkit-input-placeholder {
-    color: $ccc;
+    color: $border-grey;
   }
   .recipient-currency {
     .form-control {

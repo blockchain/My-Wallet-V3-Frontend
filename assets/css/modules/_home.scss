@@ -18,13 +18,9 @@
     color: $blue;
     &:hover { color: $blue; }
   }
-  &.partner {
-  color: $partner;
-    &:hover { color: $partner; }
-  }
   &.educational {
-    color: $educational;
-    &:hover { color: $educational; }
+    color: $jade;
+    &:hover { color: $jade; }
   }
 }
 
