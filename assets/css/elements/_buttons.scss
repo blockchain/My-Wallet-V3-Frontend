@@ -74,14 +74,15 @@ $false: nil;
 
 @include button($false, white, $black);
 @include button('blue', $blue, white);
-@include button('purple', $purple, white);
+@include button('info', $grey, white);
+@include button('sent', $sent, white);
 @include button('default', white, $black);
-@include button('danger', #E28081, white);
-@include button('info', $light-grey, white);
 @include button('primary', $primary, white);
-@include button('success', $receive-green, white);
-@include button('transfer', $transfer-blue, white);
-@include button('success-alt', $security-green, white);
+@include button('danger', $mahogany, white);
+@include button('success-alt', $jade, white);
+@include button('success', $iris-green, white);
+@include button('received', $iris-green, white);
+@include button('transferred', $bali-hai, white);
 @include button('primary-inverse', white, $primary, none, $primary);
 
 button[disabled] {
@@ -120,9 +121,9 @@ button.full {
 .button-muted {
   border: none;
   background: transparent;
-  color: $dark-grey;
+  color: $basic-grey;
   &:hover {
-    color: darken($dark-grey, 10%);
+    color: darken($basic-grey, 10%);
   }
 }
 

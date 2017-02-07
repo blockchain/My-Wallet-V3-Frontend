@@ -15,10 +15,10 @@
   }
   a.date { padding-top: 10px; }
   .transaction {
-    border-bottom: 1pt solid $eee;
+    border-bottom: 1pt solid $border-grey;
     padding: 15px 30px;
     position: relative;
-    &:hover { background: $hover-blue; }
+    &:hover { background: $grey; }
     .timestamp{
       font-style: italic;
     }
@@ -29,14 +29,14 @@
     .feed-info {
       width: 120px;
     }
-    .incoming_tx{
-      color: $receive-green;
+    .incoming_tx {
+      color: $received;
     }
-    .outgoing_tx{
-     color: $send-red;
+    .outgoing_tx {
+      color: $sent;
     }
-    .local_tx{
-     color: $transfer-blue;
+    .local_tx {
+     color: $transferred;
     }
     .tx-toggle {
       top: 25px;
@@ -64,7 +64,7 @@
       .progress-bar {
         background-color: $blue;
         &.progress-bar-success {
-          background-color: $success;
+          background-color: $jade;
         }
         &[aria-valuenow="0"] span {
           color: $basic-grey;
@@ -105,10 +105,10 @@
     }
   }
   .description {
-    color: $dark-grey;
+    color: $basic-grey;
   }
   .feed-details {
-    border-top: 1px solid $eee;
+    border-top: 1px solid $border-grey;
   }
   .tx-note {
     max-width: 100%;
@@ -129,8 +129,8 @@
 }
 
 .transaction-card {
-  background-color: $light-blue;
-  border: 1px solid $eee;
+  background-color: $grey;
+  border: 1px solid $border-grey;
   border-radius: 5px;
   min-width: 50vw;
   font-size: 1.1em;
@@ -175,7 +175,7 @@
       padding: 0px;
     }
     .border-left {
-      border-top: 1px solid $eee;
+      border-top: 1px solid $border-grey;
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       margin-top: 0.625em;
@@ -219,17 +219,9 @@ button.amount {
 }
 
 button {
-  &.intra-wallet  { background: $transfer-blue; }
-  &.spent { background: $send-red; }
-  &.received {
-    background: $receive-green;
-    span.glyphicon {
-      padding-left: 10px;
-    }
-    &:hover {
-      color:white;
-    }
-  }
+  &.intra-wallet  { @extend .bg-transferred; }
+  &.received { @extend .bg-received; }
+  &.spent { @extend .bg-sent; }
 }
 .unconfirmed { opacity: 0.5; }
 
@@ -239,7 +231,7 @@ button {
   textarea {
     resize: none;
     height: 60px;
-    border-color: $eee;
+    border-color: $border-grey;
     padding: 10px 0px 0px 10px;
   }
   @media (min-width: 768px) {

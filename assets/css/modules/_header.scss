@@ -46,7 +46,7 @@
       overflow: scroll;
       @extend .pts;
       > div > li {
-        border-bottom: 1px solid $ccc;
+        border-bottom: 1px solid $border-grey;
         small, p {
           font-size: 12px;
         }
