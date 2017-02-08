@@ -16,11 +16,11 @@ function Options ($http, $rootScope) {
   };
 
   function get () {
-    let file = $rootScope.isProduction ? 'wallet-options' : 'wallet-options-debug';
-    let url = `/Resources/${file}.json`;
+    let url = `/Resources/wallet-options.json`;
     if (fetchedOptions) {
       return Promise.resolve(service.options);
     }
+
     return $http.get(url)
       .success((res) => {
         service.options = res;
