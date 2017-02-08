@@ -38,7 +38,7 @@ ifndef API_DOMAIN
 export API_DOMAIN:=api.blockchain.info
 endif
 
-helperApp/dist:
+helperApp/dist: bower_components
 	rm -rf helperApp/dist
 	DIST=1 ./node_modules/.bin/webpack
 
