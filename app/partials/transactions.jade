@@ -66,8 +66,14 @@
           i.icon-tx.h3.mrm
           h3.montserrat.em-300(translate="NO_TRANSACTIONS_YET")
         p.montserrat.em-300(translate="DESCRIBE_TRANSACTIONS")
-      h3.montserrat.em-100.center-align.mid-grey.emptystate(translate="HIT_RECEIVE", ng-click="request()")
-      h3.montserrat.em-100.center-align.mid-grey.emptystate(translate="HIT_SEND", ng-click="send()")
+      .flex.flex-center-mobile
+        button.btn.button-default.button-short-wide.type-h5.mrm(ng-click="send()")
+          i.mrs.media-middle.icon-send
+          span.em-300(translate="SEND")
+        .btn-group
+          button.btn.button-default.button-short-wide.type-h5.pos-rel(ng-click="request()")
+            i.mrs.media-middle.icon-receive
+            span.em-300(translate="REQUEST")
     .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")
       i.ti-search.h1.mrm
       h3.montserrat.em-300.mbl(translate="SORRY_ZERO_TXS")
