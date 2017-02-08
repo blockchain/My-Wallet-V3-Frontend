@@ -58,7 +58,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
       data-style="expand-left"
       ng-show="history == null || canTriggerDownload"
       ng-disabled="exportForm.$invalid || start.date > end.date")
-    download-button.btn.button-success(
+    download-button.btn.button-primary(
       ng-hide="history == null || canTriggerDownload"
       filename="{{formatFilename()}}"
       content="history")
