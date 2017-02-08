@@ -3,25 +3,28 @@ angular
   .module('walletApp')
   .component('buyCheckout', {
     bindings: {
+      userId: '<',
       buyLimit: '<',
       buyLevel: '<',
       buyAccount: '<',
       collapseSummary: '=',
       handleQuote: '&',
-      handleBuy: '&'
+      buySuccess: '&',
+      buyError: '&'
     },
     templateUrl: 'templates/buy-checkout.jade',
     controller: BuyCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWalletHelpers) {
+function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox) {
   $scope.format = currency.formatCurrencyForView;
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
+  $scope.siftScienceEnabled = false;
 
   let state = $scope.state = {
     fiat: null,
@@ -91,7 +94,19 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
-    this.handleBuy({ quote }).finally($scope.resetFields).finally($scope.free);
+    sfox.buy(this.buyAccount, quote)
+        .then(trade => {
+          // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+          if ($rootScope.buySellDebug) {
+            console.info('Load Sift Science iframe');
+          }
+          $scope.tradeId = trade.id;
+          sfox.watchTrade(trade);
+          this.buySuccess({trade});
+        })
+        .then(() => $scope.siftScienceEnabled = true)
+        .catch(() => this.buyError())
+        .finally($scope.resetFields).finally($scope.free);
   };
 
   $scope.setLimits = (limit) => {
