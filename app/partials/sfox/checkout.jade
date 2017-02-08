@@ -1,6 +1,6 @@
 .filter-bar.flex-center.flex-between(capture-key="{'ArrowLeft': moveTab(-1), 'ArrowRight': moveTab(1)}")
   .filter-buttons
-    a.spaced.black.em-400.em-alt.f-16(
+    a.spaced.black.em-400.upper.f-16(
       ng-repeat="tab in tabs"
       ng-class="{active: selectedTab === tab}"
       ng-click="selectTab(tab)"
@@ -36,7 +36,7 @@
           h3.em-100(translate="NO_TRADES")
         p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="selectTab('BUY_BITCOIN')")
     table.width-100(ng-show="state.trades.length")
-      tr.border.bg-light-blue
+      tr.border.bg-grey
         th.phml.pvs.width-30(translate="STATUS")
         th.pvs.width-30(translate="DATE")
         th.pvs.width-25 BTC

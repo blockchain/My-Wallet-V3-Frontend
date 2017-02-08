@@ -11,6 +11,6 @@
 .modal-footer
   button.button-muted.mrm(ng-click="$dismiss('cancelled')" translate="{{::cancel || 'CANCEL'}}")
   button.btn(
-    ng-class="{'button-primary': friendly, 'button-success': success, 'button-danger': !friendly && !success}"
+    ng-class="{'button-primary': friendly || success, 'button-danger': !friendly && !success}"
     ng-click="$close()"
     translate="{{::action || 'OK'}}")

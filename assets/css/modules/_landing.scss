@@ -12,7 +12,7 @@
       width: 100% !important;
     }
     .signup {
-      margin-top: 80px;
+      margin-top: 60px;
     }
     .stats {
       margin-top: 60px;
@@ -25,7 +25,6 @@
     }
     color: white;
     height: 660px;
-    padding-top: 150px;
     background-image: url('../img/landing-page-banner.jpg');
     background-repeat: no-repeat;
     background-position: 100% 100%;
@@ -34,7 +33,6 @@
     -o-background-size: cover;
     background-size: cover;
     @media (max-width: 767px) {
-      padding-top: 285px;
       background-position: 10% 100%;
     }
     @media (min-width: 1441px) {
@@ -147,7 +145,7 @@
       margin-top: 40px;
       min-height: 335px;
       position: relative;
-      background: $light-grey;
+      background: $grey;
       @media (max-width: 767px) {
         margin-top: 20px;
         min-height: 300px;
@@ -270,7 +268,7 @@
           width: 12px !important;
         }
         &.active {
-          background: $dark-grey;
+          background: $basic-grey;
         }
       }
     }

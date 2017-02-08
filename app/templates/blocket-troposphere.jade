@@ -1,6 +1,0 @@
-.blocket-troposphere.width-100
-  img(ng-src="img/blocket.png" ng-show="status === 'burn_baby_burn'")
-  img.sos(ng-src="img/blocket-sos.png" ng-show="status === 'of_course_i_still_love_you'")
-  .flex-row.flex-between
-    .clouds.flex-column(ng-repeat="i in getRange(3)" ng-class="{'down': status === 'burn_baby_burn'}")
-      img(ng-repeat="i in getRange(24)" ng-src="img/cloud.svg")

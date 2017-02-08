@@ -3,7 +3,7 @@ li(
   ng-repeat="feat in feats | orderBy:'-date' track by $index"
   ng-class="::{flash: feat.date > lastViewedWhatsNew}")
   h4 {{::feat.title | translate}}
-    small.aaa.mlm {{::feat.date | date:'shortDate'}}
+    small.border-grey.mlm {{::feat.date | date:'shortDate'}}
   p
     span(translate="{{::feat.desc}}")
     |  

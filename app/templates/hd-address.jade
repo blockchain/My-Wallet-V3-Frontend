@@ -14,7 +14,7 @@ tr
         span(ng-class="{'float-right': address.label}")
           a(ng-click="editing = true")
             i.ti-pencil.prm(ng-show="address.label")
-            span.pointer.aaa(translate="ADD_A_LABEL" ng-hide="address.label")
+            span.pointer.border-grey(translate="ADD_A_LABEL" ng-hide="address.label")
           a(ng-click="removeLabel()" ng-show="address.label")
             i.ti-trash.prm
       div(ng-if="pastAddress")

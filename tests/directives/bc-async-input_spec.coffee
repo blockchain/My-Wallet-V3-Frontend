@@ -46,7 +46,7 @@ describe 'bcAsyncInput Directive', ->
       expect(isoScope.form.newValue).toBe('oldValue')
 
     it 'should have buttonClass', ->
-      expect(isoScope.buttonClass).toBe('button-primary btn-small')
+      expect(isoScope.buttonClass).toBe('button-primary button-sm')
 
     it 'should have inline attribute set to false', ->
       expect(isoScope.inline).toBe(false)

@@ -7,16 +7,16 @@ blocket-loading
         h5.mtn.type-h5.em-400.mbl(translate="BALANCES")
         ul.pln.account-balances
           li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts()")
-            span.em-500 {{::account.label}}
+            span {{::account.label}}
             fiat-or-btc(btc="account.balance")
           li.flex-between.border-bottom-light.mid-grey(ng-show="activeLegacyAddresses().length > 5")
-            span.em-500(translate="IMPORTED_ADDRESSES")
+            span(translate="IMPORTED_ADDRESSES")
             fiat-or-btc(btc="getLegacyTotal()")
           ul(ng-show="activeLegacyAddresses().length <= 5")
             li.flex-between.border-bottom-light.mid-grey(ng-repeat="address in activeLegacyAddresses()")
-              span.em-400 {{address.label ? address.label : address.address}}
+              span {{address.label ? address.label : address.address}}
               fiat-or-btc(btc="address.balance")
-          li.flex-between.border-bottom-light.basic-grey.em-500
+          li.flex-between.basic-grey.em-500
             span Total
             fiat-or-btc(btc="getTotal()")
       .section
