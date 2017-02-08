@@ -32,7 +32,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     return stepDescriptions[step];
   };
 
-  $scope.siftScienceEnabled = false;
   $scope.userId = exchange.user;
 
   $scope.inspectTrade = modals.openTradeSummary;
@@ -54,23 +53,13 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.trades = exchange.trades;
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
-  $scope.buyHandler = (...args) => {
-    return sfox.buy($scope.account, ...args)
-      .then(trade => {
-        // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-        if ($rootScope.buySellDebug) {
-          console.info('Load Sift Science iframe');
-        }
-        $scope.siftScienceEnabled = true;
-        $scope.tradeId = trade.id;
-        $scope.selectTab('ORDER_HISTORY');
-        modals.openTradeSummary(trade, 'initiated');
-        sfox.watchTrade(trade);
-      })
-      .then(() => exchange.fetchProfile())
-      .then(() => $scope.setState())
-      .catch(() => {
-        Alerts.displayError('Error connecting to our exchange partner');
-      });
+  $scope.buySuccess = (trade) => {
+    $scope.selectTab('ORDER_HISTORY');
+    modals.openTradeSummary(trade, 'initiated');
+    exchange.fetchProfile().then($scope.setState);
+  };
+
+  $scope.buyError = () => {
+    Alerts.displayError('Error connecting to our exchange partner');
   };
 }

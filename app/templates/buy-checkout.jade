@@ -76,3 +76,4 @@ form.bc-form(
     .group.mtl(ng-hide="$ctrl.collapseSummary")
       button.btn.button-primary.full(type="submit" ng-hide="enabled" ng-disabled="!quote || checkoutForm.$invalid || state.loadFailed") Buy Bitcoin
       button.btn.button-blue.full(type="submit" ng-show="enabled" ng-disabled="!quote") Confirm Purchase
+    sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')
