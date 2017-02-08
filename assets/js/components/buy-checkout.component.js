@@ -104,7 +104,8 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
-    sfox.buy(this.buyAccount, quote)
+    if (this.buyAccount) {
+      sfox.buy(this.buyAccount, quote)
         .then(trade => {
           // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
           if ($rootScope.buySellDebug) {
@@ -117,6 +118,10 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
         .then(() => $scope.siftScienceEnabled = true)
         .catch(() => this.buyError())
         .finally($scope.resetFields).finally($scope.free);
+    } else {
+      this.buySuccess({quote});
+      $q.resolve().finally($scope.resetFields).finally($scope.free);
+    }
   };
 
   $scope.setLimits = (limit) => {

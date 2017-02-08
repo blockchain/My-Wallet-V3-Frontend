@@ -10,7 +10,7 @@
     a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
       img.mbs(src="img/sfox-logo-trans.png")
 .buy-sell.mt-60.mbvl
-  .flex-row.flex-column-tablet(ng-show="!signupCompleted && selectedTab === 'BUY_BITCOIN'")
+  .flex-row.flex-column-tablet(ng-show="!showCheckout && selectedTab === 'BUY_BITCOIN'")
     .width-50.border.mrl.pal.flex-column.flex-between.flex-center
       span.type-h4.width-100 Just a few steps away!
       .mvl.flex-column.flex-center.blue.type-h4
@@ -18,7 +18,7 @@
         span(translate="{{stepDescription().text}}")
       form.width-100(ng-submit="openSfoxSignup()")
         button.btn.button-primary.full(type="submit" focus-when="!selectedTab" ng-disabled="modalOpen") Continue
-  .flex-column(ng-show="signupCompleted && selectedTab === 'BUY_BITCOIN'")
+  .flex-column(ng-show="showCheckout && selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
       user-id="userId"
       buy-limit="state.buyLimit"
