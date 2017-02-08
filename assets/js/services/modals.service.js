@@ -27,7 +27,10 @@ function modals ($state, $uibModal, $ocLazyLoad) {
   };
 
   service.openHelper = (helper) => open({
-    controller ($scope) { $scope.helper = helper; },
+    controller ($scope) {
+      $scope.helper = helper;
+      $scope.image = 'img/' + helper + '.png';
+    },
     templateUrl: 'partials/helper-modal.jade',
     windowClass: 'bc-modal medium'
   });
