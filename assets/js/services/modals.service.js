@@ -28,8 +28,15 @@ function modals ($state, $uibModal, $ocLazyLoad) {
 
   service.openHelper = (helper) => open({
     controller ($scope) {
+      let helperImages = {
+        'bank-deposit-helper': 'img/bank-deposit-helper.png',
+        'bank-check-helper': 'img/bank-check-helper.png',
+        'address-id-helper': 'img/address-id-helper.png',
+        'id-id-helper': 'img/id-id-helper.png'
+      };
+
       $scope.helper = helper;
-      $scope.image = 'img/' + helper + '.png';
+      $scope.image = helperImages[helper];
     },
     templateUrl: 'partials/helper-modal.jade',
     windowClass: 'bc-modal medium'
