@@ -16,7 +16,7 @@ form(role="form" name="form" novalidate ng-submit="form.$valid && setPbkdf2()")
         span(ng-show="form.pbkdf2.$error.max" translate="PBKDF2_LESS_THAN_20000")
   .form-group.mbn.has-error.pull-right.right-align
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
-    button.button-success(
+    button.button-primary(
       ui-ladda="status.waiting"
       ng-disabled="form.$invalid"
       ladda-translate="CHANGE"

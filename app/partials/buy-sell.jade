@@ -1,10 +1,9 @@
 .buy-sell(ng-class="{'loading': status.loading || status.metaDataDown || status.exchangeDown, 'disabled': status.disabled}" data-preflight-tag="BuySell")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.metaDataDown || status.exchangeDown")
-    blocket-troposphere(status="of_course_i_still_love_you")
-    span.bg-deeper-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
+    span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading && !status.disabled")
-    blocket-troposphere(status="burn_baby_burn")
-    span.bg-deeper-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
+    img.loader(src="img/puff.svg")
+    span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
   div(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
     .flex-row.flex-column-tablet
       .width-50.mrl.mtl(ng-show="state.buy")
@@ -26,7 +25,7 @@
         h4.type-h4(translate="ORDER_HISTORY")
         span Coinify Account: {{ exchange.profile.email }}
       table.width-100
-        tr.border.bg-light-blue
+        tr.border.bg-grey
           th.phml.pvs.width-30(translate="STATUS")
           th.pvs.width-30(translate="DATE")
           th.pvs.width-25 BTC

@@ -46,7 +46,7 @@ $select-fg: #686868;
       box-shadow: none;
     }
     > span {
-      border: 1px solid $ccc !important;
+      border: 1px solid $border-grey !important;
       box-shadow: none;
       padding-bottom: 0;
       color: $black !important;
@@ -67,7 +67,7 @@ $select-fg: #686868;
       border-radius: 0;
       background: $select-bg;
       color: $select-fg;
-      border: 1px solid $eee;
+      border: 1px solid $border-grey;
       box-shadow: none;
     }
     .caret {
@@ -94,7 +94,7 @@ $select-fg: #686868;
 .ui-select-bootstrap > .ui-select-choices {
   border-radius: 0;
   background: $select-bg;
-  border: 1px solid $eee; //you'll want to add this color in your sassy way
+  border: 1px solid $border-grey; //you'll want to add this color in your sassy way
   -webkit-box-shadow: 0px 5px 10px -6px black;
   box-shadow: 0px 5px 10px -6px black;
 }
@@ -159,20 +159,27 @@ pre {
 //angular popovers
 .clean-popover {
   border-radius: 0px !important;
-  border: 1px solid $eee !important;
+  border: 1px solid $border-grey !important;
   .popover-content {
     padding: 5px 5px 7px 5px;
   }
   &.top {
     .arrow {
-      border-top-color: $eee !important;
+      border-top-color: $border-grey !important;
     }
   }
   &.bottom {
    .arrow {
-      border-bottom-color: $eee !important;
+      border-bottom-color: $border-grey !important;
    }
   }
+}
+
+//popover font
+.popover-content {
+  font-family: 'Gillsans' !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
 }
 
 //override tooltip
@@ -184,7 +191,7 @@ $tt-position-default: -4px !important;
 
 .tooltip-inner {
   @extend .popover-content;
-  background-color: $light-blue !important;
+  background-color: $grey !important;
   color: $black !important;
   border: 1px solid $mid-grey !important;
   border-radius: 7px !important;
@@ -205,7 +212,7 @@ $tt-position-default: -4px !important;
     border-top: 10px solid $mid-grey !important;
     border-right: $transparent-border;
     border-left: $transparent-border;
-    border-bottom-width: 0px !important; 
+    border-bottom-width: 0px !important;
     border-width: $tt-top-default;
   }
   .tooltip-arrow::after {
@@ -216,7 +223,8 @@ $tt-position-default: -4px !important;
     content: '';
     width: 0;
     height: 0;
-    border-top: 9px solid $light-blue;
+    border-top: 9px solid $grey;
+    border-bottom: $transparent-border-after;
     border-right: $transparent-border-after;
     border-left: $transparent-border-after;
     border-bottom-width: 0px;
@@ -246,7 +254,7 @@ $tt-position-default: -4px !important;
       height: 0;
       border-top: $transparent-border-after;
       border-bottom: $transparent-border-after;
-      border-right: 9px solid $light-blue;
+      border-right: 9px solid $grey;
       border-left: $transparent-border-after;
     }
   }

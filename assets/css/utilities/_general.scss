@@ -4,11 +4,12 @@
 
 html,
 body {
-  font-size: small;
+  font-family: 'Montserrat', 'Helvetica', sans-serif !important;
   background-color: #fff;
-  color: $text;
-  font-family: 'Roboto', 'Helvetica', sans-serif !important;
   position: relative;
+  font-size: small;
+  font-weight: 300;
+  color: $text;
   height: 100%;
   width: 100%;
 }
@@ -52,7 +53,7 @@ body {
     content: '';
     height: 50%;
     position: absolute;
-    background-color: $ccc;
+    background-color: $border-grey;
   }
   &:before { top: 0; }
   &:after { bottom: 0; }
