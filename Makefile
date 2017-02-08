@@ -3,9 +3,11 @@ all: clean node_modules test pgp dist changelog
 node_modules:
 	npm install -g grunt-cli coffee-script
 	npm update
+
+bower_components:
 	node_modules/bower/bin/bower install
 
-build: node_modules
+build: node_modules bower_components
 	grunt build
 
 test: build
@@ -40,7 +42,7 @@ helperApp/dist:
 	rm -rf helperApp/dist
 	DIST=1 ./node_modules/.bin/webpack
 
-dist: helperApp/dist
+dist: helperApp/dist bower_components
 	./check_bad_strings.rb
 	grunt build --skipWebpack=1
 
