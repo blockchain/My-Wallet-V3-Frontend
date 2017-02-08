@@ -11,6 +11,8 @@ describe "buy-checkout.component", ->
 
   mockTrade = () ->
     id: 'TRADE'
+    refresh: () -> $q.resolve()
+    watchAddress: () -> $q.resolve()
 
   mockMediums = () ->
     ach:
@@ -24,6 +26,8 @@ describe "buy-checkout.component", ->
   handlers =
     handleQuote: () -> $q.resolve(mockQuote())
     handleBuy: () -> $q.resolve()
+    buySuccess: () -> $q.resolve()
+    buyError: () -> $q.resolve()
     quote: () -> mockQuote()
 
   getControllerScope = (bindings) ->

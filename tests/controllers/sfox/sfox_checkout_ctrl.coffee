@@ -90,23 +90,6 @@ describe "SfoxCheckoutController", ->
       scope.$digest()
       expect(scope.modalOpen).toBe(false)
 
-  describe ".buyHandler()", ->
-    beforeEach ->
-      scope = getControllerScope([{status:'active'}])
-
-    it "should open the trade summary modal", ->
-      spyOn(modals, "openTradeSummary").and.callThrough()
-      scope.buyHandler(mockQuote())
-      scope.$digest()
-      trade = jasmine.objectContaining({ id: "TRADE" })
-      expect(modals.openTradeSummary).toHaveBeenCalledWith(trade, 'initiated')
-
-    it "should show an alert in case of error", ->
-      spyOn(Alerts, "displayError")
-      scope.buyHandler(mockQuote('NETWORK_ERROR'))
-      scope.$digest()
-      expect(Alerts.displayError).toHaveBeenCalled()
-
   describe "showCheckout", ->
     beforeEach ->
       scope = getControllerScope([{}], true)
