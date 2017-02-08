@@ -25,8 +25,10 @@ describe "buy-checkout.component", ->
 
   handlers =
     handleQuote: () -> $q.resolve(mockQuote())
+    handleBuy: () -> $q.resolve()
     buySuccess: () -> $q.resolve()
     buyError: () -> $q.resolve()
+    quote: () -> mockQuote()
 
   getControllerScope = (bindings) ->
     scope = $rootScope.$new(true)
@@ -112,12 +114,6 @@ describe "buy-checkout.component", ->
       scope.buy()
       scope.$digest()
       expect(scope.resetFields).toHaveBeenCalled()
-
-    it "should disable buy again", ->
-      spyOn(scope, "disableBuy")
-      scope.buy()
-      scope.$digest()
-      expect(scope.disableBuy).toHaveBeenCalled()
 
   describe ".getQuoteArgs()", ->
     buildArgs = (args) -> amount: args[0], baseCurr: args[1], quoteCurr: args[2]

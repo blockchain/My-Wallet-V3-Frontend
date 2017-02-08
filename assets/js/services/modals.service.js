@@ -50,12 +50,13 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     backdrop: false, windowClass: 'tray'
   }, options).result;
 
-  service.openSfoxSignup = (exchange) => service.expandTray({
+  service.openSfoxSignup = (exchange, quote) => service.expandTray({
     templateUrl: 'partials/sfox/signup.jade',
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
       exchange () { return exchange; },
+      quote () { return quote; },
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
