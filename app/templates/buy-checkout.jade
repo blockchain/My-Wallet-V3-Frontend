@@ -52,7 +52,7 @@ form.bc-form(
                             popup-name="sfox-identity"
                             ng-if="$ctrl.buyLevel === 'pending'"
                             translate="WHY")
-    .group.mtl(ng-hide="$ctrl.collapseSummary")
+    .group.mtl(ng-show="$ctrl.collapseSummary && $ctrl.buyAccount")
       .item
         .mbm
           span.f-16.em-500.colon Order Summary
@@ -73,7 +73,9 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
-    .group.mtl(ng-hide="$ctrl.collapseSummary")
+    .group.mtl(ng-show="$ctrl.collapseSummary && $ctrl.buyAccount")
       button.btn.button-primary.full(type="submit" ng-hide="enabled" ng-disabled="!quote || checkoutForm.$invalid || state.loadFailed") Buy Bitcoin
       button.btn.button-blue.full(type="submit" ng-show="enabled" ng-disabled="!quote") Confirm Purchase
+    .group.mtl(ng-show="!$ctrl.buyAccount")
+      button.btn.button-primary.full(type="submit" ng-disabled="!quote || checkoutForm.$invalid || state.loadFailed") Buy Bitcoin
     sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')
