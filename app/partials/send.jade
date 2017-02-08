@@ -183,12 +183,12 @@
                 span(ng-show="address.type !== 'External'") + 
                 fiat.mrml(btc="transaction.amounts[$index]")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
-            span.border-grey.account.width-50-mobile.width-50(translate="TX_FEE_REQUIRED")
+            span.mid-grey.account.width-50-mobile.width-50(translate="TX_FEE_REQUIRED")
             .width-50.width-50-mobile.flex-between
-              span.border-grey.center 
+              span.mid-grey.center 
                 span.fade + 
                 span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
-              span.border-grey.center
+              span.mid-grey.center
                 fiat.mrml(btc="transaction.fee")
             helper-button(content="DYK_TX_FEES")
         .mvm.flex-justify.flex-1.flex-center.split-rule
