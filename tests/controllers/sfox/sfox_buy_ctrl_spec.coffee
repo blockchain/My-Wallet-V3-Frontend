@@ -72,19 +72,3 @@ describe "SfoxBuyController", ->
     it "should set buyLimit", ->
       scope.setState()
       expect(scope.state.buyLimit).toBeDefined()
-
-  describe ".buyHandler()", ->
-    beforeEach ->
-      scope = getControllerScope([{status:'active'}])
-
-    it "should watch the trade for completion", ->
-      spyOn(sfox, "watchTrade")
-      scope.buyHandler(mockQuote())
-      scope.$digest()
-      expect(sfox.watchTrade).toHaveBeenCalled()
-
-    it "should show an alert in case of error", ->
-      spyOn(Alerts, "displayError")
-      scope.buyHandler(mockQuote('NETWORK_ERROR'))
-      scope.$digest()
-      expect(Alerts.displayError).toHaveBeenCalled()

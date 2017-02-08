@@ -20,11 +20,13 @@
         button.btn.button-primary.full(type="submit" focus-when="!selectedTab" ng-disabled="modalOpen") Continue
   .flex-column(ng-show="signupCompleted && selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border.pt-30.pb-30.pl-15.pr-15(
+      user-id="userId"
       buy-limit="state.buyLimit"
       buy-level="state.buyLevel"
       buy-account="state.account"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
-      handle-buy="buyHandler(quote)")
+      buy-success="buySuccess(trade)"
+      buy-error="buyError()")
   .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black
@@ -44,4 +46,3 @@
         buy="inspectTrade"
         usa="true")
   contact-support-footer
-  sift-science(ng-if='siftScienceEnabled' user-id='userId' trade-id='tradeId')
