@@ -21,15 +21,15 @@
       .badge-panel.visible-xs-block(ng-show="display.action == 'email'")
         div(ng-show="display.action == 'email' && !display.editingEmail")
           .verify-email
-            p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+            p.gillsans.f-16(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
             verify-email(button-class="button-primary")
             p(ng-hide="user.isEmailVerified")
-              span(translate="DIDNT_RECEIVE_EMAIL")
+              span.gillsans.f-16(translate="DIDNT_RECEIVE_EMAIL")
               span 
                 resend-email-confirmation
-                span(translate="OR")
+                span.gillsans.f-16(translate="OR")
               span
-                a(ng-click="beginEditEmail()", translate="CHANGE")
+                a.gillsans.f-16(ng-click="beginEditEmail()", translate="CHANGE")
         div(ng-show="display.action == 'email' && display.editingEmail")       
           bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
       li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
@@ -74,18 +74,18 @@
     .badge-panel.hidden-xs(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
         .verify-email
-          p(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+          p.gillsans.f-16(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
           verify-email(button-class="button-primary")
           p(ng-hide="user.isEmailVerified")
-            span(translate="DIDNT_RECEIVE_EMAIL")
+            span.gillsans.f-16(translate="DIDNT_RECEIVE_EMAIL")
             | &nbsp;
             span
               resend-email-confirmation
             | &nbsp;
-            span(translate="OR")
+            span.gillsans.f-16(translate="OR")
             | &nbsp;
             span
-              a(ng-click="beginEditEmail()", translate="CHANGE")
+              a.gillsans.f-16(ng-click="beginEditEmail()", translate="CHANGE")
 
       div(ng-show="display.action == 'email' && display.editingEmail")       
         bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
