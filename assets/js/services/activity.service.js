@@ -80,7 +80,7 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
     switch (type) {
       case 0:
         a.title = 'TRANSACTION';
-        a.icon = 'ti-layout-list-post';
+        a.icon = 'icon-tx';
         a.time = obj.time * 1000;
         a.message = getTxMessage(obj);
         a.amount = Math.abs(obj.amount);

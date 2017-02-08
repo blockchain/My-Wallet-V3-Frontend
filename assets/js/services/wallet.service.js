@@ -1207,9 +1207,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       wallet.settings.secondPassword = false;
       successCallback();
+      $rootScope.$safeApply();
     };
     let error = () => {
       errorCallback();
+      $rootScope.$safeApply();
     };
     let decrypting = () => {
       console.log('Decrypting...');
@@ -1227,10 +1229,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       if (lastViewed) {
         let whatsNew = wallet.my.wallet.metadata(2);
         whatsNew.fetch()
-          .then(res => res ? $q.resolve(res) : $q.reject())
           .then(() => whatsNew.update({ lastViewed }))
-          .catch(() => whatsNew.create({ lastViewed }))
-          .finally(success);
+          .then(success);
       }
     };
 
@@ -1245,9 +1245,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       Alerts.displaySuccess('Second password set.');
       wallet.settings.secondPassword = true;
       successCallback();
+      $rootScope.$safeApply();
     };
     let error = () => {
       Alerts.displayError('Second password cannot be set. Contact support.');
+      $rootScope.$safeApply();
     };
     let encrypting = () => {
       console.log('Encrypting...');

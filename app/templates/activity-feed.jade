@@ -7,7 +7,7 @@
         ng-repeat="activity in activities | limitTo: 8"
         )
         .af-marker
-          i(ng-class="activity.icon")
+          i.flex-center.flex-justify(ng-class="activity.icon")
         .af-info.flex-center.width-100.width-100-mobile
           p.h5.af-type.flex-1.mvn(translate="{{::activity.title}}")
           p.af-date.mlm.flex-1.hidden-xs.mvn {{::activity.time | date:'mediumDate'}}

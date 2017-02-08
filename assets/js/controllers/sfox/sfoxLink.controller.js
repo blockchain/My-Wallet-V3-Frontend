@@ -28,7 +28,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
   $scope.fields = {
     deposit1: undefined,
     deposit2: undefined,
-    nickname: '',
+    accountName: undefined,
     routingNumber: undefined,
     accountNumber: undefined,
     type: 'checking',
@@ -64,7 +64,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
     let addAccount = (methods) => methods.ach.addAccount(
       $scope.fields.routingNumber,
       $scope.fields.accountNumber,
-      'name1',
+      $scope.fields.accountName,
       $scope.fields.type
     );
 
@@ -94,9 +94,8 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
   $scope.setBankAccount = () => {
     let obj = {
       token: $scope.token,
-      id: $scope.fields.bankAccount._id,
-      lastName: exchange.profile.lastName || null,
-      firstName: exchange.profile.firstName || null
+      name: $scope.fields.accountName,
+      id: $scope.fields.bankAccount._id
     };
 
     $q.resolve(exchange.bankLink.setAccount(obj))
