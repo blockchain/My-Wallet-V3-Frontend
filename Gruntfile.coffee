@@ -446,7 +446,7 @@ module.exports = (grunt) ->
 
       webpack:
         command: () ->
-          './node_modules/.bin/webpack'
+          './node_modules/.bin/webpack --bail'
 
     coveralls:
       options:

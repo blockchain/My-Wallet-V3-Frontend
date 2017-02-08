@@ -4,7 +4,7 @@ node_modules:
 	npm install -g grunt-cli coffee-script
 	npm update
 
-bower_components:
+bower_components: node_modules
 	node_modules/bower/bin/bower install
 
 build: node_modules bower_components
@@ -40,7 +40,7 @@ endif
 
 helperApp/dist: bower_components
 	rm -rf helperApp/dist
-	DIST=1 ./node_modules/.bin/webpack
+	DIST=1 ./node_modules/.bin/webpack --bail
 
 dist: helperApp/dist bower_components
 	./check_bad_strings.rb
