@@ -46,7 +46,7 @@ dist: helperApp/dist bower_components
 	./check_bad_strings.rb
 	grunt build --skipWebpack=1
 
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(HELPER_APP_URL)
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(WALLET_HELPER_URL)
 	cp -r helperApp/dist dist/wallet-helper
 
 dist_fixed_domain: build
