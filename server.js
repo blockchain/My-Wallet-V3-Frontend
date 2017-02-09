@@ -8,14 +8,14 @@ var compression = require('compression');
 loadEnv('.env');
 
 var port = parseInt(process.env.PORT, 10) || 8080;
-var helperAppPort = port + 1;
+var walletHelperPort = port + 1;
 var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
 var webSocketURL = process.env.WEB_SOCKET_URL || false;
 var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
-var helperAppFrameDomain = process.env.HELPER_APP_URL || `http://localhost:${ helperAppPort }`;
+var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
 var sfoxUseStaging = process.env.SFOX_USE_STAGING === '1';
 var sfoxProduction = sfoxUseStaging ? false : production;
 
@@ -45,8 +45,8 @@ app.use(function (req, res, next) {
       // Safari throws the same error, but without suggesting an hash to whitelist.
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
-      `child-src ${ helperAppFrameDomain } ${ iSignThisDomain} `,
-      `frame-src ${ helperAppFrameDomain } ${ iSignThisDomain} `,
+      `child-src ${ walletHelperFrameDomain } ${ iSignThisDomain} `,
+      `frame-src ${ walletHelperFrameDomain } ${ iSignThisDomain} `,
       "script-src 'self'",
       'connect-src ' + [
         "'self'",
@@ -175,8 +175,8 @@ rootApp.listen(port, function () {
   console.log('Visit http://localhost:%d/', port);
 });
 
-helperApp.listen(helperAppPort, function () {
-  console.log('Helper App running on http://localhost:%d/wallet-helper/', helperAppPort);
+helperApp.listen(walletHelperPort, function () {
+  console.log('Helper App running on http://localhost:%d/wallet-helper/', walletHelperPort);
 });
 
 // Helper functions
