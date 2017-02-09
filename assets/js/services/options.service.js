@@ -16,7 +16,7 @@ function Options ($http, $rootScope) {
   };
 
   function get () {
-    let file = $rootScope.isProduction ? 'wallet-options' : 'wallet-options-debug';
+    let file = $rootScope.isProduction ? 'wallet-options' : ($rootScope.network === 'testnet' ? 'wallet-options-testnet' : 'wallet-options-debug');
     let url = `/Resources/${file}.json`;
     if (fetchedOptions) {
       return Promise.resolve(service.options);

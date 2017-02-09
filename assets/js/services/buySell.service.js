@@ -66,7 +66,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function init (coinify) {
     return Options.get().then(options => {
-      coinify.partnerId = options.partners.coinify.apiKey;
+      coinify.partnerId = options.partners.coinify.partnerId;
+      coinify.api.testnet = $rootScope.network === 'testnet';
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
