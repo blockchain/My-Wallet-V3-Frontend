@@ -13,6 +13,12 @@
   }
 }
 
+.border-desktop {
+  @media (min-width: 767px) {
+    border: 1px solid $border-grey;
+  }
+}
+
 .or {
   position: relative;
   text-transform: uppercase;
