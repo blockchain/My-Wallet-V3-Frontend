@@ -182,3 +182,9 @@ $multiplier: 5;
     margin-bottom: #{$i * $multiplier}px;
   }
 }
+
+.no-padding-mobile {
+  @media (max-width: 767px) {
+    padding: 0px;
+  }
+}

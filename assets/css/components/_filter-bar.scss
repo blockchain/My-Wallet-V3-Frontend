@@ -107,7 +107,6 @@
   .filter-bar {
     border-top: 1px solid $border-grey;
     width: 100%;
-    top: 200px;
-    left: 0;
+    flex: 0 0 60px;
   }
 }
