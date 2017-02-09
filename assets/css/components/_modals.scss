@@ -535,7 +535,7 @@
   line-height: 20px;
   opacity: 1 !important;
   top: calc(100% - 60px);
-  @include transition(top $timing, opacity 0s $timing);
+  @include transition(top $timing, bottom $timing, opacity 0s $timing);
 
   .modal-content {
     overflow: auto;
@@ -556,20 +556,23 @@
     &.ng-enter,
     &.in {
       top: 0%;
-      transition: top $timing, opacity 0s !important;
-      -moz-transition: top $timing, opacity 0s !important;
-      -webkit-transition: top $timing, opacity 0s !important;
+      bottom: 0%;
+      transition: top $timing, bottom $timing, opacity 0s !important;
+      -moz-transition: top $timing, bottom $timing, opacity 0s !important;
+      -webkit-transition: top $timing, bottom $timing, opacity 0s !important;
     }
   }
 
   @media (max-width: 767px) {
     left: 0px;
     top: 100%;
+    bottom: -100%;
     margin-top: 0px;
     &.fade {
       &.ng-enter,
       &.in {
         top: 0px;
+        bottom: 0px;
       }
     }
 
