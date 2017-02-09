@@ -90,6 +90,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   $window.activateMobileBuy = (guid, sharedKey, password) => {
     $timeout(() => {
+      if (wallet.status.isLoggedIn) return;
       $rootScope.inMobileBuy = true;
       let success = () => { $state.go('wallet.common.buy-sell'); };
       Options.get().then(() => {
