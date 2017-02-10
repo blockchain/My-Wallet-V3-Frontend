@@ -71,6 +71,9 @@ angular.module('walletApp', modules)
     }]
   });
 })
+.config(($locationProvider) => {
+  $locationProvider.html5Mode(true);
+})
 .constant('whatsNew', [
   { title: 'BUY_BITCOIN', desc: 'BUY_BITCOIN_EXPLAIN', date: new Date('12/15/2016'), ref: 'wallet.common.buy-sell' },
   { title: 'EXPORT_HISTORY', desc: 'EXPORT_HISTORY_EXPLAIN', date: 1466521300000 },
@@ -115,7 +118,7 @@ angular.module('walletApp', modules)
     const absUrl = $location.absUrl();
     const path = $location.path();
     if (absUrl && path && path.length) {
-      // e.g. https://blockchain.info/wallet/#
+      // e.g. https://blockchain.info/wallet
       $rootScope.rootPath = $location.absUrl().slice(0, -$location.path().length);
     }
 

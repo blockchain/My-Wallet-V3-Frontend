@@ -11,4 +11,7 @@ angular
   .module('sift', modules)
   .controller('MainController', MainController)
   .controller('SiftController', SiftController)
-  .config(RoutesConfig);
+  .config(RoutesConfig)
+  .config(($locationProvider) => {
+    $locationProvider.html5Mode(true);
+  });
