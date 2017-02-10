@@ -232,6 +232,9 @@
   }
   &.sm {
     .modal-dialog { width: 40vw; }
+    @media(max-width: 768px) {
+      .modal-dialog { width: 80vw; }
+    }
   }
   &.xs {
     .modal-dialog { width: 30vw; }
