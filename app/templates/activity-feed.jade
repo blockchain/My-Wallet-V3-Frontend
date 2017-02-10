@@ -1,6 +1,6 @@
 .col-md-6.col-sm-12.col-xs-12.pos-rel.pln.col-home
   .activity-feed(ng-if="status.isLoggedIn")
-    h5.mtn.em-400.type-h5.mbl.af-header(translate="MOST_RECENT_ACTIVITY")
+    h5.mtn.em-400.type-h5.af-header.mb-20(translate="MOST_RECENT_ACTIVITY")
     ul.af.pln
       li.af-item.flex-align-start(
         ng-class="{ 'af-fade' : $last && activities.length >= 8 }"
