@@ -52,7 +52,7 @@
               placeholder="{{placeholder}}"
               required)
             div.input-group-btn
-              button.btn.btn-default.brdrn.disabled BTC
+              button.btn.btn-default.brdrn BTC
         .mts.pos-rel(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
@@ -63,17 +63,17 @@
           span.pos-abs.type-sm
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
             span  
-            span.blue.pointer(popup
-                              popup-days="{{getDays()}}"
-                              popup-name="coinify-verification"
-                              translate="WHY")
+            a(popup
+              popup-days="{{getDays()}}"
+              popup-name="coinify-verification"
+              translate="WHY")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
           span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')")
-            span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")
+            a(ng-click="openPendingTrade()" translate="FINISH")
             | 
             span(translate="OR")
             | 
-            span.blue.pointer(ng-click="cancelTrade()" translate="CANCEL")
+            a(ng-click="cancelTrade()" translate="CANCEL")
             | 
             span(translate="PURCHASE_PENDING")
             | 
