@@ -35,7 +35,7 @@ function siftScience ($sce, $rootScope, Options) {
     }
 
     let processOptions = (options) => {
-      let url = `http://localhost:8081/wallet-helper/sift-science/#/key/${$rootScope.sfoxSiftScienceKey || options.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
+      let url = `http://localhost:8081/wallet-helper/sift-science/key/${$rootScope.sfoxSiftScienceKey || options.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
       scope.url = $sce.trustAsResourceUrl(url);
 
       if ($rootScope.buySellDebug) {
