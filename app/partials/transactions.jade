@@ -78,7 +78,7 @@
       i.ti-search.h1.mrm
       h3.montserrat.em-300.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")
-    .transaction.flex-center(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
+    .transaction.flex-center.montserrat(ng-repeat="tx in transactions | filter:transactionFilter | limitTo:txLimit as filteredTransactions track by tx.hash" ng-init="tx.toggled = false")
       .tx-toggle.pointer.hidden-xs.mtm(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
         i.icon-down_arrow
       .tx-details.width-100.mll.mvm
