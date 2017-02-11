@@ -62,14 +62,7 @@
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.passwordHint" placement="bottom" content="PASSWORD_HINT_TOOLTIP" img="img/badge-passwordhint.png" message="HINT_STORED")
       .badge-panel.visible-xs-block(ng-show="display.action == 'passwordhint'")
-        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate" editing=1)
-          .flex-center
-            .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
-              p(translate="CHANGE")
-              input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
-              span.help-block {{::errorMessage}}
-            .width-50.mll.pll
-              button.button-primary(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
+        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
 
     .badge-panel.hidden-xs(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
