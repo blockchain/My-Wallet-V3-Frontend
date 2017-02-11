@@ -1,9 +1,10 @@
 .transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
-    a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
-      i.icon-export
-    .hidden-md.hidden-lg.pointer.blue.right-align.width-100(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
-    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.mbl(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
+    .hidden-md.hidden-lg.pointer.blue.right-align.width-100.flex-between.flex-center(ng-class="{mbl: isFilterOpen}")
+      a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
+        i.f-24.icon-export
+      span(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
+      span(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
       ui-select.mbl(
         ng-show="accounts.length > 1"
@@ -51,7 +52,7 @@
             translate="{{::f}}")
       .flex-center
         a.black.mhl.em-500.upper.hidden-xs.hidden-sm(ng-click="exportHistory()")
-          i.icon-export
+          i.f-24.icon-export
         .filter-search.input-group
           input.form-control(
             type="text"
