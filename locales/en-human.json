@@ -25,7 +25,7 @@
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
       "Q": "How do I buy Bitcoin?",
-      "A": "It’s simple, secure and seamless. <span class='pointer blue'>{{::text | translate}}</span>"
+      "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy Bitcoin?",
