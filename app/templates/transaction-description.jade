@@ -32,7 +32,7 @@
       div
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-    .flex-2.flex-column.flex-align-end.mtvl
+    .flex-2.flex-column.flex-align-end.f-12.mtvl
       .flex-row(ng-class="{fade: tx.confirmations <= 5 || settings.currency.code !== 'USD'}")
         p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
         p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
