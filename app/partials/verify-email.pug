@@ -1,5 +1,5 @@
 header
-  div(ng-show="state === 'pending' || state ==='error'")
+  div.center(ng-show="state === 'pending' || state ==='error'")
     hgroup(ng-show="state === 'pending'")
       img(src="img/spinner.gif")
     hgroup(ng-show="state === 'error'")
