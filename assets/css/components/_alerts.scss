@@ -20,7 +20,8 @@
   min-height: initial !important;
 }
 .alert-received-bitcoin, .alert-sent-bitcoin {
-  @extend .received;
+  @extend .alert-in-app;
+  color: $received;
   background: white;
   padding: 20px;
   font-size: 1.2em;
@@ -30,7 +31,14 @@
   animation: fade-in-right .5s;
   box-shadow: 0 2px 3px 0 #676767;
   .close {
-    @extend .received;
+    color: $received;
+  }
+}
+
+.alert-sent-bitcoin {
+  color: $sent;
+  .close {
+    color: $sent;
   }
 }
 
