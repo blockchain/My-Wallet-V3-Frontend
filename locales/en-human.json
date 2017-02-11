@@ -351,7 +351,7 @@
   "DOWNLOAD": "Download File",
   "SPENDABLE_ADDRESSES" : "Spendable Addresses",
   "UNUSED_ADDRESSES": "Unused Addresses",
-  "UNUSED_ADDRESSES_COPY": "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. <br/>Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
+  "UNUSED_ADDRESSES_COPY": "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "CONFIRM_SHOW_PAST": {
     "TITLE": "Are you sure?",
     "BODY": "Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once."
