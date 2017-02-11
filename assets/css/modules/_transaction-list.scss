@@ -3,6 +3,7 @@
   .label-primary,
   .label-default {
     @extend .btn-xs;
+    font-weight: normal;
     display: inline-block;
   }
   .transaction-feed {
