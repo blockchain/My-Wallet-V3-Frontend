@@ -291,6 +291,15 @@ a.date,p.date { color: $black; }
 }
 
 @media (min-width: 768px){
+  .destination {
+    margin-top: -4px;
+    & + .width-30 {
+      margin-top: -4px;
+      & + .width-20 {
+        margin-top: -4px;
+      }
+    }
+  }
   .transaction-details {
     .status{text-align: right;}
   }
