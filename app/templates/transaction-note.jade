@@ -6,7 +6,7 @@
                                              ng-bind-html="transaction.note | escapeHtml | highlight:search")
       a.mlm(ng-show="label || transaction.note" ng-click="startEditNote()")
         i.ti-pencil
-      a.em-300(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
+      span.basic-grey.pointer.em-300(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
     a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
       i.ti-close
   .flex-column.input(ng-show="editNote" ng-class="{'pos-abs': transaction.toggled}")
