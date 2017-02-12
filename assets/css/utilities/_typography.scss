@@ -16,8 +16,8 @@
 .f-14 { font-size: 14px; }
 .f-12 { font-size: 12px; }
 
-.alt-font { font-family: 'GillSans'; }
-.montserrat { font-family: 'Montserrat'; }
+.main-font { font-family: 'Montserrat', 'Helvetica', sans-serif !important; }
+.alt-font { font-family: 'GillSans', 'Helvetica', sans-serif !important; }
 
 .underline { text-decoration: underline; &:hover { text-decoration: underline; } }
 .underline-blue { border-bottom: 2px solid $blue; }
