@@ -95,6 +95,23 @@ form.bc-form {
     .item {
       position: relative;
       @extend .flex-column;
+      &.search {
+        input {
+          padding-left: 35px;
+          &:active,
+          &:focus {
+            & + i {
+              color: $primary;
+            }
+          }
+        }
+        i {
+          position: absolute;
+          font-size: 17px;
+          left: 10px;
+          top: 8px;
+        }
+      }
       &.check {
         @extend .flex-row;
         @extend .flex-center;
