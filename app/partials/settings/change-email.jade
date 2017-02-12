@@ -12,7 +12,7 @@ form(role="form" name="form" novalidate ng-submit="form.$valid && changeEmail()"
       span.help-block
         span(translate="NOT_VALID_EMAIL_ADDRESS" ng-show="form.$invalid && form.$dirty")
         span(translate="MAIL_PROVIDER_WARN" ng-show="isProblemProvider(fields.email)")
-  .form-group.mbn.has-error.pull-right.right-align
+  .form-group.mbn.has-error.pull-right.right-align.flex-center
     button.button-muted(ng-click="deactivate()" translate="CANCEL" ng-hide="busy" type="button")
     button.button-primary(
       ui-ladda="status.waiting"
