@@ -63,6 +63,11 @@
   }
 }
 
+[class^="glyphicon-"]:before,
+[class*="glyphicon-"]:before {
+    font-family: inherit;
+}
+
 .ti-home:before {
   content: "\e69b";
 }

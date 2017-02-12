@@ -9,10 +9,10 @@ div(data-preflight-tag="Logout" ng-hide="deauthorized")
           translate-values="{time:timeToRedirect}")
   .flex-column.mtl
     .flex-column.flex-between.flex-center
-      .flex-column.flex-2.pbm
+      .flex-column.pbm
         p.em-300.type-h5(translate="DEAUTH_EXPLAIN")
-      .flex-1.flex-center.flex-column
-        button.button-primary.button-nowrap(
+      .flex-center.flex-column
+        button.button-primary(
           ng-click="deauth()"
           ng-disabled="deauthorizing"
           translate="DEAUTHORIZE")
