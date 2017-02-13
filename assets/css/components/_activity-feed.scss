@@ -1,4 +1,4 @@
-.af-header { margin-bottom: 19px; }
+.af-header {}
 .af-item {
   height: calc(635px/8);
   border-left: 1px solid #d2ced0;
@@ -10,7 +10,7 @@
 .af-empty-state {
   height: 100%;
   width: 100%;
-  background: linear-gradient(rgba(247, 247, 247, 0.6), rgba(247, 247, 247, 1));
+  background: linear-gradient(rgba(247, 247, 247, 1), rgba(247, 247, 247, 1));
   position: absolute;
   top: 0;
   h2, h5 {
