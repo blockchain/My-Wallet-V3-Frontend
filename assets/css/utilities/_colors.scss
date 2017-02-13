@@ -70,6 +70,7 @@ $bright-green:  $pug !important; //override Security Center nested css selectors
 @include color('state-danger-text', $security-red);
 @include color('transferred', $bali-hai);
 @include color('received', $iris-green);
+@include color('transfer', $bali-hai);
 @include color('sent', $bittersweet);
 
 @include bg-color('transferred', $bali-hai);
