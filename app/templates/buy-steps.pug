@@ -1,27 +1,27 @@
 .buy-steps.flex-row.flex-between.flex-baseline.center(ng-click="buy()" ng-class="{'flex-justify': exchangeAcct}")
-  .width-25.flex-column.flex-center(ng-class="{primary: beforeStep('select-payment-medium')}" ng-hide="exchangeAcct")
+  .width-25.flex-column.flex-center(ng-class="beforeStep('select-payment-medium') ? 'primary' : 'hidden-xs'" ng-hide="exchangeAcct")
     i.type-lrg.ti-user
     span(translate="ACCOUNT")
 
-  .flex-justify(ng-hide="exchangeAcct")
+  .flex-justify.hidden-xs(ng-hide="exchangeAcct")
     i.ti-arrow-right.type-h4
 
   //- card || bank
-  .width-25.flex-column.flex-center(ng-class="{primary: afterStep('accept-terms') && beforeStep('isx')}")
+  .width-25.flex-column.flex-center(ng-class="afterStep('accept-terms') && beforeStep('isx') ? 'primary' : 'hidden-xs'")
     i.type-lrg.ti-credit-card(ng-class="{bank: (getMedium().inMedium === 'bank' || medium === 'bank') || isKYC}")
     span(translate="METHOD")
 
-  .flex-justify
+  .flex-justify.hidden-xs
     i.ti-arrow-right.type-h4
 
   //- verify
-  .width-25.flex-column.flex-center(ng-class="{primary: afterStep('summary') && beforeStep('trade-formatted')}")
+  .width-25.flex-column.flex-center(ng-class="afterStep('summary') && beforeStep('trade-formatted') ? 'primary' : 'hidden-xs'")
     i.type-lrg.ti-id-badge.bank
     span(translate="VERIFY_PAYMENT")
 
-  .flex-justify
+  .flex-justify.hidden-xs
     i.ti-arrow-right.type-h4
 
-  .width-25.flex-column.flex-center(ng-class="{primary: onStep('trade-formatted')}")
+  .width-25.flex-column.flex-center(ng-class="onStep('trade-formatted') ? 'primary' : 'hidden-xs'")
     i.type-lrg.ti-shopping-cart
     span(translate="GET_BITCOIN")
