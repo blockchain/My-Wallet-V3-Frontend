@@ -17,7 +17,8 @@
   //- verify
   .width-25.flex-column.flex-center(ng-class="afterStep('summary') && beforeStep('trade-formatted') ? 'blue' : 'hidden-xs'")
     i.type-lrg.ti-id-badge.bank
-    span(translate="VERIFY_PAYMENT")
+    span.hidden-xs(translate="VERIFY_PAYMENT")
+    span.visible-xs(translate="VERIFY")
 
   .flex-justify.hidden-xs
     i.ti-arrow-right.type-h4
