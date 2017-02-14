@@ -1,8 +1,8 @@
 .buy-sell
   .flex-row.flex-column-tablet
     .find-partner.width-50.mrl.mtl.flex-column
-      span.f-20.em-500(translate="Buy Bitcoin")
-      .mt-15.pt-20.pb-20.pl-25.pr-25.phm.border
+      span.f-20.em-500(translate="Buy Bitcoin" ng-hide="inMobileBuy")
+      .mt-15.pt-20.pb-20.pl-25.pr-25.phm.border-desktop
         .f-20.blue.lh1.center(translate="SIMPLE_SECURE_SEAMLESS")
         .f-14.mt-10(translate="BUY_SIMPLE_STEPS")
         .mt-20(ng-class="{'ui-select-border-red': !onWhitelist(country.Code)}")
