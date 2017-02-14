@@ -91,23 +91,23 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   }
 
   $window.activateMobileBuy = (guid, sharedKey, password) => {
-    $timeout(() => {
-      if (wallet.status.isLoggedIn) return;
-      $rootScope.inMobileBuy = true;
-      let success = () => { $state.go('wallet.common.buy-sell'); };
-      Options.get().then(() => {
-        wallet.login(guid, password, null, null, success, null, sharedKey);
-      });
-    });
-    return { guid, sharedKey, password };
-  };
-
-  $window.activateMobileBuyFromJson = (json, password) => {
     if (wallet.status.isLoggedIn) return;
+    $state.go('intermediate');
     $rootScope.inMobileBuy = true;
     Options.get()
-      .then(() => MyWallet.loginFromJSON(json, password))
-      .then(() => $q(resolve => didLogin(MyWallet.wallet.guid, resolve)))
+      .then(() => $q(resolve => wallet.login(guid, password, null, null, resolve, null, sharedKey)))
+      .then(() => { $state.go('wallet.common.buy-sell'); });
+  };
+
+  $window.activateMobileBuyFromJson = (json, externalJson, password) => {
+    console.log('json', json);
+    console.log('external', externalJson);
+    if (wallet.status.isLoggedIn) return;
+    $state.go('intermediate');
+    $rootScope.inMobileBuy = true;
+    Options.get()
+      .then(() => { MyWallet.loginFromJSON(json, externalJson, password); })
+      .then(() => $q(resolve => { didLogin(MyWallet.wallet.guid, resolve); }))
       .then(() => { $state.go('wallet.common.buy-sell'); });
   };
 
@@ -763,6 +763,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     if (wallet.askForDeauth()) {
       $window.name = 'blockchain-logout';
+    }
+
+    if ($rootScope.inMobileBuy) {
+      $state.go('intermediate');
     }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {
