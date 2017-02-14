@@ -6,7 +6,7 @@
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading && !status.disabled")
     img.loader(src="img/puff.svg")
     span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
-  div(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
+  .mb-20(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
     .flex-row.flex-column-tablet
       .width-50.mrl.mtl(ng-show="state.buy")
         buy-quick-start(limits="limits"
@@ -25,7 +25,7 @@
     .flex-column.mtl.pb-50(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="ORDER_HISTORY")
-        span Coinify Account: {{ exchange.profile.email }}
+        span.hidden-xs Coinify Account: {{ exchange.profile.email }}
       div(ng-if="fetchTradeError")
         span.state-danger-text(translate="FETCH_TRADE_ERROR")
       table.width-100(ng-if="!fetchTradeError")
