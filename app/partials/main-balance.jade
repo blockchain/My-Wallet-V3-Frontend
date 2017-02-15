@@ -2,13 +2,12 @@
   span(ng-show="getTotal() == null")
     h3
       img(ng-show="balance == null" src="img/spinner.gif") 
-  span.flex-between.flex-column.mt-5(ng-show="getTotal() != null")
-    span(ng-hide="isBitCurrency(settings.displayCurrency)")
-      h1.mvn.em-600.pos-rel
-        fiat(btc="getTotal()")
-    span(ng-show="isBitCurrency(settings.displayCurrency)")
-      h1.mvn.em-600.pos-rel {{ getTotal() | toBitCurrency:settings.btcCurrency }}
-    p.mvn.f-24.mt-5.em-300.align-offset.pos-rel
+  span.flex-between.flex-column(ng-show="getTotal() != null")
+    p.mvn.f-28.em-600
+      fiat(btc="getTotal()", ng-hide="isBitCurrency(settings.displayCurrency)")
+      span(ng-show="isBitCurrency(settings.displayCurrency)")
+        span {{ getTotal() | toBitCurrency:settings.btcCurrency }}
+    p.mvn.f-24.mt-5.em-300
       fiat(btc="getTotal()", ng-show="isBitCurrency(settings.displayCurrency)")
       span(ng-hide="isBitCurrency(settings.displayCurrency)")
         span {{ getTotal() | toBitCurrency:settings.btcCurrency }}
