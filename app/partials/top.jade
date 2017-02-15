@@ -1,9 +1,9 @@
 .flex-center.flex-between.height-100.width-100-mobile(ng-show="status.isLoggedIn")
   .flex-column.flex-center-mobile.width-100-mobile
     .flex-baseline.heavy.hidden-xs
-      h1.my-wallet.upper.mtn Be your own bank.
+      h1.f-28.my-wallet.upper.mtn Be your own bank.
         span.reg.pos-rel &reg;
-    .visible-xs.mbl
+    .visible-xs
       include ./main-balance
     .flex.flex-center-mobile
       button.btn.button-default.button-short-wide.type-h5.mrm(ng-click="send()")
@@ -15,5 +15,5 @@
           span.em-300(translate="REQUEST")
         button.btn.button-default.button-short.type-h5(ng-if="browserCanExecCommand" on-click-copy="nextAddress()" ng-mouseleave="resetCopy()")
           i.mhs(ng-class="copied ? 'ti-check' : 'ti-clipboard'")
-  .hidden-xs
+  .hidden-xs.mt-5
     include ./main-balance
