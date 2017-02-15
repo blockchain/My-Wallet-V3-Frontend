@@ -97,14 +97,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(() => { $state.go('wallet.common.buy-sell'); });
   };
 
-  $window.activateMobileBuyFromJson = (json, externalJson, password) => {
+  $window.activateMobileBuyFromJson = (json, externalJson, magicHash, password) => {
     console.log('json', json);
     console.log('external', externalJson);
     if (wallet.status.isLoggedIn) return;
     $state.go('intermediate');
     $rootScope.inMobileBuy = true;
     Options.get()
-      .then(() => { MyWallet.loginFromJSON(json, externalJson, password); })
+      .then(() => { MyWallet.loginFromJSON(json, externalJson, magicHash, password); })
       .then(() => $q(resolve => { didLogin(MyWallet.wallet.guid, resolve); }))
       .then(() => { $state.go('wallet.common.buy-sell'); });
   };
