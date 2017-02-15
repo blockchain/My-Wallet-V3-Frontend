@@ -48,6 +48,9 @@ $sent: $bittersweet;
 $received: $iris-green;
 $transferred: $bali-hai;
 
+// Alerts
+$success: $jade;
+
 //Security Badge Colors
 $security-red: $mahogany;
 $security-green: $jade;
@@ -65,6 +68,7 @@ $bright-green:  $jade !important; //override Security Center nested css selector
 @include color('security-yellow', $security-yellow);
 @include color('security-green', $security-green);
 @include color('bright-green', $jade);
+@include color('success', $success);
 @include color('success', $jade);
 @include color('text-color', $text);
 @include color('state-danger-text', $security-red);

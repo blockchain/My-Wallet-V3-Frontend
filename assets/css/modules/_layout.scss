@@ -37,7 +37,6 @@
   padding: 0 30px;
   height: 115px;
   .heavy {
-    h1 { font-size: 2.3em; }
     img.spinner {
       height: 11px;
     }
@@ -46,6 +45,9 @@
     top: -0.75em;
     font-size: 0.5em;
     font-weight: 300;
+  }
+  @media (max-width: 991px) {
+    padding: 0 15px;
   }
 }
 
@@ -127,11 +129,13 @@
 .brdrn { border-radius: 0px !important; }
 
 @media (max-width: 991px) {
-  .top-view .heavy h1 { font-size: 1.75em; }
+  .top-view .heavy p,
+  .top-view .heavy h1 { font-size: 24px; }
 }
 
 @media (max-width: 767px) {
-  .top-view .heavy p { font-size: 1.2em; }
+  .top-view .heavy p { font-size: 20px; }
+  .top-view .heavy p.f-28 { font-size: 24px; }
 }
 
 @media (max-width:480px) {
