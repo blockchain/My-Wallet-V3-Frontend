@@ -95,12 +95,29 @@ form.bc-form {
     .item {
       position: relative;
       @extend .flex-column;
+      &.search {
+        input {
+          padding-left: 35px;
+          &:active,
+          &:focus {
+            & + i {
+              color: $primary;
+            }
+          }
+        }
+        i {
+          position: absolute;
+          font-size: 17px;
+          left: 10px;
+          top: 8px;
+        }
+      }
       &.check {
         @extend .flex-row;
         @extend .flex-center;
         label {
-          font-weight: 400;
-          font-size: 14px;
+          font-weight: 300;
+          font-size: 12px;
           cursor: pointer;
           margin: 0;
         }

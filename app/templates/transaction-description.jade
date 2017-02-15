@@ -2,18 +2,18 @@
   .flex-between.flex-center.width-100
     div.mrl.width-20
       .flex-center.lh1.pointer(ng-click="tx.toggled = !tx.toggled")
-        span.montserrat.upper.f-16.em-500(
+        span.main-font.upper.f-16.em-500(
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
-      span.timestamp.type-sm.basic-grey
+      span.timestamp.type-sm.basic-grey.main-font.f-14
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
-      span.label.label-default.mts(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-      span.label.label-primary.mts(ng-show="txMethod != null")
+      span.label.label-default.mts.mls(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
+      span.label.label-primary.mts.mls(ng-show="txMethod != null")
         span(translate="BOUGHT_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'buy'")
         span(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
     .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       transaction-destinations(transaction="tx" search="search")
-    .flex-2.width-30.hidden-sm.hidden-xs  
+    .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300  
       transaction-note(transaction="tx", account="account" search="search")
     .flex-1.width-20.mrl
       transaction-pending(transaction="tx")
@@ -32,7 +32,7 @@
       div
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-    .flex-2.flex-column.flex-align-end.mtvl
+    .flex-2.flex-column.flex-align-end.f-12.mtvl
       .flex-row(ng-class="{fade: tx.confirmations <= 5 || settings.currency.code !== 'USD'}")
         p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
         p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
