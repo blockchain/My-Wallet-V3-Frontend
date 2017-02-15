@@ -116,8 +116,9 @@
   }
   .navbar-nav {
     > li {
-      margin-left: 2px;
       padding-top: 10px;
+      font-weight: 500;
+      font-size: 14px;
       a {
         &.refresh {
           img {
