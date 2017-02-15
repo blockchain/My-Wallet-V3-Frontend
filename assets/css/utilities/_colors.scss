@@ -31,7 +31,7 @@ $iris-green: #00BABC;
 $bittersweet: #F26C57;
 
 // Product
-$pug: #00A76F;
+$jade: #00A76F;
 $mahogany: #CA3A3C;
 
 // Greys
@@ -48,11 +48,14 @@ $sent: $bittersweet;
 $received: $iris-green;
 $transferred: $bali-hai;
 
+// Alerts
+$success: $jade;
+
 //Security Badge Colors
 $security-red: $mahogany;
-$security-green: $pug;
+$security-green: $jade;
 $security-yellow: $dandelion;
-$bright-green:  $pug !important; //override Security Center nested css selectors
+$bright-green:  $jade !important; //override Security Center nested css selectors
 
 @include color('blue', $blue);
 @include color('white', white);
@@ -64,8 +67,9 @@ $bright-green:  $pug !important; //override Security Center nested css selectors
 @include color('security-red', $security-red);
 @include color('security-yellow', $security-yellow);
 @include color('security-green', $security-green);
-@include color('bright-green', $pug);
-@include color('success', $pug);
+@include color('bright-green', $jade);
+@include color('success', $success);
+@include color('success', $jade);
 @include color('text-color', $text);
 @include color('state-danger-text', $security-red);
 @include color('transferred', $bali-hai);
@@ -82,4 +86,4 @@ $bright-green:  $pug !important; //override Security Center nested css selectors
 @include bg-color('black', $black);
 @include bg-color('light-blue', $light-blue);
 @include bg-color('mid-grey', $mid-grey);
-@include bg-color('success', $pug);
+@include bg-color('success', $jade);
