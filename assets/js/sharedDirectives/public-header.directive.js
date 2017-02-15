@@ -26,7 +26,6 @@ function publicHeader ($rootScope, $location, languages) {
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}stats" translate="STATS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="https://markets.blockchain.info" translate="MARKETS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="https://blockchain.com/about" translate="ABOUT" class="upper"></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right hidden-sm">
             <li class="hidden-md">
