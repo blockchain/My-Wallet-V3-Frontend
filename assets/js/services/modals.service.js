@@ -27,7 +27,17 @@ function modals ($state, $uibModal, $ocLazyLoad) {
   };
 
   service.openHelper = (helper) => open({
-    controller ($scope) { $scope.helper = helper; },
+    controller ($scope) {
+      let helperImages = {
+        'bank-deposit-helper': 'img/bank-deposit-helper.png',
+        'bank-check-helper': 'img/bank-check-helper.png',
+        'address-id-helper': 'img/address-id-helper.png',
+        'id-id-helper': 'img/id-id-helper.png'
+      };
+
+      $scope.helper = helper;
+      $scope.image = helperImages[helper];
+    },
     templateUrl: 'partials/helper-modal.jade',
     windowClass: 'bc-modal medium'
   });
@@ -50,12 +60,13 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     backdrop: false, windowClass: 'tray'
   }, options).result;
 
-  service.openSfoxSignup = (exchange) => service.expandTray({
+  service.openSfoxSignup = (exchange, quote) => service.expandTray({
     templateUrl: 'partials/sfox/signup.jade',
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
       exchange () { return exchange; },
+      quote () { return quote; },
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())

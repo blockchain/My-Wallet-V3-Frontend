@@ -20,10 +20,6 @@ div.login-form {
   }
 }
 
-.login-box-container {
-  margin-top: -100px;
-}
-
 @media (max-height: 700px) {
   html, body {
     position: relative;
@@ -45,34 +41,18 @@ div.login-form {
 
 .login-box {
   background-color: white;
-  padding: 10px 50px 25px;
+  padding: 35px 40px 30px 40px;
   width: 550px;
   box-shadow: 0px 0px 20px -8px black;
   max-height: 600px;
   overflow: auto;
   header {
-    padding: 15px 0 10px;
     border-bottom: 1px solid rgb(240, 236, 236);
   }
   .form-horizontal .form-group {
     margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
-  }
-  .help-block .info {
-    color: $mid-grey;
-    &:hover {
-      color: $dark-grey;
-    }
-  }
-  .help-block {
-    margin-bottom: 0px;
-    p {
-      margin: 0;
-    }
-    & + .help-block {
-      margin-top: 5px;
-    }
   }
   input[type='checkbox'] { margin: 0; }
   .step { right: 20px; top: 10px; }
@@ -111,12 +91,8 @@ div.login-form {
 
 @media (max-width: 620px) {
   .login-box {
-    padding: 10px 25px 25px;
+    width: 100%;
     min-width: 0;
-    width: 95%;
-    header h2 { font-size: 18px; margin-top: 0; margin-bottom: 5px; }
-    .navbar { margin-bottom: 0; }
-    .form-group { margin-bottom: 0; }
   }
 }
 

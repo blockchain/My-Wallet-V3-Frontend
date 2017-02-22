@@ -47,11 +47,22 @@ ul.aside {
           color: $security-green;
         }
       }
-      i { margin-right: .55em; line-height: 0; font-size: 1.3em; }
+      i {
+        @extend .f-20;
+        margin-right: .55em;
+        text-align: center;
+        line-height: 0;
+        width: 20px;
+      }
     }
   }
   li.current {
-    background: #EBEBEB;
+    a {
+      i,
+      span {
+        color: $blue;
+      }
+    }
   }
   ul.aside-list{
     background: white;
@@ -143,7 +154,7 @@ li.action-bar{
 }
 .settings-nav { margin-top: 10px; }
 .settings-nav-header {
-  background: $light-grey;
+  background: $grey;
 }
 
 @media (max-width: 480px) {

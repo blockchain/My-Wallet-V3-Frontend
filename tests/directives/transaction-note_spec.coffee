@@ -40,15 +40,15 @@ describe "Transaction Note Directive", ->
     element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
-    addressLabel = element[0].querySelectorAll('.aaa.tx-note')
-    txNote = element[0].querySelectorAll('.basic-grey.tx-note')
+    addressLabel = element[0].querySelectorAll('.tx-note')
+    txNote = element[0].querySelectorAll('.tx-note')
 
     expect(element.html().indexOf("label label label fun") == -1).toBe(true)
   )
 
   it "should show the note over the address label if the tx has both", ->
-    addressLabel = element[0].querySelectorAll('.aaa.tx-note')
-    txNote = element[0].querySelectorAll('.basic-grey.tx-note')
+    addressLabel = element[0].querySelectorAll('.tx-note')
+    txNote = element[0].querySelectorAll('.tx-note')
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(true)
 
   it "should show the label if it is associated with an address in the tx and there is no tx note", inject((Wallet) ->
@@ -56,7 +56,7 @@ describe "Transaction Note Directive", ->
     isoScope.deleteNote()
     isoScope.$digest()
 
-    addressLabel = element[0].querySelectorAll('.aaa.tx-note')
+    addressLabel = element[0].querySelectorAll('.tx-note')
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false)
   )
 
@@ -67,7 +67,7 @@ describe "Transaction Note Directive", ->
     element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope)
     $rootScope.$digest()
 
-    addressLabel = element[0].querySelectorAll('.aaa.tx-note')
+    addressLabel = element[0].querySelectorAll('.tx-note')
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false)
   )
 

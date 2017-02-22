@@ -21,7 +21,7 @@
       i.ti-alert.state-danger-text.mrs.type-h4
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempCurrency.code, max: limits.available}")
       span.state-danger-text.mrs(ng-show="tempFiatForm.fiat.$error.min && !tempFiatForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempCurrency.code, min: limits.min}")
-  .border.pam(ng-class="{'bg-light-grey': editAmount}")
+  .border.pam(ng-class="{'bg-grey': editAmount}")
     .flex-row.flex-between.pam.border-bottom-light
       span(ng-hide="isBankTransfer()" translate="BTC:")
       span(ng-show="isBankTransfer()" translate="BTC_APPROX_RATE")
@@ -74,4 +74,4 @@
       div
         input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
       div
-        label.mlm.em-400(translate="ACCEPT_COINIFY_RATE" for="rate")
+        label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")

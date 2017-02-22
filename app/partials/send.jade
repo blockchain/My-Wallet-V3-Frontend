@@ -93,7 +93,7 @@
                     ng-change="setPaymentAmount()"
                     required
                   )
-              i.ti-arrows-horizontal.h4.aaa.prm
+              i.ti-arrows-horizontal.h4.border-grey.prm
               .flex-1
                 .flex-center.border-bottom
                   span.mrm {{ fiatCurrency.code }}:
@@ -183,12 +183,12 @@
                 span(ng-show="address.type !== 'External'") + 
                 fiat.mrml(btc="transaction.amounts[$index]")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
-            span.aaa.account.width-50-mobile.width-50(translate="TX_FEE_REQUIRED")
+            span.mid-grey.account.width-50-mobile.width-50(translate="TX_FEE_REQUIRED")
             .width-50.width-50-mobile.flex-between
-              span.aaa.center 
+              span.mid-grey.center 
                 span.fade + 
                 span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
-              span.aaa.center
+              span.mid-grey.center
                 fiat.mrml(btc="transaction.fee")
             helper-button(content="DYK_TX_FEES")
         .mvm.flex-justify.flex-1.flex-center.split-rule
@@ -201,8 +201,8 @@
               fiat.mrml(btc="getTransactionTotal(true)")
 .modal-footer.flex-between.flex-center.pal
   .flex-center
-    a.dark-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
-    a.dark-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
+    a.basic-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
+    a.basic-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
   .flex-center.flex-end.send-actions
     button.button-muted.mrm(
       ng-click="close()" translate="CANCEL" ng-hide="confirmationStep")
@@ -222,7 +222,7 @@
       data-style="expand-left"
       ng-hide="confirmationStep")
 
-    button.button-success(
+    button.button-primary(
       ladda-translate="SEND"
       ui-ladda="sending"
       ng-click="send()"

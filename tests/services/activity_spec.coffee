@@ -50,7 +50,7 @@ describe "Activity", () ->
       tx = Activity.factory(0, MyWallet.wallet.txList.transactions()[0])
       expect(tx).toEqual(jasmine.objectContaining({
         title: 'TRANSACTION',
-        icon: 'ti-layout-list-post',
+        icon: 'icon-tx',
         time: 25000,
         message: 'RECEIVED',
         amount: 1,
@@ -62,7 +62,7 @@ describe "Activity", () ->
       tx = Activity.factory(0, MyWallet.wallet.txList.transactions()[0])
       expect(tx).toEqual(jasmine.objectContaining({
         title: 'TRANSACTION',
-        icon: 'ti-layout-list-post',
+        icon: 'icon-tx',
         time: 25000,
         message: 'BOUGHT',
         amount: 1,
