@@ -296,7 +296,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.jade',
       controller: 'BuySellCtrl',
-      params: { countryCode: null }
+      params: { countryCode: null },
+      resolve: {
+        options (Options) { return Options.get(); }
+      }
     })
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.jade',
@@ -317,11 +320,19 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           return exchange.hasAccount
             ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
             : $q.resolve([]);
+        },
+        options (Options) { return Options.get(); },
+        showCheckout (options, MyWallet) {
+          let email = MyWallet.wallet.accountInfo.email;
+          let fraction = options.partners.sfox.showCheckoutFraction;
+
+          return Blockchain.Helpers.isEmailInvited(email, fraction);
         }
       },
-      onEnter ($state, $stateParams, MyWallet, modals) {
+      onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {
         let exchange = MyWallet.wallet.external.sfox;
-        if (exchange.profile == null) {
+
+        if (exchange.profile == null && !showCheckout) {
           $state.transition = null; // hack to prevent transition
           modals.openSfoxSignup(exchange);
         }

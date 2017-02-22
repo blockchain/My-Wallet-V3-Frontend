@@ -59,18 +59,20 @@ describe "SfoxCheckoutController", ->
       currency = $injector.get("currency")
       currency.conversions["USD"] = { conversion: 2 }
 
-  getControllerScope = (accounts) ->
+  getControllerScope = (accounts, showCheckout) ->
     scope = $rootScope.$new()
     scope.vm = external: { sfox:
       profile:
         limits: buy: 100
         verificationStatus: level: "unverified"
       getBuyQuote: () -> $q.resolve(mockQuote())
+      fetchProfile: () -> $q.resolve()
     }
     template = $templateCache.get('partials/sfox/checkout.jade')
     $controller "SfoxCheckoutController",
       $scope: scope
       accounts: accounts || []
+      showCheckout: showCheckout || undefined
     $compile(template)(scope)
     scope
 
@@ -78,31 +80,26 @@ describe "SfoxCheckoutController", ->
     scope = getControllerScope([{status:'active'}])
     spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
     scope.openSfoxSignup()
-    expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox)
+    expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox, undefined)
 
-  describe ".buyHandler()", ->
+  describe ".openSfoxSignup()", ->
+    it "should set modalOpen to false", ->
+      scope = getControllerScope([{status:'active'}], true)
+      spyOn(modals, "openSfoxSignup").and.returnValue($q.resolve())
+      scope.openSfoxSignup()
+      scope.$digest()
+      expect(scope.modalOpen).toBe(false)
+
+  describe "showCheckout", ->
     beforeEach ->
-      scope = getControllerScope([{status:'active'}])
+      scope = getControllerScope([{}], true)
 
-    it "should watch the trade for completion and close the first modal", ->
-      dismissSpy = jasmine.createSpy("dismiss")
-      spyOn(modals, "openTradeSummary").and.returnValue(dismiss: dismissSpy)
-      spyOn(sfox, "watchTrade").and.callFake((trade, cb) -> cb())
-      scope.buyHandler(mockQuote())
+    it "should show if signup is completed", ->
+      scope.signupCompleted = true
       scope.$digest()
-      trade = jasmine.objectContaining({ id: "TRADE" })
-      expect(sfox.watchTrade).toHaveBeenCalledWith(trade, jasmine.any(Function))
-      expect(dismissSpy).toHaveBeenCalled()
+      expect(scope.showCheckout).toBe(true)
 
-    it "should open the trade summary modal", ->
-      spyOn(modals, "openTradeSummary").and.callThrough()
-      scope.buyHandler(mockQuote())
+    it "should show if signup is not completed but showCheckout is true", ->
+      scope.signupCompleted = false
       scope.$digest()
-      trade = jasmine.objectContaining({ id: "TRADE" })
-      expect(modals.openTradeSummary).toHaveBeenCalledWith(trade, 'initiated')
-
-    it "should show an alert in case of error", ->
-      spyOn(Alerts, "displayError")
-      scope.buyHandler(mockQuote('NETWORK_ERROR'))
-      scope.$digest()
-      expect(Alerts.displayError).toHaveBeenCalled()
+      expect(scope.showCheckout).toBe(true)

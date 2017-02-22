@@ -82,7 +82,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
 
-  if (!$rootScope.isProduction) {
+  if (window.location.hostname === 'localhost' || !$rootScope.isProduction) {
     const KEY = 'qa-tools-enabled';
     $rootScope.buySellDebug = $cookies.get(KEY) === 'true';
     let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
@@ -1222,9 +1222,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       wallet.settings.secondPassword = false;
       successCallback();
+      $rootScope.$safeApply();
     };
     let error = () => {
       errorCallback();
+      $rootScope.$safeApply();
     };
     let decrypting = () => {
       console.log('Decrypting...');
@@ -1236,34 +1238,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     const didDecrypt = () => {
       // Check which metadata service features we use:
 
-      // whatsNew
       // This falls back to cookies if 2nd password is enabled:
-      let whatsNewViewed = $cookies.get('whatsNewViewed');
-      if (whatsNewViewed) {
-        // let whatsNew = new MyWalletMetadata(2);
-        let whatsNew = wallet.my.wallet.metadata(2);
+      let lastViewed = $cookies.get('whatsNewViewed');
 
-        whatsNew.fetch().then((res) => {
-          if (res === null) {
-            whatsNew.create({lastViewed: whatsNewViewed}).then(() => {
-              // TODO: uncomment once cookie fallback is removed
-              // $cookies.remove('whatsNewViewed');
-              success();
-            });
-          } else {
-            whatsNew.update({lastViewed: whatsNewViewed}).then(() => {
-              // TODO: uncomment once cookie fallback is removed
-              // $cookies.remove('whatsNewViewed');
-              success();
-            });
-          }
-        }).catch(() => {
-          // The What's New section may be marked (partially) unread at the
-          // next login.
-          success();
-        });
-      } else {
-        success();
+      if (lastViewed) {
+        let whatsNew = wallet.my.wallet.metadata(2);
+        whatsNew.fetch()
+          .then(() => whatsNew.update({ lastViewed }))
+          .then(success);
       }
     };
 
@@ -1278,9 +1260,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       Alerts.displaySuccess('Second password set.');
       wallet.settings.secondPassword = true;
       successCallback();
+      $rootScope.$safeApply();
     };
     let error = () => {
       Alerts.displayError('Second password cannot be set. Contact support.');
+      $rootScope.$safeApply();
     };
     let encrypting = () => {
       console.log('Encrypting...');

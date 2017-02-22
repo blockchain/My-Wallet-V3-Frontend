@@ -1,6 +1,6 @@
 describe "Adverts Directive", ->
   $compile = undefined
-  $rootScope = undefined
+  rootScope = undefined
   element = undefined
   isoScope = undefined
 
@@ -8,18 +8,23 @@ describe "Adverts Directive", ->
     module "walletApp", ($provide) ->
       $provide.value 'Adverts',
         fetchOnce:  () ->
-        ads: [{link: "http://www.google.com/"}]
+        ads: [{id: 1337}]
       return
 
-    inject((_$compile_, _$rootScope_, Adverts) ->
+    inject((_$compile_, $rootScope, Adverts) ->
         spyOn(Adverts, "fetchOnce")
 
+        rootScope = $rootScope;
+
         $compile = _$compile_
-        $rootScope = _$rootScope_
 
-        element = $compile("<adverts></adverts>")($rootScope)
+        scope = $rootScope.$new()
+        $rootScope.apiDomain = "https://api.blockchain.info/"
 
-        $rootScope.$digest()
+        element = $compile("<adverts></adverts>")(scope)
+
+        scope.$digest()
+
         isoScope = element.isolateScope()
         isoScope.$digest()
 
@@ -35,8 +40,7 @@ describe "Adverts Directive", ->
     expect(isoScope.ads.length).toBe(1)
   )
 
-  it "should redirect to the advertisers page, in a new tab", inject((Adverts, $window) ->
-    spyOn($window, "open")
-    isoScope.visit(Adverts.ads[0])
-    expect($window.open).toHaveBeenCalledWith("http://www.google.com/", "_blank")
+  it "should redirect to the advertisers page, in a new tab", inject((Adverts) ->
+    Adverts.fetchOnce()
+    expect(element.html()).toContain "<a ng-href=\"https://api.blockchain.info/ads/out?id=1337\" target=\"_blank\" rel=\"noopener noreferrer\""
   )

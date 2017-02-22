@@ -12,9 +12,10 @@ describe "SfoxSignupController", ->
       $rootScope = _$rootScope_
       $controller = _$controller_
 
-  getController = (profile, accounts) ->
+  getController = (profile, accounts, quote) ->
     $controller "SfoxSignupController",
       exchange: { profile: profile }
+      quote: quote || {}
       accounts: accounts || []
 
   describe "steps", ->

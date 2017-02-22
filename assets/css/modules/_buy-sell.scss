@@ -48,7 +48,7 @@
     }
   }
   .kyc-status {
-    background-color: $light-grey;
+    background-color: $grey;
   }
 }
 
@@ -100,12 +100,12 @@
 
 .payment-methods {
   input {
-    & ~ .flex-column img {
+    & ~ .flex-row img {
       width: 30px;
       &.checked { display: none; }
     }
   }
-  input:checked ~ .flex-column img:not(.cc-shadow) {
+  input:checked ~ .flex-row img:not(.cc-shadow) {
     display: none;
     &.checked { display: inline-block; }
   }
@@ -197,7 +197,7 @@
         #isx-iframe {
           height: 700px;
           @media (max-width: 767px) {
-            height: 1000px;
+            height: 1460px;
           }
         }
       }
@@ -255,14 +255,15 @@ i.ti-credit-card.bank {
     opacity: 0;
   }
   &:after {
-    top: 8px;
-    left: 2px;
     content: '';
-    width: 22px;
-    height: 22px;
+    top: 0;
+    width: 100%;
+    height: 100%;
     display: block;
     position: absolute;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-image: url('../img/bank.png');
   }
 }
@@ -364,56 +365,6 @@ i.ti-credit-card.bank {
   position: absolute;
 }
 
-.blocket-troposphere {
-  opacity: 0.4;
-  position: relative;
-  > img {
-    top: 50%;
-    left: 50%;
-    width: auto;
-    height: 260px;
-    position: absolute;
-    outline: 1px solid transparent;
-    transform: translate(-50%, -50%);
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translate(-50%, -50%);
-    &.sos {
-      height: 495px;
-      margin-top: -248px;
-      margin-left: -141px;
-      @include animation(sway 2s infinite);
-    }
-  }
-  .clouds {
-    position: relative;
-    @include animation(float-up 3s infinite linear);
-    &.down {
-      @include animation(float-down 1.9s infinite linear);
-    }
-    // random cloud positions and sizes
-    img {
-      width: auto;
-      height: 80px;
-      margin-top: 20px;
-      margin-bottom: 30px;
-      &:nth-child(odd) {
-        margin-left: 200px;
-      }
-      &:nth-child(even) {
-        margin-right: 180px;
-      }
-    }
-    &:nth-child(2) img {
-      &:nth-child(odd) {
-        margin-left: 300px;
-      }
-      &:nth-child(even) {
-        margin-right: 260px;
-      }
-    }
-  }
-}
-
 .bank-transfer {
   border: 0px;
   li {
@@ -433,6 +384,24 @@ i.ti-credit-card.bank {
 .cc-shadow {
   box-shadow: 0px 4px 5px 1px #CCC;
   width: 30px;
+}
+
+.signup-steps {
+  @media (max-width: 991px) {
+    .pt-70 {
+      padding-top: 25px;
+      .width-80 {
+        margin-bottom: 30px;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    .pt-70 {
+      .width-80 {
+        padding: 0px 30px;
+      }
+    }
+  }
 }
 
 #plaid {

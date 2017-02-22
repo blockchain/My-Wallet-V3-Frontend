@@ -72,9 +72,9 @@
           max-width: 100%;
           max-height: 250px;
           margin-bottom: 10px;
-          border: 1px solid $light-grey;
+          border: 1px solid $border-grey;
           border-radius: 4px 4px 0px 0px;
-          border-top: 16px solid $light-grey;
+          border-top: 16px solid $border-grey;
         }
       }
       .item {
@@ -97,7 +97,7 @@
             box-shadow: 12px 0 0 #fdeaa2, 24px 0 0 #d7edb4;
           }
         }
-      }      
+      }
     }
-  }  
+  }
 }

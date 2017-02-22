@@ -16,9 +16,11 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     completed_test,
     initiated,
 
+    reject_card,
     kyc,
     error,
     success,
+    labelsForCurrency,
     bank_transfer
   };
 
@@ -27,6 +29,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     'rejected': 'rejected',
     'expired': 'expired'
   };
+
+  let isKYC = (trade) => trade.constructor.name === 'CoinifyKYC';
 
   let getState = (state) => errorStates[state] || state;
 
@@ -59,6 +63,8 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function error (trade, state) {
     let tx = addTradeDetails(trade);
+    if (isKYC(trade)) { return service.kyc(trade, 'rejected'); }
+    if (state === 'rejected' && trade.medium === 'card') { return service.reject_card(trade, 'rejected'); }
 
     return {
       tx: tx,
@@ -98,6 +104,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function reviewing (trade) {
     let tx = addTradeDetails(trade);
+    if (isKYC(trade)) { return service.kyc(trade, 'reviewing'); }
 
     return {
       tx: tx,
@@ -121,17 +128,42 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     };
   }
 
-  function kyc (trade) {
+  function reject_card (trade, state) {
+    let namespace = 'TX_CARD_REJECTED';
+    let tx = addTradeDetails(trade);
+
     return {
-      class: 'blue',
-      namespace: 'TX_KYC_PENDING',
+      tx: tx,
+      class: 'state-danger-text',
+      namespace: namespace,
+      values: {
+        state: state || getState(trade.state)
+      }
+    };
+  }
+
+  function kyc (trade, state) {
+    let classname = state === 'reviewing' ? 'blue' : 'state-danger-text';
+    let namespace = state === 'reviewing' ? 'TX_KYC_REVIEWING' : 'TX_KYC_REJECTED';
+
+    return {
+      class: classname,
+      namespace: namespace,
       values: {
         date: $filter('date')(trade.createdAt, 'MM/dd')
       }
     };
   }
 
+  function labelsForCurrency (currency) {
+    if (currency === 'DKK') {
+      return { accountNumber: 'Reg. Number', bankCode: 'Account Number' };
+    }
+    return { accountNumber: 'IBAN', bankCode: 'BIC' };
+  }
+
   function bank_transfer (trade) {
+    const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',
       namespace: 'TX_BANK_TRANSFER',
@@ -142,15 +174,15 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
           trade.bankAccount.holderAddress.zipcode + ' ' + trade.bankAccount.holderAddress.city,
           trade.bankAccount.holderAddress.country
         ].join(', '),
-        'IBAN': trade.bankAccount.number,
-        'BIC': trade.bankAccount.bic,
+        [labels.accountNumber]: trade.bankAccount.number,
+        [labels.bankCode]: trade.bankAccount.bic,
         'Bank': [
           trade.bankAccount.bankName,
           trade.bankAccount.bankAddress.street,
           trade.bankAccount.bankAddress.zipcode + ' ' + trade.bankAccount.bankAddress.city,
           trade.bankAccount.bankAddress.country
         ].join(', '),
-        'Reference': `Order ID ${trade.bankAccount.referenceText}`
+        'Reference/Message': `Order ID ${trade.bankAccount.referenceText}`
       },
       values: {
         label: getLabel(trade),

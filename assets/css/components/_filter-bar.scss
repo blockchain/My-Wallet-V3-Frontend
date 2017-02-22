@@ -5,9 +5,9 @@
   height: 60px;
   position: fixed;
   padding: 0px 30px;
-  background: $light-blue;
+  background: $grey;
   width: calc(100% - 270px);
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $border-grey;
   @media (max-width: 767px) {
     padding: 0 10px;
   }
@@ -74,7 +74,7 @@
     min-width: 300px;
     border-radius: 5px;
     padding: 5px 10px;
-    border: 1px solid #ddd
+    border: 1px solid $border-grey;
   }
   .ti-search {
     position: absolute;
@@ -91,9 +91,9 @@
     height: 38px;
     padding: 6px 12px;
     font-size: 14px;
-    line-height: 1.42857;
-    border: 1px solid $ccc;
     border-radius: 4px;
+    line-height: 1.42857;
+    border: 1px solid $border-grey;
   }
   .ti-search {
     right: 10px;
@@ -116,7 +116,7 @@
 
 @media (max-width: 767px) {
   .filter-bar {
-    border-top: 1px solid $eee;
+    border-top: 1px solid $border-grey;
     width: 100%;
     top: 200px;
     left: 0;

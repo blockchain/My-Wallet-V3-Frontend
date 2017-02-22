@@ -72,7 +72,6 @@
     "webpack": "~1.14.0"
   },
   "scripts": {
-    "postinstall": "node_modules/bower/bin/bower install",
     "start": "node server.js",
     "start:dev": "node_modules/nodemon/bin/nodemon.js server.js",
     "test": "node_modules/karma/bin/karma start karma.conf.js",
@@ -80,7 +79,7 @@
     "build": "node_modules/grunt-cli/bin/grunt build"
   },
   "engines": {
-    "node": "5.10.x"
+    "node": "7.5.x"
   },
   "repository": {
     "type": "git",

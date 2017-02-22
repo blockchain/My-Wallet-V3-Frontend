@@ -21,8 +21,8 @@ function sfox ($rootScope, $q, Alerts, modals, Options) {
 
   function init (sfox) {
     return Options.get().then(options => {
-      sfox.api.production = $rootScope.isProduction;
-      sfox.api.apiKey = options.partners.sfox.apiKey;
+      sfox.api.production = $rootScope.sfoxUseStaging === null ? $rootScope.isProduction : !Boolean($rootScope.sfoxUseStaging);
+      sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
       if (sfox.trades) service.watchTrades(sfox.trades);
       sfox.monitorPayments();
     });
@@ -84,11 +84,10 @@ function sfox ($rootScope, $q, Alerts, modals, Options) {
       .forEach(service.watchTrade);
   }
 
-  function watchTrade (trade, completedCallback) {
+  function watchTrade (trade) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeSummary(trade, 'success'); })
-      .then(completedCallback);
+      .then(() => { modals.openTradeSummary(trade, 'success'); });
   }
 }

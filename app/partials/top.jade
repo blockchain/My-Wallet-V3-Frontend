@@ -7,11 +7,11 @@
       include ./main-balance
     .flex.flex-center-mobile
       button.btn.button-default.button-short-wide.type-h5.mrm(ng-click="send()")
-        i.mrs.media-middle.bc-icon-send
+        i.mrs.media-middle.icon-send
         span.em-300(translate="SEND")
       .btn-group
         button.btn.button-default.button-short-wide.type-h5.pos-rel(ng-click="request()")
-          i.mrs.media-middle.bc-icon-receive
+          i.mrs.media-middle.icon-receive
           span.em-300(translate="REQUEST")
         button.btn.button-default.button-short.type-h5(ng-if="browserCanExecCommand" on-click-copy="nextAddress()" ng-mouseleave="resetCopy()")
           i.mhs(ng-class="copied ? 'ti-check' : 'ti-clipboard'")

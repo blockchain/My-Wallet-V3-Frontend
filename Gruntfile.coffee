@@ -52,11 +52,6 @@ module.exports = (grunt) ->
         }
       }
 
-      html:
-        expand: true
-        src: ['build/index.html']
-        dest: ''
-
       js:
         expand: true
         src: ['build/js/app.js']
@@ -253,8 +248,9 @@ module.exports = (grunt) ->
       fonts:
         files: [
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/bc-icons", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/roboto", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/montserrat", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/gillsans", expand: true}
+          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/icomoon", expand: true}
           {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
 
         ]
@@ -273,7 +269,7 @@ module.exports = (grunt) ->
     watch:
       jade:
         files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
-        tasks: ['build']
+        tasks: ['html2js', 'includeSource', 'concat:wallet']
         options:
           spawn: false
 
@@ -305,6 +301,9 @@ module.exports = (grunt) ->
       html:
         options:
           client: false
+          pretty: true
+          data:
+            production: true
         files:
           "build/index.html": "app/index.jade"
           "build/landing.html": "app/landing.jade"
@@ -447,7 +446,7 @@ module.exports = (grunt) ->
 
       webpack:
         command: () ->
-          './node_modules/.bin/webpack'
+          './node_modules/.bin/webpack --bail'
 
     coveralls:
       options:
@@ -479,17 +478,6 @@ module.exports = (grunt) ->
           from: 'customWebSocketURL = $rootScope.webSocketURL'
           to: () =>
             "customWebSocketURL = '#{ @webSocketURL }'"
-        }]
-      debug:
-        src: ['build/js/app.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'isProduction = false'
-          to: () =>
-            if @rootDomain == null || @rootDomain == 'blockchain.info'
-              'isProduction = true'
-            else
-              'isProduction = false'
         }]
       helper_app_url:
         src: ['build/js/wallet.js'],
@@ -555,21 +543,31 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-text-replace')
   grunt.loadNpmTasks('grunt-include-source')
 
-  grunt.registerTask "build", [
-    "html2js"
-    "babel:build"
-    "shell:webpack"
-    "concat:wallet"
-    "concat:qrReader"
-    "concat:bcPhoneNumber"
-    "sass"
-    "concat_css:app"
-    "copy:fonts"
-    "autoprefixer"
-    "includeSource"
-    "copy:images"
-    "merge-json"
-  ]
+  grunt.registerTask "build", () =>
+    skipWebpack = grunt.option('skipWebpack')
+
+    grunt.task.run [
+      "html2js"
+      "babel:build"
+    ]
+
+    if !skipWebpack
+      grunt.task.run [
+        "shell:webpack"
+      ]
+
+    grunt.task.run [
+      "concat:wallet"
+      "concat:qrReader"
+      "concat:bcPhoneNumber"
+      "sass"
+      "concat_css:app"
+      "copy:fonts"
+      "autoprefixer"
+      "includeSource"
+      "copy:images"
+      "merge-json"
+    ]
 
   grunt.registerTask "default", [
     "build"
@@ -618,7 +616,6 @@ module.exports = (grunt) ->
       "replace:root_url"
       "replace:web_socket_url"
       "replace:helper_app_url"
-      "replace:debug"
     ]
 
     if apiDomain
@@ -641,7 +638,6 @@ module.exports = (grunt) ->
       "uglify:bcQrReader"
       "uglify:bcPhoneNumber"
       "jade"
-      "preprocess:html"
       "copy:main"
       "copy:blockchainWallet"
       "copy:css_dist"

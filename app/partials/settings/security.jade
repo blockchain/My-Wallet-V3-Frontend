@@ -7,7 +7,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         label.type-h5.em-400.mbn(translate="WALLET_RECOVERY_PHRASE")
         span.label.label-warning(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
         span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
-      p.text.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
+      p.gillsans.f-16.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       confirm-recovery-phrase
 
@@ -17,10 +17,11 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         .flex-center.flex-between-mobile.mbm
           label.em-400.type-h5.mbn(translate="WALLET_PASSWORD")
           span.label.label-success(translate="PASSWORD_SET")
-        p.text.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
-      .col-sm-12.col-md-6.setting-result.mtm(ng-hide="active")
+        p.gillsans.f-16.em-300.hidden-xs(translate="WALLET_PASSWORD_EXPLAIN")
+      .col-sm-0.col-md-2
+      .col-sm-12.col-md-4.setting-result.mtm(ng-hide="active")
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-      .col-sm-12.col-md-6(ng-show="active")
+      .col-sm-12.col-md-4(ng-show="active")
         include ./change-password.jade
   .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-class="{'has-error':errors.passwordHint}" ng-controller="ChangePasswordHintCtrl" data-preflight-tag="ChangePasswordHint")
     div(settings-form)
@@ -29,11 +30,12 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
           label.em-400.type-h5.mbn(translate="PASSWORD_HINT")
           span.label.label-warning(translate="NOT_STORED", ng-show="!user.passwordHint")
           span.label.label-success(translate="HINT_STORED", ng-show="user.passwordHint")
-        p.text.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
-      .col-sm-12.col-md-6.setting-result(ng-hide="active")
+        p.gillsans.f-16.em-300.hidden-xs(translate="PASSWORD_HINT_EXPLAIN")    
+      .col-sm-0.col-md-2
+      .col-sm-12.col-md-4.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ user.passwordHint }}
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
-      .col-sm-12.col-md-6(ng-show="active")
+      .col-sm-12.col-md-4(ng-show="active")
         include ./change-password-hint.jade
       
   .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-controller="ManageSecondPasswordCtrl" data-preflight-tag="ManageSecondPassword")
@@ -43,12 +45,13 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
           label.type-h5.em-400.mbn(translate="WALLET_SECOND_PASSWORD")
           span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")    
           span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
-        p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN" ng-hide="userHasExchangeAcct")    
-        p.em-300.text.hidden-xs(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
+        p.em-300.gillsans.f-16.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN" ng-hide="userHasExchangeAcct")    
+        p.em-300.gillsans.f-16.hidden-xs(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
+      .col-sm-0.col-md-2
       .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
-        button.button-primary.display-inline-block(ng-click="activate()", translate="SET_SECOND_PASSWORD", ng-show="!settings.secondPassword" ng-disabled="userHasExchangeAcct")
+        button.button-primary.display-inline-block(ng-click="walletStatus.didConfirmRecoveryPhrase ? activate() : recoveryModal()" translate="SET_SECOND_PASSWORD" ng-disabled="userHasExchangeAcct" ng-hide="settings.secondPassword")
         button.button-primary.display-inline-block.mlm(ng-click="activate()" translate="REMOVE_SECOND_PASSWORD" ng-show="settings.secondPassword")
-      .col-sm-12.col-md-6(ng-show="active")
+      .col-sm-12.col-md-4(ng-show="active")
         include ./manage-second-password.jade
    
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ManageTwoFactor")
@@ -57,7 +60,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         label.em-400.type-h5.mbn(translate="TWO_STEP_VERIFICATION")
         span.label.label-warning(translate="DISABLED", ng-show="!settings.needs2FA")
         span.label.label-success(translate="ENABLED", ng-show="settings.needs2FA")
-      p.text.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
+      p.gillsans.f-16.em-300.hidden-xs(translate="TWO_STEP_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA" ng-hide="settings.needs2FA")
       a.button-primary.display-inline-block(ng-click="changeTwoFactor()" translate="DISABLE" ng-show="settings.needs2FA")
@@ -68,7 +71,7 @@ h5.well.type-h5.em-400.hidden-xs(translate="SECURITY_BASIC_EXPLAIN")
         label.type-h5.em-400.mbn(translate="REMEMBER_2FA")
         span.label.label-warning(ng-hide="settings.rememberTwoFactor", translate="DISABLED")
         span.label.label-success(ng-show="settings.rememberTwoFactor", translate="ENABLED")
-      p.em-300.text.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
+      p.em-300.gillsans.f-16.hidden-xs.hidden-sm(translate="REMEMBER_2FA_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       a.button-primary.display-inline-block(ng-click="enableRememberTwoFactor()", ladda-translate="ENABLE", ng-hide="settings.rememberTwoFactor" ui-ladda="processToggleRememberTwoFactor" data-style="expand-right")
       a.button-primary.display-inline-block(ng-click="disableRememberTwoFactor()", ladda-translate="DISABLE", ng-show="settings.rememberTwoFactor" ui-ladda="processToggleRememberTwoFactor" data-style="expand-right")
@@ -86,7 +89,7 @@ div.clearfix(ng-show="display.advanced")
         label.type-h5.em-400.mbn(translate="LOGGING")
         span.label.label-warning(ng-hide="settings.loggingLevel" translate="DISABLED")
         span.label.label-success(ng-show="settings.loggingLevel" translate="ENABLED")
-      p.em-300.text.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
+      p.em-300.gillsans.f-16.hidden-xs.hidden-sm(translate="LOGGING_EXPLAIN")    
     .col-sm-12.col-md-6
       setting-toggle(
         value="settings.loggingLevel"
@@ -101,7 +104,7 @@ div.clearfix(ng-show="display.advanced")
         label.type-h5.em-400.mbn(translate="IP_WHITELIST_RESTRICT")
         span.label.label-warning(ng-hide="settings.restrictToWhitelist", translate="DISABLED")
         span.label.label-success(ng-show="settings.restrictToWhitelist", translate="ENABLED")
-      p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
+      p.em-300.gillsans.f-16.hidden-xs.hidden-sm(translate="IP_WHITELIST_RESTRICT_EXPLAIN")    
     .col-sm-12.col-md-6.setting-result
       ip-whitelist-restrict
       
@@ -109,7 +112,7 @@ div.clearfix(ng-show="display.advanced")
     div(settings-form)
       .col-sm-12.col-md-6
         label.type-h5.em-400(translate="IP_WHITELIST")
-        p.em-300.text.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
+        p.em-300.gillsans.f-16.hidden-xs.hidden-sm(translate="IP_WHITELIST_EXPLAIN")    
       .col-sm-12.col-md-6.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ settings.ipWhitelist }}
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
@@ -122,7 +125,7 @@ div.clearfix(ng-show="display.advanced")
           label.type-h5.em-400(translate="BLOCK_TOR")
           span.label.label-success(ng-show="settings.blockTOR", translate="BLOCKED")
           span.label.label-warning(ng-hide="settings.blockTOR", translate="ALLOWED")
-        p.em-300.text.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
+        p.em-300.gillsans.f-16.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")    
       .col-sm-12.col-md-6.setting-result
         tor
 
@@ -130,7 +133,7 @@ div.clearfix(ng-show="display.advanced")
     div(settings-form)
       .col-sm-12.col-md-6
         label.type-h5.em-400(translate="PBKDF2_ITERATIONS")
-        p.em-300.text.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")
+        p.em-300.gillsans.f-16.hidden-xs.hidden-sm(translate="PBKDF2_ITERATIONS_EXPLAIN")
       .col-sm-12.col-md-6.setting-result(ng-hide="active")
         p.em-400.type-h5.mbm {{ settings.pbkdf2 }}
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
@@ -141,5 +144,5 @@ div.clearfix(ng-show="display.advanced")
     .col-sm-12.col-md-6
       .flex-center.flex-between-mobile.mbm
         label.type-h5.em-400.mbn(translate="API_ACCESS")
-      p.em-300.text(translate="API_ACCESS_SUPPORT")    
+      p.em-300.gillsans.f-16(translate="API_ACCESS_SUPPORT")    
     .col-sm-12.col-md-6

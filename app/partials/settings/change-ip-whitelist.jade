@@ -16,7 +16,7 @@ form(role="form" name="form" ng-submit="form.$valid && setIPWhitelist()" novalid
       ng-click="deactivate()"
       translate="CANCEL"
       ng-hide="busy")
-    button.button-success(
+    button.button-primary(
       type="submit"
       ui-ladda="status.waiting"
       ng-disabled="form.$invalid"

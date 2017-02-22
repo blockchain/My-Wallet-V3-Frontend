@@ -9,13 +9,36 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     $uibModal.open(angular.merge(options, defaults))
   );
 
-  service.openBankHelper = () => open({
-    templateUrl: 'partials/bank-check-modal.jade',
-    windowClass: 'bc-modal medium'
-  });
+  service.openOnce = (modalOpener) => {
+    let modalInstance = null;
+    return (...args) => {
+      if (modalInstance) return;
+      modalInstance = modalOpener(...args);
+      modalInstance.result.finally(() => { modalInstance = null; });
+    };
+  };
 
-  service.openDepositHelper = () => open({
-    templateUrl: 'partials/bank-deposit-modal.jade',
+  service.dismissPrevious = (modalOpener) => {
+    let modalInstance = null;
+    return (...args) => {
+      if (modalInstance) modalInstance.dismiss('overridden');
+      modalInstance = modalOpener(...args);
+    };
+  };
+
+  service.openHelper = (helper) => open({
+    controller ($scope) {
+      let helperImages = {
+        'bank-deposit-helper': 'img/bank-deposit-helper.png',
+        'bank-check-helper': 'img/bank-check-helper.png',
+        'address-id-helper': 'img/address-id-helper.png',
+        'id-id-helper': 'img/id-id-helper.png'
+      };
+
+      $scope.helper = helper;
+      $scope.image = helperImages[helper];
+    },
+    templateUrl: 'partials/helper-modal.jade',
     windowClass: 'bc-modal medium'
   });
 
@@ -37,12 +60,13 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     backdrop: false, windowClass: 'tray'
   }, options).result;
 
-  service.openSfoxSignup = (exchange) => service.expandTray({
+  service.openSfoxSignup = (exchange, quote) => service.expandTray({
     templateUrl: 'partials/sfox/signup.jade',
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
       exchange () { return exchange; },
+      quote () { return quote; },
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
@@ -57,7 +81,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
-  service.openTradeSummary = (trade, state) => open({
+  service.openTradeSummary = service.dismissPrevious((trade, state) => open({
     templateUrl: 'partials/trade-modal.jade',
     windowClass: 'bc-modal trade-summary',
     controller ($scope, trade, formatTrade, accounts) {
@@ -72,7 +96,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
           : $q.resolve([]);
       }
     }
-  });
+  }));
 
   return service;
 }

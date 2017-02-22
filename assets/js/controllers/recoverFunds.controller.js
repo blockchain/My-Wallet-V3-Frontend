@@ -27,13 +27,14 @@ function RecoverFundsCtrl ($scope, $rootScope, $state, $timeout, $translate, $co
       $rootScope.$safeApply();
 
       const loginSuccess = () => {
-        Alerts.displaySuccess('Successfully recovered wallet!');
+        $state.go('wallet.common.home');
       };
+
       const loginError = (err) => {
-        console.error(err);
+        Alerts.displayError(err);
       };
+
       $timeout(() => {
-        $state.go('public.login-uid', {uid: result.guid});
         Wallet.login(
           result.guid, result.password, null, null, loginSuccess, loginError
         );

@@ -1,0 +1,8 @@
+.modal-body.flex-column.width-100
+  .ptl.pll.prl
+    span.f-20.em-500.flex-start(translate="{{helper}}.TITLE")
+    p.f-14.ptm.mbn(translate="{{helper}}.COPY")
+  .center
+    img.width-80.mt-40.mb-40(ng-src="{{image}}")
+  .flex-end
+    button.button.button-primary(ng-click="$close()") Close

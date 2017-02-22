@@ -3,5 +3,5 @@
   .message-contextual.pal(ng-show="revealed")
     p.mbl(translate="{{messageText}}")
     .flex-center.flex-around
-      a.aaa(ng-click="dismissMessage()" translate="NO_THANKS")
+      a.border-grey(ng-click="dismissMessage()" translate="NO_THANKS")
       a.button-success-alt(ng-click="dismissMessage()" ui-sref="{{route}}" translate="{{buttonText}}")
