@@ -3,9 +3,11 @@ all: clean node_modules test pgp dist changelog
 node_modules:
 	npm install -g grunt-cli coffee-script
 	npm update
+
+bower_components: node_modules
 	node_modules/bower/bin/bower install
 
-build: node_modules
+build: node_modules bower_components
 	grunt build
 
 test: build
@@ -36,15 +38,15 @@ ifndef API_DOMAIN
 export API_DOMAIN:=api.blockchain.info
 endif
 
-helperApp/dist:
+helperApp/dist: bower_components
 	rm -rf helperApp/dist
-	DIST=1 ./node_modules/.bin/webpack
+	DIST=1 ./node_modules/.bin/webpack --bail
 
-dist: helperApp/dist
+dist: helperApp/dist bower_components
 	./check_bad_strings.rb
 	grunt build --skipWebpack=1
 
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(HELPER_APP_URL)
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --network=${NETWORK} --webSocketURL=$(WEB_SOCKET_URL) --helperAppUrl=$(WALLET_HELPER_URL)
 	cp -r helperApp/dist dist/wallet-helper
 
 dist_fixed_domain: build

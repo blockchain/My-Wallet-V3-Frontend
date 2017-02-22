@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
   const wallet = {
     goal: {
       auth: false,
@@ -76,8 +76,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   if (customApiDomain) {
     wallet.api.API_ROOT_URL = customApiDomain;
   }
-
-  wallet.Payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
@@ -1198,9 +1196,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       wallet.settings.secondPassword = false;
       successCallback();
+      $rootScope.$safeApply();
     };
     let error = () => {
       errorCallback();
+      $rootScope.$safeApply();
     };
     let decrypting = () => {
       console.log('Decrypting...');
@@ -1218,10 +1218,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       if (lastViewed) {
         let whatsNew = wallet.my.wallet.metadata(2);
         whatsNew.fetch()
-          .then(res => res ? $q.resolve(res) : $q.reject())
           .then(() => whatsNew.update({ lastViewed }))
-          .catch(() => whatsNew.create({ lastViewed }))
-          .finally(success);
+          .then(success);
       }
     };
 
@@ -1236,9 +1234,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       Alerts.displaySuccess('Second password set.');
       wallet.settings.secondPassword = true;
       successCallback();
+      $rootScope.$safeApply();
     };
     let error = () => {
       Alerts.displayError('Second password cannot be set. Contact support.');
+      $rootScope.$safeApply();
     };
     let encrypting = () => {
       console.log('Encrypting...');

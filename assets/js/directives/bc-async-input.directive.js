@@ -40,7 +40,7 @@ function bcAsyncInput ($timeout, Wallet) {
     scope.button = attrs.button || 'SAVE';
 
     scope.type = scope._type || 'text';
-    scope.buttonClass = scope._buttonClass || 'button-primary btn-small';
+    scope.buttonClass = scope._buttonClass || 'button-primary button-sm';
 
     scope.user = Wallet.user;
     scope.status = {

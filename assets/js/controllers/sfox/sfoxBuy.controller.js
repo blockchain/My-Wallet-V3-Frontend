@@ -5,8 +5,10 @@ angular
 function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
   let exchange = $scope.vm.exchange;
 
-  $scope.summaryCollapsed = true;
   $scope.user = Wallet.user;
+  $scope.userId = exchange.user;
+  $scope.summaryCollapsed = false;
+  $scope.quote = $scope.vm.quote;
   $scope.quoteHandler = (...args) => sfox.fetchQuote(exchange, ...args);
 
   $scope.state = {
@@ -19,17 +21,13 @@ function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
     $scope.state.buyLevel = exchange.profile.verificationStatus.level;
   };
 
-  $scope.buyHandler = (...args) => {
-    return sfox.buy($scope.account, ...args)
-      .then(trade => {
-        sfox.watchTrade(trade);
-        $scope.trade = formatTrade.initiated(trade, [$scope.account]);
-      })
-      .then(() => exchange.fetchProfile())
-      .then(() => $scope.setState())
-      .catch(() => {
-        Alerts.displayError('Error connecting to our exchange partner');
-      });
+  $scope.buySuccess = (trade) => {
+    exchange.fetchProfile().then($scope.setState);
+    $scope.trade = formatTrade.initiated(trade, [$scope.account]);
+  };
+
+  $scope.buyError = () => {
+    Alerts.displayError('Error connecting to our exchange partner');
   };
 
   exchange.getBuyMethods()

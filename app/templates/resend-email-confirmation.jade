@@ -1,4 +1,4 @@
 span
-  a(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION", ng-hide="status.done || status.loading")
+  a.gillsans.f-16(ng-click="resendEmailConfirmation()", translate="RESEND_EMAIL_VERIFICATION", ng-hide="status.done || status.loading")
   span.label.label-success(translate="EMAIL_CONFIRMATION_SENT", ng-show="status.done")
   img(src="img/spinner.gif", ng-show="status.loading")

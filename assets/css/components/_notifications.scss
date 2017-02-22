@@ -36,7 +36,7 @@
   top: 50%;
   right: -15px;
   position: absolute;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);
   -webkit-transform: translateY(-50%); // ensure centering
   z-index: 1049; //above everything except modals (1050)
   @media (max-width: 767px) {
@@ -53,11 +53,11 @@
   width: 20px;
   height: 20px;
   z-index: 1049; //keep this the highest on the z-axis
+  background: $sent;
   border-radius: 100%;
-  background: $send-red;
   animation: pulse-alert 3s linear infinite;
   &.green {
-    background: $receive-green;
+    background: $received;
     animation: pulse-success 3s linear infinite;
   }
 }
@@ -65,13 +65,13 @@
   width: 250px;
   z-index: 1048;
   position: absolute;
-  border: 1px solid $aaa;
-  background-color: $light-blue;
+  border: 1px solid $border-grey;
+  background-color: $grey;
   border-radius: 0px !important;
   text-transform: none !important;
   //scoped CSS (refactor)
   a.button-success-alt { color: white; }
-  a.aaa { color: $aaa; }
+  a.aaa { color: $border-grey; }
   &.left {
     .arrow {
       border-bottom-color: transparent !important;
@@ -88,7 +88,7 @@
   .arrow {
     border-bottom-color: rgba(0, 0, 0, 0.6) !important;
     &:after {
-      border-top-color: $light-blue !important;
+      border-top-color: $grey !important;
     }
   }
 }

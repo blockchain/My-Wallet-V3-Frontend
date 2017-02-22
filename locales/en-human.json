@@ -103,9 +103,9 @@
   "TRANSACTION" : "Transaction",
   "WALLETS" : "Wallets",
   "COUNTRIES_SERVED" : "Countries Served",
-  "TRANSACTIONS_AMT" : "60 Million+",
+  "TRANSACTIONS_AMT" : "100 Million+",
   "WALLETS_AMT" : "11 Million+",
-  "COUNTRIES_SERVED_AMT" : "120+",
+  "COUNTRIES_SERVED_AMT" : "140+",
   "REQUEST" : "Receive",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
@@ -881,7 +881,7 @@
   "DEDICATED_SUPPORT_TEAM": "Should you need help, our team will be there for you.",
   "OTHER_FEATURES": "Other features:",
   "CONVERSION_RATES": "20+ currency conversion rates",
-  "GLOBAL_INFO": "20+ currency conversion rates, including JPY, RUB, SGD, USD, CNY, EUR, GDP, and many more. 25+ languages",
+  "GLOBAL_INFO": "20+ currency conversion rates, including JPY, RUB, SGD, USD, CNY, EUR, GBP, and many more. 25+ languages",
   "LANGUAGES_FEAT": "25+ languages",
   "WATCH_ONLY_DESC": "Monitoring and spending from Watch Only addresses",
   "SECOND_PASSWORD_PROTECTION": "Second password protection",
@@ -1265,5 +1265,6 @@
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='blue'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
   "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
+  "OR": "or",
   "": ""
 }
