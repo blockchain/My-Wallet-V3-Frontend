@@ -36,7 +36,7 @@ function publicHeader ($rootScope, $location, languages) {
                 </div>
               </a>
               <ul class="dropdown-menu" uib-dropdown-menu>
-                <li ng-repeat="lang in languages"><a ng-href="/{{lang.code}}/wallet/#{{path()}}">{{lang.name}}</a></li>
+                <li ng-repeat="lang in languages"><a ng-href="/{{lang.code}}/wallet{{path()}}">{{lang.name}}</a></li>
               </ul>
             </li>
           </ul>

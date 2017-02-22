@@ -13,4 +13,7 @@ angular
   .module('plaid', modules)
   .controller('MainController', MainController)
   .controller('PlaidController', PlaidController)
-  .config(RoutesConfig);
+  .config(RoutesConfig)
+  .config(($locationProvider) => {
+    $locationProvider.html5Mode(true);
+  });
