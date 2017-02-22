@@ -41,7 +41,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     size: 0
   };
 
-  $scope.payment = new Wallet.Payment();
+  $scope.payment = Wallet.my.wallet.createPayment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   $scope.payment.on('update', data => {
