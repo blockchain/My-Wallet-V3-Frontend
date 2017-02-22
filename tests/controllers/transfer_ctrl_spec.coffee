@@ -38,9 +38,11 @@ describe "TransferControllerSpec", ->
       Wallet.accounts = () -> [{label: 'Savings'}, {label: 'Party Money'}]
       Wallet.legacyAddresses = () -> spendableAddresses
       Wallet.askForSecondPasswordIfNeeded = () -> $q.resolve('pw')
-      Wallet.payment = () -> new MyWalletPayment()
 
-      MyWallet.wallet = { hdwallet: { defaultAccount: { label: 'Default', index: 1 } } }
+      MyWallet.wallet =
+        createPayment: () -> new MyWalletPayment()
+        hdwallet:
+          defaultAccount: { label: 'Default', index: 1 }
 
       scope = getControllerScope(spendableAddresses)
 
