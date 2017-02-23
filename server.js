@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
   var cspHeader;
   if (req.url === '/') {
     cspHeader = ([
-      "img-src 'self' " + rootURL + ' data: blob:',
+      "img-src 'self' " + rootURL + ' data: blob: android-webview-video-poster:',
       // echo -n "outline: 0;" | openssl dgst -sha256 -binary | base64
       // "outline: 0;"        : ud+9... from ui-select
       // "margin-right: 10px" : 4If ... from ui-select

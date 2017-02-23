@@ -100,8 +100,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   $window.activateMobileBuyFromJson = (json, externalJson, magicHash, password) => {
-    console.log('json', json);
-    console.log('external', externalJson);
     if (wallet.status.isLoggedIn) return;
     $state.go('intermediate');
     $rootScope.inMobileBuy = true;
@@ -111,14 +109,25 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       .then(() => { $state.go('wallet.common.buy-sell'); });
   };
 
-  wallet.webkitNotify = (handlerName, data) => {
-    let wk = $window.webkit;
-    if (wk) {
-      let handler = wk.messageHandlers[handlerName];
-      if (handler) handler.postMessage(data);
-      else console.error('Unknown webkit message handler:', handlerName);
+  $window.teardown = () => {
+    $state.go('intermediate');
+    $timeout(() => MyWallet.logout(true));
+  };
+
+  wallet.callMobileInterface = (handlerName) => {
+    if ($window.webkit) {
+      let handler = $window.webkit.messageHandlers[handlerName];
+      if (handler) handler.postMessage(null);
+      else console.error('Unknown webkit handler: ' + handlerName);
+    }
+    if ($window.android) {
+      let handler = $window.android[handlerName];
+      if (handler) handler.call($window.android);
+      else console.error('Unknown android handler: ' + handlerName);
     }
   };
+
+  wallet.callMobileInterface('frontendInitialized');
 
   let didLogin = (uid, successCallback) => {
     currency.fetchExchangeRate();
