@@ -60,7 +60,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     $scope.selectTab('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
-    Wallet.webkitNotify('buyCompleted', null);
+    Wallet.callMobileInterface('buyCompleted');
   };
 
   $scope.buyError = () => {

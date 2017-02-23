@@ -61,10 +61,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       $scope.$parent.trade = trade;
       Alerts.clear($scope.alerts);
       if ($scope.$parent.trade.bankAccount) $scope.formatTrade('bank_transfer');
-
-      let pendingTrades = [trade].concat(buySell.trades.pending);
-      Wallet.webkitNotify('buyCompleted', pendingTrades.map(t => t.toJSON()));
-
+      Wallet.callMobileInterface('buyCompleted');
       $scope.nextStep();
     };
 
