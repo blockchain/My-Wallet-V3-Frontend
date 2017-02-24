@@ -27,7 +27,7 @@ function SettingsImportedAddressesCtrl ($scope, Wallet, Alerts, $translate, $uib
   $scope.importAddress = () => {
     Alerts.clear();
     $uibModal.open({
-      templateUrl: 'partials/settings/import-address.jade',
+      templateUrl: 'partials/settings/import-address.pug',
       controller: 'AddressImportCtrl',
       windowClass: 'bc-modal',
       resolve: {

@@ -33,7 +33,7 @@ describe "buy-checkout.component", ->
   getControllerScope = (bindings) ->
     scope = $rootScope.$new(true)
     ctrl = $componentController("buyCheckout", $scope: scope, bindings)
-    template = $templateCache.get('templates/buy-checkout.jade')
+    template = $templateCache.get('templates/buy-checkout.pug')
     $compile(template)(scope)
     scope
 

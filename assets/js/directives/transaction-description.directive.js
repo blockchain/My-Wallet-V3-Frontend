@@ -12,7 +12,7 @@ function transactionDescription ($translate, Wallet, buySell) {
       search: '=highlight',
       account: '=account'
     },
-    templateUrl: 'templates/transaction-description.jade',
+    templateUrl: 'templates/transaction-description.pug',
     link: link
   };
   return directive;

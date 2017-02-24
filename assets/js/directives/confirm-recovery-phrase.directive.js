@@ -12,14 +12,14 @@ function confirmRecoveryPhrase ($uibModal, Wallet, Alerts) {
     scope: {
       promptBackup: '='
     },
-    templateUrl: 'templates/confirm-recovery-phrase.jade',
+    templateUrl: 'templates/confirm-recovery-phrase.pug',
     link: link
   };
   return directive;
 
   function link (scope, elem, attrs) {
     let openModal = () => $uibModal.open({
-      templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+      templateUrl: 'partials/confirm-recovery-phrase-modal.pug',
       controller: 'ConfirmRecoveryPhraseCtrl',
       windowClass: 'bc-modal'
     });

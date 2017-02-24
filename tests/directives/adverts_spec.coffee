@@ -42,5 +42,5 @@ describe "Adverts Directive", ->
 
   it "should redirect to the advertisers page, in a new tab", inject((Adverts) ->
     Adverts.fetchOnce()
-    expect(element.html()).toContain "<a ng-href=\"https://api.blockchain.info/ads/out?id=1337\" target=\"_blank\" rel=\"noopener noreferrer\""
+    expect(element.html()).toContain "https://api.blockchain.info/ads/out?id=1337\" target=\"_blank\" rel=\"noopener noreferrer\""
   )

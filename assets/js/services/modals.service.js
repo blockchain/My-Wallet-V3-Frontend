@@ -38,7 +38,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
       $scope.helper = helper;
       $scope.image = helperImages[helper];
     },
-    templateUrl: 'partials/helper-modal.jade',
+    templateUrl: 'partials/helper-modal.pug',
     windowClass: 'bc-modal medium'
   });
 
@@ -50,7 +50,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
   };
 
   service.openTransfer = (addresses) => open({
-    templateUrl: 'partials/settings/transfer.jade',
+    templateUrl: 'partials/settings/transfer.pug',
     controller: 'TransferController',
     windowClass: 'bc-modal',
     resolve: { address: () => addresses }
@@ -61,7 +61,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
   }, options).result;
 
   service.openSfoxSignup = (exchange, quote) => service.expandTray({
-    templateUrl: 'partials/sfox/signup.jade',
+    templateUrl: 'partials/sfox/signup.pug',
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
@@ -82,7 +82,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
   });
 
   service.openTradeSummary = service.dismissPrevious((trade, state) => open({
-    templateUrl: 'partials/trade-modal.jade',
+    templateUrl: 'partials/trade-modal.pug',
     windowClass: 'bc-modal trade-summary',
     controller ($scope, trade, formatTrade, accounts) {
       $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);

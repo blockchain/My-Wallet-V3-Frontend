@@ -151,13 +151,13 @@ module.exports = (grunt) ->
     includeSource:
       options:
         templates:
-          jade:
+          pug: # Using a fork of grunt-include-source.git, to support Pug
             js: 'script(src="{filePath}" type="text/javascript" defer="defer")'
             css: 'link(href="{filePath}" rel="stylesheet" type="text/css")'
       myTarget:
         files:
-          'build/index.jade': 'app/index.jade'
-          'build/landing.jade': 'app/landing.jade'
+          'build/index.pug': 'app/index.pug'
+          'build/landing.pug': 'app/landing.pug'
 
     concat_css: {
       app: {
@@ -190,12 +190,12 @@ module.exports = (grunt) ->
 
     html2js: {
       options:
-        jade:
+        pug:
           doctype: "html"
         base: "app"
         singleModule: true
       main:
-        src: ["app/partials/notifications/*.jade", "app/partials/**/*.jade", "app/templates/*.jade", "app/*.jade"],
+        src: ["app/partials/notifications/*.pug", "app/partials/**/*.pug", "app/templates/*.pug", "app/*.pug"],
         dest: 'build/js/templates.js'
     },
     "merge-json": # TODO: generate this list...
@@ -267,8 +267,8 @@ module.exports = (grunt) ->
         ]
 
     watch:
-      jade:
-        files: ['app/partials/**/*.jade', 'app/templates/**/*.jade', 'app/*.jade']
+      pug:
+        files: ['app/partials/**/*.pug', 'app/templates/**/*.pug', 'app/*.pug']
         tasks: ['html2js', 'includeSource', 'concat:wallet']
         options:
           spawn: false
@@ -297,7 +297,7 @@ module.exports = (grunt) ->
         options:
           spawn: false
 
-    jade:
+    pug:
       html:
         options:
           client: false
@@ -305,8 +305,8 @@ module.exports = (grunt) ->
           data:
             production: true
         files:
-          "build/index.html": "app/index.jade"
-          "build/landing.html": "app/landing.jade"
+          "build/index.html": "app/index.pug"
+          "build/landing.html": "app/landing.pug"
 
     babel:
       options:
@@ -529,7 +529,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-sass')
-  grunt.loadNpmTasks('grunt-contrib-jade')
+  grunt.loadNpmTasks('grunt-contrib-pug')
   grunt.loadNpmTasks('grunt-concat-css')
   grunt.loadNpmTasks('grunt-html2js')
   grunt.loadNpmTasks('grunt-contrib-watch')
@@ -637,7 +637,7 @@ module.exports = (grunt) ->
       "uglify:wallet"
       "uglify:bcQrReader"
       "uglify:bcPhoneNumber"
-      "jade"
+      "pug"
       "copy:main"
       "copy:blockchainWallet"
       "copy:css_dist"
