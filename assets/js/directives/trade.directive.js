@@ -14,7 +14,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       buy: '=',
       usa: '='
     },
-    templateUrl: 'templates/trade.jade',
+    templateUrl: 'templates/trade.pug',
     link: link
   };
   return directive;

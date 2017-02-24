@@ -30,7 +30,7 @@ describe "SignupCtrl", ->
       Wallet.changeCurrency = () ->
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/signup.jade')
+      template = $templateCache.get('partials/signup.pug')
 
       $controller "SignupCtrl",
         $scope: scope,

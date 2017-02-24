@@ -13,7 +13,7 @@ describe "VerifyMessageController", ->
       MyWalletHelpers.isBase64 = (s) -> s == 'base64'
       MyWalletHelpers.verifyMessage = (addr, sig, msg) -> sig == 'valid_sig'
 
-      template = $templateCache.get('partials/settings/verify-message.jade')
+      template = $templateCache.get('partials/settings/verify-message.pug')
 
       scope = $rootScope.$new()
       scope.model = {}

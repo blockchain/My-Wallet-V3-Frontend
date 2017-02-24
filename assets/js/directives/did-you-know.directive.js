@@ -9,7 +9,7 @@ function didYouKnow (DidYouKnow) {
   const directive = {
     restrict: 'E',
     replace: true,
-    templateUrl: 'templates/did-you-know.jade',
+    templateUrl: 'templates/did-you-know.pug',
     link: link
   };
   return directive;

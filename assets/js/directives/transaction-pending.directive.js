@@ -10,7 +10,7 @@ function transactionPending ($rootScope, Wallet, $translate) {
     scope: {
       transaction: '='
     },
-    templateUrl: 'templates/transaction-pending.jade',
+    templateUrl: 'templates/transaction-pending.pug',
     link: link
   };
   return directive;

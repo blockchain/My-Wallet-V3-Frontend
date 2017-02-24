@@ -22,7 +22,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       currencySymbol: '=',
       changeCurrency: '&'
     },
-    templateUrl: 'templates/buy-quick-start.jade',
+    templateUrl: 'templates/buy-quick-start.pug',
     link: link
   };
   return directive;

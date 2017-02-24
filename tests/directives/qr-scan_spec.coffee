@@ -20,7 +20,7 @@ describe 'qr-scan directive', ->
   )
 
   it 'should have a template url', ->
-    expect(isoScope.popoverTemplate).toEqual('templates/qr-scan-popover.jade')
+    expect(isoScope.popoverTemplate).toEqual('templates/qr-scan-popover.pug')
 
   it 'should display a warning when the camera cannot open', inject((Alerts) ->
     spyOn(Alerts, 'displayWarning')

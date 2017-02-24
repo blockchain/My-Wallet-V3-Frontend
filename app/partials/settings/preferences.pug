@@ -15,7 +15,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         p.em-400.type-h5.mbm {{ user.email }}
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
       .col-sm-12.col-md-4.flex-column(ng-show="active")
-        include ./change-email.jade
+        include ./change-email.pug
         .right-align.mtm
           resend-email-confirmation.mtl(ng-hide="user.isEmailVerified")
 
@@ -94,7 +94,7 @@ h5.well.em-400.type-h5.hidden-xs(translate="PREFERENCES_EXPLAIN")
         p.em-400.type-h5.mbm {{ settings.logoutTimeMinutes }} minutes
         a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
       .col-sm-12.col-md-3(ng-show="active")
-        include ./change-logout.jade
+        include ./change-logout.pug
 
   .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ChangeTheme")
     .col-sm-12.col-md-6
