@@ -163,7 +163,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
         $scope.unsetPaymentHandlers($scope.payment);
         $scope.payment = new Wallet.Payment(paymentCheckpoint);
         $scope.setPaymentHandlers($scope.payment);
-        $scope.setPaymentFrom();
+        $scope.setPaymentFrom(true);
         $scope.payment.build();
       }
 
@@ -293,14 +293,15 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   let lastOrigin;
-  $scope.setPaymentFrom = () => {
+  $scope.setPaymentFrom = (force = false) => {
     let tx = $scope.transaction;
     if (!tx.from) return;
     let origin = tx.from.index == null ? tx.from.address : tx.from.index;
-    let fee = $scope.advanced ? tx.fee : undefined;
-    if (origin === lastOrigin) return;
-    lastOrigin = origin;
-    $scope.payment.from(origin, fee);
+    if (force || origin !== lastOrigin) {
+      lastOrigin = origin;
+      let fee = $scope.advanced ? tx.fee : undefined;
+      $scope.payment.from(origin, fee);
+    }
   };
 
   $scope.setPaymentTo = () => {
