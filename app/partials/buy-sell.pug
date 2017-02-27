@@ -18,7 +18,7 @@
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
-      .flex-column.width-50.mlvl.mt-55
+      .flex-column.pos-rel.width-50.mlvl.mt-55(ng-class="{disabled: getIsTradingDisabled() && getIsTradingDisabledReason() === 'disabled'}")
         kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
     .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
       .flex-row.flex-between.flex-center
@@ -32,6 +32,8 @@
           th.pvs.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
+          trading-disabled-reason="getIsTradingDisabledReason()"
+          trading-disabled="getIsTradingDisabled()"
           disabled="status.disabled"
           trade="trade"
           buy="buy"

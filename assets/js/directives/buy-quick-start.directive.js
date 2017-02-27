@@ -93,7 +93,8 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     };
 
     scope.getDays = () => {
-      let verifyDate = buySell.getExchange().profile.canTradeAfter;
+      let profile = buySell.getExchange().profile;
+      let verifyDate = profile && profile.canTradeAfter;
       return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
     };
 

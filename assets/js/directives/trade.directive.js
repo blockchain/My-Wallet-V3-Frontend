@@ -9,6 +9,8 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     restrict: 'A',
     replace: true,
     scope: {
+      tradingDisabledReason: '=',
+      tradingDisabled: '=',
       disabled: '=',
       trade: '=',
       buy: '=',
@@ -21,6 +23,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
 
   function link (scope, elem, attrs) {
     scope.buySellDebug = $rootScope.buySellDebug;
+    scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
 
     scope.update = () => angular.extend(scope, {
       error: buySell.tradeStateIn(buySell.states.error)(scope.trade),
@@ -71,6 +74,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.$watchGroup(['disabled', 'trade.state'], () => {
       scope.canCancel =
         !scope.disabled &&
+        !scope.isTradingDisabled &&
         scope.trade.state === 'awaiting_transfer_in' &&
         angular.isFunction(scope.trade.cancel);
     });
