@@ -173,7 +173,7 @@
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
-  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds. We will not use your email address for marketing purposes.",
+  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds.",
   "CHANGE_EMAIL_NOT_EXCHANGE": "This will change your wallet's email address, but the email address you signed up to Buy Bitcoin with will remain the same.",
   "MAIL_PROVIDER_WARN": "Your mail provider may have issues receiving emails from Blockchain",
   "VERIFIED" : "Verified",
