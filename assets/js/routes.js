@@ -226,6 +226,18 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'ResetTwoFactorTokenCtrl'
         }
       }
+    })
+    .state('public.mobile-login', {
+      url: '/mobile-login',
+      views: {
+        contents: {
+          templateUrl: 'partials/mobile-login.jade',
+          controller: 'MobileLoginController'
+        }
+      },
+      resolve: {
+        _bcQrReader: ($ocLazyLoad) => $ocLazyLoad.load('bcQrReader')
+      }
     });
 
   $stateProvider

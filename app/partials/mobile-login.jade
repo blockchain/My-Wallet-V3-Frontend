@@ -1,0 +1,19 @@
+div
+  header
+    hgroup
+      .flex-between.flex-center.flex-wrap.mb-10
+        span.f-24.lh1(translate="Mobile Login")
+.mt-30.mobile-login
+  .flex-center.flex-column.flex-justify(ng-hide="scanComplete")
+    bc-qr-reader(
+      on-error="onScanError"
+      on-result="onScanResult"
+      active="scannerOn"
+      camera-status="scannerOn")
+    .mt-30
+      span.f-20.center-align Show the code on your mobile phone to log in
+  .flex-center.flex-column.flex-justify(ng-show="scanComplete")
+    .level-complete.flex-center.flex-justify.mtl
+      i.ti-check.bright-green
+    h4.em-300.mtl(translate="Scan Successful")
+    p.em-300(translate="Logging into your wallet now...")
