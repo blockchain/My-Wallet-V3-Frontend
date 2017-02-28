@@ -107,17 +107,6 @@ describe "buySell service", () ->
         if fetchFailWith? then $q.reject(fetchFailWith) else $q.resolve()
       spyOn(buySell, "getTrades").and.callThrough()
 
-    it "should call getTrades when successful", ->
-      buySell.fetchProfile()
-      $rootScope.$digest()
-      expect(buySell.getTrades).toHaveBeenCalled()
-
-    it "should call updateCoinifyCurrencies when successful", ->
-      spyOn(currency, "updateCoinifyCurrencies")
-      buySell.fetchProfile()
-      $rootScope.$digest()
-      expect(currency.updateCoinifyCurrencies).toHaveBeenCalledWith(["USD", "EUR"])
-
     it "should reject with the error if there is one", ->
       fetchFailWith = JSON.stringify(error: 'some_err')
       buySell.fetchProfile().catch((e) -> expect(e).toEqual('SOME_ERR'))
