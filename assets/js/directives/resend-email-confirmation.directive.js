@@ -8,7 +8,7 @@ function resendEmailConfirmation ($translate, Wallet) {
     restrict: 'E',
     replace: 'true',
     scope: {},
-    templateUrl: 'templates/resend-email-confirmation.jade',
+    templateUrl: 'templates/resend-email-confirmation.pug',
     link: link
   };
   return directive;

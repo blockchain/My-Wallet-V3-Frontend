@@ -28,12 +28,12 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "1.0.*",
     "grunt-contrib-copy": "^0.7.0",
-    "grunt-contrib-jade": "^0.14.1",
     "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-pug": "^1.0.0",
     "grunt-contrib-uglify": "1.0.*",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-html2js": "^0.2.9",
-    "grunt-include-source": "^0.7.1",
+    "grunt-html2js": "WeWriteCode/grunt-html2js#pug-support",
+    "grunt-include-source": "sjors/grunt-include-source#pug",
     "grunt-karma-coveralls": "^2.5.4",
     "grunt-legacy-util": "^0.2.0",
     "grunt-merge-json": "^0.9.5",
@@ -46,7 +46,8 @@
     "html-webpack-plugin": "~2.26.0",
     "isparta": "4.0.*",
     "istanbul": "^1.0.0-alpha.2",
-    "jade": "*",
+    "pug": "2.0.0-beta11",
+    "pug-lint": "*",
     "jasmine-core": "2.4.*",
     "jasmine-es6-promise-matchers": "2.0.*",
     "jstransformer-verbatim": "^1.0.0",
@@ -55,9 +56,9 @@
     "karma-browserify": "^5.1.0",
     "karma-coffee-preprocessor": "0.3.*",
     "karma-coverage": "0.5.*",
-    "karma-jade-preprocessor": "0.0.11",
+    "karma-pug-preprocessor": "*",
     "karma-jasmine": "0.3.*",
-    "karma-ng-jade2js-preprocessor": "^0.1.5",
+    "karma-ng-pug2js-preprocessor": "*",
     "karma-osx-reporter": "^0.2.0",
     "karma-phantomjs-launcher": "1.0.*",
     "node-env-file": "^0.1.4",
@@ -79,7 +80,7 @@
     "build": "node_modules/grunt-cli/bin/grunt build"
   },
   "engines": {
-    "node": "5.10.x"
+    "node": "7.5.x"
   },
   "repository": {
     "type": "git",
