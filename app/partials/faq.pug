@@ -1,0 +1,9 @@
+.faq.flex-column.width-100.flex-center(data-preflight-tag="FAQ")
+  .header-bar
+    h4.mvn.em-300.f-20(translate="FAQ_FULL")
+  .flex-column.width-100
+    faq-question(ng-repeat="q in questions" question="q" on-toggle="toggle(q)")
+  .flex-column.flex-center.mbvl.mtm.pb-50
+    h3 
+      small(translate="NEED_MORE_HELP")
+    a.button-primary.width-60(href="https://blockchain.zendesk.com/" target="_blank" rel="noopener noreferrer" translate="VISIT_SUPPORT")

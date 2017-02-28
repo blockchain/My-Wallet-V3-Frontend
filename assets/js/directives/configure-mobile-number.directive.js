@@ -13,7 +13,7 @@ function configureMobileNumber (Wallet, bcPhoneNumber) {
       onCancel: '&',
       onSuccess: '&'
     },
-    templateUrl: 'templates/configure-mobile-number.jade',
+    templateUrl: 'templates/configure-mobile-number.pug',
     link: link
   };
   return directive;

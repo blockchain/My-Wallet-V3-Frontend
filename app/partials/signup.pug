@@ -1,0 +1,79 @@
+div(data-preflight-tag="CreateWallet")
+  header
+    hgroup
+      .flex-between.flex-center.flex-wrap.mb-10
+        span.f-24.lh1(translate="CREATE_A_WALLET")
+        span
+          span(translate="OR")
+          | 
+          a(ui-sref="public.login-uid")
+            span(translate="LOGIN")
+      p.alt-font.f-16(translate="CREATE_FREE_WALLET")
+
+form.bc-form.form-horizontal.mt-30(
+  role="form"
+  name="signupForm"
+  ng-submit="signup()"
+  autocomplete="off"
+  novalidate)
+  browser-detection(result="browser")
+  fieldset(ng-disabled="browser.disabled || working")
+    .group.mb-15(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+      .item
+        label(translate="EMAIL")
+        div
+          input.form-control(
+            name="email"
+            type="email"
+            ng-model="fields.email"
+            required
+            focus-when="!fields.email.length")
+          span.help-block
+            div(ng-show="signupForm.email.$touched")
+              p(ng-show="signupForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
+              p(ng-show="signupForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
+    .group.mb-15(ng-class="{'has-error': signupForm.password.$invalid && signupForm.password.$touched}")
+      .item
+        label(translate="NEW_PASSWORD")
+        div
+          input.form-control(
+            name="password"
+            type="password"
+            ng-model="fields.password"
+            ng-maxlength="255"
+            min-entropy="25"
+            focus-when="fields.emailIsFromState"
+            ng-change="fields.confirmation = ''"
+            required)
+          password-entropy.help-block(password="fields.password")
+          span.help-block
+            div(ng-show="signupForm.password.$touched")
+              p(ng-show="signupForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
+              p(ng-show="signupForm.password.$error.maxlength" translate="TOO_LONG")
+    .group.mb-15(ng-class="{'has-error': signupForm.confirmation.$invalid && signupForm.confirmation.$touched}")
+      .item
+        label(translate="CONFIRM_PASSWORD")
+        div
+          input.form-control(
+            name="confirmation"
+            type="password"
+            ng-model="fields.confirmation"
+            is-valid="fields.confirmation == fields.password"
+            required)
+          span.help-block
+            div(ng-show="signupForm.confirmation.$touched")
+              p(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
+    .group.mb-15
+      .item.check
+        input(
+          name="agreement"
+          type="checkbox"
+          ng-model="fields.acceptedAgreement"
+          required)
+        label.em-300.mbn.mls.right-align(translate="ACCEPT_TOS")
+    .group.mb-15.full
+      button.button-primary.button-heavy(
+        type="submit"
+        ng-disabled="signupForm.$invalid || !currency_guess"
+        ladda-translate="CONTINUE"
+        ui-ladda="working")

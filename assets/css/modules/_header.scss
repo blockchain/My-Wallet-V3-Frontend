@@ -102,8 +102,8 @@
 .navbar-inverse {
   background-color: $blue;
   border:none;
-  border-radius: 0px;
   z-index: 1030;
+  border-radius: 0px;
   @media (min-width: 768px) {
     height: 60px;
   }
@@ -116,8 +116,9 @@
   }
   .navbar-nav {
     > li {
-      margin-left: 2px;
       padding-top: 10px;
+      font-weight: 500;
+      font-size: 14px;
       a {
         &.refresh {
           img {
@@ -175,17 +176,36 @@
 }
 
 img#logo {
-  height: 18px;
+  height: 20px;
   padding-left: 15px;
 }
 
 .bc-public-header {
+  &.navbar-inverse {
+    height: 90px;
+  }
   img#logo {
-    height: 30px;
+    height: 20px;
     padding-left: 5px;
   }
   @media (max-width: 620px) {
     img#logo { height: 18px; margin-top: 0; }
+  }
+  .navbar .nav > li > a {
+    font-weight: 500;
+    font-size: 14px !important;
+  }
+  .navbar-collapse{
+    margin-top: 17px;
+  }
+  .navbar-header .navbar-brand {
+    line-height: 90px;
+    @media (max-width: 767px) {
+      line-height: 90px;
+    }
+  }
+  @media (max-width: 767px) {
+    .navbar-toggle { margin-top: 35px; }
   }
 }
 

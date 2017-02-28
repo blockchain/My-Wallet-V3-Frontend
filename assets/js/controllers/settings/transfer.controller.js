@@ -18,7 +18,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
 
   $scope.initializePayments = () => {
     let paymentsP = $scope.addresses.reduce((chain, a) => chain.then(payments => $q(resolve => {
-      let p = new Wallet.Payment().from(a.address).useAll();
+      let p = Wallet.my.wallet.createPayment().from(a.address).useAll();
       p.sideEffect(() => resolve(payments.concat(p)));
     })), $q.resolve([]));
 

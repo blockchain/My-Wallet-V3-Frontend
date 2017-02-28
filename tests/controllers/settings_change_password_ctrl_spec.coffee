@@ -20,7 +20,7 @@ describe "ChangePasswordCtrl", ->
       )
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/change-password.jade')
+      template = $templateCache.get('partials/settings/change-password.pug')
 
       $controller "ChangePasswordCtrl",
         $scope: scope,

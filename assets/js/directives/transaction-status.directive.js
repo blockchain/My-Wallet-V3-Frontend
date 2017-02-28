@@ -10,7 +10,7 @@ function transactionStatus ($rootScope) {
     scope: {
       transaction: '='
     },
-    templateUrl: 'templates/transaction-status.jade',
+    templateUrl: 'templates/transaction-status.pug',
     link: link
   };
   return directive;

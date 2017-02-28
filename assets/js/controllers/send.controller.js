@@ -41,7 +41,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     size: 0
   };
 
-  $scope.payment = new Wallet.Payment();
+  $scope.payment = Wallet.my.wallet.createPayment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   $scope.payment.on('update', data => {
@@ -101,7 +101,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.reopenModal = () => {
     $timeout(() => $uibModal.open({
-      templateUrl: 'partials/send.jade',
+      templateUrl: 'partials/send.pug',
       windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
       resolve: {paymentRequest}

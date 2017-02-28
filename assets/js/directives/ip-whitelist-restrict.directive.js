@@ -10,7 +10,7 @@ function ipWhitelistRestrict ($translate, Wallet) {
     restrict: 'E',
     replace: true,
     scope: {},
-    templateUrl: 'templates/ip-whitelist-restrict.jade',
+    templateUrl: 'templates/ip-whitelist-restrict.pug',
     link: link
   };
   return directive;

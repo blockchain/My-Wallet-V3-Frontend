@@ -1,0 +1,12 @@
+form.clearfix(name="signupForm" role="form" novalidate)
+  span.type-h5.em-500.flex-start.pts(translate="ACCEPT_TERMS")
+  p.mvl(translate="PARTNER" translate-values="{email: user.email}")
+  div.flex
+    div
+      input(type="checkbox" checked id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="rejectedEmail" required)
+    div
+      label.mlm.em-400(translate="ACCEPT_PARTNER_TOS_PRIVACY" for="tos")
+  .mtl(ng-show="rejectedEmail")
+    i.ti-alert.sent.mrs.type-h4
+    span.sent.mrs(translate="EMAIL_IN_USE" translate-values="{email: user.email}")
+    span.blue.pointer(translate="CLICK_TO_CHANGE" ng-click="nextStep();")
