@@ -12,7 +12,7 @@ function uiLadda () {
       uiLadda: '=',
       disabled: '=ngDisabled'
     },
-    templateUrl: 'templates/ui-ladda.jade',
+    templateUrl: 'templates/ui-ladda.pug',
     link: link
   };
   return directive;

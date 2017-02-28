@@ -13,7 +13,7 @@ function popup (modals, $translate) {
     let open = () => {
       let options = { windowClass: 'bc-modal sm' };
 
-      modals.openTemplate('partials/popup-modal.jade', {
+      modals.openTemplate('partials/popup-modal.pug', {
         days: attrs.popupDays,
         name: attrs.popupName,
         icon: $translate.instant(attrs.popupName + '.ICON')

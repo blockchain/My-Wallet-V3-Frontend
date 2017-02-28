@@ -12,7 +12,7 @@ function amount (Wallet, currency) {
     scope: {
       tx: '=transaction'
     },
-    templateUrl: 'templates/amount.jade',
+    templateUrl: 'templates/amount.pug',
     link: link
   };
   return directive;

@@ -10,7 +10,7 @@ describe "ChangePbkdf2Ctrl", ->
       Wallet.settings.pbkdf2 = 10
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/change-pbkdf2.jade')
+      template = $templateCache.get('partials/settings/change-pbkdf2.pug')
 
       $controller "ChangePbkdf2Ctrl",
         $scope: scope

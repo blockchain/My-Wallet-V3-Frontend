@@ -10,13 +10,13 @@ function qrScan ($rootScope, $timeout, $translate, Wallet, Alerts) {
     scope: {
       onScan: '='
     },
-    templateUrl: 'templates/qr-scan-button.jade',
+    templateUrl: 'templates/qr-scan-button.pug',
     link: link
   };
   return directive;
 
   function link (scope) {
-    scope.popoverTemplate = 'templates/qr-scan-popover.jade';
+    scope.popoverTemplate = 'templates/qr-scan-popover.pug';
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.loader = () => {

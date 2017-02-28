@@ -69,7 +69,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.my.ws.wsUrl = customWebSocketURL;
   }
 
-  // If a custom apiDomain is set by index.jade:
+  // If a custom apiDomain is set by index.pug:
   //                             Grunt can replace this:
   const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
   $rootScope.apiDomain = customApiDomain;

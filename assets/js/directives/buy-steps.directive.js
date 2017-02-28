@@ -17,7 +17,7 @@ function buySteps () {
       paymentInfo: '=',
       currencySymbol: '='
     },
-    templateUrl: 'templates/buy-steps.jade',
+    templateUrl: 'templates/buy-steps.pug',
     link: link
   };
   return directive;

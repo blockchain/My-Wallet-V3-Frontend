@@ -68,7 +68,7 @@ describe "SfoxCheckoutController", ->
       getBuyQuote: () -> $q.resolve(mockQuote())
       fetchProfile: () -> $q.resolve()
     }
-    template = $templateCache.get('partials/sfox/checkout.jade')
+    template = $templateCache.get('partials/sfox/checkout.pug')
     $controller "SfoxCheckoutController",
       $scope: scope
       accounts: accounts || []

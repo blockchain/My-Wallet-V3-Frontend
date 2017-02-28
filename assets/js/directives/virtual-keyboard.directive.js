@@ -11,7 +11,7 @@ function virtualKeyboard ($document, $window) {
     scope: {
       ngModel: '='
     },
-    templateUrl: 'templates/virtual-keyboard.jade',
+    templateUrl: 'templates/virtual-keyboard.pug',
     link: link
   };
   return directive;

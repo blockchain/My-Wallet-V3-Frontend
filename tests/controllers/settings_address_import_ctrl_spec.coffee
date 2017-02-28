@@ -43,7 +43,7 @@ describe "AddressImportCtrl", ->
         then: (f) -> f(true)
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/import-address.jade')
+      template = $templateCache.get('partials/settings/import-address.pug')
 
       $controller "AddressImportCtrl",
         $scope: scope,

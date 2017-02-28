@@ -216,7 +216,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function openBuyView (trade = null, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/coinify-modal.jade',
+      templateUrl: 'partials/coinify-modal.pug',
       windowClass: 'bc-modal auto buy',
       controller: 'CoinifyController',
       backdrop: 'static',

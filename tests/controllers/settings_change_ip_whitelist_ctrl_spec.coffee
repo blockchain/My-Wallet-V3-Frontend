@@ -11,7 +11,7 @@ describe "ChangeIpWhitelistCtrl", ->
       Wallet.setIPWhitelist = () -> $q.resolve()
 
       scope = $rootScope.$new()
-      template = $templateCache.get("partials/settings/change-ip-whitelist.jade")
+      template = $templateCache.get("partials/settings/change-ip-whitelist.pug")
 
       $controller "ChangeIpWhitelistCtrl",
         $scope: scope

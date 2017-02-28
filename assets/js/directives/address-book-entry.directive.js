@@ -13,7 +13,7 @@ function addressBookEntry (Wallet, $translate, Alerts) {
       address: '=addressBookEntry',
       searchText: '='
     },
-    templateUrl: (elem, attrs) => 'templates/address-book-entry.jade',
+    templateUrl: (elem, attrs) => 'templates/address-book-entry.pug',
     link: link
   };
   return directive;
