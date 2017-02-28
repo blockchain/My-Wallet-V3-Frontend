@@ -5,6 +5,8 @@ function LandingCtrl ($scope, $state, $sce, languages) {
     email: undefined
   };
 
+  $scope.languages = languages.languages;
+
   $scope.firstLoad = () => {
     let language_code = languages.get();
 
@@ -28,4 +30,9 @@ function LandingCtrl ($scope, $state, $sce, languages) {
   $scope.signup = () => {
     $state.go('public.signup', { email: $scope.fields.email });
   };
+
+  $scope.$watch(languages.get, (code) => {
+    $scope.language = languages.mapCodeToName(code);
+    $scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
+  });
 }
