@@ -152,7 +152,11 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-      Alerts.displayError(msgText, false, $scope.alerts);
+      if (msgText.indexOf('Transaction Already Exists') > -1) {
+        $uibModalInstance.close();
+      } else {
+        Alerts.displayError(msgText, false, $scope.alerts);
+      }
     };
 
     const transactionSucceeded = (tx) => {

@@ -1,5 +1,5 @@
 angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
-  (_, shouldReject) ->
+  (_, shouldReject, rejectWith) ->
 
     tx = {
       txid: 'tx-hash'
@@ -7,7 +7,7 @@ angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
 
     deferred = $q.defer()
     if shouldReject
-      deferred.reject('err_message')
+      deferred.reject(rejectWith || 'err_message')
     else
       deferred.resolve(tx)
 

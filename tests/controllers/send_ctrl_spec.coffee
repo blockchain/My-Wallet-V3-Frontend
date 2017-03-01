@@ -449,6 +449,16 @@ describe "SendCtrl", ->
           expect(Alerts.displayError.calls.argsFor(0)[0]).toEqual('err_message')
         )
 
+        it "should close the modal if it receives Tx Exists error", inject((Alerts) ->
+          scope.payment = new Wallet.Payment({}, true, 'Transaction Already Exists')
+          spyOn(modalInstance, 'close').and.callThrough()
+          spyOn(Alerts, 'displayError').and.callThrough()
+          scope.send()
+          scope.$digest()
+          expect(modalInstance.close).toHaveBeenCalled()
+          expect(Alerts.displayError).not.toHaveBeenCalled()
+        )
+
       describe "success", ->
 
         beforeEach ->
