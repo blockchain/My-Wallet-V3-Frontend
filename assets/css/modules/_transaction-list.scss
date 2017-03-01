@@ -3,6 +3,7 @@
   .label-primary,
   .label-default {
     @extend .btn-xs;
+    font-weight: normal;
     display: inline-block;
   }
   .transaction-feed {
@@ -121,7 +122,7 @@
 
   font-size: 16px;
   font-weight: 300;
-  font-family: GillSans-Light;
+  @extend .alt-font;
 
   .rotated {
     transform: rotate(-90deg);
@@ -290,6 +291,15 @@ a.date,p.date { color: $black; }
 }
 
 @media (min-width: 768px){
+  .destination {
+    margin-top: -4px;
+    & + .width-30 {
+      margin-top: -4px;
+      & + .width-20 {
+        margin-top: -4px;
+      }
+    }
+  }
   .transaction-details {
     .status{text-align: right;}
   }

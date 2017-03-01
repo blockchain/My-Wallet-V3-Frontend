@@ -42,7 +42,7 @@
           ng-model="fields.email"
           autofocus
           required)
-        span.help-block 
+        span.help-block
           span.help-block
             div(ng-show="recoveryForm.email.$touched")
               p(ng-show="recoveryForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
@@ -70,7 +70,7 @@
           ng-model="fields.confirmation"
           is-valid="fields.confirmation === fields.password"
           required)
-        span.help-block 
+        span.help-block
           div(ng-show="recoveryForm.confirmation.$touched")
             p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
       .flex-center.flex-end.mtm.mbl

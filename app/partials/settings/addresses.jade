@@ -28,7 +28,7 @@
           li
             a(translate="REVEAL_XPUB" ng-click="revealXpub(account)" ng-hide="account.archived")
     .type-lbl.em-500(translate="UNUSED_ADDRESSES")
-    p.gillsans.f-16.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
+    p.alt-font.f-16.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
     table.accounts-container.addresses.responsive.width-100
       tr.width-100.pointer(ng-click="createAddress()")
         td.col-md-6
@@ -46,7 +46,7 @@
   .type-lbl.em-500(translate="PAST_ADDRESSES")
   a(translate="{{showPast ? 'HIDE' : 'SHOW'}}" ng-click="toggleShowPast()" ng-class="{active:showPast}")
 .flex-row.flex-between(ng-if="showPast")
-  p.gillsans.f-16.em-300.mvm.pbm(translate="PAST_ADDRESSES_COPY")
+  p.alt-font.f-16.em-300.mvm.pbm(translate="PAST_ADDRESSES_COPY")
   uib-pagination.pagination-sm(
     ng-model="page"
     ng-show="totalUsed > pageLength"

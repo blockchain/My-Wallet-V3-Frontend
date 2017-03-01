@@ -171,11 +171,6 @@
   }
 }
 
-.verify-email {
-  width: 100%;
-  p { width: 50%; }
-}
-
 .level-complete {
   width: 75px;
   height: 75px;
@@ -264,7 +259,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .security-center-ui {
     ul {
       flex-direction: column;
@@ -280,14 +275,6 @@
     }
     .level-badge {
       width: 100%;
-    }
-    .badge-panel {
-      p {
-        font-size: .85em;
-      }
-      input {
-        font-size: .8em;
-      }
     }
     .button-lg {
       font-size: 1em;

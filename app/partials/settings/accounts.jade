@@ -40,7 +40,7 @@
         |  
         span.security-red.hidden-xs(translate="NOT_BACKED_BY_RECOVERY")
       .flex-center.flex-row
-        button.button-primary.mrl.hidden-sm.hidden-xs(
+        button.button-primary.mrl(
           translate="TRANSFER_ALL"
           ng-show="activeSpendableAddresses().length > 0"
           ng-click="openTransferAll()"
