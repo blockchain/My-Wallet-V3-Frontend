@@ -13,7 +13,7 @@ function hdAddress ($rootScope, $sce, Wallet, Alerts) {
       remove: '&',
       pastAddress: '='
     },
-    templateUrl: 'templates/hd-address.jade',
+    templateUrl: 'templates/hd-address.pug',
     link
   };
   return directive;

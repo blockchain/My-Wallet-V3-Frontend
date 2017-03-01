@@ -6,7 +6,7 @@ angular
       limits: '<',
       onTrigger: '&'
     },
-    templateUrl: 'templates/kyc-status.jade',
+    templateUrl: 'templates/kyc-status.pug',
     controller: function (buySell) {
       this.stateMap = {
         'expired': { ns: 'KYC_EXPIRED', i: 'ti-na' },

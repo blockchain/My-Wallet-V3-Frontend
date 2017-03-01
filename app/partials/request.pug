@@ -29,7 +29,7 @@
       label.col-sm-3.control-label(translate="PAID")
       .flex-1
         p.form-control-static
-          | {{ paymentRequest.paid / 100000000.0 }}  
+          | {{ paymentRequest.paid / 100000000.0 }}
 
 
     .receive-container(ng-class="{'mtl': !advanced && numberOfActiveAccountsAndLegacyAddresses() <= 1}")
@@ -71,38 +71,38 @@
                 name="label"
               )
               helper-button(ng-model="fields" content="REQUEST_BITCOIN_STEP2B" values="{walletLabel: fields.to.label}")
-            span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL") 
-            span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP") 
+            span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL")
+            span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP")
 
       .flex-center.flex-justify.pbl(ng-show="advanced && fields.to.index != undefined")
         span.ti-arrow-down.center
 
       .payment-url.flex-around.flex-row(ng-if="paymentRequestURL()")
         .flex-column.receive-address.flex-center(ng-class="{'max-width': advanced}"
-                                                 uib-tooltip="{{'COPY_HELPER' | translate}}" 
+                                                 uib-tooltip="{{'COPY_HELPER' | translate}}"
                                                  tooltip-append-to-body="true")
           h4.mbl(translate="COPY_AND_SHARE")
-          span.flex-align-self-end.phs.pvs.pointer(ng-show="fields.amount || fields.label && advanced" 
+          span.flex-align-self-end.phs.pvs.pointer(ng-show="fields.amount || fields.label && advanced"
                                                    ng-class="{'bg-grey': showPaymentRequestURL}"
                                                    ng-click="showPaymentRequestURL = !showPaymentRequestURL")
             i.ti-link
           p.form-control-static.bitcoin-address
-            img(src="img/spinner.gif", ng-hide="status.didInitializeHD")  
+            img(src="img/spinner.gif", ng-hide="status.didInitializeHD")
             span(ng-show="status.didInitializeHD" single-click-select)
               button.clipboard.btn.button-default
               span(ng-hide="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestAddress() }}
               span(ng-show="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestURL() }}
         span.or.flex-center.mrl.mll(translate="OR")
-        .receive-code.flex-column.flex-center.flex-around(uib-tooltip="{{'QR_HELPER' | translate}}" 
+        .receive-code.flex-column.flex-center.flex-around(uib-tooltip="{{'QR_HELPER' | translate}}"
                                               tooltip-trigger="mouseenter"
                                               tooltip-append-to-body="true")
           h4(translate="SCAN")
           p(ng-hide="status.didInitializeHD")
-            img(src="img/spinner.gif")  
+            img(src="img/spinner.gif")
           span(ng-show="status.didInitializeHD")
             qr(text="paymentRequestURL()", size=100, correction-level="'M'", image="true")
 
- LABEL_ERROR_BIP_44_GAP
+LABEL_ERROR_BIP_44_GAP
 .modal-footer.flex-between.flex-center.pal
   .flex-center
     button.btn.button-default(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="CUSTOMIZE"

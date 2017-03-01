@@ -17,7 +17,7 @@ function pulseCta () {
       onReveal: '&',
       onDismiss: '&'
     },
-    templateUrl: 'templates/pulse-cta.jade',
+    templateUrl: 'templates/pulse-cta.pug',
     link
   };
   return directive;

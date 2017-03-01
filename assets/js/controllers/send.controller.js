@@ -101,7 +101,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.reopenModal = () => {
     $timeout(() => $uibModal.open({
-      templateUrl: 'partials/send.jade',
+      templateUrl: 'partials/send.pug',
       windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
       resolve: {paymentRequest}
@@ -146,7 +146,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
+        $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint).build();
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';

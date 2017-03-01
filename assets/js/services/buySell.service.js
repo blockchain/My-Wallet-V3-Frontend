@@ -198,26 +198,19 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     });
   }
 
-  function fetchProfile (lean) {
-    let success = () => $q.all([
-      service.getTrades(),
-      service.getKYCs(),
-      service.getExchange().getBuyCurrencies().then(currency.updateCoinifyCurrencies)
-    ]);
-
+  function fetchProfile () {
     let error = (err) => {
       let msg;
       try { msg = JSON.parse(err).error.toUpperCase(); } catch (e) { msg = 'INVALID_REQUEST'; }
       return $q.reject(msg);
     };
 
-    return $q.resolve(service.getExchange().fetchProfile())
-      .then(lean ? () => {} : success, error);
+    return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
   function openBuyView (trade = null, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/coinify-modal.jade',
+      templateUrl: 'partials/coinify-modal.pug',
       windowClass: 'bc-modal auto buy',
       controller: 'CoinifyController',
       backdrop: 'static',

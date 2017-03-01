@@ -23,7 +23,7 @@ describe "ManageSecondPasswordCtrl", ->
         external: {}
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/manage-second-password.jade')
+      template = $templateCache.get('partials/settings/manage-second-password.pug')
 
       $controller "ManageSecondPasswordCtrl",
         $scope: scope,

@@ -43,7 +43,7 @@ describe "RequestCtrl", ->
       currency.conversions.EUR = { conversion: 400000 }
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/request.jade')
+      template = $templateCache.get('partials/request.pug')
 
       $controller "RequestCtrl",
         $scope: scope,

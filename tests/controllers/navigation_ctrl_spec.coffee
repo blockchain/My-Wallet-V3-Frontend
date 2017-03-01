@@ -95,7 +95,7 @@ describe "NavigationCtrl", ->
 
   describe "whats new", ->
     it "should have the whats new template", ->
-      expect(scope.whatsNewTemplate).toEqual('templates/whats-new.jade')
+      expect(scope.whatsNewTemplate).toEqual('templates/whats-new.pug')
 
     it "should have the feature array injected", ->
       scope.$digest()

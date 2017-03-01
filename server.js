@@ -66,10 +66,10 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    res.render(dist ? 'index.html' : 'build/index.jade', {pretty: true});
+    res.render(dist ? 'index.html' : 'build/index.pug', {pretty: true});
     return;
   } else if (req.url === '/landing.html') {
-    res.render(dist ? 'landing.html' : 'build/landing.jade');
+    res.render(dist ? 'landing.html' : 'build/landing.pug');
     return;
   }
   if (dist) {
@@ -150,7 +150,7 @@ if (dist) {
 } else {
   console.log('Development mode: multiple javascript files, not cached');
   app.use(express.static(__dirname));
-  app.set('view engine', 'jade');
+  app.set('view engine', 'pug');
   app.set('views', __dirname);
 
   helperApp.use('/wallet-helper', express.static(path.join(__dirname, 'helperApp/build')));

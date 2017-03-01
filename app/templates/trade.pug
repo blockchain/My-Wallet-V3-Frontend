@@ -12,8 +12,11 @@ tr.border
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
     
-    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()" ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
-    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()" ng-show="trade.state !== 'awaiting_transfer_in'") View details
+    span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(ng-class="{disabled: isTradingDisabled}"
+                                                            ng-click="!isTradingDisabled && triggerBuy()" 
+                                                            ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
+    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()"
+                                                    ng-show="trade.state !== 'awaiting_transfer_in'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml(ng-hide="status.gettingQuote")
