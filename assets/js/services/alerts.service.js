@@ -66,7 +66,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
   // options = { values, props, friendly, success, action, modalClass, iconClass }
   function confirm (namespace, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/modal-confirm.jade',
+      templateUrl: 'partials/modal-confirm.pug',
       windowClass: `bc-modal confirm ${options.modalClass || ''}`,
       controller: ($scope) => angular.extend($scope, options, { namespace })
     }).result;
@@ -74,7 +74,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function prompt (message, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/modal-prompt.jade',
+      templateUrl: 'partials/modal-prompt.pug',
       windowClass: 'bc-modal medium',
       controller: ($scope) => angular.extend($scope, options, { message })
     }).result;
@@ -82,7 +82,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function saving () {
     return $uibModal.open({
-      templateUrl: 'partials/modal-saving.jade',
+      templateUrl: 'partials/modal-saving.pug',
       windowClass: 'bc-modal confirm top',
       backdrop: 'static',
       keyboard: false,

@@ -173,7 +173,7 @@
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
-  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds. We will not use your email address for marketing purposes.",
+  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds.",
   "CHANGE_EMAIL_NOT_EXCHANGE": "This will change your wallet's email address, but the email address you signed up to Buy Bitcoin with will remain the same.",
   "MAIL_PROVIDER_WARN": "Your mail provider may have issues receiving emails from Blockchain",
   "VERIFIED" : "Verified",
@@ -1149,7 +1149,8 @@
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
   "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet secure and seamless.",
-  "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
+  "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
+  "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
   "ORDER_HISTORY": "Order History",
   "STATUS": "Status",
@@ -1266,5 +1267,7 @@
   "NEED_HELP": "Need help?",
   "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
   "OR": "or",
+  "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
+  "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "": ""
 }

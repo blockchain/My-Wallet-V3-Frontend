@@ -2,6 +2,7 @@ describe "SendCtrl", ->
   scope = undefined
   ngAudio = undefined
   Wallet = undefined
+  MyWallet = undefined
   MyWalletHelpers = undefined
   Alerts = undefined
   fees = undefined
@@ -37,6 +38,7 @@ describe "SendCtrl", ->
 
       MyWallet.wallet =
         setNote: (-> )
+        createPayment: (p, shouldFail) -> new MyWalletPayment(MyWallet.wallet, p, shouldFail)
         keys: [
           { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }
           { address: 'watch_address', archived: false, isWatchOnly: true }
@@ -62,8 +64,6 @@ describe "SendCtrl", ->
         currency: currency.currencies[0]
         btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
-
-      Wallet.Payment = MyWalletPayment
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -436,7 +436,7 @@ describe "SendCtrl", ->
       describe "failure", ->
 
         beforeEach ->
-          scope.payment = new Wallet.Payment({}, true)
+          scope.payment = MyWallet.wallet.createPayment({}, true)
           askForSecondPassword.resolve()
 
         it "should display an error when process fails", inject((Alerts) ->

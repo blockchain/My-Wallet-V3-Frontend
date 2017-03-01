@@ -38,6 +38,14 @@ ifndef API_DOMAIN
 export API_DOMAIN:=api.blockchain.info
 endif
 
+ifndef WEB_SOCKET_URL
+export WEB_SOCKET_URL:=wss://ws.blockchain.info/inv
+endif
+
+ifndef WALLET_HELPER_URL
+export WALLET_HELPER_URL:=http://localhost:8081
+endif
+
 helperApp/dist: bower_components
 	rm -rf helperApp/dist
 	DIST=1 ./node_modules/.bin/webpack --bail

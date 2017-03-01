@@ -2,17 +2,17 @@ doctype
 html(
   lang='en'
   ng-app='walletApp'
-  ng-init=production ? undefined : `autoCreate='${ process.env.AUTO_CREATE || '' }';\
-  autoReload=${ process.env.AUTO_RELOAD || false };\
-  rootURL='${ process.env.ROOT_URL }/';\
-  webSocketURL='${ process.env.WEB_SOCKET_URL }';\
-  apiDomain='${ process.env.API_DOMAIN }/';\
-  network='${ process.env.NETWORK || '' }';\
-  helperAppDomain='http://localhost:${ (process.env.PORT || 80) + 1 }';\
-  sfoxUseStaging=${ process.env.SFOX_USE_STAGING || null };\
-  sfoxApiKey='${ process.env.SFOX_API_KEY || ''}';\
-  sfoxPlaidEnv='${ process.env.SFOX_PLAID_ENV || ''}';\
-  sfoxSiftScienceKey='${ process.env.SFOX_SIFT_SCIENCE_KEY || '' }';`
+  ng-init=production ? undefined : (`autoCreate='${ process.env.AUTO_CREATE || '' }';\
+    autoReload=${ process.env.AUTO_RELOAD || false };\
+    rootURL='${ process.env.ROOT_URL }/';\
+    webSocketURL='${ process.env.WEB_SOCKET_URL }';\
+    apiDomain='${ process.env.API_DOMAIN }/';\
+    network='${ process.env.NETWORK || '' }';\
+    helperAppDomain='http://localhost:${ (process.env.PORT || 80) + 1 }';\
+    sfoxUseStaging=${ process.env.SFOX_USE_STAGING || null };\
+    sfoxApiKey='${ process.env.SFOX_API_KEY || ''}';\
+    sfoxPlaidEnv='${ process.env.SFOX_PLAID_ENV || ''}';\
+    sfoxSiftScienceKey='${ process.env.SFOX_SIFT_SCIENCE_KEY || '' }';`)
   ng-csp
   ng-class="{'not-fixed': outOfApp}"
 )
@@ -90,7 +90,7 @@ html(
     meta(name="msapplication-TileColor" content="#ffffff")
     meta(name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png")
     title Bitcoin Wallet - Blockchain
-    
+
     if !production
       link(rel='stylesheet' href='build/css/wallet.css')
     else

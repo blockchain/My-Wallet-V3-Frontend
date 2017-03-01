@@ -45,7 +45,7 @@ function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts) {
 
   $scope.changeTwoFactor = () => {
     $uibModal.open({
-      templateUrl: 'partials/settings/two-factor.jade',
+      templateUrl: 'partials/settings/two-factor.pug',
       windowClass: 'bc-modal initial',
       controller: 'TwoFactorCtrl',
       resolve: {

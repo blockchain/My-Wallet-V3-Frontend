@@ -46,7 +46,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.request = modals.openOnce(() => {
     Alerts.clear();
     return $uibModal.open({
-      templateUrl: 'partials/request.jade',
+      templateUrl: 'partials/request.pug',
       windowClass: 'bc-modal auto',
       controller: 'RequestCtrl',
       resolve: {
@@ -59,7 +59,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.send = modals.openOnce(() => {
     Alerts.clear();
     return $uibModal.open({
-      templateUrl: 'partials/send.jade',
+      templateUrl: 'partials/send.pug',
       windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
       resolve: {
@@ -76,7 +76,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
-      templateUrl: 'partials/second-password.jade',
+      templateUrl: 'partials/second-password.pug',
       controller: 'SecondPasswordCtrl',
       backdrop: insist ? 'static' : null,
       keyboard: insist,
@@ -152,7 +152,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if ($scope.status.isLoggedIn) {
       if (Wallet.goal.upgrade) {
         $uibModal.open({
-          templateUrl: 'partials/upgrade.jade',
+          templateUrl: 'partials/upgrade.pug',
           controller: 'UpgradeCtrl',
           backdrop: 'static',
           windowClass: 'bc-modal',
@@ -166,7 +166,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime) {
         buyStatus.canBuy().then((canBuy) => {
-          let template = canBuy ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
+          let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial'
@@ -185,7 +185,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
           $uibModal.open({
-            templateUrl: 'partials/send.jade',
+            templateUrl: 'partials/send.pug',
             controller: 'SendCtrl',
             resolve: {
               paymentRequest: () => Wallet.goal.send,

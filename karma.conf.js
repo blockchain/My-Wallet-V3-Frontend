@@ -48,13 +48,13 @@ module.exports = function (config) {
       'tests/directives/*.coffee',
       'tests/mocks/**/*.coffee',
       'tests/**/*.js',
-      'app/templates/*.jade'
+      'app/templates/*.pug'
     ],
 
     autoWatch: true,
 
     preprocessors: {
-      '**/*.jade': ['ng-jade2js'],
+      '**/*.pug': ['ng-pug2js'],
       'assets/js/core/core.module.js': ['babel'],
       'assets/js/controllers/**/*.js': ['coverage', 'babel'],
       'assets/js/components/**/*.js': ['coverage', 'babel'],
@@ -92,7 +92,7 @@ module.exports = function (config) {
         return file.originalPath;
       }
     },
-    ngJade2JsPreprocessor: {
+    ngPug2JsPreprocessor: {
       stripPrefix: 'app/',
       prependPrefix: '',
 
@@ -102,7 +102,7 @@ module.exports = function (config) {
       //   return null;
       // },
 
-      // Support for jade locals to render at compile time
+      // Support for pug locals to render at compile time
       // locals: {
       //   foo: 'bar'
       // },
@@ -113,8 +113,8 @@ module.exports = function (config) {
       // from all the files, so you can load them all with module('foo')
       // moduleName: 'foo',
 
-      // Jade compiler options. For a list of possible options, consult Jade documentation.
-      jadeOptions: {
+      // Pug compiler options. For a list of possible options, consult Pug documentation.
+      pugOptions: {
         doctype: 'xml'
       }
     },

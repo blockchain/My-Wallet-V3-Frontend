@@ -1,5 +1,5 @@
 describe "Transform-Currency Directive", ->
-  
+
   scope = undefined
   isoScope = undefined
   element = undefined

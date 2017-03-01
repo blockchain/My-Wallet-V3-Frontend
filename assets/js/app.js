@@ -98,7 +98,7 @@ angular.module('walletApp', modules)
 
   $rootScope.$on('showNotification', (_, notification) => {
     $uibModal.open({
-      templateUrl: 'partials/modal-notification.jade',
+      templateUrl: 'partials/modal-notification.pug',
       controller: 'ModalNotificationCtrl',
       windowClass: 'notification-modal',
       resolve: { notification: () => notification }
@@ -106,7 +106,7 @@ angular.module('walletApp', modules)
   });
 
   $rootScope.$watch('rootURL', () => {
-    // If a custom rootURL is set by index.jade:
+    // If a custom rootURL is set by index.pug:
     //                    Grunt can replace this:
     const customRootURL = $rootScope.rootURL;
     // If customRootURL is set by Grunt:

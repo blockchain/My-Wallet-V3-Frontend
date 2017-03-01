@@ -7,7 +7,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   $scope.settings = Wallet.settings;
 
   const lastViewedDefaultTime = 1231469665000;
-  $scope.whatsNewTemplate = 'templates/whats-new.jade';
+  $scope.whatsNewTemplate = 'templates/whats-new.pug';
   $scope.lastViewedWhatsNew = null;
 
   $rootScope.isSubscribed = $cookies.get('subscribed');
@@ -39,7 +39,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
 
   $scope.subscribe = () => {
     $uibModal.open({
-      templateUrl: 'partials/subscribe-modal.jade',
+      templateUrl: 'partials/subscribe-modal.pug',
       windowClass: 'bc-modal initial',
       controller: 'SubscribeCtrl'
     });

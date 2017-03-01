@@ -12,7 +12,7 @@ function bcFileUpload ($rootScope, Alerts) {
       idType: '=',
       onUpload: '='
     },
-    templateUrl: 'templates/bc-file-upload.jade',
+    templateUrl: 'templates/bc-file-upload.pug',
     link: link
   };
   return directive;

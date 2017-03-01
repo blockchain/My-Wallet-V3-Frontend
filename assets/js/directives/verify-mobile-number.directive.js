@@ -10,7 +10,7 @@ function verifyMobileNumber ($translate, Wallet, $filter) {
     scope: {
       onSuccess: '&'
     },
-    templateUrl: 'templates/verify-mobile-number.jade',
+    templateUrl: 'templates/verify-mobile-number.pug',
     link: link
   };
   return directive;

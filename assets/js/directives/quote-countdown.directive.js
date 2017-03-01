@@ -13,7 +13,7 @@ function quoteCountdown ($interval) {
       tradeObj: '=',
       quote: '='
     },
-    templateUrl: 'templates/quote-countdown.jade',
+    templateUrl: 'templates/quote-countdown.pug',
     link: link
   };
   return directive;

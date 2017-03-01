@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletPayment', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletPayment, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
   const wallet = {
     goal: {
       auth: false,
@@ -69,15 +69,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.my.ws.wsUrl = customWebSocketURL;
   }
 
-  // If a custom apiDomain is set by index.jade:
+  // If a custom apiDomain is set by index.pug:
   //                             Grunt can replace this:
   const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
   $rootScope.apiDomain = customApiDomain;
   if (customApiDomain) {
     wallet.api.API_ROOT_URL = customApiDomain;
   }
-
-  wallet.Payment = MyWalletPayment;
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
@@ -104,77 +102,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.status.didInitializeHD = true;
       }
       $window.name = 'blockchain-' + uid;
-      wallet.my.wallet.fetchAccountInfo().then((result) => {
-        const accountInfo = wallet.my.wallet.accountInfo;
-
-        wallet.user.email = accountInfo.email;
-
-        if (wallet.my.wallet.accountInfo.mobile) {
-          wallet.user.mobileNumber = accountInfo.mobile;
-        } else {
-          wallet.user.mobileNumber = '+' + accountInfo.dialCode;
-        }
-        wallet.user.isEmailVerified = accountInfo.isEmailVerified;
-        wallet.user.isMobileVerified = accountInfo.isMobileVerified;
-
-        wallet.settings.currency = $filter('getByProperty')('code', accountInfo.currency, currency.currencies);
-
-        // TODO: handle more of this in My-Wallet-V3
-        wallet.settings.ipWhitelist = result.ip_lock || '';
-        wallet.settings.restrictToWhitelist = result.ip_lock_on;
-        wallet.settings.apiAccess = result.is_api_access_enabled;
-        wallet.settings.rememberTwoFactor = !result.never_save_auth_type;
-        wallet.settings.needs2FA = result.auth_type !== 0;
-        wallet.settings.twoFactorMethod = result.auth_type;
-        wallet.settings.loggingLevel = result.logging_level;
-        wallet.user.current_ip = result.my_ip;
-        wallet.user.guid = result.guid;
-        wallet.user.alias = result.alias;
-        wallet.settings.notifications_on = result.notifications_on;
-        wallet.settings.notifications = {};
-        if (result.notifications_type) {
-          let notifs = wallet.settings.notifications;
-          result.notifications_type.forEach(code => {
-            let type = Math.log2(code);
-            if (type === 0) notifs.email = true;
-            if (type === 2) notifs.http = true;
-            if (type === 5) notifs.sms = true;
-          });
-        }
-        wallet.user.passwordHint = result.password_hint1;
-        wallet.setLanguage($filter('getByProperty')('code', result.language, languages.languages));
-        wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
-        wallet.settings.displayCurrency = wallet.settings.btcCurrency;
-        wallet.settings.theme = $filter('getByProperty')('name', $cookies.get('theme'), theme.themes) || theme.themes[0];
-        wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
-        wallet.settings.blockTOR = !!result.block_tor_ips;
-        wallet.status.didLoadSettings = true;
-        if (wallet.my.wallet.isUpgradedToHD) {
-          let didFetchTransactions = () => {
-            if (browserDetection().browser === 'ie') {
-              console.warn('Stop!');
-              console.warn('This browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!');
-            } else {
-              console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
-              console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
-            }
-            wallet.status.didLoadTransactions = true;
-            wallet.status.didLoadBalances = true;
-            $rootScope.$safeApply();
-          };
-          wallet.my.wallet.getHistory().then(didFetchTransactions);
-        }
+      wallet.fetchAccountInfo((result) => {
+        wallet.loadExternal();
         wallet.status.isLoggedIn = true;
-        let { external } = MyWallet.wallet;
-        $injector.get('buySell'); // init buySell to monitor incoming payments
-        if (external) {
-          let { sfox } = external;
-          if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
-        }
-        $rootScope.$safeApply();
-        successCallback && successCallback(result.guid);
+        successCallback && successCallback(result);
       });
-      $rootScope.$safeApply();
     };
 
     let needsTwoFactorCode = (method) => {
@@ -191,17 +123,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       $rootScope.$safeApply();
     };
 
-    let wrongTwoFactorCode = (message) => {
-      errorCallback('twoFactor', message);
-      $rootScope.$safeApply();
-    };
-
     let loginError = (error) => {
       console.log(error);
       if (error.length && error.indexOf('Unknown Wallet Identifier') > -1) {
         errorCallback('uid', 'UNKNOWN_IDENTIFIER');
       } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
+      } else if (error.length && error.indexOf('Invalid authentication code') > -1 || error.indexOf('Authentication code is incorrect') > -1) {
+        errorCallback('twoFactor', error);
       } else {
         Alerts.displayError(error.message || error, true);
         errorCallback();
@@ -215,13 +144,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       two_factor_code = null;
     }
 
-    let authorizationProvided = () => {
+    let authorizationRequired = () => {
       wallet.goal.auth = true;
-      $rootScope.$safeApply();
-    };
-
-    let authorizationRequired = (callback) => {
-      callback(authorizationProvided());
       Alerts.displayWarning('CHECK_EMAIL_VERIFY_BROWSER', true);
       $rootScope.$safeApply();
     };
@@ -257,7 +181,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         {
           newSessionToken: newSessionToken,
           needsTwoFactorCode: needsTwoFactorCode,
-          wrongTwoFactorCode: wrongTwoFactorCode,
           authorizationRequired: authorizationRequired
         }
       ).then(didLogin).catch(loginError);
@@ -270,6 +193,85 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     doLogin(uid, sessionGuid, sessionToken);
 
     currency.fetchExchangeRate();
+  };
+
+  wallet.fetchAccountInfo = (successCallback) => {
+    $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
+      const accountInfo = wallet.my.wallet.accountInfo;
+
+      wallet.user.email = accountInfo.email;
+
+      if (wallet.my.wallet.accountInfo.mobile) {
+        wallet.user.mobileNumber = accountInfo.mobile;
+      } else {
+        wallet.user.mobileNumber = '+' + accountInfo.dialCode;
+      }
+      wallet.user.isEmailVerified = accountInfo.isEmailVerified;
+      wallet.user.isMobileVerified = accountInfo.isMobileVerified;
+
+      wallet.settings.currency = $filter('getByProperty')('code', accountInfo.currency, currency.currencies);
+
+      // TODO: handle more of this in My-Wallet-V3
+      wallet.settings.ipWhitelist = result.ip_lock || '';
+      wallet.settings.restrictToWhitelist = result.ip_lock_on;
+      wallet.settings.apiAccess = result.is_api_access_enabled;
+      wallet.settings.rememberTwoFactor = !result.never_save_auth_type;
+      wallet.settings.needs2FA = result.auth_type !== 0;
+      wallet.settings.twoFactorMethod = result.auth_type;
+      wallet.settings.loggingLevel = result.logging_level;
+      wallet.user.current_ip = result.my_ip;
+      wallet.user.guid = result.guid;
+      wallet.user.alias = result.alias;
+      wallet.settings.notifications_on = result.notifications_on;
+      wallet.settings.notifications = {};
+      if (result.notifications_type) {
+        let notifs = wallet.settings.notifications;
+        result.notifications_type.forEach(code => {
+          let type = Math.log2(code);
+          if (type === 0) notifs.email = true;
+          if (type === 2) notifs.http = true;
+          if (type === 5) notifs.sms = true;
+        });
+      }
+
+      wallet.user.passwordHint = result.password_hint1;
+      wallet.setLanguage($filter('getByProperty')('code', result.language, languages.languages));
+      wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
+      wallet.settings.displayCurrency = wallet.settings.btcCurrency;
+      wallet.settings.theme = $filter('getByProperty')('name', $cookies.get('theme'), theme.themes) || theme.themes[0];
+      wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
+      wallet.settings.blockTOR = !!result.block_tor_ips;
+      wallet.status.didLoadSettings = true;
+
+      if (wallet.my.wallet.isUpgradedToHD) {
+        let didFetchTransactions = () => {
+          if (browserDetection().browser === 'ie') {
+            console.warn('Stop!');
+            console.warn('This browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!');
+          } else {
+            console.log('%cStop!', 'color:white; background:red; font-size: 16pt');
+            console.log('%cThis browser feature is intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your money!', 'font-size: 14pt');
+          }
+          wallet.status.didLoadTransactions = true;
+          wallet.status.didLoadBalances = true;
+          $rootScope.$safeApply();
+        };
+        wallet.my.wallet.getHistory().then(didFetchTransactions);
+      }
+
+      successCallback && successCallback(result.guid);
+    });
+  };
+
+  wallet.loadExternal = () => {
+    return $q.resolve(wallet.my.wallet.loadExternal()).then(() => {
+      let { external } = MyWallet.wallet;
+      if (external) {
+        let { coinify, sfox } = external;
+        if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
+        if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
+      }
+    });
   };
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
@@ -859,6 +861,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       if (data.guid === wallet.user.uid) {
         wallet.logout({ auto: true });
       }
+    } else if (event === 'on_change') {
+      wallet.fetchAccountInfo(wallet.loadExternal);
     } else {
     }
     $rootScope.$safeApply();
