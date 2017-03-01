@@ -13,7 +13,7 @@ div(data-preflight-tag="CreateWallet")
 form.bc-form.form-horizontal.mt-30(
   role="form"
   name="signupForm"
-  ng-submit="signup()"
+  ng-submit="browser.disabled || signup()"
   autocomplete="off"
   novalidate)
   browser-detection(result="browser")
