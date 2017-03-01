@@ -2,9 +2,9 @@ blocket-loading
 .home(data-preflight-tag="Home")
   .flex.flex-wrap.mtl
     activity-feed(data-preflight-tag="ActivityFeed")
-    .col-md-6.col-sm-12.col-xs-12.col-home.flex-column
+    .col-md-6.col-sm-12.col-xs-12.col-home.flex-column.pb-50
       .section.mbvl(ng-show="activeLegacyAddresses().length || activeAccounts().length > 1")
-        h5.mtn.type-h5.em-400.mbl(translate="BALANCES")
+        h5.mtn.type-h5.em-400.mb-20(translate="BALANCES")
         ul.pln.account-balances
           li.flex-between.border-bottom-light(ng-repeat="account in activeAccounts()")
             span {{::account.label}}

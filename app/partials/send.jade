@@ -174,7 +174,7 @@
         .flex-column
           span.type-lbl.mbs.underline(translate="TO")
           .mls.mbs.flex-row.flex-center.center(ng-repeat="address in getToLabels() track by $index")
-            span.account.mvn.width-50-mobile.width-50.em-400 {{ address.label || address.address }}
+            span.account.mvn.width-50-mobile.width-60.em-400 {{ address.label || address.address }}
             .width-50.width-50-mobile.flex-between
               span(ng-class="{success: address.type !== 'External'}")
                 span(ng-class="{fade: address.type === 'External'}") + 
@@ -183,7 +183,7 @@
                 span(ng-show="address.type !== 'External'") + 
                 fiat.mrml(btc="transaction.amounts[$index]")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
-            span.mid-grey.account.width-50-mobile.width-50(translate="TX_FEE_REQUIRED")
+            span.mid-grey.account.width-50-mobile.width-60.f-12(translate="TX_FEE_REQUIRED")
             .width-50.width-50-mobile.flex-between
               span.mid-grey.center 
                 span.fade + 
@@ -194,7 +194,7 @@
         .mvm.flex-justify.flex-1.flex-center.split-rule
         span.type-lbl.mbs.underline(translate="FROM")
         .mls.flex-row.flex-center.center.flex-between
-          span.account.width-50-mobile.width-50.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
+          span.account.width-50-mobile.width-60.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
           .width-50.width-50-mobile.flex-between
             span.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
             span.security-red -

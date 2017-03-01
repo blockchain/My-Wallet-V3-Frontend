@@ -14,11 +14,11 @@
         in-view="$last && $render.next()")
 
 div.mtvl.ptl(ng-controller="SettingsImportedAddressesCtrl")
-  .flex-between.flex-center.mtl
+  .flex-between.flex-center.mtl.pbvl
     span.type-md.em-500(translate="ARCHIVED_ADDRESSES")
     span.pointer.blue(translate="{{display.archived ? 'HIDE' : 'SHOW'}}" ng-click="toggleDisplayArchived()")
 
-  p.gillsans.f-16.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
+  p.alt-font.f-16.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
 
   .row(ng-show="display.archived")
     .col-xs-12.table-container
