@@ -156,25 +156,26 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     };
 
     const transactionSucceeded = (tx) => {
-      $scope.$root.scheduleRefresh();
-      $scope.sending = false;
       $uibModalInstance.close('');
-      Wallet.beep();
+      $timeout(() => {
+        $scope.$root.scheduleRefresh();
+        $scope.sending = false;
+        Wallet.beep();
 
-      if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
-        $scope.sendInputMetrics($scope.inputMetric);
-      }
+        if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
+          $scope.sendInputMetrics($scope.inputMetric);
+        }
 
-      let note = $scope.transaction.note;
-      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+        let note = $scope.transaction.note;
+        if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-      if ($state.current.name !== 'wallet.common.transactions') {
-        $state.go('wallet.common.transactions');
-      }
+        if ($state.current.name !== 'wallet.common.transactions') {
+          $state.go('wallet.common.transactions');
+        }
 
-      let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
-      Alerts.displaySentBitcoin(message);
-      $scope.$safeApply();
+        let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
+        Alerts.displaySentBitcoin(message);
+      });
     };
 
     const signAndPublish = (passphrase) => {
