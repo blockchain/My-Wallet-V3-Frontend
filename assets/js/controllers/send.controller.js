@@ -146,7 +146,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
+        $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint).build();
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';

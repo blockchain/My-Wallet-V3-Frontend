@@ -1,6 +1,8 @@
 .buy-sell(ng-class="{'loading': status.loading || status.metaDataDown || status.exchangeDown, 'disabled': status.disabled}" data-preflight-tag="BuySell")
-  .flex-column.flex-justify.flex-center.height-100(ng-if="status.metaDataDown || status.exchangeDown")
-    span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
+  .flex-column.flex-justify.flex-center.height-100(ng-if="status.metaDataDown")
+    span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN")
+  .flex-column.flex-justify.flex-center.height-100(ng-if="status.exchangeDown")
+    span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="EXCHANGE_DOWN")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.loading && !status.disabled")
     img.loader(src="img/puff.svg")
     span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
@@ -18,13 +20,16 @@
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
-      .flex-column.width-50.mlvl.mt-55
-        kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
-    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
+      .flex-column.pos-rel.width-50.mlvl.mt-55(ng-class="{disabled: getIsTradingDisabled() && getIsTradingDisabledReason() === 'disabled'}")
+        span.state-danger-text(ng-if="fetchKYCError" translate="FETCH_KYC_ERROR")
+        kyc-status(ng-if="!fetchKYCError" state="kyc.state" on-trigger="openKyc()" limits="limits")
+    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length || fetchTradeError" data-preflight-tag="BuySellTrades")
       .flex-row.flex-between.flex-center
         h4.type-h4(translate="ORDER_HISTORY")
         span Coinify Account: {{ exchange.profile.email }}
-      table.width-100
+      div(ng-if="fetchTradeError")
+        span.state-danger-text(translate="FETCH_TRADE_ERROR")
+      table.width-100(ng-if="!fetchTradeError")
         tr.border.bg-grey
           th.phml.pvs.width-30(translate="STATUS")
           th.pvs.width-30(translate="DATE")
@@ -32,6 +37,8 @@
           th.pvs.width-15(translate="TOTAL")
         tr(
           ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
+          trading-disabled-reason="getIsTradingDisabledReason()"
+          trading-disabled="getIsTradingDisabled()"
           disabled="status.disabled"
           trade="trade"
           buy="buy"
