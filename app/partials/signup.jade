@@ -5,7 +5,7 @@ div(data-preflight-tag="CreateWallet")
         span.f-24.lh1(translate="CREATE_A_WALLET")
         span
           span(translate="OR")
-          | 
+          |
           a(ui-sref="public.login-uid")
             span(translate="LOGIN")
       p.alt-font.f-16(translate="CREATE_FREE_WALLET")
@@ -13,7 +13,7 @@ div(data-preflight-tag="CreateWallet")
 form.bc-form.form-horizontal.mt-30(
   role="form"
   name="signupForm"
-  ng-submit="signup()"
+  ng-submit="browser.disabled || signup()"
   autocomplete="off"
   novalidate)
   browser-detection(result="browser")
