@@ -1,6 +1,6 @@
 .col-md-6.col-sm-12.col-xs-12.pos-rel.pln.col-home
   .activity-feed(ng-if="status.isLoggedIn")
-    h5.mtn.em-400.type-h5.mbl.af-header(translate="MOST_RECENT_ACTIVITY")
+    h5.mtn.em-400.type-h5.af-header.mb-20(translate="MOST_RECENT_ACTIVITY")
     ul.af.pln
       li.af-item.flex-align-start(
         ng-class="{ 'af-fade' : $last && activities.length >= 8 }"
@@ -38,7 +38,7 @@
           p.mvn.af-date.mll.flex-1 
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_3_DESC")
     .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-hide="loading || activities.length > 0")
-      h2.em-400.center-align.shadow.mbm(translate="ACTIVITY_EMPTY")
+      h2.em-400.center-align.shadow.mbm.f-24(translate="ACTIVITY_EMPTY")
       h5.flex-0.em-300.center-align(translate="{{canBuy ? 'CAN_BUY_ACTIVITY_EMPTY_MSG' : 'ACTIVITY_EMPTY_MSG'}}")
       button.button-primary.mtl(ng-show="canBuy" ui-sref="wallet.common.buy-sell" translate="BUY_BITCOIN")
       button.button-primary.mtl(ng-hide="canBuy" ng-click="request()" translate="RECEIVE_BTC")

@@ -14,7 +14,7 @@ div(ng-show="differentBrowser && !success" data-preflight-tag="AuthApprove")
     hgroup
       p.em-300 {{ details.device_change_reason }}
       
-  .row
+  .row.ptm
     .col-xs-6
       h4(translate="AUTHORIZE_APPROVE_REQUESTING_DEVICE")
       p
@@ -52,8 +52,8 @@ div(ng-show="differentBrowser && !success" data-preflight-tag="AuthApprove")
         |  {{ details.approver_country }}
         br
 
-  form.ptl.form-horizontal.clearfix(role="form")
-    .flex-between.flex-center.pal
+  form.ptl.row.form-horizontal.clearfix(role="form")
+    .flex-around.flex-center
       .flex-center
         button.button-danger(ui-ladda="busyApproving", ng-click="approve()", data-style="expand-left", ladda-translate="ACCEPT")
       .flex-center.flex-end
