@@ -152,29 +152,34 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-      Alerts.displayError(msgText, false, $scope.alerts);
+      if (msgText.indexOf('Transaction Already Exists') > -1) {
+        $uibModalInstance.close();
+      } else {
+        Alerts.displayError(msgText, false, $scope.alerts);
+      }
     };
 
     const transactionSucceeded = (tx) => {
-      $scope.$root.scheduleRefresh();
-      $scope.sending = false;
       $uibModalInstance.close('');
-      Wallet.beep();
+      $timeout(() => {
+        $scope.$root.scheduleRefresh();
+        $scope.sending = false;
+        Wallet.beep();
 
-      if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
-        $scope.sendInputMetrics($scope.inputMetric);
-      }
+        if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
+          $scope.sendInputMetrics($scope.inputMetric);
+        }
 
-      let note = $scope.transaction.note;
-      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+        let note = $scope.transaction.note;
+        if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-      if ($state.current.name !== 'wallet.common.transactions') {
-        $state.go('wallet.common.transactions');
-      }
+        if ($state.current.name !== 'wallet.common.transactions') {
+          $state.go('wallet.common.transactions');
+        }
 
-      let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
-      Alerts.displaySentBitcoin(message);
-      $scope.$safeApply();
+        let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
+        Alerts.displaySentBitcoin(message);
+      });
     };
 
     const signAndPublish = (passphrase) => {

@@ -804,8 +804,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.beep = () => {
-    let sound = ngAudio.load('beep.wav');
-    sound.play();
+    try {
+      let sound = ngAudio.load('beep.wav');
+      sound.play();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   wallet.monitor = (event, data) => {
