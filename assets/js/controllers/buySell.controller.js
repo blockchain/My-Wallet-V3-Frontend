@@ -160,7 +160,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     return cannotTradeReason;
   };
 
-  $scope.tabs = ['BUY_BITCOIN', /*'SELL_BITCOIN'*/, 'ORDER_HISTORY'];
+  $scope.tabs = ['BUY_BITCOIN'/*, 'SELL_BITCOIN'*/, 'ORDER_HISTORY'];
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
   };

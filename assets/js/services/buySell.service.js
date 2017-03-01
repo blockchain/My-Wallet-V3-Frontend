@@ -187,9 +187,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       if (t.txHash) { txHashes[t.txHash] = type; }
     });
 
-    service.trades.pending = [{id:103879,state:'processing',confirmed:false,is_buy:true,account_index:0,receive_index:0},{id:103579,state:'pending',confirmed:false,is_buy:true,account_index:0,receive_index:0},{id:123879,state:'reviewing',confirmed:false,is_buy:true,account_index:0,receive_index:0}]
-    service.trades.completed = [{id:103879,state:'expired',confirmed:false,is_buy:true,account_index:0,receive_index:0},{id:103519,state:'completed',confirmed:true,is_buy:true,account_index:0,receive_index:0}]
-
     return service.trades;
   }
 
