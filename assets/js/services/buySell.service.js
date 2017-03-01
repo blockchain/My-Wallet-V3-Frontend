@@ -26,26 +26,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     }
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, $rootScope.buySellDebug);
-      if (_buySellMyWallet.exchanges) { // Absent if 2nd password set
-        _buySellMyWallet.exchanges.sfox.api.production = $rootScope.sfoxUseStaging === null ? $rootScope.isProduction : !Boolean($rootScope.sfoxUseStaging);
-
-        // This can safely be done asynchrnously, because:
-        // * the buy-sell tab won't appear until Options is loaded
-        // * no information is fetched from partner API's until:
-        //   * the buy-sell tab is shown; or
-        //   * monitorPayments() is called and finds a new transaction (which is
-        //     why the monitorPayments call below is wrapped in an Options.get()
-        //     promise)
-        let processOptions = (options) => {
-          _buySellMyWallet.exchanges.coinify.partnerId = options.partners.coinify.partnerId;
-          _buySellMyWallet.exchanges.sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
-        };
-        if (Options.didFetch) {
-          processOptions(Options.options);
-        } else {
-          Options.get().then(processOptions);
-        }
-      }
     }
     return _buySellMyWallet;
   };
@@ -86,7 +66,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function init (coinify) {
     return Options.get().then(options => {
-      coinify.partnerId = options.partners.coinify.apiKey;
+      coinify.partnerId = options.partners.coinify.partnerId;
+      coinify.api.testnet = $rootScope.network === 'testnet';
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
