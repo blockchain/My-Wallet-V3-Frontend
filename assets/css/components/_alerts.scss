@@ -20,7 +20,7 @@
   min-height: initial !important;
 }
 .alert-received-bitcoin, .alert-sent-bitcoin {
-  @extend .received;
+  @extend .success;
   background: white;
   padding: 20px;
   font-size: 1.2em;
@@ -30,7 +30,7 @@
   animation: fade-in-right .5s;
   box-shadow: 0 2px 3px 0 #676767;
   .close {
-    @extend .received;
+    color: $success !important;
   }
 }
 

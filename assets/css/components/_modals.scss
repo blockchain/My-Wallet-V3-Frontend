@@ -130,7 +130,7 @@
 // Where all modal content resides (sibling of .modal-header and .modal-footer)
 .modal-body {
   position: relative;
-  padding: $modal-inner-padding;
+  padding: 25px 35px;
 }
 
 // Footer (for actions)
@@ -232,6 +232,9 @@
   }
   &.sm {
     .modal-dialog { width: 40vw; }
+    @media(max-width: 768px) {
+      .modal-dialog { width: 80vw; }
+    }
   }
   &.xs {
     .modal-dialog { width: 30vw; }

@@ -2,6 +2,11 @@
   display: flex !important;
   justify-content: center;
   align-items: center;
+  @media(max-width: 768px) {
+    .modal-dialog {
+      width: 80vw;
+    }
+  }
   .modal-dialog {
     width: 40vw;
     margin-top: 0 !important;

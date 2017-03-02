@@ -2,7 +2,7 @@
   section.level.level_one
     header.flex-baseline.mtl
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_1")
-      p.gillsans.f-16.em-300.mvn(translate="LEVEL_1_TITLE")
+      p.alt-font.f-16.em-300.mvn(translate="LEVEL_1_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-grey.flex-center.flex-justify
         img(src="img/security-icon-1.png")
@@ -20,16 +20,19 @@
           completed-level(ng-show="user.isEmailVerified" placement="bottom" content="EMAIL_ADDRESS_TOOLTIP" img="img/badge-verifyemail.png" message="EMAIL_VERIFIED")
       .badge-panel.visible-xs-block(ng-show="display.action == 'email'")
         div(ng-show="display.action == 'email' && !display.editingEmail")
-          .verify-email
-            p.gillsans.f-16(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+          .verify-email.width-100
+            p.alt-font.f-16.width-100-mobile(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
             verify-email(button-class="button-primary")
-            p(ng-hide="user.isEmailVerified")
-              span.gillsans.f-16(translate="DIDNT_RECEIVE_EMAIL")
-              span 
-                resend-email-confirmation
-                span.gillsans.f-16(translate="OR")
+            span.mt-10(ng-hide="user.isEmailVerified")
+              span.alt-font.f-16(translate="DIDNT_RECEIVE_EMAIL")
+              |  
               span
-                a.gillsans.f-16(ng-click="beginEditEmail()", translate="CHANGE")
+                resend-email-confirmation
+              |  
+              span.alt-font.f-16(translate="OR")
+              |  
+              span
+                a.alt-font.f-16(ng-click="beginEditEmail()", translate="CHANGE")
         div(ng-show="display.action == 'email' && display.editingEmail")       
           bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
       li.level-badge(ng-click="status.didConfirmRecoveryPhrase || toggle('securityphrase')", ng-class="{'active' : display.action == 'securityphrase', 'badge-active': status.didConfirmRecoveryPhrase }")
@@ -46,8 +49,8 @@
           completed-level(ng-show="status.didConfirmRecoveryPhrase" placement="bottom" content="RECOVERY_PHRASE_TOOLTIP" img="img/badge-securityphrase.png" message="PHRASE_BACKED")
       .badge-panel.visible-xs-block(ng-show="display.action == 'securityphrase'")
         .flex-center
-          p.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
-          .flex-1.mll.backup-phrase-actions
+          p.alt-font.f-16.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+          .mll.backup-phrase-actions
             confirm-recovery-phrase(ng-hide="status.didConfirmRecoveryPhrase")
       li.level-badge(ng-click="user.passwordHint || toggle('passwordhint')", ng-class="{'active' : display.action == 'passwordhint', 'badge-active': user.passwordHint }")
         a
@@ -62,36 +65,29 @@
             p.bright-green.em-300(translate="NICELY_DONE")
           completed-level(ng-show="user.passwordHint" placement="bottom" content="PASSWORD_HINT_TOOLTIP" img="img/badge-passwordhint.png" message="HINT_STORED")
       .badge-panel.visible-xs-block(ng-show="display.action == 'passwordhint'")
-        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate" editing=1)
-          .flex-center
-            .form-group.width-50.flex-column(ng-class="{'has-error': !validate()}")
-              p(translate="CHANGE")
-              input.form-control.mtm(on-enter="save()" type="{{ type }}" ng-model="form.newValue" ng-focus="focus()" placeholder="{{ placeholder }}" ng-change="onChange()" maxlength="255")
-              span.help-block {{::errorMessage}}
-            .width-50.mll.pll
-              button.button-primary(ng-click="save()",ng-disabled="!validate() || form.newValue == ngModel",ui-ladda="status.saving", ladda-translate="SAVE", data-style="expand-left")
+        bc-async-input(custom inline placeholder="'ADD_PASSWORD_HINT' | translate" ng-model="user.passwordHint" on-cancel="cancelEditPasswordHint" on-save="changePasswordHint" action-title="'CHANGE' | translate")
 
     .badge-panel.hidden-xs(ng-show="display.action == 'email' || display.action == 'securityphrase' || display.action == 'passwordhint' ")
       div(ng-show="display.action == 'email' && !display.editingEmail")
-        .verify-email
-          p.gillsans.f-16(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
+        .verify-email.width-100
+          p.alt-font.f-16.width-50(translate="PLEASE_CHECK_EMAIL", translate-values='{ email: user.email}')
           verify-email(button-class="button-primary")
-          p(ng-hide="user.isEmailVerified")
-            span.gillsans.f-16(translate="DIDNT_RECEIVE_EMAIL")
-            | &nbsp;
+          span.mt-10(ng-hide="user.isEmailVerified")
+            span.alt-font.f-16(translate="DIDNT_RECEIVE_EMAIL")
+            |  
             span
               resend-email-confirmation
-            | &nbsp;
-            span.gillsans.f-16(translate="OR")
-            | &nbsp;
+            |  
+            span.alt-font.f-16(translate="OR")
+            |  
             span
-              a.gillsans.f-16(ng-click="beginEditEmail()", translate="CHANGE")
+              a.alt-font.f-16(ng-click="beginEditEmail()", translate="CHANGE")
 
       div(ng-show="display.action == 'email' && display.editingEmail")       
         bc-async-input(custom inline type="email" is-required placeholder="'EMAIL_ADDRESS' | translate", ng-model="user.email", on-cancel="cancelEditEmail" on-save="changeEmail", action-title="'CHANGE' | translate" editing=1)
 
       div.flex-center(ng-show="display.action == 'securityphrase'")        
-        p.gillsans.f-16.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
+        p.alt-font.f-16.flex-1.prl(translate="RECOVERY_PHRASE_SECURITY_CENTER")
         .flex-1.mll.backup-phrase-actions
           confirm-recovery-phrase(button-class="button-primary", ng-hide="status.didConfirmRecoveryPhrase", prompt-backup="promptBackup")
 
@@ -109,7 +105,7 @@
   section.level.level_two
     header.flex-baseline.mtl
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_2")
-      p.gillsans.f-16.em-300.mvn(translate="LEVEL_2_TITLE")
+      p.alt-font.f-16.em-300.mvn(translate="LEVEL_2_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-grey.flex-center.flex-justify
         img(src="img/security-icon-2.png")
@@ -145,7 +141,7 @@
           completed-level(ng-show="settings.needs2FA" content="2FA_TOOLTIP" img="img/badge-add2FA.png" message="TWO_STEP_ENABLED")
       .badge-panel.visible-xs-block(ng-show="display.action == 'twofactor'")     
         div.flex-center
-          p.gillsans.f-16.flex-1.prl(translate="SC_CONFIGURE_2FA")
+          p.alt-font.f-16.flex-1.prl(translate="SC_CONFIGURE_2FA")
           .flex-1.mll
             a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
     .badge-panel.hidden-xs(ng-show="display.action == 'mobilenumber' || display.action == 'twofactor'")
@@ -155,14 +151,14 @@
           h2.status.complete.hidden-xs.long-input
           verify-mobile-number(on-success="mobileNumber.step = 0" full-width)
       div.flex-center(ng-show="display.action == 'twofactor'")     
-        p.gillsans.f-16.flex-1.prl(translate="SC_CONFIGURE_2FA")
+        p.alt-font.f-16.flex-1.prl(translate="SC_CONFIGURE_2FA")
         .flex-1.mll
           a.button-primary(ng-click="changeTwoFactor()" translate="CONFIGURE_2FA")
 
   section.level.level_three
     header.flex-baseline.mtl
       h2.prm.type-h5.mvn.em-400(translate="LEVEL_3")
-      p.gillsans.f-16.em-300.mvn(translate="LEVEL_3_TITLE")
+      p.alt-font.f-16.em-300.mvn(translate="LEVEL_3_TITLE")
     ul.flex.flex-start.pln.mbn
       li.level-header.bg-grey.flex-center.flex-justify
         img(src="img/security-icon-3.png")
@@ -180,12 +176,12 @@
           completed-level(ng-show="settings.blockTOR" content="BLOCK_TOR_TOOLTIP" img="img/badge-blockTOR.png" message="TOR_BLOCKED")
         .badge-panel.visible-xs-block(ng-show="display.action == 'blocktor'")
           .flex-center(ng-show="display.action == 'blocktor'")
-            p.gillsans.f-16.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
+            p.alt-font.f-16.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
             .mll.pll.block-tor-actions
               tor(button-class="button-primary")
 
     .badge-panel.hidden-xs(ng-show="display.action == 'blocktor'")
       .flex-center(ng-show="display.action == 'blocktor'")
-        p.gillsans.f-16.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
+        p.alt-font.f-16.flex-1(TRANSLATE="BLOCK_TOR_EXPLAIN")
         .mll.pll.block-tor-actions
           tor(button-class="button-primary")
