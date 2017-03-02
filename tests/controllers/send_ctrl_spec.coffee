@@ -8,6 +8,7 @@ describe "SendCtrl", ->
   scope = undefined
   $q = undefined
   $httpBackend = undefined
+  $timeout = undefined
 
   askForSecondPassword = undefined
 
@@ -21,8 +22,9 @@ describe "SendCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller, $compile, _$q_) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $compile, _$q_, _$timeout_) ->
       $q = _$q_
+      $timeout = _$timeout_
       $httpBackend = $injector.get("$httpBackend")
       MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
@@ -447,40 +449,54 @@ describe "SendCtrl", ->
           expect(Alerts.displayError.calls.argsFor(0)[0]).toEqual('err_message')
         )
 
+        it "should close the modal if it receives Tx Exists error", inject((Alerts) ->
+          scope.payment = new Wallet.Payment({}, true, 'Transaction Already Exists')
+          spyOn(modalInstance, 'close').and.callThrough()
+          spyOn(Alerts, 'displayError').and.callThrough()
+          scope.send()
+          scope.$digest()
+          expect(modalInstance.close).toHaveBeenCalled()
+          expect(Alerts.displayError).not.toHaveBeenCalled()
+        )
+
       describe "success", ->
 
         beforeEach ->
           askForSecondPassword.resolve()
+        
+        digestAndFlush = () ->
+          scope.$digest()
+          $timeout.flush()
 
         it "should return sending to false", ->
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(scope.sending).toBe(false)
 
         it "should close the modal", ->
           spyOn(modalInstance, "close")
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(modalInstance.close).toHaveBeenCalled()
 
         it "should play \"The Beep\"", inject((Wallet) ->
           spyOn(Wallet, 'beep')
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(Wallet.beep).toHaveBeenCalled()
         )
 
         it "should clear alerts", inject((Alerts) ->
           spyOn(Alerts, 'clear')
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(Alerts.clear).toHaveBeenCalled()
         )
 
         it "should show a confirmation alert", inject((Alerts) ->
           spyOn(Alerts, "displaySentBitcoin").and.callThrough()
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT")
         )
 
@@ -488,14 +504,14 @@ describe "SendCtrl", ->
           MyWalletHelpers.tor = () -> true
           spyOn(Alerts, "displaySentBitcoin").and.callThrough()
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT_TOR")
         )
 
         it "should show account transactions", inject(($state) ->
           spyOn($state, 'go')
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect($state.go).toHaveBeenCalledWith('wallet.common.transactions')
         )
 
@@ -503,7 +519,7 @@ describe "SendCtrl", ->
           spyOn($state, 'go')
           scope.transaction.from = Wallet.legacyAddresses()[0]
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect($state.go).toHaveBeenCalledWith('wallet.common.transactions')
         )
 
@@ -512,7 +528,7 @@ describe "SendCtrl", ->
           spyOn(MyWallet.wallet, 'setNote')
           scope.transaction.note = 'this_is_a_note'
           scope.send()
-          scope.$digest()
+          digestAndFlush()
           expect(Wallet.setNote).toHaveBeenCalledWith({ hash: 'tx-hash' }, 'this_is_a_note')
           expect(MyWallet.wallet.setNote).toHaveBeenCalledWith('tx-hash', 'this_is_a_note')
         )
@@ -520,6 +536,7 @@ describe "SendCtrl", ->
         it "should not set a note if there is not one", inject((Wallet) ->
           spyOn(Wallet, 'setNote')
           scope.send()
+          digestAndFlush()
           expect(Wallet.setNote).not.toHaveBeenCalled()
         )
 
@@ -529,19 +546,19 @@ describe "SendCtrl", ->
 
           it "should not send if inputMetric is null", ->
             scope.send()
-            scope.$digest()
+            digestAndFlush()
             expect(scope.sendInputMetrics).not.toHaveBeenCalled()
 
           it "should not send if inputMetric is not valid", ->
             scope.inputMetric = "asdf"
             scope.send()
-            scope.$digest()
+            digestAndFlush()
             expect(scope.sendInputMetrics).not.toHaveBeenCalled()
 
           it "should send if inputMetric is valid", ->
             scope.inputMetric = "paste"
             scope.send()
-            scope.$digest()
+            digestAndFlush()
             expect(scope.sendInputMetrics).toHaveBeenCalledWith("paste")
 
     describe "sendInputMetrics", ->

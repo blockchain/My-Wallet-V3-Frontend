@@ -5,7 +5,7 @@
     .flex-column
       h2.em-300.mtn(translate="RECOVER_FUNDS")
       p(translate="RECOVER_BTC_LOST")
-  form.ptl.form-horizontal(name="passphraseForm" ng-submit="nextStep()" autocomplete="off" ng-switch-when="1" novalidate)
+  form.ptl.form-horizontal(name="passphraseForm" ng-submit="browser.disabled || nextStep()" autocomplete="off" ng-switch-when="1" novalidate)
     fieldset(ng-disabled="browser.disabled || working")
       browser-detection(result="browser")
       .security-red.mbl.em-400.flex-center

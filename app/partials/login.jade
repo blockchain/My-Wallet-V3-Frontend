@@ -11,7 +11,7 @@
       p.alt-font.f-16(translate="LOGIN_BELOW")
 
   // GUID & Password fields
-  form.bc-form.mt-30.form-horizontal.clearfix(name="loginForm" ng-submit="login()" role="form" autocomplete="off" novalidate)
+  form.bc-form.mt-30.form-horizontal.clearfix(name="loginForm" ng-submit="browser.disabled || login()" role="form" autocomplete="off" novalidate)
     browser-detection(result="browser")
     fieldset(ng-disabled="browser.disabled || status.busy")
       .group.mb-15(ng-class="{'has-error': errors.uid}")
