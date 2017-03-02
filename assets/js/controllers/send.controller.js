@@ -41,10 +41,9 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     size: 0
   };
 
-  $scope.payment = new Wallet.Payment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
-  $scope.payment.on('update', data => {
+  $scope.paymentOnUpdate = (data) => {
     let tx = $scope.transaction;
     tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
     if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
@@ -56,20 +55,35 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     tx.sweepFees = data.sweepFees;
     tx.size = data.txSize;
     $scope.$safeApply();
-  });
+  };
 
-  $scope.payment.on('error', error => {
+  $scope.paymentOnError = (error) => {
     if (error.error === 'ERR_FETCH_UNSPENT') {
       Alerts.displayError(error.error, true, $scope.alerts);
       $scope.failedToLoadUnspent = true;
     }
-  });
+  };
 
-  $scope.payment.on('message', message => {
+  $scope.paymentOnMessage = (message) => {
     if (message && message.text) {
       Alerts.displayWarning(message.text, true, $scope.alerts);
     }
-  });
+  };
+
+  $scope.setPaymentHandlers = (payment) => {
+    payment.on('update', $scope.paymentOnUpdate);
+    payment.on('error', $scope.paymentOnError);
+    payment.on('message', $scope.paymentOnMessage);
+  };
+
+  $scope.unsetPaymentHandlers = (payment) => {
+    payment.removeListener('update', $scope.paymentOnUpdate);
+    payment.removeListener('error', $scope.paymentOnError);
+    payment.removeListener('message', $scope.paymentOnMessage);
+  };
+
+  $scope.payment = new Wallet.Payment();
+  $scope.setPaymentHandlers($scope.payment);
 
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
@@ -146,7 +160,11 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
+        $scope.unsetPaymentHandlers($scope.payment);
+        $scope.payment = new Wallet.Payment(paymentCheckpoint);
+        $scope.setPaymentHandlers($scope.payment);
+        $scope.setPaymentFrom(true);
+        $scope.payment.build();
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
@@ -280,14 +298,15 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   let lastOrigin;
-  $scope.setPaymentFrom = () => {
+  $scope.setPaymentFrom = (force = false) => {
     let tx = $scope.transaction;
     if (!tx.from) return;
     let origin = tx.from.index == null ? tx.from.address : tx.from.index;
-    let fee = $scope.advanced ? tx.fee : undefined;
-    if (origin === lastOrigin) return;
-    lastOrigin = origin;
-    $scope.payment.from(origin, fee);
+    if (force || origin !== lastOrigin) {
+      lastOrigin = origin;
+      let fee = $scope.advanced ? tx.fee : undefined;
+      $scope.payment.from(origin, fee);
+    }
   };
 
   $scope.setPaymentTo = () => {
