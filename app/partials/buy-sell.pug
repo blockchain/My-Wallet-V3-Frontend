@@ -7,8 +7,22 @@
     img.loader(src="img/puff.svg")
     span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
   div(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
-    .flex-row.flex-column-tablet
-      .width-50.mrl.mtl(ng-show="state.buy")
+    .filter-bar.flex-center.flex-between
+      .filter-buttons.flex-center
+        a.black.em-400.em-alt.f-16.upper(
+        ng-repeat="tab in tabs"
+        ng-class="{active: selectedTab === tab, mrn: $last, spaced: !$last}"
+        ng-click="selectTab(tab)"
+        translate="{{tab}}")
+        span.badge(ng-if="trades.pending.length") {{pendingNumber}}
+      .sfox-logo
+        span.mrs.type-sm Powered By
+        a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
+          img(src="img/coinify-logo.svg")
+    .buy-sell.mbvl
+      .flex-row.flex-column-tablet
+      .flex-column(ng-show="selectedTab === 'BUY_BITCOIN'")
+        //- BUY
         buy-quick-start(limits="limits"
                         transaction="transaction"
                         disabled="status.disabled"
@@ -20,33 +34,60 @@
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
-      .flex-column.pos-rel.width-50.mlvl.mt-55(ng-class="{disabled: getIsTradingDisabled() && getIsTradingDisabledReason() === 'disabled'}")
-        span.state-danger-text(ng-if="fetchKYCError" translate="FETCH_KYC_ERROR")
-        kyc-status(ng-if="!fetchKYCError" state="kyc.state" on-trigger="openKyc()" limits="limits")
-    .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length || fetchTradeError" data-preflight-tag="BuySellTrades")
-      .flex-row.flex-between.flex-center
-        h4.type-h4(translate="ORDER_HISTORY")
-        span Coinify Account: {{ exchange.profile.email }}
-      div(ng-if="fetchTradeError")
-        span.state-danger-text(translate="FETCH_TRADE_ERROR")
-      table.width-100(ng-if="!fetchTradeError")
-        tr.border.bg-grey
-          th.phml.pvs.width-30(translate="STATUS")
-          th.pvs.width-30(translate="DATE")
-          th.pvs.width-25 BTC
-          th.pvs.width-15(translate="TOTAL")
-        tr(
-          ng-repeat="trade in trades.pending.concat(trades.completed) | orderBy:'createdAt':true | limitTo:tradeLimit"
-          trading-disabled-reason="getIsTradingDisabledReason()"
-          trading-disabled="getIsTradingDisabled()"
-          disabled="status.disabled"
-          trade="trade"
-          buy="buy"
-          in-view="$last && scrollTrades()")
-      .flex-column.flex-align-end.mbvl.mtml(ng-if="false" translate-namespace="BUY_FEEDBACK")
-        span.type-h5.em-500(translate=".PROMPT")
-        .flex-row.flex-center.mts
-          span.type-h5.security-red(translate=".DISAGREE")
-          span.type-h5.mhm.pointer(uib-rating ng-model="rating" max="5" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" ng-click="submitFeedback(rating)")
-          span.type-h5.success(translate=".AGREE")
+        .flex-column.width-50.mlvl.mt-55
+          kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
+      .flex-column(ng-show="selectedTab === 'SELL_BITCOIN'")
+        //- SELL
+        //- sell-quick-start(limits="limits",
+        //-                 transaction="transaction",
+        //-                 disabled="status.disabled",
+        //-                 currency-symbol="currencySymbol",
+        //-                 modal-open="status.modalOpen",
+        //-                 change-currency="changeCurrency(currency)"
+        //-                 trading-disabled="getIsTradingDisabled()"
+        //-                 trading-disabled-reason="getIsTradingDisabledReason()"
+        //-                 open-pending-trade="buy(pendingTrade)"
+        //-                 pending-trade="pendingTrade"
+        //-                 sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
+        //- .flex-column.width-50.mlvl.mt-55
+        //-   kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
+
+      .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
+        .flex-column.mtl(ng-show="trades.pending.length" data-preflight-tag="BuySellTrades")
+        .flex-row.flex-between.flex-center(ng-show="trades.pending.length")
+          //- h4.type-h4(translate="ORDER_HISTORY")
+          h4.type-h5 Action Required ({{pendingNumber}})
+          span(ng-show="trades.pending.length") Coinify Account: {{ exchange.profile.email }}
+        table.width-100(ng-show="trades.pending.length")
+          tr.border.bg-light-blue
+            th.phml.pvs.width-30(translate="STATUS")
+            th.pvs.width-30(translate="DATE")
+            th.pvs.width-25 BTC
+            th.pvs.width-15(translate="TOTAL")
+          tr(
+            ng-repeat="trade in trades.pending | orderBy:'createdAt':true | limitTo:tradeLimit"
+            disabled="status.disabled"
+            trade="trade"
+            buy="buy"
+            in-view="$last && scrollTrades()")
+
+
+        .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
+        .flex-row.flex-between.flex-center
+          h4.type-h5 Completed Orders
+          //- h4.type-h4(translate="ORDER_HISTORY")          span Coinify Account: {{ exchange.profile.email }}
+          span(ng-hide="trades.pending.length") Coinify Account: {{ exchange.profile.email }}
+        table.width-100.mb-30
+          tr.border.bg-light-blue
+            th.phml.pvs.width-30(translate="STATUS")
+            th.pvs.width-30(translate="DATE")
+            th.pvs.width-25 BTC
+            th.pvs.width-15(translate="TOTAL")
+          tr(
+            ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:tradeLimit"
+            disabled="status.disabled"
+            trade="trade"
+            buy="buy"
+            in-view="$last && scrollTrades()")
+
     contact-support-footer
