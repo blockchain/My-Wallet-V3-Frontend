@@ -288,7 +288,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.goToOrderHistory = () => {
-    if ($state.params.selectedTab === 'ORDER_HISTORY' || $scope.onStep('accept-terms')) {
+    if ($state.params.selectedTab === 'ORDER_HISTORY' || $scope.onStep('accept-terms') || ($scope.trades.pending.length === 0)) {
       $uibModalInstance.dismiss('');
     } else {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
