@@ -388,12 +388,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     return defer.promise;
   };
 
-  wallet.askForMainPasswordConfirmation = () => (
-    Alerts.prompt('MAIN_PW_REQUIRED', { type: 'password' })
-      .then(wallet.isCorrectMainPassword)
-      .then(correct => correct ? $q.resolve(true) : $q.reject('incorrect_main_pw'))
-  );
-
   wallet.saveActivity = () => {
     // TYPES: ['transactions', 'security', 'settings', 'accounts']
     $rootScope.$broadcast('updateActivityFeed');
