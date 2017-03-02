@@ -11,6 +11,7 @@ build: node_modules bower_components
 	grunt build
 
 test: build
+	./check_bad_strings.rb
 	./node_modules/karma/bin/karma start karma.conf.js --single-run
 
 pgp: node_modules
@@ -51,7 +52,6 @@ helperApp/dist: bower_components
 	DIST=1 ./node_modules/.bin/webpack --bail
 
 dist: helperApp/dist bower_components
-	./check_bad_strings.rb
 	grunt build --skipWebpack=1
 
 	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=${NETWORK}
