@@ -41,10 +41,9 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     size: 0
   };
 
-  $scope.payment = Wallet.my.wallet.createPayment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
-  $scope.payment.on('update', data => {
+  $scope.paymentOnUpdate = (data) => {
     let tx = $scope.transaction;
     tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
     if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
@@ -56,20 +55,35 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     tx.sweepFees = data.sweepFees;
     tx.size = data.txSize;
     $scope.$safeApply();
-  });
+  };
 
-  $scope.payment.on('error', error => {
+  $scope.paymentOnError = (error) => {
     if (error.error === 'ERR_FETCH_UNSPENT') {
       Alerts.displayError(error.error, true, $scope.alerts);
       $scope.failedToLoadUnspent = true;
     }
-  });
+  };
 
-  $scope.payment.on('message', message => {
+  $scope.paymentOnMessage = (message) => {
     if (message && message.text) {
       Alerts.displayWarning(message.text, true, $scope.alerts);
     }
-  });
+  };
+
+  $scope.setPaymentHandlers = (payment) => {
+    payment.on('update', $scope.paymentOnUpdate);
+    payment.on('error', $scope.paymentOnError);
+    payment.on('message', $scope.paymentOnMessage);
+  };
+
+  $scope.unsetPaymentHandlers = (payment) => {
+    payment.removeListener('update', $scope.paymentOnUpdate);
+    payment.removeListener('error', $scope.paymentOnError);
+    payment.removeListener('message', $scope.paymentOnMessage);
+  };
+
+  $scope.payment = Wallet.my.wallet.createPayment();
+  $scope.setPaymentHandlers($scope.payment);
 
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
@@ -146,35 +160,43 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
+        $scope.unsetPaymentHandlers($scope.payment);
+        $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint);
+        $scope.setPaymentHandlers($scope.payment);
+        $scope.payment.build();
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-      Alerts.displayError(msgText, false, $scope.alerts);
+      if (msgText.indexOf('Transaction Already Exists') > -1) {
+        $uibModalInstance.close();
+      } else {
+        Alerts.displayError(msgText, false, $scope.alerts);
+      }
     };
 
     const transactionSucceeded = (tx) => {
-      $scope.$root.scheduleRefresh();
-      $scope.sending = false;
       $uibModalInstance.close('');
-      Wallet.beep();
+      $timeout(() => {
+        $scope.$root.scheduleRefresh();
+        $scope.sending = false;
+        Wallet.beep();
 
-      if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
-        $scope.sendInputMetrics($scope.inputMetric);
-      }
+        if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
+          $scope.sendInputMetrics($scope.inputMetric);
+        }
 
-      let note = $scope.transaction.note;
-      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+        let note = $scope.transaction.note;
+        if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-      if ($state.current.name !== 'wallet.common.transactions') {
-        $state.go('wallet.common.transactions');
-      }
+        if ($state.current.name !== 'wallet.common.transactions') {
+          $state.go('wallet.common.transactions');
+        }
 
-      let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
-      Alerts.displaySentBitcoin(message);
-      $scope.$safeApply();
+        let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
+        Alerts.displaySentBitcoin(message);
+      });
     };
 
     const signAndPublish = (passphrase) => {

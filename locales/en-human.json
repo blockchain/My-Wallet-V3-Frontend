@@ -1149,7 +1149,8 @@
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
   "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet secure and seamless.",
-  "METADATA_DOWN_EXCHANGE": "Unable to load your exchange details. Please try refreshing the page.",
+  "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
+  "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
   "ORDER_HISTORY": "Order History",
   "STATUS": "Status",
@@ -1274,5 +1275,7 @@
   "INTERVIEWING": "Interviewing",
   "PRESS": "Press",
   "BLOG": "Blog",
+  "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
+  "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "": ""
 }
