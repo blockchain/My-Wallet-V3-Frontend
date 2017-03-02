@@ -72,6 +72,7 @@ $bright-green:  $jade !important; //override Security Center nested css selector
 @include color('success', $jade);
 @include color('text-color', $text);
 @include color('state-danger-text', $security-red);
+@include color('medium-blue', $bali-hai);
 @include color('transferred', $bali-hai);
 @include color('received', $iris-green);
 @include color('transfer', $bali-hai);

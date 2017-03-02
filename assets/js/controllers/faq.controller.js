@@ -8,7 +8,7 @@ function faqCtrl ($scope, faq, buyStatus, $uibModal) {
 
   $scope.subscribe = () => {
     $uibModal.open({
-      templateUrl: 'partials/subscribe-modal.jade',
+      templateUrl: 'partials/subscribe-modal.pug',
       windowClass: 'bc-modal initial',
       controller: 'SubscribeCtrl'
     });

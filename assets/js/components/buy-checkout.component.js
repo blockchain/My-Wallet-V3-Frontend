@@ -13,7 +13,7 @@ angular
       buySuccess: '&',
       buyError: '&'
     },
-    templateUrl: 'templates/buy-checkout.jade',
+    templateUrl: 'templates/buy-checkout.pug',
     controller: BuyCheckoutController,
     controllerAs: '$ctrl'
   });

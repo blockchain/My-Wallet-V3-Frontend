@@ -24,7 +24,7 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
   $scope.goToTransfer = () => {
     $uibModalInstance.close();
     $uibModal.open({
-      templateUrl: 'partials/settings/transfer.jade',
+      templateUrl: 'partials/settings/transfer.pug',
       controller: 'TransferController',
       windowClass: 'bc-modal',
       resolve: { address: () => $scope.address }

@@ -12,7 +12,7 @@ function fiatOrBtc (Wallet, currency) {
     scope: {
       btc: '='
     },
-    templateUrl: 'templates/fiat-or-btc.jade',
+    templateUrl: 'templates/fiat-or-btc.pug',
     link: link
   };
   return directive;

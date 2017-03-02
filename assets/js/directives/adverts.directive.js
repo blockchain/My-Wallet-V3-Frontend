@@ -10,7 +10,7 @@ function adverts (Adverts, $rootScope) {
     restrict: 'E',
     replace: 'true',
     scope: {},
-    templateUrl: 'templates/adverts.jade',
+    templateUrl: 'templates/adverts.pug',
     link: link
   };
   return directive;

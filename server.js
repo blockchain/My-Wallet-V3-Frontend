@@ -18,6 +18,7 @@ var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://st
 var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
 var sfoxUseStaging = process.env.SFOX_USE_STAGING === '1';
 var sfoxProduction = sfoxUseStaging ? false : production;
+var testnet = process.env.NETWORK === 'testnet';
 
 // App configuration
 var rootApp = express();
@@ -54,7 +55,7 @@ app.use(function (req, res, next) {
         (webSocketURL || 'wss://ws.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
-        'https://app-api.coinify.com',
+        `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`
@@ -65,10 +66,10 @@ app.use(function (req, res, next) {
     ]).join('; ');
     res.setHeader('content-security-policy', cspHeader);
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    res.render(dist ? 'index.html' : 'build/index.jade', {pretty: true});
+    res.render(dist ? 'index.html' : 'build/index.pug', {pretty: true});
     return;
   } else if (req.url === '/landing.html') {
-    res.render(dist ? 'landing.html' : 'build/landing.jade');
+    res.render(dist ? 'landing.html' : 'build/landing.pug');
     return;
   }
   if (dist) {
@@ -149,7 +150,7 @@ if (dist) {
 } else {
   console.log('Development mode: multiple javascript files, not cached');
   app.use(express.static(__dirname));
-  app.set('view engine', 'jade');
+  app.set('view engine', 'pug');
   app.set('views', __dirname);
 
   helperApp.use('/wallet-helper', express.static(path.join(__dirname, 'helperApp/build')));

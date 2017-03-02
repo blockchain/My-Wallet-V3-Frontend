@@ -59,7 +59,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   };
 
   $scope.exportHistory = () => $uibModal.open({
-    templateUrl: 'partials/export-history.jade',
+    templateUrl: 'partials/export-history.pug',
     controller: 'ExportHistoryController',
     windowClass: 'bc-modal',
     resolve: {

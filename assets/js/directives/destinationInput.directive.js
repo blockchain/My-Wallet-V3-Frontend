@@ -15,7 +15,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       ignore: '=',
       setInputMetric: '&'
     },
-    templateUrl: 'templates/destination-input.jade',
+    templateUrl: 'templates/destination-input.pug',
     link: link
   };
   return directive;

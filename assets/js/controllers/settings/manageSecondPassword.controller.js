@@ -64,14 +64,14 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   };
 
   $scope.openRecovery = () => $uibModal.open({
-    templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+    templateUrl: 'partials/confirm-recovery-phrase-modal.pug',
     controller: 'ConfirmRecoveryPhraseCtrl',
     windowClass: 'bc-modal'
   });
 
   $scope.recoveryModal = () => {
     const openModal = () => $uibModal.open({
-      templateUrl: 'partials/recovery-before-second-password.jade',
+      templateUrl: 'partials/recovery-before-second-password.pug',
       controller: 'ManageSecondPasswordCtrl',
       windowClass: 'bc-modal'
     });

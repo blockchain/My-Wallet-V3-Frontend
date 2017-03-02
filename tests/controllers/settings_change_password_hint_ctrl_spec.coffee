@@ -8,7 +8,7 @@ describe "ChangePasswordHintCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/change-password-hint.jade')
+      template = $templateCache.get('partials/settings/change-password-hint.pug')
 
       $controller "ChangePasswordHintCtrl",
         $scope: scope

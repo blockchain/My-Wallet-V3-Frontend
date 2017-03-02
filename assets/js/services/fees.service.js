@@ -13,7 +13,7 @@ function fees ($uibModal) {
 
   function showFeeWarning (currentFee, suggestedFee, maxFee, surge) {
     let modalOptions = {
-      templateUrl: 'partials/dynamic-fee.jade',
+      templateUrl: 'partials/dynamic-fee.pug',
       windowClass: 'bc-modal medium',
       resolve: { feeValues: () => ({
         currentFee, suggestedFee, maxFee, surge
@@ -26,7 +26,7 @@ function fees ($uibModal) {
   function showLargeTxWarning (txSize, recommendedFee) {
     let multiplier = (txSize / standardTx).toFixed(1);
     let modalOptions = {
-      templateUrl: 'partials/large-tx.jade',
+      templateUrl: 'partials/large-tx.pug',
       windowClass: 'bc-modal medium',
       controller: ($scope) => angular.extend($scope, { multiplier, recommendedFee })
     };

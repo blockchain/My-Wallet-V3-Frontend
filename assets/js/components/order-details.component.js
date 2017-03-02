@@ -8,5 +8,5 @@ angular
       $scope.hideHeader = true;
       $scope.formattedTrade = this.formattedTrade;
     },
-    templateUrl: 'partials/trade-summary.jade'
+    templateUrl: 'partials/trade-summary.pug'
   });
