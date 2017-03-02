@@ -2,9 +2,9 @@ angular
   .module('sharedDirectives')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope', '$location', 'languages'];
+publicHeader.$inject = ['$rootScope', '$location'];
 
-function publicHeader ($rootScope, $location, languages) {
+function publicHeader ($rootScope, $location) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -29,16 +29,6 @@ function publicHeader ($rootScope, $location, languages) {
                 <input type="text" name="search" class="form-control input-sm search-query" placeholder="{{'SEARCH'|translate}}">
               </form>
             </li>
-            <li class="dropdown" uib-dropdown>
-              <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" uib-dropdown-toggle>
-                <div class="flex-center">
-                  {{language}}<span class="caret mlm"></span>
-                </div>
-              </a>
-              <ul class="dropdown-menu" uib-dropdown-menu>
-                <li ng-repeat="lang in languages"><a ng-href="/{{lang.code}}/wallet/#{{path()}}">{{lang.name}}</a></li>
-              </ul>
-            </li>
           </ul>
         </div>
       </div>
@@ -53,12 +43,7 @@ function publicHeader ($rootScope, $location, languages) {
 
   function link (scope, elem, attrs) {
     scope.rootURL = $rootScope.rootURL;
-    scope.languages = languages.languages;
     scope.path = () => $location.path();
     scope.isTestnet = $rootScope.network === 'testnet';
-    scope.$watch(languages.get, (code) => {
-      scope.language = languages.mapCodeToName(code);
-      scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
-    });
   }
 }
