@@ -1,16 +1,16 @@
 .flex-column.note.em-300.width-80
   .flex-row.flex-end.flex-start-tablet
     .flex-row.width-100(ng-hide="editNote")
-      .tx-note.em-400.text-cursor(ng-show="label && !transaction.note") {{ label }}
-      .tx-note.em-400.text-cursor(ng-hide="label && !transaction.note"
+      .tx-note.em-300.text-cursor(ng-show="label && !transaction.note") {{ label }}
+      .tx-note.em-300.text-cursor(ng-hide="label && !transaction.note"
                                              ng-bind-html="transaction.note | escapeHtml | highlight:search")
       a.mlm(ng-show="label || transaction.note" ng-click="startEditNote()")
         i.ti-pencil
-      a.em-400(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
+      span.mid-grey.pointer.em-300.f-14(ng-click="startEditNote()" ng-hide="editNote || transaction.note || label" translate="ADD_A_DESCRIPTION") 
     a.cancel(ng-click="cancelEditNote()" ng-show="editNote")
       i.ti-close
   .flex-column.input(ng-show="editNote" ng-class="{'pos-abs': transaction.toggled}")
-    textarea.em-400(on-enter="saveNote()" ng-model="transaction.draftNote" maxlength="255" placeholder="{{'ADD_A_DESCRIPTION' | translate}}")
+    textarea.em-300(on-enter="saveNote()" ng-model="transaction.draftNote" maxlength="255" placeholder="{{'ADD_A_DESCRIPTION' | translate}}")
     .flex-start.mts
       span.label.label-success.pointer(ng-click="saveNote()", translate="SAVE", ng-hide="transaction.note")
       span.label.label-success.pointer(ng-click="saveNote()", translate="UPDATE_NOTE", ng-show="transaction.note")
