@@ -479,13 +479,13 @@ module.exports = (grunt) ->
           to: () =>
             "customWebSocketURL = '#{ @webSocketURL }'"
         }]
-      helper_app_url:
+      wallet_helper_url:
         src: ['build/js/wallet.js'],
         overwrite: true,
         replacements: [{
           from: 'http://localhost:8081'
           to: () =>
-            @helperAppUrl
+            @walletHelperUrl
         }]
 
       api_domain:
@@ -583,9 +583,9 @@ module.exports = (grunt) ->
     apiDomain = grunt.option('apiDomain')
     network = grunt.option('network')
 
-    @helperAppUrl = grunt.option('helperAppUrl')
-    if !@helperAppUrl
-      console.log('Helper App URL missing')
+    @walletHelperUrl = grunt.option('walletHelperUrl')
+    if !@walletHelperUrl
+      console.log('WALLET_HELPER_URL missing')
       exit(1)
 
     if !versionFrontend
@@ -615,7 +615,7 @@ module.exports = (grunt) ->
     grunt.task.run [
       "replace:root_url"
       "replace:web_socket_url"
-      "replace:helper_app_url"
+      "replace:wallet_helper_url"
     ]
 
     if apiDomain
