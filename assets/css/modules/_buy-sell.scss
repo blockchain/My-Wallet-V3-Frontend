@@ -52,6 +52,11 @@
   .kyc-status {
     background-color: $grey;
   }
+  @media(max-width: 991px) {
+    .kyc-status {
+      margin-top: 25px;
+    }
+  }
 }
 
 .currency-dropdown {

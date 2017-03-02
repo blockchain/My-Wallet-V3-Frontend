@@ -135,7 +135,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   function cancelTrade (trade) {
     let msg = 'CONFIRM_CANCEL_TRADE';
     if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
-
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'

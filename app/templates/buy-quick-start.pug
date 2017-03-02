@@ -1,5 +1,5 @@
-.quick-start
-  .mt-15.pt-30.pb-30.pr-15.phm.border.width-50
+.quick-start.col-md-6.col-sm-12.col-xs-12
+  .pt-30.pb-30.ph-15.phm.border
     form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerBuy()" novalidate)
       .flex-row.flex-between
         .flex-center
@@ -61,21 +61,21 @@
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'after_first_trade'")
           span.pos-abs.type-sm
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
-            span
+            span &nbsp;
             span.blue.pointer(popup
                               popup-days="{{getDays()}}"
                               popup-name="coinify-verification"
                               translate="WHY")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
           span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')")
-            span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")
-            |
+            a(ng-click="openPendingTrade()" translate="FINISH")
+            | &nbsp;
             span(translate="OR")
-            |
-            span.blue.pointer(ng-click="cancelTrade()" translate="CANCEL")
-            |
+            | &nbsp;
+            a(ng-click="cancelTrade()" translate="CANCEL")
+            | &nbsp;
             span(translate="PURCHASE_PENDING")
-            |
+            | &nbsp;
             span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
             | .
           span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")

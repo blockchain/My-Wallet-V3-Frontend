@@ -163,10 +163,9 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   $scope.tabs = ['BUY_BITCOIN'/*, 'SELL_BITCOIN'*/, 'ORDER_HISTORY'];
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
+    $state.params.selectedTab = tab;
   };
   $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
-
-  $scope.pendingNumber = $scope.trades.pending.length;
 
   $rootScope.$on('fetchExchangeProfile', () => {
     $scope.status.disabled = true;
