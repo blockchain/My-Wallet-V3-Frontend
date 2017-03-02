@@ -21,6 +21,7 @@ function fiatOrBtc (Wallet, currency) {
     scope.settings = Wallet.settings;
     scope.currency = scope.settings.displayCurrency;
     scope.isBitCurrency = currency.isBitCurrency;
+    scope.toggle = Wallet.toggleDisplayCurrency;
 
     scope.updateDisplay = () => {
       scope.currency = Wallet.settings.displayCurrency;
