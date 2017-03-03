@@ -247,10 +247,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     $scope.trade = null;
-    buySell.getTrades();
-    if ($state.params.selectedTab !== 'ORDER_HISTORY') {
+    buySell.getTrades().then(() => {
       $scope.goToOrderHistory();
-    }
+    });
   };
 
   $scope.close = () => {
@@ -288,7 +287,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.goToOrderHistory = () => {
-    if ($state.params.selectedTab === 'ORDER_HISTORY' || $scope.onStep('accept-terms') || ($scope.trades.pending.length === 0)) {
+    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
       $uibModalInstance.dismiss('');
     } else {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
