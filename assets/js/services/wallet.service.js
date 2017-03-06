@@ -316,17 +316,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }));
   };
 
-  wallet.getPendingPayments = (acctIdx) => {
-    let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
-    let addresses = labelledAddresses.map(a => a.address);
-    return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
-      labelledAddresses.map(({ index, address, label }) => ({
-        index, address, label,
-        ntxs: data[address].n_tx
-      })).filter(a => a.ntxs === 0)
-    ));
-  };
-
   wallet.addAddressForAccount = (account) => {
     let index = account.receiveIndex;
     let address = wallet.getReceiveAddress(account.index, index);

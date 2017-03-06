@@ -8,7 +8,8 @@ angular
   .filter('escapeHtml', escapeHtmlFilter)
   .filter('getByProperty', getByPropertyFilter)
   .filter('getByPropertyNested', getByPropertyNestedFilter)
-  .filter('addressOrNameMatch', addressOrNameMatchFilter);
+  .filter('addressOrNameMatch', addressOrNameMatchFilter)
+  .filter('reversePage', reversePageFilter);
 
 toBitCurrencyFilter.$inject = ['currency'];
 function toBitCurrencyFilter (currency) {
@@ -123,5 +124,11 @@ function addressOrNameMatchFilter () {
       keep = keep || addr.address.toLowerCase().indexOf(q) > -1;
       return keep;
     });
+  };
+}
+
+function reversePageFilter () {
+  return function (input, page, pageLength) {
+    return input.reverse().slice((page - 1) * pageLength, page * pageLength);
   };
 }
