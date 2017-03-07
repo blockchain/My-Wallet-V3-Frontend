@@ -27,7 +27,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.getTheme = () => $scope.settings.theme && $scope.settings.theme.class;
 
   $scope.inactivityCheck = () => {
-    if (!Wallet.status.isLoggedIn) return;
+    if (!Wallet.status.isLoggedIn || $rootScope.inMobileBuy) return;
     let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
     if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
