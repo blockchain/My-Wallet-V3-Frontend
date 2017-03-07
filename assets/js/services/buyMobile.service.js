@@ -7,7 +7,9 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
   const actions = {
     FRONTEND_INITIALIZED: 'frontendInitialized',
     BUY_COMPLETED: 'buyCompleted',
-    AMOUNT_FIELD_FOCUSED: 'amountFieldFocused'
+    AMOUNT_FIELD_FOCUSED: 'amountFieldFocused',
+    AMOUNT_FIELD_BLURRED: 'amountFieldBlurred',
+    AMOUNT_FIELD_CHANGED: 'amountFieldChanged'
   }
 
   const service = Object.assign({}, actions)

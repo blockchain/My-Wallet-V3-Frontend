@@ -18,6 +18,18 @@ function nativeKeyboard (buyMobile) {
       buyMobile.callMobileInterface(buyMobile.AMOUNT_FIELD_FOCUSED, fieldId)
     })
 
+    elem.on('blur', () => {
+      let data = [fieldId, ctrl.$viewValue].join()
+      buyMobile.callMobileInterface(buyMobile.AMOUNT_FIELD_BLURRED, data)
+    })
+
+    ctrl.$viewChangeListeners.push(() => {
+      if (elem[0] === document.activeElement) {
+        let data = [fieldId, ctrl.$viewValue].join()
+        buyMobile.callMobileInterface(buyMobile.AMOUNT_FIELD_CHANGED, data)
+      }
+    })
+
     scope.$on('nativeKeyboardInput', (event, input, field) => {
       if (field === fieldId) {
         ctrl.$setViewValue(input)
