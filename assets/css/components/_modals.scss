@@ -433,6 +433,15 @@
   }
 }
 
+.modal-fullscreen .modal-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+}
+
 .rocket-modal {
   background: rgba(10,10,10,.4);
   .modal-body { padding: 3em; }
