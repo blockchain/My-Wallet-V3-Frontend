@@ -15,6 +15,7 @@
             input.form-control.brdrn(
               type="number"
               ng-model="transaction.fiat"
+              native-keyboard
               name="fiat"
               tabindex="1"
               focus-when="status.ready"
@@ -42,6 +43,7 @@
             input.form-control.brdrn(
               type="number"
               ng-model="transaction.btc"
+              native-keyboard
               name="btc"
               step="any"
               prevent-event="mousewheel"

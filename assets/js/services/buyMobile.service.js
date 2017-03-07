@@ -6,7 +6,8 @@ angular
 function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet, Options) {
   const actions = {
     FRONTEND_INITIALIZED: 'frontendInitialized',
-    BUY_COMPLETED: 'buyCompleted'
+    BUY_COMPLETED: 'buyCompleted',
+    AMOUNT_FIELD_FOCUSED: 'amountFieldFocused'
   }
 
   const service = Object.assign({}, actions)
@@ -42,10 +43,14 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
     $timeout(() => MyWallet.logout(true))
   }
 
-  service.callMobileInterface = (handlerName) => {
+  $window.inputForAmountField = (input, fieldName) => {
+    $rootScope.$broadcast('nativeKeyboardInput', parseFloat(input), fieldName)
+  }
+
+  service.callMobileInterface = (handlerName, value = null) => {
     if ($window.webkit) {
       let handler = $window.webkit.messageHandlers[handlerName]
-      if (handler) handler.postMessage(null)
+      if (handler) handler.postMessage(value)
       else console.error('Unknown webkit handler: ' + handlerName)
     }
     if ($window.android) {
