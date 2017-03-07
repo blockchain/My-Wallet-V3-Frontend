@@ -42,6 +42,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     windowClass: 'bc-modal medium'
   });
 
+  service.openFullScreen = (templateUrl, controller) => open({
+    templateUrl,
+    controller,
+    windowClass: 'modal-fullscreen',
+    backdrop: 'static',
+    keyboard: false
+  });
+
   service.openTemplate = (templateUrl, scope, options) => {
     let config = angular.merge({
       templateUrl,
