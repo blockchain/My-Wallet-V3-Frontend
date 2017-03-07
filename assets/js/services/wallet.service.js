@@ -88,46 +88,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     $window.disableQA = () => reloadWithDebug(false);
   }
 
-  $window.activateMobileBuy = (guid, sharedKey, password) => {
-    if (wallet.status.isLoggedIn) return;
-    $state.go('intermediate');
-    $rootScope.inMobileBuy = true;
-    Options.get()
-      .then(() => $q(resolve => wallet.login(guid, password, null, null, resolve, null, sharedKey)))
-      .then(() => { $state.go('wallet.common.buy-sell'); });
-  };
-
-  $window.activateMobileBuyFromJson = (json, externalJson, magicHash, password) => {
-    if (wallet.status.isLoggedIn) return;
-    $state.go('intermediate');
-    $rootScope.inMobileBuy = true;
-    Options.get()
-      .then(() => { MyWallet.loginFromJSON(json, externalJson, magicHash, password); })
-      .then(() => $q(resolve => { didLogin(MyWallet.wallet.guid, resolve); }))
-      .then(() => { $state.go('wallet.common.buy-sell'); });
-  };
-
-  $window.teardown = () => {
-    $state.go('intermediate');
-    $timeout(() => MyWallet.logout(true));
-  };
-
-  wallet.callMobileInterface = (handlerName) => {
-    if ($window.webkit) {
-      let handler = $window.webkit.messageHandlers[handlerName];
-      if (handler) handler.postMessage(null);
-      else console.error('Unknown webkit handler: ' + handlerName);
-    }
-    if ($window.android) {
-      let handler = $window.android[handlerName];
-      if (handler) handler.call($window.android);
-      else console.error('Unknown android handler: ' + handlerName);
-    }
-  };
-
-  wallet.callMobileInterface('frontendInitialized');
-
-  let didLogin = (uid, successCallback) => {
+  wallet.didLogin = (uid, successCallback) => {
     currency.fetchExchangeRate();
     wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
     if (wallet.my.wallet.isUpgradedToHD) {
@@ -292,7 +253,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         }
       )
       .then((result) => {
-        didLogin(uid, successCallback);
+        wallet.didLogin(uid, successCallback);
       })
       .catch(loginError);
     };

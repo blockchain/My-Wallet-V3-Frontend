@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
+function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
   $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
@@ -61,7 +61,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       $scope.$parent.trade = trade;
       Alerts.clear($scope.alerts);
       if ($scope.$parent.trade.bankAccount) $scope.formatTrade('bank_transfer');
-      Wallet.callMobileInterface('buyCompleted');
+      buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
       $scope.nextStep();
     };
 
