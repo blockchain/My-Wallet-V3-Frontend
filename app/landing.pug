@@ -8,7 +8,7 @@
         .flex-column.center.width-30
           span.type-med.em-400.white.lh1(translate="TRANSACTIONS_AMT")
           span.type-h5.white(translate="TRANSACTIONS")
-        .flex-column.center.width-30
+        .flex-column.center.width-30(ng-show="nWallets")
           span.type-med.em-400.white.lh1 {{ nWallets }}&nbsp;
             span(translate="MILLION")
             span +
