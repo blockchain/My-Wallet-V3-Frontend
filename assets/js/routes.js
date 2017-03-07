@@ -76,7 +76,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/intermediate',
       views: {
         body: {
-          template: '<blocket-loading loading="true"></blocket-loading>'
+          template: '<blocket-loading loading="true"></blocket-loading>',
+          controller (buyMobile) {
+            buyMobile.callMobileInterface(buyMobile.FRONTEND_INITIALIZED);
+          }
         }
       },
       resolve: {

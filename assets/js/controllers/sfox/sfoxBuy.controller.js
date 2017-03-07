@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxBuyController', SfoxBuyController);
 
-function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
+function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade, buyMobile) {
   let exchange = $scope.vm.exchange;
 
   $scope.user = Wallet.user;
@@ -24,7 +24,7 @@ function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade) {
   $scope.buySuccess = (trade) => {
     exchange.fetchProfile().then($scope.setState);
     $scope.trade = formatTrade.initiated(trade, [$scope.account]);
-    Wallet.callMobileInterface('buyCompleted');
+    buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
   };
 
   $scope.buyError = () => {
