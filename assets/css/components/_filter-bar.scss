@@ -4,6 +4,9 @@
   background: $grey;
   width: 100%;
   border-bottom: 1px solid $border-grey;
+  height: 60px;
+  position: absolute;
+  z-index: 10;
   @media (max-width: 767px) {
     padding: 0 10px;
   }

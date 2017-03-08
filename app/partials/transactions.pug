@@ -1,5 +1,5 @@
 .transactions(ng-if="status.isLoggedIn")
-  .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
+  .filter-bar.flex-center.hidden-md.hidden-lg(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100.flex-between.flex-center(ng-class="{mbl: isFilterOpen}")
       a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
         i.f-24.icon-export
