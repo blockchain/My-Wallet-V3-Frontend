@@ -30,17 +30,20 @@
     .type-lbl.em-500(translate="UNUSED_ADDRESSES")
     p.alt-font.f-16.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
     table.accounts-container.addresses.responsive.width-100
-      tr.width-100.pointer(ng-click="createAddress()")
+      tr.width-100.pointer(ng-click="createAddress()" ng-disabled="createAddressInProgress")
         td.col-md-6
           i.ti-plus.blue.mrm
           span(translate="ADD_NEXT_ADDRESS")
         td.col-md-6
+          img(ng-show="createAddressInProgress" src="img/spinner.gif")
       tr(
         account="account"
         ng-repeat="address in addresses | filter:presentFilter | filter:searchText | orderBy:'-'"
         hd-address="address"
         search-text="searchText"
-        remove="removeAddressLabel(address.index, paymentRequests.indexOf(address))")
+        on-remove-label="removeAddressLabel"
+        on-change-label="changeLabel"
+      )
       img(ng-show="loading" src="img/spinner.gif")
 
 .flex-between.flex-center.mvl
@@ -73,5 +76,6 @@ div(ng-if="showPast" ng-init="setPastAddressesPage(page)")
           account="account"
           ng-repeat="address in pastAddressesPage(page, pageLength)"
           hd-address="address"
-          remove="removeAddressLabel(address.index, usedAddresses.indexOf(address), true)"
+          on-remove-label="removeAddressLabel"
+          on-change-label="changeLabel"
           past-address="true")

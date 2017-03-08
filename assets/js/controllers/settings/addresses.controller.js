@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $rootScope, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, MyBlockchainApi, Alerts, $uibModal) {
+function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, MyBlockchainApi, Alerts, $uibModal) {
   if (!Wallet.status.isLoggedIn) {
     console.error('Controller depends on being logged in');
     return;
@@ -38,19 +38,28 @@ function SettingsAddressesCtrl ($scope, $rootScope, $state, $stateParams, $q, $s
   $scope.totalPast = null;
 
   $scope.createAddress = () => {
-    // TODO: use Labels
-    Wallet.addAddressForAccount($scope.account)
-      .then(address => $scope.paymentRequests.push(address))
-      .catch(Alerts.displayError);
+    $scope.createAddressInProgress = true;
+
+    Labels.addLabel(accountIndex, $translate.instant('DEFAULT_NEW_ADDRESS_LABEL'), 15)
+      .then(address => $scope.addresses.push(address))
+      .catch(Alerts.displayError)
+      .then(() => {
+        $scope.createAddressInProgress = false;
+        $rootScope.$safeApply();
+      });
   };
 
-  $scope.removeAddressLabel = (addressIndex, i, used) => {
+  $scope.removeAddressLabel = (address) => {
     Alerts.confirm('CONFIRM_REMOVE_LABEL').then(() => {
-      // TODO: use Labels
-      $scope.account.removeLabelForReceivingAddress(addressIndex);
-      used
-        ? $scope.usedAddresses[i].label = null
-        : $scope.paymentRequests.splice(i, 1);
+      Labels.removeLabel(accountIndex, address).then().then(() => {
+        $rootScope.$safeApply();
+      });
+    });
+  };
+
+  $scope.changeLabel = (address, label) => {
+    return Labels.setLabel(accountIndex, address, label).then().then(() => {
+      $rootScope.$safeApply();
     });
   };
 
