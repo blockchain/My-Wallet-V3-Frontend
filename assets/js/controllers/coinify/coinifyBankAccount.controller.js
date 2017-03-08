@@ -1,13 +1,30 @@
 angular
   .module('walletApp')
-  .controller('CoinifySummaryController', CoinifySummaryController);
+  .controller('CoinifyBankAccountController', CoinifyBankAccountController);
 
-function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
+function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
   $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
-  // $scope.isBankTransfer = () => $scope.isMedium('bank');
-  console.log('coinify summary ctrl scope', $scope)
+  $scope.isBankTransfer = () => $scope.isMedium('bank');
+  $scope.qa = {};
+  $scope.accountCurrency = $scope.$parent.bankAccount.account.currency;
+  $scope.accountType = 'international';
+
+  console.log('bank account ctrl scope', $scope)
+
+  $scope.setAccountType = (accountType) => {
+    $scope.accountType = accountType;
+  };
+
+  $scope.selectCountry = (country) => {
+    $scope.$parent.bankAccount.holder.address.country = country.code;
+  };
+
+  $scope.selectBankCountry = (country) => {
+    $scope.$parent.bankAccount.bank.address.country = country.code;
+    $scope.selectedBankCountry = country.name;
+  };
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
@@ -47,11 +64,47 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.getMaxMin(curr).then(() => { $scope.tempCurrency = curr; })
   );
 
-  $scope.setParentError = () => {
-    $timeout(() => {
-      $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
-    });
+  $scope.qa.info = () => {
+    $scope.$parent.bankAccount = {
+      account: {
+        bic: '123',
+        iban: '123456789',
+        currency: $scope.trade.quoteCurrency
+      },
+      bank: {
+        address: {
+          // street: '123 rue de btc',
+          // city: 'Paris',
+          // state: '',
+          // zipcode: '12345',
+          country: 'France'
+        }
+      },
+      holder: {
+        name: 'Darth Vader',
+        address: {
+          street: '789 Death Star Rd NE',
+          zipcode: '13451',
+          city: 'Forceville',
+          state: '',
+          country: 'France'
+        }
+      }
+    }
   };
+
+    $scope.setAccountCurrency = (currency) => {
+      console.log('setting account currency', currency)
+      $scope.$parent.bankAccount.account.currency = currency.code;
+      $scope.accountCurrency = currency.code;
+      console.log()
+    };
+
+  // $scope.setParentError = () => {
+  //   $timeout(() => {
+  //     $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
+  //   });
+  // };
 
   let eventualError = (message) => Promise.reject.bind(Promise, { message });
 

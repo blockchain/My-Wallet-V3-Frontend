@@ -1,0 +1,90 @@
+.flex-column.mbvl
+  p.security-red.pointer(ng-show="true")
+    i.ti-search.mrm.right-align(ng-click="qa.info()")  QA: Now
+  .flex-column.flex-between.pam
+    span.pvm.f-14.mbm Please enter your bank information below.
+    .form-group.flex-row.flex-between.width-80
+      div.width-100
+        label.control-label(translate="Select the country your account was opened in.")
+        div
+          ui-select.mtm(ng-model="selectedBankCountry" on-select="selectBankCountry($item)")
+            ui-select-match(placeholder="Select Country") {{selectedBankCountry.name}}
+            ui-select-choices(repeat="c in sepaCountries | filter:$select.search track by c.name") {{c.name}}
+
+    .form-group.flex-column.width-80
+      label.control-label(translate="Bank Name")
+      div
+        input.form-control(
+          type="text"
+          ng-model="$parent.bankAccount.bank.name"
+          ng-change="setParentError()"
+          name="bankName"
+          tabindex="1"
+          placeholder=""
+          required)
+    //- form for non-Danish accounts
+    form.input-group.width-80.amount-input(
+      role="form"
+      name="accountInfoForm"
+      ng-submit="commitValues()"
+      autocomplete="off"
+      novalidate
+      ng-hide="accountType === 'danish'")
+      .form-group.flex-column.width-100
+        label.control-label(translate="Bank Identifier Code (SWIFT/BIC)")
+        div
+          input.form-control(
+            type="text"
+            ng-model="$parent.bankAccount.account.bic"
+            ng-change="setParentError()"
+            name="bankBic"
+            tabindex="1"
+            placeholder=""
+            required)
+      .form-group.flex-column.width-100
+        //- label.control-label(ng-show="accountType === 'danish'" translate="Bank Account Number")
+        label.control-label(translate="International Bank Account Number (IBAN)")
+        div
+          input.form-control(
+            type="text"
+            ng-model="$parent.bankAccount.account.number"
+            ng-change="setParentError()"
+            name="bankIban"
+            tabindex="1"
+            placeholder=""
+            required)
+      .width-100
+        a(ng-click="setAccountType('danish')") I have a Danish bank account
+
+    //- form for Danish accounts
+    form.input-group.width-80.amount-input(
+      role="form"
+      name="accountInfoForm"
+      ng-submit="commitValues()"
+      autocomplete="off"
+      novalidate
+      ng-hide="accountType === 'international'")
+      .form-group.flex-column.width-100
+        label.control-label(translate="Bank REG Number")
+        div
+          input.form-control(
+            type="text"
+            ng-model="$parent.bankAccount.account.bic"
+            ng-change="setParentError()"
+            name="bankReg"
+            tabindex="1"
+            placeholder=""
+            required)
+      .form-group.flex-column.width-100
+        label.control-label(translate="Bank Account Number (BBAN)")
+        div
+          input.form-control(
+            type="text"
+            ng-model="$parent.bankAccount.account.number"
+            ng-change="setParentError()"
+            name="bankNumber"
+            tabindex="1"
+            placeholder=""
+            required)
+      .width-100
+        a(ng-click="setAccountType('international')") I don't have a Danish bank account

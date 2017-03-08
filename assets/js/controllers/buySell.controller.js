@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options) {
+function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -36,6 +36,13 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
         buySell.openBuyView(trade, options).finally($scope.onCloseModal);
+      }
+    };
+
+    $scope.sell = (trade, options) => {
+      if (!$scope.status.modalOpen) {
+        $scope.status.modalOpen = true;
+        buySell.openSellView(trade, options).finally($scope.onCloseModal);
       }
     };
 
@@ -159,6 +166,13 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
     return cannotTradeReason;
   };
+
+  $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
+  $scope.selectTab = (tab) => {
+    $scope.selectedTab = $scope.selectedTab ? tab : null;
+    $state.params.selectedTab = tab;
+  };
+  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
 
   $rootScope.$on('fetchExchangeProfile', () => {
     $scope.status.disabled = true;

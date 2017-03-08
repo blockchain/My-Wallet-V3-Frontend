@@ -43,6 +43,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     login: () => initialized.promise.finally(service.fetchProfile),
     init,
     getQuote,
+    getSellQuote,
     getKYCs,
     getRate,
     calculateMax,
@@ -52,6 +53,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     watchAddress,
     fetchProfile,
     openBuyView,
+    openSellView,
     pollKYC,
     pollUserLevel,
     getCurrency,
@@ -59,7 +61,11 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     submitFeedback,
     tradeStateIn,
     cancelTrade,
-    states
+    states,
+    getBankAccounts,
+    createBankAccount,
+    // getOneBankAccount,
+    // deleteBankAccount
   };
 
   return service;
@@ -81,6 +87,30 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       amt = Math.trunc(amt * 100);
     }
     return $q.resolve(service.getExchange().getBuyQuote(amt, curr, quoteCurr));
+  }
+
+  function getSellQuote (amt, curr, quoteCurr) {
+    if (curr === 'BTC') {
+      amt = Math.trunc(amt * 100000000);
+    } else {
+      amt = Math.trunc(amt * 100);
+    }
+    console.log('running GET SELL QUOTE', amt, curr, quoteCurr)
+    return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr))
+  }
+
+  function getBankAccounts () {
+    return $q.resolve(service.getExchange().bank.getAll()).then(accounts => {
+      console.log('**BANK ACCOUNTS**', accounts)
+      return accounts;
+    })
+  }
+
+  function createBankAccount (bankObject) {
+    return $q.resolve(service.getExchange().bank.create(bankObject)).then(response => {
+      console.log('**CREATED BANK RESPONSE**', response)
+      return response;
+    })
   }
 
   function getKYCs () {
@@ -139,7 +169,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
-    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+    }).then(() => trade.cancel().then(() => service.fetchProfile()).then(() => {
+      // so when a trade is cancelled it moves to the completed table
+      service.getTrades();
+    }), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
@@ -218,6 +251,20 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       resolve: {
         trade: () => trade && trade.refresh().then(() => trade),
         buyOptions: () => options
+      }
+    }).result;
+  }
+
+  function openSellView (trade = null, options = {}) {
+    return $uibModal.open({
+      templateUrl: 'partials/coinify-sell-modal.pug',
+      windowClass: 'bc-modal auto buy',
+      controller: 'CoinifySellController',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        trade: () => trade,
+        buySellOptions: () => options
       }
     }).result;
   }
