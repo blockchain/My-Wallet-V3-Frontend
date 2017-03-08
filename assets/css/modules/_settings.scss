@@ -1,6 +1,8 @@
 .settings {
-  padding: 15px 30px;
-  margin-bottom: 3em;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
   .label {
     font-weight: normal;
     margin-left: 5px;
@@ -38,6 +40,13 @@
       padding: 10px;
     }
   }
+
+  .settings-category {
+    overflow: scroll;
+    height: 100%;
+    padding: 15px 30px;
+  }
+
   // Preferences
   .clearfix {
     .form-group {
@@ -242,7 +251,7 @@ table.accounts-container {
 }
 
 @media (max-width: 767px) {
-  .settings {
+  .settings-category {
     padding: 15px 15px;
   }
 }
