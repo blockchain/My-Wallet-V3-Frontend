@@ -58,6 +58,7 @@ function SettingsAddressesCtrl ($scope, $rootScope, $state, $stateParams, $q, $s
     if (!$scope.showPast) {
       if (!$scope.didLoadPast) {
         Alerts.confirm('CONFIRM_SHOW_PAST').then(() => {
+          $scope.didLoadPast = true;
           $scope.showPast = true;
           let totalLabeled = $scope.addresses.filter($scope.presentFilter).length;
           $scope.addresses = Labels.all(accountIndex, {includeUnlabeled: true});
