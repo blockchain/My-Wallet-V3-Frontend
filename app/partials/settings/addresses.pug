@@ -71,7 +71,7 @@ div(ng-if="showPast" ng-init="setPastAddressesPage(page)")
                 helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
         tr(
           account="account"
-          ng-repeat="address in addresses | filter:pastFilter | reversePage:page:pageLength"
+          ng-repeat="address in pastAddressesPage(page, pageLength)"
           hd-address="address"
           remove="removeAddressLabel(address.index, usedAddresses.indexOf(address), true)"
           past-address="true")
