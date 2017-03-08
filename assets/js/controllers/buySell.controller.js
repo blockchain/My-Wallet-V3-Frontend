@@ -11,6 +11,10 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     modalOpen: false
   };
 
+  $scope.transaction = {
+    currency: buySell.getCurrency()
+  };
+
   $scope.walletStatus = Wallet.status;
   $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
@@ -26,7 +30,6 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   $scope.initialize = () => {
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
-    $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.state = {buy: true};

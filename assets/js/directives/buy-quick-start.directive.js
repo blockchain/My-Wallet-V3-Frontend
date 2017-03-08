@@ -33,6 +33,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.currencies = currency.coinifyCurrencies;
     scope.format = currency.formatCurrencyForView;
 
+    scope.transaction.btc = undefined;
+    scope.transaction.fiat = undefined;
+
     scope.updateLastInput = (type) => scope.lastInput = type;
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
 
@@ -102,6 +105,12 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.$on('$destroy', stopFetchingQuote);
     scope.$watch('modalOpen', (modalOpen) => {
       modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
+    });
+    scope.$watch('transaction.fiat', (fiat) => {
+      console.log(fiat);
+    });
+    scope.$watch('transaction.btc', (btc) => {
+      console.log(btc);
     });
   }
 }
