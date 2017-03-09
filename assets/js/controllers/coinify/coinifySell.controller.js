@@ -13,7 +13,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.trade = trade;
   $scope.quote = buySellOptions.quote;
   $scope.isSell = buySellOptions.sell;
-  $scope.step = 1;
+  $scope.step = 4;
   $scope.sepaCountries = country.sepaCountryCodes;
 
   $scope.bankAccount = {
@@ -75,7 +75,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     'account-info': 1,
     'account-holder': 2,
     'summary': 3,
-    'trade-formatted': 4
+    'bank-link': 4,
+    'trade-formatted': 5
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -138,6 +139,18 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       })
   }
 
+  $scope.getBankAccounts = () => {
+    $q.resolve(buySell.getBankAccounts())
+      .then((result) => {
+        if (result) {
+          $scope.registeredBankAccount = true;
+          $scope.bankAccounts = result;
+        } else {
+          $scope.registeredBankAccount = false;
+        }
+      })
+  };
+
   console.log('step', $scope, $scope.step)
 
   $scope.goToOrderHistory = () => {
@@ -160,30 +173,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.close = () => {
     $scope.cancel();
-    // let text, action, link, index;
-    // let surveyOpened = $cookies.getObject('survey-opened');
-    //
-    // if (!$scope.exchange.user) index = 0;
-    // else if (!$scope.trades.length && !$scope.trade) index = 1;
-    // else index = 2;
-    //
-    // link = links[index];
-    //
-    // let hasSeenPrompt = surveyOpened && surveyOpened.index >= index;
-    //
-    // if (hasSeenPrompt) {
-    //   [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
-    //   Alerts.confirm(text, {action: action}).then($scope.cancel).then(buySell.getTrades()).then($scope.goToOrderHistory());
-    // } else {
-    //   [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
-    //   let openSurvey = () => {
-    //     $scope.cancel();
-    //     $rootScope.safeWindowOpen(link);
-    //     $cookies.putObject('survey-opened', {index: index});
-    //   };
-    //   Alerts.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'}).then(openSurvey, $scope.cancel);
-    // }
   };
+
+
+  $scope.getBankAccounts();
 
 //   $scope.buySellDebug = $rootScope.buySellDebug;
 //

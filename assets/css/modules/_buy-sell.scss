@@ -124,6 +124,12 @@
   }
 }
 
+.bank-link {
+  img {
+    width: 25px;
+  }
+}
+
 #buy {
   .modal-body {
     @media (max-width: 768px) {
