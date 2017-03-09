@@ -55,7 +55,10 @@
 
 .currency-dropdown {
   max-height: 210px;
+  min-width: auto;
   overflow: scroll;
+  right: 0;
+  left: auto;
 }
 
 .bc-modal.coinify {
