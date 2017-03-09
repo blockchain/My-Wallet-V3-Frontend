@@ -2,6 +2,7 @@
   .modal-header.bc-modal-header.flex-between.flex-center()
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
+        h3.mlm(ng-if="onStep('accept-terms')") Coinify Account
         h3.mlm(ng-if="onStep('account-info')") Add Bank Account
         h3.mlm(ng-if="onStep('account-holder')") Account Holder
         h3.mlm(ng-if="onStep('summary')") Confirm Sell Order
@@ -28,6 +29,8 @@
       alerts(context="alerts")
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
+    div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
+      include ./coinify/email
     div.width-80(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
       include ./coinify/account-info
     div.width-90(ng-show="onStep('account-holder')" ng-controller="CoinifyBankAccountController")
@@ -52,6 +55,7 @@
       button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
       button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
+      button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link')")
       div(ng-hide="afterStep('summary')")
         button.button-primary(
           ladda-translate="CONTINUE"
@@ -67,13 +71,20 @@
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
           ng-show="onStep('account-holder')")
-        //- button.button-primary(
+        button.button-primary(
           ladda-translate="CONTINUE"
-          ng-click="submitBankAccount()"
+          ng-click="acceptTerms()"
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
-          ng-show="onStep('account-holder')")
+          ng-show="onStep('accept-terms')")
+        button.button-primary(
+          ladda-translate="CONTINUE"
+          ng-click="nextStep()"
+          data-style="expand-left"
+          ui-ladda="status.waiting"
+          ng-disabled="isDisabled()"
+          ng-show="onStep('bank-link')")
         button.button-primary(
           ladda-translate="Place Sell Order"
           ng-click="sell()"

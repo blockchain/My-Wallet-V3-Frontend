@@ -1,4 +1,4 @@
-div
+div(ng-hide="isSell")
   div(ng-hide="editEmail || rejectedEmail")
     span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
     p.mtl.mbm
@@ -7,10 +7,22 @@ div
       span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
   form.clearfix(name="emailForm" ng-show="editEmail || rejectedEmail")
     bc-async-input(type="email"
-                   is-required 
-                   ng-model="user.email" 
-                   on-cancel="toggleEmail" 
-                   on-save="changeEmail" 
-                   action-title="'CHANGE' | translate" 
-                   inline 
+                   is-required
+                   ng-model="user.email"
+                   on-cancel="toggleEmail"
+                   on-save="changeEmail"
+                   action-title="'CHANGE' | translate"
+                   inline
                    editing="true")
+div(ng-show="isSell")
+  div.pbl
+    p.type-md.pbm Coinify Account Terms
+    span Our partner Coinify will process your Bitcoin purchase. By accepting Coinify's terms and clicking 'Continue' you will create a Coinify account using your verified email address:
+  //- form.clearfix(name="acceptTermsForm" role="form" novalidate)
+    //- span.type-h5.em-500.flex-start.pts(translate="ACCEPT_TERMS")
+    //- p.mvl(translate="PARTNER" translate-values="{email: user.email}")
+  div.flex
+    div
+      input(type="checkbox" checked id="tos" name="tos" ng-model="fields.acceptTOS" ng-disabled="" required)
+    div
+      label.mlm.em-400(translate="ACCEPT_PARTNER_TOS_PRIVACY" for="tos")

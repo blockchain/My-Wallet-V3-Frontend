@@ -1,16 +1,27 @@
 .bank-link
   span.type-h5.em-500.flex-start.pts Where would you like your funds sent? You have the following bank accounts linked.
-  .flex-row.flex-between
+  .flex-row.flex-between.mt-15.mb-10
     span.type-lbl.colon Select Account
-    a.underline(ng-click="bankLinkEdit()") edit
-  .flex-column
+    a.underline(ng-show="selecting" ng-click="bankLinkEdit()") Edit
+    a.underline(ng-show="!selecting" ng-click="bankLinkEdit()") Done
+  .flex-column(ng-show="selecting" )
     .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
       input(type="radio")
-      img(src="img/bank.png")
-      span.pal {{ account.account.type }}
-      span.pal {{ account.bank.address.country }}
-
-
+      img.mll(src="img/bank.png")
+      span.pal {{ account.bank.name }}
+      span.pv-25 {{ account.bank.address.country }}
+    .flex-row.flex-center.border.plvl
+      input(type="radio")
+      span.pv-25.pal Add new account
+  .flex-column(ng-show="!selecting" )
+    .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
+      i.ti-trash.pointer.state-danger-text.f-20.mrm(ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
+      img.mll(src="img/bank.png")
+      span.pal {{ account.bank.name }}
+      span.pv-25 {{ account.bank.address.country }}
+    .flex-row.flex-center.border.plvl.bg-mid-grey
+      input.disabled(type="radio")
+      span.pv-25.pal Add new account
 
 
 

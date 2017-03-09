@@ -3,6 +3,7 @@ angular
   .controller('CoinifySellController', CoinifySellController);
 
 function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country) {
+  $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -13,8 +14,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.trade = trade;
   $scope.quote = buySellOptions.quote;
   $scope.isSell = buySellOptions.sell;
-  $scope.step = 4;
+  $scope.step = 5;
   $scope.sepaCountries = country.sepaCountryCodes;
+  $scope.acceptTermsForm;
+  $scope.transaction = {};
 
   $scope.bankAccount = {
     account: {
@@ -71,12 +74,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
 
   $scope.steps = {
-    'isx': 0,
-    'account-info': 1,
-    'account-holder': 2,
-    'summary': 3,
-    'bank-link': 4,
-    'trade-formatted': 5
+    'accept-terms': 0,
+    'isx': 1,
+    'account-info': 2,
+    'account-holder': 3,
+    'summary': 4,
+    'bank-link': 5,
+    'trade-formatted': 6
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -98,7 +102,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.isDisabled = () => {
     const account = $scope.bankAccount.account;
-    if ($scope.onStep('account-info')) {
+    if ($scope.onStep('accept-terms')) {
+      return !$scope.fields.acceptTOS;
+    } else if ($scope.onStep('account-info')) {
       return (!account.number || !account.bic);
     } else if ($scope.onStep('account-holder')) {
       return false;
@@ -147,6 +153,34 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
           $scope.bankAccounts = result;
         } else {
           $scope.registeredBankAccount = false;
+          // load fake account
+          $scope.bankAccounts = [{
+            "id": 12345, // Identifier of the bank account
+            "account": {
+              "type": "danish", // Type of bank account
+              "currency": "DKK", // Currency of the bank account
+              "bic": "6456", // Account bic/swift/reg number depending on the type
+              "number": "12345435345345" // Account number
+            },
+            "bank": {
+              "name": "Bank of Coinify",
+              "address": { // Address of the bank
+                "country": "DK"
+              }
+            },
+            "holder": {
+              "name": "John Doe", // Name of the account holder
+              "address": { // Address of the account holder
+                "street": "123 Example Street",
+                "zipcode": "12345",
+                "city": "Exampleville",
+                "state": "CA",
+                "country": "US"
+              }
+            },
+            "update_time": "2016-04-01T12:27:36Z",
+            "create_time": "2016-04-01T12:23:19Z"
+          }]
         }
       })
   };
@@ -175,8 +209,15 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.cancel();
   };
 
+  $scope.determineStep = () => {
+    if (!$scope.exchange.user) {
+      $scope.goTo('accept-terms');
+    }
+  };
+
 
   $scope.getBankAccounts();
+  $scope.setCurrency();
 
 //   $scope.buySellDebug = $rootScope.buySellDebug;
 //

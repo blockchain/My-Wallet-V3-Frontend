@@ -1277,5 +1277,6 @@
   "BLOG": "Blog",
   "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
+  "CLICK_TO_DELETE_ACCOUNT": "Delete bank account",
   "": ""
 }
