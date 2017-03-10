@@ -12,6 +12,9 @@
     }
     .quick-start {
       margin-top: 0px;
+      fieldset .btc {
+        padding-right: 16px;
+      }
     }
   }
   &.loading {
