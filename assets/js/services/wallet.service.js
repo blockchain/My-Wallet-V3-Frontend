@@ -309,13 +309,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     return account.receiveAddressAtIndex(addrIdx);
   });
 
-  wallet.getLabelledHdAddresses = (acctIdx) => {
-    let account = wallet.accounts()[acctIdx];
-    return account.receivingAddressesLabels.map(({ index, label }) => ({
-      index, label, address: wallet.getReceiveAddress(acctIdx, index)
-    }));
-  };
-
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
       $cookies.put('session', sessionToken);
