@@ -102,9 +102,19 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if (wallet && toState.name === 'wallet.common.buy-sell') {
       let error;
 
-      if (wallet.external === null) error = 'POOR_CONNECTION';
-      else if (wallet.isDoubleEncrypted) error = 'MUST_DISABLE_2ND_PW';
-      else if ($rootScope.needsRefresh) error = 'NEEDS_REFRESH';
+      if (!wallet.isMetadataReady) {
+        Wallet.askForSecondPasswordIfNeeded().then(pw => {
+          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+            Alerts.displaySuccess('NEEDS_REFRESH');
+          });
+        });
+        event.preventDefault();
+      } else if ($rootScope.needsRefresh) {
+        error = 'NEEDS_REFRESH';
+      } else if (wallet.external === null) {
+        // Metadata service connection failed
+        error = 'POOR_CONNECTION';
+      }
 
       if (error) {
         event.preventDefault();

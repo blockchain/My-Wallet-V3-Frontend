@@ -1107,7 +1107,6 @@
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
   "CONFIRM_YOUR_ORDER": "Confirm your order:",
   "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",

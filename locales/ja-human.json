@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "受信するウォレット",
   "RECEIVING_ADDRESS": "QA: 受信するアドレス",
   "RECEIVE_BITCOIN_TO": "ビットコインは{{::label}}に送信されます。",
-  "MUST_DISABLE_2ND_PW": "ウォレットのこのセクションにアクセスするには第二のパスワードを削除してください。",
   "BLACKLISTED_COUNTRY": "ビットコインの購入はお住いの国ではご利用いただけません。<br>さらに対応国が追加される予定です。",
   "CONFIRM_YOUR_ORDER": "注文を確認:",
   "ORDER_CONFIRMATION_COPY": "セキュアな決済プロバイダーに移動する前に注文の詳細を確認してください。",
