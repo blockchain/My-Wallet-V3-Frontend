@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format, smartAccount) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format, smartAccount, Labels) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -56,8 +56,8 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
         $scope.requestForm.label.$valid = false;
       };
 
-      let idx = $scope.fields.to.index;
-      Wallet.changeHDAddressLabel($scope.fields.to.index, Wallet.getReceivingAddressIndexForAccount(idx), $scope.fields.label, success, error);
+      let accountIndex = $scope.fields.to.index;
+      Labels.addLabel(accountIndex, $scope.fields.label, 15).then(success).catch(error);
     }
   };
 
