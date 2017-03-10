@@ -43,7 +43,7 @@ describe "AccountFormCtrl", ->
   beforeEach ->
     angular.mock.inject ($rootScope, $controller, $compile, $templateCache) ->
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/account-form.jade')
+      template = $templateCache.get('partials/account-form.pug')
 
       $controller "AccountFormCtrl",
         $scope: scope

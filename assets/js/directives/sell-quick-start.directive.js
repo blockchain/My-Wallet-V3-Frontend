@@ -6,7 +6,7 @@ function sellQuickStart () {
   const directive = {
     replace: true,
     scope: {},
-    templateUrl: 'templates/sell-quick-start.jade',
+    templateUrl: 'templates/sell-quick-start.pug',
     link: link
   };
   return directive;

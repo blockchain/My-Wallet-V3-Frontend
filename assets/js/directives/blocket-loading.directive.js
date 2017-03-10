@@ -9,7 +9,7 @@ function blocketLoading ($timeout, Wallet) {
   const directive = {
     restrict: 'E',
     scope: {},
-    templateUrl: 'templates/blocket-loading.jade',
+    templateUrl: 'templates/blocket-loading.pug',
     link: link
   };
 

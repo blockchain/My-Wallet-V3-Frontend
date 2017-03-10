@@ -10,7 +10,7 @@ describe "ChangeLogoutTimeCtrl", ->
       Wallet.settings.logoutTimeMinutes = 10
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/change-logout.jade')
+      template = $templateCache.get('partials/settings/change-logout.pug')
 
       $controller "ChangeLogoutTimeCtrl",
         $scope: scope

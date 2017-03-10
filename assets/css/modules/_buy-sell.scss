@@ -18,6 +18,7 @@
     height: 100%;
     overflow: hidden;
   }
+  .disabled,
   &.disabled {
     &:after {
       top: 0;

@@ -2,6 +2,7 @@ describe "SendCtrl", ->
   scope = undefined
   ngAudio = undefined
   Wallet = undefined
+  MyWallet = undefined
   MyWalletHelpers = undefined
   Alerts = undefined
   fees = undefined
@@ -37,6 +38,7 @@ describe "SendCtrl", ->
 
       MyWallet.wallet =
         setNote: (-> )
+        createPayment: (p, shouldFail, failWith) -> new MyWalletPayment(MyWallet.wallet, p, shouldFail, failWith)
         keys: [
           { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }
           { address: 'watch_address', archived: false, isWatchOnly: true }
@@ -62,8 +64,6 @@ describe "SendCtrl", ->
         currency: currency.currencies[0]
         btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
-
-      Wallet.Payment = MyWalletPayment
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -436,7 +436,7 @@ describe "SendCtrl", ->
       describe "failure", ->
 
         beforeEach ->
-          scope.payment = new Wallet.Payment({}, true)
+          scope.payment = MyWallet.wallet.createPayment({}, true)
           askForSecondPassword.resolve()
 
         it "should display an error when process fails", inject((Alerts) ->
@@ -450,7 +450,7 @@ describe "SendCtrl", ->
         )
 
         it "should close the modal if it receives Tx Exists error", inject((Alerts) ->
-          scope.payment = new Wallet.Payment({}, true, 'Transaction Already Exists')
+          scope.payment = MyWallet.wallet.createPayment({}, true, 'Transaction Already Exists')
           spyOn(modalInstance, 'close').and.callThrough()
           spyOn(Alerts, 'displayError').and.callThrough()
           scope.send()
@@ -463,7 +463,7 @@ describe "SendCtrl", ->
 
         beforeEach ->
           askForSecondPassword.resolve()
-        
+
         digestAndFlush = () ->
           scope.$digest()
           $timeout.flush()

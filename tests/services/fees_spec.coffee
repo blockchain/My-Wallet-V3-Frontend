@@ -18,7 +18,7 @@ describe 'fees service', () ->
     it 'should get called with the correct modal options', ->
       fees.showFeeWarning()
       argsObj = jasmine.objectContaining({
-        templateUrl: 'partials/dynamic-fee.jade',
+        templateUrl: 'partials/dynamic-fee.pug',
         windowClass: 'bc-modal medium',
         controller: 'DynamicFeeController'
       })

@@ -1,6 +1,5 @@
 angular.module('walletApp.core').factory 'MyWalletPayment', ($q) ->
-  (_, shouldReject, rejectWith) ->
-
+  (w, p, shouldReject, rejectWith) ->
     tx = {
       txid: 'tx-hash'
     }

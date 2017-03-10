@@ -15,7 +15,7 @@ describe "ChangeEmailCtrl", ->
       }
 
       scope = $rootScope.$new()
-      template = $templateCache.get('partials/settings/change-email.jade')
+      template = $templateCache.get('partials/settings/change-email.pug')
 
       $controller "ChangeEmailCtrl",
         $scope: scope

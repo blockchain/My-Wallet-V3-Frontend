@@ -12,7 +12,7 @@ function transactionNote ($translate, $rootScope, Wallet) {
       account: '=',
       search: '='
     },
-    templateUrl: 'templates/transaction-note.jade',
+    templateUrl: 'templates/transaction-note.pug',
     link: link
   };
   return directive;

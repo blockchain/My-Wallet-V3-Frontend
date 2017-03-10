@@ -76,7 +76,7 @@ function SettingsAddressesCtrl ($scope, $state, $stateParams, $q, $sce, Wallet, 
   $scope.newAccount = () => {
     Alerts.clear();
     $uibModal.open({
-      templateUrl: 'partials/account-form.jade',
+      templateUrl: 'partials/account-form.pug',
       windowClass: 'bc-modal initial',
       controller: 'AccountFormCtrl',
       resolve: {
@@ -88,7 +88,7 @@ function SettingsAddressesCtrl ($scope, $state, $stateParams, $q, $sce, Wallet, 
   $scope.editAccount = (account) => {
     Alerts.clear();
     $uibModal.open({
-      templateUrl: 'partials/account-form.jade',
+      templateUrl: 'partials/account-form.pug',
       controller: 'AccountFormCtrl',
       windowClass: 'bc-modal sm',
       resolve: {
@@ -99,7 +99,7 @@ function SettingsAddressesCtrl ($scope, $state, $stateParams, $q, $sce, Wallet, 
 
   $scope.revealXpub = (account) => {
     $uibModal.open({
-      templateUrl: 'partials/reveal-xpub.jade',
+      templateUrl: 'partials/reveal-xpub.pug',
       controller: 'RevealXpubCtrl',
       resolve: {
         account: () => account
