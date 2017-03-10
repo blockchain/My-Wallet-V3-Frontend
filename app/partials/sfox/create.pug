@@ -21,14 +21,16 @@
   .width-60.flex-justify(ng-show="viewing('summary')")
     form.bc-form.width-60.width-100-tablet.width-100-mobile(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
-        .group.pb-30
+        .group.pb-40
           .item
-            label Email Address
+            .flex-between
+              label Email Address
+              span.blue.pointer.hidden-sm.hidden-md.hidden-lg(ng-click="view('email')" ng-show="accountForm.email.$error.registered && inMobileBuy") Change Email
             input(ng-model="state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
             .help
               span.state-danger-text Sorry, this email is already registered with SFOX.
-            .help.flex-end
+            .help.flex-end.hidden-xs
               span.blue.pointer(ng-click="view('email')") Change Email
         .group.pb-40
           .item
