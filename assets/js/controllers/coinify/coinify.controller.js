@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window) {
+function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -247,6 +247,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     $scope.trade = null;
+    buySell.getTrades().then(() => {
+      $scope.goToOrderHistory();
+    });
   };
 
   $scope.close = () => {
@@ -263,7 +266,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
     if (hasSeenPrompt) {
       [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
-      Alerts.confirm(text, {action: action}).then($scope.cancel);
+      Alerts.confirm(text, {action: action}).then($scope.cancel).then(buySell.getTrades()).then($scope.goToOrderHistory());
     } else {
       [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
       let openSurvey = () => {
@@ -280,6 +283,14 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     else if ($scope.quote && !$scope.quote.id) return 'EST_QUOTE_1';
     else if ($scope.expiredQuote) return 'EST_QUOTE_2';
     else return 'RATE_WILL_EXPIRE';
+  };
+
+  $scope.goToOrderHistory = () => {
+    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
+      $uibModalInstance.dismiss('');
+    } else {
+      $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
+    }
   };
 
   $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => {
