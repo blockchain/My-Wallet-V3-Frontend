@@ -101,9 +101,14 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function getBankAccounts () {
     return $q.resolve(service.getExchange().bank.getAll()).then(accounts => {
-      console.log('**BANK ACCOUNTS**', accounts)
-      return accounts;
-    })
+      if (accounts) {
+        console.log('**BANK ACCOUNTS**', accounts)
+        return accounts;
+      } else {
+        console.log('from buySell.service: no accounts for this user')
+        return [];
+      }
+    });
   }
 
   function createBankAccount (bankObject) {
@@ -263,6 +268,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       backdrop: 'static',
       keyboard: false,
       resolve: {
+        accounts: () => service.getBankAccounts(),
         trade: () => trade,
         buySellOptions: () => options
       }

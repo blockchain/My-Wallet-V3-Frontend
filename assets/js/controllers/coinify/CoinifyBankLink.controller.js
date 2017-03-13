@@ -63,15 +63,21 @@ function CoinifyBankLinkController ($scope, Alerts, buySell) {
 
   $scope.selecting = true;
 
+  $scope.$parent.$parent.selectedBankAccount = $scope.selectedBankAccount;
 
   $scope.bankLinkEdit = () => $scope.selecting = !$scope.selecting;
 
   $scope.addBankAccount = () => {
-
+    console.log('add bank account')
+    $scope.$parent.goTo('account-info')
   };
 
   $scope.deleteAccount = (account) => {
     console.log('delete account with', account)
   };
+
+  $scope.$watch('selectedBankAccount', () => {
+    $scope.$parent.$parent.selectedBankAccount = $scope.selectedBankAccount;
+  })
 
 }

@@ -4,15 +4,16 @@
     span.type-lbl.colon Select Account
     a.underline(ng-show="selecting" ng-click="bankLinkEdit()") Edit
     a.underline(ng-show="!selecting" ng-click="bankLinkEdit()") Done
-  .flex-column(ng-show="selecting" )
-    .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
-      input(type="radio")
-      img.mll(src="img/bank.png")
-      span.pal {{ account.bank.name }}
-      span.pv-25 {{ account.bank.address.country }}
-    .flex-row.flex-center.border.plvl
-      input(type="radio")
-      span.pv-25.pal Add new account
+  form(name="bankLinkForm" novalidate)
+    .flex-column(ng-show="selecting" )
+      .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
+        input(type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
+        img.mll(src="img/bank.png")
+        span.pal {{ account.bank.name }}
+        span.pv-25 {{ account.bank.address.country }}
+      .flex-row.flex-center.border.plvl
+        input(type="radio" name="bankRadios" ng-click="addBankAccount()")
+        a.pv-25.pal(ng-click="addBankAccount()") Add new account
   .flex-column(ng-show="!selecting" )
     .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
       i.ti-trash.pointer.state-danger-text.f-20.mrm(ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
@@ -20,47 +21,5 @@
       span.pal {{ account.bank.name }}
       span.pv-25 {{ account.bank.address.country }}
     .flex-row.flex-center.border.plvl.bg-mid-grey
-      input.disabled(type="radio")
-      span.pv-25.pal Add new account
-
-
-
-
-
-
-
-
-
-
-  //- .flex-row.flex-center.pointer.mtml
-    input.man(type="radio" name="inMedium" id="card" ng-model="$parent.medium" value="card" ng-disabled="status.waiting")
-    .flex-row.flex-align-end.flex-1.mlm.pointer
-      label.mts.pointer.em-300(for="card")
-        .flex-row.flex-center
-          span
-            img.mrm(src="img/credit-card.png")
-            img.mrm.checked(src="img/credit-card-blue.png")
-          div
-            span.type-h5.em-300(translate="CARD")
-            img.mbs.mll.cc-shadow(src="img/visa-logo.png")
-            img.mbs.mlm.cc-shadow(src="img/mastercard-logo.png")
-            span.flex-row
-              span.em-300(translate="CARD_TRANSFER.TITLE")
-      helper-button.mb-5(content="CARD_TRANSFER.COPY")
-  //- .mlm.mbl.em-300.width-70(ng-show="showNote('card')")
-    span(translate="VERIFY_CARD_NOTE")
-  //- .flex-row.flex-center.pointer
-    input.man(type="radio" name="inMedium" id="bank" ng-model="$parent.medium" value="bank" ng-disabled="status.waiting")
-    .flex-row.flex-align-end.flex-1.mlm.pointer
-      label.mts.pointer.em-300(for="bank")
-        .flex-row.flex-center
-          span
-            img.mrm(src="img/bank.png")
-            img.mrm.checked(src="img/bank-blue.png")
-          .flex-column
-            span.type-h5.em-300(translate="BANK")
-            span.flex-row
-              span.em-300(translate="BANK_TRANSFER.TITLE")
-      helper-button.mb-5(content="BANK_TRANSFER.COPY")
-  //- .mlm.mbl.em-300.width-70(ng-show="showNote('bank')")
-    span(translate="VERIFY_ID_NOTE")
+      input.disabled(type="radio" disabled)
+      span.pv-25.pal.basic-grey Add new account

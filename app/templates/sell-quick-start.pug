@@ -78,8 +78,9 @@
             | .
           span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")
             span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
+      //- TODO hide limits if user is not verified
       .flex-row.mtl
-        span Maximum daily sell amount is {{limits.sell.daily}}.
+        span Maximum daily sell amount is {{sellLimit}}.
         | &nbsp;
         a(ng-click="increaseLimit()") Increase my limit>
       .flex-end.pos-rel

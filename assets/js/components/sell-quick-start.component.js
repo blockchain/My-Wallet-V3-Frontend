@@ -30,6 +30,16 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.exchangeRate = {};
   $scope.selectedCurrency = $scope.transaction.currency.code;
   $scope.currencies = currency.coinifyCurrencies;
+
+  let exchange = buySell.getExchange();
+  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  if ($scope.exchange._profile) {
+    $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining;
+  } else {
+    $scope.sellLimit = 'n/a';
+  }
+
+
   console.log('from sell quick start component', $scope)
 
   $scope.changeSellCurrency = (curr) => {
