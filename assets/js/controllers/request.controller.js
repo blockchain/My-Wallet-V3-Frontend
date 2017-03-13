@@ -61,7 +61,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
       let accountIndex = $scope.fields.to.index;
 
       if (Wallet.my.wallet.isMetadataReady) {
-        Labels.addLabel(accountIndex, $scope.fields.label, 15).then(success).catch(error);
+        Labels.addLabel(accountIndex, 15, $scope.fields.label).then(success).catch(error);
       } else {
         Wallet.askForSecondPasswordIfNeeded().then(pw => {
           Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {

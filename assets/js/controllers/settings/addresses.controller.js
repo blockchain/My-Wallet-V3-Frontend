@@ -40,7 +40,7 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
   $scope.createAddress = () => {
     $scope.createAddressInProgress = true;
 
-    Labels.addLabel(accountIndex, $translate.instant('DEFAULT_NEW_ADDRESS_LABEL'), 15)
+    Labels.addLabel(accountIndex, 15, $translate.instant('DEFAULT_NEW_ADDRESS_LABEL'))
       .then(address => $scope.addresses.push(address))
       .catch(Alerts.displayError)
       .then(() => {
