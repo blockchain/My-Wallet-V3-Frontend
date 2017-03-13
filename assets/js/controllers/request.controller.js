@@ -52,12 +52,23 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
           $scope.requestForm.label.$error.characters = true;
         } else if (error === 'GAP') {
           $scope.requestForm.label.$error.gap = true;
+        } else if (error === 'KV_LABELS_READ_ONLY') {
+          Alerts.displayError('NEEDS_REFRESH');
         }
         $scope.requestForm.label.$valid = false;
       };
 
       let accountIndex = $scope.fields.to.index;
-      Labels.addLabel(accountIndex, $scope.fields.label, 15).then(success).catch(error);
+
+      if (Wallet.my.wallet.isMetadataReady) {
+        Labels.addLabel(accountIndex, $scope.fields.label, 15).then(success).catch(error);
+      } else {
+        Wallet.askForSecondPasswordIfNeeded().then(pw => {
+          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+            Alerts.displayError('NEEDS_REFRESH');
+          });
+        });
+      }
     }
   };
 
