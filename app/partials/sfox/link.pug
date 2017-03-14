@@ -42,12 +42,13 @@
       )
       .mvvl
         span.or-horizontal.flex-justify(translate="OR")
-      form.bc-form(name="bankAccountForm" ng-submit="link()" novalidate autocomplete="off")
+      button.btn.button-primary-inverse.full(translate="Manually Enter Account & Routing" ng-hide="state.enableBankAccountForm" ng-click="state.enableBankAccountForm = true")
+      form.bc-form(name="bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
         fieldset(ng-disabled="locked")
           .group.full.mb-30
             .item
               label Name on Account
-              input(ng-model="fields.accountName" name="accountName" required)
+              input(ng-model="fields.accountName" name="accountName" focus-when="state.enableBankAccountForm" required)
               span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
           .group.full.mb-30
             .item
