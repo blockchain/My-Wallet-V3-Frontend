@@ -9,6 +9,7 @@ function bcFileUpload ($rootScope, Alerts) {
     restrict: 'E',
     scope: {
       file: '=',
+      locked: '=',
       idType: '=',
       onUpload: '='
     },

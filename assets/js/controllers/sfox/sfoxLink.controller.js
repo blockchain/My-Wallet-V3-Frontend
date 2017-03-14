@@ -22,7 +22,8 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
   let state = $scope.state = {
     plaid: {},
     terms: false,
-    accounts: accounts
+    accounts: accounts,
+    enableBankAccountForm: false
   };
 
   $scope.fields = {
