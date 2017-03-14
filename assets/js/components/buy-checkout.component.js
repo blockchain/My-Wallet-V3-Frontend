@@ -104,13 +104,11 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
     };
 
-    $scope.formattedTrade = formatTrade.confirm(obj);
-
     $uibModal.open({
+      controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
       templateUrl: 'partials/confirm-trade-modal.pug',
-      windowClass: 'bc-modal trade-summary',
-      scope: $scope
-    });
+      windowClass: 'bc-modal trade-summary'
+    }).result.then($scope.buy);
   };
 
   $scope.buy = () => {

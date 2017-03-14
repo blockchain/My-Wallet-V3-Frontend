@@ -2,5 +2,5 @@
   .width-100.pam
     include ./trade-summary
     .flex-1.flex-end.ptm
-      button.button-muted.mrm(ng-click="$close()" translate="CANCEL")
-      button.btn.button-primary(ng-click="buy(); $close()" ladda-translate="CONFIRM" ui-ladda="locked" data-style="expand-left")
+      button.button-muted.mrm(ng-click="$dismiss()" translate="CANCEL")
+      button.btn.button-primary(ng-click="$close()")
