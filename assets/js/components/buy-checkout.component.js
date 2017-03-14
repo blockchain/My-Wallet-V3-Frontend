@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox) {
+function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -45,9 +45,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
     state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / 100 : null;
     state.btc = !state.baseFiat ? quote.baseAmount : null;
   }
-
-  $scope.enableBuy = () => $scope.enabled = true;
-  $scope.disableBuy = () => $scope.enabled = false;
 
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
@@ -83,7 +80,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500, () => {
     $scope.quote = null;
-    $scope.disableBuy();
   });
 
   $scope.getInitialQuote = () => {
@@ -99,6 +95,22 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
     } else {
       $scope.cancelRefresh();
     }
+  };
+
+  $scope.enableBuy = () => {
+    let obj = {
+      'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
+      'Payment Method': this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')',
+      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
+    };
+
+    $scope.formattedTrade = formatTrade.confirm(obj);
+
+    $uibModal.open({
+      templateUrl: 'partials/confirm-trade-modal.pug',
+      windowClass: 'bc-modal trade-summary',
+      scope: $scope
+    });
   };
 
   $scope.buy = () => {
@@ -129,7 +141,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
     $scope.max = $scope.toSatoshi(limit, $scope.dollars);
   };
 
-  $scope.$watchGroup(['state.fiat', 'state.btc'], () => this.buyAccount ? $scope.disableBuy() : $scope.enableBuy());
   $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
