@@ -27,6 +27,7 @@
         .group.full.mb-30
           .item
             label Name on Account
+              helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
             input(ng-model="fields.accountName" name="accountName" required)
             span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
         button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
@@ -47,6 +48,7 @@
           .group.full.mb-30
             .item
               label Name on Account
+                helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
               input(ng-model="fields.accountName" name="accountName" required)
               span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
           .group.full.mb-30
