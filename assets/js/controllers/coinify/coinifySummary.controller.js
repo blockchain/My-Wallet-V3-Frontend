@@ -98,7 +98,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       $scope.getMaxMin($scope.tempCurrency);
 
       // Get a new quote if using a fake quote.
-      if (!$scope.$parent.quote.id) {
+      if (!$scope.$parent.quote.id && !$scope.$parent.sell) {
         $scope.$parent.quote = null;
         $scope.getQuote();
       }

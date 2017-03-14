@@ -11,9 +11,9 @@ tr.border
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
-    
+
     span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(ng-class="{disabled: isTradingDisabled}"
-                                                            ng-click="!isTradingDisabled && triggerBuy()" 
+                                                            ng-click="!isTradingDisabled && triggerBuy()"
                                                             ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
     span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()"
                                                     ng-show="trade.state !== 'awaiting_transfer_in'") View details
@@ -31,7 +31,8 @@ tr.border
     span.display-inline-block(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl
     span(ng-hide="status.gettingQuote")
-      span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
+      span.em-600(ng-hide="trade.medium === 'blockchain'") {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
+      span.em-600(ng-show="trade.medium === 'blockchain'") {{ trade.outAmountExpected / 100 }} {{ trade.outCurrency }}
       i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade)" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
       i.ti-trash.fade(ng-hide="canCancel")
   td.type-lbl.right-align.paml(ng-show="status.gettingQuote")

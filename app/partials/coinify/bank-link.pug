@@ -10,7 +10,7 @@
         input(type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
         img.mll(src="img/bank.png")
         span.pal {{ account.bank.name }}
-        span.pv-25 {{ account.bank.address.country }}
+        span.pv-25 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
       .flex-row.flex-center.border.plvl
         input(type="radio" name="bankRadios" ng-click="addBankAccount()")
         a.pv-25.pal(ng-click="addBankAccount()") Add new account

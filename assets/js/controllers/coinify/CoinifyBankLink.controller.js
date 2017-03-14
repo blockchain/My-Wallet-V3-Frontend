@@ -2,64 +2,9 @@ angular
   .module('walletApp')
   .controller('CoinifyBankLinkController', CoinifyBankLinkController);
 
-function CoinifyBankLinkController ($scope, Alerts, buySell) {
+function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
   console.log('bank link scope', $scope)
-  // $scope.$parent.getBankAccounts();
-  // load fake account
-  $scope.$parent.bankAccounts = [{
-    "id": 12345, // Identifier of the bank account
-    "account": {
-      "type": "sepa", // Type of bank account
-      "currency": "EUR", // Currency of the bank account
-      "bic": "6456", // Account bic/swift/reg number depending on the type
-      "number": "987654321" // Account number
-    },
-    "bank": {
-      "name": "Bank of Coinify",
-      "address": { // Address of the bank
-        "country": "FR"
-      }
-    },
-    "holder": {
-      "name": "John Doe", // Name of the account holder
-      "address": { // Address of the account holder
-        "street": "123 Example Street",
-        "zipcode": "12345",
-        "city": "Exampleville",
-        "state": "CA",
-        "country": "US"
-      }
-    },
-    "update_time": "2016-04-01T12:27:36Z",
-    "create_time": "2016-04-01T12:23:19Z"
-  },
-  {
-    "id": 12345,
-    "account": {
-      "type": "sepa",
-      "currency": "EUR",
-      "bic": "6456",
-      "number": "123456789"
-    },
-    "bank": {
-      "name": "Bank of Satoshi",
-      "address": {
-        "country": "FR"
-      }
-    },
-    "holder": {
-      "name": "John Smith",
-      "address": {
-        "street": "123 Example Street",
-        "zipcode": "12345",
-        "city": "Exampleville",
-        "state": "CA",
-        "country": "US"
-      }
-    },
-    "update_time": "2016-04-01T12:27:36Z",
-    "create_time": "2016-04-01T12:23:19Z"
-  }]
+  $scope.bankAccounts = $scope.$parent.bankAccounts;
 
   $scope.selecting = true;
 
@@ -67,12 +12,33 @@ function CoinifyBankLinkController ($scope, Alerts, buySell) {
 
   $scope.bankLinkEdit = () => $scope.selecting = !$scope.selecting;
 
+  $scope.bankNumView = (number) => {
+    return number.slice(number.length - 4);
+  }
+
   $scope.addBankAccount = () => {
     console.log('add bank account')
     $scope.$parent.goTo('account-info')
   };
 
   $scope.deleteAccount = (account) => {
+    Alerts.confirm('Are you sure you want to delete this bank account?')
+      .then(() => {
+        $q.resolve(buySell.deleteBankAccount(account.id))
+          .then((res) => {
+            console.log('res', res)
+          })
+          .finally(() => {
+            let accounts = $scope.$parent.bankAccounts
+            console.log('first accounts', accounts)
+            for (let i = 0; i < accounts.length; i++) {
+              if (accounts[i]['id'] === account['id']) accounts.splice(i, 1);
+            }
+            console.log('accounts', accounts)
+            $scope.$parent.bankAccounts = accounts;
+            $scope.$parent.getBankAccounts();
+          });
+      })
     console.log('delete account with', account)
   };
 

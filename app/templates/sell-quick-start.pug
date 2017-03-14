@@ -89,4 +89,4 @@
         //-   a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
         //-     img(src="img/coinify-logo.svg")
         //-     span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-        button.button-primary(translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled")
+        button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled" data-style="expand-left" ui-ladda="status.waiting")

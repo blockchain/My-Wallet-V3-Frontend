@@ -1,0 +1,26 @@
+.flex-column.mvm
+  div
+    p.pvm You will receive an email confirmation of this sell order. Coinify will issue the owed sale amount directly to your bank account within 1 business day*
+  .left-align
+    p.colon.em-500.mbs.type-lbl Order Details
+  .flex-column.bg-grey.pal.border
+    .flex-row.flex-between.pvm
+      span.colon Coinify Trade ID
+      span {{ sellTrade.id }}
+    .flex-row.flex-between.pvm
+      span.colon Date initialized
+      span {{ sellTrade.createTime | date:dateFormat }}
+    .flex-row.flex-between.pvm
+      span.colon BTC Sold
+      span {{ sellTrade.transferIn.receiveAmount }} BTC
+  .left-align
+    p.colon.em-500.mbs.type-lbl.mtl Payout Details
+  .flex-column.bg-grey.pal.border
+    .flex-row.flex-between.pvm
+      span.colon Bank Account
+      span {{ sellTrade.transferOut.details.bank.name }}
+    .flex-row.flex-between.pvm
+      span.colon Credit Issued
+      span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}
+  .left-align
+    p.type-sm.mtvl *Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1-2 business days from the transfer.

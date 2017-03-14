@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts) {
+function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts, $state) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
@@ -17,9 +17,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.sepaCountries = country.sepaCountryCodes;
   $scope.acceptTermsForm;
   $scope.transaction = {};
+  $scope.bankAccounts = accounts;
   $scope.step;
-  // $scope.accounts = accounts;
-  // console.log('scope.accounts', $scope.accounts)
 
   $scope.bankAccount = {
     account: {
@@ -68,6 +67,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
+  $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   // $scope.needsKyc = () => +$scope.exchange.profile.level.name < 2;
   $scope.needsKyc = () => false;
@@ -80,9 +80,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     // 'isx': 1,
     'account-info': 1,
     'account-holder': 2,
-    'summary': 3,
-    'bank-link': 4,
-    'trade-formatted': 5,
+    'bank-link': 3,
+    'summary': 4,
+    'review': 5,
     'isx': 6
   };
 
@@ -97,7 +97,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     console.log('running nextStep function')
     if (!$scope.exchange.user || !$scope.user.isEmailVerified) {
       $scope.goTo('accept-terms');
-    } else if (!$scope.bankAccounts) {
+    } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
       $scope.goTo('account-info');
     } else if ($scope.bankAccounts) {
       $scope.goTo('bank-link');
@@ -115,11 +115,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else if ($scope.onStep('account-holder')) {
       return (!bank.holder.name || !bank.holder.address.street || !bank.holder.address.zipcode || !bank.holder.address.city || !bank.holder.address.country)
       return false;
-      // return $scope.accountInfoForm.$valid;
-    } else if ($scope.onStep('select-payment-medium')) {
-      return !$scope.quote || !$scope.medium;
+    } else if ($scope.onStep('bank-link')) {
+      return !$scope.selectedBankAccount;
     } else if ($scope.onStep('summary')) {
-      return true;
+      if (!$scope.trade.quote && (!$scope.selectedBankAccount || !scope.bankAccount.holder.name)) true;
       // return $scope.editAmount || !$scope.limits.max;
     }
   };
@@ -136,16 +135,21 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.status.waiting = true;
     $scope.setCurrency();
     $scope.bankAccount.account.currency = $scope.transaction.currency;
-    console.log('from createBankAccount', $scope.bankAccount)
 
     $q.resolve(buySell.createBankAccount($scope.bankAccount))
       .then((result) => {
         console.log('result of creating bank account', result)
+        $scope.selectedBankAccount = result;
         return result;
       })
       .then(data => {
         $scope.status.waiting = false;
-        $scope.goTo('summary')
+        if (!data) {
+          Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED')
+          $scope.goTo('account-info');
+        } else {
+          $scope.goTo('summary');
+        }
       })
       .catch(err => {
         console.log('err', err)
@@ -156,45 +160,17 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $q.resolve(buySell.getBankAccounts())
       .then((result) => {
         if (result) {
+          console.log('result in getBankAccounts', result)
           $scope.registeredBankAccount = true;
           $scope.bankAccounts = result;
           console.log('scope.bankAccounts set to', result)
           return result;
         } else {
           $scope.registeredBankAccount = false;
-          // load fake account
-          $scope.bankAccounts = [{
-            "id": 12345, // Identifier of the bank account
-            "account": {
-              "type": "danish", // Type of bank account
-              "currency": "DKK", // Currency of the bank account
-              "bic": "6456", // Account bic/swift/reg number depending on the type
-              "number": "12345435345345" // Account number
-            },
-            "bank": {
-              "name": "Bank of Coinify",
-              "address": { // Address of the bank
-                "country": "DK"
-              }
-            },
-            "holder": {
-              "name": "John Doe", // Name of the account holder
-              "address": { // Address of the account holder
-                "street": "123 Example Street",
-                "zipcode": "12345",
-                "city": "Exampleville",
-                "state": "CA",
-                "country": "US"
-              }
-            },
-            "update_time": "2016-04-01T12:27:36Z",
-            "create_time": "2016-04-01T12:23:19Z"
-          }]
+          $scope.bankAccounts = null;
         }
       })
   };
-
-  console.log('step', $scope, $scope.step)
 
   $scope.goToOrderHistory = () => {
     if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
@@ -224,14 +200,30 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
+  $scope.sell = () => {
+    $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
+      .then((sellResult) => {
+        if (!sellResult) {
+          console.log('error creating sell trade')
+          Alerts.displayError() //TODO
+        }
+        console.log('sell created', sellResult)
+        $scope.sellTrade = sellResult;
+        $scope.sellAddress = sellResult.transferIn.details.account;
+        $scope.goTo('review')
+      })
+      .catch(error => {
+        // TODO handle error
+      })
+  };
+
   // buySell.getBankAccounts().then((result) => {
   //   console.log('have result')
   //   $scope.nextStep();
   // })
 
-  console.log('calling nextStep()')
-  
-  $scope.nextStep();
+  if (!$scope.step) $scope.nextStep();
+
 
   $scope.setCurrency();
   // $scope.nextStep();

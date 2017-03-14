@@ -6,6 +6,7 @@
         h3.mlm(ng-if="onStep('account-info')") Add Bank Account
         h3.mlm(ng-if="onStep('account-holder')") Account Holder
         h3.mlm(ng-if="onStep('summary')") Confirm Sell Order
+        h3.mlm(ng-if="onStep('review')") Sell Order Placed
         h3.mlm(ng-if="onStep('bank-link')") Linked Accounts
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
@@ -37,6 +38,8 @@
       include ./coinify/account-holder
     div.width-80(ng-if="onStep('summary')" ng-controller="CoinifySummaryController")
       include ./coinify/summary
+    div.width-80(ng-if="onStep('review')")
+      include ./coinify/review
     div.width-80(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
       include ./coinify/bank-link
       p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
@@ -49,13 +52,13 @@
           img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   .modal-footer.flex-end.flex-row
-    button.button-muted(ng-show="onStep('summary')" ng-click="goTo('select-payment-medium')" translate="GO_BACK")
+    button.button-muted(ng-show="onStep('account-holder')" ng-click="goTo('account-info')" translate="GO_BACK")
 
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
-      button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary')")
+      button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-show="onStep('summary')")
       button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
-      button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link')")
+      button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link') || onStep('account-info') || onStep('account-holder')")
       div(ng-hide="afterStep('summary')")
         button.button-primary(
           ladda-translate="CONTINUE"
@@ -80,7 +83,7 @@
           ng-show="onStep('accept-terms')")
         button.button-primary(
           ladda-translate="CONTINUE"
-          ng-click="nextStep()"
+          ng-click="goTo('summary')"
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
@@ -90,9 +93,9 @@
           ng-click="sell()"
           data-style="expand-left"
           ui-ladda="status.waiting"
-          ng-disabled="isDisabled() || fiatFormInvalid || status.gettingQuote"
+          ng-disabled="isDisabled()"
           ng-show="onStep('summary')")
-      div(ng-show="onStep('trade-in-review') || onStep('trade-formatted') && !bitcoinReceived")
+      div(ng-show="onStep('review')")
         button.button-primary(translate="CLOSE" ng-click="cancel()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")

@@ -64,8 +64,9 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     states,
     getBankAccounts,
     createBankAccount,
-    // getOneBankAccount,
-    // deleteBankAccount
+    deleteBankAccount,
+    createSellTrade,
+    // getOneBankAccount
   };
 
   return service;
@@ -115,7 +116,29 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return $q.resolve(service.getExchange().bank.create(bankObject)).then(response => {
       console.log('**CREATED BANK RESPONSE**', response)
       return response;
-    })
+    });
+  }
+
+  function deleteBankAccount (bankId) {
+    return $q.resolve(service.getExchange().bank.deleteOne(bankId)).then(response => {
+      console.log('**DELETED BANK RESPONSE**', response);
+      return response;
+    });
+  }
+
+  function createSellTrade (quote, bank) {
+    return $q.resolve(service.getExchange().sell(quote, bank)).then(response => {
+        console.log('*** SELL TRADE RESPONSE ***', response)
+        return response;
+      })
+      .then(data => {
+        console.log('running getTrades() after sell result')
+        service.getTrades();
+        return data;
+      })
+      .catch(err => {
+        console.log('error creating sell trade', err)
+      })
   }
 
   function getKYCs () {
