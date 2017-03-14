@@ -47,8 +47,8 @@ form.bc-form(
         .f-12.mts
           span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
             | Your daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
-            | 
-          span.blue.pointer(popup
+            |
+          span.primary.pointer(popup
                             popup-name="sfox-identity"
                             ng-if="$ctrl.buyLevel === 'pending'"
                             translate="WHY")
