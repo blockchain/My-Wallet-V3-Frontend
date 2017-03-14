@@ -1281,5 +1281,6 @@
   "BLOG": "Blog",
   "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
+  "MILLION": "Million",
   "": ""
 }

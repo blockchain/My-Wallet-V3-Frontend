@@ -1,6 +1,6 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
-function LandingCtrl ($scope, $state, $sce, languages) {
+function LandingCtrl ($scope, $state, $sce, $http, languages) {
   $scope.fields = {
     email: undefined
   };
@@ -35,4 +35,11 @@ function LandingCtrl ($scope, $state, $sce, languages) {
     $scope.language = languages.mapCodeToName(code);
     $scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
   });
+
+  let setNWallets = (res) => {
+    let nWallets = res.data.values[res.data.values.length - 1]['y'];
+    $scope.nWallets = Math.floor(nWallets / 1000000);
+  };
+
+  $http.get('https://api.blockchain.info/charts/my-wallet-n-users?format=json').then(setNWallets);
 }
