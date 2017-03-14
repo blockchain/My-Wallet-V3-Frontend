@@ -63,7 +63,7 @@
           .group
             .item
               label Enter verification code sent to your email:
-              input(ng-model="state.emailCode" name="emailCode" ng-change="clearInlineErrors()" required)
+              input(ng-model="state.emailCode" name="emailCode" ng-change="clearInlineErrors()" focus-when="state.sentEmailCode || state.resentEmailCode" required)
             .item(ng-hide="emailForm.emailCode.$error.correct")
               span.f-14.mt-5(ng-hide="state.resentEmailCode")
                 | Didn't receive the email? 
@@ -72,7 +72,9 @@
                 a(ng-click="state.sentEmailCode = false") change email
               span.f-14.mt-5(ng-show="state.resentEmailCode") Another code has been sent!
             .help(ng-show="emailForm.emailCode.$error.correct")
-              span.state-danger-text Verification code incorrect.
+              span.state-danger-text 
+                | Verification code incorrect. 
+                a(ng-click="sendEmailCode(); clearInlineErrors(); state.resentEmailCode = true;") Resend
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
@@ -91,13 +93,15 @@
           .group.pt-30
             .item
               label Enter verification code sent to your mobile phone:
-              input(ng-model="state.mobileCode" name="mobileCode" ng-change="clearInlineErrors()" required)
+              input(ng-model="state.mobileCode" name="mobileCode" ng-change="clearInlineErrors()" focus-when="state.sentMobileCode || state.resentMobileCode" required)
             .item(ng-hide="mobileForm.mobileCode.$error.correct")
               span.f-14.mt-5(ng-hide="state.resentMobileCode")
                 | Didn't receive the code? 
                 a(ng-click="sendMobileCode(); state.resentMobileCode = true;") Resend 
               span.f-14.mt-5(ng-show="state.resentMobileCode") Another code has been sent!
             .help(ng-show="mobileForm.mobileCode.$error.correct")
-              span.state-danger-text Verification code incorrect.
+              span.state-danger-text
+                | Verification code incorrect. 
+                a(ng-click="sendMobileCode(); clearInlineErrors(); state.resentMobileCode = true;") Resend
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue
