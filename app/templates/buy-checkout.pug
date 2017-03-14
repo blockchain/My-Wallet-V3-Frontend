@@ -61,15 +61,15 @@ form.bc-form(
             .flex-between.flex-center.form-control.bg-grey.no-border
               span.colon Send To
               span {{ btcAccount.label }}
-            .border-bottom-thick.mhm
+            .border-bottom.mhm
           .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon BTC Order
             span {{ format(fromSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
-          .border-bottom-thick.mhm
+          .border-bottom.mhm
           .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon Payment Method
             span.capitalize {{ $ctrl.buyAccount.accountType }} ({{ $ctrl.buyAccount.accountNumber }})
-          .border-bottom-thick.mhm
+          .border-bottom.mhm
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
