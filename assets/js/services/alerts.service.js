@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal'];
+Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal', '$uibModalStack', '$cookies'];
 
-function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
+function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack, $cookies) {
   const service = {
     alerts: [],
     close,
@@ -14,6 +14,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
     prompt,
     saving,
     isDuplicate,
+    surveyCloseConfirm,
     displayInfo: display.bind(null, 'info'),
     displaySuccess: display.bind(null, 'success'),
     displayWarning: display.bind(null, ''),
@@ -61,6 +62,30 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
         msg: message
       });
     });
+  }
+
+  function surveyCloseConfirm (survey, links, index) {
+    let text, action;
+    let link = links[index];
+    let surveyOpened = $cookies.getObject(survey);
+
+    let hasSeenPrompt = !links.length ||
+                        index >= links.length ||
+                        surveyOpened && surveyOpened.index >= index;
+
+    if (hasSeenPrompt) {
+      [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
+      return service.confirm(text, {action: action});
+    } else {
+      [text, action] = ['SURVEY_PROMPT', 'TAKE_SURVEY'];
+      let openSurvey = () => {
+        $rootScope.safeWindowOpen(link);
+        $cookies.putObject(survey, {index: index});
+      };
+      return service.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'})
+                    .then(openSurvey)
+                    .catch(() => $uibModalStack.dismissAll());
+    }
   }
 
   // options = { values, props, friendly, success, action, modalClass, iconClass }

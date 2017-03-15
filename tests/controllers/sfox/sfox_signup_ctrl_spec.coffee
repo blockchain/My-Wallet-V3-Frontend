@@ -14,6 +14,7 @@ describe "SfoxSignupController", ->
 
   getController = (profile, accounts, quote) ->
     $controller "SfoxSignupController",
+      $uibModalInstance: { close: (->) dismiss: (->) }
       exchange: { profile: profile }
       quote: quote || {}
       accounts: accounts || []

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($state, $uibModal, $ocLazyLoad) {
+function modals ($state, $uibModal, $ocLazyLoad, Options) {
   const service = {};
 
   let open = (defaults, options = {}) => (
@@ -67,6 +67,7 @@ function modals ($state, $uibModal, $ocLazyLoad) {
     resolve: {
       exchange () { return exchange; },
       quote () { return quote; },
+      options: () => Options.get(),
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
