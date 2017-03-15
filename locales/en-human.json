@@ -376,7 +376,8 @@
   "HIDE_PAIRING_CODE"  : "Hide Pairing Code",
   "SHOW_PAIRING_CODE"  : "Show Pairing Code",
   "PAIRING_CODE_EXPLAIN": "Scan the code <i>(click on 'Show Pairing Code')</i> with your Blockchain Wallet (iOS or Android) for a seamless connection to your wallet.",
-  "SHOW_PAIRING_CODE_FAIL" : "Failed to load pairing code",
+  "PAIRING_CODE_EXPLAIN_WARN": "Do not share your Pairing Code with others.",
+  "SHOW_PAIRING_CODE_FAIL" : "Failed to load Pairing Code",
   "DOWNLOAD_THE": "Download the",
   "IOS_APP_HERE": "iOS app here",
   "AND_THE": "and the",
@@ -1280,5 +1281,7 @@
   "BLOG": "Blog",
   "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
+  "CANNOT_COMPLETE_TRADE_ERROR": "{{::error}}. Please try again later. If you continue to experience issues, you may contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
+  "UNABLE_TO_PROCESS": "Unable to process your trade",
   "": ""
 }
