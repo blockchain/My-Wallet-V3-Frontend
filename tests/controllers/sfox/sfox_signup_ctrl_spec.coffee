@@ -1,6 +1,7 @@
 describe "SfoxSignupController", ->
   $rootScope = undefined
   $controller = undefined
+  options = undefined
 
   profile = (status, docs) -> verificationStatus: { level: status, required_docs: docs }
   accounts = (first) -> if first then [first] else []
@@ -11,12 +12,21 @@ describe "SfoxSignupController", ->
     angular.mock.inject ($injector, $q, _$rootScope_, _$controller_) ->
       $rootScope = _$rootScope_
       $controller = _$controller_
+      
+      options = {
+        partners: {
+          sfox: {
+            surveyLinks: []
+          }
+        }
+      }
 
   getController = (profile, accounts, quote) ->
     $controller "SfoxSignupController",
       $uibModalInstance: { close: (->) dismiss: (->) }
       exchange: { profile: profile }
       quote: quote || {}
+      options: options || {}
       accounts: accounts || []
 
   describe "steps", ->
