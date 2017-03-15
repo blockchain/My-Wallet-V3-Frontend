@@ -168,13 +168,3 @@ button.full {
 .button-short-wide {
   min-width: 100px;
 }
-
-.button-native-mobile {
-  @media (max-width: 767px) {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    border-radius: 0px;
-    height: 35pt;
-  }
-}
