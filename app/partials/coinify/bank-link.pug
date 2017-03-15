@@ -7,10 +7,11 @@
   form(name="bankLinkForm" novalidate)
     .flex-column(ng-show="selecting" )
       .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
-        input(type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
-        img.mll(src="img/bank.png")
-        span.pal {{ account.bank.name }}
-        span.pv-25 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
+        label.pv-25.mbn.pointer(for="{{account.id}}")
+          input(type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
+          img.ml-30(src="img/bank.png")
+          span.pal.em-300 {{ account.bank.name }}
+          span.pv-25.em-300 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
       .flex-row.flex-center.border.plvl
         input(type="radio" name="bankRadios" ng-click="addBankAccount()")
         a.pv-25.pal(ng-click="addBankAccount()") Add new account
@@ -19,7 +20,7 @@
       i.ti-trash.pointer.state-danger-text.f-20.mrm(ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
       img.mll(src="img/bank.png")
       span.pal {{ account.bank.name }}
-      span.pv-25 {{ account.bank.address.country }}
+      span.pv-30 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
     .flex-row.flex-center.border.plvl.bg-mid-grey
       input.disabled(type="radio" disabled)
       span.pv-25.pal.basic-grey Add new account

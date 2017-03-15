@@ -2,11 +2,15 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
+function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, smartAccount) {
   $scope.$parent.limits = {};
+  $scope.format = currency.formatCurrencyForView;
+  $scope.btcCurrency = currency.bitCurrencies[0];
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
   // $scope.isBankTransfer = () => $scope.isMedium('bank');
+  $scope.trade = $scope.$parent.$parent.trade;
+  $scope.transaction = $scope.$parent.$parent.transaction;
   console.log('coinify summary ctrl scope', $scope)
 
   $scope.getMaxMin = (curr) => {
@@ -24,6 +28,45 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
       return $q.all([min, max]).then($scope.setParentError);
     });
+  };
+
+  // build().publish().payment.then()
+  // send controller line 202
+  //sign().publish
+
+  // $scope.getFee = () => {
+  //   const index = Wallet.getDefaultAccountIndex();
+  //   // to get fee
+  //   // payment.sideEffect
+  //   // .fee(absoluteFeeBounds [0])
+  //
+  //   console.log('index', index)
+  //
+  //
+  //   $scope.payment = Wallet.my.wallet.createPayment();
+  //
+  //   console.log('scope from inside getFee', $scope)
+  //
+  //   $scope.payment.from(index).amount(100000)
+  //
+  //   $scope.payment.sideEffect(result => {
+  //     console.log('result of sideEffect', result)
+  //     $scope.fee = result.absoluteFeeBounds[0];
+  //     console.log('$scope.fee', $scope.fee)
+  //     $scope.btcFee = currency.convertFromSatoshi($scope.fee, $scope.btcCurrency);
+  //     // const fiatFee = ($scope.transaction.fiat / $scope.transaction.btc) * $scope.fee;
+  //     // $scope.amountOwed =
+  //   })
+  // };
+  //
+  // $scope.getFee();
+
+  $scope.convertFeeToFiat = () => {
+    return $scope.transaction.fiat / $scope.fee;
+  };
+
+  $scope.setTotal = (baseAmount, fee) => {
+    return baseAmount - fee;
   };
 
   $scope.commitValues = () => {

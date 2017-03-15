@@ -96,7 +96,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     } else {
       amt = Math.trunc(amt * 100);
     }
-    console.log('running GET SELL QUOTE', amt, curr, quoteCurr)
     return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr))
   }
 
@@ -138,6 +137,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       })
       .catch(err => {
         console.log('error creating sell trade', err)
+        return err;
       })
   }
 

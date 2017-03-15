@@ -11,8 +11,6 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.accountCurrency = $scope.$parent.bankAccount.account.currency;
   $scope.accountType = 'international';
 
-  console.log('bank account ctrl scope', $scope)
-
   $scope.setAccountType = (accountType) => {
     $scope.accountType = accountType;
   };

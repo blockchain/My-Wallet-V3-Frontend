@@ -305,6 +305,10 @@
     "TITLE": "Remove Label?",
     "BODY": "This action cannot be undone. Removing a label does not delete this address, you can still safely receive funds to it."
   },
+  "CONFIRM_DELETE_BANK": {
+    "TITLE": "Delete bank account?",
+    "BODY": "Are you sure you want to delete this bank account?"
+  },
   "DETAILS" : "Details",
   "TRANSFER" : "Transfer",
   "TRANSFER_ALL" : "Transfer All",
@@ -1129,6 +1133,8 @@
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
   "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
+  "SELL_AMT_LOW": "Sell amount too low.",
+  "SELL_AMT_HIGH": "Sell amount too high.",
   "WHY": "Why?",
   "UPDATE": "Update",
   "BUY_SUBSCRIBE": {

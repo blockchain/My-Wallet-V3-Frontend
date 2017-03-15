@@ -20,7 +20,7 @@
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
     .buy-sell.mbvl
-      .flex-row.flex-column-tablet
+      .flex-row.flex-column-tablet.mt-50
       div(ng-show="selectedTab === 'BUY_BITCOIN'")
         //- BUY
         buy-quick-start(limits="limits"
@@ -36,7 +36,7 @@
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
-      .flex-column(ng-show="selectedTab === 'SELL_BITCOIN'")
+      div(ng-show="selectedTab === 'SELL_BITCOIN'")
         //- SELL
         sell-quick-start(limits="limits",
                         transaction="transaction",
@@ -49,7 +49,7 @@
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
                         sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
-        .flex-column.width-50.mlvl.mt-55
+        .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
       .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
         .flex-column.mtl(ng-show="trades.pending.length" data-preflight-tag="BuySellTrades")

@@ -3,7 +3,6 @@ angular
   .controller('CoinifyBankLinkController', CoinifyBankLinkController);
 
 function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
-  console.log('bank link scope', $scope)
   $scope.bankAccounts = $scope.$parent.bankAccounts;
 
   $scope.selecting = true;
@@ -17,12 +16,11 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
   }
 
   $scope.addBankAccount = () => {
-    console.log('add bank account')
     $scope.$parent.goTo('account-info')
   };
 
   $scope.deleteAccount = (account) => {
-    Alerts.confirm('Are you sure you want to delete this bank account?')
+    Alerts.confirm('CONFIRM_DELETE_BANK')
       .then(() => {
         $q.resolve(buySell.deleteBankAccount(account.id))
           .then((res) => {
