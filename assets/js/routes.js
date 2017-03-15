@@ -77,8 +77,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       views: {
         body: {
           template: '<blocket-loading loading="true"></blocket-loading>',
-          controller (buyMobile) {
-            buyMobile.callMobileInterface(buyMobile.FRONTEND_INITIALIZED);
+          controller (buyMobile, Wallet) {
+            if (!Wallet.status.isLoggedIn) {
+              buyMobile.callMobileInterface(buyMobile.FRONTEND_INITIALIZED);
+            }
           }
         }
       },
