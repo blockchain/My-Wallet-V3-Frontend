@@ -1,4 +1,4 @@
-describe "walletServices", () ->
+xdescribe "walletServices", () ->
   Wallet = undefined
   Alerts = undefined
   mockObserver = undefined

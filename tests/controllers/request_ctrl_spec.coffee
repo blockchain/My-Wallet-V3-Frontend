@@ -1,4 +1,4 @@
-describe "RequestCtrl", ->
+xdescribe "RequestCtrl", ->
 
   scope = undefined
   modalInstance =

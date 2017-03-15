@@ -1,4 +1,4 @@
-describe "SettingsAddressesCtrl", ->
+xdescribe "SettingsAddressesCtrl", ->
   $q = undefined
   $state = undefined
   scope = undefined

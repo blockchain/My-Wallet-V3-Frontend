@@ -1,4 +1,4 @@
-describe "Transaction Description Directive", ->
+xdescribe "Transaction Description Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
