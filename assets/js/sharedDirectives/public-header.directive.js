@@ -24,7 +24,7 @@ function publicHeader ($rootScope, $location) {
             <li class="item active"><a href="#" translate="WALLET" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}charts" translate="CHARTS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}stats" translate="STATS" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="https://markets.blockchain.info" translate="MARKETS" class="upper"></a></li>
+            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}markets" translate="MARKETS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="upper"></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right hidden-sm">

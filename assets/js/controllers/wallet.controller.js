@@ -119,7 +119,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         // Metadata service connection failed
         error = 'POOR_CONNECTION';
       }
-
       if (error) {
         event.preventDefault();
         Alerts.displayError(error);

@@ -1017,6 +1017,10 @@
     "TITLE": "Transaction {{::state}}",
     "BODY": ""
   },
+  "TX_CONFIRM": {
+    "TITLE": "Confirm Purchase",
+    "BODY": "You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete."
+  },
   "TX_PENDING": {
     "TITLE": "Order Pending",
     "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
@@ -1167,7 +1171,7 @@
   "LANDING": {
     "NEW_TO_BITCOIN" : "New To Bitcoin?",
     "WHAT_IS_BITCOIN": "What is Bitcoin?",
-    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
     "WHY_USE" : "Why use it?",
     "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
