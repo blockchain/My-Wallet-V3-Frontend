@@ -11,7 +11,7 @@
     "babelify": "^7.3.0",
     "bootstrap-sass": "^3.3.7",
     "bower": "^1.3.1",
-    "brand-assets": "git+ssh://git@github.com/blockchain/brand-assets.git#css",
+    "blockchain-css": "1.0.*",
     "browserify": "^13.1.0",
     "browserify-istanbul": "^2.0.0",
     "coffee-script": "^1.9.1",
