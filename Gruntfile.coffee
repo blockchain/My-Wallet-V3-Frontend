@@ -274,7 +274,7 @@ module.exports = (grunt) ->
           spawn: false
 
       css:
-        files: ['assets/css/**/*.scss']
+        files: ['assets/css/**/*.scss', 'node_modules/blockchain-css/**/*.scss']
         tasks: ['sass', 'concat_css', 'copy:fonts']
         options:
           spawn: false

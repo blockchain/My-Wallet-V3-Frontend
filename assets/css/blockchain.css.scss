@@ -9,6 +9,8 @@
 @import '../../node_modules/blockchain-css/sass/elements/buttons';
 @import '../../node_modules/blockchain-css/sass/elements/inputs';
 @import '../../node_modules/blockchain-css/sass/elements/links';
+@import '../../node_modules/blockchain-css/sass/modules/header';
+@import '../../node_modules/blockchain-css/sass/modules/footer';
 
 //import utilitarian CSS
 @import 'utilities/borders';
@@ -20,7 +22,6 @@
 @import 'elements/labels';
 @import 'elements/tables';
 @import 'elements/carousel';
-@import 'elements/footer';
 
 // import themes
 @import 'themes/dev';
