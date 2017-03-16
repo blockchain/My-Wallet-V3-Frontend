@@ -47,6 +47,8 @@ describe "walletServices", () ->
               })
           accountInfo:
             email: "a@b.com"
+          loadExternal: () ->
+            {}
 
         createNewWallet: (email, pwd, firstAccount, language, currency, success, fail) ->
           success()
