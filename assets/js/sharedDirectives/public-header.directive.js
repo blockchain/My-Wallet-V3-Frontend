@@ -32,7 +32,7 @@ function publicHeader ($rootScope, $location) {
               <form action="{{searchUrl}}" class="bc-form" method="GET">
                 <div class="group">
                   <div class="item search">
-                    <input type="text" name="search" class="form-control input-sm search-query" placeholder="{{'SEARCH'|translate}}">
+                    <input type="text" name="search" id="header-search" class="form-control" placeholder="{{'SEARCH_FOR_BLOCK_ETC'|translate}}">
                     <i class="icon-search"></i>
                   </div>
                 </div>

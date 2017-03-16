@@ -812,6 +812,7 @@
   "CHECKING_LOGIN_ATTEMPT" : "Checking login attempt",
   "ERROR" : "Error",
   "SEARCH" : "Search",
+  "SEARCH_FOR_BLOCK_ETC": "Search for block hash, transaction, address, etc",
   "BALANCES" : "Balances",
   "MUST_SELECT_ORIGIN" : "Must select where to send from",
   "ERR_ENABLE_IP_RESTRICT" : "You must add at least one IP address to the whitelist to enable Login IP Restriction",
