@@ -170,7 +170,6 @@ module.exports = (grunt) ->
           "build/css/fonts.css"
           "build/css/angular-csp.css"
           "build/css/blockchain.css"
-          "build/css/fonts.css"
         ],
         dest: "build/css/wallet.css"
       }
@@ -248,10 +247,7 @@ module.exports = (grunt) ->
       fonts:
         files: [
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/montserrat", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/gillsans", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/icomoon", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
+          {src: ["*/*"], dest: "build/fonts", cwd: "node_modules/blockchain-css/fonts", expand: true}
 
         ]
 
