@@ -28,7 +28,8 @@ tr.border
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
-    span.display-inline-block(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-show="trade.medium === 'blockchain'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
+    span.display-inline-block(ng-hide="trade.medium === 'blockchain'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl
     span(ng-hide="status.gettingQuote")
       span.em-600(ng-hide="trade.medium === 'blockchain'") {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}

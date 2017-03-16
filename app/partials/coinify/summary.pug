@@ -14,7 +14,7 @@
     span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, max: limits.available}")
     span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, min: limits.min}")
   p.mvm(ng-show="isSell")
-    span(translate="Please review your order. Coinify will issue the owed sale amount directly to your bank account within one business day." ng-show="isSell")
+    span.f-16(translate="Please review your order. Coinify will issue the owed sale amount directly to your bank account within one business day." ng-show="isSell")
   .flex-center.flex-between.flex-row-reverse
     .mam
       span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount" translate="EDIT_ORDER")
@@ -29,9 +29,9 @@
       span(ng-show="isBankTransfer()" translate="BTC_APPROX_RATE")
       span.success(ng-hide="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
       span.success.tilda-before(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
-    .flex-row.flex-between.pam.pos-rel
+    .flex-row.flex-between.pam.pos-rel.pv-15
       //- SELL
-      span(ng-show="isSell") BTC to Sell:
+      span.colon(ng-show="isSell") BTC to Sell
       span(ng-show="editAmount || isSell") {{ transaction.btc }} BTC ({{ transaction.fiat }} {{ trade.quote.quoteCurrency === 'BTC' ? trade.quote.baseCurrency : trade.quote.quoteCurrency }})
       //- BUY
       span(translate="AMOUNT:" ng-hide="isSell")
@@ -69,23 +69,24 @@
                  ng-click="changeTempCurrency(currency);"
                  ng-class="{active: isCurrencySelected(currency)}")
                 a(ng-click="$event.preventDefault()") {{ currency.code }}
-    .flex-row.flex-between.pam.border-bottom-light
-      span(translate="PAYMENT_FEE" ng-hide="isSell === true")
-      span(ng-show="isSell") BTC Transaction Fee
+    .flex-row.flex-between.pam.border-bottom-light(ng-hide="isSell")
+    .flex-row.flex-between.pam.pv-15(ng-if="isSell")
+      span(translate="PAYMENT_FEE" ng-hide="isSell")
+      span.colon(ng-show="isSell") BTC Transaction Fee
       //- Transaction Fees
       span(ng-hide="isSell") {{ transaction.methodFee | format }} {{ transaction.currency.code }}
-      span(ng-show="isSell") {{ transaction.fee.btc }} BTC &nbsp; ({{ transaction.fee.fiat }} {{ transaction.currency }})
+      span(ng-show="isSell") {{ transaction.fee.btc }} BTC
     //- Transaction Totals
     .flex-row.flex-between.pam(ng-hide="isSell")
       span.em-500(translate="TOTAL_COST:")
       span {{ currencySymbol.symbol }}{{ transaction.total }} {{ transaction.currency.code }}
-    .flex-row.flex-between.pam(ng-show="isSell")
+    .flex-row.flex-between.pam.pv-15(ng-show="isSell")
       span.em-500 Credit Owed:
-      span {{ transaction.amountOwed | format }} {{ transaction.currency }}
+      span.em-500 {{ transaction.fiat | format }} {{ transaction.currency }}
   .pam.mtl(ng-show="isSell")
-    span.em-500 {{ transaction.btc }} BTC
+    span.em-500.f-16 {{ transaction.btcAfterFee }} BTC
     | &nbsp;
-    span will be sent directly from your Blockchain Wallet to Coinify once you click 'Place Sell Order'.
+    span.f-16 will be sent directly from your Blockchain Wallet to Coinify once you click 'Place Sell Order'.
   form.clearfix(ng-show="isBankTransfer()" ng-hide="isSell" name="rateForm" role="form" novalidate)
     .flex-row.flex-start.mtl
       div

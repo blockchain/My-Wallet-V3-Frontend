@@ -24,7 +24,7 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
       .then(() => {
         $q.resolve(buySell.deleteBankAccount(account.id))
           .then((res) => {
-            console.log('res', res)
+            console.log('successful delete?', res)
           })
           .finally(() => {
             let accounts = $scope.$parent.bankAccounts
@@ -33,6 +33,7 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
               if (accounts[i]['id'] === account['id']) accounts.splice(i, 1);
             }
             console.log('accounts', accounts)
+            $scope.selecting = false;
             $scope.$parent.bankAccounts = accounts;
             $scope.$parent.getBankAccounts();
           });

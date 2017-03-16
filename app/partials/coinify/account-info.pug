@@ -1,17 +1,17 @@
 .flex-column.mbvl
   p.security-red.pointer(ng-show="true")
     i.ti-search.mrm.right-align(ng-click="qa.info()")  QA: Now
-  .flex-column.flex-between.pam
-    span.pvm.f-14.mbm Please enter your bank information below.
-    .form-group.flex-row.flex-between.width-80
+  .flex-column.flex-center.pam
+    span.pvm.f-16.mbm Please enter your bank information below.
+    .form-group.flex-row.flex-between.width-90
       div.width-100
-        label.control-label(translate="Select the country your account was opened in.")
+        label.control-label(translate="Bank Account Country")
         div
           ui-select.mtm(ng-model="selectedBankCountry" on-select="selectBankCountry($item)")
             ui-select-match(placeholder="Select Country") {{selectedBankCountry.name}}
             ui-select-choices(repeat="c in sepaCountries | filter:$select.search track by c.name") {{c.name}}
 
-    .form-group.flex-column.width-80
+    .form-group.flex-column.width-90
       label.control-label(translate="Bank Name")
       div
         input.form-control(
@@ -22,8 +22,19 @@
           tabindex="1"
           placeholder=""
           required)
+  form(novalidate)
+    .flex-justify.phm.mb-10
+      .flex-column.width-90
+        label(for="non-Danish")
+          input(type="radio" name="bankRadioGroup" id="non-Danish" ng-value="'international'" ng-model="accountType")
+          span.pointer I do not have a Danish account.
+        label(for="Danish")
+          input(type="radio" name="bankRadioGroup" id="Danish" ng-value="'danish'" ng-model="accountType")
+          span.pointer I have a Danish account.
+
+  .flex-column.flex-center.pam
     //- form for non-Danish accounts
-    form.input-group.width-80.amount-input(
+    form.input-group.width-90.amount-input(
       role="form"
       name="accountInfoForm"
       ng-submit="commitValues()"
@@ -53,11 +64,11 @@
             tabindex="1"
             placeholder=""
             required)
-      .width-100
-        a(ng-click="setAccountType('danish')") I have a Danish bank account
+      //- .width-100
+      //-   a(ng-click="setAccountType('danish')") I have a Danish bank account
 
     //- form for Danish accounts
-    form.input-group.width-80.amount-input(
+    form.input-group.width-90.amount-input(
       role="form"
       name="accountInfoForm"
       ng-submit="commitValues()"
@@ -86,5 +97,5 @@
             tabindex="1"
             placeholder=""
             required)
-      .width-100
-        a(ng-click="setAccountType('international')") I don't have a Danish bank account
+      //- .width-100
+      //-   a(ng-click="setAccountType('international')") I don't have a Danish bank account

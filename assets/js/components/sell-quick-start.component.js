@@ -30,6 +30,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.exchangeRate = {};
   $scope.selectedCurrency = $scope.transaction.currency.code;
   $scope.currencies = currency.coinifyCurrencies;
+  $scope.error = {};
+  $scope.status = { ready: true };
+
+  $scope.transaction.btc = null;
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
@@ -39,6 +43,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.sellLimit = 'n/a';
   }
 
+  $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
   console.log('from sell quick start component', $scope)
 
@@ -61,7 +66,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getExchangeRate = () => {
     // stopFetchingQuote();
     // startFetchingQuote();
-    // $scope.status.busy = true;
+    $scope.status.busy = true;
 
     buySell.getQuote(-1, 'BTC', $scope.transaction.currency.code).then(function (quote) {
       $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
@@ -74,7 +79,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     } else if ($scope.lastInput === 'fiat') {
       buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error);
     } else {
-      $scope.status = {};
+      $scope.status = { busy: false };
     }
   };
 
@@ -101,103 +106,16 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.getExchangeRate();
 
-  // -------- OLD DIRECTIVE CODE BELOW -------- //
 
-  // const directive = {
-  //   restrict: 'E',
-  //   replace: true,
-  //   scope: {
-  //     buy: '&',
-  //     limits: '=',
-  //     disabled: '=',
-  //     tradingDisabled: '=',
-  //     tradingDisabledReason: '=',
-  //     openPendingTrade: '&',
-  //     pendingTrade: '=',
-  //     modalOpen: '=',
-  //     transaction: '=',
-  //     currencySymbol: '=',
-  //     changeCurrency: '&'
-  //   },
-  //   templateUrl: 'templates/buy-quick-start.jade',
-  //   link: link
-  // };
-  // return directive;
 
-  function link (scope, elem, attr) {
-    scope.exchangeRate = {};
-    scope.status = {ready: true};
-    scope.currencies = currency.coinifyCurrencies;
-    scope.format = currency.formatCurrencyForView;
+  $scope.$watch('transaction.btc', (newVal, oldVal) => {
+    if (newVal >= $scope.totalBalance) {
+      console.log('moreThanInWallet error')
+      // $scope.error['moreThanInWallet'] = true;
+    } else if (newVal < $scope.totalBalance) {
+      // $scope.error['moreThanInWallet'] = false;
+    }
+  });
 
-    scope.updateLastInput = (type) => scope.lastInput = type;
-    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
 
-    scope.getExchangeRate = () => {
-      stopFetchingQuote();
-      startFetchingQuote();
-      scope.status.busy = true;
-
-      buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
-        scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
-      }, error).finally(scope.getQuote);
-    };
-
-    scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
-
-    scope.triggerBuy = () => {
-      scope.buy({ fiat: scope.transaction.fiat, btc: scope.transaction.btc, quote: scope.quote });
-    };
-
-    let fetchingQuote;
-    let startFetchingQuote = () => {
-      fetchingQuote = $interval(() => scope.getExchangeRate(), 1000 * 60);
-    };
-
-    let stopFetchingQuote = () => {
-      $interval.cancel(fetchingQuote);
-    };
-
-    scope.getQuote = () => {
-      if (scope.lastInput === 'btc') {
-        buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
-      } else if (scope.lastInput === 'fiat') {
-        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
-      } else {
-        scope.status = {};
-      }
-    };
-
-    const success = (quote) => {
-      if (quote.baseCurrency === 'BTC') {
-        scope.transaction.fiat = -quote.quoteAmount / 100;
-      } else {
-        scope.transaction.btc = quote.quoteAmount / 100000000;
-      }
-      scope.quote = quote;
-      scope.status = {};
-      Alerts.clear();
-    };
-
-    const error = () => {
-      scope.status = {};
-      Alerts.displayError('ERROR_QUOTE_FETCH');
-    };
-
-    scope.cancelTrade = () => {
-      scope.disabled = true;
-      buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
-    };
-
-    scope.getDays = () => {
-      let verifyDate = buySell.getExchange().profile.canTradeAfter;
-      return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
-    };
-
-    scope.getExchangeRate();
-    scope.$on('$destroy', stopFetchingQuote);
-    scope.$watch('modalOpen', (modalOpen) => {
-      modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
-    });
-  }
 }

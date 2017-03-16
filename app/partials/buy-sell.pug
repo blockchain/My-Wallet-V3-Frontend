@@ -55,7 +55,7 @@
         .flex-column.mtl(ng-show="trades.pending.length" data-preflight-tag="BuySellTrades")
         .flex-row.flex-between.flex-center(ng-show="trades.pending.length")
           //- h4.type-h4(translate="ORDER_HISTORY")
-          h4.type-h5 Action Required ({{trades.pending.length}})
+          h4.type-h5 Pending Orders ({{trades.pending.length}})
           span(ng-show="trades.pending.length") Coinify Account: {{ exchange.profile.email }}
         table.width-100(ng-show="trades.pending.length")
           tr.border.bg-light-blue

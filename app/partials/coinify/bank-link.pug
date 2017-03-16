@@ -6,7 +6,7 @@
     a.underline(ng-show="!selecting" ng-click="bankLinkEdit()") Done
   form(name="bankLinkForm" novalidate)
     .flex-column(ng-show="selecting" )
-      .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
+      .flex-row.flex-center.border-top.border-right.border-left.plvl(ng-repeat="account in bankAccounts")
         label.pv-25.mbn.pointer(for="{{account.id}}")
           input(type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
           img.ml-30(src="img/bank.png")
