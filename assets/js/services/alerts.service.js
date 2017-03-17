@@ -65,7 +65,6 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack
   }
 
   function surveyCloseConfirm (survey, links, index) {
-    let text, action;
     let link = links[index];
     let surveyOpened = $cookies.getObject(survey);
 
@@ -74,15 +73,11 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack
                         surveyOpened && surveyOpened.index >= index;
 
     if (hasSeenPrompt) {
-      [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
-      return service.confirm(text, {action: action});
+      return service.confirm('CONFIRM_CLOSE_BUY', {action: 'IM_DONE'});
     } else {
-      [text, action] = ['SURVEY_PROMPT', 'TAKE_SURVEY'];
-      let openSurvey = () => {
-        $rootScope.safeWindowOpen(link);
-        $cookies.putObject(survey, {index: index});
-      };
-      return service.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'})
+      $cookies.putObject(survey, {index: index});
+      let openSurvey = () => $rootScope.safeWindowOpen(link);
+      return service.confirm('SURVEY_PROMPT', {action: 'TAKE_SURVEY', friendly: true, cancel: 'NO_THANKS'})
                     .then(openSurvey)
                     .catch(() => $uibModalStack.dismissAll());
     }
