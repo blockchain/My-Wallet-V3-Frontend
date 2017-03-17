@@ -22,6 +22,12 @@ function bcFileUpload ($rootScope, Alerts) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.state = { webcam: {} };
 
+    scope.reset = () => {
+      scope.file = null;
+      scope.invalidFile = null;
+      scope.disableWebcam();
+    };
+
     scope.enableWebcam = () => {
       scope.state.webcam.active = true;
     };
