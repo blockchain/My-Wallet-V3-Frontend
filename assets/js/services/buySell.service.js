@@ -139,7 +139,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
-    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+    }).then(() => trade.cancel().then(() => service.fetchProfile()).then(() => {
+      // so when a trade is cancelled it moves to the completed table
+      service.getTrades();
+    }), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 

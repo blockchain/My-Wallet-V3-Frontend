@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options) {
+function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -91,9 +91,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         $q.all([getTrades, getKYCs, getCurrencies]).then(() => {
           $scope.status.loading = false;
           $scope.status.disabled = false;
-        }).catch(() => {
-          $scope.status.exchangeDown = true;
         });
+      }).catch(() => {
+        $scope.status.loading = false;
+        $scope.status.exchangeDown = true;
+        $scope.$safeApply();
       });
     } else {
       $scope.status.disabled = false;
@@ -159,6 +161,13 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
     return cannotTradeReason;
   };
+
+  $scope.tabs = ['BUY_BITCOIN', 'ORDER_HISTORY'];
+  $scope.selectTab = (tab) => {
+    $scope.selectedTab = $scope.selectedTab ? tab : null;
+    $state.params.selectedTab = tab;
+  };
+  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
 
   $rootScope.$on('fetchExchangeProfile', () => {
     $scope.status.disabled = true;

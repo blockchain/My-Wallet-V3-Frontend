@@ -52,7 +52,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     });
   };
 
-  let eventualError = (message) => Promise.reject.bind(Promise, { message });
+  const completeTradeError = (err) => {
+    $scope.status.waiting = false;
+    $scope.$parent.error = JSON.parse(err);
+  };
 
   $scope.$parent.buy = () => {
     $scope.status.waiting = true;
@@ -72,10 +75,8 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
         : buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
-    let buyError = eventualError('ERROR_TRADE_CREATE');
-
     $scope.accounts[0].buy()
-                      .catch(buyError)
+                      .catch((e) => completeTradeError(e))
                       .then(success, $scope.standardError)
                       .then($scope.watchAddress);
   };

@@ -25,20 +25,6 @@ body {
   }
 }
 
-.display-block { display: block; }
-.display-inline-block { display: inline-block; }
-
-.pointer { cursor: pointer; }
-.cursor-text { cursor: text; }
-.pos-rel { position: relative; }
-.pos-abs { position: absolute; }
-.row { vertical-align: bottom; }
-.row.spacing {
-  height: 20px;
-  background: transparent;
-}
-.margin-0-auto { margin: 0 auto; }
-
 .line-split {
   position: relative;
   &:before, &:after {
@@ -82,9 +68,3 @@ noscript {
 }
 
 .mw { max-width: 100%; }
-
-.tilda-before {
-  &:before {
-    content: '~';
-  }
-}

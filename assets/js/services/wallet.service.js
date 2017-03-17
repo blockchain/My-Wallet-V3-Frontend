@@ -102,12 +102,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.status.didInitializeHD = true;
     }
     $window.name = 'blockchain-' + uid;
-    $q.all([
-      wallet.fetchAccountInfo(),
-      wallet.loadExternal()
-    ]).then(([accountInfoResult]) => {
+    wallet.fetchAccountInfo().then((accountInfo) => {
+      wallet.initExternal();
       wallet.status.isLoggedIn = true;
-      successCallback && successCallback(accountInfoResult);
+      successCallback && successCallback(accountInfo);
     });
   };
 
@@ -269,15 +267,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     });
   };
 
-  wallet.loadExternal = () => {
-    return $q.resolve(wallet.my.wallet.loadExternal()).then(() => {
-      let { external } = MyWallet.wallet;
-      if (external) {
-        let { coinify, sfox } = external;
-        if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
-        if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
-      }
-    });
+  wallet.initExternal = () => {
+    let { external } = MyWallet.wallet;
+    if (external) {
+      let { coinify, sfox } = external;
+      if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
+      if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
+    }
   };
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
@@ -866,7 +862,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.logout({ auto: true });
       }
     } else if (event === 'on_change') {
-      wallet.fetchAccountInfo(wallet.loadExternal);
+      wallet.fetchAccountInfo(wallet.initExternal);
     } else {
     }
     $rootScope.$safeApply();

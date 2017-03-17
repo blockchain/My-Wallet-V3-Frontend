@@ -1,10 +1,11 @@
 
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
-@import "../../assets/css/utilities/colors";
-@import "../../assets/css/utilities/typography";
-@import "../../assets/css/elements/buttons";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+
+@import '../../node_modules/blockchain-css/sass/utilities/colors';
+@import '../../node_modules/blockchain-css/sass/utilities/typography';
+@import '../../node_modules/blockchain-css/sass/elements/buttons';
 
 body {
   margin: 0px;
