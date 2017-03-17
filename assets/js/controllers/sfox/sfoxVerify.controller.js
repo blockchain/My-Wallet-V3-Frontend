@@ -31,7 +31,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modal
     return then < Date.now();
   };
 
-  $scope.getSignedURL = () => {
+  $scope.prepUpload = () => {
     $scope.lock();
     let fields = $scope.state;
     let profile = exchange.profile;
@@ -42,23 +42,22 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modal
     fields.verifyDoc && (filename = 'testing-' + filename);
 
     $q.resolve(profile.getSignedURL(idType, filename))
-      .then((res) => $scope.state.signedURL = res.signed_url)
-      .catch((err) => console.log(err))
-      .finally($scope.free);
+      .then((res) => $scope.upload(res.signed_url))
+      .catch((err) => console.log(err));
   };
 
-  $scope.upload = () => {
-    $scope.lock();
-    let { signedURL, file } = $scope.state;
+  $scope.upload = (url) => {
+    let { file } = $scope.state;
 
     Upload.http({
       method: 'PUT',
-      url: signedURL,
+      url: url,
       data: file,
       headers: { 'content-type': 'application/octet-stream' }
     }).then(() => exchange.fetchProfile())
       .then(() => $scope.setState())
-      .catch(sfox.displayError);
+      .catch(sfox.displayError)
+      .finally($scope.free);
   };
 
   $scope.verify = () => {
@@ -103,7 +102,6 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modal
   };
 
   $scope.installLock();
-  $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
