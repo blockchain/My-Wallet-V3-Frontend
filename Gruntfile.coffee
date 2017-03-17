@@ -139,6 +139,8 @@ module.exports = (grunt) ->
         dest: "build/js/bc-phone-number.js"
 
     sass:
+      options:
+        includePaths: ["node_modules", "bower_components"]
       build:
         files: [{
           expand: true,

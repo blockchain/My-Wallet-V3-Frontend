@@ -1,26 +1,26 @@
 @import 'angular-csp';
 //import global blockchain CSS
-@import '../../node_modules/blockchain-css/sass/bootstrap-blockchain';
-@import '../../node_modules/blockchain-css/sass/variables';
-@import '../../node_modules/blockchain-css/sass/fonts';
+@import 'blockchain-css/sass/bootstrap-blockchain';
+@import 'blockchain-css/sass/variables';
+@import 'blockchain-css/sass/fonts';
 
 //import global utilities
-@import '../../node_modules/blockchain-css/sass/utilities/general';
-@import '../../node_modules/blockchain-css/sass/utilities/colors';
-@import '../../node_modules/blockchain-css/sass/utilities/flex';
-@import '../../node_modules/blockchain-css/sass/utilities/spacing';
-@import '../../node_modules/blockchain-css/sass/utilities/borders';
-@import '../../node_modules/blockchain-css/sass/utilities/typography';
+@import 'blockchain-css/sass/utilities/general';
+@import 'blockchain-css/sass/utilities/colors';
+@import 'blockchain-css/sass/utilities/flex';
+@import 'blockchain-css/sass/utilities/spacing';
+@import 'blockchain-css/sass/utilities/borders';
+@import 'blockchain-css/sass/utilities/typography';
 
 //import global elements
-@import '../../node_modules/blockchain-css/sass/elements/buttons';
-@import '../../node_modules/blockchain-css/sass/elements/inputs';
-@import '../../node_modules/blockchain-css/sass/elements/forms';
-@import '../../node_modules/blockchain-css/sass/elements/links';
+@import 'blockchain-css/sass/elements/buttons';
+@import 'blockchain-css/sass/elements/inputs';
+@import 'blockchain-css/sass/elements/forms';
+@import 'blockchain-css/sass/elements/links';
 
 //import global modules
-@import '../../node_modules/blockchain-css/sass/modules/header';
-@import '../../node_modules/blockchain-css/sass/modules/footer';
+@import 'blockchain-css/sass/modules/header';
+@import 'blockchain-css/sass/modules/footer';
 
 //import utilitarian CSS
 @import 'utilities/shadows';
