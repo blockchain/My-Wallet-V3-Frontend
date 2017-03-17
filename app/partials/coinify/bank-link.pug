@@ -5,22 +5,19 @@
     a.underline(ng-show="selecting" ng-click="bankLinkEdit()") Edit
     a.underline(ng-show="!selecting" ng-click="bankLinkEdit()") Done
   form(name="bankLinkForm" novalidate)
-    .flex-column(ng-show="selecting" )
+    .flex-column
       .flex-row.flex-center.border-top.border-right.border-left.plvl(ng-repeat="account in bankAccounts")
-        label.pv-25.mbn.pointer(for="{{account.id}}")
-          input(type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
-          img.ml-30(src="img/bank.png")
-          span.pal.em-300 {{ account.bank.name }}
-          span.pv-25.em-300 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
-      .flex-row.flex-center.border.plvl
+        label.pv-25.mbn.pointer.width-100.flex-row(for="{{account.id}}")
+          div.width-10
+            input(ng-show="selecting" type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
+            i.ti-trash.pointer.state-danger-text.f-16(ng-hide="selecting" ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
+          div.width-90
+            img(src="img/bank.png")
+            span.pal.em-300 {{ account.bank.name }}
+            span.pv-25.em-300 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
+      .flex-row.flex-center.border.plvl(ng-show="selecting")
         input(type="radio" name="bankRadios" ng-click="addBankAccount()")
-        a.pv-25.pal(ng-click="addBankAccount()") Add new account
-  .flex-column(ng-show="!selecting" )
-    .flex-row.flex-center.border.plvl(ng-repeat="account in bankAccounts")
-      i.ti-trash.pointer.state-danger-text.f-20.mrm(ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
-      img.mll(src="img/bank.png")
-      span.pal {{ account.bank.name }}
-      span.pv-30 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
-    .flex-row.flex-center.border.plvl.bg-mid-grey
-      input.disabled(type="radio" disabled)
-      span.pv-25.pal.basic-grey Add new account
+        a.pal(ng-click="addBankAccount()") Add new account
+      .flex-row.flex-center.border.plvl.opacity-5(ng-hide="selecting")
+        input.disabled(type="radio" disabled)
+        span.pal Add new account

@@ -11,7 +11,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   // $scope.isBankTransfer = () => $scope.isMedium('bank');
   $scope.trade = $scope.$parent.$parent.trade;
   $scope.transaction = $scope.$parent.$parent.transaction;
-  console.log('coinify summary ctrl scope', $scope)
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {

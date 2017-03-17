@@ -11,8 +11,9 @@ angular
       pendingTrade: '=',
       modalOpen: '=',
       transaction: '=',
-      currencySymbol: '=',
-      changeCurrency: '&'
+      // currencySymbol: '=',
+      // changeCurrency: '&',
+      onTrigger: '&'
     },
     templateUrl: 'templates/sell-quick-start.pug',
     controller: sellQuickStartController,
@@ -30,6 +31,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.exchangeRate = {};
   $scope.selectedCurrency = $scope.transaction.currency.code;
   $scope.currencies = currency.coinifyCurrencies;
+  $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
   $scope.error = {};
   $scope.status = { ready: true };
 
@@ -56,6 +58,14 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   };
 
+  $scope.changeCurrency = (curr) => {
+    console.log('changeCurrency', curr)
+    if (curr && $scope.currencies.some(c => c.code === curr.code)) {
+      $scope.transaction.currency = curr;
+      console.log('tx.currency', $scope.transaction.currency)
+    }
+  }
+
   $scope.increaseLimit = () => {
     // TODO
     console.log('show kyc here')
@@ -64,10 +74,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
   $scope.getExchangeRate = () => {
-    // stopFetchingQuote();
-    // startFetchingQuote();
-    $scope.status.busy = true;
-
     buySell.getQuote(-1, 'BTC', $scope.transaction.currency.code).then(function (quote) {
       $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
     }, error).finally($scope.getQuote);
@@ -102,9 +108,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.triggerSell = () => {
-    // buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error).then(() => {
-    $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote })
-    // })
+    buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error).then(() => {
+      $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote })
+    })
   };
 
   $scope.getExchangeRate();
@@ -114,11 +120,15 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.$watch('transaction.btc', (newVal, oldVal) => {
     if (newVal >= $scope.totalBalance) {
       console.log('moreThanInWallet error')
-      // $scope.error['moreThanInWallet'] = true;
+      $scope.error['moreThanInWallet'] = true;
     } else if (newVal < $scope.totalBalance) {
-      // $scope.error['moreThanInWallet'] = false;
+      $scope.error['moreThanInWallet'] = false;
     }
   });
 
+  $scope.$watch('transaction.currency', (newVal, oldVal) => {
+    let curr = $scope.transaction.currency || null;
+    $scope.currencySymbol = currency.conversions[curr.code];
+  });
 
 }

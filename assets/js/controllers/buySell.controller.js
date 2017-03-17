@@ -115,6 +115,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.changeCurrency = (curr) => {
+      console.log('running changeCurrency from buy sell ctrl with', curr)
       if (curr && $scope.currencies.some(c => c.code === curr.code)) {
         $scope.transaction.currency = curr;
       }

@@ -57,6 +57,9 @@ $security-green: $jade;
 $security-yellow: $dandelion;
 $bright-green:  $jade !important; //override Security Center nested css selectors
 
+//opacity
+.opacity-5 { opacity: .5; }
+
 @include color('blue', $blue);
 @include color('white', white);
 @include color('black', $black);
