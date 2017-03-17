@@ -74,6 +74,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.getQuote = () => {
+    $scope.status.busy = true;
     if ($scope.lastInput === 'btc') {
       buySell.getSellQuote($scope.transaction.btc, 'BTC', $scope.transaction.currency.code).then(success, error);
     } else if ($scope.lastInput === 'fiat') {
@@ -101,7 +102,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.triggerSell = () => {
+    // buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error).then(() => {
     $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote })
+    // })
   };
 
   $scope.getExchangeRate();

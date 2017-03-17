@@ -55,7 +55,12 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
         scope.btcExpected = quote;
       };
 
-      scope.trade.btcExpected().then(success);
+      const error = (e) => {
+        scope.status.gettingQuote = false;
+        console.log('error updating btc expected', e)
+      };
+
+      scope.trade.btcExpected().then(success).catch(error);
     };
 
     scope.logDetails = (trade) => {

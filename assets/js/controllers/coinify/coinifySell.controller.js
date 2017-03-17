@@ -303,25 +303,26 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         console.log('sell created', sellResult)
         $scope.sellTrade = sellResult;
 
-        // $scope.sendAddress = sellResult.transferIn.details.account; // coinify receive addr
+        $scope.sendAddress = sellResult.transferIn.details.account; // coinify receive addr
 
         // '1FrYGs1PCdaJ7yyHbQY2mHQzD9YotKrudu'
-        $scope.sendAddress = '15XPS4LjoJmyTUG7VAfRvwfCT5f8f6T13C' // testing
-        $scope.sendAmount = sellResult.transferIn.sendAmount;
+        // $scope.sendAddress = '15XPS4LjoJmyTUG7VAfRvwfCT5f8f6T13C' // testing
+        $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000; // to satoshi for payment.amount()
 
         return sellResult;
       })
       .then((sellData) => {
         // send btc to coinify
-        console.log('assign payment.to', $scope)
+        console.log('assign payment.to and payment.amount', $scope.sendAddress, $scope.sendAmount)
         $scope.payment.to($scope.sendAddress);
 
-        $scope.payment.amount(5000) // testing - send tiny amounts
+        $scope.payment.amount($scope.sendAmount);
+        // $scope.payment.amount(5000) // testing - send tiny amounts
 
         console.log('build payment')
         $scope.payment.build();
 
-        console.log('ask for 2nd PW')
+        console.log('ask for 2nd PW and send btc', $scope)
         Wallet.askForSecondPasswordIfNeeded()
           .then(signAndPublish)
           .then(transactionSucceeded)
