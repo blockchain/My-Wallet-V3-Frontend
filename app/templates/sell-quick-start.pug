@@ -7,13 +7,15 @@
         //-   span.f-12 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
         //-   helper-button(content="EXCHANGE_RATE_HELPER")
       .flex-row.flex-between
-        ui-select.mtm.width-45.width-45-tablet.width-45-mobile(placeholder="Select Currency" ng-model="transaction.currency.code" on-select="changeCurrency($item); getExchangeRate()")
+        ui-select.mtm.width-45.width-45-tablet.width-45-mobile(placeholder="Select Currency" ng-model="transaction.currency" on-select="$ctrl.changeSellCurrency($item); getExchangeRate()")
           ui-select-match(placeholder="Select currency") {{transaction.currency.code}}
           ui-select-choices(repeat="currency in currencies")
-            span() {{currency.code}}
-        .flex-row.flex-center
+            span {{currency.name}}
+        .flex-row.flex-center.width-45(ng-hide="status.fetching")
           span.f-14 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
           helper-button(content="EXCHANGE_RATE_HELPER")
+        .flex-row.flex-center.width-45(ng-show="status.fetching")
+          img(src="img/spinner.gif")
       .flex-row.flex-between.pt-20
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")

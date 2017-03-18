@@ -11,8 +11,8 @@ angular
       pendingTrade: '=',
       modalOpen: '=',
       transaction: '=',
-      // currencySymbol: '=',
-      // changeCurrency: '&',
+      currencySymbol: '=',
+      changeCurrency: '&',
       onTrigger: '&'
     },
     templateUrl: 'templates/sell-quick-start.pug',
@@ -31,7 +31,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.exchangeRate = {};
   $scope.selectedCurrency = $scope.transaction.currency.code;
   $scope.currencies = currency.coinifyCurrencies;
-  $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
+  // $scope.currencySymbol = currency.conversions['EUR']; // default to Euro
   $scope.error = {};
   $scope.status = { ready: true };
 
@@ -50,21 +50,33 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   console.log('from sell quick start component', $scope)
 
   $scope.changeSellCurrency = (curr) => {
-    $scope.selectedCurrency = curr.code;
-    $scope.transaction.currency.code = curr.code;
-    $scope.transaction.currency.name = currency.coinifyCurrencies[curr.code];
-    console.log('change sell currency - scope.transaction', $scope.transaction.currency)
-    $scope.getExchangeRate(); // get new quote when user changes their preferred currency
-
-  };
-
-  $scope.changeCurrency = (curr) => {
-    console.log('changeCurrency', curr)
+    console.log('changeSellCurrency', curr)
+    $scope.status.fetching = true;
     if (curr && $scope.currencies.some(c => c.code === curr.code)) {
       $scope.transaction.currency = curr;
+      this.changeCurrency(curr);
       console.log('tx.currency', $scope.transaction.currency)
     }
   }
+
+  // $scope.changeCurrency = (curr) => {
+  //   console.log('changeCurrency', curr)
+  //   $scope.status['fetching'] = true;
+  //   if (curr && $scope.currencies.some(c => c.code === curr.code)) {
+  //     $scope.transaction.currency = curr;
+  //     this.changeCurrency(curr);
+  //     console.log('tx.currency', $scope.transaction.currency)
+  //   }
+  // }
+
+  // $scope.changeCurrencySymbol = (curr) => {
+  //   if (typeof curr.code === 'object') {
+  //     $scope.currencySymbol = currency.conversions[curr.code.code];
+  //   } else {
+  //     $scope.currencySymbol = currency.conversions[curr.code];
+  //   }
+  // };
+  // $scope.changeCurrencySymbol($scope.transaction.currency);
 
   $scope.increaseLimit = () => {
     // TODO
