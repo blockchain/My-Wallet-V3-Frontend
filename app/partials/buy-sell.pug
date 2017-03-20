@@ -84,7 +84,7 @@
             th.pvs.width-15(translate="TOTAL")
           tr(ng-hide="trades.completed.length")
             tr.border(ng-hide="trades.completed.length")
-              td.pvml.plml.italic.type-lbl(colspan="4") You haven't completed any trades yet.
+              td.pvml.plml.italic.type-lbl(colspan="{{inMobileBuy ? 3 : 4}}") You haven't completed any trades yet.
           tr(
             ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:tradeLimit"
             disabled="status.disabled"
