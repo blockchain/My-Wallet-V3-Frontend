@@ -101,4 +101,5 @@
       div(ng-show="onStep('trade-in-review') || onStep('summary') && error || onStep('trade-formatted') && !bitcoinReceived")
         button.button-primary(translate="CLOSE" ng-click="cancel() && goToOrderHistory()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
-        button.button-primary(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")
+        button.button-primary(translate="SEE_BITCOIN" ng-hide="inMobileBuy" ng-click="cancel()" ui-sref="wallet.common.transactions")
+        button.button-primary(translate="SEE_BITCOIN" ng-show="inMobileBuy" ng-click="exitToNativeTx()")
