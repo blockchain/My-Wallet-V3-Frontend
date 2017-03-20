@@ -14,7 +14,7 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
     span(ng-hide="inMobileBuy")
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
         ng-class="{disabled: isTradingDisabled}"
-        ng-click="!isTradingDisabled && triggerBuy()" 
+        ng-click="!isTradingDisabled && triggerBuy()"
         ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
       span.type-sm.blue.underline.pointer.text-nowrap(
         ng-click="triggerBuy()"
@@ -34,7 +34,7 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
   td.type-lbl
     span(ng-hide="status.gettingQuote")
       span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
-      i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade)" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
+      i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" tooltip-enable="!$root.inMobileBuy")
       i.ti-trash.fade(ng-hide="canCancel")
   td.type-lbl.right-align.paml(ng-show="status.gettingQuote")
     img(src="img/spinner.gif")
