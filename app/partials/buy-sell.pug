@@ -1,4 +1,4 @@
-.buy-sell(ng-class="{'loading': status.loading || status.metaDataDown || status.exchangeDown, 'disabled': status.disabled}" data-preflight-tag="BuySell")
+.pos-rel.flex-1(ng-class="{'loading': status.loading || status.metaDataDown || status.exchangeDown, 'disabled': status.disabled}" data-preflight-tag="BuySell")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.metaDataDown")
     span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN")
   .flex-column.flex-justify.flex-center.height-100(ng-if="status.exchangeDown")
