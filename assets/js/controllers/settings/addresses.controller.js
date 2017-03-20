@@ -30,12 +30,12 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
 
   $scope.account = Wallet.accounts()[$stateParams.account];
 
-  // TODO: use Labels
   $scope.receiveIndex = $scope.account.receiveIndex;
 
   $scope.page = 1;
   $scope.pageLength = 20;
-  $scope.totalPast = null;
+  let totalLabeled = $scope.addresses.filter($scope.presentFilter).length;
+  $scope.totalPast = $scope.addresses.length - totalLabeled;
 
   $scope.createAddress = () => {
     $scope.createAddressInProgress = true;
@@ -69,9 +69,6 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
         Alerts.confirm('CONFIRM_SHOW_PAST').then(() => {
           $scope.didLoadPast = true;
           $scope.showPast = true;
-          let totalLabeled = $scope.addresses.filter($scope.presentFilter).length;
-          $scope.addresses = Labels.all(accountIndex, {includeUnlabeled: true});
-          $scope.totalPast = $scope.addresses.length - totalLabeled;
         });
       } else {
         $scope.showPast = true;
