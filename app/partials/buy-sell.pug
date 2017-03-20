@@ -75,12 +75,12 @@
         .flex-row.flex-between.flex-center
           h4.type-h5 Completed Orders
           //- h4.type-h4(translate="ORDER_HISTORY")          span Coinify Account: {{ exchange.profile.email }}
-          span(ng-hide="trades.pending.length") Coinify Account: {{ exchange.profile.email }}
+          span(ng-hide="trades.pending.length || inMobileBuy") Coinify Account: {{ exchange.profile.email }}
         table.width-100.mb-30
           tr.border.bg-light-blue
             th.phml.pvs.width-30(translate="STATUS")
             th.pvs.width-30(translate="DATE")
-            th.pvs.width-25 BTC
+            th.pvs.width-25(ng-hide="inMobileBuy") BTC
             th.pvs.width-15(translate="TOTAL")
           tr(ng-hide="trades.completed.length")
             tr.border(ng-hide="trades.completed.length")
