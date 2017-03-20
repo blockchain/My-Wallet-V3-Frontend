@@ -37,7 +37,7 @@ div
         canvas#snapshot.hide
       div.flex-column.flex-center(ng-show="invalidFile")
         span.f-20.state-danger-text.em-500.mt-20 Upload failed!
-        span.f-16.em-300.mv-30(ng-show="invalidFile.$error === 'pattern'") Please try uploading an image or PDF.
+        span.f-16.em-300.mv-30(ng-show="invalidFile.$error === 'pattern'") Please try uploading a .jpg, .png, or .pdf file.
         span.f-16.em-300.mv-30(ng-show="invalidFile.$error !== 'pattern'") An error occured uploading your documentation.
         a.f-16(ngf-select ng-model="file" ngf-model-invalid="invalidFile" ngf-pattern="'image/*,application/pdf'") Try again.
     form(ng-show="file" ng-submit="upload()")
