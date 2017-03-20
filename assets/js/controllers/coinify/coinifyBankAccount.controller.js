@@ -10,6 +10,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.qa = {};
   $scope.accountCurrency = $scope.$parent.bankAccount.account.currency;
   $scope.accountType = 'international';
+  $scope.showBankName = true;
 
   $scope.setAccountType = (accountType) => {
     $scope.accountType = accountType;
@@ -40,6 +41,21 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       return $q.all([min, max]).then($scope.setParentError);
     });
   };
+
+  $scope.setAccountType = (tx) => {
+    if (tx.currency === 'DKK') {
+      $scope.showDanish = true;
+      $scope.showBankName = false;
+      $scope.$parent.bankAccount.holder.address.country = 'DK';
+    }
+    if (tx.currency === 'EUR') {
+      $scope.showBankName = false;
+    }
+    if (tx.currency === 'GBP') {
+      $scope.$parent.bankAccount.holder.address.country = 'GB';
+    }
+  };
+  $scope.setAccountType($scope.transaction);
 
   $scope.commitValues = () => {
     $scope.$parent.quote = null;
@@ -91,18 +107,10 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     }
   };
 
-    $scope.setAccountCurrency = (currency) => {
-      console.log('setting account currency', currency)
-      $scope.$parent.bankAccount.account.currency = currency.code;
-      $scope.accountCurrency = currency.code;
-      console.log()
-    };
-
-  // $scope.setParentError = () => {
-  //   $timeout(() => {
-  //     $scope.$parent.fiatFormInvalid = $scope.tempFiatForm.$invalid && !$scope.needsKyc();
-  //   });
-  // };
+  $scope.setAccountCurrency = (currency) => {
+    $scope.$parent.bankAccount.account.currency = currency.code;
+    $scope.accountCurrency = currency.code;
+  };
 
   let eventualError = (message) => Promise.reject.bind(Promise, { message });
 

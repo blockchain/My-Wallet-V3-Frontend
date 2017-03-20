@@ -87,9 +87,15 @@
     span.em-500.f-16 {{ transaction.btcAfterFee }} BTC
     | &nbsp;
     span.f-16 will be sent directly from your Blockchain Wallet to Coinify once you click 'Place Sell Order'.
-  form.clearfix(ng-show="isBankTransfer()" ng-hide="isSell" name="rateForm" role="form" novalidate)
+  form.clearfix(ng-show="isBankTransfer()" name="rateForm" role="form" novalidate)
     .flex-row.flex-start.mtl
       div
         input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
       div
-        label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
+        label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate" ng-hide="isSell")
+  form.clearfix(ng-show="isSell" name="sellRateForm" role="form" novalidate)
+    .flex-row.flex-start.mtl
+      div
+        input(type="checkbox" id="rate" name="rate" ng-model="fields.rate" required)
+      div
+        label.mlm.em-300(translate="SELL_RATE_ACCEPT" for="rate" ng-show="isSell")

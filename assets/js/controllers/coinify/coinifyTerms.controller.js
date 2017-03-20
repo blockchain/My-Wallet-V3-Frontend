@@ -5,7 +5,6 @@ angular
 function CoinifyTermsController ($scope, buySell, $stateParams) {
   $scope.isSell = $scope.$parent.isSell;
   $scope.fields = {};
-  console.log('termsController', $scope)
   $scope.$parent.acceptTermsForm = $scope.acceptTermsForm;
 
   $scope.$parent.acceptTerms = () => {

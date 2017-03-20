@@ -15,7 +15,7 @@
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top"
                                     tooltip-enable="!hideQuote()")
-          .flex-row.type-h5.em-500
+          .flex-row.type-h5.em-500(ng-hide="onStep('review')")
             span {{transaction.btc }} BTC ({{currencySymbol.symbol}}{{transaction.fiat}})
             //- span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }} BTC
             //- span(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
@@ -96,6 +96,6 @@
           ng-disabled="isDisabled()"
           ng-show="onStep('summary')")
       div(ng-show="onStep('review')")
-        button.button-primary(translate="CLOSE" ng-click="cancel()")
+        button.button-primary(translate="CLOSE" ng-click="dismiss()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")

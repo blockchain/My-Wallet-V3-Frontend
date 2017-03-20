@@ -7,16 +7,21 @@ tr.border
         li.pointer.pas(ng-click="trade.fakeAchSuccess()" ng-show="pending") Fake ACH Success
         li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
 
-    span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
-    span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
-    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
-    span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
+    span.state.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
+    span.state.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
+    span.state.italic(ng-show="completed && success && !trade.bitcoinReceived") Pending
+    //- span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
+    span.state.italic.capitalize(ng-show="pending") {{ trade.state | translate }}
+    
+    span.state.type-sm(ng-show="trade.medium === 'blockchain'") (sell)
+    span.state.type-sm(ng-hide="trade.medium === 'blockchain'") (buy)
 
+    //- span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(ng-click="triggerSell()" ng-show="trade.medium === 'blockchain'") View details
     span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(ng-class="{disabled: isTradingDisabled}"
                                                             ng-click="!isTradingDisabled && triggerBuy()"
-                                                            ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
-    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="triggerBuy()"
-                                                    ng-show="trade.state !== 'awaiting_transfer_in'") View details
+                                                            ng-show="trade.state === 'awaiting_transfer_in' && trade.medium !== 'blockchain'") Finish payment
+    span.type-sm.blue.underline.pointer.text-nowrap(ng-click="trade.medium === 'blockchain' ? triggerSell() : triggerBuy()"
+                                                    ng-show="trade.state !== 'awaiting_transfer_in' || trade.medium === 'blockchain'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml(ng-hide="status.gettingQuote")

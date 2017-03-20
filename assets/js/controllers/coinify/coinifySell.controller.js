@@ -57,10 +57,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.assignFiatCurrency = () => {
+    if ($scope.trade._state) return;
     if ($scope.trade.quote.quoteCurrency === 'BTC') {
       $scope.transaction.currency = $scope.trade.quote.baseCurrency;
+      $scope.bankAccount.account.currency = $scope.trade.quote.baseCurrency;
     } else {
       $scope.transaction.currency = $scope.trade.quote.quoteCurrency;
+      $scope.bankAccount.account.currency = $scope.trade.quote.quoteCurrency;
     }
   };
   $scope.assignFiatCurrency();
@@ -97,7 +100,12 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
-    console.log('running nextStep function')
+    console.log('running nextStep function', $scope)
+    if ($scope.trade._state) {
+      $scope.mapTradeDetails();
+      $scope.goTo('review');
+      return;
+    }
     if (!$scope.exchange.user || !$scope.user.isEmailVerified) {
       $scope.goTo('accept-terms');
     } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
@@ -114,13 +122,16 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     if ($scope.onStep('accept-terms')) {
       return !$scope.fields.acceptTOS;
     } else if ($scope.onStep('account-info')) {
-      return (!bank.account.number || !bank.account.bic || !bank.bank.name || !bank.bank.address.country);
+      // return (!bank.account.number || !bank.account.bic || !bank.bank.name || !bank.bank.address.country);
+      return (!bank.account.number || !bank.account.bic);
     } else if ($scope.onStep('account-holder')) {
       return (!bank.holder.name || !bank.holder.address.street || !bank.holder.address.zipcode || !bank.holder.address.city || !bank.holder.address.country)
     } else if ($scope.onStep('bank-link')) {
       return !$scope.selectedBankAccount;
     } else if ($scope.onStep('summary')) {
-      if ($scope.insufficientFunds() === true) true;
+      if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
+        return true;
+      }
       if (!$scope.trade.quote && (!$scope.selectedBankAccount || !scope.bankAccount.holder.name)) true;
       // return $scope.editAmount || !$scope.limits.max;
     }
@@ -181,6 +192,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.startPayment = () => {
+    if ($scope.trade._state) return;
 
     let index = Wallet.getDefaultAccountIndex();
     // .fee(absoluteFeeBounds [0])
@@ -217,7 +229,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     console.log('cancel called')
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
-    $scope.trade = null;
+    // $scope.trade = null;
     buySell.getTrades().then(() => {
       $scope.goToOrderHistory();
     });
@@ -225,6 +237,21 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.close = () => {
     $scope.cancel();
+  };
+
+  $scope.dismiss = () => {
+    $uibModalInstance.dismiss('');
+  }
+
+  $scope.mapTradeDetails = () => {
+    const t = $scope.trade;
+    $scope.sellTrade = {
+      id: t._id,
+      createTime: t.createdAt,
+      transferIn: {receiveAmount: t._inAmount / 100000000},
+      transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
+    }
+    $scope.formatBankInfo(t);
   };
 
   $scope.getReadyToSend = () => {
@@ -304,6 +331,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         $scope.sellTrade = sellResult;
 
         $scope.sendAddress = sellResult.transferIn.details.account; // coinify receive addr
+        $scope.formatBankInfo();
 
         // '1FrYGs1PCdaJ7yyHbQY2mHQzD9YotKrudu'
         // $scope.sendAddress = '15XPS4LjoJmyTUG7VAfRvwfCT5f8f6T13C' // testing
@@ -340,6 +368,23 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         console.log('err in coinify sell controller', err)
         // TODO handle error
       })
+  };
+
+  $scope.formatBankInfo = (trade) => {
+    const b = $scope.bankAccount;
+    if (trade) {
+      if (trade._bankName) {
+        $scope.bankNameOrNumber = trade._bankName;
+        return;
+      }
+      $scope.bankNameOrNumber = trade._lastFourBankAccountDigits;
+      return;
+    }
+    if (!$scope.bankAccount.bank.name) {
+      $scope.bankNameOrNumber = b.account.number.substring(b.account.number.length, b.account.number.length - 4);
+      return;
+    }
+    $scope.bankNameOrNumber = b.bank.name;
   };
 
 

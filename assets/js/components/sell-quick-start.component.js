@@ -51,7 +51,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.changeSellCurrency = (curr) => {
     console.log('changeSellCurrency', curr)
-    $scope.status.fetching = true;
     if (curr && $scope.currencies.some(c => c.code === curr.code)) {
       $scope.transaction.currency = curr;
       this.changeCurrency(curr);
@@ -67,6 +66,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
   $scope.getExchangeRate = () => {
+    $scope.status.fetching = true;
+
     buySell.getQuote(-1, 'BTC', $scope.transaction.currency.code).then(function (quote) {
       $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
     }, error).finally($scope.getQuote);

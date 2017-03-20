@@ -18,7 +18,7 @@
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
       span.colon Bank Account
-      span {{ sellTrade.transferOut.details.bank.name }}
+      span {{ bankNameOrNumber }}
     .flex-row.flex-between.pvm
       span.colon Credit Issued
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}

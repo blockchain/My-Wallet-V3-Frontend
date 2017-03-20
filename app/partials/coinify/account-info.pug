@@ -11,7 +11,7 @@
             ui-select-match(placeholder="Select Country") {{selectedBankCountry.name}}
             ui-select-choices(repeat="c in sepaCountries | filter:$select.search track by c.name") {{c.name}}
 
-    .form-group.flex-column.width-90
+    .form-group.flex-column.width-90(ng-show="showBankName")
       label.control-label(translate="Bank Name")
       div
         input.form-control(
@@ -23,14 +23,14 @@
           placeholder=""
           required)
   form(novalidate)
-    .flex-justify.phm.mb-10
-      .flex-column.width-90
-        label(for="non-Danish")
-          input(type="radio" name="bankRadioGroup" id="non-Danish" ng-value="'international'" ng-model="accountType")
-          span.pointer I do not have a Danish account.
-        label(for="Danish")
-          input(type="radio" name="bankRadioGroup" id="Danish" ng-value="'danish'" ng-model="accountType")
-          span.pointer I have a Danish account.
+    //- .flex-justify.phm.mb-10
+    //-   .flex-column.width-90
+    //-     label(for="non-Danish")
+    //-       input(type="radio" name="bankRadioGroup" id="non-Danish" ng-value="'international'" ng-model="accountType")
+    //-       span.pointer I do not have a Danish account.
+    //-     label(for="Danish")
+    //-       input(type="radio" name="bankRadioGroup" id="Danish" ng-value="'danish'" ng-model="accountType")
+    //-       span.pointer I have a Danish account.
 
   .flex-column.flex-center.pam
     //- form for non-Danish accounts
@@ -40,7 +40,18 @@
       ng-submit="commitValues()"
       autocomplete="off"
       novalidate
-      ng-hide="accountType === 'danish'")
+      ng-hide="showDanish")
+      .form-group.flex-column.width-100
+        label.control-label(translate="International Bank Account Number (IBAN)")
+        div
+          input.form-control(
+            type="text"
+            ng-model="$parent.bankAccount.account.number"
+            ng-change="setParentError()"
+            name="bankIban"
+            tabindex="1"
+            placeholder=""
+            required)
       .form-group.flex-column.width-100
         label.control-label(translate="Bank Identifier Code (SWIFT/BIC)")
         div
@@ -49,18 +60,6 @@
             ng-model="$parent.bankAccount.account.bic"
             ng-change="setParentError()"
             name="bankBic"
-            tabindex="1"
-            placeholder=""
-            required)
-      .form-group.flex-column.width-100
-        //- label.control-label(ng-show="accountType === 'danish'" translate="Bank Account Number")
-        label.control-label(translate="International Bank Account Number (IBAN)")
-        div
-          input.form-control(
-            type="text"
-            ng-model="$parent.bankAccount.account.number"
-            ng-change="setParentError()"
-            name="bankIban"
             tabindex="1"
             placeholder=""
             required)
@@ -74,7 +73,18 @@
       ng-submit="commitValues()"
       autocomplete="off"
       novalidate
-      ng-hide="accountType === 'international'")
+      ng-show="showDanish")
+      .form-group.flex-column.width-100
+        label.control-label(translate="Basic Bank Account Number (BBAN)")
+        div
+          input.form-control(
+            type="text"
+            ng-model="$parent.bankAccount.account.number"
+            ng-change="setParentError()"
+            name="bankNumber"
+            tabindex="1"
+            placeholder=""
+            required)
       .form-group.flex-column.width-100
         label.control-label(translate="Bank REG Number")
         div
@@ -83,17 +93,6 @@
             ng-model="$parent.bankAccount.account.bic"
             ng-change="setParentError()"
             name="bankReg"
-            tabindex="1"
-            placeholder=""
-            required)
-      .form-group.flex-column.width-100
-        label.control-label(translate="Bank Account Number (BBAN)")
-        div
-          input.form-control(
-            type="text"
-            ng-model="$parent.bankAccount.account.number"
-            ng-change="setParentError()"
-            name="bankNumber"
             tabindex="1"
             placeholder=""
             required)

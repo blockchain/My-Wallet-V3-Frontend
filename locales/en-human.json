@@ -1285,5 +1285,6 @@
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "CLICK_TO_DELETE_ACCOUNT": "Delete bank account",
   "BANK_ACCOUNT_CREATION_FAILED": "There was a problem saving your bank account. Please try again later.",
+  "SELL_RATE_ACCEPT": "I accept that Bitcoin will be traded at the current available exchange rate at the time Coinify processes my order which might differ from the rate displayed above.",
   "": ""
 }

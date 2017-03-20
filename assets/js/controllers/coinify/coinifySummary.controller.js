@@ -12,6 +12,8 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.trade = $scope.$parent.$parent.trade;
   $scope.transaction = $scope.$parent.$parent.transaction;
 
+  $scope.$parent.fields.rate = false;
+
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
       $scope.$parent.limits.min = (rate * 10).toFixed(2);
@@ -28,37 +30,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       return $q.all([min, max]).then($scope.setParentError);
     });
   };
-
-  // build().publish().payment.then()
-  // send controller line 202
-  //sign().publish
-
-  // $scope.getFee = () => {
-  //   const index = Wallet.getDefaultAccountIndex();
-  //   // to get fee
-  //   // payment.sideEffect
-  //   // .fee(absoluteFeeBounds [0])
-  //
-  //   console.log('index', index)
-  //
-  //
-  //   $scope.payment = Wallet.my.wallet.createPayment();
-  //
-  //   console.log('scope from inside getFee', $scope)
-  //
-  //   $scope.payment.from(index).amount(100000)
-  //
-  //   $scope.payment.sideEffect(result => {
-  //     console.log('result of sideEffect', result)
-  //     $scope.fee = result.absoluteFeeBounds[0];
-  //     console.log('$scope.fee', $scope.fee)
-  //     $scope.btcFee = currency.convertFromSatoshi($scope.fee, $scope.btcCurrency);
-  //     // const fiatFee = ($scope.transaction.fiat / $scope.transaction.btc) * $scope.fee;
-  //     // $scope.amountOwed =
-  //   })
-  // };
-  //
-  // $scope.getFee();
 
   $scope.convertFeeToFiat = () => {
     return $scope.transaction.fiat / $scope.fee;
@@ -134,6 +105,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.$watch('rateForm', () => {
     $scope.$parent.rateForm = $scope.rateForm;
   });
+
+  $scope.$watch('sellRateForm', () => {
+    $scope.$parent.$parent.sellRateForm = $scope.rateForm;
+  })
 
   $scope.$watch('step', () => {
     if ($scope.onStep('summary')) {
