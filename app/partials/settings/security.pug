@@ -120,15 +120,15 @@
         .col-sm-12.col-md-6(ng-show="active")
           include ./change-ip-whitelist.pug
 
-  .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="BlockTOR")
-    .col-sm-12.col-md-6
-      .flex-center.flex-between-mobile.mbm
-        label.type-h5.em-400.mbn(translate="BLOCK_TOR")
-        span.label.label-success(ng-show="settings.blockTOR", translate="BLOCKED")
-        span.label.label-warning(ng-hide="settings.blockTOR", translate="ALLOWED")
-      p.em-300.alt-font.f-16.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result
-      tor
+    .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="BlockTOR")
+      .col-sm-12.col-md-6
+        .flex-center.flex-between-mobile.mbm
+          label.type-h5.em-400.mbn(translate="BLOCK_TOR")
+          span.label.label-success(ng-show="settings.blockTOR", translate="BLOCKED")
+          span.label.label-warning(ng-hide="settings.blockTOR", translate="ALLOWED")
+        p.em-300.alt-font.f-16.hidden-xs.hidden-sm(translate="BLOCK_TOR_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result
+        tor
 
     .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-class="{'has-error':errors.pbkdf2}" ng-controller="ChangePbkdf2Ctrl" data-preflight-tag="ChangePbkdf2")
       div(settings-form)
