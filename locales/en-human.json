@@ -1196,7 +1196,7 @@
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "COINIFY_SURVEY": {
+  "SURVEY_PROMPT": {
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
   },

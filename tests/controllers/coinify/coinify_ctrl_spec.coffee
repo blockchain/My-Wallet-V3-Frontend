@@ -8,6 +8,7 @@ describe "CoinifyController", ->
   $q = undefined
   $timeout = undefined
   mediums = undefined
+  options = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -40,6 +41,12 @@ describe "CoinifyController", ->
         accounts: [{ label: 'My Bitcoin Wallet'}, {label: 'New Wallet'}]
         defaultAccount: {index: 0}
 
+      options = {
+        partners: {
+          coinify: surveyLinks: ['link1', 'link2', 'link3']
+        }
+      }
+      
       currency.conversions = { "USD": "$", "EUR": "E", "GBP": "P" }
       currency.formatCurrencyForView = (amt, curr) -> "#{curr.code}(#{amt})"
 
@@ -47,6 +54,7 @@ describe "CoinifyController", ->
     scope = $rootScope.$new()
     $controller "CoinifyController",
       $scope: scope,
+      options: options,
       $uibModalInstance: params.modalInstance ? { close: (->) dismiss: (->) }
       trade: params.trade ? false
       buyOptions: params.buyOptions ? {}
@@ -184,7 +192,7 @@ describe "CoinifyController", ->
     it "should prompt for survey first", ->
       scope.goTo('select-country')
       scope.close(true)
-      expect(Alerts.confirm).toHaveBeenCalledWith('COINIFY_SURVEY', {friendly: true, action: 'TAKE_SURVEY', cancel: 'NO_THANKS'})
+      expect(Alerts.confirm).toHaveBeenCalledWith('SURVEY_PROMPT', {friendly: true, action: 'TAKE_SURVEY', cancel: 'NO_THANKS'})
 
   describe "needsISX", ->
     it "should return true if trade is in a pending state", ->

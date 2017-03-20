@@ -220,6 +220,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       keyboard: false,
       resolve: {
         trade: () => trade && trade.refresh().then(() => trade),
+        options: () => Options.get(),
         buyOptions: () => options
       }
     }).result;
