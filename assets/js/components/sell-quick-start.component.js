@@ -59,25 +59,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   }
 
-  // $scope.changeCurrency = (curr) => {
-  //   console.log('changeCurrency', curr)
-  //   $scope.status['fetching'] = true;
-  //   if (curr && $scope.currencies.some(c => c.code === curr.code)) {
-  //     $scope.transaction.currency = curr;
-  //     this.changeCurrency(curr);
-  //     console.log('tx.currency', $scope.transaction.currency)
-  //   }
-  // }
-
-  // $scope.changeCurrencySymbol = (curr) => {
-  //   if (typeof curr.code === 'object') {
-  //     $scope.currencySymbol = currency.conversions[curr.code.code];
-  //   } else {
-  //     $scope.currencySymbol = currency.conversions[curr.code];
-  //   }
-  // };
-  // $scope.changeCurrencySymbol($scope.transaction.currency);
-
   $scope.increaseLimit = () => {
     // TODO
     console.log('show kyc here')
@@ -120,6 +101,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.triggerSell = () => {
+    $scope.status.waiting = true;
     buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error).then(() => {
       $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote })
     })

@@ -60,7 +60,7 @@
             div.input-group-btn
               button.btn.btn-default.disabled(ng-disabled="true")
                 span {{ transaction.currency.code }}
-        .mts.pos-rel(ng-hide="tradingDisabled")
+        .mts.pos-rel.mb-10(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min && !error.moreThanInWallet" translate="SELL_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")
           span.pos-abs.type-sm.state-danger-text(ng-show="error.moreThanInWallet") The amount is more than what is available in this wallet.
