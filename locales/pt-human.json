@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "Recebendo carteira",
   "RECEIVING_ADDRESS": "GQ: Recebendo endereço",
   "RECEIVE_BITCOIN_TO": "Bitcoins serão enviadas a {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Por favor, remova sua segunda senha para acessar esta parte da carteira.",
   "BLACKLISTED_COUNTRY": "A compra de bitcoins ainda não está disponível no seu país.<br>Introduziremos mais países em breve.",
   "CONFIRM_YOUR_ORDER": "Confirme seu pedido:",
   "ORDER_CONFIRMATION_COPY": "Por favor, confirme os detalhes de seu pedido antes de lhe direcionarmos ao nosso prestador de pagamento seguro.",

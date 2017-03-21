@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format, smartAccount) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format, smartAccount, Labels) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -52,12 +52,23 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
           $scope.requestForm.label.$error.characters = true;
         } else if (error === 'GAP') {
           $scope.requestForm.label.$error.gap = true;
+        } else if (error === 'KV_LABELS_READ_ONLY') {
+          Alerts.displayError('NEEDS_REFRESH');
         }
         $scope.requestForm.label.$valid = false;
       };
 
-      let idx = $scope.fields.to.index;
-      Wallet.changeHDAddressLabel($scope.fields.to.index, Wallet.getReceivingAddressIndexForAccount(idx), $scope.fields.label, success, error);
+      let accountIndex = $scope.fields.to.index;
+
+      if (Wallet.my.wallet.isMetadataReady) {
+        Labels.addLabel(accountIndex, 15, $scope.fields.label).then(success).catch(error);
+      } else {
+        Wallet.askForSecondPasswordIfNeeded().then(pw => {
+          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+            Alerts.displayError('NEEDS_REFRESH');
+          });
+        });
+      }
     }
   };
 

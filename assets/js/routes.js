@@ -407,17 +407,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/settings/addresses.pug',
           controller: 'SettingsAddressesCtrl'
         }
-      },
-      resolve: {
-        paymentRequests: ($stateParams, $q, $injector) => {
-          try {
-            let Wallet = $injector.get('Wallet');
-            let index = parseInt($stateParams.account, 10);
-            return Wallet.getPendingPayments(index).catch(() => $q.reject('LOAD_ADDR_ERR'));
-          } catch (e) {
-            return $q.resolve([]);
-          }
-        }
       }
     })
     .state('wallet.common.settings.address_book', {

@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "Portafoglio ricevente",
   "RECEIVING_ADDRESS": "QA: Indirizzo ricevente",
   "RECEIVE_BITCOIN_TO": "I bitcoin saranno inviati a {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Per favore, rimuova la sua seconda password per accedere a questa sezione del portafoglio.",
   "BLACKLISTED_COUNTRY": "L'acquisto di bitcoin non è ancora disponibile nella sua nazione.<br>Aggiungeremo presto nuove nazioni.",
   "CONFIRM_YOUR_ORDER": "Confermi il suo ordine:",
   "ORDER_CONFIRMATION_COPY": "Per favore, confermi i dettagli del suo ordine prima di essere ridiretto al nostro provider per il pagamento sicuro.",

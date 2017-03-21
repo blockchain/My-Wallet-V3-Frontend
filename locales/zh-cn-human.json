@@ -1041,8 +1041,6 @@
   "RECEIVING_WALLET": "接收钱包",
   "RECEIVING_ADDRESS": "QA：接收地址",
   "RECEIVE_BITCOIN_TO": "比特币将被发送至：{{::label}}。",
-  "MUST_DISABLE_2ND_PW": "请删除您的副密码以访问钱包的这个部分。",
-  "BLACKLISTED_COUNTRY": "在您的国家还不可以购买比特币。<br>我们很快会推出更多国家。",
   "CONFIRM_YOUR_ORDER": "确认您的订单：",
   "ORDER_CONFIRMATION_COPY": "请确认您的订单详情，而后，我们会将您导向我们的安全支付提供商。",
   "ERROR_DAILY_LIMIT": "错误：超出每日限额",
