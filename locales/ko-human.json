@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "지갑 받는 중",
   "RECEIVING_ADDRESS": "QA: 주소 받는 중",
   "RECEIVE_BITCOIN_TO": "비트코인은 {{::label}}로 보내집니다.",
-  "MUST_DISABLE_2ND_PW": "두 번째 암호를 제거해서 지갑 이 섹션에 접근하세요.",
   "BLACKLISTED_COUNTRY": "귀하 국가에서는 아직 비트코인 사기가 안됩니다.<br>앞으로 서비스 국가를 더 늘릴 예정입니다.",
   "CONFIRM_YOUR_ORDER": "귀하 주문 확인:",
   "ORDER_CONFIRMATION_COPY": "우리가 귀하를 안전한 지불 제공자에게 보내기 전에 귀하 주문 상세를 확인하세요.",

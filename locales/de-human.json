@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "Empfangswallet",
   "RECEIVING_ADDRESS": "FA: Empfangsadresse",
   "RECEIVE_BITCOIN_TO": "Bitcoins werden gesandt an {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Zum Zugriff auf diesen Wallet-Bereich entfernen Sie bitte Ihr zweites Passwort.",
   "BLACKLISTED_COUNTRY": "In Ihrem Land ist es noch nicht möglich, Bitcoin zu erwerben.<br>In Kürze werden wir weitere Währungen anbieten.",
   "CONFIRM_YOUR_ORDER": "Bestätigen Sie Ihren Auftrag:",
   "ORDER_CONFIRMATION_COPY": "Bevor wir Sie zu unserem sicheren Zahlungsanbieter weiterleiten, bestätigen Sie bitte Ihre Auftragsangaben.",
