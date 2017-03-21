@@ -135,10 +135,12 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else if ($scope.onStep('bank-link')) {
       return !$scope.selectedBankAccount;
     } else if ($scope.onStep('summary')) {
-      if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
-        return true;
-      }
-      if (!$scope.trade.quote && (!$scope.selectedBankAccount || !scope.bankAccount.holder.name)) true;
+      // NOTE commented out for dev purposes
+      // if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
+      //   console.log('insufficientFunds')
+      //   return true;
+      // }
+      if (!$scope.trade.quote) true;
       // return $scope.editAmount || !$scope.limits.max;
     }
   };
@@ -158,10 +160,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       .then((result) => {
         console.log('result of creating bank account', result)
         $scope.selectedBankAccount = result;
+        $scope.status = {};
         return result;
       })
       .then(data => {
-        $scope.status.waiting = false;
         if (!data) {
           Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED')
           $scope.goTo('account-info');
@@ -171,6 +173,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       })
       .catch(err => {
         console.log('err', err)
+        $scope.status = {};
       })
   }
 
@@ -220,7 +223,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       console.log('firstBlockFee', firstBlockFee)
       $scope.payment.fee(firstBlockFee);
       $scope.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
-      const amountAfterFee = $scope.transaction.btc - $scope.transaction.fee.btc;
+      const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
       console.log('amountAfterFee', amountAfterFee);
       $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
       $scope.payment.amount(amountAfterFee / 100000000) // in SATOSHI
@@ -351,7 +354,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
         if (exchange._customAddress && exchange._customAmount) {
           console.log('customAddress and customAmount', exchange._customAddress, exchange._customAmount)
-
+          $scope.payment.to(exchange._customAddress);
+          $scope.payment.amount(exchange._customAmount);
+          // 10000 SATOSHI is ~.11 EUR
         }
 
         // $scope.payment.amount(5000) // testing - send tiny amounts
@@ -360,17 +365,17 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         $scope.payment.build();
 
         console.log('ask for 2nd PW and send btc', $scope)
-        // Wallet.askForSecondPasswordIfNeeded()
-        //   .then(signAndPublish)
-        //   .then(transactionSucceeded)
-        //   .catch(err => {
-        //     console.log('err when publishing', err)
-        //     transactionFailed(err);
-        //   })
+        Wallet.askForSecondPasswordIfNeeded()
+          .then(signAndPublish)
+          .then(transactionSucceeded)
+          .catch(err => {
+            console.log('err when publishing', err)
+            transactionFailed(err);
+          })
       })
       .finally(() => {
         console.log('finally')
-        // TODO fix formatBankInfo() but put it in here
+        // NOTE fix formatBankInfo() but put it in here
         // $scope.formatBankInfo();
         $scope.status.waiting = false;
         $scope.goTo('review')

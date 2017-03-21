@@ -47,6 +47,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       $scope.showDanish = true;
       $scope.showBankName = false;
       $scope.$parent.bankAccount.holder.address.country = 'DK';
+      $scope.$parent.bankAccount.bank.address.country = 'DK';
     }
     if (tx.currency === 'EUR') {
       $scope.showBankName = false;
@@ -54,6 +55,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     if (tx.currency === 'GBP') {
       $scope.britishBank = true;
       $scope.$parent.bankAccount.holder.address.country = 'GB';
+      $scope.$parent.bankAccount.bank.address.country = 'GB';
     }
   };
   $scope.setAccountType($scope.transaction);
@@ -79,7 +81,62 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     $scope.getMaxMin(curr).then(() => { $scope.tempCurrency = curr; })
   );
 
-  $scope.qa.info = () => {
+  $scope.qa.ukInfo = () => {
+    $scope.$parent.bankAccount = {
+      account: {
+        bic: 'NWBK',
+        number: 'GB29 NWBK 6016 1331 9268 19',
+        currency: $scope.trade.quoteCurrency
+      },
+      bank: {
+        name: 'Gringotts',
+        address: {
+          street: '1 Tea St',
+          city: 'London',
+          state: null,
+          zipcode: '11111',
+          country: 'GB'
+        }
+      },
+      holder: {
+        name: 'Harry Potter',
+        address: {
+          street: '4 Privet Drive',
+          zipcode: '22222',
+          city: 'London',
+          state: '',
+          country: 'GB'
+        }
+      }
+    }
+  };
+
+  $scope.qa.dkInfo = () => {
+    $scope.$parent.bankAccount = {
+      account: {
+        bic: '0040',
+        number: '0040 0440 1162 43',
+        currency: $scope.trade.quoteCurrency
+      },
+      bank: {
+        address: {
+          country: 'DK'
+        }
+      },
+      holder: {
+        name: 'Viggo Mortensen',
+        address: {
+          street: '1 Danish Way',
+          zipcode: '22222',
+          city: 'Copenhagen',
+          state: '',
+          country: 'DK'
+        }
+      }
+    }
+  };
+
+  $scope.qa.sepaInfo = () => {
     $scope.$parent.bankAccount = {
       account: {
         bic: '37040044',
@@ -88,21 +145,17 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       },
       bank: {
         address: {
-          // street: '123 rue de btc',
-          // city: 'Paris',
-          // state: '',
-          // zipcode: '12345',
-          country: 'Germany'
+          country: 'DE'
         }
       },
       holder: {
-        name: 'Borat Sagdiyev',
+        name: 'Ludwig van Beethoven',
         address: {
-          street: '1 Main St',
-          zipcode: '10101',
+          street: '1 Germany Way',
+          zipcode: '22222',
           city: 'Berlin',
           state: '',
-          country: 'Germany'
+          country: 'DE'
         }
       }
     }

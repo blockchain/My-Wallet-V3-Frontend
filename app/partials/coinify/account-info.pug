@@ -1,6 +1,8 @@
 .flex-column.mbvl
   p.security-red.pointer(ng-show="true")
-    i.ti-search.mrm.right-align(ng-click="qa.info()")  QA
+    i.ti-search.mrm.right-align(ng-click="qa.ukInfo()")  QA UK
+    i.ti-search.mrm.right-align(ng-click="qa.dkInfo()")  QA DK
+    i.ti-search.mrm.right-align(ng-click="qa.sepaInfo()")  QA SEPA
   .flex-column.flex-center.pam
     span.pvm.f-16.mbm Please enter your bank information below.
     .form-group.flex-row.flex-between.width-90(ng-hide="britishBank || showDanish")

@@ -12,7 +12,7 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
   $scope.bankLinkEdit = () => $scope.selecting = !$scope.selecting;
 
   $scope.bankNumView = (number) => {
-    return number.slice(number.length - 4);
+    return number.slice(number.length - 6);
   }
 
   $scope.addBankAccount = () => {

@@ -111,13 +111,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getExchangeRate();
 
 
-
+  // TODO commented this out for dev
   $scope.$watch('transaction.btc', (newVal, oldVal) => {
     if (newVal >= $scope.totalBalance) {
       console.log('moreThanInWallet error')
-      $scope.error['moreThanInWallet'] = true;
+      // $scope.error['moreThanInWallet'] = true;
     } else if (newVal < $scope.totalBalance) {
-      $scope.error['moreThanInWallet'] = false;
+      // $scope.error['moreThanInWallet'] = false;
     }
   });
 
