@@ -52,6 +52,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       $scope.showBankName = false;
     }
     if (tx.currency === 'GBP') {
+      $scope.britishBank = true;
       $scope.$parent.bankAccount.holder.address.country = 'GB';
     }
   };
@@ -81,8 +82,8 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.qa.info = () => {
     $scope.$parent.bankAccount = {
       account: {
-        bic: '123',
-        iban: '123456789',
+        bic: '37040044',
+        number: 'DE89 3704 0044 0532 0130 00',
         currency: $scope.trade.quoteCurrency
       },
       bank: {
@@ -91,17 +92,17 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
           // city: 'Paris',
           // state: '',
           // zipcode: '12345',
-          country: 'France'
+          country: 'Germany'
         }
       },
       holder: {
-        name: 'Darth Vader',
+        name: 'Borat Sagdiyev',
         address: {
-          street: '789 Death Star Rd NE',
-          zipcode: '13451',
-          city: 'Forceville',
+          street: '1 Main St',
+          zipcode: '10101',
+          city: 'Berlin',
           state: '',
-          country: 'France'
+          country: 'Germany'
         }
       }
     }

@@ -30,7 +30,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.transaction = this.transaction;
   $scope.exchangeRate = {};
   $scope.selectedCurrency = $scope.transaction.currency.code;
-  $scope.currencies = currency.coinifyCurrencies;
+  $scope.currencies = currency.coinifySellCurrencies;
   // $scope.currencySymbol = currency.conversions['EUR']; // default to Euro
   $scope.error = {};
   $scope.status = { ready: true };
