@@ -1,4 +1,4 @@
-xdescribe "walletServices", () ->
+describe "walletServices", () ->
   Wallet = undefined
 
   mockObserver = undefined
@@ -53,11 +53,3 @@ xdescribe "walletServices", () ->
       spyOn(Wallet.store, "setLegacyAddressLabel")
       Wallet.changeAddressLabel(address, "New Label", (()->))
       expect(Wallet.store.setLegacyAddressLabel).toHaveBeenCalled()
-
-    it "can be set for an HD address", ->
-      spyOn(account, "setLabelForReceivingAddress").and.callThrough()
-      Wallet.changeHDAddressLabel(account.index, 0, "New Label", (()->), (()->))
-      expect(account.setLabelForReceivingAddress).toHaveBeenCalled()
-
-    it "each account should have at least one address without a label", ->
-      pending()
