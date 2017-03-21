@@ -1,4 +1,4 @@
-xdescribe "Transaction Note Directive", ->
+describe "Transaction Note Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -18,7 +18,12 @@ xdescribe "Transaction Note Directive", ->
 
     Wallet.getLabelledHdAddresses = () -> [{'address': '123', 'label': 'label label label fun'}]
 
-    $rootScope.transaction = {note: "Hello World", processedOutputs: [{'address': '123', 'identity': 1}], txType: 'received'}
+    $rootScope.transaction = {
+      note: "Hello World",
+      processedOutputs: [{'address': '123', 'identity': 1}],
+      txType: 'received',
+      to: [{accountIndex: 0, receiveIndex: 1}]
+    }
     $rootScope.account = 1
 
     return
