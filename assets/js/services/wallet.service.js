@@ -309,32 +309,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     return account.receiveAddressAtIndex(addrIdx);
   });
 
-  wallet.getLabelledHdAddresses = (acctIdx) => {
-    let account = wallet.accounts()[acctIdx];
-    return account.receivingAddressesLabels.map(({ index, label }) => ({
-      index, label, address: wallet.getReceiveAddress(acctIdx, index)
-    }));
-  };
-
-  wallet.getPendingPayments = (acctIdx) => {
-    let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
-    let addresses = labelledAddresses.map(a => a.address);
-    return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
-      labelledAddresses.map(({ index, address, label }) => ({
-        index, address, label,
-        ntxs: data[address].n_tx
-      })).filter(a => a.ntxs === 0)
-    ));
-  };
-
-  wallet.addAddressForAccount = (account) => {
-    let index = account.receiveIndex;
-    let address = wallet.getReceiveAddress(account.index, index);
-    let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
-    return $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
-      .then(() => ({ index, address, label }));
-  };
-
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
       $cookies.put('session', sessionToken);
@@ -428,12 +402,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) => {
     address.label = label;
     successCallback();
-  };
-
-  wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) => {
-    let account = wallet.accounts()[parseInt(accountIdx, 10)];
-    $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
-      .then(successCallback).catch(errorCallback);
   };
 
   wallet.askForDeauth = () => (

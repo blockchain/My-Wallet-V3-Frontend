@@ -99,13 +99,26 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
       event.preventDefault();
     }
-    if (wallet && toState.name === 'wallet.common.buy-sell') {
+    if (wallet && [
+      'wallet.common.buy-sell',
+      'wallet.common.settings.accounts_addresses'
+    ].includes(toState.name)) {
       let error;
 
-      if (wallet.external === null) error = 'POOR_CONNECTION';
-      else if (wallet.isDoubleEncrypted) error = 'MUST_DISABLE_2ND_PW';
-      else if ($rootScope.needsRefresh) error = 'NEEDS_REFRESH';
-
+      if (!wallet.isMetadataReady) {
+        Wallet.askForSecondPasswordIfNeeded().then(pw => {
+          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+            Alerts.displaySuccess('NEEDS_REFRESH');
+            $rootScope.needsRefresh = true;
+          });
+        });
+        event.preventDefault();
+      } else if ($rootScope.needsRefresh) {
+        error = 'NEEDS_REFRESH';
+      } else if (wallet.external === null) {
+        // Metadata service connection failed
+        error = 'POOR_CONNECTION';
+      }
       if (error) {
         event.preventDefault();
         Alerts.displayError(error);
