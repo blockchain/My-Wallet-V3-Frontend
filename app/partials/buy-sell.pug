@@ -59,10 +59,12 @@
           span.hidden-xs(ng-show="trades.pending.length") Coinify Account: {{ exchange.profile.email }}
         table.width-100(ng-show="trades.pending.length")
           tr.border.bg-light-blue
+            th.pvs.width-5-mobile.visible-xs
             th.phml.pvs.width-30(translate="STATUS")
             th.pvs.width-30(translate="DATE")
-            th.pvs.width-25(ng-hide="inMobileBuy") BTC
+            th.pvs.width-25.hidden-xs BTC
             th.pvs.width-15(translate="TOTAL")
+            th.pvs.width-5-mobile.visible-xs
           tr(
             ng-repeat="trade in trades.pending | orderBy:'createdAt':true | limitTo:tradeLimit"
             disabled="status.disabled"
@@ -78,13 +80,16 @@
           span(ng-hide="trades.pending.length || inMobileBuy") Coinify Account: {{ exchange.profile.email }}
         table.width-100.mb-30
           tr.border.bg-light-blue
+            th.pvs.width-5-mobile.visible-xs
             th.phml.pvs.width-30(translate="STATUS")
             th.pvs.width-30(translate="DATE")
-            th.pvs.width-25(ng-hide="inMobileBuy") BTC
+            th.pvs.width-25.hidden-xs BTC
             th.pvs.width-15(translate="TOTAL")
+            th.pvs.width-5-mobile.visible-xs
           tr(ng-hide="trades.completed.length")
             tr.border(ng-hide="trades.completed.length")
-              td.pvml.plml.italic.type-lbl(colspan="{{inMobileBuy ? 3 : 4}}") You haven't completed any trades yet.
+              td.pvml.plml.italic.type-lbl.hidden-xs(colspan="4") You haven't completed any trades yet.
+              td.pvml.plml.italic.type-lbl.visible-xs(colspan="5") You haven't completed any trades yet.
           tr(
             ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:tradeLimit"
             disabled="status.disabled"

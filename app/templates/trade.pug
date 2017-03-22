@@ -1,4 +1,7 @@
 tr.border(ng-click="inMobileBuy && triggerBuy()")
+  td.width-5-mobile.right-align.visible-xs
+    i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" tooltip-enable="!$root.inMobileBuy")
+    i.ti-trash.fade(ng-hide="canCancel")
   td.type-lbl.paml
     span.mrm(ng-if="buySellDebug" uib-dropdown)
       i.ti-search.pointer.blue(uib-dropdown-toggle)
@@ -11,7 +14,7 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
-    span(ng-hide="inMobileBuy")
+    span.hidden-xs
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
         ng-class="{disabled: isTradingDisabled}"
         ng-click="!isTradingDisabled && triggerBuy()"
@@ -21,8 +24,8 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
         ng-show="trade.state !== 'awaiting_transfer_in'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
-  td.type-lbl.pvml(ng-hide="status.gettingQuote || inMobileBuy")
-    span(ng-hide="!trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
+  td.type-lbl.pvml.hidden-xs
+    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
       span.display-inline-block.left-align
         quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
       br
@@ -34,7 +37,9 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
   td.type-lbl
     span(ng-hide="status.gettingQuote")
       span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
-      i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" tooltip-enable="!$root.inMobileBuy")
-      i.ti-trash.fade(ng-hide="canCancel")
-  td.type-lbl.right-align.paml(ng-show="status.gettingQuote")
-    img(src="img/spinner.gif")
+      span.hidden-xs
+        i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" tooltip-enable="!$root.inMobileBuy")
+        i.ti-trash.fade(ng-hide="canCancel")
+    img(ng-show="status.gettingQuote" src="img/spinner.gif")
+  td.type-lbl.width-5-mobile.visible-xs
+    i.ti-angle-right
