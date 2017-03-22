@@ -166,7 +166,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function labelsForCurrency (currency) {
     if (currency === 'DKK') {
-      return { accountNumber: 'Reg. Number', bankCode: 'Account Number' };
+      return { accountNumber: 'Account Number', bankCode: 'Reg. Number' };
     }
     return { accountNumber: 'IBAN', bankCode: 'BIC' };
   }
