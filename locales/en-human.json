@@ -1287,5 +1287,7 @@
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "CANNOT_COMPLETE_TRADE_ERROR": "{{::error}}. Please try again later. If you continue to experience issues, you may contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
   "UNABLE_TO_PROCESS": "Unable to process your trade",
+  "COPY_LINK": "Copy Link",
+  "LINK_COPIED": "Link Copied To Clipboard!",
   "": ""
 }
