@@ -22,9 +22,6 @@ describe "Click to highlight directive", ->
     $rootScope.$digest()
     $scope.$apply()
 
-  it "will initially not be highlighted", ->
-    expect($scope.highlighted).toBe(false)
-
   it "will check a browser version", ->
     expect($scope.browserCanExecCommand).toBeDefined()
 
