@@ -107,6 +107,7 @@
   "WALLETS_AMT" : "12 Million+",
   "COUNTRIES_SERVED_AMT" : "140+",
   "REQUEST" : "Request",
+  "REQUEST_CREATED" : "Request Created",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
   "RECEIVE_TO" : "Receive To:",
