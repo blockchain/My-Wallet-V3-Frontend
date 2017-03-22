@@ -40,6 +40,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.sell = (trade, options) => {
+      console.log('sell from buy sell ctrl')
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
         buySell.openSellView(trade, options).finally(() => {
@@ -79,7 +80,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
         let getKYCs = buySell.getKYCs().then(() => {
           $scope.kyc = buySell.kycs[0];
-          if ($scope.exchange) {
+          if ($scope.exchange.profile) { // NOTE added .profile here
             if (+$scope.exchange.profile.level.name < 2) {
               if ($scope.kyc) {
                 buySell.pollKYC();
@@ -113,6 +114,15 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         ? buySell.triggerKYC().then(kyc => $scope.buy(kyc))
         : $scope.buy($scope.kyc);
     };
+
+    $scope.openSellKyc = () => {
+      console.log('openSellKyc')
+      buySell.triggerKYC()
+        .then(kyc => {
+          console.log('then kyc', kyc)
+          $scope.buy(kyc)
+        })
+    }
 
     $scope.changeCurrency = (curr) => {
       console.log('running changeCurrency from buy sell ctrl with', curr)

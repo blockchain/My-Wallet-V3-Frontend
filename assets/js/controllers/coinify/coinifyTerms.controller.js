@@ -11,11 +11,11 @@ function CoinifyTermsController ($scope, buySell, $stateParams) {
     $scope.status.waiting = true;
     $scope.$parent.exchange = buySell.getExchange();
 
-    return $scope.exchange.signup($stateParams.countryCode, $scope.transaction.currency)
+    return $scope.exchange.signup($stateParams.countryCode, $scope.$parent.transaction.currency)
       .then(() => $scope.exchange.fetchProfile())
-      .then(() => $scope.getPaymentMediums())
+      .then(() => $scope.$parent.nextStep())
       // then go to next step
-      .catch($scope.standardError);
+      .catch(e => console.log('problem creating account', e));
   };
 
   $scope.$watch('fields', () => {

@@ -17,7 +17,9 @@ div(ng-hide="isSell")
 div(ng-show="isSell")
   div.pbl
     p.type-md.pbm Coinify Account Terms
-    span Our partner Coinify will process your Bitcoin purchase. By accepting Coinify's terms and clicking 'Continue' you will create a Coinify account using your verified email address:
+    span.colon(translate="SELL_TERMS_CREATE_ACCOUNT")
+    | 
+    span {{user.email}}
   //- form.clearfix(name="acceptTermsForm" role="form" novalidate)
     //- span.type-h5.em-500.flex-start.pts(translate="ACCEPT_TERMS")
     //- p.mvl(translate="PARTNER" translate-values="{email: user.email}")

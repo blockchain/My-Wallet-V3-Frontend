@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyBankAccountController', CoinifyBankAccountController);
 
-function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
+function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, $stateParams) {
   $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
@@ -11,6 +11,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.accountCurrency = $scope.$parent.bankAccount.account.currency;
   $scope.accountType = 'international';
   $scope.showBankName = true;
+  $scope.countries = $scope.$parent.sepaCountries;
 
   $scope.setAccountType = (accountType) => {
     $scope.accountType = accountType;
@@ -23,39 +24,27 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.selectBankCountry = (country) => {
     $scope.$parent.bankAccount.bank.address.country = country.code;
     $scope.selectedBankCountry = country.name;
+    $scope.$parent.country = country.name;
   };
 
-  $scope.getMaxMin = (curr) => {
-    const calculateMin = (rate) => {
-      $scope.$parent.limits.min = (rate * 10).toFixed(2);
-    };
-
-    const calculateMax = (rate) => {
-      $scope.$parent.limits.max = buySell.calculateMax(rate, $scope.medium).max;
-      $scope.$parent.limits.available = buySell.calculateMax(rate, $scope.medium).available;
-    };
-
-    return buySell.fetchProfile(true).then(() => {
-      let min = buySell.getRate('EUR', curr.code).then(calculateMin);
-      let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
-      return $q.all([min, max]).then($scope.setParentError);
-    });
+  const setAccountTypeHelper = (countryCode, countryName) => {
+    $scope.$parent.bankAccount.holder.address.country = countryCode;
+    $scope.$parent.bankAccount.bank.address.country = countryCode;
+    $scope.$parent.country = countryName;
   };
 
   $scope.setAccountType = (tx) => {
     if (tx.currency === 'DKK') {
       $scope.showDanish = true;
       $scope.showBankName = false;
-      $scope.$parent.bankAccount.holder.address.country = 'DK';
-      $scope.$parent.bankAccount.bank.address.country = 'DK';
+      setAccountTypeHelper('DK', 'Denmark');
     }
     if (tx.currency === 'EUR') {
       $scope.showBankName = false;
     }
     if (tx.currency === 'GBP') {
       $scope.britishBank = true;
-      $scope.$parent.bankAccount.holder.address.country = 'GB';
-      $scope.$parent.bankAccount.bank.address.country = 'GB';
+      setAccountTypeHelper('GB', 'United Kingdom');
     }
   };
   $scope.setAccountType($scope.transaction);
@@ -166,34 +155,6 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     $scope.accountCurrency = currency.code;
   };
 
-  let eventualError = (message) => Promise.reject.bind(Promise, { message });
-
-  $scope.$parent.buy = () => {
-    $scope.status.waiting = true;
-
-    let success = (trade) => {
-      $scope.$parent.trade = trade;
-      Alerts.clear($scope.alerts);
-      if ($scope.$parent.trade.bankAccount) $scope.formatTrade('bank_transfer');
-
-      $scope.nextStep();
-    };
-
-    // check if bank transfer and kyc level
-    if ($scope.needsKyc()) {
-      return buySell.kycs.length && ['declined', 'rejected', 'expired'].indexOf(buySell.kycs[0].state) > -1
-        ? buySell.triggerKYC().then(success, $scope.standardError)
-        : buySell.getOpenKYC().then(success, $scope.standardError);
-    }
-
-    let buyError = eventualError('ERROR_TRADE_CREATE');
-
-    $scope.accounts[0].buy()
-                      .catch(buyError)
-                      .then(success, $scope.standardError)
-                      .then($scope.watchAddress);
-  };
-
   $scope.$watch('transaction.currency', (newVal, oldVal) => {
     $scope.tempCurrency = $scope.transaction.currency;
   });
@@ -204,17 +165,5 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
 
   $scope.$watch('rateForm', () => {
     $scope.$parent.rateForm = $scope.rateForm;
-  });
-
-  $scope.$watch('step', () => {
-    if ($scope.onStep('summary')) {
-      $scope.getMaxMin($scope.tempCurrency);
-
-      // Get a new quote if using a fake quote.
-      if (!$scope.$parent.quote.id) {
-        $scope.$parent.quote = null;
-        $scope.getQuote();
-      }
-    }
   });
 }

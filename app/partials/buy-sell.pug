@@ -48,7 +48,7 @@
                         trading-disabled-reason="getIsTradingDisabledReason()"
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
-                        on-trigger="openKyc()"
+                        on-trigger="openSellKyc()"
                         sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
@@ -86,7 +86,7 @@
             th.pvs.width-15(translate="TOTAL")
           tr(ng-hide="trades.completed.length")
             tr.border(ng-hide="trades.completed.length")
-              td.pvml.plml.italic.type-lbl(colspan="4") You haven't completed any trades yet.
+              td.pvml.plml.italic.type-lbl(colspan="4" translate="NO_COMPLETED_TRADES")
           tr(
             ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:tradeLimit"
             disabled="status.disabled"

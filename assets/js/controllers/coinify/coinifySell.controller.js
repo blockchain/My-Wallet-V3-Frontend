@@ -9,6 +9,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifySellCurrencies;
+  $scope.currencySymbol = null;
   $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
@@ -61,15 +62,20 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.assignFiatCurrency = () => {
     if ($scope.trade._state) return;
     if ($scope.trade.quote.quoteCurrency === 'BTC') {
-      $scope.transaction.currency = $scope.trade.quote.baseCurrency;
-      $scope.bankAccount.account.currency = $scope.trade.quote.baseCurrency;
+      $scope.assignFiatHelper('baseCurrency');
     } else {
-      $scope.transaction.currency = $scope.trade.quote.quoteCurrency;
-      $scope.bankAccount.account.currency = $scope.trade.quote.quoteCurrency;
+      $scope.assignFiatHelper('quoteCurrency');
     }
   };
-  $scope.assignFiatCurrency();
 
+  $scope.assignFiatHelper = (currencyType) => {
+    $scope.transaction.currency = $scope.trade.quote[currencyType];
+    $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
+    $scope.currencySymbol = currency.conversions[$scope.trade.quote[currencyType]]['symbol'];
+    console.log('$scope.currencySymbol', $scope.currencySymbol)
+  };
+
+  $scope.assignFiatCurrency();
 
   let exchange = buySell.getExchange();
   console.log('coinifySell $scope', $scope, exchange)
@@ -103,7 +109,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
-    console.log('running nextStep function', $scope)
+    
     if ($scope.trade._state) {
       $scope.mapTradeDetails();
       $scope.goTo('review');
@@ -177,19 +183,21 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       })
   }
 
+  const handleGetBankAccounts = (result) => {
+    if (result) {
+      $scope.registeredBankAccount = true;
+      $scope.bankAccounts = result;
+      return result;
+    } else {
+      $scope.registeredBankAccount = false;
+      $scope.bankAccounts = null;
+    }
+  };
+
   $scope.getBankAccounts = () => {
     $q.resolve(buySell.getBankAccounts())
-      .then((result) => {
-        if (result) {
-          console.log('result in getBankAccounts', result)
-          $scope.registeredBankAccount = true;
-          $scope.bankAccounts = result;
-          return result;
-        } else {
-          $scope.registeredBankAccount = false;
-          $scope.bankAccounts = null;
-        }
-      })
+      .then(result => handleGetBankAccounts(result))
+      .catch(e => console.log('error in getBankAccounts', e))
   };
 
   $scope.goToOrderHistory = () => {
@@ -200,37 +208,29 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
+  // NOTE this gets run upon controller load
   $scope.startPayment = () => {
     if ($scope.trade._state) return;
 
-    let index = Wallet.getDefaultAccountIndex();
-    // .fee(absoluteFeeBounds [0])
-
+    const index = Wallet.getDefaultAccountIndex();
     $scope.payment = Wallet.my.wallet.createPayment();
-
-    let tradeInSatoshi = currency.convertToSatoshi($scope.trade.btc, currency.bitCurrencies[0])
-
-
+    const tradeInSatoshi = currency.convertToSatoshi($scope.trade.btc, currency.bitCurrencies[0])
     $scope.payment.from(index).amount(tradeInSatoshi)
-    // $scope.payment.from(index).amount(100000)
 
     $scope.payment.sideEffect(result => {
       console.log('result of sideEffect', result)
 
-      // const firstBlockFee = result.sweepFees[0];
       const firstBlockFee = result.absoluteFeeBounds[0];
 
       console.log('firstBlockFee', firstBlockFee)
       $scope.payment.fee(firstBlockFee);
       $scope.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
       const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
-      console.log('amountAfterFee', amountAfterFee);
       $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
       $scope.payment.amount(amountAfterFee / 100000000) // in SATOSHI
-      // let date = + new Date();
     })
   };
-  $scope.startPayment();
+
 
   $scope.cancel = () => {
     console.log('cancel called')
@@ -248,7 +248,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.dismiss = () => {
     $uibModalInstance.dismiss('');
-  }
+  };
 
   $scope.mapTradeDetails = () => {
     const t = $scope.trade;
@@ -261,25 +261,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.formatBankInfo(t);
   };
 
-  $scope.getReadyToSend = () => {
-    // get fee
-    // get Origin address payment.from(origin, fee)
-    // add To address payment.to(origin)
-    // add Amount payment.amount(amount, absoluteFee)
-    // build?
-    $scope.payment = Wallet.my.wallet.createPayment();
-
-    // $scope.payment.from(Wallet.getDefaultAccountIndex()).to().amount()
-    //
-    // console.log('scope.payment', $scope)
-    // const origin = smartAccount.getDefault();
-    // console.log('origin', origin)
-    // console.log('from', from)
-    // $scope.payment.from(origin, 1)
-  }
-
-
-
   /* Will need to use this for if user has 2nd PW set
 
   const signAndPublish = (passphrase) => {
@@ -291,7 +272,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     .then(transactionSucceeded).catch(transactionFailed);
 
   */
-
 
   const transactionFailed = (message) => {
 
@@ -323,35 +303,37 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       .sign(passphrase).publish().payment;
   };
 
+  const handleSellResult = (sellResult) => {
+    if (!sellResult) {
+      console.log('error creating sell trade')
+      Alerts.displayError('CREATE_SELL_TRADE_ERROR', false, $scope.alerts);
+    }
+    $scope.sellTrade = sellResult;
+    $scope.sendAddress = sellResult.transferIn.details.account;
+    $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
+  };
+
+  const handlePaymentAssignment = () => {
+    $scope.payment.to($scope.sendAddress);
+    $scope.payment.amount($scope.sendAmount);
+    // $scope.payment.build();
+  };
+
 
   $scope.sell = () => {
 
     $scope.status.waiting = true;
 
     $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
-      .then((sellResult) => {
-        if (!sellResult) {
-          console.log('error creating sell trade')
-          Alerts.displayError() //TODO
-        }
+      .then(sellResult => {
         console.log('sell created', sellResult)
-        $scope.sellTrade = sellResult;
-
-        $scope.sendAddress = sellResult.transferIn.details.account; // coinify receive addr
-
-        // '1FrYGs1PCdaJ7yyHbQY2mHQzD9YotKrudu'
-        // $scope.sendAddress = '15XPS4LjoJmyTUG7VAfRvwfCT5f8f6T13C' // testing
-        $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000; // to satoshi for payment.amount()
-
+        handleSellResult(sellResult);
         return sellResult;
       })
-      .then((sellData) => {
-        // send btc to coinify
-        console.log('assign payment.to and payment.amount', $scope.sendAddress, $scope.sendAmount)
-        $scope.payment.to($scope.sendAddress);
+      .then(sellData => {
+        handlePaymentAssignment();
 
-        $scope.payment.amount($scope.sendAmount);
-
+        // for testing
         if (exchange._customAddress && exchange._customAmount) {
           console.log('customAddress and customAmount', exchange._customAddress, exchange._customAmount)
           $scope.payment.to(exchange._customAddress);
@@ -359,9 +341,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
           // 10000 SATOSHI is ~.11 EUR
         }
 
-        // $scope.payment.amount(5000) // testing - send tiny amounts
-
-        console.log('build payment')
         $scope.payment.build();
 
         console.log('ask for 2nd PW and send btc', $scope)
@@ -374,7 +353,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
           })
       })
       .finally(() => {
-        console.log('finally')
         // NOTE fix formatBankInfo() but put it in here
         // $scope.formatBankInfo();
         $scope.status.waiting = false;
@@ -386,7 +364,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       })
   };
 
-  // TODO this whole thing needs to be refactored
+  // TODO this whole thing needs to be refactored (or killed)
   $scope.formatBankInfo = (trade) => {
     const b = $scope.bankAccount;
     if (trade) {
@@ -409,7 +387,15 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
 
-
+  $scope.startPayment();
   if (!$scope.step) $scope.nextStep();
+
+  $scope.$watch('currencySymbol', (newVal, oldVal) => {
+    if (!$scope.currencySymbol) {
+      let curr = $scope.transaction.currency || null;
+      $scope.currencySymbol = currency.conversions[curr.code];
+    }
+    if (!newVal) return;
+  });
 
 }

@@ -1286,5 +1286,8 @@
   "CLICK_TO_DELETE_ACCOUNT": "Delete bank account",
   "BANK_ACCOUNT_CREATION_FAILED": "There was a problem saving your bank account. Please try again later.",
   "SELL_RATE_ACCEPT": "I accept that Bitcoin will be traded at the current available exchange rate at the time Coinify processes my order which might differ from the rate displayed above.",
+  "CREATE_SELL_TRADE_ERROR": "Error creating sell trade. Please try again later.",
+  "NO_COMPLETED_TRADES": "You haven't completed any trades yet.",
+  "SELL_TERMS_CREATE_ACCOUNT": "Our partner Coinify will process your Bitcoin purchase. By accepting Coinify's terms and clicking 'Continue' you will create a Coinify account using your verified email address",
   "": ""
 }

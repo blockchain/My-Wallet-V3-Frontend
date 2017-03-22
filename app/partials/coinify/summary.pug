@@ -59,7 +59,7 @@
             max="{{!needsKyc() ? limits.available : 1000}}"
             step="0.01"
             required)
-          div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+          div.input-group-btn(uib-dropdown uib-keyboard-nav-style ng-hide="isSell")
             button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
               span {{ tempCurrency.code }}
               span.caret

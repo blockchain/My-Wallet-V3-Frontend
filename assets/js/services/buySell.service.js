@@ -101,15 +101,20 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function getBankAccounts () {
-    return $q.resolve(service.getExchange().bank.getAll()).then(accounts => {
-      if (accounts) {
-        console.log('**BANK ACCOUNTS**', accounts)
-        return accounts;
-      } else {
-        console.log('from buySell.service: no accounts for this user')
-        return [];
-      }
-    });
+    return $q.resolve(service.getExchange().bank.getAll())
+      .then(accounts => {
+        if (accounts) {
+          console.log('**BANK ACCOUNTS**', accounts)
+          return accounts;
+        } else {
+          console.log('from buySell.service: no accounts for this user')
+          return [];
+        }
+      })
+      .catch(e => {
+        console.log('error getting accounts', e);
+        return e;
+      });
   }
 
   function createBankAccount (bankObject) {
@@ -285,6 +290,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function openSellView (trade = null, options = { sell: true }) {
+    console.log('openSellView', trade, options)
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',

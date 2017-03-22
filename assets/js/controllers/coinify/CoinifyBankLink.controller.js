@@ -3,7 +3,8 @@ angular
   .controller('CoinifyBankLinkController', CoinifyBankLinkController);
 
 function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
-  $scope.bankAccounts = $scope.$parent.bankAccounts;
+  $scope.transaction = $scope.$parent.transaction;
+  $scope.bankAccounts = $scope.$parent.bankAccounts.filter(b => b.account.currency === $scope.transaction.currency); // only show banks with selected currency
 
   $scope.selecting = true;
 
@@ -19,30 +20,34 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
     $scope.$parent.goTo('account-info')
   };
 
+  const handleAccountAssignment = (account) => {
+    let accounts = $scope.$parent.bankAccounts
+    for (let i = 0; i < accounts.length; i++) {
+      if (accounts[i]['id'] === account['id']) accounts.splice(i, 1);
+    }
+    console.log('accounts', accounts)
+    $scope.selecting = false;
+    $scope.$parent.bankAccounts = accounts;
+    $scope.bankAccounts = accounts;
+    $scope.$parent.getBankAccounts();
+    $scope.bankLinkEdit();
+  };
+
   $scope.deleteAccount = (account) => {
     Alerts.confirm('CONFIRM_DELETE_BANK')
       .then(() => {
         $q.resolve(buySell.deleteBankAccount(account.id))
-          .then((res) => {
-            console.log('successful delete?', res)
-          })
-          .finally(() => {
-            let accounts = $scope.$parent.bankAccounts
-            console.log('first accounts', accounts)
-            for (let i = 0; i < accounts.length; i++) {
-              if (accounts[i]['id'] === account['id']) accounts.splice(i, 1);
-            }
-            console.log('accounts', accounts)
-            $scope.selecting = false;
-            $scope.$parent.bankAccounts = accounts;
-            $scope.$parent.getBankAccounts();
-          });
+          .catch(e => console.error('Error deleting bank', e))
+          .finally(handleAccountAssignment(account));
       })
-    console.log('delete account with', account)
   };
 
   $scope.$watch('selectedBankAccount', () => {
     $scope.$parent.$parent.selectedBankAccount = $scope.selectedBankAccount;
-  })
+  });
+
+  $scope.$watch('bankAccounts', () => {
+    $scope.$parent.bankAccounts = $scope.bankAccounts;
+  });
 
 }

@@ -31,11 +31,15 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.exchangeRate = {};
   $scope.selectedCurrency = $scope.transaction.currency.code;
   $scope.currencies = currency.coinifySellCurrencies;
-  // $scope.currencySymbol = currency.conversions['EUR']; // default to Euro
   $scope.error = {};
   $scope.status = { ready: true };
 
   $scope.transaction.btc = null;
+
+  if (['EUR', 'DKK', 'GBP'].indexOf($scope.transaction.currency.code) === -1) {
+    // NOTE make EUR default if currency is not eur, dkk, or gbp
+    $scope.transaction.currency = { code: 'EUR', name: 'Euro' };
+  }
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
@@ -62,6 +66,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     // TODO
     console.log('show kyc here')
   }
+
+  (() => {
+    $scope.kyc = buySell.kycs[0];
+    console.log('ran scope.kyc', $scope)
+  })()
+
+  // $scope.establishKyc();
 
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
@@ -104,6 +115,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.triggerSell = () => {
     $scope.status.waiting = true;
     buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error).then(() => {
+      console.log('then sell')
       $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote })
     })
   };

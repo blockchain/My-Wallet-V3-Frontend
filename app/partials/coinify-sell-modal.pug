@@ -16,7 +16,7 @@
                                     tooltip-placement="top"
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review')")
-            span {{transaction.btc }} BTC ({{currencySymbol.symbol}}{{transaction.fiat}})
+            span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
             //- span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }} BTC
             //- span(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
             //- | &nbsp;
