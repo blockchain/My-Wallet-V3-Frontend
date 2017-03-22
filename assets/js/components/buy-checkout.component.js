@@ -70,6 +70,7 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       state.rate = quote.rate;
       state.loadFailed = false;
       let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
+      timeToExpiration = timeToExpiration < 20 ? 20 : timeToExpiration;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
       this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
