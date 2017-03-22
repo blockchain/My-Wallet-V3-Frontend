@@ -77,11 +77,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     $uibModalInstance.dismiss('');
   };
 
-  $scope.useAccount = () => {
-    let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    $scope.fields.to = $scope.destinations.filter(d => d.index === idx)[0];
-  };
-
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     const activeAccounts = filterFilter(Wallet.accounts(), {
       archived: false

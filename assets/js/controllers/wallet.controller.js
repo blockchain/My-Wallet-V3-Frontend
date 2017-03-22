@@ -47,7 +47,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     Alerts.clear();
     return $uibModal.open({
       templateUrl: 'partials/request.pug',
-      windowClass: 'bc-modal auto',
+      windowClass: 'bc-modal initial',
       controller: 'RequestCtrl',
       resolve: {
         destination: () => null,
