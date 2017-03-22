@@ -15,7 +15,7 @@
     .form-group.flex-row(ng-show="signature")
       label.control-label(translate="SIGNATURE")
       span.type-lbl :
-      p.form-control-static.bitcoin-address(single-click-select) 
+      p.form-control-static.bitcoin-address(single-click-select copy-content="{{signature}}") 
         button.clipboard.btn.btn-default
         span {{ signature }}
 
