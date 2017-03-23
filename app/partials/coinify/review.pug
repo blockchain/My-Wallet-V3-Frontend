@@ -1,26 +1,26 @@
 .flex-column.mvm
   div
-    p.pvm.f-16 You will receive an email confirmation of this sell order. Coinify will issue the owed sale amount directly to your bank account within 1 business day*
+    p.pvm.f-16(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
   .left-align
-    p.colon.em-500.mbs.type-lbl Order Details
+    p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
-      span.colon Coinify Trade ID
+      span.colon(translate="SELL.TRADE_ID")
       span {{ sellTrade.id }}
     .flex-row.flex-between.pvm
-      span.colon Date initialized
+      span.colon(translate="SELL.DATE_INITIALIZED")
       span {{ sellTrade.createTime | date:dateFormat }}
     .flex-row.flex-between.pvm
-      span.colon BTC Sold
+      span.colon(translate="SELL.BTC_SOLD")
       span {{ sellTrade.transferIn.receiveAmount }} BTC
   .left-align
-    p.colon.em-500.mbs.type-lbl.mtl Payout Details
+    p.colon.em-500.mbs.type-lbl.mtl(translate="SELL.PAYOUT_DETAILS") 
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
-      span.colon Bank Account
+      span.colon(translate="SELL.BANK_ACCOUNT")
       span {{ bankNameOrNumber }}
     .flex-row.flex-between.pvm
-      span.colon Credit Issued
+      span.colon(translate="SELL.CREDIT_ISSUED")
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}
   .left-align
-    p.type-sm.mtvl *Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1-2 business days from the transfer.
+    p.type-sm.mtvl(translate="SELL.1_2_DAYS")

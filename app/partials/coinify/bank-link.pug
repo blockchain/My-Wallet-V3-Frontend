@@ -1,9 +1,9 @@
 .bank-link
-  span.type-h5.em-500.flex-start.pts Where would you like your funds sent? You have the following bank accounts linked.
+  span.type-h5.em-500.flex-start.pts(translate="SELL.WHERE_FUNDS_SENT")
   .flex-row.flex-between.mt-15.mb-10
-    span.type-lbl.colon Select Account
-    a.underline(ng-show="selecting" ng-click="bankLinkEdit()") Edit
-    a.underline(ng-show="!selecting" ng-click="bankLinkEdit()") Done
+    span.type-lbl.colon(translate="SELL.SELECT_ACCOUNT")
+    a.underline(ng-show="selecting" ng-click="bankLinkEdit()" translate="EDIT_NOTE")
+    a.underline(ng-show="!selecting" ng-click="bankLinkEdit()" translate="SELL.DONE")
   form(name="bankLinkForm" novalidate)
     .flex-column
       .flex-row.flex-center.border-top.border-right.border-left.plvl(ng-repeat="account in bankAccounts")
@@ -17,7 +17,7 @@
             span.pv-25.em-300 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
       .flex-row.flex-center.border.plvl(ng-show="selecting")
         input(type="radio" name="bankRadios" ng-click="addBankAccount()")
-        a.pal(ng-click="addBankAccount()") Add new account
+        a.pal(ng-click="addBankAccount()" translate="SELL.ADD_NEW_ACCOUNT")
       .flex-row.flex-center.border.plvl.opacity-5(ng-hide="selecting")
         input.disabled(type="radio" disabled)
-        span.pal Add new account
+        span.pal(translate="SELL.ADD_NEW_ACCOUNT")

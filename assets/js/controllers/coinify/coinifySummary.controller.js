@@ -3,16 +3,22 @@ angular
   .controller('CoinifySummaryController', CoinifySummaryController);
 
 function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, smartAccount) {
+  $scope.isSell = $scope.$parent.$parent.isSell;
   $scope.$parent.limits = {};
   $scope.format = currency.formatCurrencyForView;
   $scope.btcCurrency = currency.bitCurrencies[0];
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
   // $scope.isBankTransfer = () => $scope.isMedium('bank');
-  $scope.trade = $scope.$parent.$parent.trade;
-  $scope.transaction = $scope.$parent.$parent.transaction;
+  $scope.sellTrade = $scope.$parent.$parent.trade;
+  $scope.sellTransaction = $scope.$parent.$parent.transaction;
+
+  $scope.trade = $scope.$parent.trade;
+  $scope.transaction = $scope.$parent.transaction;
 
   $scope.$parent.fields.rate = false;
+
+  console.log('CoinifySummaryController', $scope)
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {

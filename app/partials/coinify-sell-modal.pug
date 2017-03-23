@@ -2,12 +2,13 @@
   .modal-header.bc-modal-header.flex-between.flex-center()
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3.mlm(ng-if="onStep('accept-terms')") Coinify Account
-        h3.mlm(ng-if="onStep('account-info')") Add Bank Account
-        h3.mlm(ng-if="onStep('account-holder')") Account Holder
-        h3.mlm(ng-if="onStep('summary')") Confirm Sell Order
-        h3.mlm(ng-if="onStep('review')") Sell Order Placed
-        h3.mlm(ng-if="onStep('bank-link')") Linked Accounts
+        h3.mlm(ng-if="onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
+        h3.mlm(ng-if="onStep('account-info')" translate="SELL.ADD_BANK_ACCOUNT")
+        h3.mlm(ng-if="onStep('account-holder')" translate="SELL.ACCOUNT_HOLDER")
+        h3.mlm(ng-if="onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
+        h3.mlm(ng-if="onStep('review')" translate="SELL.ORDER_PLACED")
+        h3.mlm(ng-if="onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
+        h3.mlm(ng-if="onStep('isx')" translate="INCREASE_SELL_LIMIT")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-row-reverse.flex-align-end(ng-hide="status.gettingQuote"
@@ -89,7 +90,7 @@
           ng-disabled="isDisabled()"
           ng-show="onStep('bank-link')")
         button.button-primary(
-          ladda-translate="Place Sell Order"
+          ladda-translate="PLACE_ORDER"
           ng-click="sell()"
           data-style="expand-left"
           ui-ladda="status.waiting"

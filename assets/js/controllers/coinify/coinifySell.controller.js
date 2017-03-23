@@ -351,13 +351,14 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         $scope.payment.build();
 
         console.log('ask for 2nd PW and send btc', $scope)
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
-          .then(transactionSucceeded)
-          .catch(err => {
-            console.log('err when publishing', err)
-            transactionFailed(err);
-          })
+        // NOTE sending is turned off when below is commented out
+        // Wallet.askForSecondPasswordIfNeeded()
+        //   .then(signAndPublish)
+        //   .then(transactionSucceeded)
+        //   .catch(err => {
+        //     console.log('err when publishing', err)
+        //     transactionFailed(err);
+        //   })
       })
       .finally(() => {
         // NOTE fix formatBankInfo() but put it in here
