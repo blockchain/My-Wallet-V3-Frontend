@@ -40,7 +40,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.sell = (trade, options) => {
-      console.log('sell from buy sell ctrl')
+      console.log('sell from buy sell ctrl', trade, options) // NOTE trade will be kyc if passed in
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
         buySell.openSellView(trade, options).finally(() => {
@@ -120,7 +120,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       buySell.triggerKYC()
         .then(kyc => {
           console.log('then kyc', kyc)
-          $scope.buy(kyc)
+          $scope.sell(kyc)
         })
     }
 

@@ -109,12 +109,19 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
-    
-    if ($scope.trade._state) {
+
+    if ($scope.trade._iSignThisID) {
+      console.log('send to isx')
+      $scope.goTo('isx');
+      return;
+    }
+
+    if ($scope.trade._state && !$scope.trade._iSignThisID) {
       $scope.mapTradeDetails();
       $scope.goTo('review');
       return;
     }
+
     if (!$scope.exchange.user || !$scope.user.isEmailVerified) {
       $scope.goTo('accept-terms');
     } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
