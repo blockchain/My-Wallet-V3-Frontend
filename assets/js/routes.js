@@ -296,11 +296,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.pug',
       controller: 'BuySellCtrl',
-<<<<<<< HEAD
       params: { countryCode: null, selectedTab: 'SELL_BITCOIN' },
-=======
-      params: { countryCode: null, selectedTab: null },
->>>>>>> v1.14-release
       resolve: {
         options (Options) { return Options.get(); }
       }

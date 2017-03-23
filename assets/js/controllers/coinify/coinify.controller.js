@@ -2,11 +2,9 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-<<<<<<< HEAD
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state) {
-=======
+
 function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options) {
->>>>>>> v1.14-release
+
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -260,27 +258,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     if (!$scope.exchange.user) index = 0;
     else if (!$scope.trades.length && !$scope.trade) index = 1;
     else index = 2;
-
-<<<<<<< HEAD
-    link = links[index];
-
-    let hasSeenPrompt = surveyOpened && surveyOpened.index >= index;
-
-    if (hasSeenPrompt) {
-      [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
-      Alerts.confirm(text, {action: action}).then($scope.cancel).then(buySell.getTrades()).then($scope.goToOrderHistory());
-    } else {
-      [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
-      let openSurvey = () => {
-        $scope.cancel();
-        $rootScope.safeWindowOpen(link);
-        $cookies.putObject('survey-opened', {index: index});
-      };
-      Alerts.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'}).then(openSurvey, $scope.cancel);
-    }
-=======
     Alerts.surveyCloseConfirm('survey-opened', links, index).then($scope.cancel);
->>>>>>> v1.14-release
   };
 
   $scope.getQuoteHelper = () => {

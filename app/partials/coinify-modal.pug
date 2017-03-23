@@ -96,13 +96,8 @@
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled() || fiatFormInvalid || status.gettingQuote"
-<<<<<<< HEAD
-          ng-show="onStep('summary')")
-      div(ng-show="onStep('trade-in-review') || onStep('trade-formatted') && !bitcoinReceived")
-=======
           ng-show="onStep('summary') && !error")
       div(ng-show="onStep('trade-in-review') || onStep('summary') && error || onStep('trade-formatted') && !bitcoinReceived")
->>>>>>> v1.14-release
         button.button-primary(translate="CLOSE" ng-click="cancel() && goToOrderHistory()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-primary(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")
