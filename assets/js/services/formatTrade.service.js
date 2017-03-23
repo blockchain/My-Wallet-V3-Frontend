@@ -6,6 +6,7 @@ formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'
 
 function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   const service = {
+    confirm,
     reviewing,
     processing,
     cancelled,
@@ -73,6 +74,14 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
       values: {
         state: state || getState(trade.state)
       }
+    };
+  }
+
+  function confirm (trade) {
+    return {
+      tx: trade,
+      values: {},
+      namespace: 'TX_CONFIRM'
     };
   }
 
@@ -157,7 +166,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function labelsForCurrency (currency) {
     if (currency === 'DKK') {
-      return { accountNumber: 'Reg. Number', bankCode: 'Account Number' };
+      return { accountNumber: 'Account Number', bankCode: 'Reg. Number' };
     }
     return { accountNumber: 'IBAN', bankCode: 'BIC' };
   }

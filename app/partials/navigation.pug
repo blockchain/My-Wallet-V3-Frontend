@@ -5,7 +5,7 @@
         button.navbar-toggle.mvn(type="button", ng-init="navCollapsed = true", ng-click="toggleMenu()")
           span.sr-only Toggle navigation
           span.ti-menu.white
-        a.navbar-brand(ui-sref="wallet.common.home") 
+        a.navbar-brand(ui-sref="wallet.common.home")
           img#logo(src="img/blockchain-vector.svg", alt="Blockchain" ng-show="getTheme().name !== 'dev'")
           img#logo(src="img/blockchain-vector-dev.svg", alt="Blockchain" ng-show="getTheme().name === 'dev'")
       a#wallet-nav-toggle(title="Wallet Navigation Menu", ng-click="navCollapsed = !navCollapsed")
@@ -32,7 +32,7 @@
             li
               a(href="{{rootURL}}stats", translate="STATS" target="_blank" rel="noopener noreferrer")
             li
-              a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank" rel="noopener noreferrer")
+              a(href="{{rootURL}}markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
             li
               a(href="{{rootURL}}api", translate="API" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
@@ -44,7 +44,7 @@
         li.item.visible-xs
           a(href="{{rootURL}}api", translate="API" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
-          a(href="https://markets.blockchain.info/", translate="MARKETS" target="_blank" rel="noopener noreferrer")
+          a(href="{{rootURL}}markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
         li.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
           a(uib-popover-template="::whatsNewTemplate"
             popover-class="whats-new-popover"

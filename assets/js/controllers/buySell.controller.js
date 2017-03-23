@@ -101,9 +101,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         $q.all([getTrades, getKYCs, getCurrencies]).then(() => {
           $scope.status.loading = false;
           $scope.status.disabled = false;
-        }).catch(() => {
-          $scope.status.exchangeDown = true;
         });
+      }).catch(() => {
+        $scope.status.loading = false;
+        $scope.status.exchangeDown = true;
+        $scope.$safeApply();
       });
     } else {
       $scope.status.disabled = false;
@@ -180,7 +182,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     return cannotTradeReason;
   };
 
+<<<<<<< HEAD
   $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
+=======
+  $scope.tabs = ['BUY_BITCOIN', 'ORDER_HISTORY'];
+>>>>>>> v1.14-release
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
     $state.params.selectedTab = tab;

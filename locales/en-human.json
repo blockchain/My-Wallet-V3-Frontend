@@ -380,7 +380,8 @@
   "HIDE_PAIRING_CODE"  : "Hide Pairing Code",
   "SHOW_PAIRING_CODE"  : "Show Pairing Code",
   "PAIRING_CODE_EXPLAIN": "Scan the code <i>(click on 'Show Pairing Code')</i> with your Blockchain Wallet (iOS or Android) for a seamless connection to your wallet.",
-  "SHOW_PAIRING_CODE_FAIL" : "Failed to load pairing code",
+  "PAIRING_CODE_EXPLAIN_WARN": "Do not share your Pairing Code with others.",
+  "SHOW_PAIRING_CODE_FAIL" : "Failed to load Pairing Code",
   "DOWNLOAD_THE": "Download the",
   "IOS_APP_HERE": "iOS app here",
   "AND_THE": "and the",
@@ -435,7 +436,6 @@
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
   "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality, and you cannot set a second password if you have an exchange account linked to your Blockchain Wallet.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
@@ -815,6 +815,7 @@
   "CHECKING_LOGIN_ATTEMPT" : "Checking login attempt",
   "ERROR" : "Error",
   "SEARCH" : "Search",
+  "SEARCH_FOR_BLOCK_ETC": "Search for block hash, transaction, address, etc",
   "BALANCES" : "Balances",
   "MUST_SELECT_ORIGIN" : "Must select where to send from",
   "ERR_ENABLE_IP_RESTRICT" : "You must add at least one IP address to the whitelist to enable Login IP Restriction",
@@ -1021,6 +1022,10 @@
     "TITLE": "Transaction {{::state}}",
     "BODY": ""
   },
+  "TX_CONFIRM": {
+    "TITLE": "Confirm Purchase",
+    "BODY": "You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete."
+  },
   "TX_PENDING": {
     "TITLE": "Order Pending",
     "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
@@ -1111,7 +1116,6 @@
   "RECEIVING_WALLET": "Receiving wallet",
   "RECEIVING_ADDRESS": "QA: Receiving address",
   "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Please remove your second password to access this section of the wallet.",
   "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
   "CONFIRM_YOUR_ORDER": "Confirm your order:",
   "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
@@ -1174,7 +1178,7 @@
   "LANDING": {
     "NEW_TO_BITCOIN" : "New To Bitcoin?",
     "WHAT_IS_BITCOIN": "What is Bitcoin?",
-    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
     "WHY_USE" : "Why use it?",
     "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
@@ -1196,7 +1200,7 @@
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "COINIFY_SURVEY": {
+  "SURVEY_PROMPT": {
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
   },
@@ -1283,11 +1287,16 @@
   "BLOG": "Blog",
   "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
+<<<<<<< HEAD
   "CLICK_TO_DELETE_ACCOUNT": "Delete bank account",
   "BANK_ACCOUNT_CREATION_FAILED": "There was a problem saving your bank account. Please try again later.",
   "SELL_RATE_ACCEPT": "I accept that Bitcoin will be traded at the current available exchange rate at the time Coinify processes my order which might differ from the rate displayed above.",
   "CREATE_SELL_TRADE_ERROR": "Error creating sell trade. Please try again later.",
   "NO_COMPLETED_TRADES": "You haven't completed any trades yet.",
   "SELL_TERMS_CREATE_ACCOUNT": "Our partner Coinify will process your Bitcoin purchase. By accepting Coinify's terms and clicking 'Continue' you will create a Coinify account using your verified email address",
+=======
+  "CANNOT_COMPLETE_TRADE_ERROR": "{{::error}}. Please try again later. If you continue to experience issues, you may contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
+  "UNABLE_TO_PROCESS": "Unable to process your trade",
+>>>>>>> v1.14-release
   "": ""
 }

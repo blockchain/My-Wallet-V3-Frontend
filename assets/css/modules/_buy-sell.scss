@@ -425,7 +425,8 @@ i.ti-credit-card.bank {
 
 #plaid {
   border-width: 0px;
-  height: 42px;
+  display: block;
+  height: 40px;
   width: 100%;
   &.enabled {
     position: fixed;

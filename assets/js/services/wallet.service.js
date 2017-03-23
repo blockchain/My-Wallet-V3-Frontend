@@ -57,6 +57,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
+  //              Grunt can replace this:
   const network = $rootScope.network || 'bitcoin';
   BlockchainConstants.NETWORK = network;
 
@@ -103,7 +104,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       }
       $window.name = 'blockchain-' + uid;
       wallet.fetchAccountInfo((result) => {
-        wallet.loadExternal();
+        wallet.initExternal();
         wallet.status.isLoggedIn = true;
         successCallback && successCallback(result);
       });
@@ -263,15 +264,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     });
   };
 
-  wallet.loadExternal = () => {
-    return $q.resolve(wallet.my.wallet.loadExternal()).then(() => {
-      let { external } = MyWallet.wallet;
-      if (external) {
-        let { coinify, sfox } = external;
-        if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
-        if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
-      }
-    });
+  wallet.initExternal = () => {
+    let { external } = MyWallet.wallet;
+    if (external) {
+      let { coinify, sfox } = external;
+      if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
+      if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
+    }
   };
 
   wallet.upgrade = (successCallback, cancelSecondPasswordCallback) => {
@@ -310,32 +309,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let account = wallet.accounts()[acctIdx];
     return account.receiveAddressAtIndex(addrIdx);
   });
-
-  wallet.getLabelledHdAddresses = (acctIdx) => {
-    let account = wallet.accounts()[acctIdx];
-    return account.receivingAddressesLabels.map(({ index, label }) => ({
-      index, label, address: wallet.getReceiveAddress(acctIdx, index)
-    }));
-  };
-
-  wallet.getPendingPayments = (acctIdx) => {
-    let labelledAddresses = wallet.getLabelledHdAddresses(acctIdx);
-    let addresses = labelledAddresses.map(a => a.address);
-    return $q.resolve(MyBlockchainApi.getBalances(addresses)).then(data => (
-      labelledAddresses.map(({ index, address, label }) => ({
-        index, address, label,
-        ntxs: data[address].n_tx
-      })).filter(a => a.ntxs === 0)
-    ));
-  };
-
-  wallet.addAddressForAccount = (account) => {
-    let index = account.receiveIndex;
-    let address = wallet.getReceiveAddress(account.index, index);
-    let label = $translate.instant('DEFAULT_NEW_ADDRESS_LABEL');
-    return $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
-      .then(() => ({ index, address, label }));
-  };
 
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
@@ -430,12 +403,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.changeLegacyAddressLabel = (address, label, successCallback, errorCallback) => {
     address.label = label;
     successCallback();
-  };
-
-  wallet.changeHDAddressLabel = (accountIdx, index, label, successCallback, errorCallback) => {
-    let account = wallet.accounts()[parseInt(accountIdx, 10)];
-    $q.resolve(account.setLabelForReceivingAddress(index, label, 15))
-      .then(successCallback).catch(errorCallback);
   };
 
   wallet.askForDeauth = () => (
@@ -856,7 +823,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.logout({ auto: true });
       }
     } else if (event === 'on_change') {
-      wallet.fetchAccountInfo(wallet.loadExternal);
+      wallet.fetchAccountInfo(wallet.initExternal);
     } else {
     }
     $rootScope.$safeApply();

@@ -296,7 +296,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.pug',
       controller: 'BuySellCtrl',
+<<<<<<< HEAD
       params: { countryCode: null, selectedTab: 'SELL_BITCOIN' },
+=======
+      params: { countryCode: null, selectedTab: null },
+>>>>>>> v1.14-release
       resolve: {
         options (Options) { return Options.get(); }
       }
@@ -387,17 +391,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         settings: {
           templateUrl: 'partials/settings/addresses.pug',
           controller: 'SettingsAddressesCtrl'
-        }
-      },
-      resolve: {
-        paymentRequests: ($stateParams, $q, $injector) => {
-          try {
-            let Wallet = $injector.get('Wallet');
-            let index = parseInt($stateParams.account, 10);
-            return Wallet.getPendingPayments(index).catch(() => $q.reject('LOAD_ADDR_ERR'));
-          } catch (e) {
-            return $q.resolve([]);
-          }
         }
       }
     })

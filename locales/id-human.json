@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "Dompet penerima",
   "RECEIVING_ADDRESS": "QA: Alamat penerima",
   "RECEIVE_BITCOIN_TO": "Bitcoin akan dikirimkan ke {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Harap hapus kata sandi kedua untuk mengakses bagian dompet ini.",
   "BLACKLISTED_COUNTRY": "Membeli bitcoin belum tersedia di negara Anda.<br>Kami akan mengeluarkan lebih banyak negara segera.",
   "CONFIRM_YOUR_ORDER": "Konfirmasi pemesanan Anda:",
   "ORDER_CONFIRMATION_COPY": "Harap konfirmasi perincian pesanan Anda sebelum kami mengarahkan Anda ke penyedia pembayaran kami yang aman.",

@@ -4,7 +4,8 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function SfoxSignupController ($stateParams, sfox, exchange, accounts, quote) {
+function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, accounts, quote, options, Alerts) {
+  let links = options.partners.sfox.surveyLinks;
   this.exchange = exchange;
   this.accounts = accounts;
   this.quote = quote;
@@ -14,4 +15,8 @@ function SfoxSignupController ($stateParams, sfox, exchange, accounts, quote) {
   this.goTo = (s) => { this.step = this.steps[s]; };
 
   this.goTo(sfox.determineStep(exchange, accounts));
+
+  this.close = () => {
+    Alerts.surveyCloseConfirm('sfox-survey', links, this.step).then($uibModalInstance.dismiss);
+  };
 }
