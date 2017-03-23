@@ -3,9 +3,9 @@ angular.module('walletApp')
 
 const ONE_DAY_MS = 86400000;
 
-buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals', 'buyMobile'];
 
-function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, modals) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, modals, buyMobile) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -33,6 +33,11 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.currencies = currency.coinifyCurrencies;
     scope.format = currency.formatCurrencyForView;
     scope.inMobileBuy = $rootScope.inMobileBuy;
+
+    scope.exitToNativeTx = () => {
+      let txHash = 'dcfcb3557a394e3eee5ac0ea05c3ffb8b40f80b2eb280f6d0bcdfba4a3160214';
+      buyMobile.callMobileInterface(buyMobile.SHOW_TX, txHash);
+    };
 
     scope.updateLastInput = (type) => scope.lastInput = type;
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;

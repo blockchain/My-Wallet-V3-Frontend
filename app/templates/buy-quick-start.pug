@@ -87,4 +87,5 @@
           a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
             img(src="img/coinify-logo.svg")
             span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
+        button.button-primary(translate="SEE_BITCOIN" ng-show="inMobileBuy" ng-click="exitToNativeTx()")
         button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled")
