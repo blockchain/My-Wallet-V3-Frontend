@@ -23,6 +23,9 @@
 @import 'blockchain-css/sass/modules/header';
 @import 'blockchain-css/sass/modules/footer';
 
+//import global components
+@import 'blockchain-css/sass/components/modals';
+
 //import utilitarian CSS
 @import 'utilities/shadows';
 @import 'utilities/addresses';
