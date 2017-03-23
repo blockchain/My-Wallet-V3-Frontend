@@ -1320,7 +1320,8 @@
     "WILL_BE_SENT": "will be sent directly from your Blockchain Wallet to Coinify once you click 'Place Sell Order'.",
     "CREDIT_OWED": "Credit Owed",
     "BTC_TO_SELL": "BTC to Sell",
-    "BTC_TX_FEE": "BTC Transaction Fee"
+    "BTC_TX_FEE": "BTC Transaction Fee",
+    "CREATE_SELL_ERROR": "There was a problem creating your sell trade. Please try again later."
   },
   "": ""
 }

@@ -1,6 +1,7 @@
-.flex-column.mbvl(ng-show="error")
+.flex-column.mbvl(ng-show="error || $parent.error")
   p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
-  span.mvm(translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")
+  span.mvm(ng-hide="isSell" translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")
+  span.mvm(ng-show="isSell" translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")
 .flex-column.mbvl(ng-hide="error || status.creatingSellTrade")
   span.type-h5.em-500.flex-start.pts(
     ng-hide="isBankTransfer() && tempFiatForm.$invalid || isSell"

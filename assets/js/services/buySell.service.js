@@ -65,8 +65,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     getBankAccounts,
     createBankAccount,
     deleteBankAccount,
-    createSellTrade,
-    // getOneBankAccount
+    createSellTrade
   };
 
   return service;
@@ -97,7 +96,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     } else {
       amt = Math.trunc(amt * 100);
     }
-    return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr))
+    return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr));
   }
 
   function getBankAccounts () {
@@ -137,14 +136,12 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
         return response;
       })
       .then(data => {
-        console.log('running getTrades() after sell result')
         service.getTrades();
         return data;
       })
       .catch(err => {
-        console.log('error creating sell trade', err)
         return err;
-      })
+      });
   }
 
   function getKYCs () {

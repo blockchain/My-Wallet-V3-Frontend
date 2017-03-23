@@ -182,6 +182,12 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     return cannotTradeReason;
   };
 
+  $scope.setSellLimits = () => {
+    if ($scope.exchange._profile) {
+      $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
+    }
+  }
+
   $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;

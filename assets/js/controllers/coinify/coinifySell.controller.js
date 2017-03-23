@@ -68,6 +68,11 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
+  $scope.finishISX = (thing) => {
+    console.log('finishISX', thing)
+    // TODO screens for ISX status
+  }
+
   $scope.assignFiatHelper = (currencyType) => {
     $scope.transaction.currency = $scope.trade.quote[currencyType];
     $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
@@ -268,18 +273,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.formatBankInfo(t);
   };
 
-  /* Will need to use this for if user has 2nd PW set
-
-  const signAndPublish = (passphrase) => {
-    return $scope.payment.sideEffect(setCheckpoint)
-      .sign(passphrase).publish().payment;
-  };
-
-  Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
-    .then(transactionSucceeded).catch(transactionFailed);
-
-  */
-
   const transactionFailed = (message) => {
 
     let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
@@ -311,13 +304,15 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   const handleSellResult = (sellResult) => {
-    if (!sellResult) {
-      console.log('error creating sell trade')
-      Alerts.displayError('CREATE_SELL_TRADE_ERROR', false, $scope.alerts);
+    if (!sellResult.transferIn) {
+      $scope.error = sellResult;
+      $scope.error = JSON.parse($scope.error);
+    } else {
+      $scope.sellTrade = sellResult;
+      $scope.sendAddress = sellResult.transferIn.details.account;
+      $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
+      $scope.formatBankInfo(sellResult);
     }
-    $scope.sellTrade = sellResult;
-    $scope.sendAddress = sellResult.transferIn.details.account;
-    $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
   };
 
   const handlePaymentAssignment = () => {
@@ -333,7 +328,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
     $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
       .then(sellResult => {
-        console.log('sell created', sellResult)
+        console.log('sell created - result:', sellResult)
         handleSellResult(sellResult);
         return sellResult;
       })
@@ -360,38 +355,22 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         //     transactionFailed(err);
         //   })
       })
-      .finally(() => {
-        // NOTE fix formatBankInfo() but put it in here
-        // $scope.formatBankInfo();
-        $scope.status.waiting = false;
-        $scope.goTo('review')
-      })
       .catch(err => {
-        console.log('err in coinify sell controller', err)
+        console.log('err in sell catch')
         // TODO handle error
+      })
+      .finally(() => {
+        $scope.status.waiting = false;
+        if (!$scope.error) $scope.goTo('review');
       })
   };
 
   // TODO this whole thing needs to be refactored (or killed)
   $scope.formatBankInfo = (trade) => {
-    const b = $scope.bankAccount;
-    if (trade) {
-      if (trade._bankName) {
-        $scope.bankNameOrNumber = trade._bankName;
-        return;
-      }
-      $scope.bankNameOrNumber = trade._lastFourBankAccountDigits;
-      return;
+    if (trade.transferOut) {
+      let n = trade.transferOut.details.account.number;
+      $scope.bankNameOrNumber = n.substring(n.length, n.length - 6);
     }
-    if (!$scope.bankAccount.bank.name) {
-      if (!b.account.number) {
-        $scope.bankNameorNumber = $scope.selectedBankAccount.account.number.substring($scope.selectedBankAccount.account.number.length, $scope.selectedBankAccount.account.number.length - 4);
-        return;
-      }
-      $scope.bankNameOrNumber = b.account.number.substring(b.account.number.length, b.account.number.length - 4);
-      return;
-    }
-    $scope.bankNameOrNumber = b.bank.name;
   };
 
 
