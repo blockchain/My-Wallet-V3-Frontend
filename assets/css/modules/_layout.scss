@@ -1,6 +1,7 @@
 
 .wallet-container {
   width: 100%;
+  height: 100%;
   flex-grow: 1;
   display: flex;
 }
@@ -30,6 +31,7 @@
 
 .main-container {
   width: 100%;
+  height: 100%;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -108,7 +110,6 @@
 @media (max-width:480px) {
   .right-container {
     background: transparent;
-    height: calc(100% - 145px);
   }
 }
 
