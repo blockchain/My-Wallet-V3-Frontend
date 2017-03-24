@@ -4,7 +4,6 @@ describe "SettingsAddressesCtrl", ->
   scope = undefined
   Wallet = undefined
   Alerts = undefined
-  MyBlockchainApi = undefined
   Labels = undefined
 
   beforeEach angular.mock.module("walletApp")
@@ -18,8 +17,20 @@ describe "SettingsAddressesCtrl", ->
       $state = $injector.get('$state')
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
-      MyBlockchainApi = $injector.get("MyBlockchainApi")
       Labels = $injector.get("Labels")
+
+      addressesHD = [{used: null, index: 0}, {used: null, index: 1}, { address: '1aaa', label: 'pending', index: 2, used: null }]
+      Labels.checkIfUsed = (accountIndex) ->
+        addressesHD[0].used = true
+        addressesHD[1].used = false
+        addressesHD[2].used = false
+        $q.resolve()
+
+      Labels.all = (accountIndex) ->
+        addressesHD
+
+      Labels.fetchBalance = () ->
+        $q.resolve()
 
       account =
         index: 0
@@ -28,15 +39,6 @@ describe "SettingsAddressesCtrl", ->
 
       Wallet.accounts = () -> [account]
       Wallet.status = {isLoggedIn: true}
-
-      MyBlockchainApi.getBalances = (addrs) ->
-        response = {}
-        for addr in addrs
-          response[addr] =
-            address: addr
-            n_tx: 1
-            final_balance: 1000
-        $q.resolve(response)
 
       scope = $rootScope.$new()
 
@@ -47,13 +49,14 @@ describe "SettingsAddressesCtrl", ->
         Wallet: Wallet
         Labels: Labels
         $uibModal: modal
-        paymentRequests: [{ address: '1aaa', label: 'pending', index: 2 }]
+
+      scope.$digest()
 
   it "should have payment requests", ->
-    expect(scope.addresses.length).toEqual(4)
+    expect(scope.addresses.length).toEqual(3)
 
   it "should calculate total number of past addresses", ->
-    expect(scope.totalPast).toEqual(4)
+    expect(scope.totalPast).toEqual(2)
 
   it "should open modal to edit an account", ->
     spyOn(modal, "open")
@@ -104,7 +107,7 @@ describe "SettingsAddressesCtrl", ->
 
     it "should fetch the balance for the first page of addresses", ->
       scope.addresses = Labels.all(0)
-      expectedFirstPage = [scope.addresses[3]]
+      expectedFirstPage = [scope.addresses[1]]
       scope.pageLength = 1
       scope.setPastAddressesPage(1)
       expect(Labels.fetchBalance).toHaveBeenCalledWith(expectedFirstPage)
