@@ -25,6 +25,7 @@ function isignthis ($sce, Options) {
   return directive;
 
   function link (scope, elem, attrs) {
+    console.log('from isx directive', scope)
     scope.$watch('transactionId', (newValue) => {
       if (newValue) {
         scope.iSignThisFrame(newValue);

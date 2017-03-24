@@ -56,6 +56,6 @@
         div.width-45
           label.control-label(translate="Country")
           div
-            ui-select.mtm(ng-model="$parent.bankAccount.holder.address.country" on-select="selectCountry($item)")
+            ui-select.mtm(ng-model="$parent.bankAccount.holder.address.country" on-select="selectCountry('holder', $item)")
               ui-select-match(placeholder="Select Country") {{$parent.bankAccount.holder.address.country}} 
               ui-select-choices(repeat="c in sepaCountries | filter:$select.search track by c.name") {{c.name}}

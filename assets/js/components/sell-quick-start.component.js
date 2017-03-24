@@ -78,9 +78,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getExchangeRate = () => {
     $scope.status.fetching = true;
 
-    buySell.getQuote(-1, 'BTC', $scope.transaction.currency.code).then(function (quote) {
-      $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
-    }, error).finally($scope.getQuote);
+    buySell.getQuote(-1, 'BTC', $scope.transaction.currency.code)
+      .then(function (quote) {
+        $scope.exchangeRate.fiat = (quote.quoteAmount / -100).toFixed(2);
+        $scope.status = {};
+      }, error)//.finally($scope.getQuote);
   };
 
   $scope.getQuote = () => {
@@ -114,10 +116,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.triggerSell = () => {
     $scope.status.waiting = true;
-    buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error).then(() => {
-      console.log('then sell')
-      $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote })
-    })
+    // buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC')
+      // .then(success, error)
+      // .then(() => {
+    $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote });
+
+      // })
+    $scope.status = {}
   };
 
   $scope.getExchangeRate();
@@ -127,6 +132,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.$watch('transaction.btc', (newVal, oldVal) => {
     if (newVal >= $scope.totalBalance) {
       $scope.error['moreThanInWallet'] = true;
+      $scope.offerUseAll();
     } else if (newVal < $scope.totalBalance) {
       $scope.error['moreThanInWallet'] = false;
     }
@@ -137,62 +143,40 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.currencySymbol = currency.conversions[curr.code];
   });
 
-  // $scope.initializePayment = () => {
-  //   $scope.status.busy = true;
-  //   $scope.transaction['fee'] = {};
-  //   const index = Wallet.getDefaultAccountIndex();
-  //   $scope.payment = Wallet.my.wallet.createPayment();
-  //   const tradeInSatoshi = currency.convertToSatoshi($scope.transaction.btc, currency.bitCurrencies[0])
-  //   $scope.payment.from(index).amount(tradeInSatoshi)
-  //
-  //   $scope.payment.sideEffect(result => {
-  //     console.log('sideEffect', result)
-  //
-  //
-  //     if (firstBlockFee === 0) {
-  //       console.warn('fee is zero')
-  //     } else {
-  //       const firstBlockFee = result.absoluteFeeBounds[0];
-  //       console.log('firstBlockFee in satoshi and btc', firstBlockFee, firstBlockFee / 100000000)
-  //       $scope.payment.fee(firstBlockFee);
-  //       $scope.firstBlockFee = firstBlockFee !== 0 ? firstBlockFee : null;
-  //       const btcRequired = $scope.transaction.btc + firstBlockFee / 100000000;
-  //       const maxAvail = $scope.assignMaxAvailable(firstBlockFee);
-  //
-  //       console.log('maxAvail < btcRequired', maxAvail < btcRequired)
-  //       if (maxAvail < btcRequired) {
-  //         console.warn('Houston, we have a problem', maxAvail, btcRequired)
-  //         $scope.useMaxAvailable = true;
-  //
-  //       }
-  //
-  //       $scope.transaction['fee']['btc'] = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
-  //       const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
-  //       $scope.payment.amount(amountAfterFee / 100000000) // in SATOSHI
-  //     }
-  //
-  //     /*
-  //
-  //
-  //
-  //
-  //
-  //
-  //     */
-  //
-  //     // $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
-  //     // console.log('math!', $scope.maxAvailable() - $scope.transaction.btc < 0)
-  //     // if ($scope.maxAvailable() - $scope.transaction.btc < 0) {
-  //     //   console.log('need to do use total minus fee')
-  //     // }
-  //
-  //     // $q.resolve(currency.getFiatAtTime(+ new Date(), $scope.totalBalance * 100000000, $scope.transaction.currency.code))
-  //     //   .then((fiat) => { console.log('fiat', fiat) })
-  //     //   .catch(() => { scope.loadFailed = true; });
-  //
-  //     $scope.status = {};
-  //   })
-  // };
+  $scope.offerUseAll = () => {
+    $scope.status.busy = true;
+    $scope.transaction['fee'] = {};
+    $scope.payment = Wallet.my.wallet.createPayment();
+
+    const index = Wallet.getDefaultAccountIndex();
+    $scope.payment.from(index);
+
+    console.log('before sideEffect', $scope.payment)
+    $scope.payment.sideEffect(result => {
+      console.log('sideEffect', result)
+      $scope.sweepAmount = result.sweepAmount;
+
+
+
+      // $scope.transaction['fee']['btc'] = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
+      // const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
+      // $scope.payment.amount(amountAfterFee / 100000000) // in SATOSHI
+
+      $scope.status = {};
+      return result;
+    })
+    .then((paymentData) => {
+      console.log('after sideEffect', paymentData)
+
+      $scope.payment.useAll(paymentData.sweepFees[0]).sideEffect(things => {
+        console.log('things', things)
+      });
+    })
+  };
+
+  $scope.useAll = () => {
+    $scope.transaction.btc = $scope.sweepAmount / 100000000;
+  };
 
 
   // $scope.assignMaxAvailable = (fee) => {

@@ -52,7 +52,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.transaction = {
     btc: $scope.trade.btc,
     fiat: $scope.trade.fiat,
-    currency: null,
+    currency: { name: 'Euro', code: 'EUR' },
     fee: {
       btc: null,
       fiat: null
@@ -378,6 +378,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   if (!$scope.step) $scope.nextStep();
 
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
+    console.log('watch currencySymbol')
     if (!$scope.currencySymbol) {
       let curr = $scope.transaction.currency || null;
       $scope.currencySymbol = currency.conversions[curr.code];

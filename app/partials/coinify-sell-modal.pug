@@ -30,7 +30,7 @@
     .alert-in-app
       alerts(context="alerts")
     div.iframe(ng-if="onStep('isx')")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="testLog()" payment-info="paymentInfo" on-resize="onResize(step)")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX()" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
       include ./coinify/email
     div.width-80(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")

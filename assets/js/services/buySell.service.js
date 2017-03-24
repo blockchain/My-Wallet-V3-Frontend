@@ -90,7 +90,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function getSellQuote (amt, curr, quoteCurr) {
-    console.log('buySell service getSellQuote', amt, curr, quoteCurr)
+    console.log('buySell getSellQuote - amt, baseCurr, quoteCurr', amt, curr, quoteCurr)
     if (curr === 'BTC') {
       amt = Math.trunc(amt * 100000000);
     } else {

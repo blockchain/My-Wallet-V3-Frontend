@@ -3,10 +3,7 @@ angular
   .controller('CoinifyBankAccountController', CoinifyBankAccountController);
 
 function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, $stateParams) {
-  $scope.$parent.limits = {};
   $scope.exchange = buySell.getExchange();
-  $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
-  $scope.isBankTransfer = () => $scope.isMedium('bank');
   $scope.qa = {};
   $scope.accountCurrency = $scope.$parent.bankAccount.account.currency;
   $scope.accountType = 'international';
@@ -17,14 +14,14 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     $scope.accountType = accountType;
   };
 
-  $scope.selectCountry = (country) => {
-    $scope.$parent.bankAccount.holder.address.country = country.code;
-  };
-
-  $scope.selectBankCountry = (country) => {
-    $scope.$parent.bankAccount.bank.address.country = country.code;
+  $scope.selectCountry = (type, country) => {
     $scope.selectedBankCountry = country.name;
-    $scope.$parent.country = country.name;
+    if (type === 'bank') {
+      $scope.$parent.bankAccount.bank.address.country = country.code;
+      $scope.$parent.country = country.name;
+    } else if (type === 'holder') {
+      $scope.$parent.bankAccount.holder.address.country = country.code;
+    }
   };
 
   const setAccountTypeHelper = (countryCode, countryName) => {
@@ -48,16 +45,6 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     }
   };
   $scope.setAccountType($scope.transaction);
-
-  $scope.commitValues = () => {
-    $scope.$parent.quote = null;
-    $scope.status.waiting = true;
-    $scope.transaction.currency = $scope.tempCurrency;
-    $scope.transaction.fiat = $scope.tempFiat;
-    $scope.getQuote().then(() => $scope.status.waiting = false);
-    $scope.$parent.changeCurrencySymbol($scope.transaction.currency);
-    $scope.toggleEditAmount();
-  };
 
   $scope.cancel = () => {
     $scope.tempCurrency = $scope.transaction.currency;
@@ -161,6 +148,10 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
 
   $scope.$watch('transaction.fiat', (newVal, oldVal) => {
     $scope.tempFiat = $scope.transaction.fiat;
+  });
+
+  $scope.$watch('selectedBankCountry', (newVal, oldVal) => {
+    $scope.selectedBankCountry = $scope.selectedBankCountry;
   });
 
   $scope.$watch('rateForm', () => {
