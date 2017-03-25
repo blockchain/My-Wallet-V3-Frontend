@@ -165,10 +165,13 @@
       }
       &.capture {
         height: 500px;
+        @media (max-width: 767px) {
+          height: 1050px;
+        }
         #isx-iframe {
           height: 650px;
           @media (max-width: 767px) {
-            height: 950px;
+            height: 1000px;
           }
         }
       }
