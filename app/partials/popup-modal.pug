@@ -1,7 +1,7 @@
 .modal-body.width-100.height-100.flex-column.flex-between
   .flex-column.flex-center(ng-class="inMobileBuy ? 'ptvl mtvl' : 'mtl'")
     i.blue.type-yuge(ng-class="[icon, inMobileBuy ? 'mbm' : '']")
-    span.f-24.em-500(translate="{{name}}.TITLE")
+    span.f-24.em-500.center-align(translate="{{name}}.TITLE")
     p.f-16.ptm.width-60.center(translate="{{name}}.COPY" translate-values="{days:days}")
   .flex-row.flex-end
     button.button.button-primary.width-20.width-100-mobile.mtl(ng-click="$close()" translate="CLOSE")
