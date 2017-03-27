@@ -9,12 +9,17 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
     $uibModal.open(angular.merge(options, defaults))
   );
 
+  let openMobileCompatible = (config) => (
+    ($rootScope.inMobileBuy ? service.expandTray : open)(config)
+  );
+
   service.openOnce = (modalOpener) => {
     let modalInstance = null;
     return (...args) => {
       if (modalInstance) return;
       modalInstance = modalOpener(...args);
       modalInstance.result.finally(() => { modalInstance = null; });
+      return modalInstance;
     };
   };
 
@@ -23,6 +28,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
     return (...args) => {
       if (modalInstance) modalInstance.dismiss('overridden');
       modalInstance = modalOpener(...args);
+      return modalInstance;
     };
   };
 
@@ -51,13 +57,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
   });
 
   service.openTemplate = (templateUrl, scope, options) => {
-    let config = angular.merge({
+    return openMobileCompatible(angular.merge({
       templateUrl,
       controller ($scope) { angular.merge($scope, scope); }
-    }, options);
-    let modalInstance = $rootScope.inMobileBuy
-      ? service.expandTray(config) : open(config);
-    return modalInstance.result;
+    }, options)).result;
   };
 
   service.openTransfer = (addresses) => open({
@@ -100,7 +103,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
         ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
         : $q.resolve([]);
     };
-    let config = {
+    return openMobileCompatible({
       templateUrl: 'partials/trade-modal.pug',
       windowClass: 'bc-modal trade-summary',
       controller ($scope, trade, formatTrade, accounts) {
@@ -110,8 +113,22 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
         trade: () => trade,
         accounts
       }
-    };
-    return $rootScope.inMobileBuy ? service.expandTray(config) : open(config);
+    });
+  });
+
+  service.openBuyView = service.openOnce((trade = null, options = {}) => {
+    return openMobileCompatible({
+      templateUrl: 'partials/coinify-modal.pug',
+      windowClass: 'bc-modal auto buy',
+      controller: 'CoinifyController',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        trade: () => trade && trade.refresh().then(() => trade),
+        options: () => Options.get(),
+        buyOptions: () => options
+      }
+    });
   });
 
   return service;
