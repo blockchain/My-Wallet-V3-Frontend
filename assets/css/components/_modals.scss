@@ -111,7 +111,7 @@
 // Modal header
 // Top section of the modal w/ title and dismiss
 .modal-header {
-  padding: $modal-title-padding;
+  padding: 25px 35px;
   border-bottom: 1px solid $modal-header-border-color;
   min-height: ($modal-title-padding + $modal-title-line-height);
 }
@@ -135,7 +135,7 @@
 
 // Footer (for actions)
 .modal-footer {
-  padding: $modal-inner-padding;
+  padding: 25px 35px;
   text-align: right; // right align buttons
   border-top: 1px solid $modal-footer-border-color;
   @include clearfix; // clear it in case folks use .pull-* classes on buttons
@@ -284,13 +284,13 @@
   .bc-modal-header {
     position: relative;
     h3 {
-      font-weight: 500;
-      font-size: 2em;
-      margin-top: 10px;
+      @extend .f-24;
+      @extend .em-300;
+      @extend .mt-10;
     }
     h5 {
-      font-weight: 300;
       color: darken($border-grey, 30%);
+      font-weight: 300;
       margin: 5px 0;
     }
     img {
@@ -427,7 +427,7 @@
     }
   }
 
-  [name='sendForm'], [name='requestForm'], [name="signMessageForm"], [name="verifyMessageForm"]  {
+  [name='sendForm'], [name="signMessageForm"], [name="verifyMessageForm"]  {
     label { text-align: right; }
   }
 }
@@ -460,7 +460,7 @@
       width: 95vw;
       margin: 5vw 2vw;
     }
-    [name='sendForm'], [name='requestForm']  {
+    [name='sendForm']  {
       label { text-align: left; }
     }
   }
@@ -512,6 +512,7 @@
   margin: 0px;
 }
 
+.modal-header .close-modal,
 .modal-body .close-modal,
 .tray .close-modal {
   @extend .lh1;

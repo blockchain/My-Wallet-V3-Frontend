@@ -15,24 +15,18 @@ function singleClickSelect ($window) {
     scope.highlighted = false;
 
     scope.select = () => {
-      let text = elem[0];
+      let hidden = document.createElement('input');
 
-      let range = $window.document.createRange();
-      range.setStartBefore(text.firstChild);
-      range.setEndAfter(text.lastChild);
+      hidden.setAttribute('value', attrs.copyContent);
+      document.body.appendChild(hidden);
+      hidden.select();
 
-      let selection = $window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      if ($window.getSelection().toString() !== '') {
-        scope.highlighted = true;
-        elem.addClass('highlighted');
-      }
       if (scope.browserCanExecCommand) {
         $window.document.execCommand('copy');
         scope.$safeApply();
       }
+
+      document.body.removeChild(hidden);
     };
 
     elem.bind('click', scope.select);
