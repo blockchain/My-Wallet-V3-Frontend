@@ -270,6 +270,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       transferIn: {receiveAmount: t._inAmount / 100000000},
       transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
     }
+    $scope.tradeCompleted = $scope.isInCompletedState(t);
+    $scope.inNegativeState = $scope.isInNegativeState(t);
     $scope.formatBankInfo(t);
   };
 
@@ -347,13 +349,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
         console.log('ask for 2nd PW and send btc', $scope)
         // NOTE sending is turned off when below is commented out
-        // Wallet.askForSecondPasswordIfNeeded()
-        //   .then(signAndPublish)
-        //   .then(transactionSucceeded)
-        //   .catch(err => {
-        //     console.log('err when publishing', err)
-        //     transactionFailed(err);
-        //   })
+        Wallet.askForSecondPasswordIfNeeded()
+          .then(signAndPublish)
+          .then(transactionSucceeded)
+          .catch(err => {
+            console.log('err when publishing', err)
+            transactionFailed(err);
+          })
       })
       .catch(err => {
         console.log('err in sell catch')
@@ -368,8 +370,23 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   // TODO this whole thing needs to be refactored (or killed)
   $scope.formatBankInfo = (trade) => {
     if (trade.transferOut) {
+      console.log('formatBankInfo', trade)
       let n = trade.transferOut.details.account.number;
       $scope.bankNameOrNumber = n.substring(n.length, n.length - 6);
+    }
+  };
+
+  $scope.isInCompletedState = (trade) => {
+    if (trade._state === 'awaiting_transfer_in' || trade._state === 'processing') {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  $scope.isInNegativeState = (trade) => {
+    if (trade._state === 'canceled' || trade._state === 'expired' || trade._state === 'rejected') {
+      return true;
     }
   };
 

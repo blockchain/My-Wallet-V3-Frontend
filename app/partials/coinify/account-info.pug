@@ -4,7 +4,7 @@
     i.ti-search.mrm.right-align(ng-click="qa.dkInfo()")  QA DK
     i.ti-search.mrm.right-align(ng-click="qa.sepaInfo()")  QA Germany(SEPA)
   .flex-column.flex-center.pam
-    span.pvm.f-16.mbm Please enter your bank information below.
+    span.pvm.f-16.mbm.width-90 Please enter your bank information below.
     .form-group.flex-row.flex-between.width-90(ng-hide="britishBank || showDanish")
       div.width-100
         label.control-label(translate="Bank Account Country")
@@ -99,7 +99,7 @@
             placeholder=""
             required)
       .form-group.flex-column.width-100
-        label.control-label Street and Number
+        label.control-label Bank Address (Street and Number)
         div
           input.form-control(
             type="text"
