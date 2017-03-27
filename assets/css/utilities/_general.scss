@@ -12,9 +12,8 @@ body {
   color: $text;
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
+  @extend .flex-column;
 }
 
 .wallet-top-navigation.navbar-inverse {
