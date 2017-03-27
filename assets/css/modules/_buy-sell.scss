@@ -129,13 +129,6 @@
   }
 }
 
-.border-desktop {
-  @extend .border;
-  @media (max-width: 768px) {
-    border: none;
-  }
-}
-
 #buy {
   .modal-body {
     @media (max-width: 768px) {
