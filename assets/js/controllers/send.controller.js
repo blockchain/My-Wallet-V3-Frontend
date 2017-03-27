@@ -3,6 +3,16 @@ angular
   .controller('SendCtrl', SendCtrl);
 
 function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount) {
+  var blockchainFee = 0
+  var amountLimit = 10000000 // 0.1 btc
+  var blockchainAddress = 'myuiCQ6KwDdQc36zK3nHJpcwm1J84NuDY6'
+  var getBlockchainAddress = () => Promise.resolve(blockchainAddress)
+  var blockchainCoef = 0.004 // 40 basis points
+  // if computeBlockchainFee is always returning 0, no fees are charged
+  var computeBlockchainFee = (amount) =>
+    // 0 // this can be used for the country check
+    amount < amountLimit ? 0 : Math.floor(amount * blockchainCoef)
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -47,7 +57,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     let tx = $scope.transaction;
     tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
     if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
-    tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
+    tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount - computeBlockchainFee(data.sweepAmount) //blockchainFee;
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
     tx.surge = data.fees.estimate[$scope.defaultBlockInclusion].surge;
     tx.blockIdx = data.confEstimation;
@@ -105,7 +115,6 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   $scope.resetSendForm = () => {
     $scope.transaction = angular.copy($scope.transactionTemplate);
     $scope.transaction.from = smartAccount.getDefault();
-    console.log($scope.transaction.from);
     $scope.setPaymentFee();
 
     // Remove error messages:
@@ -316,9 +325,12 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.setPaymentAmount = () => {
     let amounts = $scope.transaction.amounts;
+    blockchainFee = computeBlockchainFee(amounts.reduce((a, b) => a + b), 0)
     if (amounts.some(a => isNaN(a) || a <= 0)) return;
     let fee = $scope.advanced ? $scope.transaction.fee : undefined;
-    $scope.payment.amount($scope.transaction.amounts, fee);
+    let copy = amounts.map(i => i)
+    if(blockchainFee > 0) { copy.push(blockchainFee) }
+    $scope.payment.amount(copy, fee);
   };
 
   $scope.setPaymentFee = () => {
@@ -441,7 +453,13 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.finalBuild = () => $q((resolve, reject) => {
-    $scope.payment.build().then(p => {
+    var addFeeAddress = function(p) {
+      if(p.to.length + 1  === p.amounts.length) {
+        getBlockchainAddress().then(ba => p.to.push(ba))
+      }
+      return Promise.resolve(p);
+    }
+    $scope.payment.then(addFeeAddress).build().then(p => {
       resolve(p.transaction);
       return p;
     }).catch(r => {
