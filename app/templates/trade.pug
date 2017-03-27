@@ -17,10 +17,10 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
     span.hidden-xs
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
         ng-class="{disabled: isTradingDisabled}"
-        ng-click="!isTradingDisabled && triggerBuy()"
+        ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
         ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
       span.type-sm.blue.underline.pointer.text-nowrap(
-        ng-click="triggerBuy()"
+        ng-click="triggerBuy(); $event.stopPropagation();"
         ng-show="trade.state !== 'awaiting_transfer_in'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
