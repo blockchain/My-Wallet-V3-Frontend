@@ -282,7 +282,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     }).result;
   }
 
-  function openSellView (trade = null, options = { sell: true }) {
+  function openSellView (trade, options = { sell: true }) {
     console.log('openSellView', trade, options)
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',

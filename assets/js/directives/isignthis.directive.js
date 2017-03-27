@@ -161,6 +161,7 @@ function isignthis ($sce, Options) {
       };
 
       var setState = (state) => {
+        console.log('setState', state)
         switch (state) {
           case 'SUCCESS.MANUAL_ACCEPTED':
           case 'SUCCESS.COMPLETE':
@@ -184,6 +185,7 @@ function isignthis ($sce, Options) {
           case 'PENDING.PROCESSING_DOCUMENT':
           case 'PROCESSING_DOCUMENT.PENDING':
           case 'PENDING.MANUAL_REVIEW':
+            console.log('onComplete reviewing')
             scope.onComplete('reviewing');
             break;
         }

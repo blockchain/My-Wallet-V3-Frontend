@@ -129,7 +129,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   // TODO commented this out for dev
   $scope.$watch('transaction.btc', (newVal, oldVal) => {
     console.log('watching tx.btc', newVal, oldVal)
-    if (!$scope.totalBalance) {
+    if ($scope.totalBalance === 0) {
+      $scope.tradingDisabled = true;
       return;
     }
     if (newVal >= $scope.totalBalance) {

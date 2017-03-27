@@ -14,18 +14,18 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
 
   $scope.bankNumView = (number) => {
     return number.slice(number.length - 6);
-  }
+  };
 
   $scope.addBankAccount = () => {
-    $scope.$parent.goTo('account-info')
+    $scope.$parent.goTo('account-info');
   };
 
   const handleAccountAssignment = (account) => {
-    let accounts = $scope.$parent.bankAccounts
+    let accounts = $scope.$parent.bankAccounts;
     for (let i = 0; i < accounts.length; i++) {
       if (accounts[i]['id'] === account['id']) accounts.splice(i, 1);
     }
-    console.log('accounts', accounts)
+    console.log('accounts', accounts);
     $scope.selecting = false;
     $scope.$parent.bankAccounts = accounts;
     $scope.bankAccounts = accounts;
@@ -39,7 +39,7 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
         $q.resolve(buySell.deleteBankAccount(account.id))
           .catch(e => console.error('Error deleting bank', e))
           .finally(handleAccountAssignment(account));
-      })
+      });
   };
 
   $scope.$watch('selectedBankAccount', () => {
@@ -49,5 +49,4 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
   $scope.$watch('bankAccounts', () => {
     $scope.$parent.bankAccounts = $scope.bankAccounts;
   });
-
 }

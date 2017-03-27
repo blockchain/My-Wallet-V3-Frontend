@@ -1320,8 +1320,13 @@
     "WILL_BE_SENT": "will be sent directly from your Blockchain Wallet to Coinify once you click 'Place Sell Order'.",
     "CREDIT_OWED": "Credit Owed",
     "BTC_TO_SELL": "BTC to Sell",
+    "ID_REVIEW_STATUS": "Review Status",
     "BTC_TX_FEE": "BTC Transaction Fee",
-    "CREATE_SELL_ERROR": "There was a problem creating your sell trade. Please try again later."
+    "CREATE_SELL_ERROR": "There was a problem creating your sell trade. Please try again later.",
+    "KYC_SUCCESS": "Your application was successful.",
+    "KYC_CANCELLED": "This transaction has been cancelled.",
+    "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
+    "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity."
   },
   "": ""
 }

@@ -84,7 +84,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
           country: 'GB'
         }
       }
-    }
+    };
   };
 
   $scope.qa.dkInfo = () => {
@@ -109,7 +109,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
           country: 'DK'
         }
       }
-    }
+    };
   };
 
   $scope.qa.sepaInfo = () => {
@@ -134,7 +134,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
           country: 'DE'
         }
       }
-    }
+    };
   };
 
   $scope.setAccountCurrency = (currency) => {

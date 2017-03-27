@@ -40,12 +40,12 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.sell = (trade, options) => {
-      console.log('sell from buy sell ctrl', trade, options) // NOTE trade will be kyc if passed in
+      console.log('sell from buy sell ctrl', trade, options); // NOTE trade will be kyc if passed in
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
         buySell.openSellView(trade, options).finally(() => {
           $scope.onCloseModal();
-        })
+        });
       }
     };
 
@@ -118,16 +118,16 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.openSellKyc = () => {
-      console.log('openSellKyc')
+      console.log('openSellKyc');
       buySell.triggerKYC()
         .then(kyc => {
-          console.log('then kyc', kyc)
-          $scope.sell(kyc)
-        })
-    }
+          console.log('then kyc', kyc);
+          $scope.sell(kyc);
+        });
+    };
 
     $scope.changeCurrency = (curr) => {
-      console.log('running changeCurrency from buy sell ctrl with', curr)
+      console.log('running changeCurrency from buy sell ctrl with', curr);
       if (curr && $scope.currencies.some(c => c.code === curr.code)) {
         $scope.transaction.currency = curr;
       }
@@ -186,7 +186,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     if ($scope.exchange._profile) {
       $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
     }
-  }
+  };
 
   $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
   $scope.selectTab = (tab) => {

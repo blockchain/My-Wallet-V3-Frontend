@@ -18,8 +18,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
   $scope.$parent.fields.rate = false;
 
-  console.log('CoinifySummaryController', $scope)
-
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
       $scope.$parent.limits.min = (rate * 10).toFixed(2);
@@ -115,7 +113,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
   $scope.$watch('sellRateForm', () => {
     $scope.$parent.$parent.sellRateForm = $scope.rateForm;
-  })
+  });
 
   $scope.$watch('step', () => {
     if ($scope.onStep('summary')) {

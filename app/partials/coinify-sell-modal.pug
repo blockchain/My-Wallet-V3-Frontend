@@ -6,10 +6,11 @@
         h3.mlm(ng-if="onStep('account-info')" translate="SELL.ADD_BANK_ACCOUNT")
         h3.mlm(ng-if="onStep('account-holder')" translate="SELL.ACCOUNT_HOLDER")
         h3.mlm(ng-if="onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
-        h3.mlm(ng-if="onStep('review')" translate="SELL.ORDER_PLACED")
+        h3.mlm(ng-if="onStep('review') && !KYCState" translate="SELL.ORDER_PLACED")
         h3.mlm(ng-if="onStep('review') && trade._state === 'completed'" translate="Order Complete")
         h3.mlm(ng-if="onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
         h3.mlm(ng-if="onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
+        h3.mlm(ng-if="onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-row-reverse.flex-align-end(ng-hide="status.gettingQuote"
@@ -19,19 +20,14 @@
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
-            //- span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }} BTC
-            //- span(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
-            //- | &nbsp;
-            //- span(ng-hide="!transaction.btc || trade || needsKyc()") ({{currencySymbol.symbol}}{{ transaction.fiat }})
-            //- span(ng-show="trade && !isKYC && !needsKyc()") ({{currencySymbol.symbol}}{{ transaction.total }})
-          quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
-          p.security-red.pointer(ng-show="buySellDebug && quote.id")
+          //- quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
+          //- p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
     div.iframe(ng-if="onStep('isx')")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX()" payment-info="paymentInfo" on-resize="onResize(step)")
+      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX" payment-info="paymentInfo" on-resize="onResize(step)")
     div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
       include ./coinify/email
     div.width-80(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
@@ -44,9 +40,8 @@
       include ./coinify/review
     div.width-80(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
       include ./coinify/bank-link
-      p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
-        i.ti-search.mrm
-        span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
+    div.width-80(ng-if="onStep('trade-formatted')")
+      include ./trade-summary
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
         span.mrs.type-sm(translate="POWERED_BY")
@@ -57,7 +52,7 @@
     button.button-muted(ng-show="onStep('account-holder')" ng-click="goTo('account-info')" translate="GO_BACK")
 
     .flex-1.flex-end(ng-hide="status.loading")
-      button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
+      button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('accept-terms')")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-show="onStep('summary') && !error")
       button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
       button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link') || onStep('account-info') || onStep('account-holder')")

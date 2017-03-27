@@ -65,8 +65,8 @@
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" ng-hide="error.moreThanInWallet" translate="SELL_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")
           //- span.pos-abs.type-sm.state-danger-text(ng-show="error.moreThanInWallet") The amount is more than what is available in this wallet.
-          span(ng-show="error.moreThanInWallet") The amount entered is more than your balance.
-          | &nbsp;
+          span.state-danger-text(ng-show="error.moreThanInWallet") The amount entered is more than your balance.
+          br
           a.type-sm(ng-show="error.moreThanInWallet" ng-click="useAll()") Sell all minus BTC fee
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
           span.pos-abs.type-sm
@@ -96,7 +96,7 @@
       .flex-row.mtm.mb-10(ng-hide="!exchange._user || error.moreThanInWallet")
         span Maximum daily sell amount is €{{sellLimit}}.
         | &nbsp;
-        a(ng-click="$ctrl.onTrigger()") Increase my limit>
+        a(ng-click="$ctrl.onTrigger()") Increase my limit
       .flex-end.pos-rel
         //- span.coinify-logo.coinify-logo-left
         //-   span.mrs.type-sm(translate="POWERED_BY")
