@@ -90,7 +90,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function getSellQuote (amt, curr, quoteCurr) {
-    console.log('buySell getSellQuote - amt, baseCurr, quoteCurr', amt, curr, quoteCurr)
     if (curr === 'BTC') {
       amt = Math.trunc(amt * 100000000);
     } else {
@@ -103,10 +102,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return $q.resolve(service.getExchange().bank.getAll())
       .then(accounts => {
         if (accounts) {
-          console.log('**BANK ACCOUNTS**', accounts)
           return accounts;
         } else {
-          console.log('from buySell.service: no accounts for this user')
           return [];
         }
       })
@@ -118,14 +115,12 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function createBankAccount (bankObject) {
     return $q.resolve(service.getExchange().bank.create(bankObject)).then(response => {
-      console.log('**CREATED BANK RESPONSE**', response)
       return response;
     });
   }
 
   function deleteBankAccount (bankId) {
     return $q.resolve(service.getExchange().bank.deleteOne(bankId)).then(response => {
-      console.log('**DELETED BANK RESPONSE**', response);
       return response;
     });
   }

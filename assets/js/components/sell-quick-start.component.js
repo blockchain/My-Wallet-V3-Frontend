@@ -45,9 +45,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   if ($scope.exchange._profile) {
-    $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining;
-  } else {
-    $scope.sellLimit = 'n/a';
+    $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
   }
 
   console.log('from sell quick start component', $scope)
@@ -119,7 +117,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     // buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC')
       // .then(success, error)
       // .then(() => {
-    $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote });
+    $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
 
       // })
     $scope.status = {}
@@ -130,10 +128,16 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   // TODO commented this out for dev
   $scope.$watch('transaction.btc', (newVal, oldVal) => {
+    console.log('watching tx.btc', newVal, oldVal)
+    if (!$scope.totalBalance) {
+      return;
+    }
     if (newVal >= $scope.totalBalance) {
       $scope.error['moreThanInWallet'] = true;
       $scope.offerUseAll();
     } else if (newVal < $scope.totalBalance) {
+      $scope.error['moreThanInWallet'] = false;
+    } else if (!newVal) {
       $scope.error['moreThanInWallet'] = false;
     }
   });
@@ -156,26 +160,21 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       console.log('sideEffect', result)
       $scope.sweepAmount = result.sweepAmount;
 
-
-
-      // $scope.transaction['fee']['btc'] = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
-      // const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
-      // $scope.payment.amount(amountAfterFee / 100000000) // in SATOSHI
-
       $scope.status = {};
       return result;
     })
     .then((paymentData) => {
       console.log('after sideEffect', paymentData)
 
-      $scope.payment.useAll(paymentData.sweepFees[0]).sideEffect(things => {
-        console.log('things', things)
-      });
+      $scope.payment.useAll(paymentData.sweepFee)
     })
   };
 
   $scope.useAll = () => {
     $scope.transaction.btc = $scope.sweepAmount / 100000000;
+    $scope.isSweepTransaction = true;
+    $scope.status.busy = true;
+    buySell.getSellQuote($scope.transaction.btc, 'BTC', $scope.transaction.currency.code).then(success, error)
   };
 
 

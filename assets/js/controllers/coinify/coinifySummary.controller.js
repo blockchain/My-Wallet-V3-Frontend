@@ -45,13 +45,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     return baseAmount - fee;
   };
 
-  // $scope.commitSellValues = () => {
-  //   $scope.$parent.quote = null;
-  //   $scope.status.waiting = true;
-  //   const amt = $scope.transaction * 100; // amount will always be fiat
-  //   buySell.getSellQuote()
-  // };
-
   $scope.commitValues = () => {
     $scope.$parent.quote = null;
     $scope.status.waiting = true;

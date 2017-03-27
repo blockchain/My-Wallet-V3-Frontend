@@ -67,7 +67,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       bank: {
         name: 'Gringotts',
         address: {
-          street: '1 Tea St',
+          street: '1 Main St',
           city: 'London',
           state: null,
           zipcode: '11111',
@@ -102,7 +102,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       holder: {
         name: 'Viggo Mortensen',
         address: {
-          street: '1 Danish Way',
+          street: '1 Main St',
           zipcode: '22222',
           city: 'Copenhagen',
           state: '',
@@ -127,7 +127,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
       holder: {
         name: 'Ludwig van Beethoven',
         address: {
-          street: '1 Germany Way',
+          street: '1 Main St',
           zipcode: '22222',
           city: 'Berlin',
           state: '',

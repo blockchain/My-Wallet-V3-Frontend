@@ -528,4 +528,8 @@ input[type="radio"]:checked + label {
   }
 }
 
+.input-error {
+  border-color: #a94442 !important;
+}
+
 .primary { color: $iris; }

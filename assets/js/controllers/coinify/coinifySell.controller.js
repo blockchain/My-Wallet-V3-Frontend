@@ -17,6 +17,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.trade = trade;
   $scope.quote = buySellOptions.quote;
   $scope.isSell = buySellOptions.sell;
+  $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
   $scope.acceptTermsForm;
   $scope.transaction = {};
@@ -77,7 +78,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.transaction.currency = $scope.trade.quote[currencyType];
     $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
     $scope.currencySymbol = currency.conversions[$scope.trade.quote[currencyType]]['symbol'];
-    console.log('$scope.currencySymbol', $scope.currencySymbol)
   };
 
   $scope.assignFiatCurrency();
@@ -153,11 +153,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else if ($scope.onStep('bank-link')) {
       return !$scope.selectedBankAccount;
     } else if ($scope.onStep('summary')) {
-      // NOTE commented out for dev purposes
-      // if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
-      //   console.log('insufficientFunds')
-      //   return true;
-      // }
+      if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
+        return true;
+      }
       if (!$scope.trade.quote) true;
       // return $scope.editAmount || !$scope.limits.max;
     }
@@ -176,7 +174,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.bankAccount.account.currency = $scope.transaction.currency;
     $q.resolve(buySell.createBankAccount($scope.bankAccount))
       .then((result) => {
-        console.log('result of creating bank account', result)
         $scope.selectedBankAccount = result;
         $scope.status = {};
         return result;
@@ -230,9 +227,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.payment.from(index).amount(tradeInSatoshi)
 
     $scope.payment.sideEffect(result => {
-      console.log('result of sideEffect', result)
+      console.log('result sideEffect', result)
 
-      const firstBlockFee = result.absoluteFeeBounds[0];
+      let firstBlockFee = result.absoluteFeeBounds[0];
+
+      if ($scope.isSweepTransaction) {
+        firstBlockFee = result.sweepFee;
+      }
 
       console.log('firstBlockFee', firstBlockFee)
       $scope.payment.fee(firstBlockFee);
@@ -263,12 +264,14 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.mapTradeDetails = () => {
+    console.log('mapTradeDetails')
     const t = $scope.trade;
     $scope.sellTrade = {
       id: t._id,
       createTime: t.createdAt,
       transferIn: {receiveAmount: t._inAmount / 100000000},
       transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
+      bankDigits: t._lastFourBankAccountDigits
     }
     $scope.tradeCompleted = $scope.isInCompletedState(t);
     $scope.inNegativeState = $scope.isInNegativeState(t);
@@ -349,13 +352,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
         console.log('ask for 2nd PW and send btc', $scope)
         // NOTE sending is turned off when below is commented out
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
-          .then(transactionSucceeded)
-          .catch(err => {
-            console.log('err when publishing', err)
-            transactionFailed(err);
-          })
+        // Wallet.askForSecondPasswordIfNeeded()
+        //   .then(signAndPublish)
+        //   .then(transactionSucceeded)
+        //   .catch(err => {
+        //     console.log('err when publishing', err)
+        //     transactionFailed(err);
+        //   })
       })
       .catch(err => {
         console.log('err in sell catch')

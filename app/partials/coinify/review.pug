@@ -1,6 +1,6 @@
 .flex-column.mvm(ng-if="!tradeCompleted")
   div
-    p.pvm.f-16(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
+    p.pvm.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
@@ -18,22 +18,22 @@
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")
-      span {{ trade._lastFourBankAccountDigits }}
+      span &#8226;&#8226;&#8226;&#8226;{{ sellTrade.bankDigits || bankNameOrNumber }}
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.CREDIT_ISSUED")
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}
   .left-align
-    p.type-sm.mtvl(translate="SELL.1_2_DAYS")
+    p.type-sm.mtl(translate="SELL.1_2_DAYS")
       
 .flex-column.mvm(ng-if="tradeCompleted")
   div.mvl.em-500(ng-show="trade._state !== 'completed'")
-    span.pvm.f-16.state-danger-text(translate="Trade")
+    span.pvm.f-14.state-danger-text(translate="Trade")
     | &nbsp;
-    span.f-16.state-danger-text {{trade._state}}.
+    span.f-14.state-danger-text {{trade._state}}.
   div.mvl(ng-show="trade._state === 'completed'")
-    span.pvm.f-16.text-success(translate="Trade")
+    span.pvm.f-14.text-success(translate="Trade")
     | &nbsp;
-    span.f-16.text-success {{trade._state}}.
+    span.f-14.text-success {{trade._state}}.
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
@@ -51,7 +51,7 @@
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")
-      span {{ bankNameOrNumber }}
+      span &#8226;&#8226;&#8226;&#8226;{{ sellTrade.bankDigits }}
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.CREDIT_ISSUED")
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}
