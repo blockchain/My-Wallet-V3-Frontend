@@ -10,10 +10,10 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
 
   let accountIndex = parseInt($stateParams.account, 10);
 
-  $scope.presentFilter = (address) => address && !!address.label && address.used === false;
+  $scope.presentFilter = (address) => address && address.label !== null && address.used === false;
 
   $scope.pastAddressesPage = (page, pageLength) => {
-    let pastFilter = (address) => address && (!address.label || address.used === true);
+    let pastFilter = (address) => address && (address.label === null || address.used === true);
 
     return $scope.addresses.filter(pastFilter)
                            .reverse().slice((page - 1) * pageLength, page * pageLength);
