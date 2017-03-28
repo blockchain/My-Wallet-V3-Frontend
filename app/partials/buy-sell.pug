@@ -7,21 +7,14 @@
     img.loader(src="img/puff.svg")
     span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
   .mb-20(ng-if="!status.loading && !status.metaDataDown && !status.exchangeDown || status.disabled")
-    .filter-bar.flex-center.flex-between
-      .filter-buttons.flex-center
-        a.black.em-400.em-alt.f-16.upper(
-        ng-repeat="tab in tabs"
-        ng-class="{active: selectedTab === tab, mrn: $last, spaced: !$last}"
-        ng-click="selectTab(tab)"
-        translate="{{tab}}")
-        span.badge.mbs(ng-if="trades.pending.length") {{trades.pending.length}}
+    bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)" badge="trades.pending.length")
       .sfox-logo
         span.mrs.type-sm Powered By
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
     .buy-sell.mbvl
       .flex-row.flex-column-tablet.mt-50
-      div(ng-show="selectedTab === 'BUY_BITCOIN'")
+      div(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
         //- BUY
         buy-quick-start(limits="limits"
                         transaction="transaction"
@@ -36,7 +29,7 @@
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
-      div(ng-show="selectedTab === 'SELL_BITCOIN'")
+      div(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
         //- SELL
         sell-quick-start(limits="limits",
                         transaction="sellTransaction",
@@ -51,7 +44,7 @@
                         sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openSellKyc()" limits="sellLimits")
-      .flex-column(ng-show="selectedTab === 'ORDER_HISTORY'")
+      .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
         .flex-column.mtl(ng-show="trades.pending.length" data-preflight-tag="BuySellTrades")
         .flex-row.flex-between.flex-center(ng-show="trades.pending.length")
           //- h4.type-h4(translate="ORDER_HISTORY")
