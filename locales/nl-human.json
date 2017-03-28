@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "Ontvangende portemonnee",
   "RECEIVING_ADDRESS": "QA: Ontvangend adres",
   "RECEIVE_BITCOIN_TO": "Bitcoins zullen worden verzonden naar {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Verwijder uw tweede wachtwoord om toegang te krijgen tot dit deel van de portemonnee.",
   "BLACKLISTED_COUNTRY": "Het kopen van Bitcoins is nog niet beschikbaar in uw land.<br>We zullen binnenkort meer landen uitrollen.",
   "CONFIRM_YOUR_ORDER": "Bevestig uw order:",
   "ORDER_CONFIRMATION_COPY": "Bevestig uw ordergegevens voordat we u naar onze beveiligde betalingsprovider brengen.",

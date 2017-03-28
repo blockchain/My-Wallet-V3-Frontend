@@ -1041,7 +1041,6 @@
   "RECEIVING_WALLET": "Probíhá příjem peněženky",
   "RECEIVING_ADDRESS": "QA: Přijímací adresa",
   "RECEIVE_BITCOIN_TO": "Bitcoiny budou odeslány na {{::label}}.",
-  "MUST_DISABLE_2ND_PW": "Pro přístup k této části peněženky prosím odeberte druhé heslo.",
   "BLACKLISTED_COUNTRY": "Nákup bitcoinu není ve Vaší zemi ještě dostupný.<br>V dohledné době budou k dispozici další měny.",
   "CONFIRM_YOUR_ORDER": "Potvrďte svoji objednávku:",
   "ORDER_CONFIRMATION_COPY": "Prosím potvrďte podrobnosti Vaší objednávky. Poté Vás přesměrujeme na našeho poskytovatele zabezpečených plateb.",
