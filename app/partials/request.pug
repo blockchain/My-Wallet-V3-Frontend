@@ -3,16 +3,19 @@
   .flex-center
     h3
       i.mr-10.icon-receive
-      span(translate="REQUEST" ng-hide="requestCreated")
-      span(translate="REQUEST_CREATED" ng-show="requestCreated")
+      span(translate="REQUEST" ng-hide="state.requestCreated || state.viewQR")
+      span(translate="PAYMENT_ADDRESS" ng-show="state.viewQR")
+      span(translate="REQUEST_CREATED" ng-show="state.requestCreated")
 #receive.modal-body
-  form.bc-form(role="form" name="requestForm" ng-hide="requestCreated" ng-submit="createPaymentRequest()" novalidate)
+  form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="createPaymentRequest()" novalidate)
     fieldset
       .group.mb-20
         .item
-          label
-            span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
-            helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER")
+          label.flex-between.flex-baseline
+            span
+              span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
+              helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER")
+            a.f-12.em-300(translate="VIEW_QR" ng-click="state.viewQR = true")
           .flex-row
             span.f-16.bg-grey.ph-25.pv-10.width-100 {{ address() }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browserCanExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
@@ -71,7 +74,23 @@
         .item
           button.btn.button-primary.upper(ng-disabled="requestForm.$invalid || locked" translate="NEXT" type="submit")
 
-  div(ng-show="requestCreated")
+  form.bc-form(ng-show="state.viewQR")
+    fieldset
+      .group.mb-20
+        .item
+          label.flex-between.flex-baseline
+            span
+              span.colon(translate="SCAN_QR_CODE.TITLE")
+              helper-button(content="SCAN_QR_CODE.HELPER")
+            a.f-12.em-300(translate="GO_BACK" ng-click="state.viewQR = false")
+          .flex-justify.flex-center.flex-column.mv-25
+            qr(text="paymentRequestURL(true)" size=250 image="true")
+          .flex-row
+            span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden {{ paymentRequestURL(true) }}
+            span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isBitcoinURICopied || !browserCanExecCommand" copy-content="{{ paymentRequestURL(true) }}" ng-click="state.isBitcoinURICopied = true")
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied")
+          
+  div(ng-show="state.requestCreated")
     p.f-14.mb-25(translate="Send the link below to your friend or contact (via email or other messaging service), and they will be able to send bitcoin directly to your wallet.")
     
     form.bc-form

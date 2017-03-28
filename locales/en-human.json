@@ -108,6 +108,8 @@
   "COUNTRIES_SERVED_AMT" : "140+",
   "REQUEST" : "Request",
   "REQUEST_CREATED" : "Request Created",
+  "PAYMENT_ADDRESS": "Payment Address",
+  "VIEW_QR": "View QR Code",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
   "RECEIVE_TO" : "Receive To:",
@@ -618,7 +620,10 @@
   "BLOCKED" : "Blocked",
   "TWO_STEP_ENABLED" : "2-Step Enabled",
   "MOBILE_LINKED" : "Mobile Linked",
-  "SCAN_QR_CODE" : "Scan your QR code:",
+  "SCAN_QR_CODE" : {
+    "TITLE": "Scan QR Code",
+    "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet."
+  },
   "HINT_STORED" : "Hint Stored",
   "NOT_STORED" : "Not Stored",
   "PHRASE_BACKED" : "Phrase Backed",
@@ -904,7 +909,6 @@
   "OK": "OK",
   "DESCRIPTION:": "Description:",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
-  "QR_HELPER": "Ask your sender to scan this QR code.",
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
   "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",

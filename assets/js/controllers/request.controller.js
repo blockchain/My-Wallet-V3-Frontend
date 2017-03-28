@@ -9,6 +9,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.isBitCurrency = currency.isBitCurrency;
   $scope.format = currency.formatCurrencyForView;
+  $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
 
   $scope.destinationLimit = 50;
@@ -17,7 +18,9 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.state = {
     to: null,
     label: '',
-    amount: null
+    amount: null,
+    viewQR: null,
+    requestCreated: null
   };
 
   $scope.destinations = smartAccount.getOptions();
@@ -27,7 +30,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     $scope.lock();
     Alerts.clear();
 
-    const success = () => $scope.requestCreated = true;
+    const success = () => $scope.state.requestCreated = true;
 
     const error = (error) => {
       if (error === 'NOT_ALPHANUMERIC') {
@@ -71,12 +74,17 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     }
   };
 
-  $scope.paymentRequestURL = () => {
+  $scope.paymentRequestURL = (isBitcoinURI) => {
     let { amount, label } = $scope.state;
     let { currency } = $scope.settings;
+    let url;
 
-    let url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
-    url += amount ? 'amount_local=' + $scope.fromSatoshi(amount || 0, currency) + '&' : '';
+    if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
+    else url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
+
+    if (isBitcoinURI) url += amount ? 'amount=' + $scope.toSatoshi(amount || 0) + '&' : '';
+    else url += amount ? 'amount_local=' + $scope.fromSatoshi(amount || 0, currency) + '&' : '';
+
     url += label ? 'message=' + label + ' ' : '';
     return encodeURI(url.slice(0, -1));
   };
