@@ -20,7 +20,7 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
         ng-show="trade.state === 'awaiting_transfer_in' && trade.medium !== 'blockchain'") Finish payment
       span.type-sm.blue.underline.pointer.text-nowrap(
         ng-click="trade.medium === 'blockchain' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
-        ng-show=trade.state !== 'awaiting_transfer_in' || trade.medium === 'blockchain'") View details
+        ng-show="trade.state !== 'awaiting_transfer_in' || trade.medium === 'blockchain'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml.hidden-xs
