@@ -282,8 +282,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     }).result;
   }
 
-  function openSellView (trade, options = { sell: true }) {
-    console.log('openSellView', trade, options);
+  function openSellView (trade, buySellOptions = { sell: true }) {
+    console.log('openSellView', trade, buySellOptions);
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',
@@ -293,7 +293,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       resolve: {
         accounts: () => service.getBankAccounts(),
         trade: () => trade,
-        buySellOptions: () => options
+        buySellOptions: () => buySellOptions,
+        options: () => Options.get()
       }
     }).result;
   }

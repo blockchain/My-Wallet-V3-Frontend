@@ -64,7 +64,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack
     });
   }
 
-  function surveyCloseConfirm (survey, links, index) {
+  function surveyCloseConfirm (survey, links, index, sell) {
     let link = links[index];
     let surveyOpened = $cookies.getObject(survey);
 
@@ -73,6 +73,9 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack
                         surveyOpened && surveyOpened.index >= index;
 
     if (hasSeenPrompt) {
+      if (sell === true) {
+        return service.confirm('CONFIRM_CLOSE_SELL', {action: 'IM_DONE'});
+      }
       return service.confirm('CONFIRM_CLOSE_BUY', {action: 'IM_DONE'});
     } else {
       $cookies.putObject(survey, {index: index});

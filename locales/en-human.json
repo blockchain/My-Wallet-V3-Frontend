@@ -170,6 +170,10 @@
     "TITLE": "Are You Sure?",
     "BODY": "You're just a few steps from receiving bitcoin, are you sure you want to stop?"
   },
+  "CONFIRM_CLOSE_SELL": {
+    "TITLE": "Are You Sure?",
+    "BODY": "You're just one click away from from completing your sale. Are you sure you want to stop?"
+  },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",

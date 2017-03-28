@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts, $state, smartAccount) {
+function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts, $state, smartAccount, options) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
@@ -22,6 +22,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.bankAccounts = accounts;
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   $scope.step;
+
+  let links = options.partners.coinify.sellSurveyLinks;
 
   $scope.bankAccount = {
     account: {
@@ -107,7 +109,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.nextStep = () => {
     $scope.status = {};
-    
+
     if ($scope.trade._iSignThisID) {
       $scope.goTo('isx');
       return;
@@ -243,7 +245,12 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.close = () => {
-    $scope.cancel();
+    let index;
+
+    if (!$scope.exchange.user) index = 0;
+    else if (!$scope.trades.length && !$scope.trade) index = 1;
+    else index = 2;
+    Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
   };
 
   $scope.dismiss = () => {
