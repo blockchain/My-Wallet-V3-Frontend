@@ -1,9 +1,9 @@
 .quick-start.col-md-6.col-sm-12.col-xs-12.pln.prn
   .pt-30.pb-30.ph-15.phm.border
     form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerSell()" novalidate)
-      .flex-row.flex-center.flex-between
+      //- .flex-row.flex-center.flex-between
         span.f-14.em-500.colon(translate="SELL.SELECT_CURRENCY")
-      .flex-row.flex-between
+      //- .flex-row.flex-between
         ui-select.mtm.width-45.width-45-tablet.width-45-mobile(placeholder="Select Currency" ng-model="sellTransaction.currency" on-select="$ctrl.changeSellCurrency($item); getExchangeRate()")
           ui-select-match(placeholder="Select currency") {{sellTransaction.currency.code}}
           ui-select-choices(repeat="currency in currencies")
@@ -13,10 +13,14 @@
           helper-button(content="EXCHANGE_RATE_HELPER")
         .flex-row.flex-center.width-45(ng-show="status.fetching")
           img(src="img/spinner.gif")
-      .flex-row.flex-between.pt-20
+      .flex-row.flex-between
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
-        .flex-center(ng-show="exchangeRate.fiat")
+        .flex-center(ng-show="exchangeRate.fiat" ng-hide="status.fetching")
+          span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
+          helper-button(content="EXCHANGE_RATE_HELPER")
+        .flex-row.flex-center.width-45(ng-show="status.fetching")
+          img(src="img/spinner.gif")
       fieldset(ng-disabled="tradingDisabled")
         .flex-row.flex-between.flex-center.flex-column-tablet
           section.input-group.width-45
@@ -34,7 +38,7 @@
               ng-class="{'input-error': error.moreThanInWallet}"
               required)
             div.input-group-btn
-              button.btn.btn-default.brdrn.disabled(ng-disabled="true") BTC
+              button.btn.btn-default.brdrn BTC
           i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
           i.ti-arrows-vertical.mvs.type-h4.visible-sm.visible-xs
           section.input-group.width-45
@@ -52,7 +56,17 @@
               step="any"
               prevent-event="mousewheel"
               required)
-            div.input-group-btn
+            div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+              button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true")
+                span {{ sellTransaction.currency.code }}
+                span.caret
+              ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+                li(ng-repeat="currency in currencies"
+                   role="menuitem"
+                   ng-click="changeSellCurrency(currency); getExchangeRate();"
+                   ng-class="{active: isCurrencySelected(currency)}")
+                  a(ng-click="$event.preventDefault()") {{ currency.code }}
+            //- div.input-group-btn
               button.btn.btn-default.disabled(ng-disabled="true")
                 span {{ sellTransaction.currency.code }}
         .mtm.pos-rel.mb-10(ng-hide="tradingDisabled")

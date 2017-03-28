@@ -45,6 +45,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   console.log('sell quick start component', $scope);
 
   $scope.changeSellCurrency = (curr) => {
+    console.log('changeSellCurrency')
     if (curr && $scope.currencies.some(c => c.code === curr.code)) {
       $scope.sellTransaction.currency = curr;
       this.changeCurrency(curr);
