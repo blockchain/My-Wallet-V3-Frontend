@@ -2,7 +2,6 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-
 function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options) {
 
   $scope.settings = Wallet.settings;

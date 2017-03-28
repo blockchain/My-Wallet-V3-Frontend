@@ -21,7 +21,7 @@ function currency ($q, MyBlockchainApi) {
     'DKK': 'Danish Krone',
     'EUR': 'Euro',
     'GBP': 'Great British Pound'
-  }
+  };
 
   const currencyCodes = {
     'USD': 'U.S. Dollar',

@@ -127,16 +127,16 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function createSellTrade (quote, bank) {
     return $q.resolve(service.getExchange().sell(quote, bank)).then(response => {
-        console.log('*** SELL TRADE RESPONSE ***', response)
-        return response;
-      })
-      .then(data => {
-        service.getTrades();
-        return data;
-      })
-      .catch(err => {
-        return err;
-      });
+      console.log('*** SELL TRADE RESPONSE ***', response);
+      return response;
+    })
+    .then(data => {
+      service.getTrades();
+      return data;
+    })
+    .catch(err => {
+      return err;
+    });
   }
 
   function getKYCs () {
@@ -283,7 +283,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function openSellView (trade, options = { sell: true }) {
-    console.log('openSellView', trade, options)
+    console.log('openSellView', trade, options);
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',

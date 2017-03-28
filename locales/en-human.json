@@ -1326,7 +1326,11 @@
     "KYC_SUCCESS": "Your application was successful.",
     "KYC_CANCELLED": "This transaction has been cancelled.",
     "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
-    "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity."
+    "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity.",
+    "MORE_THAN_BALANCE": "The amount entered is more than your balance.",
+    "SELECT_CURRENCY": "Select your currency",
+    "SELL_ALL": "Sell all minus BTC fee"
+
   },
   "": ""
 }

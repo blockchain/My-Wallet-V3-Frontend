@@ -19,26 +19,23 @@ angular
     controllerAs: '$ctrl'
   });
 
-const ONE_DAY_MS = 86400000;
-
-// sellQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
-
 function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q) {
   $scope.limits = this.limits;
   $scope.currencySymbol = this.currencySymbol;
-  $scope.transaction = this.transaction;
+  $scope.sellTransaction = this.transaction;
   $scope.exchangeRate = {};
-  $scope.selectedCurrency = $scope.transaction.currency.code;
+  $scope.selectedCurrency = $scope.sellTransaction.currency.code;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
+  console.log('scope', $scope)
 
-  $scope.transaction.btc = null;
+  $scope.sellTransaction.btc = null;
 
-  if (['EUR', 'DKK', 'GBP'].indexOf($scope.transaction.currency.code) === -1) {
+  if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {
     // NOTE make EUR default if currency is not eur, dkk, or gbp
-    $scope.transaction.currency = { code: 'EUR', name: 'Euro' };
+    $scope.sellTransaction.currency = { code: 'EUR', name: 'Euro' };
   }
 
   let exchange = buySell.getExchange();
@@ -51,14 +48,14 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.changeSellCurrency = (curr) => {
     if (curr && $scope.currencies.some(c => c.code === curr.code)) {
-      $scope.transaction.currency = curr;
+      $scope.sellTransaction.currency = curr;
       this.changeCurrency(curr);
     }
   };
 
   $scope.increaseLimit = () => {
     // TODO
-    console.log('show kyc here')
+    console.log('show kyc here');
   };
 
   (() => {
@@ -72,19 +69,19 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getExchangeRate = () => {
     $scope.status.fetching = true;
 
-    buySell.getQuote(-1, 'BTC', $scope.transaction.currency.code)
+    buySell.getQuote(-1, 'BTC', $scope.sellTransaction.currency.code)
       .then(function (quote) {
         $scope.exchangeRate.fiat = (quote.quoteAmount / -100).toFixed(2);
         $scope.status = {};
-      }, error)//.finally($scope.getQuote);
+      }, error);
   };
 
   $scope.getQuote = () => {
     $scope.status.busy = true;
     if ($scope.lastInput === 'btc') {
-      buySell.getSellQuote(-$scope.transaction.btc, 'BTC', $scope.transaction.currency.code).then(success, error);
+      buySell.getSellQuote(-$scope.sellTransaction.btc, 'BTC', $scope.sellTransaction.currency.code).then(success, error);
     } else if ($scope.lastInput === 'fiat') {
-      buySell.getSellQuote($scope.transaction.fiat, $scope.transaction.currency.code, 'BTC').then(success, error);
+      buySell.getSellQuote($scope.sellTransaction.fiat, $scope.sellTransaction.currency.code, 'BTC').then(success, error);
     } else {
       $scope.status = { busy: false };
     }
@@ -92,9 +89,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   const success = (quote) => {
     if (quote.quoteCurrency === 'BTC') {
-      $scope.transaction.btc = -quote.quoteAmount / 100000000;
+      $scope.sellTransaction.btc = -quote.quoteAmount / 100000000;
     } else {
-      $scope.transaction.fiat = quote.quoteAmount / 100;
+      $scope.sellTransaction.fiat = quote.quoteAmount / 100;
     }
     $scope.quote = quote;
     $scope.status = {};
@@ -108,16 +105,15 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.triggerSell = () => {
     $scope.status.waiting = true;
-    $scope.$parent.sell({ fiat: $scope.transaction.fiat, btc: $scope.transaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
+    $scope.$parent.sell({ fiat: $scope.sellTransaction.fiat, btc: $scope.sellTransaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
     $scope.status = {};
+    $scope.reset();
   };
 
   $scope.getExchangeRate();
 
-
   // TODO commented this out for dev
-  $scope.$watch('transaction.btc', (newVal, oldVal) => {
-    console.log('watching tx.btc', newVal, oldVal)
+  $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
       $scope.tradingDisabled = true;
       return;
@@ -132,14 +128,14 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   });
 
-  $scope.$watch('transaction.currency', (newVal, oldVal) => {
-    let curr = $scope.transaction.currency || null;
+  $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
+    let curr = $scope.sellTransaction.currency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
   });
 
   $scope.offerUseAll = () => {
     $scope.status.busy = true;
-    $scope.transaction['fee'] = {};
+    $scope.sellTransaction['fee'] = {};
     $scope.payment = Wallet.my.wallet.createPayment();
 
     const index = Wallet.getDefaultAccountIndex();
@@ -152,24 +148,18 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     })
     .then((paymentData) => {
       $scope.payment.useAll(paymentData.sweepFee);
-    })
+    });
   };
 
   $scope.useAll = () => {
-    $scope.transaction.btc = $scope.sweepAmount / 100000000;
+    $scope.sellTransaction.btc = $scope.sweepAmount / 100000000;
     $scope.isSweepTransaction = true;
     $scope.status.busy = true;
-    buySell.getSellQuote(-$scope.transaction.btc, 'BTC', $scope.transaction.currency.code).then(success, error);
+    buySell.getSellQuote(-$scope.sellTransaction.btc, 'BTC', $scope.sellTransaction.currency.code).then(success, error);
   };
 
-
-  // $scope.assignMaxAvailable = (fee) => {
-  //   if (fee === 0) console.warn('fee is zero in maxAvailable')
-  //   $scope.transaction.maxAvailable = $scope.totalBalance - fee / 100000000;
-  //   return $scope.totalBalance - fee / 100000000;
-  // }
-
-// tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
-// if (tx.maxAvailable < 0) tx.maxAvailable = 0;
-
+  $scope.reset = () => {
+    $scope.sellTransaction.btc = null;
+    $scope.sellTransaction.fiat = null;
+  };
 }

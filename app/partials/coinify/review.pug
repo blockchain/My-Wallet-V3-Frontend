@@ -33,13 +33,13 @@
       
 .flex-column.mvm(ng-if="tradeCompleted && !ISXState")
   div.mvl.em-500(ng-show="trade._state !== 'completed'")
-    span.pvm.f-14.state-danger-text(translate="Trade")
+    span.pvm.type-h5.state-danger-text(translate="Trade")
     | &nbsp;
-    span.f-14.state-danger-text {{trade._state}}.
+    span.type-h5.state-danger-text {{trade._state}}.
   div.mvl(ng-show="trade._state === 'completed'")
-    span.pvm.f-14.text-success(translate="Trade")
+    span.pvm.type-h5.text-success(translate="Trade")
     | &nbsp;
-    span.f-14.text-success {{trade._state}}.
+    span.type-h5.text-success {{trade._state}}.
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
