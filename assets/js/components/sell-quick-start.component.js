@@ -155,9 +155,4 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.status.busy = true;
     buySell.getSellQuote(-$scope.sellTransaction.btc, 'BTC', $scope.sellTransaction.currency.code).then(success, error);
   };
-
-  $scope.reset = () => {
-    $scope.sellTransaction.btc = null;
-    $scope.sellTransaction.fiat = null;
-  };
 }

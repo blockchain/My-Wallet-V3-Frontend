@@ -4,7 +4,7 @@ angular
 
 function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
   $scope.transaction = $scope.$parent.transaction;
-  $scope.bankAccounts = $scope.$parent.bankAccounts.filter(b => b.account.currency === $scope.transaction.currency); // only show banks with selected currency
+  $scope.bankAccounts = $scope.$parent.bankAccounts;
 
   $scope.selecting = true;
 

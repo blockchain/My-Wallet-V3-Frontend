@@ -19,7 +19,7 @@
                                     tooltip-placement="top"
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
-            span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
+            span {{transaction.btc }} BTC ({{transaction.fiat}}{{currencySymbol}})
           //- quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           //- p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now

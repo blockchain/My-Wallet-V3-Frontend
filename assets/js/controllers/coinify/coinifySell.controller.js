@@ -235,6 +235,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
+    $scope.reset();
     $scope.trade = null;
     buySell.getTrades().then(() => {
       $scope.goToOrderHistory();
@@ -397,6 +398,11 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   if (!$scope.step) {
     $scope.nextStep();
   }
+
+  $scope.reset = () => {
+    $scope.sellTransaction.btc = null;
+    $scope.sellTransaction.fiat = null;
+  };
 
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
     if (!$scope.currencySymbol) {

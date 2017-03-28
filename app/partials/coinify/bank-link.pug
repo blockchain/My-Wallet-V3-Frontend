@@ -13,8 +13,7 @@
             i.ti-trash.pointer.state-danger-text.f-16(ng-hide="selecting" ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
           div.width-90
             img(src="img/bank.png")
-            span.pal.em-300 {{ account.bank.name }}
-            span.pv-25.em-300 &#8226;&#8226;&#8226;&#8226;{{ bankNumView(account.account.number) }}
+            span.pv-25.em-300.pl-20 {{ account.account.number }}
       .flex-row.flex-center.border.plvl(ng-show="selecting")
         input(type="radio" name="bankRadios" ng-click="addBankAccount()")
         a.pal(ng-click="addBankAccount()" translate="SELL.ADD_NEW_ACCOUNT")
