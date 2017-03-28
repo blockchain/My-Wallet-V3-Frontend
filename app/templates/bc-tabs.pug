@@ -1,3 +1,7 @@
+.filter-bar.backdrop.fade(
+  ng-show="$ctrl.state.expanded"
+  ng-click="$ctrl.state.expanded = false")
+
 .filter-bar.auto.flex-center.flex-between.flex-start-mobile(
   capture-key="{'ArrowLeft': $ctrl.moveTab(-1), 'ArrowRight': $ctrl.moveTab(1)}")
 

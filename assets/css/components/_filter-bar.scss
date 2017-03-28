@@ -12,6 +12,12 @@
   &.auto {
     height: auto;
   }
+  &.backdrop {
+    position: fixed;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+  }
   .ui-select-container {
     width: 360px;
     .divider {
