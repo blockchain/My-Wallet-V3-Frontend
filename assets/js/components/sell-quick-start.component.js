@@ -29,8 +29,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.error = {};
   $scope.status = { ready: true };
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
-  console.log('scope', $scope)
-
   $scope.sellTransaction.btc = null;
 
   if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {

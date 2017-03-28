@@ -106,6 +106,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
+    $scope.status = {};
+    
     if ($scope.trade._iSignThisID) {
       $scope.goTo('isx');
       return;
@@ -255,7 +257,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       createTime: t.createdAt,
       transferIn: {receiveAmount: t._inAmount / 100000000},
       transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
-      bankDigits: t._lastFourBankAccountDigits
+      bankDigits: t._lastSixBankAccountDigits
     };
     $scope.tradeCompleted = $scope.isInCompletedState(t);
     $scope.inNegativeState = $scope.isInNegativeState(t);
