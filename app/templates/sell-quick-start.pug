@@ -1,25 +1,13 @@
 .quick-start.col-md-6.col-sm-12.col-xs-12.pln.prn
   .pt-30.pb-30.ph-15.phm.border
     form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerSell()" novalidate)
-      //- .flex-row.flex-center.flex-between
-        span.f-14.em-500.colon(translate="SELL.SELECT_CURRENCY")
-      //- .flex-row.flex-between
-        ui-select.mtm.width-45.width-45-tablet.width-45-mobile(placeholder="Select Currency" ng-model="sellTransaction.currency" on-select="$ctrl.changeSellCurrency($item); getExchangeRate()")
-          ui-select-match(placeholder="Select currency") {{sellTransaction.currency.code}}
-          ui-select-choices(repeat="currency in currencies")
-            span {{currency.name}}
-        .flex-row.flex-center.width-45(ng-hide="status.fetching")
-          span.f-14 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
-          helper-button(content="EXCHANGE_RATE_HELPER")
-        .flex-row.flex-center.width-45(ng-show="status.fetching")
-          img(src="img/spinner.gif")
       .flex-row.flex-between
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
         .flex-center(ng-show="exchangeRate.fiat" ng-hide="status.fetching")
           span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
           helper-button(content="EXCHANGE_RATE_HELPER")
-        .flex-row.flex-center.width-45(ng-show="status.fetching")
+        .flex-row.flex-center(ng-show="status.fetching")
           img(src="img/spinner.gif")
       fieldset(ng-disabled="tradingDisabled")
         .flex-row.flex-between.flex-center.flex-column-tablet
@@ -66,10 +54,7 @@
                    ng-click="changeSellCurrency(currency); getExchangeRate();"
                    ng-class="{active: isCurrencySelected(currency)}")
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
-            //- div.input-group-btn
-              button.btn.btn-default.disabled(ng-disabled="true")
-                span {{ sellTransaction.currency.code }}
-        .mtm.pos-rel.mb-10(ng-hide="tradingDisabled")
+        .mts.pos-rel.mb-10(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")
         .mtm.pos-rel.mb-10(ng-if="error.moreThanInWallet")
@@ -101,7 +86,7 @@
             | .
           span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")
             span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
-      .flex-row.mtm.mb-10(ng-hide="!exchange._user || error.moreThanInWallet")
+      .flex-row.mt-5(ng-hide="!exchange._user || error.moreThanInWallet")
         span Maximum daily sell amount is €{{sellLimit}}.
         | &nbsp;
         a(ng-click="$ctrl.onTrigger()") Increase my limit

@@ -78,15 +78,12 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.assignFiatCurrency();
 
   let exchange = buySell.getExchange();
-  console.log('coinifySell $scope', $scope, exchange);
 
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
-  // $scope.needsKyc = () => +$scope.exchange.profile.level.name < 2;
   $scope.needsKyc = () => false;
-  // $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
   $scope.needsISX = () => false;
   $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
 
@@ -334,21 +331,18 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
           $scope.payment.to(exchange._customAddress);
           $scope.payment.amount(exchange._customAmount);
         }
-
         $scope.payment.build();
 
-        console.log('ask for 2nd PW and send btc', $scope);
         // NOTE sending is turned off when below is commented out
-        // Wallet.askForSecondPasswordIfNeeded()
-        //   .then(signAndPublish)
-        //   .then(transactionSucceeded)
-        //   .catch(err => {
-        //     console.log('err when publishing', err)
-        //     transactionFailed(err);
-        //   })
+        Wallet.askForSecondPasswordIfNeeded()
+          .then(signAndPublish)
+          .then(transactionSucceeded)
+          .catch(err => {
+            console.log('err when publishing', err)
+            transactionFailed(err);
+          })
       })
       .catch(err => {
-        console.log('err in sell catch');
         // TODO handle error
       })
       .finally(() => {
@@ -360,7 +354,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   // TODO this whole thing needs to be refactored (or killed)
   $scope.formatBankInfo = (trade) => {
     if (trade.transferOut) {
-      console.log('formatBankInfo', trade);
       let n = trade.transferOut.details.account.number;
       $scope.bankNameOrNumber = n.substring(n.length, n.length - 6);
     }
@@ -410,7 +403,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   }
 
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
-    console.log('watch currencySymbol');
     if (!$scope.currencySymbol) {
       let curr = $scope.transaction.currency || null;
       $scope.currencySymbol = currency.conversions[curr.code];
