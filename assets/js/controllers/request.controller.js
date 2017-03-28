@@ -40,7 +40,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
 
     const success = () => $scope.requestCreated = true;
 
-    let idx = $scope.fields.to.index;
+    let idx = $scope.state.to.index;
     Wallet.changeHDAddressLabel(to.index, Wallet.getReceivingAddressIndexForAccount(idx), label, success, error);
   };
 
