@@ -338,12 +338,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
           .then(signAndPublish)
           .then(transactionSucceeded)
           .catch(err => {
-            console.log('err when publishing', err)
+            console.log('err when publishing', err);
             transactionFailed(err);
-          })
-      })
-      .catch(err => {
-        // TODO handle error
+          });
       })
       .finally(() => {
         $scope.status.waiting = false;
