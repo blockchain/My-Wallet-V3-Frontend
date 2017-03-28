@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
 
   $scope.openSfoxSignup = (quote) => {
@@ -60,9 +60,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     $scope.selectTab('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
+    buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
   };
 
   $scope.buyError = () => {
-    Alerts.displayError('Error connecting to our exchange partner');
+    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
 }
