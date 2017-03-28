@@ -1,9 +1,10 @@
 .modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
   .flex-center
-    img(src="img/arrow-up.png")
-    h3(ng-show="!confirmationStep && !advanced", translate="SEND_BITCOIN")
-    h3(ng-show="advanced && !confirmationStep", translate="ADVANCED_SEND")
-    h3(ng-show="confirmationStep", translate="CONFIRM")
+    h3
+      i.mr-10.icon-send
+      span(ng-show="!confirmationStep && !advanced", translate="SEND_BITCOIN")
+      span(ng-show="advanced && !confirmationStep", translate="ADVANCED_SEND")
+      span(ng-show="confirmationStep", translate="CONFIRM")
   h5(ng-show="!confirmationStep && !advanced", translate="SEND_STEP_1")
   h5(ng-show="confirmationStep", translate="SEND_STEP_2")
   h5(ng-show="advanced && !confirmationStep", translate="SEND_STEP_1_ADVANCED")

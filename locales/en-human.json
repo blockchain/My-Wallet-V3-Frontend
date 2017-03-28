@@ -106,12 +106,12 @@
   "TRANSACTIONS_AMT" : "100 Million+",
   "WALLETS_AMT" : "12 Million+",
   "COUNTRIES_SERVED_AMT" : "140+",
-  "REQUEST" : "Receive",
+  "REQUEST" : "Request",
+  "REQUEST_CREATED" : "Request Created",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
   "RECEIVE_TO" : "Receive To:",
   "AMOUNT" : "Amount",
-  "AMOUNT:" : "Amount:",
   "PAID" : "Paid:",
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
   "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
@@ -946,6 +946,10 @@
   "ADD_A_DESCRIPTION": "Add a description",
   "ADD_A_LABEL": "Add a label",
   "COPY_AND_SHARE": "Copy and Share",
+  "COPY_AND_SHARE_ADDRESS": {
+    "TITLE": "Copy & Share Address",
+    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below."
+  },
   "SCAN": "Scan",
   "SIMPLE": "Simple",
   "CROSS_PLATFORM": "Cross-platform",
@@ -1245,7 +1249,6 @@
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
-  "ENTER_AMOUNT:": "Enter amount:",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
@@ -1286,5 +1289,7 @@
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "CANNOT_COMPLETE_TRADE_ERROR": "{{::error}}. Please try again later. If you continue to experience issues, you may contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
   "UNABLE_TO_PROCESS": "Unable to process your trade",
+  "COPY_LINK": "Copy Link",
+  "LINK_COPIED": "Link Copied To Clipboard!",
   "": ""
 }
