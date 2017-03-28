@@ -287,9 +287,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }, 500);
   };
 
-  let paymentCheckpoint;
   const setCheckpoint = (payment) => {
-    paymentCheckpoint = payment;
+    $scope.paymentCheckpoint = payment;
   };
 
   const signAndPublish = (passphrase) => {
