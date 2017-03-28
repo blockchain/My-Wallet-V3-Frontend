@@ -10,9 +10,9 @@
   h5(ng-show="advanced && !confirmationStep", translate="SEND_STEP_1_ADVANCED")
   p.step
     span(translate="STEP")
-    | 
+    | &nbsp;
     span {{ confirmationStep ? 2 : 1 }}
-    | 
+    | &nbsp;
     span(translate="OF_2")
 #send.modal-body.fade(ng-class="{ 'advanced-container': advanced && !confirmationStep, 'confirmation': confirmationStep, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1 }")
   .alert-in-app
@@ -50,7 +50,7 @@
               is-valid="!transaction.from.isWatchOnly || isValidPrivateKey(transaction.priv)")
             .input-group-btn
               qr-scan.form-control(on-scan="setPrivateKey")
-          span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN") 
+          span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN")
           span.help-block.inprv(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
 
       //- Advanced Send
@@ -158,8 +158,8 @@
       span.type-sm.help-block.blue(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
         span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
           span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
-          |  
-          ng-pluralize(count="transaction.blockIdx" 
+          | &nbsp;
+          ng-pluralize(count="transaction.blockIdx"
                        ng-init="block='BLOCK'; blocks='BLOCKS'"
                        when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
           span ).
@@ -178,20 +178,20 @@
             span.account.mvn.width-50-mobile.width-60.em-400 {{ address.label || address.address }}
             .width-50.width-50-mobile.flex-between
               span(ng-class="{success: address.type !== 'External'}")
-                span(ng-class="{fade: address.type === 'External'}") + 
+                span(ng-class="{fade: address.type === 'External'}") +&nbsp;
                 span {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
               span(ng-class="{success: address.type !== 'External'}")
-                span(ng-show="address.type !== 'External'") + 
+                span(ng-show="address.type !== 'External'") +&nbsp;
                 fiat.mrml(btc="transaction.amounts[$index]")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
-            span.mid-grey.account.width-50-mobile.width-60.f-12(translate="TX_FEE_REQUIRED")
+            span.mid-grey.account.width-50-mobile.width-60.f-12(translate="TX_FEE")
             .width-50.width-50-mobile.flex-between
-              span.mid-grey.center 
-                span.fade + 
+              span.mid-grey.center
+                span.fade +&nbsp;
                 span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
               span.mid-grey.center
                 fiat.mrml(btc="transaction.fee")
-            helper-button(content="DYK_TX_FEES")
+            helper-button(content="TX_FEE_CONFIRM_EXPLAIN")
         .mvm.flex-justify.flex-1.flex-center.split-rule
         span.type-lbl.mbs.underline(translate="FROM")
         .mls.flex-row.flex-center.center.flex-between
