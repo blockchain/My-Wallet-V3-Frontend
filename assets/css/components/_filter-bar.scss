@@ -1,13 +1,11 @@
 .filter-bar {
-  z-index: 1;
-  top: 175px;
-  left: 270px;
-  height: 60px;
-  position: fixed;
   padding: 0px 30px;
   background: $grey;
-  width: calc(100% - 270px);
+  width: 100%;
   border-bottom: 1px solid $border-grey;
+  height: 60px;
+  position: absolute;
+  z-index: 10;
   @media (max-width: 767px) {
     padding: 0 10px;
   }
@@ -118,7 +116,6 @@
   .filter-bar {
     border-top: 1px solid $border-grey;
     width: 100%;
-    top: 200px;
-    left: 0;
+    flex: 0 0 60px;
   }
 }

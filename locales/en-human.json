@@ -1140,6 +1140,7 @@
   "BUY_SUBSCRIBE": {
     "TITLE": "This feature is coming soon!",
     "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Sign up to get access as soon as we launch in your area!",
+    "BODY_MOBILE": "The world's most popular bitcoin wallet now lets you buy bitcoin securely.",
     "BUTTON": "Sign Up"
   },
   "SUBSCRIBE_TITLE": "Sign up for Blockchain updates!",
@@ -1196,7 +1197,7 @@
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "COINIFY_SURVEY": {
+  "SURVEY_PROMPT": {
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
   },

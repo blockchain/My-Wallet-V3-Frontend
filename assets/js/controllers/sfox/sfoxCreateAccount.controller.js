@@ -2,13 +2,16 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox, bcPhoneNumber) {
+function SfoxCreateAccountController ($scope, $timeout, $q, $cookies, Wallet, Alerts, sfox, bcPhoneNumber) {
   const views = ['summary', 'email', 'mobile'];
+  const cookieIds = { SENT_EMAIL: 'sentEmailCode', SENT_MOBILE: 'sentMobileCode' };
   let exchange = $scope.vm.exchange;
   let user = $scope.user = Wallet.user;
 
   let state = $scope.state = {
     terms: false,
+    sentEmailCode: $cookies.get(cookieIds.SENT_EMAIL),
+    sentMobileCode: $cookies.get(cookieIds.SENT_MOBILE),
     get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
 
@@ -107,10 +110,27 @@ function SfoxCreateAccountController ($scope, $timeout, $q, Wallet, Alerts, sfox
   $scope.$watch('user.isMobileVerified', $scope.setState);
 
   $scope.$watch('state.view', (view) => {
-    let shouldSendEmail = !state.verifiedEmail && state.email && state.email.indexOf('@') > -1;
-    let shouldSendMobile = !state.verifiedMobile && bcPhoneNumber.isValid(state.mobile);
+    let shouldSendEmail =
+      !state.verifiedEmail &&
+      !$cookies.get('sentEmailCode') &&
+      state.email &&
+      state.email.indexOf('@') > -1;
+
+    let shouldSendMobile =
+      !state.verifiedMobile &&
+      !$cookies.get('sentMobileCode') &&
+      bcPhoneNumber.isValid(state.mobile);
+
     if (view === 'email' && shouldSendEmail) $scope.sendEmailCode();
     if (view === 'mobile' && shouldSendMobile) $scope.sendMobileCode();
+  });
+
+  $scope.$watch('state.sentEmailCode', $cookies.put.bind(null, cookieIds.SENT_EMAIL));
+  $scope.$watch('state.sentMobileCode', $cookies.put.bind(null, cookieIds.SENT_MOBILE));
+
+  $scope.$on('$destroy', () => {
+    $cookies.remove(cookieIds.SENT_EMAIL);
+    $cookies.remove(cookieIds.SENT_MOBILE);
   });
 
   $scope.setState();

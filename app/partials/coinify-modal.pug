@@ -1,9 +1,10 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="BuyModal")
   .modal-header.bc-modal-header.flex-between.flex-center(ng-class="{'no-border': isPendingBankTransfer()}")
-    .flex-column.flex-1
+    .flex-1(ng-class="inMobileBuy ? 'flex-row-reverse flex-center flex-between' : 'flex-column'")
       .flex-row.flex-between.flex-center
-        h3.mlm(ng-hide="isPendingBankTransfer()" translate="BUY_BITCOIN")
-        h3.mlm(ng-show="isPendingBankTransfer()" translate="BANK_TRANSFER_HEADING")
+        .hidden-xs
+          h3.mlm(ng-hide="isPendingBankTransfer()" translate="BUY_BITCOIN")
+          h3.mlm(ng-show="isPendingBankTransfer()" translate="BANK_TRANSFER_HEADING")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-column.flex-align-end(ng-hide="status.gettingQuote"
@@ -49,7 +50,7 @@
       p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
         i.ti-search.mrm
         span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
-    .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
+    .flex-end.flex-center.mtl.coinify-logo.hidden-xs(ng-hide="afterStep('summary')")
       span.pos-rel
         span.mrs.type-sm(translate="POWERED_BY")
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
