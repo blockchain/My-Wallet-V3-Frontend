@@ -91,11 +91,12 @@ describe "buySell service", () ->
       buySell.watchAddress(trades.pending)
       expect(trades.pending.watchAddress).toHaveBeenCalled()
 
-    it "should open the buy modal when bitcoin is received", ->
-      spyOn(buySell, 'openBuyView')
+    it "should open the buy modal when bitcoin is received", inject((modals) ->
+      spyOn(modals, 'openBuyView')
       buySell.watchAddress(trades.pending)
       $rootScope.$digest()
-      expect(buySell.openBuyView).toHaveBeenCalled()
+      expect(modals.openBuyView).toHaveBeenCalled()
+    )
 
   describe "fetchProfile", ->
     exchange = undefined
@@ -118,27 +119,6 @@ describe "buySell service", () ->
       buySell.fetchProfile().catch((e) -> expect(e).toEqual('INVALID_REQUEST'))
       $rootScope.$digest()
       expect(buySell.getTrades).not.toHaveBeenCalled()
-
-  describe "openBuyView", ->
-    exchange = undefined
-
-    beforeEach ->
-      spyOn($uibModal, 'open').and.returnValue({ result: {} })
-
-    it "should open if there are trades", ->
-      buySell.getTrades()
-      buySell.openBuyView()
-      expect($uibModal.open).toHaveBeenCalled()
-
-    it "should get the trades before opening if user exists but there are no trades", ->
-      exchange.user = true
-      buySell.openBuyView()
-      $rootScope.$digest()
-      expect($uibModal.open).toHaveBeenCalled()
-
-    it "should open otherwise", ->
-      buySell.openBuyView()
-      expect($uibModal.open).toHaveBeenCalled()
 
   describe "cancelTrade", ->
     trade = undefined

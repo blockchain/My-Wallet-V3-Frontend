@@ -23,7 +23,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
     plaid: {},
     terms: false,
     accounts: accounts,
-    enableBankAccountForm: false
+    enableBankAccountForm: !!$scope.$root.inMobileBuy
   };
 
   $scope.fields = {

@@ -1,5 +1,5 @@
 .transactions(ng-if="status.isLoggedIn")
-  .filter-bar.flex-center(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
+  .filter-bar.flex-center.hidden-md.hidden-lg(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100.flex-between.flex-center(ng-class="{mbl: isFilterOpen}")
       a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
         i.f-24.icon-export
@@ -24,7 +24,7 @@
           span {{$select.selected | translate}}
         ui-select-choices(repeat="filter in filterTypes")
           span {{ filter | translate }}
-      .filter-search.input-group.width-100
+      .filter-search.input-group.width-100.mbl
         input.form-control.width-100(
           type="text"
           placeholder="{{::'SEARCH' | translate}}"
@@ -32,7 +32,8 @@
           ng-model-options="{ debounce: 250 }")
         i.ti-search
 
-    .flex-between.width-100.hidden-xs.hidden-sm
+  .filter-bar.flex-center.hidden-xs.hidden-sm(data-preflight-tag="TxsOptions")
+    .flex-between.width-100
       .flex-row.flex-center
         ui-select.mrl(
           ng-show="accounts.length > 1"
@@ -60,7 +61,7 @@
             ng-model="$parent.searchText"
             ng-model-options="{ debounce: 250 }")
           i.ti-search
-  .transaction-feed(data-preflight-tag="TxsFeed")
+  .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black.ph-25.center
         .flex-center.flex-justify

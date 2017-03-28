@@ -32,6 +32,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.status = {ready: true};
     scope.currencies = currency.coinifyCurrencies;
     scope.format = currency.formatCurrencyForView;
+    scope.inMobileBuy = $rootScope.inMobileBuy;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;

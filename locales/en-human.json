@@ -1148,6 +1148,7 @@
   "BUY_SUBSCRIBE": {
     "TITLE": "This feature is coming soon!",
     "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Sign up to get access as soon as we launch in your area!",
+    "BODY_MOBILE": "The world's most popular bitcoin wallet now lets you buy bitcoin securely.",
     "BUTTON": "Sign Up"
   },
   "SUBSCRIBE_TITLE": "Sign up for Blockchain updates!",

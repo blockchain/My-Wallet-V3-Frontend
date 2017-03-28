@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants) {
+function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants, modals) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -52,7 +52,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     getTrades,
     watchAddress,
     fetchProfile,
-    openBuyView,
     openSellView,
     pollKYC,
     pollUserLevel,
@@ -253,7 +252,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      service.openBuyView(trade, { bitcoinReceived: true });
+      modals.openBuyView(trade, { bitcoinReceived: true });
     });
   }
 
@@ -267,23 +266,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function openBuyView (trade = null, options = {}) {
-    return $uibModal.open({
-      templateUrl: 'partials/coinify-modal.pug',
-      windowClass: 'bc-modal auto buy',
-      controller: 'CoinifyController',
-      backdrop: 'static',
-      keyboard: false,
-      resolve: {
-        trade: () => trade && trade.refresh().then(() => trade),
-        options: () => Options.get(),
-        buyOptions: () => options
-      }
-    }).result;
-  }
-
   function openSellView (trade, buySellOptions = { sell: true }) {
-    console.log('openSellView', trade, buySellOptions);
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',

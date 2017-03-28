@@ -17,7 +17,7 @@
       helper-button.mb-5(content="CARD_TRANSFER.COPY")
   .mlm.mbl.em-300.width-70(ng-show="showNote('card')")
     span(translate="VERIFY_CARD_NOTE")
-  .flex-row.flex-center.pointer
+  .flex-row.flex-center.pointer(ng-hide="inMobileBuy")
     input.man(type="radio" name="inMedium" id="bank" ng-model="$parent.medium" value="bank" ng-disabled="status.waiting")
     .flex-row.flex-align-end.flex-1.mlm.pointer
       label.mts.pointer.em-300(for="bank")

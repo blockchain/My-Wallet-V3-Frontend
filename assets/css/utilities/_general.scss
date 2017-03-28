@@ -12,22 +12,15 @@ body {
   color: $text;
   height: 100%;
   width: 100%;
+  overflow: hidden;
+  @extend .flex-column;
 }
 
 .wallet-top-navigation.navbar-inverse {
-  position: fixed;
+  flex: 0 0 60px;
   width: 100%;
-  left: 0;
-  top: 0;
-}
-
-.wallet-container {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 60px;
   @media (max-width: 767px) {
-    top: 50px;
+    flex: 0 0 50px;
   }
 }
 
@@ -63,8 +56,6 @@ noscript {
     margin-bottom: 3em;
   }
 }
-
-.lh1 { line-height: 1; }
 
 .ph-form {
   @media(max-width: 375px) {

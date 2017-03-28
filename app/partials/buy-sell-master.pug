@@ -1,10 +1,9 @@
-.height-100.pbvl.flex-center.flex-around(ng-if="state.transitioning")
-
+.height-100.width-100.flex-center.flex-around.overflow-hidden.pos-rel.flex-grow(ng-if="state.transitioning")
   .flex-column.flex-justify.flex-center.height-100(ng-show="state.loading")
-    img.loader(src="img/puff.svg")
-    span.bg-blue.type-h4.copy-bar.white.flex-center.flex-justify(translate="FETCHING_INFO_EXCHANGE")
+    img.loader(src="img/puff.svg" ng-hide="inMobileBuy")
+    span.bg-blue.type-h4.white.copy-bar(translate="FETCHING_INFO_EXCHANGE" ng-class="{ 'full': inMobileBuy }")
 
   .flex-column.flex-justify.flex-center.height-100(ng-show="state.error")
-    span.bg-red.type-h4.copy-bar.white.flex-center.flex-justify(translate="METADATA_DOWN_EXCHANGE")
+    span.type-h4.white.copy-bar(translate="METADATA_DOWN" ng-class="inMobileBuy ? 'bg-blue full' : 'bg-red'")
 
-ui-view(ng-hide="state.transitioning")
+ui-view.height-100.flex-column.flex-1(ng-hide="state.transitioning")
