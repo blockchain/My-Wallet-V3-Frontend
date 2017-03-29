@@ -10,7 +10,7 @@
     span.badge.mbs(ng-if="$ctrl.badge > 0") {{$ctrl.badge}}
 
   .filter-buttons.flex-grow.visible-xs
-    .pal(
+    .pvl(
       ng-repeat="tab in $ctrl.tabOptions"
       ng-click="$ctrl.selectTab(tab)"
       ng-show="$ctrl.tab === tab || $ctrl.state.expanded")
@@ -18,7 +18,7 @@
         ng-class="{active: $ctrl.tab === tab}"
         translate="{{tab}}")
 
-  .pal.mts.f-12.visible-xs(ng-click="$ctrl.toggleExpanded()")
+  .pvl.mts.f-12.visible-xs(ng-click="$ctrl.toggleExpanded()")
     i.icon-up_arrow(ng-show="$ctrl.state.expanded")
     i.icon-down_arrow(ng-hide="$ctrl.state.expanded")
 
