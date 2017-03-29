@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($state, $uibModal, $ocLazyLoad) {
+function modals ($state, $uibModal, $ocLazyLoad, Options) {
   const service = {};
 
   let open = (defaults, options = {}) => (
@@ -25,6 +25,19 @@ function modals ($state, $uibModal, $ocLazyLoad) {
       modalInstance = modalOpener(...args);
     };
   };
+
+  service.openSend = service.openOnce((paymentRequest = {}, options) =>
+    open({
+      templateUrl: 'partials/send.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'SendCtrl',
+      resolve: {
+        paymentRequest: () => paymentRequest,
+        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
+        options: () => Options.get()
+      }
+    }, options)
+  );
 
   service.openHelper = (helper) => open({
     controller ($scope) {
