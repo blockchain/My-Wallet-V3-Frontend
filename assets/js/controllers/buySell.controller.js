@@ -29,6 +29,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
     $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency() };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
+    $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.state = {buy: true};
     $scope.rating = 0;
@@ -62,6 +63,12 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       let curr = $scope.transaction.currency || null;
       $scope.currencySymbol = currency.conversions[curr.code];
       if (newVal !== oldVal) $scope.getMaxMin();
+    });
+
+    $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
+      let curr = $scope.sellTransaction.currency || null;
+      $scope.sellCurrencySymbol = currency.conversions[curr.code];
+      if (newVal !== oldVal) $scope.getMaxMin(true);
     });
 
     if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
@@ -130,7 +137,13 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.changeCurrency = (curr) => {
       if (curr && $scope.currencies.some(c => c.code === curr.code)) {
         $scope.transaction.currency = curr;
+      }
+    };
+
+    $scope.changeSellCurrency = (curr) => {
+      if (curr && $scope.currencies.some(c => c.code === curr.code)) {
         $scope.sellTransaction.currency = curr;
+        $scope.sellCurrencySymbol = currency.conversions[curr.code];
       }
     };
 
@@ -150,7 +163,9 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     });
   }
 
-  $scope.getMaxMin = () => {
+  $scope.getMaxMin = (sell) => {
+    let transaction = sell ? 'sellTransaction' : 'transaction';
+
     const calculateMin = (rate) => {
       $scope.limits.card.min = (rate * 10).toFixed(2);
     };
@@ -161,8 +176,8 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       $scope.limits.currency = $scope.currencySymbol;
     };
 
-    buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateMin);
-    buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
+    buySell.getRate('EUR', $scope[transaction].currency.code).then(calculateMin);
+    buySell.getRate($scope.exchange.profile.defaultCurrency, $scope[transaction].currency.code).then(calculateMax);
   };
 
   $scope.getIsTradingDisabled = () => {

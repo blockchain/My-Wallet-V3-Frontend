@@ -10,7 +10,7 @@ angular
       pendingTrade: '=',
       modalOpen: '=',
       transaction: '=',
-      currencySymbol: '=',
+      sellCurrencySymbol: '=',
       changeCurrency: '&',
       onTrigger: '&'
     },
@@ -21,9 +21,10 @@ angular
 
 function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q) {
   $scope.limits = this.limits;
-  $scope.currencySymbol = this.currencySymbol;
+  $scope.sellCurrencySymbol = this.sellCurrencySymbol;
   $scope.sellTransaction = this.transaction;
-  $scope.exchangeRate = {};
+  $scope.sellExchangeRate = {};
+  $scope.changeSellCurrency = this.changeCurrency;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
@@ -32,9 +33,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.selectedCurrency = $scope.sellTransaction.currency.code;
 
 
+
   if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {
     // NOTE make EUR default if currency is not eur, dkk, or gbp
     $scope.sellTransaction.currency = { code: 'EUR', name: 'Euro' };
+    $scope.sellCurrencySymbol = currency.conversions['EUR'];
   }
 
   let exchange = buySell.getExchange();
@@ -45,12 +48,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   console.log('sell quick start component', $scope);
 
-  $scope.changeSellCurrency = (curr) => {
-    if (curr && $scope.currencies.some(c => c.code === curr.code)) {
-      $scope.sellTransaction.currency = curr;
-      this.changeCurrency(curr);
+  $scope.changeSymbol = (curr) => {
+    if (curr && $scope.currencies.some(c => c.code === curr.currency.code)) {
+      $scope.sellCurrencySymbol = currency.conversions[curr.currency.code];
     }
-  };
+  }
 
   $scope.increaseLimit = () => {
     // TODO
@@ -70,7 +72,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
     buySell.getQuote(-1, 'BTC', $scope.sellTransaction.currency.code)
       .then(function (quote) {
-        $scope.exchangeRate.fiat = (quote.quoteAmount / -100).toFixed(2);
+        $scope.sellExchangeRate.fiat = (quote.quoteAmount / -100).toFixed(2);
         $scope.status = {};
       }, error);
   };
