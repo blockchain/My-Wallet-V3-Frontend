@@ -79,7 +79,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
 
-
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => false;
@@ -403,6 +402,21 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   if (!$scope.step) {
     $scope.nextStep();
   }
+
+  $scope.standardError = (err) => {
+    console.log(err);
+    $scope.status = {};
+    try {
+      let e = JSON.parse(err);
+      let msg = e.error.toUpperCase();
+      if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
+      else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
+    } catch (e) {
+      let msg = e.error || err.message;
+      if (msg) Alerts.displayError(msg, true, $scope.alerts);
+      else Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
+    }
+  };
 
   $scope.reset = () => {
     $scope.transaction.btc = null;

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyTermsController', CoinifyTermsController);
 
-function CoinifyTermsController ($scope, buySell, $stateParams, Alerts) {
+function CoinifyTermsController ($scope, buySell, $stateParams, Alerts, $q, Wallet) {
   $scope.isSell = $scope.$parent.isSell;
   $scope.fields = {};
   $scope.$parent.acceptTermsForm = $scope.acceptTermsForm;
@@ -21,13 +21,23 @@ function CoinifyTermsController ($scope, buySell, $stateParams, Alerts) {
     return $scope.exchange.signup($stateParams.countryCode, $scope.$parent.transaction.currency)
       .then(() => $scope.exchange.fetchProfile())
       .then(() => $scope.$parent.nextStep())
-      // then go to next step
-      .catch(e => {
-        const msg = `There was a problem creating your Coinify account.`;
-        Alerts.displayError(msg);
-        $scope.status = {};
-      });
+      .catch($scope.standardError);
   };
+
+  $scope.$parent.signup = () => {
+    $scope.status.waiting = true;
+    Alerts.clear($scope.alerts);
+    $scope.$parent.exchange = buySell.getExchange();
+
+    return $scope.exchange.signup($stateParams.countryCode, $scope.transaction.currency.code)
+      .then(() => $scope.exchange.fetchProfile())
+      .then(() => $scope.getPaymentMediums())
+      .catch($scope.standardError);
+  };
+
+  $scope.$watch('signupForm', () => {
+    $scope.$parent.signupForm = $scope.signupForm;
+  });
 
   $scope.$watch('fields', () => {
     $scope.$parent.fields = $scope.fields;
