@@ -23,8 +23,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   $scope.step;
 
-  let links = options.partners.coinify.sellSurveyLinks;
-
   $scope.bankAccount = {
     account: {
       currency: null
@@ -249,9 +247,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     });
   };
 
+  let links = options.partners.coinify.sellSurveyLinks;
   $scope.close = () => {
     let index;
-
     if (!$scope.exchange.user) index = 0;
     else if (!$scope.trades.length && !$scope.trade) index = 1;
     else index = 2;

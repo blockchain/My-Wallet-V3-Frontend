@@ -19,7 +19,7 @@
                                     tooltip-placement="top"
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
-            span {{transaction.btc }} BTC ({{transaction.fiat}}{{currencySymbol}})
+            span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
           //- quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
           //- p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
@@ -28,11 +28,11 @@
       alerts(context="alerts")
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX" payment-info="paymentInfo" on-resize="onResize(step)")
-    div.width-80(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
+    div.width-90(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
       include ./coinify/email
-    div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
+    div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
       include ./coinify/email
-    div.width-80(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
+    div.width-90(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
       include ./coinify/account-info
     div.width-90(ng-show="onStep('account-holder')" ng-controller="CoinifyBankAccountController")
       include ./coinify/account-holder
@@ -40,9 +40,9 @@
       include ./coinify/summary
     div.width-90(ng-if="onStep('review')")
       include ./coinify/review
-    div.width-80(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
+    div.width-90(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
       include ./coinify/bank-link
-    div.width-80(ng-if="onStep('trade-formatted')")
+    div.width-90(ng-if="onStep('trade-formatted')")
       include ./trade-summary
     .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
       span.pos-rel
