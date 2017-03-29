@@ -106,12 +106,14 @@
   "TRANSACTIONS_AMT" : "100 Million+",
   "WALLETS_AMT" : "12 Million+",
   "COUNTRIES_SERVED_AMT" : "140+",
-  "REQUEST" : "Receive",
+  "REQUEST" : "Request",
+  "REQUEST_CREATED" : "Request Created",
+  "PAYMENT_ADDRESS": "Payment Address",
+  "VIEW_QR": "View QR Code",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
   "RECEIVE_TO" : "Receive To:",
   "AMOUNT" : "Amount",
-  "AMOUNT:" : "Amount:",
   "PAID" : "Paid:",
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
   "DEFAULT_NEW_ADDRESS_LABEL" : "New Address",
@@ -564,6 +566,7 @@
   "TX_FEE_REQUIRED": "Transaction Fee (required by Bitcoin miners)",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TX_FEE_EXPLAINATION": "Bitcoin miners receive fees for verifying transactions. We set fees dynamically based on network conditions and transaction size. You can customize your fee in advanced send.",
+  "TX_FEE_CONFIRM_EXPLAIN": "Transaction fees cover the mining network fees and the Blockchain infrastructure necessary to ensure fast and reliable transaction confirmation times. At this time, we recommend the transaction fee shown.",
   "USE_TOTAL": "Use total available minus fee",
   "ENTER_VALID_AMOUNT": "Please enter a valid amount",
   "ESTIMATED_TX_TIME": "Estimated confirmation time: ~{{ confirmationTime }} minutes ({{ blockQueue }}",
@@ -626,7 +629,10 @@
   "BLOCKED" : "Blocked",
   "TWO_STEP_ENABLED" : "2-Step Enabled",
   "MOBILE_LINKED" : "Mobile Linked",
-  "SCAN_QR_CODE" : "Scan your QR code:",
+  "SCAN_QR_CODE" : {
+    "TITLE": "Scan QR Code",
+    "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet."
+  },
   "HINT_STORED" : "Hint Stored",
   "NOT_STORED" : "Not Stored",
   "PHRASE_BACKED" : "Phrase Backed",
@@ -912,7 +918,6 @@
   "OK": "OK",
   "DESCRIPTION:": "Description:",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
-  "QR_HELPER": "Ask your sender to scan this QR code.",
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
   "THANKS_FOR_ACCEPTING": "Thanks for accepting bitcoin!",
@@ -953,6 +958,10 @@
   "ADD_A_DESCRIPTION": "Add a description",
   "ADD_A_LABEL": "Add a label",
   "COPY_AND_SHARE": "Copy and Share",
+  "COPY_AND_SHARE_ADDRESS": {
+    "TITLE": "Copy & Share Address",
+    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below."
+  },
   "SCAN": "Scan",
   "SIMPLE": "Simple",
   "CROSS_PLATFORM": "Cross-platform",
@@ -1253,7 +1262,6 @@
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
-  "ENTER_AMOUNT:": "Enter amount:",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
@@ -1335,7 +1343,8 @@
     "MORE_THAN_BALANCE": "The amount entered is more than your balance.",
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee"
-
   },
+  "COPY_LINK": "Copy Link",
+  "LINK_COPIED": "Link Copied To Clipboard!",
   "": ""
 }

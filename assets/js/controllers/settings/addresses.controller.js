@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, Alerts, $uibModal) {
+function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, MyBlockchainApi, Alerts, $uibModal) {
   if (!Wallet.status.isLoggedIn) {
     console.error('Controller depends on being logged in');
     return;
@@ -26,9 +26,6 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
   Labels.checkIfUsed(accountIndex).then(() => {
     $scope.loading = false;
     $rootScope.$safeApply();
-
-    let totalLabeled = $scope.addresses.filter($scope.presentFilter).length;
-    $scope.totalPast = $scope.addresses.length - totalLabeled;
   });
 
   $scope.account = Wallet.accounts()[$stateParams.account];
@@ -37,6 +34,8 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
 
   $scope.page = 1;
   $scope.pageLength = 20;
+  let totalLabeled = $scope.addresses.filter($scope.presentFilter).length;
+  $scope.totalPast = $scope.addresses.length - totalLabeled;
 
   $scope.createAddress = () => {
     $scope.createAddressInProgress = true;

@@ -2,130 +2,92 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, focus, $translate, $stateParams, filterFilter, $filter, format, smartAccount, Labels) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.legacyAddresses = Wallet.legacyAddresses;
   $scope.isBitCurrency = currency.isBitCurrency;
-  $scope.destinations = [];
-  $scope.receiveAddress = null;
-  $scope.advanced = false;
-  $scope.focus = focus;
-  $scope.showPaymentRequestURL = false;
+  $scope.format = currency.formatCurrencyForView;
+  $scope.toSatoshi = currency.convertToSatoshi;
+  $scope.fromSatoshi = currency.convertFromSatoshi;
 
   $scope.destinationLimit = 50;
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
 
-  $scope.fields = {
+  $scope.state = {
     to: null,
+    label: '',
     amount: null,
-    label: ''
+    viewQR: null,
+    requestCreated: null
   };
 
   $scope.destinations = smartAccount.getOptions();
-  $scope.fields.to = focus ? destination : Wallet.my.wallet.hdwallet.defaultAccount;
+  $scope.state.to = destination || Wallet.my.wallet.hdwallet.defaultAccount;
 
-  $scope.advancedReceive = () => {
-    $scope.advanced = true;
-  };
-
-  $scope.regularReceive = () => {
-    $scope.advanced = false;
-
-    $scope.fields.label = '';
-    $scope.fields.amount = null;
-  };
-
-  $scope.done = () => {
+  $scope.createPaymentRequest = () => {
+    $scope.lock();
     Alerts.clear();
 
-    if ($scope.fields.label === '' || $scope.fields.to.index == null) {
-      $uibModalInstance.dismiss('');
-    } else {
-      const success = () => {
-        $uibModalInstance.dismiss('');
-      };
+    const success = () => $scope.state.requestCreated = true;
 
-      const error = (error) => {
-        if (error === 'NOT_ALPHANUMERIC') {
-          $scope.requestForm.label.$error.characters = true;
-        } else if (error === 'GAP') {
-          $scope.requestForm.label.$error.gap = true;
-        } else if (error === 'KV_LABELS_READ_ONLY') {
-          Alerts.displayError('NEEDS_REFRESH');
-        }
-        $scope.requestForm.label.$valid = false;
-      };
-
-      let accountIndex = $scope.fields.to.index;
-
-      if (Wallet.my.wallet.isMetadataReady) {
-        Labels.addLabel(accountIndex, 15, $scope.fields.label).then(success).catch(error);
-      } else {
-        Wallet.askForSecondPasswordIfNeeded().then(pw => {
-          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
-            Alerts.displayError('NEEDS_REFRESH');
-          });
-        });
+    const error = (error) => {
+      if (error === 'NOT_ALPHANUMERIC') {
+        $scope.requestForm.label.$error.characters = true;
+      } else if (error === 'GAP') {
+        $scope.requestForm.label.$error.gap = true;
+      } else if (error === 'KV_LABELS_READ_ONLY') {
+        Alerts.displayError('NEEDS_REFRESH');
       }
+      $scope.requestForm.label.$valid = false;
+    };
+
+    let { label, to, amount } = $scope.state;
+
+    if (Wallet.my.wallet.isMetadataReady) {
+      $q.resolve(Labels.addLabel(to.index, 15, label, amount))
+        .then(success).catch(error).finally($scope.free);
+    } else {
+      Wallet.askForSecondPasswordIfNeeded().then(pw => {
+        Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+          Alerts.displayError('NEEDS_REFRESH');
+        });
+      });
     }
-  };
-
-  $scope.cancel = () => {
-    Alerts.clear();
-    $uibModalInstance.dismiss('');
-  };
-
-  $scope.useAccount = () => {
-    let idx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    $scope.fields.to = $scope.destinations.filter(d => d.index === idx)[0];
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
-    const activeAccounts = filterFilter(Wallet.accounts(), {
-      archived: false
-    });
-    const activeAddresses = filterFilter(Wallet.legacyAddresses(), {
-      archived: false
-    });
+    const activeAccounts = filterFilter(Wallet.accounts(), {archived: false});
+    const activeAddresses = filterFilter(Wallet.legacyAddresses(), {archived: false});
     return activeAccounts.length + activeAddresses.length;
   };
 
-  $scope.$watchCollection('destinations', () => {
-    if ($scope.fields.to == null) {
-      $scope.fields.to = smartAccount.getDefault();
-    }
-  });
-
-  $scope.paymentRequestAddress = () => {
+  $scope.address = () => {
     if (!$scope.status.didInitializeHD) return null;
 
-    if (($scope.fields.to != null) && ($scope.fields.to.address != null)) {
-      $scope.advanced = false;
-      return $scope.fields.to.address;
+    if (($scope.state.to != null) && ($scope.state.to.address != null)) {
+      return $scope.state.to.address;
     } else if ($scope.status.didInitializeHD) {
-      let idx = $scope.fields.to.index;
+      let idx = $scope.state.to.index;
       return Wallet.getReceivingAddressForAccount(idx);
     }
   };
 
-  $scope.paymentRequestURL = () => {
-    if ($scope.paymentRequestAddress() == null) return null;
+  $scope.paymentRequestURL = (isBitcoinURI) => {
+    let { amount, label } = $scope.state;
+    let { currency, btcCurrency } = $scope.settings;
+    let url;
 
-    let url = `bitcoin:${ $scope.paymentRequestAddress() }?`;
-    let amount = `amount=${ parseFloat($scope.fields.amount / 100000000) }`;
-    let message = `message=${ $scope.fields.label }`;
+    if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
+    else url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
 
-    if ($scope.fields.amount > 0 && $scope.fields.label !== '') {
-      url += amount;
-      url += `&`;
-      url += message;
-    }
-    else if ($scope.fields.amount > 0) url += amount;
-    else if ($scope.fields.label !== '') url += message;
-    else url = url.slice(0, -1);
+    if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
+    else url += amount ? 'amount_local=' + $scope.fromSatoshi(amount || 0, currency) + '&' : '';
 
-    return encodeURI(url);
+    url += label ? 'message=' + label + ' ' : '';
+    return encodeURI(url.slice(0, -1));
   };
+
+  $scope.installLock();
 }

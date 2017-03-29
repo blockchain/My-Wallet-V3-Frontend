@@ -1,117 +1,115 @@
 .modal-header.flex-column.bc-modal-header(data-preflight-tag="Request")
+  i.ti-close.close-modal(ng-click="$close()")
   .flex-center
-    img(src="img/arrow-down.png")
-    h3(translate="RECEIVE_BITCOIN")
-  div(ng-hide="focus || fields.to.type === 'Imported Addresses'")
-    h5.display-inline-block(translate="RECEIVE_BITCOIN_MESSAGE")
-    helper-button(content="WHY_HD" linktext="LEARN_MORE" link="https://support.blockchain.com/hc/en-us/articles/210353663-Why-is-my-bitcoin-address-changing-")
-  div(ng-show="fields.to.type === 'Imported Addresses'")
-    h5
-      span(translate="RECEIVE_BITCOIN_MESSAGE_LEGACY_1")
-      | &nbsp;
-      a(translate="CLICK_HERE" ng-click="useAccount()")
-#receive.fade.modal-body(ng-class="{'advanced': advanced, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
-  form.form-horizontal.ph-form(role="form" name="requestForm" novalidate)
-    .form-group.row.pbm.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': fields.to.isWatchOnly}")
-      label.flex-start.pts(translate="RECEIVE_TO")
-      .flex-center.flex-justify.auto(ng-show="focus")
-        span.type-lbl {{ fields.to.address }}
-      .flex-1(ng-hide="focus")
-        ui-select(ng-model="fields.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label" tagging)
-          ui-select-match(placeholder="{{::'SEARCH' | translate}}...")
-            label-origin(origin="$select.selected")
-          ui-select-choices(repeat="destination in destinations | filter: {label:$select.search} | limitTo:destinationLimit" group-by="'type'")
-            span(in-view="$last && destination.type==='Imported Addresses' && increaseLimit()")
-              label-origin(origin="::destination" highlight="$select.search")
-        span.help-block(ng-show="fields.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
-
-    .form-group.row(ng-show="paymentRequest && paymentRequest.paid > 0 && paymentRequest.paid != fields.amount")
-      label.col-sm-3.control-label(translate="PAID")
-      .flex-1
-        p.form-control-static
-          | {{ paymentRequest.paid / 100000000.0 }}
-
-
-    .receive-container(ng-class="{'mtl': !advanced && numberOfActiveAccountsAndLegacyAddresses() <= 1}")
-
-      .column.flex-justify(ng-show="advanced && fields.to.index != undefined")
-        .form-group.row.pbm.flex-justify.flex-center.amount(ng-class="{'has-error': requestForm.amount.$error.isValidAmount && requestForm.amount.$touched}")
-          label.mbn.pts(translate="AMOUNT:")
+    h3
+      i.mr-10.icon-receive
+      span(translate="REQUEST" ng-hide="state.requestCreated || state.viewQR")
+      span(translate="PAYMENT_ADDRESS" ng-show="state.viewQR")
+      span(translate="REQUEST_CREATED" ng-show="state.requestCreated")
+#receive.modal-body
+  form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="createPaymentRequest()" novalidate)
+    fieldset
+      .group.mb-20
+        .item
+          label.flex-between.flex-baseline
+            span
+              span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
+              helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER")
+            a.f-12.em-300(translate="VIEW_QR" ng-click="state.viewQR = true")
           .flex-row
-            .flex-center.flex-2.border-bottom
-              input.form-control.pln.pbn.no-border(
+            span.f-16.bg-grey.ph-25.pv-10.width-100 {{ address() }}
+            span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browserCanExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isAddressCopied")
+      
+      .group.mb-20
+        .item
+          .or-horizontal Or
+        
+      .group.inline.mb-25
+        .item.width-100
+          label.capitalize(translate="ENTER_AMOUNT:")
+          .flex-center
+            .flex-1.flex-center.border
+              input.form-control.no-border(
                 type="number"
-                ng-model="fields.amount"
-                name="amount"
-                transform-currency="settings.btcCurrency"
-                placeholder="0"
-                min="1"
-                max="2100000000000000"
-              )
-              span.lh1 {{ settings.btcCurrency.code }}
-            i.ti-arrows-horizontal.h4.border-grey.center.flex-1
-            .flex-center.border-bottom.flex-2
-              input.form-control.pln.pbn.no-border(
-                type="number"
-                ng-model="fields.amount"
+                ng-model="state.amount"
                 name="amountFiat"
                 transform-currency="settings.currency"
                 placeholder="0"
                 min="1"
                 max="2100000000000000"
-              )
-              span.lh1 {{ settings.currency.code }}
-        .form-group.row.pbm.flex-justify.flex-center.description(ng-class="{'has-error': !requestForm.label.$valid}")
-          label.mbn.pts(translate="DESCRIPTION:")
-          div
-            .flex-center.border-bottom
-              input.form-control.no-border.pln.pbn(
-                type="text"
-                ng-model="fields.label"
-                name="label"
-              )
-              helper-button(ng-model="fields" content="REQUEST_BITCOIN_STEP2B" values="{walletLabel: fields.to.label}")
-            span.help-block(ng-show="requestForm.label.$error.characters", translate="INVALID_CHARACTERS_FOR_LABEL")
-            span.help-block(ng-show="requestForm.label.$error.gap", translate="LABEL_ERROR_BIP_44_GAP")
+                required
+                autofocus)
+              span.mhm {{ settings.currency.code }}
+            i.ti-arrows-horizontal.h4.basic-grey.phm
+            .flex-1.flex-center.border
+              input.form-control.no-border(
+                type="number"
+                ng-model="state.amount"
+                name="amount"
+                transform-currency="settings.btcCurrency"
+                placeholder="0"
+                min="1"
+                max="2100000000000000"
+                required)
+              span.mhm {{ settings.btcCurrency.code }}
+      
+      .group.mb-20(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': state.to.isWatchOnly}")
+        .item
+          label(translate="RECEIVE_TO")
+          ui-select(ng-model="state.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label" tagging)
+            ui-select-match(placeholder="{{::'SEARCH' | translate}}...")
+              label-origin(origin="$select.selected")
+            ui-select-choices(repeat="destination in destinations | filter: {label:$select.search} | limitTo:destinationLimit" group-by="'type'")
+              span(in-view="$last && destination.type==='Imported Addresses' && increaseLimit()")
+                label-origin(origin="::destination" highlight="$select.search")
+          span.help-block(ng-show="state.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
+        
+      .group.mb-20
+        .item
+          label(translate="DESCRIPTION:")
+          textarea(name="label" ng-model="state.label" rows="8" cols="80" placeholder="What's this transaction for?" required)
+      
+      .group.mb-10
+        .item
+          button.btn.button-primary.upper(ng-disabled="requestForm.$invalid || locked" translate="NEXT" type="submit")
 
-      .flex-center.flex-justify.pbl(ng-show="advanced && fields.to.index != undefined")
-        span.ti-arrow-down.center
-
-      .payment-url.flex-around.flex-row(ng-if="paymentRequestURL()")
-        .flex-column.receive-address.flex-center(ng-class="{'max-width': advanced}"
-                                                 uib-tooltip="{{'COPY_HELPER' | translate}}"
-                                                 tooltip-append-to-body="true")
-          h4.mbl(translate="COPY_AND_SHARE")
-          span.flex-align-self-end.phs.pvs.pointer(ng-show="fields.amount || fields.label && advanced"
-                                                   ng-class="{'bg-grey': showPaymentRequestURL}"
-                                                   ng-click="showPaymentRequestURL = !showPaymentRequestURL")
-            i.ti-link
-          p.form-control-static.bitcoin-address
-            img(src="img/spinner.gif", ng-hide="status.didInitializeHD")
-            span(ng-show="status.didInitializeHD" single-click-select)
-              button.clipboard.btn.button-default
-              span(ng-hide="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestAddress() }}
-              span(ng-show="(fields.amount || fields.label) && showPaymentRequestURL") {{ paymentRequestURL() }}
-        span.or.flex-center.mrl.mll(translate="OR")
-        .receive-code.flex-column.flex-center.flex-around(uib-tooltip="{{'QR_HELPER' | translate}}"
-                                              tooltip-trigger="mouseenter"
-                                              tooltip-append-to-body="true")
-          h4(translate="SCAN")
-          p(ng-hide="status.didInitializeHD")
-            img(src="img/spinner.gif")
-          span(ng-show="status.didInitializeHD")
-            qr(text="paymentRequestURL()", size=100, correction-level="'M'", image="true")
-
-LABEL_ERROR_BIP_44_GAP
-.modal-footer.flex-between.flex-center.pal
-  .flex-center
-    button.btn.button-default(ng-hide="advanced || fields.to.index == undefined", ng-click="advancedReceive()", translate="CUSTOMIZE"
-                              uib-tooltip="{{'CUSTOMIZE_HELPER' | translate}}"
-                              tooltip-append-to-body="true")
-    button.btn.button-default(ng-show="advanced", ng-click="regularReceive()", translate="BACK")
-  .flex-center.flex-end
-    button.button-primary.btn(ng-click="done()", translate="DONE" ng-hide="advanced && fields.label != ''")
-    a.basic-grey.mrm(ng-click="cancel()", translate="CLOSE" ng-show="advanced && fields.label != ''")
-    button.button-primary.btn(ng-click="done()", translate="SAVE" ng-show="advanced && fields.label != ''"
-                              uib-tooltip="{{'SAVE_HELPER' | translate:{label: fields.to.label} }}"
-                              tooltip-append-to-body="true")
+  form.bc-form(ng-show="state.viewQR")
+    fieldset
+      .group.mb-20
+        .item
+          label.flex-between.flex-baseline
+            span
+              span.colon(translate="SCAN_QR_CODE.TITLE")
+              helper-button(content="SCAN_QR_CODE.HELPER")
+            a.f-12.em-300(translate="GO_BACK" ng-click="state.viewQR = false")
+          .flex-justify.flex-center.flex-column.mv-25
+            qr(text="paymentRequestURL(true)" size=250 image="true")
+          .flex-row
+            span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden {{ paymentRequestURL(true) }}
+            span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isBitcoinURICopied || !browserCanExecCommand" copy-content="{{ paymentRequestURL(true) }}" ng-click="state.isBitcoinURICopied = true")
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied")
+          
+  div(ng-show="state.requestCreated")
+    p.f-14.mb-25(translate="Send the link below to your friend or contact (via email or other messaging service), and they will be able to send bitcoin directly to your wallet.")
+    
+    form.bc-form
+      .group
+        .item
+          label(translate="Payment Request:")
+    
+    .bg-grey.pv-30.ph-60.flex-column.center
+      span.received.f-28.mb-10.em-600 {{ format(fromSatoshi(state.amount || 0, settings.btcCurrency), settings.btcCurrency, true) }}
+      span.received.f-20.em-300 {{ format(fromSatoshi(state.amount || 0, settings.currency), settings.currency, true) }}
+      span.f-16.em-300.mt-20.mbn(ng-show="state.label")
+        span For
+        |  
+        span.italic "{{ state.label }}"
+    
+    .bg-grey.pv-10.ph-30.center.border-top
+      span.f-12(style="word-break: break-all;") {{ paymentRequestURL() }}
+      
+    button.btn.button-primary.full.upper.mt-20(single-click-select copy-content="{{ paymentRequestURL() }}" ng-click="state.isPaymentRequestCopied = true" ng-hide="state.isPaymentRequestCopied || !browserCanExecCommand" translate="COPY_LINK")
+    button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED")
+    
+    a.display-block.center.mt-20(ng-click="$close()") Close
