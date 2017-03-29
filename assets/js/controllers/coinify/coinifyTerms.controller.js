@@ -6,6 +6,13 @@ function CoinifyTermsController ($scope, buySell, $stateParams, Alerts) {
   $scope.isSell = $scope.$parent.isSell;
   $scope.fields = {};
   $scope.$parent.acceptTermsForm = $scope.acceptTermsForm;
+  $scope.sellEmailVerified = true;
+
+  $scope.$parent.verifyEmail = () => {
+    $q(Wallet.verifyEmail.bind(null, $scope.$parent.fields.emailVerification)).catch((err) => {
+      Alerts.displayError(err);
+    });
+  };
 
   $scope.$parent.acceptTerms = () => {
     $scope.status.waiting = true;

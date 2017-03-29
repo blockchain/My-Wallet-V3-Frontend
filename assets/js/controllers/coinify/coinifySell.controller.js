@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts, $state, smartAccount, options) {
+function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts, $state, smartAccount, options, $stateParams) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
@@ -78,12 +78,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.assignFiatCurrency();
 
   let exchange = buySell.getExchange();
-
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-
-  if ($scope.exchange) {
-    $scope.exchangeCountry = exchange._profile._country;
-  }
+  $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
 
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
@@ -93,13 +89,14 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
 
   $scope.steps = {
-    'accept-terms': 0,
-    'account-info': 1,
-    'account-holder': 2,
-    'bank-link': 3,
-    'summary': 4,
-    'review': 5,
-    'isx': 6
+    'email': 0,
+    'accept-terms': 1,
+    'account-info': 2,
+    'account-holder': 3,
+    'bank-link': 4,
+    'summary': 5,
+    'review': 6,
+    'isx': 7
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -111,7 +108,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.nextStep = () => {
     $scope.status = {};
-
     if ($scope.trade._iSignThisID) {
       $scope.goTo('isx');
       return;
@@ -123,7 +119,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return;
     }
 
-    if (!$scope.exchange.user || !$scope.user.isEmailVerified) {
+    if (!$scope.user.isEmailVerified) {
+      $scope.goTo('email');
+    } else if (!$scope.exchange.user) {
       $scope.goTo('accept-terms');
     } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
       $scope.goTo('account-info');
@@ -138,6 +136,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     const b = $scope.bankAccount;
     if ($scope.onStep('accept-terms')) {
       return !$scope.fields.acceptTOS;
+    } else if ($scope.onStep('email')) {
+      return !$scope.user.isEmailVerified;
     } else if ($scope.onStep('account-info')) {
       if ($scope.transaction.currency === 'GBP') {
         return (!b.bank.address.street || !b.bank.name || !b.bank.address.city || !b.bank.address.zipcode || !b.account.number || !b.account.bic);
@@ -166,6 +166,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return true;
     }
   };
+
+  $scope.fields = { email: $scope.user.email };
 
   $scope.createBankAccount = () => {
     $scope.status.waiting = true;
@@ -405,8 +407,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   }
 
   $scope.reset = () => {
-    $scope.sellTransaction.btc = null;
-    $scope.sellTransaction.fiat = null;
+    $scope.transaction.btc = null;
+    $scope.transaction.fiat = null;
   };
 
   $scope.$watch('currencySymbol', (newVal, oldVal) => {

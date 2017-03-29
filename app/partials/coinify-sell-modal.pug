@@ -28,6 +28,8 @@
       alerts(context="alerts")
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX" payment-info="paymentInfo" on-resize="onResize(step)")
+    div.width-80(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
+      include ./coinify/email
     div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
       include ./coinify/email
     div.width-80(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
@@ -64,6 +66,11 @@
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
           ng-show="onStep('account-info')")
+        button.button-primary(
+          translate="CONTINUE"
+          ng-click="goTo('accept-terms')"
+          ng-disabled="isDisabled()"
+          ng-show="onStep('email')")
         button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="createBankAccount()"
