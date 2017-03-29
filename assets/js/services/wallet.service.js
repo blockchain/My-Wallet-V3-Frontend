@@ -4,9 +4,9 @@ angular
   .module('walletServices', [])
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options) {
   const wallet = {
     goal: {
       auth: false,
@@ -89,27 +89,28 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     $window.disableQA = () => reloadWithDebug(false);
   }
 
-  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback) => {
-    let didLogin = (result) => {
-      wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
-      if (wallet.my.wallet.isUpgradedToHD) {
-        wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
-      }
-      wallet.user.uid = uid;
-      wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted;
-      wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
-      wallet.settings.logoutTimeMinutes = wallet.my.wallet.logoutTime / 60000;
-      if (wallet.my.wallet.isUpgradedToHD && !wallet.status.didInitializeHD) {
-        wallet.status.didInitializeHD = true;
-      }
-      $window.name = 'blockchain-' + uid;
-      wallet.fetchAccountInfo((result) => {
-        wallet.initExternal();
-        wallet.status.isLoggedIn = true;
-        successCallback && successCallback(result);
-      });
-    };
+  wallet.didLogin = (uid, successCallback) => {
+    currency.fetchExchangeRate();
+    wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
+    if (wallet.my.wallet.isUpgradedToHD) {
+      wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
+    }
+    wallet.user.uid = uid;
+    wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted;
+    wallet.settings.pbkdf2 = wallet.my.wallet.pbkdf2_iterations;
+    wallet.settings.logoutTimeMinutes = wallet.my.wallet.logoutTime / 60000;
+    if (wallet.my.wallet.isUpgradedToHD && !wallet.status.didInitializeHD) {
+      wallet.status.didInitializeHD = true;
+    }
+    $window.name = 'blockchain-' + uid;
+    wallet.fetchAccountInfo().then((accountInfo) => {
+      wallet.initExternal();
+      wallet.status.isLoggedIn = true;
+      successCallback && successCallback(accountInfo);
+    });
+  };
 
+  wallet.login = (uid, password, two_factor_code, needsTwoFactorCallback, successCallback, errorCallback, sharedKey) => {
     let needsTwoFactorCode = (method) => {
       Alerts.displayWarning('Please enter your 2FA code');
       wallet.settings.needs2FA = true;
@@ -177,14 +178,19 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         password,
         {
           twoFactor: two_factor,
-          sessionToken: sessionToken
+          sessionToken: sessionToken,
+          sharedKey
         },
         {
           newSessionToken: newSessionToken,
           needsTwoFactorCode: needsTwoFactorCode,
           authorizationRequired: authorizationRequired
         }
-      ).then(didLogin).catch(loginError);
+      )
+      .then((result) => {
+        wallet.didLogin(uid, successCallback);
+      })
+      .catch(loginError);
     };
 
     // Check if we already have a session token:
@@ -192,12 +198,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let sessionGuid = $cookies.get('uid');
 
     doLogin(uid, sessionGuid, sessionToken);
-
-    currency.fetchExchangeRate();
   };
 
   wallet.fetchAccountInfo = (successCallback) => {
-    $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
+    return $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
       const accountInfo = wallet.my.wallet.accountInfo;
 
       wallet.user.email = accountInfo.email;
@@ -692,6 +696,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     if (wallet.askForDeauth()) {
       $window.name = 'blockchain-logout';
+    }
+
+    if ($rootScope.inMobileBuy) {
+      $state.go('intermediate');
     }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {

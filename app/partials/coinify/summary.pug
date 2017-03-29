@@ -37,23 +37,21 @@
       span.success(ng-hide="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
       span.success.tilda-before(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
     .flex-row.flex-between.pam.pos-rel.pv-15(ng-show="isSell")
-      //- SELL
       span.colon(ng-show="isSell" translate="SELL.BTC_TO_SELL")
       span(ng-show="isSell") {{ sellTransaction.btc }} BTC
     .flex-row.flex-between.pam.pos-rel(ng-hide="isSell")
-      //- BUY
-      span(translate="AMOUNT:" ng-hide="isSell")
-      span(ng-hide="editAmount || isSell") {{ transaction.fiat | format }} {{ transaction.currency.code }}
-      form.input-group.width-60.flex-row.flex-center.amount-input(
+      span(ng-hide="editAmount" translate="AMOUNT:")
+      span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
+      span.type-sm.blue.underline.pointer(
+        ng-disabled="tempFiatForm.$invalid"
+        ng-show="editAmount"
+        ng-class="{'o-3': tempFiatForm.fiat.$invalid}"
+        ng-click="tempFiatForm.$valid && commitValues()"
+        translate="UPDATE")
+      form.input-group.width-50.flex-row.flex-center.amount-input(
         name="tempFiatForm"
         ng-submit="commitValues()"
         ng-show="editAmount")
-        span.type-sm.blue.underline.pointer.mrm(
-          ng-disabled="tempFiatForm.$invalid"
-          ng-show="editAmount"
-          ng-class="{'o-3': tempFiatForm.fiat.$invalid}"
-          ng-click="tempFiatForm.$valid && commitValues()"
-          translate="UPDATE")
         .flex-row.flex-center.width-100
           input.form-control(
             type="number"
