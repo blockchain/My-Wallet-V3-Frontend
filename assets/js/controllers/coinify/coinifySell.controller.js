@@ -81,6 +81,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
+  $scope.exchangeCountry = exchange._profile._country;
+
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => false;
@@ -334,13 +336,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         $scope.payment.build();
 
         // NOTE sending is turned off when below is commented out
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
-          .then(transactionSucceeded)
-          .catch(err => {
-            console.log('err when publishing', err);
-            transactionFailed(err);
-          });
+        // Wallet.askForSecondPasswordIfNeeded()
+        //   .then(signAndPublish)
+        //   .then(transactionSucceeded)
+        //   .catch(err => {
+        //     console.log('err when publishing', err);
+        //     transactionFailed(err);
+          // });
       })
       .finally(() => {
         $scope.status.waiting = false;

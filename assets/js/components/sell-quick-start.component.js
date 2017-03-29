@@ -105,7 +105,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.status.waiting = true;
     $scope.$parent.sell({ fiat: $scope.sellTransaction.fiat, btc: $scope.sellTransaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
     $scope.status = {};
-    $scope.reset();
   };
 
   $scope.getExchangeRate();

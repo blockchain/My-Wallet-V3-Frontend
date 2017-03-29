@@ -9,6 +9,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.accountType = 'international';
   $scope.showBankName = true;
   $scope.countries = $scope.$parent.sepaCountries;
+  $scope.selectedBankCountry = $scope.countries.find(c => c.code === $scope.$parent.exchangeCountry);
 
   $scope.setAccountType = (accountType) => {
     $scope.accountType = accountType;
@@ -17,6 +18,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.selectCountry = (type, country) => {
     $scope.selectedBankCountry = country.name;
     if (type === 'bank') {
+      $scope.setAccountType();
       $scope.$parent.bankAccount.bank.address.country = country.code;
       $scope.$parent.country = country.name;
     } else if (type === 'holder') {
@@ -30,18 +32,24 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     $scope.$parent.country = countryName;
   };
 
+  // TODO refactor this gross thing
   $scope.setAccountType = (tx) => {
-    if (tx.currency === 'DKK') {
+    if ($scope.selectedBankCountry === 'Denmark') {
       $scope.showDanish = true;
+      $scope.britishBank = false;
       $scope.showBankName = false;
       setAccountTypeHelper('DK', 'Denmark');
     }
-    if (tx.currency === 'EUR') {
-      $scope.showBankName = false;
-    }
-    if (tx.currency === 'GBP') {
+    if ($scope.selectedBankCountry === 'United Kingdom') {
       $scope.britishBank = true;
+      $scope.showDanish = false;
+      $scope.showBankName = true;
       setAccountTypeHelper('GB', 'United Kingdom');
+    }
+    if ($scope.selectedBankCountry !== 'Denmark' && $scope.selectedBankCountry !== 'United Kingdom') {
+      $scope.showBankName = false;
+      $scope.showDanish = false;
+      $scope.britishBank = false;
     }
   };
   $scope.setAccountType($scope.transaction);
