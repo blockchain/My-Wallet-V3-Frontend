@@ -24,12 +24,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.currencySymbol = this.currencySymbol;
   $scope.sellTransaction = this.transaction;
   $scope.exchangeRate = {};
-  $scope.selectedCurrency = $scope.sellTransaction.currency.code;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   $scope.sellTransaction.btc = null;
+  $scope.selectedCurrency = $scope.sellTransaction.currency.code;
+
 
   if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {
     // NOTE make EUR default if currency is not eur, dkk, or gbp

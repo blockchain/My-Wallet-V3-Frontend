@@ -1305,7 +1305,7 @@
   "SELL_RATE_ACCEPT": "I accept that Coinify will process my order upon the completion of the bitcoin transaction, and that bitcoin will be traded at the available exchange rate at the time, which may differ from the displayed rate.",
   "CREATE_SELL_TRADE_ERROR": "Error creating sell trade. Please try again later.",
   "NO_COMPLETED_TRADES": "You haven't completed any trades yet.",
-  "SELL_TERMS_CREATE_ACCOUNT": "Our partner Coinify will process your Bitcoin purchase. By accepting Coinify's terms and clicking 'Continue' you will create a Coinify account using your verified email address",
+  "SELL_TERMS_CREATE_ACCOUNT": "Our partner Coinify will process your Bitcoin sale. By accepting Coinify's terms and clicking 'Continue' you will create a Coinify account using your verified email address",
   "CANNOT_COMPLETE_TRADE_ERROR": "{{::error}}. Please try again later. If you continue to experience issues, you may contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
   "UNABLE_TO_PROCESS": "Unable to process your trade",
   "SELL": {

@@ -26,7 +26,7 @@
               ng-class="{'input-error': error.moreThanInWallet}"
               required)
             div.input-group-btn
-              button.btn.btn-default.brdrn BTC
+              button.btn.btn-default.brdrn(ng-click="$event.preventDefault()") BTC
           i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
           i.ti-arrows-vertical.mvs.type-h4.visible-sm.visible-xs
           section.input-group.width-45
