@@ -81,7 +81,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
-  $scope.exchangeCountry = exchange._profile._country;
+  if ($scope.exchange) {
+    $scope.exchangeCountry = exchange._profile._country;
+  }
+
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';

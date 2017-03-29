@@ -11,12 +11,36 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.countries = $scope.$parent.sepaCountries;
   $scope.selectedBankCountry = $scope.countries.find(c => c.code === $scope.$parent.exchangeCountry);
 
-  $scope.setAccountType = (accountType) => {
-    $scope.accountType = accountType;
+  const setAccountTypeHelper = (countryCode, countryName) => {
+    $scope.$parent.bankAccount.holder.address.country = countryCode;
+    $scope.$parent.bankAccount.bank.address.country = countryCode;
+    $scope.$parent.country = countryName;
   };
 
+  // TODO refactor this gross thing
+  $scope.setAccountType = (tx) => {
+    if ($scope.selectedBankCountry.name === 'Denmark') {
+      $scope.showDanish = true;
+      $scope.britishBank = false;
+      $scope.showBankName = false;
+      setAccountTypeHelper('DK', 'Denmark');
+    }
+    if ($scope.selectedBankCountry.name === 'United Kingdom') {
+      $scope.britishBank = true;
+      $scope.showDanish = false;
+      $scope.showBankName = true;
+      setAccountTypeHelper('GB', 'United Kingdom');
+    }
+    if ($scope.selectedBankCountry.name !== 'Denmark' && $scope.selectedBankCountry.name !== 'United Kingdom') {
+      $scope.showBankName = false;
+      $scope.showDanish = false;
+      $scope.britishBank = false;
+    }
+  };
+  $scope.setAccountType($scope.transaction);
+
   $scope.selectCountry = (type, country) => {
-    $scope.selectedBankCountry = country.name;
+    $scope.selectedBankCountry = country;
     if (type === 'bank') {
       $scope.setAccountType();
       $scope.$parent.bankAccount.bank.address.country = country.code;
@@ -26,33 +50,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     }
   };
 
-  const setAccountTypeHelper = (countryCode, countryName) => {
-    $scope.$parent.bankAccount.holder.address.country = countryCode;
-    $scope.$parent.bankAccount.bank.address.country = countryCode;
-    $scope.$parent.country = countryName;
-  };
-
-  // TODO refactor this gross thing
-  $scope.setAccountType = (tx) => {
-    if ($scope.selectedBankCountry === 'Denmark') {
-      $scope.showDanish = true;
-      $scope.britishBank = false;
-      $scope.showBankName = false;
-      setAccountTypeHelper('DK', 'Denmark');
-    }
-    if ($scope.selectedBankCountry === 'United Kingdom') {
-      $scope.britishBank = true;
-      $scope.showDanish = false;
-      $scope.showBankName = true;
-      setAccountTypeHelper('GB', 'United Kingdom');
-    }
-    if ($scope.selectedBankCountry !== 'Denmark' && $scope.selectedBankCountry !== 'United Kingdom') {
-      $scope.showBankName = false;
-      $scope.showDanish = false;
-      $scope.britishBank = false;
-    }
-  };
-  $scope.setAccountType($scope.transaction);
+  $scope.$parent.bankAccount.bank.address.country = $scope.selectedBankCountry.code;
 
   $scope.cancel = () => {
     $scope.tempCurrency = $scope.transaction.currency;
