@@ -47,7 +47,6 @@ describe "SettingsAddressesCtrl", ->
         Wallet: Wallet
         Labels: Labels
         $uibModal: modal
-        paymentRequests: [{ address: '1aaa', label: 'pending', index: 2 }]
 
   it "should have payment requests", ->
     expect(scope.addresses.length).toEqual(4)
@@ -104,6 +103,7 @@ describe "SettingsAddressesCtrl", ->
 
     it "should fetch the balance for the first page of addresses", ->
       scope.addresses = Labels.all(0)
+
       expectedFirstPage = [scope.addresses[3]]
       scope.pageLength = 1
       scope.setPastAddressesPage(1)

@@ -3,10 +3,20 @@ angular
   .controller('CoinifySummaryController', CoinifySummaryController);
 
 function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
+  $scope.isSell = $scope.$parent.$parent.isSell;
   $scope.$parent.limits = {};
+  $scope.format = currency.formatCurrencyForView;
+  $scope.btcCurrency = currency.bitCurrencies[0];
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
-  $scope.isBankTransfer = () => $scope.isMedium('bank');
+  // $scope.isBankTransfer = () => $scope.isMedium('bank');
+  $scope.sellTrade = $scope.$parent.$parent.trade;
+  $scope.sellTransaction = $scope.$parent.$parent.transaction;
+
+  $scope.trade = $scope.$parent.trade;
+  $scope.transaction = $scope.$parent.transaction;
+
+  $scope.$parent.fields.rate = false;
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
@@ -23,6 +33,14 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
       return $q.all([min, max]).then($scope.setParentError);
     });
+  };
+
+  $scope.convertFeeToFiat = () => {
+    return $scope.transaction.fiat / $scope.fee;
+  };
+
+  $scope.setTotal = (baseAmount, fee) => {
+    return baseAmount - fee;
   };
 
   $scope.commitValues = () => {
@@ -93,12 +111,16 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.$parent.rateForm = $scope.rateForm;
   });
 
+  $scope.$watch('sellRateForm', () => {
+    $scope.$parent.$parent.sellRateForm = $scope.rateForm;
+  });
+
   $scope.$watch('step', () => {
     if ($scope.onStep('summary')) {
       $scope.getMaxMin($scope.tempCurrency);
 
       // Get a new quote if using a fake quote.
-      if (!$scope.$parent.quote.id) {
+      if (!$scope.$parent.quote.id && !$scope.$parent.sell) {
         $scope.$parent.quote = null;
         $scope.getQuote();
       }

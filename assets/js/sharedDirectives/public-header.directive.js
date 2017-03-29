@@ -2,9 +2,9 @@ angular
   .module('sharedDirectives')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope', '$location'];
+publicHeader.$inject = ['$rootScope', '$location', 'BlockchainConstants'];
 
-function publicHeader ($rootScope, $location) {
+function publicHeader ($rootScope, $location, BlockchainConstants) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -53,6 +53,6 @@ function publicHeader ($rootScope, $location) {
   function link (scope, elem, attrs) {
     scope.rootURL = $rootScope.rootURL;
     scope.path = () => $location.path();
-    scope.isTestnet = $rootScope.network === 'testnet';
+    scope.isTestnet = BlockchainConstants.NETWORK === 'testnet';
   }
 }

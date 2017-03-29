@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, modals) {
+function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants, modals) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -43,6 +43,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     login: () => initialized.promise.finally(service.fetchProfile),
     init,
     getQuote,
+    getSellQuote,
     getKYCs,
     getRate,
     calculateMax,
@@ -51,6 +52,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     getTrades,
     watchAddress,
     fetchProfile,
+    openSellView,
     pollKYC,
     pollUserLevel,
     getCurrency,
@@ -58,7 +60,11 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     submitFeedback,
     tradeStateIn,
     cancelTrade,
-    states
+    states,
+    getBankAccounts,
+    createBankAccount,
+    deleteBankAccount,
+    createSellTrade
   };
 
   return service;
@@ -66,7 +72,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   function init (coinify) {
     return Options.get().then(options => {
       coinify.partnerId = options.partners.coinify.partnerId;
-      coinify.api.testnet = $rootScope.network === 'testnet';
+      coinify.api.testnet = BlockchainConstants.NETWORK === 'testnet';
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
@@ -80,6 +86,56 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       amt = Math.trunc(amt * 100);
     }
     return $q.resolve(service.getExchange().getBuyQuote(amt, curr, quoteCurr));
+  }
+
+  function getSellQuote (amt, curr, quoteCurr) {
+    if (curr === 'BTC') {
+      amt = Math.trunc(amt * 100000000);
+    } else {
+      amt = Math.trunc(amt * 100);
+    }
+    return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr));
+  }
+
+  function getBankAccounts () {
+    return $q.resolve(service.getExchange().bank.getAll())
+      .then(accounts => {
+        if (accounts) {
+          return accounts;
+        } else {
+          return [];
+        }
+      })
+      .catch(e => {
+        console.log('error getting accounts', e);
+        return e;
+      });
+  }
+
+  function createBankAccount (bankObject) {
+    return $q.resolve(service.getExchange().bank.create(bankObject)).then(response => {
+      return response;
+    });
+  }
+
+  function deleteBankAccount (bankId) {
+    return $q.resolve(service.getExchange().bank.deleteOne(bankId)).then(response => {
+      return response;
+    });
+  }
+
+  function createSellTrade (quote, bank) {
+    return $q.resolve(service.getExchange().sell(quote, bank)).then(response => {
+      console.log('*** SELL TRADE RESPONSE ***', response);
+      return response;
+    })
+    .then(data => {
+      service.getTrades();
+      return data;
+    })
+    .catch(err => {
+      return err;
+    });
   }
 
   function getKYCs () {
@@ -208,6 +264,22 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     };
 
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
+  }
+
+  function openSellView (trade, buySellOptions = { sell: true }) {
+    return $uibModal.open({
+      templateUrl: 'partials/coinify-sell-modal.pug',
+      windowClass: 'bc-modal auto buy',
+      controller: 'CoinifySellController',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        accounts: () => service.getBankAccounts(),
+        trade: () => trade,
+        buySellOptions: () => buySellOptions,
+        options: () => Options.get()
+      }
+    }).result;
   }
 
   function getCurrency (trade) {

@@ -57,6 +57,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
+  //              Grunt can replace this:
   const network = $rootScope.network || 'bitcoin';
   BlockchainConstants.NETWORK = network;
 

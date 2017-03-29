@@ -256,7 +256,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     if (!$scope.exchange.user) index = 0;
     else if (!$scope.trades.length && !$scope.trade) index = 1;
     else index = 2;
-
     Alerts.surveyCloseConfirm('survey-opened', links, index).then($scope.cancel);
   };
 

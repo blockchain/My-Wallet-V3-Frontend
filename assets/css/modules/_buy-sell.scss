@@ -1,6 +1,6 @@
 .buy-sell {
   position: relative;
-  padding: 20px 30px 0 30px;
+  padding: 20px 15px 0 15px;
   flex: 1;
   @media (max-width: 991px) {
     padding: 10px 10px 0 10px;
@@ -126,6 +126,12 @@
   input:checked ~ .flex-row img:not(.cc-shadow) {
     display: none;
     &.checked { display: inline-block; }
+  }
+}
+
+.bank-link {
+  img {
+    width: 25px;
   }
 }
 
@@ -537,6 +543,10 @@ input[type="radio"]:checked + label {
       fill: #e62227;
     }
   }
+}
+
+.input-error {
+  border-color: #a94442 !important;
 }
 
 .primary { color: $iris; }

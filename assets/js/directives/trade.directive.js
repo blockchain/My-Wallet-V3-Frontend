@@ -14,6 +14,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       disabled: '=',
       trade: '=',
       buy: '=',
+      sell: '=',
       usa: '='
     },
     templateUrl: 'templates/trade.pug',
@@ -49,6 +50,11 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       scope.buy(t);
     };
 
+    scope.triggerSell = () => {
+      let t = scope.trade;
+      scope.sell(t);
+    };
+
     scope.updateBTCExpected = () => {
       scope.status.gettingQuote = true;
 
@@ -57,7 +63,11 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
         scope.btcExpected = quote;
       };
 
-      scope.trade.btcExpected().then(success);
+      const error = (e) => {
+        scope.status.gettingQuote = false;
+      };
+
+      scope.trade.btcExpected().then(success).catch(error);
     };
 
     scope.logDetails = (trade) => {

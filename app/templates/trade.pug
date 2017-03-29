@@ -9,7 +9,6 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
         li.pointer.pas(ng-click="logDetails(trade)") Log Trade Details
         li.pointer.pas(ng-click="trade.fakeAchSuccess()" ng-show="pending") Fake ACH Success
         li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
-
     span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived") Pending
@@ -18,10 +17,10 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
         ng-class="{disabled: isTradingDisabled}"
         ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
-        ng-show="trade.state === 'awaiting_transfer_in'") Finish payment
+        ng-show="trade.state === 'awaiting_transfer_in' && trade.medium !== 'blockchain'") Finish payment
       span.type-sm.blue.underline.pointer.text-nowrap(
-        ng-click="triggerBuy(); $event.stopPropagation();"
-        ng-show="trade.state !== 'awaiting_transfer_in'") View details
+        ng-click="trade.medium === 'blockchain' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
+        ng-show="trade.state !== 'awaiting_transfer_in' || trade.medium === 'blockchain'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml.hidden-xs
@@ -33,10 +32,12 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
-    span.display-inline-block(ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-show="trade.medium === 'blockchain'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
+    span.display-inline-block(ng-hide="trade.medium === 'blockchain'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl
     span(ng-hide="status.gettingQuote")
-      span.em-600 {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
+      span.em-600(ng-hide="trade.medium === 'blockchain'") {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
+      span.em-600(ng-show="trade.medium === 'blockchain'") {{ trade.outAmountExpected / 100 }} {{ trade.outCurrency }}
       span.hidden-xs
         i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}" tooltip-enable="!$root.inMobileBuy")
         i.ti-trash.fade(ng-hide="canCancel")

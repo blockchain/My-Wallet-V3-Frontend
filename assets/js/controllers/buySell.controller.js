@@ -27,6 +27,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
+    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency() };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.state = {buy: true};
@@ -39,11 +40,22 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       }
     };
 
+    $scope.sell = (trade, options) => {
+      console.log('sell from buy sell ctrl', trade, options); // NOTE trade will be kyc if passed in
+      if (!$scope.status.modalOpen) {
+        $scope.status.modalOpen = true;
+        buySell.openSellView(trade, options).finally(() => {
+          $scope.onCloseModal();
+        });
+      }
+    };
+
     // for quote
     buySell.getExchange();
 
     $scope.$watch('settings.currency', () => {
       $scope.transaction.currency = buySell.getCurrency();
+      $scope.sellTransaction.currency = buySell.getCurrency();
     }, true);
 
     $scope.$watch('transaction.currency', (newVal, oldVal) => {
@@ -70,7 +82,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
         let getKYCs = buySell.getKYCs().then(() => {
           $scope.kyc = buySell.kycs[0];
-          if ($scope.exchange) {
+          if ($scope.exchange.profile) { // NOTE added .profile here
             if (+$scope.exchange.profile.level.name < 2) {
               if ($scope.kyc) {
                 buySell.pollKYC();
@@ -107,9 +119,18 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         : $scope.buy($scope.kyc);
     };
 
+    $scope.openSellKyc = () => {
+      buySell.triggerKYC()
+        .then(kyc => {
+          console.log('then kyc', kyc);
+          $scope.sell(kyc);
+        });
+    };
+
     $scope.changeCurrency = (curr) => {
       if (curr && $scope.currencies.some(c => c.code === curr.code)) {
         $scope.transaction.currency = curr;
+        $scope.sellTransaction.currency = curr;
       }
     };
 
@@ -162,7 +183,13 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     return cannotTradeReason;
   };
 
-  $scope.tabs = ['BUY_BITCOIN', 'ORDER_HISTORY'];
+  $scope.setSellLimits = () => {
+    if ($scope.exchange._profile) {
+      $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
+    }
+  };
+
+  $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
     $state.params.selectedTab = tab;

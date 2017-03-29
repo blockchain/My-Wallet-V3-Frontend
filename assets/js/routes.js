@@ -314,7 +314,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.pug',
       controller: 'BuySellCtrl',
-      params: { countryCode: null, selectedTab: null },
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
       resolve: {
         options (Options) { return Options.get(); }
       }
