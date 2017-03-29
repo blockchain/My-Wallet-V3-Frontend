@@ -86,11 +86,11 @@ describe "SfoxVerifyController", ->
       future = "11/25/2016"
       expect(scope.isBeforeNow(future)).toEqual(false)
 
-  describe "getSignedURL", ->
+  describe "prepUpload", ->
 
     it "should get a signed url", ->
       spyOn(scope.vm.exchange.profile, 'getSignedURL')
-      scope.getSignedURL()
+      scope.prepUpload()
       expect(scope.vm.exchange.profile.getSignedURL).toHaveBeenCalled()
 
   describe "verify", ->
