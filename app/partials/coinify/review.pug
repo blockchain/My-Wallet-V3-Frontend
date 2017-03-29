@@ -6,7 +6,7 @@
 
 .flex-column.mvm(ng-if="!tradeCompleted && !ISXState")
   div
-    p.pvm.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
+    p.pbs.ptn.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
@@ -20,7 +20,7 @@
       span.colon(translate="SELL.BTC_SOLD")
       span {{ sellTrade.transferIn.receiveAmount }} BTC
   .left-align
-    p.colon.em-500.mbs.type-lbl.mtl(translate="SELL.PAYOUT_DETAILS") 
+    p.colon.em-500.mbs.type-lbl.mt-15(translate="SELL.PAYOUT_DETAILS") 
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")

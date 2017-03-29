@@ -57,7 +57,7 @@
         .mts.pos-rel.mb-10(ng-show="showZeroBalance")
           span.pos-abs.type-sm.state-danger-text(translate="SELL.ZERO_BALANCE")
         .mts.pos-rel.mb-10(ng-hide="tradingDisabled")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.card.min, symbol: sellCurrencySymbol.symbol}")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")
         .mtm.pos-rel.mb-10(ng-if="error.moreThanInWallet")
           span.state-danger-text(ng-show="error.moreThanInWallet" translate="SELL.MORE_THAN_BALANCE")

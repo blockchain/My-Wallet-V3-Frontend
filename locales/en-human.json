@@ -1150,7 +1150,7 @@
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
   "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
-  "SELL_AMT_LOW": "Sell amount too low.",
+  "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
   "SELL_AMT_HIGH": "Sell amount too high.",
   "WHY": "Why?",
   "UPDATE": "Update",
@@ -1172,7 +1172,7 @@
   "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
-  "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet secure and seamless.",
+  "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
   "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
   "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
@@ -1265,7 +1265,7 @@
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
-  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying bitcoin.",
+  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
   "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
@@ -1348,5 +1348,6 @@
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
+  "BUY_SELL_BITCOIN": "Buy/Sell Bitcoin",
   "": ""
 }

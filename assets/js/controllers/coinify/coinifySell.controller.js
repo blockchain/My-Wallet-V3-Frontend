@@ -110,22 +110,22 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return;
     }
 
-    if ($scope.trade._state && !$scope.trade._iSignThisID) {
+    if (($scope.trade._state && !$scope.trade._iSignThisID) && $scope.user.isEmailVerified) {
       $scope.mapTradeDetails();
       $scope.goTo('review');
       return;
-    }
-
-    if (!$scope.user.isEmailVerified) {
-      $scope.goTo('email');
-    } else if (!$scope.exchange.user) {
-      $scope.goTo('accept-terms');
-    } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
-      $scope.goTo('account-info');
-    } else if ($scope.bankAccounts) {
-      $scope.goTo('bank-link');
     } else {
-      $scope.goTo('summary');
+      if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
+        $scope.goTo('email');
+      } else if (!$scope.exchange.user) {
+        $scope.goTo('accept-terms');
+      } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
+        $scope.goTo('account-info');
+      } else if ($scope.bankAccounts) {
+        $scope.goTo('bank-link');
+      } else {
+        $scope.goTo('summary');
+      }
     }
   };
 
@@ -346,6 +346,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
             transactionFailed(err);
           });
       })
+      .catch((e) => console.log(e))
       .finally(() => {
         $scope.status.waiting = false;
         if (!$scope.error) $scope.goTo('review');
