@@ -42,6 +42,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   const setInitialCurrencyAndSymbol = (code, name) => {
     $scope.sellTransaction.currency = { code: code, name: name };
     $scope.sellCurrencySymbol = currency.conversions[code];
+    $scope.limitsCurrencySymbol = currency.conversions[code];
   };
 
   if ($scope.exchangeCountry === 'DK') {

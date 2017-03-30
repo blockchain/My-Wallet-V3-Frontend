@@ -1344,10 +1344,12 @@
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
-    "ZERO_BALANCE": "Unfortunately, you don't have any bitcoin to sell. Click Buy or Request to get some bitcoin in your wallet!"
+    "ZERO_BALANCE": "Unfortunately, you don't have any bitcoin to sell. Click Buy or Request to get some bitcoin in your wallet!",
+    "WHO_OWNS": "Who owns this bank account? This information should match the holder's bank statement.",
+    "PLEASE_ADD_ACCOUNT": "You don't have any bank accounts stored. Please add an account where you would like your funds sent."
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
-  "BUY_SELL_BITCOIN": "Buy/Sell Bitcoin",
+  "BUY_SELL_BITCOIN": "Buy Bitcoin",
   "": ""
 }

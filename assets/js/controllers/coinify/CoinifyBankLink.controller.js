@@ -31,6 +31,9 @@ function CoinifyBankLinkController ($scope, Alerts, buySell, $q) {
     $scope.bankAccounts = accounts;
     $scope.$parent.getBankAccounts();
     $scope.bankLinkEdit();
+    if ($scope.bankAccounts.length === 0) {
+      $scope.hideWhenNoAccounts = true;
+    }
   };
 
   $scope.deleteAccount = (account) => {

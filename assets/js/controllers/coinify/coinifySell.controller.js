@@ -94,6 +94,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.setAccountCurrency($scope.exchangeCountry);
+  $scope.bankAccount.holder.address.country = $scope.exchangeCountry;
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
