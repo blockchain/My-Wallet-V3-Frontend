@@ -30,10 +30,11 @@
           input.form-control(
             type="text"
             ng-model="$parent.bankAccount.account.number"
-            ng-change="setParentError()"
+            ng-change="setParentError(); turnOffIbanError();"
             name="bankIban"
             tabindex="1"
             placeholder=""
+            ng-class="{'input-error': $parent.ibanError}"
             required)
       .form-group.flex-column.width-100
         label.control-label(translate="Bank Identifier Code (SWIFT/BIC)")

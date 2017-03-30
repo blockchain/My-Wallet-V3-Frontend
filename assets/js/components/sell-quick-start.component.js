@@ -32,8 +32,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.sellTransaction.btc = null;
   $scope.selectedCurrency = $scope.sellTransaction.currency.code;
 
-
-
   if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {
     // NOTE make EUR default if currency is not eur, dkk, or gbp
     $scope.sellTransaction.currency = { code: 'EUR', name: 'Euro' };
@@ -46,13 +44,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
   }
 
-  console.log('sell quick start component', $scope);
-
   $scope.changeSymbol = (curr) => {
     if (curr && $scope.currencies.some(c => c.code === curr.currency.code)) {
       $scope.sellCurrencySymbol = currency.conversions[curr.currency.code];
     }
-  }
+  };
 
   $scope.increaseLimit = () => {
     // TODO

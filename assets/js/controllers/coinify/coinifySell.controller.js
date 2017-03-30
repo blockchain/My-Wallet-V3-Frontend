@@ -166,6 +166,23 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.fields = { email: $scope.user.email };
 
+  const handleAccountCreateError = (e) => {
+    let accountError = JSON.parse(e);
+    Alerts.displayError(accountError.error_description);
+    $scope.status = {};
+    if (accountError.error === 'invalid_iban') $scope.ibanError = true;
+    $scope.goTo('account-info');
+  };
+
+  const handleAfterAccountCreate = (d) => {
+    if (!d) {
+      Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED');
+      $scope.goTo('account-info');
+    } else {
+      $scope.goTo('summary');
+    }
+  };
+
   $scope.createBankAccount = () => {
     $scope.status.waiting = true;
     $scope.bankAccount.account.currency = $scope.transaction.currency;
@@ -175,18 +192,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         $scope.status = {};
         return result;
       })
-      .then(data => {
-        if (!data) {
-          Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED');
-          $scope.goTo('account-info');
-        } else {
-          $scope.goTo('summary');
-        }
-      })
-      .catch(err => {
-        console.log('err', err);
-        $scope.status = {};
-      });
+      .then(data => handleAfterAccountCreate(data))
+      .catch(e => handleAccountCreateError(e));
   };
 
   const handleGetBankAccounts = (result) => {
