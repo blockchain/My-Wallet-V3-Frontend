@@ -52,6 +52,8 @@ describe "SendCtrl", ->
             { label: "Savings", index: 1, archived: false, balance: 1 }
             { label: "Something", index: 2, archived: true }
           ]
+        accountInfo:
+          countryCodeGuess: "US"
 
       Wallet.isValidAddress = (address) ->
         address == 'valid_address'
@@ -64,6 +66,9 @@ describe "SendCtrl", ->
         currency: currency.currencies[0]
         btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
+
+      Wallet.user =
+        uid: 'a'
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->
@@ -82,6 +87,7 @@ describe "SendCtrl", ->
           $stateParams: {},
           $uibModalInstance: modalInstance
           paymentRequest: {address: "", amount: ""}
+          options: {}
 
         element = angular.element(
           '<form role="form" name="sendForm" novalidate>' +
@@ -817,6 +823,7 @@ describe "SendCtrl", ->
           $stateParams: {},
           $uibModalInstance: modalInstance
           paymentRequest: {address: "valid_address", amount: 1000000}
+          options: {}
 
         element = angular.element(
           '<form role="form" name="sendForm" novalidate>' +
