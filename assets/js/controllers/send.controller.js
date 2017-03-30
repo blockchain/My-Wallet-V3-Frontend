@@ -206,7 +206,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
         Alerts.displaySentBitcoin(message);
 
         if (AB_TEST_FEE) {
-          Wallet.api.pushTxStats(Wallet.user.uid);
+          Wallet.api.pushTxStats(Wallet.user.uid, $scope.advanced);
         }
       });
     };
