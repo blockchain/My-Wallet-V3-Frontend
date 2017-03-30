@@ -1,5 +1,12 @@
 {
   "showBuySellTab": ["GB", "NL", "DE", "US"],
+  "service_charge": {
+    "US": {
+      "min_tx_amount": 0,
+      "max_service_charge": 100000,
+      "percent": 0
+    }
+  },
   "partners": {
     "coinify": {
       "disabled": false,

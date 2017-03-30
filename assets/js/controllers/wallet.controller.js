@@ -56,23 +56,10 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     });
   });
 
-  $scope.send = modals.openOnce(() => {
+  $scope.send = () => {
     Alerts.clear();
-    return $uibModal.open({
-      templateUrl: 'partials/send.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
-      resolve: {
-        paymentRequest: () => ({
-          address: '',
-          amount: ''
-        }),
-        loadBcQrReader: () => {
-          return $ocLazyLoad.load('bcQrReader');
-        }
-      }
-    });
-  });
+    modals.openSend({ address: '', amount: '' });
+  };
 
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
@@ -184,15 +171,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
-          $uibModal.open({
-            templateUrl: 'partials/send.pug',
-            controller: 'SendCtrl',
-            resolve: {
-              paymentRequest: () => Wallet.goal.send,
-              loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
-            },
-            windowClass: 'bc-modal initial'
-          });
+          modals.openSend(Wallet.goal.send);
           Wallet.goal.send = void 0;
         }
       } else {

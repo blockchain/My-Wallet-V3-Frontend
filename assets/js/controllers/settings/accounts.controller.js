@@ -31,20 +31,8 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
   };
 
   $scope.transfer = () => {
-    $uibModal.open({
-      templateUrl: 'partials/send.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
-      resolve: {
-        paymentRequest: () => ({
-          fromAccount: Wallet.accounts()[Wallet.getDefaultAccountIndex()],
-          amount: 0
-        }),
-        loadBcQrReader: () => {
-          return $ocLazyLoad.load('bcQrReader');
-        }
-      }
-    });
+    let fromAccount = Wallet.accounts()[Wallet.getDefaultAccountIndex()];
+    modals.openSend({ fromAccount, amount: 0 });
   };
 
   $scope.openTransferAll = () => $uibModal.open({

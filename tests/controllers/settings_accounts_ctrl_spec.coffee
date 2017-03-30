@@ -1,14 +1,13 @@
 describe "SettingsAccountsController", ->
   scope = undefined
-
-  modal =
-    open: ->
+  $uibModal = undefined
 
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
     angular.mock.inject ($injector, $rootScope, $controller) ->
       Wallet = $injector.get("Wallet")
+      $uibModal = $injector.get("$uibModal")
 
       Wallet.accounts = () -> [{},{}]
       Wallet.my.wallet = {
@@ -22,16 +21,11 @@ describe "SettingsAccountsController", ->
       $controller "SettingsAccountsController",
         $scope: scope,
         $stateParams: {}
-        $uibModal: modal
-
-      return
-
-    return
 
   it "should open modal to create a new account",  inject(() ->
-    spyOn(modal, "open")
+    spyOn($uibModal, "open").and.callThrough()
     scope.newAccount()
-    expect(modal.open).toHaveBeenCalled()
+    expect($uibModal.open).toHaveBeenCalled()
   )
 
   it "should list accounts",  inject(() ->
@@ -39,7 +33,7 @@ describe "SettingsAccountsController", ->
   )
 
   it "should open modal to transfer funds",  inject(() ->
-    spyOn(modal, "open")
+    spyOn($uibModal, "open").and.callThrough()
     scope.transfer()
-    expect(modal.open).toHaveBeenCalled()
+    expect($uibModal.open).toHaveBeenCalled()
   )

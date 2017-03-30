@@ -11,4 +11,6 @@ angular
       memoize: (f) -> f
       getMobileOperatingSystem: () ->
         'unknown'
+      guidToGroup: (uid) ->
+        if uid[0] == 'a' then 'a' else 'b'
     }
