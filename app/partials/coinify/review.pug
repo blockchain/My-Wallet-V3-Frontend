@@ -1,5 +1,5 @@
 .flex-column(ng-if="ISXState")
-  div.mvl.em-500
+  .mvl.em-500
     span.f-14 Identity Verification Status
   div
     span(translate="{{KYCState}}")
@@ -31,15 +31,13 @@
   .left-align
     p.type-sm.mtl(translate="SELL.1_2_DAYS")
       
-.flex-column.mvm(ng-if="tradeCompleted && !ISXState")
-  div.mvl.em-500(ng-show="trade._state !== 'completed'")
+.flex-column.mt-10(ng-if="tradeCompleted && !ISXState")
+  .mvl.em-500(ng-show="trade._state !== 'completed'")
     span.pvm.type-h5.state-danger-text(translate="Trade")
     | &nbsp;
     span.type-h5.state-danger-text {{trade._state}}.
-  div.mvl(ng-show="trade._state === 'completed'")
-    span.pvm.type-h5.text-success(translate="Trade")
-    | &nbsp;
-    span.type-h5.text-success {{trade._state}}.
+  .mbl.mtn(ng-show="trade._state === 'completed'")
+    span.f-14(translate="SELL.RECEIVE_EMAIL_RECEIPT")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
@@ -61,3 +59,5 @@
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.CREDIT_ISSUED")
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}
+  .mvm
+    span.f-12(translate="SELL.PLEASE_NOTE_BANK_POLICIES")

@@ -89,7 +89,9 @@
           span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")
             span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
       .flex-row.mt-5(ng-hide="!exchange._user || error.moreThanInWallet")
-        span Maximum daily sell amount is {{limitsCurrencySymbol.symbol}}{{sellLimit}}.
+        span(translate="SELL.MAX_DAILY")
+        | &nbsp;
+        span {{limitsCurrencySymbol.symbol}}{{sellLimit}}.
         | &nbsp;
         a(ng-click="$ctrl.onTrigger()") Increase my limit
       .flex-end.pos-rel

@@ -24,7 +24,7 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml.hidden-xs
-    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount")
+    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
       span.display-inline-block.left-align
         quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
       br

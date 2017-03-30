@@ -6,6 +6,7 @@ angular
       limits: '=',
       disabled: '=',
       tradingDisabled: '=',
+      tradingDisabledReason: '=',
       openPendingTrade: '&',
       pendingTrade: '=',
       modalOpen: '=',
@@ -136,6 +137,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
     let curr = $scope.sellTransaction.currency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
+  });
+
+  $scope.$watch('totalBalance', (newVal, oldVal) => {
+    console.log('watching total balance');
+    if (newVal > 0) {
+      $scope.tradingDisabled = false;
+    }
   });
 
   $scope.offerUseAll = () => {
