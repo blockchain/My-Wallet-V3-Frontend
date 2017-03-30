@@ -21,20 +21,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
   $scope.setAccountType = (tx) => {
     if ($scope.selectedBankCountry.name === 'Denmark') {
       $scope.showDanish = true;
-      $scope.britishBank = false;
-      $scope.showBankName = false;
       setAccountTypeHelper('DK', 'Denmark');
-    }
-    if ($scope.selectedBankCountry.name === 'United Kingdom') {
-      $scope.britishBank = true;
-      $scope.showDanish = false;
-      $scope.showBankName = true;
-      setAccountTypeHelper('GB', 'United Kingdom');
-    }
-    if ($scope.selectedBankCountry.name !== 'Denmark' && $scope.selectedBankCountry.name !== 'United Kingdom') {
-      $scope.showBankName = false;
-      $scope.showDanish = false;
-      $scope.britishBank = false;
     }
   };
   $scope.setAccountType($scope.transaction);
@@ -71,12 +58,11 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
         currency: $scope.trade.quoteCurrency
       },
       bank: {
-        name: 'Gringotts',
         address: {
-          street: '1 Main St',
-          city: 'London',
+          street: null,
+          city: null,
           state: null,
-          zipcode: '11111',
+          zipcode: null,
           country: 'GB'
         }
       },

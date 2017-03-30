@@ -53,7 +53,7 @@
               placeholder=""
               required)
       .form-group.flex-row.flex-between.width-100
-        div.width-45
+        div.width-45.width-45-mobile.width-45-tablet
           label.control-label(translate="Country")
           div
             ui-select.mtm(ng-model="$parent.bankAccount.holder.address.country" on-select="selectCountry('holder', $item)")

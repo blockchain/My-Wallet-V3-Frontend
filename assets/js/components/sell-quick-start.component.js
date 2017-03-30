@@ -19,7 +19,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q) {
+function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams) {
   $scope.limits = this.limits;
   $scope.sellCurrencySymbol = this.sellCurrencySymbol;
   $scope.sellTransaction = this.transaction;
@@ -32,17 +32,27 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.sellTransaction.btc = null;
   $scope.selectedCurrency = $scope.sellTransaction.currency.code;
 
-  if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {
-    // NOTE make EUR default if currency is not eur, dkk, or gbp
-    $scope.sellTransaction.currency = { code: 'EUR', name: 'Euro' };
-    $scope.sellCurrencySymbol = currency.conversions['EUR'];
-  }
-
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   if ($scope.exchange._profile) {
     $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
   }
+
+  const setInitialCurrencyAndSymbol = (code, name) => {
+    $scope.sellTransaction.currency = { code: code, name: name };
+    $scope.sellCurrencySymbol = currency.conversions[code];
+  };
+
+  if ($scope.exchangeCountry === 'DK') {
+    setInitialCurrencyAndSymbol('DKK', 'Danish Krone');
+  } else if ($scope.exchangeCountry === 'GB') {
+    setInitialCurrencyAndSymbol('GBP', 'Great British Pound');
+  } else {
+    setInitialCurrencyAndSymbol('EUR', 'Euro');
+  }
+
+  console.log('quick start scope', $scope);
 
   $scope.changeSymbol = (curr) => {
     if (curr && $scope.currencies.some(c => c.code === curr.currency.code)) {
@@ -58,8 +68,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   (() => {
     $scope.kyc = buySell.kycs[0];
   })();
-
-  // $scope.establishKyc();
 
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 

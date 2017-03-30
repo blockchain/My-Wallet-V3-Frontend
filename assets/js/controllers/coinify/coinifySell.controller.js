@@ -79,6 +79,22 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
 
+  $scope.setAccountCurrency = (countryCode) => {
+    switch (countryCode) {
+      case 'DK':
+        $scope.bankAccount.account.currency = 'DKK';
+        break;
+      case 'GB':
+        $scope.bankAccount.account.currency = 'GBP';
+        break;
+      default:
+        $scope.bankAccount.account.currency = 'EUR';
+        break;
+    }
+  };
+
+  $scope.setAccountCurrency($scope.exchangeCountry);
+
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => false;
@@ -136,9 +152,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else if ($scope.onStep('email')) {
       return !$scope.user.isEmailVerified;
     } else if ($scope.onStep('account-info')) {
-      if ($scope.transaction.currency === 'GBP') {
-        return (!b.bank.address.street || !b.bank.name || !b.bank.address.city || !b.bank.address.zipcode || !b.account.number || !b.account.bic);
-      }
       return (!b.account.number || !b.account.bic);
     } else if ($scope.onStep('account-holder')) {
       return (!b.holder.name || !b.holder.address.street || !b.holder.address.zipcode || !b.holder.address.city || !b.holder.address.country);
@@ -410,6 +423,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   if (!$scope.step) {
     $scope.nextStep();
   }
+
+  console.log('coinifySell controller', $scope);
 
   $scope.standardError = (err) => {
     console.log(err);
