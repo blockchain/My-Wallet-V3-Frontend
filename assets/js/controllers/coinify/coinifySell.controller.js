@@ -79,7 +79,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
 
-
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
   $scope.needsKyc = () => false;
@@ -111,22 +110,22 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return;
     }
 
-    if ($scope.trade._state && !$scope.trade._iSignThisID) {
+    if (($scope.trade._state && !$scope.trade._iSignThisID) && $scope.user.isEmailVerified) {
       $scope.mapTradeDetails();
       $scope.goTo('review');
       return;
-    }
-
-    if (!$scope.user.isEmailVerified) {
-      $scope.goTo('email');
-    } else if (!$scope.exchange.user) {
-      $scope.goTo('accept-terms');
-    } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
-      $scope.goTo('account-info');
-    } else if ($scope.bankAccounts) {
-      $scope.goTo('bank-link');
     } else {
-      $scope.goTo('summary');
+      if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
+        $scope.goTo('email');
+      } else if (!$scope.exchange.user) {
+        $scope.goTo('accept-terms');
+      } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
+        $scope.goTo('account-info');
+      } else if ($scope.bankAccounts) {
+        $scope.goTo('bank-link');
+      } else {
+        $scope.goTo('summary');
+      }
     }
   };
 
@@ -167,6 +166,23 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.fields = { email: $scope.user.email };
 
+  const handleAccountCreateError = (e) => {
+    let accountError = JSON.parse(e);
+    Alerts.displayError(accountError.error_description);
+    $scope.status = {};
+    if (accountError.error === 'invalid_iban') $scope.ibanError = true;
+    $scope.goTo('account-info');
+  };
+
+  const handleAfterAccountCreate = (d) => {
+    if (!d) {
+      Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED');
+      $scope.goTo('account-info');
+    } else {
+      $scope.goTo('summary');
+    }
+  };
+
   $scope.createBankAccount = () => {
     $scope.status.waiting = true;
     $scope.bankAccount.account.currency = $scope.transaction.currency;
@@ -176,18 +192,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         $scope.status = {};
         return result;
       })
-      .then(data => {
-        if (!data) {
-          Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED');
-          $scope.goTo('account-info');
-        } else {
-          $scope.goTo('summary');
-        }
-      })
-      .catch(err => {
-        console.log('err', err);
-        $scope.status = {};
-      });
+      .then(data => handleAfterAccountCreate(data))
+      .catch(e => handleAccountCreateError(e));
   };
 
   const handleGetBankAccounts = (result) => {
@@ -347,6 +353,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
             transactionFailed(err);
           });
       })
+      .catch((e) => console.log(e))
       .finally(() => {
         $scope.status.waiting = false;
         if (!$scope.error) $scope.goTo('review');
@@ -403,6 +410,21 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   if (!$scope.step) {
     $scope.nextStep();
   }
+
+  $scope.standardError = (err) => {
+    console.log(err);
+    $scope.status = {};
+    try {
+      let e = JSON.parse(err);
+      let msg = e.error.toUpperCase();
+      if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
+      else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
+    } catch (e) {
+      let msg = e.error || err.message;
+      if (msg) Alerts.displayError(msg, true, $scope.alerts);
+      else Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
+    }
+  };
 
   $scope.reset = () => {
     $scope.transaction.btc = null;

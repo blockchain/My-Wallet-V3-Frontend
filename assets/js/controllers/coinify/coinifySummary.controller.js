@@ -9,7 +9,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.btcCurrency = currency.bitCurrencies[0];
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
-  $scope.isBankTransfer = () => $scope.isMedium('bank');
+
   $scope.sellTrade = $scope.$parent.$parent.trade;
   $scope.sellTransaction = $scope.$parent.$parent.transaction;
 
@@ -17,6 +17,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.transaction = $scope.$parent.transaction;
 
   $scope.$parent.fields.rate = false;
+
+  if (!$scope.isSell) {
+    $scope.isBankTransfer = () => $scope.isMedium('bank');
+  }
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {

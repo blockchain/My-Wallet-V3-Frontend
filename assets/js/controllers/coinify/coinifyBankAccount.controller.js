@@ -143,6 +143,8 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
     };
   };
 
+  $scope.turnOffIbanError = () => $scope.$parent.ibanError = false;
+
   $scope.setAccountCurrency = (currency) => {
     $scope.$parent.bankAccount.account.currency = currency.code;
     $scope.accountCurrency = currency.code;

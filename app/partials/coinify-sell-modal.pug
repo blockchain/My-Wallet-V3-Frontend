@@ -31,14 +31,14 @@
     div.width-90(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
       include ./coinify/email
     div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
-      include ./coinify/email
+      include ./coinify/signup
     div.width-90(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
       include ./coinify/account-info
     div.width-90(ng-show="onStep('account-holder')" ng-controller="CoinifyBankAccountController")
       include ./coinify/account-holder
     div.width-90(ng-if="onStep('summary')" ng-controller="CoinifySummaryController")
       include ./coinify/summary
-    div.width-90(ng-if="onStep('review')")
+    div.width-95(ng-if="onStep('review')")
       include ./coinify/review
     div.width-90(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
       include ./coinify/bank-link
