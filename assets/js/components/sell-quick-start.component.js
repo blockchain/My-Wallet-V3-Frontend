@@ -12,6 +12,7 @@ angular
       modalOpen: '=',
       transaction: '=',
       sellCurrencySymbol: '=',
+      selectTab: '&',
       changeCurrency: '&',
       onTrigger: '&'
     },
@@ -20,7 +21,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams) {
+function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams, $uibModal) {
   $scope.limits = this.limits;
   $scope.sellCurrencySymbol = this.sellCurrencySymbol;
   $scope.sellTransaction = this.transaction;
@@ -122,6 +123,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
       $scope.tradingDisabled = true;
+      $scope.showZeroBalance = true;
       return;
     }
     if (newVal >= $scope.totalBalance) {
@@ -134,16 +136,22 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   });
 
+  $scope.request = modals.openOnce(() => {
+    Alerts.clear();
+    return $uibModal.open({
+      templateUrl: 'partials/request.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'RequestCtrl',
+      resolve: {
+        destination: () => null,
+        focus: () => false
+      }
+    });
+  });
+
   $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
     let curr = $scope.sellTransaction.currency || null;
     $scope.currencySymbol = currency.conversions[curr.code];
-  });
-
-  $scope.$watch('totalBalance', (newVal, oldVal) => {
-    console.log('watching total balance');
-    if (newVal > 0) {
-      $scope.tradingDisabled = false;
-    }
   });
 
   $scope.offerUseAll = () => {
