@@ -5,7 +5,9 @@ angular
 function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options) {
   const FEE_TO_MINERS = true;
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
-  const FEE_OPTIONS = options.service_charge && options.service_charge[COUNTRY_CODE];
+  const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.user.uid) === 'b';
+  const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
+  const AB_TEST_FEE = FEE_OPTIONS != null;
 
   window.FEE = FEE_OPTIONS;
 
@@ -202,6 +204,10 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
         let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
         Alerts.displaySentBitcoin(message);
+
+        if (AB_TEST_FEE) {
+          Wallet.api.pushTxStats(Wallet.user.uid);
+        }
       });
     };
 
@@ -324,7 +330,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     let amounts = $scope.transaction.amounts;
     if (amounts.some(a => isNaN(a) || a <= 0)) return;
     let fee = $scope.advanced ? $scope.transaction.fee : undefined;
-    $scope.payment.amount($scope.transaction.amounts, fee, FEE_OPTIONS);
+    $scope.payment.amount($scope.transaction.amounts, fee, FEE_ENABLED ? FEE_OPTIONS : null);
   };
 
   $scope.setPaymentFee = () => {
@@ -365,7 +371,12 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     $scope.checkPriv()
       .then($scope.checkFee)
       .then($scope.finalBuild)
-      .then(() => $scope.confirmationStep = true)
+      .then(() => {
+        $scope.confirmationStep = true;
+        if (AB_TEST_FEE) {
+          Wallet.api.confirmationScreenStats(Wallet.user.uid);
+        }
+      })
       .catch(handleNextStepError)
       .finally(() => $scope.building = false);
   };
