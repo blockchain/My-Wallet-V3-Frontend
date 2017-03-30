@@ -2,7 +2,13 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount) {
+function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options) {
+  const FEE_TO_MINERS = true;
+  const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
+  const FEE_OPTIONS = options.service_charge && options.service_charge[COUNTRY_CODE];
+
+  window.FEE = FEE_OPTIONS;
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -163,7 +169,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
         $scope.unsetPaymentHandlers($scope.payment);
         $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint);
         $scope.setPaymentHandlers($scope.payment);
-        $scope.payment.build();
+        $scope.payment.build(FEE_TO_MINERS);
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
@@ -318,7 +324,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     let amounts = $scope.transaction.amounts;
     if (amounts.some(a => isNaN(a) || a <= 0)) return;
     let fee = $scope.advanced ? $scope.transaction.fee : undefined;
-    $scope.payment.amount($scope.transaction.amounts, fee);
+    $scope.payment.amount($scope.transaction.amounts, fee, FEE_OPTIONS);
   };
 
   $scope.setPaymentFee = () => {
@@ -441,7 +447,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.finalBuild = () => $q((resolve, reject) => {
-    $scope.payment.build().then(p => {
+    $scope.payment.build(FEE_TO_MINERS).then(p => {
       resolve(p.transaction);
       return p;
     }).catch(r => {
