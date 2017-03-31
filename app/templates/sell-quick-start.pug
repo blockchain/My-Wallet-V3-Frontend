@@ -26,7 +26,7 @@
               ng-class="{'input-error': error.moreThanInWallet}"
               required)
             div.input-group-btn
-              button.btn.btn-default.brdrn(ng-click="$event.preventDefault()") BTC
+              button.btn.btn-default.brdrn(ng-click="$event.preventDefault()" ng-class="{'input-error': error.moreThanInWallet}") BTC
           i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
           i.ti-arrows-vertical.mvs.type-h4.visible-sm.visible-xs
           section.input-group.width-45
@@ -43,9 +43,10 @@
               max="{{sellLimit}}"
               step="any"
               prevent-event="mousewheel"
+              ng-class="{'input-error': error.moreThanInWallet}"
               required)
             div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
-              button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true")
+              button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true" ng-class="{'input-error': error.moreThanInWallet}")
                 span {{ sellTransaction.currency.code }}
                 span.caret
               ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
@@ -64,9 +65,9 @@
           span or
           | &nbsp;
           a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
-        .mts.pos-rel.mb-10(ng-hide="tradingDisabled")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.card.min, symbol: sellCurrencySymbol.symbol}")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")
+        .pos-rel.mt-10(ng-hide="tradingDisabled")
+          span.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.card.min, symbol: sellCurrencySymbol.symbol}")
+          span.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")
         .mtm.pos-rel.mb-10(ng-if="error.moreThanInWallet")
           span.state-danger-text(ng-show="error.moreThanInWallet" translate="SELL.MORE_THAN_BALANCE")
           br
