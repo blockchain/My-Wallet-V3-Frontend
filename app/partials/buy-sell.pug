@@ -33,6 +33,7 @@
                         trading-disabled-reason="getIsTradingDisabledReason()"
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
+                        get-days="getDays()"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
@@ -48,6 +49,7 @@
                         trading-disabled-reason="getIsTradingDisabledReason()"
                         on-trigger="openKyc()"
                         select-tab="selectTab(tab)"
+                        get-days="getDays()"
                         sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="sellLimits")

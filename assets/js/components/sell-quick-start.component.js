@@ -13,6 +13,7 @@ angular
       transaction: '=',
       sellCurrencySymbol: '=',
       selectTab: '&',
+      getDays: '&',
       changeCurrency: '&',
       onTrigger: '&'
     },
@@ -27,6 +28,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.sellTransaction = this.transaction;
   $scope.sellExchangeRate = {};
   $scope.changeSellCurrency = this.changeCurrency;
+  $scope.tradingDisabled = this.tradingDisabled;
+  $scope.tradingDisabledReason = this.tradingDisabledReason;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };

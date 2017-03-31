@@ -1272,7 +1272,7 @@
   "coinify-verification": {
     "ICON": "ti-lock",
     "TITLE": "Verification Needed",
-    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume purchasing bitcoin in <b>{{days}} day(s).</b>"
+    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume buying or selling bitcoin in <b>{{days}} day(s).</b>"
   },
   "sfox-identity": {
     "ICON": "ti-id-badge",

@@ -206,6 +206,14 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     }
   };
 
+  const ONE_DAY_MS = 86400000;
+
+  $scope.getDays = () => {
+    let profile = buySell.getExchange().profile;
+    let verifyDate = profile && profile.canTradeAfter;
+    return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
+  };
+
   $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
