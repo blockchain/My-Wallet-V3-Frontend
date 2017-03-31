@@ -18,7 +18,7 @@
                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_9u8XxkrkiUUy6z3",
                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_9ysiGRC4rkMFwFv"],
       "sellEmails": ["welber@blockchain.com"],
-      "showSellFraction": 0.01
+      "showSellFraction": 1
     },
     "sfox": {
       "countries": ["US"],

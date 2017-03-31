@@ -39,7 +39,7 @@
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
       div(ng-show="selectedTab === 'SELL_BITCOIN'")
         //- SELL
-        sell-quick-start(limits="limits",
+        sell-quick-start(limits="sellLimits",
                         transaction="sellTransaction",
                         disabled="status.disabled",
                         sell-currency-symbol="sellCurrencySymbol",
