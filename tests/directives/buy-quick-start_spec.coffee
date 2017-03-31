@@ -57,10 +57,3 @@ describe "buyQuickStart", ->
       isoScope.modalOpen = false
       isoScope.$digest()
       expect(isoScope.getQuote).toHaveBeenCalled()
-
-  describe "getDays()", ->
-    it "should calculate the correct number of days", ->
-      spyOn(Date, "now").and.returnValue(new Date('12/20/2016'))
-      spyOn(buySell, "getExchange").and.returnValue
-        profile: { canTradeAfter: new Date('12/21/2016') }
-      expect(isoScope.getDays()).toBe(1);
