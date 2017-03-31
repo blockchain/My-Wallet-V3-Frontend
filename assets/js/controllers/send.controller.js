@@ -7,7 +7,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.user.uid) === 'b';
   const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
   const FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
-  const AB_TEST_FEE = FEE_OPTIONS != null;
+  $scope.AB_TEST_FEE = FEE_OPTIONS != null;
 
   window.FEE = FEE_OPTIONS;
 
@@ -205,7 +205,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
         let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
         Alerts.displaySentBitcoin(message);
 
-        if (AB_TEST_FEE) {
+        if ($scope.AB_TEST_FEE) {
           Wallet.api.pushTxStats(Wallet.user.uid, $scope.advanced);
         }
       });
@@ -373,7 +373,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       .then($scope.finalBuild)
       .then(() => {
         $scope.confirmationStep = true;
-        if (AB_TEST_FEE) {
+        if ($scope.AB_TEST_FEE) {
           Wallet.api.confirmationScreenStats(Wallet.user.uid);
         }
       })
