@@ -326,15 +326,16 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     $scope.payment.to(destinations);
   };
 
-  $scope.setPaymentAmount = () => {
+  $scope.setPaymentAmount = (reset) => {
     let amounts = $scope.transaction.amounts;
     if (amounts.some(a => isNaN(a) || a <= 0)) return;
-    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
-    $scope.payment.amount($scope.transaction.amounts, fee, FEE_ENABLED ? FEE_OPTIONS : null);
+    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
+    let options = FEE_ENABLED && !$scope.advanced && !reset ? FEE_OPTIONS : null;
+    $scope.payment.amount($scope.transaction.amounts, fee, options);
   };
 
-  $scope.setPaymentFee = () => {
-    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
+  $scope.setPaymentFee = (reset) => {
+    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
     if ($scope.advanced && fee === undefined) return;
     $scope.payment.fee(fee);
   };
@@ -345,7 +346,8 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.advancedSend = () => {
     $scope.advanced = true;
-    $scope.setPaymentFee();
+    $scope.setPaymentAmount(true);
+    $scope.setPaymentFee(true);
   };
 
   $scope.regularSend = () => {
