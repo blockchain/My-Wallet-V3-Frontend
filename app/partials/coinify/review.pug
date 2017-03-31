@@ -6,7 +6,7 @@
 
 .flex-column.mvm(ng-if="!tradeCompleted && !ISXState")
   div
-    p.pbs.ptn.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
+    p.pb-15.ptn.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
   .flex-column.bg-grey.pal.border
@@ -31,12 +31,12 @@
   .left-align
     p.type-sm.mtl(translate="SELL.1_2_DAYS")
       
-.flex-column.mt-10(ng-if="tradeCompleted && !ISXState")
+.flex-column(ng-if="tradeCompleted && !ISXState")
   .mvl.em-500(ng-show="trade._state !== 'completed'")
     span.pvm.type-h5.state-danger-text(translate="Trade")
     | &nbsp;
     span.type-h5.state-danger-text {{trade._state}}.
-  .mbl.mtn(ng-show="trade._state === 'completed'")
+  .mb-20.mtn(ng-show="trade._state === 'completed'")
     span.f-14(translate="SELL.RECEIVE_EMAIL_RECEIPT")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")

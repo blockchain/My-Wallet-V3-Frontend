@@ -63,7 +63,7 @@
           | &nbsp;
           span or
           | &nbsp;
-          a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy
+          a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
         .mts.pos-rel.mb-10(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.card.min, symbol: sellCurrencySymbol.symbol}")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH")

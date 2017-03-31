@@ -1349,7 +1349,10 @@
     "PLEASE_ADD_ACCOUNT": "You don't have any bank accounts stored. Please add an account where you would like your funds sent.",
     "MAX_DAILY": "Maximum daily sell amount is",
     "RECEIVE_EMAIL_RECEIPT": "You will receive an email receipt from Coinify to confirm that the funds have been issued to your account.",
-    "PLEASE_NOTE_BANK_POLICIES": "Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1 - 2 business days from the transfer date."
+    "PLEASE_NOTE_BANK_POLICIES": "Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1 - 2 business days from the transfer date.",
+    "ENTER_DANISH_BANK": "Please enter your information for your Danish bank account.",
+    "ENTER_BANK_INFO": "Please enter your bank information below.",
+    "TRADE_COMPLETE": "Trade Complete"
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",

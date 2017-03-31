@@ -17,8 +17,7 @@
     span(translate="ORDER_CONFIRMATION_BANK_COPY" ng-if="tempFiatForm.$valid" ng-hide="!isBankTransfer()")
     span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, max: limits.available}")
     span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, min: limits.min}")
-  p.mvm(ng-show="isSell")
-    //- span.f-14(translate="Please review your order. Coinify will issue the owed sale amount directly to your bank account within one business day." ng-show="isSell")
+  p.mvm.pb-10(ng-show="isSell")
     span.em-500.f-14 {{ sellTransaction.btcAfterFee }} BTC
     | &nbsp;
     span.f-14(translate="SELL.WILL_BE_SENT") 
@@ -89,10 +88,7 @@
     .flex-row.flex-between.pam.pv-15(ng-show="isSell")
       span.em-500.colon(translate="SELL.CREDIT_OWED")
       span.em-500 {{ sellTransaction.fiat | format }} {{ sellTransaction.currency }}
-  //- .pam.mtl(ng-show="isSell")
-    span.em-500.f-14 {{ sellTransaction.btcAfterFee }} BTC
-    | &nbsp;
-    span.f-14(translate="SELL.WILL_BE_SENT") 
+
   form.clearfix(ng-show="isBankTransfer()" name="rateForm" role="form" novalidate)
     .flex-row.flex-start.mtl
       div

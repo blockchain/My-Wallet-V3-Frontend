@@ -7,7 +7,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifySellCurrencies;
-  $scope.currencySymbol = null;
   $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
@@ -18,10 +17,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
   $scope.acceptTermsForm;
-  $scope.transaction = {};
   $scope.bankAccounts = accounts;
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
-  $scope.step;
 
   $scope.bankAccount = {
     account: {
@@ -227,7 +224,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
+    if ($scope.onStep('accept-terms') || $scope.onStep('account-info') || $scope.onStep('account-holder') || $scope.onStep('summary')) {
       $uibModalInstance.dismiss('');
     } else {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
@@ -398,7 +395,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.finishISX = (state) => {
-    console.log('finishISX', state);
     $scope.ISXState = state;
     switch (state) {
       case 'reviewing':
