@@ -1,9 +1,9 @@
-.kyc-status.flex-row.border.pbl.ptl(ng-show="$ctrl.getState() && $ctrl.level < 2")
-  .flex-1.pll.mlm
-    h1
+.kyc-status.flex-column.flex-center.flex-justify.border.pbl.ptl.mb-80.phm(ng-show="$ctrl.getState() && $ctrl.level < 2")
+  div
+    h1.mbn.mtn
       i.type-h4(ng-class="$ctrl.getState().i")
-  .flex-4.flex-column.flex-justify.pll
+  .flex-column.flex-center.flex-justify
     span.type-h5.mbs.mts(translate="{{$ctrl.getState().ns}}.TITLE")
-    span.type-sm(translate="{{$ctrl.getState().ns}}.BODY" translate-values="{ccmax: $ctrl.getCardMax()}")
-  .flex-2.flex-center.flex-end.prl.mrm
-    span.blue.underline.pointer.type-sm(translate="{{$ctrl.getState().ns}}.LINK" ng-click="$ctrl.onTrigger()")
+    span.center.type-sm(translate="{{$ctrl.getState().ns}}.BODY" translate-values="{ccmax: $ctrl.getCardMax()}")
+  .flex-center
+    a.underline.type-sm.ptm(translate="{{$ctrl.getState().ns}}.LINK" ng-click="$ctrl.onTrigger()")

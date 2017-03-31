@@ -1,6 +1,6 @@
 .buy-sell {
   position: relative;
-  padding: 20px 30px 0 30px;
+  padding: 20px 15px 0 15px;
   margin-bottom: 60px;
   @media (max-width: 991px) {
     padding: 10px 10px 0 10px;
@@ -51,6 +51,11 @@
   .kyc-status {
     background-color: $grey;
   }
+  @media(max-width: 991px) {
+    .kyc-status {
+      margin-top: 25px;
+    }
+  }
 }
 
 .currency-dropdown {
@@ -89,10 +94,16 @@
     right: auto;
     bottom: 0px;
   }
+  @media(min-width: 425px) {
+    display: none;
+  }
 }
 
 .sfox-logo {
   img { width: 60px; }
+  @media(max-width: 425px) {
+    display: none;
+  }
 }
 
 .partner-logo {
@@ -407,7 +418,8 @@ i.ti-credit-card.bank {
 
 #plaid {
   border-width: 0px;
-  height: 42px;
+  display: block;
+  height: 40px;
   width: 100%;
   &.enabled {
     position: fixed;

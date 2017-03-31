@@ -1,4 +1,3 @@
-
 angular
   .module('walletApp')
   .directive('transactionDescription', transactionDescription);

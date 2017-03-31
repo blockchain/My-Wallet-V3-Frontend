@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options) {
+function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -67,7 +67,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   function init (coinify) {
     return Options.get().then(options => {
       coinify.partnerId = options.partners.coinify.partnerId;
-      coinify.api.testnet = $rootScope.network === 'testnet';
+      coinify.api.testnet = BlockchainConstants.NETWORK === 'testnet';
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
@@ -139,7 +139,10 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
-    }).then(() => trade.cancel().then(() => service.fetchProfile()), () => {})
+    }).then(() => trade.cancel().then(() => service.fetchProfile()).then(() => {
+      // so when a trade is cancelled it moves to the completed table
+      service.getTrades();
+    }), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
@@ -217,6 +220,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       keyboard: false,
       resolve: {
         trade: () => trade && trade.refresh().then(() => trade),
+        options: () => Options.get(),
         buyOptions: () => options
       }
     }).result;

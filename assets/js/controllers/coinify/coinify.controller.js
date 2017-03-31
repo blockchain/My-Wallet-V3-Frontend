@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window) {
+function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -13,9 +13,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.trade = trade;
   $scope.quote = buyOptions.quote;
 
-  let links = ['https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp',
-               'https://blockchain.co1.qualtrics.com/SE/?SID=SV_4ZuHusilGeNWm6V',
-               'https://blockchain.co1.qualtrics.com/SE/?SID=SV_1RF9VhC96M8xXh3'];
+  let links = options.partners.coinify.surveyLinks;
 
   $scope.buySellDebug = $rootScope.buySellDebug;
 
@@ -247,32 +245,19 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     $scope.trade = null;
+    buySell.getTrades().then(() => {
+      $scope.goToOrderHistory();
+    });
   };
 
   $scope.close = () => {
-    let text, action, link, index;
-    let surveyOpened = $cookies.getObject('survey-opened');
+    let index;
 
     if (!$scope.exchange.user) index = 0;
     else if (!$scope.trades.length && !$scope.trade) index = 1;
     else index = 2;
 
-    link = links[index];
-
-    let hasSeenPrompt = surveyOpened && surveyOpened.index >= index;
-
-    if (hasSeenPrompt) {
-      [text, action] = ['CONFIRM_CLOSE_BUY', 'IM_DONE'];
-      Alerts.confirm(text, {action: action}).then($scope.cancel);
-    } else {
-      [text, action] = ['COINIFY_SURVEY', 'TAKE_SURVEY'];
-      let openSurvey = () => {
-        $scope.cancel();
-        $rootScope.safeWindowOpen(link);
-        $cookies.putObject('survey-opened', {index: index});
-      };
-      Alerts.confirm(text, {action: action, friendly: true, cancel: 'NO_THANKS'}).then(openSurvey, $scope.cancel);
-    }
+    Alerts.surveyCloseConfirm('survey-opened', links, index).then($scope.cancel);
   };
 
   $scope.getQuoteHelper = () => {
@@ -280,6 +265,14 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     else if ($scope.quote && !$scope.quote.id) return 'EST_QUOTE_1';
     else if ($scope.expiredQuote) return 'EST_QUOTE_2';
     else return 'RATE_WILL_EXPIRE';
+  };
+
+  $scope.goToOrderHistory = () => {
+    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
+      $uibModalInstance.dismiss('');
+    } else {
+      $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
+    }
   };
 
   $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => {

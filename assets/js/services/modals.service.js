@@ -80,6 +80,7 @@ function modals ($state, $uibModal, $ocLazyLoad, Options) {
     resolve: {
       exchange () { return exchange; },
       quote () { return quote; },
+      options: () => Options.get(),
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())

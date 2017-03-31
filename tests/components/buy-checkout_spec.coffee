@@ -71,16 +71,6 @@ describe "buy-checkout.component", ->
     beforeEach ->
       scope = getControllerScope(handlers)
 
-    describe ".enableBuy()", ->
-      it "should enable buy()", ->
-        scope.enableBuy()
-        expect(scope.enabled).toBe(true)
-
-    describe ".disableBuy()", ->
-      it "should disable buy()", ->
-        scope.disableBuy()
-        expect(scope.enabled).toBe(false)
-
   it "should get an initial quote but only set the rate", ->
     scope = getControllerScope(handlers)
     scope.$digest()

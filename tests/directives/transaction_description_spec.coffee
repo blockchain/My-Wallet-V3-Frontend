@@ -34,7 +34,8 @@ describe "Transaction Description Directive", ->
       txType: 'send',
       time: 1441400781,
       processedInputs: [{ change: false, address: 'Savings' }],
-      processedOutputs: [{ change: false, address: 'Spending' }, { change: true, address: '1asdf' }]
+      processedOutputs: [{ change: false, address: 'Spending' }, { change: true, address: '1asdf' }],
+      to: []
     }
 
     return

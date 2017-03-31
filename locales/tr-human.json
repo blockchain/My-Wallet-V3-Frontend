@@ -1041,8 +1041,6 @@
   "RECEIVING_WALLET": "Alan cüzdan",
   "RECEIVING_ADDRESS": "QA: Alan adres",
   "RECEIVE_BITCOIN_TO": "Bitcoinler {{::label}} adresine gönderilecektir.",
-  "MUST_DISABLE_2ND_PW": "Cüzdanın bu kısmına erişim sağlamak için lütfen ikinci şifrenizi kaldırın.",
-  "BLACKLISTED_COUNTRY": "Bitcoin satın almak henüz ülkenizde geçerli değil.<br>Yakında daha fazla ülke ekleyeceğiz.",
   "CONFIRM_YOUR_ORDER": "Siparişi onayla:",
   "ORDER_CONFIRMATION_COPY": "Sizi güvenli ödeme sağlayıcımıza aktarmadan önce lütfen sipariş ayrıntılarını onaylayın.",
   "ERROR_DAILY_LIMIT": "Hata: Günlük Limiti Aşıyor",
