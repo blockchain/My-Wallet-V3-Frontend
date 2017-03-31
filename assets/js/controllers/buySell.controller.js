@@ -214,7 +214,20 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
   };
 
-  $scope.tabs = ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'];
+  $scope.checkEmail = () => {
+    let email = MyWallet.wallet._accountInfo._email;
+    let re = /@blockchain.com(?!.)/;
+    let bcEmail = re.test(email);
+    if (bcEmail === false) {
+      return false;
+    } else {
+      let fraction = options.partners.coinify.showSellFraction;
+      return Blockchain.Helpers.isEmailInvited(email, fraction);
+    }
+  };
+
+  $scope.tabs = $scope.checkEmail() ? ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'] : ['BUY_BITCOIN', 'ORDER_HISTORY'];
+
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
     $state.params.selectedTab = tab;
