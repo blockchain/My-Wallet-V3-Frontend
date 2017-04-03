@@ -168,6 +168,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
+        paymentCheckpoint.blockchainFee = 0 // prevent adding multiple fees
         $scope.unsetPaymentHandlers($scope.payment);
         $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint);
         $scope.setPaymentHandlers($scope.payment);
