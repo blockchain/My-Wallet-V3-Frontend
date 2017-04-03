@@ -168,7 +168,6 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        paymentCheckpoint.blockchainFee = 0; // prevent adding multiple fees
         $scope.unsetPaymentHandlers($scope.payment);
         $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint);
         $scope.setPaymentHandlers($scope.payment);
@@ -462,6 +461,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.finalBuild = () => $q((resolve, reject) => {
     $scope.payment.build(FEE_TO_MINERS).then(p => {
+      p.blockchainFee = 0; // reset fee for next build
       resolve(p.transaction);
       return p;
     }).catch(r => {
