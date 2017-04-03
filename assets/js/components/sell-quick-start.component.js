@@ -58,7 +58,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     setInitialCurrencyAndSymbol('EUR', 'Euro');
   }
 
-  console.log('quick start scope', $scope);
 
   $scope.changeSymbol = (curr) => {
     if (curr && $scope.currencies.some(c => c.code === curr.currency.code)) {
@@ -66,14 +65,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   };
 
-  $scope.increaseLimit = () => {
-    // TODO
-    console.log('show kyc here');
-  };
-
   (() => {
-    $scope.kyc = buySell.kycs[0];
+    $scope.kyc = exchange.kycs[0] || 'pending';
   })();
+
+  console.log('quick start scope', $scope);
 
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 

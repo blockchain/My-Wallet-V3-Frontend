@@ -5,9 +5,11 @@
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
           helper-button.mbs(ng-disabled="false" ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
-        .flex-center(ng-show="exchangeRate.fiat")
+        .flex-center(ng-show="exchangeRate.fiat" ng-hide="status.busy")
           span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
           helper-button(content="EXCHANGE_RATE_HELPER")
+        .flex-row.flex-center(ng-show="status.busy")
+          img(src="img/spinner.gif")
       fieldset(ng-disabled="tradingDisabled")
         .flex-row.flex-between.flex-center.flex-column-tablet
           section.input-group.width-45

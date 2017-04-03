@@ -11,7 +11,7 @@ tr.border(ng-click="inMobileBuy && triggerBuy()")
         li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
     span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
-    span.state.mrl.success(ng-show="completed && trade._medium === 'blockchain'") Completed Sale
+    span.state.mrl.success(ng-show="completed && trade._state === 'completed' && trade._medium === 'blockchain'" translate="SELL.SOLD")
     span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived && trade._medium !== 'blockchain'") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
     span.hidden-xs

@@ -1352,7 +1352,8 @@
     "PLEASE_NOTE_BANK_POLICIES": "Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1 - 2 business days from the transfer date.",
     "ENTER_DANISH_BANK": "Please enter your information for your Danish bank account.",
     "ENTER_BANK_INFO": "Please enter your bank information below.",
-    "TRADE_COMPLETE": "Trade Complete"
+    "TRADE_COMPLETE": "Trade Complete",
+    "SOLD": "SOLD"
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
