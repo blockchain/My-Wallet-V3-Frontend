@@ -206,7 +206,9 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
+    options: $rootScope.inMobileBuy
+      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
