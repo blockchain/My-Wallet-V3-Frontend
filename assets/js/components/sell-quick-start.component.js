@@ -58,7 +58,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     setInitialCurrencyAndSymbol('EUR', 'Euro');
   }
 
-
   $scope.changeSymbol = (curr) => {
     if (curr && $scope.currencies.some(c => c.code === curr.currency.code)) {
       $scope.sellCurrencySymbol = currency.conversions[curr.currency.code];
@@ -66,10 +65,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   (() => {
-    $scope.kyc = exchange.kycs[0] || 'pending';
+    $scope.kyc = exchange.kycs[0];
   })();
-
-  console.log('quick start scope', $scope);
 
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
@@ -118,7 +115,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.getExchangeRate();
 
-  // TODO commented this out for dev
   $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
       $scope.tradingDisabled = true;
@@ -129,8 +125,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       $scope.error['moreThanInWallet'] = true;
       $scope.offerUseAll();
     } else if (newVal < $scope.totalBalance) {
+      $scope.checkForNoFee();
       $scope.error['moreThanInWallet'] = false;
     } else if (!newVal) {
+      $scope.checkForNoFee();
       $scope.error['moreThanInWallet'] = false;
     }
   });
@@ -147,6 +145,21 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       }
     });
   });
+
+  $scope.checkForNoFee = () => {
+    if (!$scope.sellTransaction || !$scope.sellTransaction.btc || $scope.isSweepTransaction) return;
+    let tradeInSatoshi = currency.convertToSatoshi($scope.sellTransaction.btc, currency.bitCurrencies[0]);
+    const index = Wallet.getDefaultAccountIndex();
+    let p = Wallet.my.wallet.createPayment();
+    p.from(index).amount(tradeInSatoshi);
+    p.sideEffect(r => {
+      console.log('r', r);
+      if (r.absoluteFeeBounds[0] === 0) {
+        $scope.error['moreThanInWallet'] = true;
+        $scope.offerUseAll();
+      }
+    });
+  };
 
   $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
     let curr = $scope.sellTransaction.currency || null;

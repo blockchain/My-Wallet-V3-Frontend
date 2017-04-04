@@ -218,7 +218,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
   $scope.checkEmail = () => {
     let email = MyWallet.wallet._accountInfo._email;
-    let re = /@blockchain.com(?!.)/;
+    let re = /(@blockchain.com(?!.)|@coinify.com(?!.))/;
     let bcEmail = re.test(email);
     if (bcEmail === false) {
       return false;

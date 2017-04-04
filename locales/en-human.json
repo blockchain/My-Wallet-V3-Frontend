@@ -1106,6 +1106,11 @@
     "BODY": "@:KYC_IN_REVIEW.BODY",
     "LINK": "Finish verification"
   },
+  "SELL_KYC_PENDING": {
+    "TITLE": "Complete Identity Verification",
+    "BODY": "Completing verification will raise your daily sell amount limit.",
+    "LINK": "Finish verification"
+  },
   "KYC_EXPIRED": {
     "TITLE": "Identity Verification Expired",
     "BODY": "Your identity verification expired. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",

@@ -24,6 +24,7 @@ angular
         'rejected': { ns: 'KYC_DENIED', i: 'ti-na' },
         'manualRejected': { ns: 'KYC_DENIED', i: 'ti-na' }
       };
+
       this.getState = () => this.stateMap[this.state];
 
       this.profile = buySell.getExchange().profile;
