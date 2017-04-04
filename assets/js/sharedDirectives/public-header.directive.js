@@ -2,9 +2,9 @@ angular
   .module('sharedDirectives')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope', '$location', 'BlockchainConstants'];
+publicHeader.$inject = ['$rootScope', '$location'];
 
-function publicHeader ($rootScope, $location, BlockchainConstants) {
+function publicHeader ($rootScope, $location) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -53,6 +53,8 @@ function publicHeader ($rootScope, $location, BlockchainConstants) {
   function link (scope, elem, attrs) {
     scope.rootURL = $rootScope.rootURL;
     scope.path = () => $location.path();
-    scope.isTestnet = BlockchainConstants.NETWORK === 'testnet';
+    // Grunt will replace this, since BlockchainConstants.NETWORK is not available on landing page:
+    const network = $rootScope.network || 'bitcoin';
+    scope.isTestnet = network === 'testnet';
   }
 }

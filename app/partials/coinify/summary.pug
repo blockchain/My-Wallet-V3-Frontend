@@ -20,7 +20,7 @@
   p.mvm.pb-10(ng-show="isSell")
     span.em-500.f-14 {{ sellTransaction.btcAfterFee }} BTC
     | &nbsp;
-    span.f-14(translate="SELL.WILL_BE_SENT") 
+    span.f-14(translate="SELL.WILL_BE_SENT")
   .flex-center.flex-between.flex-row-reverse
     .mam
       span.type-sm.blue.underline.pointer(ng-click="toggleEditAmount()" ng-hide="editAmount || isSell" translate="EDIT_ORDER")
@@ -39,7 +39,7 @@
       span.colon(ng-show="isSell" translate="SELL.BTC_TO_SELL")
       span(ng-show="isSell") {{ sellTransaction.btc }} BTC
     .flex-row.flex-between.pam.pos-rel(ng-hide="isSell")
-      span(ng-hide="editAmount" translate="AMOUNT:")
+      span.colon(ng-hide="editAmount" translate="AMOUNT")
       span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
       span.type-sm.blue.underline.pointer(
         ng-disabled="tempFiatForm.$invalid"

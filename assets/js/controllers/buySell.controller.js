@@ -220,13 +220,13 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   let walletOptions = options;
   $scope.canSeeSellTab = MyWallet.wallet.external.sellCheck(email, walletOptions);
 
-  $scope.tabs = $scope.canSeeSellTab ? ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'] : ['BUY_BITCOIN', 'ORDER_HISTORY'];
-
-  $scope.selectTab = (tab) => {
-    $scope.selectedTab = $scope.selectedTab ? tab : null;
-    $state.params.selectedTab = tab;
+  $scope.tabs = {
+    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
+    options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
+      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
+    select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
-  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
 
   $rootScope.$on('fetchExchangeProfile', () => {
     $scope.status.disabled = true;

@@ -74,8 +74,6 @@ module.exports = (grunt) ->
           'bower_components/angular-ui-select/dist/select.js'
           'bower_components/ng-file-upload/ng-file-upload-shim.min.js'
           'bower_components/ng-file-upload/ng-file-upload.min.js'
-          "build/js/core/core.module.js"
-          "build/js/core/constants.service.js"
           "build/js/sharedDirectives.js"
           "build/js/sharedDirectives/public-header.directive.js"
           "build/js/sharedDirectives/video-container.directive.js"
@@ -500,7 +498,7 @@ module.exports = (grunt) ->
               "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       network:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/wallet.js', 'build/js/sharedDirectives/public-header.directive.js'],
         overwrite: true,
         replacements: [{
           from: "network = $rootScope.network"

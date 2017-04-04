@@ -4,10 +4,18 @@
   width: 100%;
   border-bottom: 1px solid $border-grey;
   height: 60px;
-  position: absolute;
   z-index: 10;
   @media (max-width: 767px) {
     padding: 0 10px;
+  }
+  &.auto {
+    height: auto;
+  }
+  &.backdrop {
+    position: fixed;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
   }
   .ui-select-container {
     width: 360px;

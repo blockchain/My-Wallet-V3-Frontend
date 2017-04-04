@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options) {
+function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options, buyMobile) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -257,6 +257,10 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     else if (!$scope.trades.length && !$scope.trade) index = 1;
     else index = 2;
     Alerts.surveyCloseConfirm('survey-opened', links, index).then($scope.cancel);
+  };
+
+  $scope.exitToNativeTx = () => {
+    buyMobile.callMobileInterface(buyMobile.SHOW_TX, $scope.trade.txHash);
   };
 
   $scope.getQuoteHelper = () => {
