@@ -17,6 +17,7 @@
       a.black.em-400.upper.f-16(
         ng-class="{active: $ctrl.tab === tab}"
         translate="{{tab}}")
+      span.badge.mbs(ng-if="$last && $ctrl.badge > 0") {{$ctrl.badge}}
 
   .pvl.mts.f-12.visible-xs(ng-click="$ctrl.toggleExpanded()")
     i.icon-up_arrow(ng-show="$ctrl.state.expanded")
