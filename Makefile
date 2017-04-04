@@ -29,7 +29,7 @@ endif
 
 ifndef VERSION
 ifdef TAG_ARG
-export VERSION=$(TAG);
+export VERSION=$(TAG)
 else
 export VERSION:=vIntermediate
 endif
@@ -54,11 +54,11 @@ helperApp/dist: bower_components
 dist: helperApp/dist bower_components
 	grunt build --skipWebpack=1
 
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=${NETWORK}
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=$(NETWORK)
 	cp -r helperApp/dist dist/wallet-helper
 
 dist_fixed_domain: helperApp/dist bower_components build
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=${NETWORK}
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=$(NETWORK)
 	cp -r helperApp/dist dist/wallet-helper
 
 changelog: node_modules

@@ -10,8 +10,8 @@ function SfoxCreateAccountController ($scope, $timeout, $q, $cookies, Wallet, Al
 
   let state = $scope.state = {
     terms: false,
-    sentEmailCode: $cookies.get(cookieIds.SENT_EMAIL),
-    sentMobileCode: $cookies.get(cookieIds.SENT_MOBILE),
+    sentEmailCode: $cookies.getObject(cookieIds.SENT_EMAIL),
+    sentMobileCode: $cookies.getObject(cookieIds.SENT_MOBILE),
     get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
 
@@ -112,26 +112,22 @@ function SfoxCreateAccountController ($scope, $timeout, $q, $cookies, Wallet, Al
   $scope.$watch('state.view', (view) => {
     let shouldSendEmail =
       !state.verifiedEmail &&
-      !$cookies.get('sentEmailCode') &&
+      !$cookies.getObject('sentEmailCode') &&
       state.email &&
       state.email.indexOf('@') > -1;
 
     let shouldSendMobile =
       !state.verifiedMobile &&
-      !$cookies.get('sentMobileCode') &&
+      !$cookies.getObject('sentMobileCode') &&
       bcPhoneNumber.isValid(state.mobile);
 
     if (view === 'email' && shouldSendEmail) $scope.sendEmailCode();
     if (view === 'mobile' && shouldSendMobile) $scope.sendMobileCode();
   });
 
-  $scope.$watch('state.sentEmailCode', $cookies.put.bind(null, cookieIds.SENT_EMAIL));
-  $scope.$watch('state.sentMobileCode', $cookies.put.bind(null, cookieIds.SENT_MOBILE));
-
-  $scope.$on('$destroy', () => {
-    $cookies.remove(cookieIds.SENT_EMAIL);
-    $cookies.remove(cookieIds.SENT_MOBILE);
-  });
+  let syncCookie = (id) => $cookies.putObject.bind($cookies, id);
+  $scope.$watch('state.sentEmailCode', syncCookie(cookieIds.SENT_EMAIL));
+  $scope.$watch('state.sentMobileCode', syncCookie(cookieIds.SENT_MOBILE));
 
   $scope.setState();
   $scope.installLock();

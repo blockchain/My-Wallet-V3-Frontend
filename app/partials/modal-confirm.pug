@@ -8,7 +8,7 @@
       span(translate="{{::prop}}")
       | :&nbsp;
       b(ng-bind="::val")
-.modal-footer
+.modal-footer.flex-end.flex-center
   button.button-muted.mrm(ng-click="$dismiss('cancelled')" translate="{{::cancel || 'CANCEL'}}")
   button.btn(
     ng-class="{'button-primary': friendly || success, 'button-danger': !friendly && !success}"
