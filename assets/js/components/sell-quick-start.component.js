@@ -149,11 +149,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.checkForNoFee = () => {
     if (!$scope.sellTransaction || !$scope.sellTransaction.btc || $scope.isSweepTransaction) return;
     let tradeInSatoshi = currency.convertToSatoshi($scope.sellTransaction.btc, currency.bitCurrencies[0]);
-    const index = Wallet.getDefaultAccountIndex();
-    let p = Wallet.my.wallet.createPayment();
-    p.from(index).amount(tradeInSatoshi);
-    p.sideEffect(r => {
-      console.log('r', r);
+    let index = Wallet.getDefaultAccountIndex();
+    let pmt = Wallet.my.wallet.createPayment();
+    pmt.from(index).amount(tradeInSatoshi);
+    pmt.sideEffect(r => {
       if (r.absoluteFeeBounds[0] === 0) {
         $scope.error['moreThanInWallet'] = true;
         $scope.offerUseAll();

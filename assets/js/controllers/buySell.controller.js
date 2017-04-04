@@ -130,11 +130,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.openSellKyc = () => {
-      buySell.triggerKYC()
-        .then(kyc => {
-          console.log('then kyc', kyc);
-          $scope.sell(kyc);
-        });
+      if (!$scope.kyc) {
+        buySell.triggerKYC().then(kyc => $scope.buy(kyc));
+      } else {
+        $scope.buy($scope.kyc);
+      }
     };
 
     $scope.changeCurrency = (curr) => {

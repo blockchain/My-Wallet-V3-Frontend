@@ -224,7 +224,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('account-info') || $scope.onStep('account-holder') || $scope.onStep('summary')) {
+    if ($scope.onStep('accept-terms') || $scope.onStep('account-info') || $scope.onStep('account-holder') || $scope.onStep('summary') || $scope.onStep('bank-link')) {
       $uibModalInstance.dismiss('');
     } else {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
@@ -283,7 +283,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       createTime: t.createdAt,
       transferIn: {receiveAmount: t._inAmount / 100000000},
       transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
-      bankDigits: t._lastSixBankAccountDigits
+      bankDigits: t._bankAccountNumber
     };
     $scope.tradeCompleted = $scope.isInCompletedState(t);
     $scope.inNegativeState = $scope.isInNegativeState(t);
@@ -335,7 +335,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   const handlePaymentAssignment = () => {
     $scope.payment.to($scope.sendAddress);
     $scope.payment.amount($scope.sendAmount);
-    // $scope.payment.build();
   };
 
   $scope.sell = () => {
@@ -376,7 +375,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.formatBankInfo = (trade) => {
     if (trade.transferOut) {
       let n = trade.transferOut.details.account.number;
-      $scope.bankNameOrNumber = n.substring(n.length, n.length - 6);
+      $scope.bankNameOrNumber = n;
     }
   };
 
@@ -392,34 +391,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     if (trade._state === 'canceled' || trade._state === 'expired' || trade._state === 'rejected') {
       return true;
     }
-  };
-
-  $scope.finishISX = (state) => {
-    $scope.ISXState = state;
-    switch (state) {
-      case 'reviewing':
-        $scope.KYCState = 'TX_KYC_REVIEWING.BODY';
-        $scope.goTo('review');
-        break;
-      case 'processing':
-        $scope.KYCState = 'SELL.KYC_SUCCESS';
-        $scope.goTo('review');
-        break;
-      case 'cancelled':
-        $scope.KYCState = 'SELL.KYC_CANCELLED';
-        $scope.goTo('review');
-        break;
-      case 'expired':
-        $scope.KYCState = 'SELL.KYC_EXPIRED';
-        $scope.goTo('review');
-        break;
-      case 'rejected':
-        $scope.KYCState = 'SELL.KYC_REJECTETED';
-        $scope.goTo('review');
-        break;
-    }
-    // TODO screens for ISX status
-    $scope.goTo('review');
   };
 
   $scope.startPayment();

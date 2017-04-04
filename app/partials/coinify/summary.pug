@@ -100,4 +100,6 @@
       div
         input(type="checkbox" id="rate" name="rate" ng-model="fields.rate" required)
       div
-        label.mlm.em-300.f-12(translate="SELL_RATE_ACCEPT" for="rate" ng-show="isSell")
+        label.mlm.em-300.f-12(for="rate" ng-show="isSell")
+          span(translate="SELL_RATE_ACCEPT")
+          helper-button(content="SELL.FIRST_CONFIRMATION")

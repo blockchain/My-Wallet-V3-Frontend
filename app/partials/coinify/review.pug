@@ -24,7 +24,7 @@
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")
-      span &#8226;&#8226;&#8226;&#8226;{{ sellTrade.bankDigits || bankNameOrNumber }}
+      span {{ sellTrade.bankDigits || bankNameOrNumber }}
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.CREDIT_ISSUED")
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}
@@ -55,7 +55,7 @@
   .flex-column.bg-grey.pal.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")
-      span &#8226;&#8226;&#8226;&#8226;{{ sellTrade.bankDigits }}
+      span {{ sellTrade.bankDigits }}
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.CREDIT_ISSUED")
       span {{ sellTrade.transferOut.receiveAmount }} {{ sellTrade.transferOut.currency }}

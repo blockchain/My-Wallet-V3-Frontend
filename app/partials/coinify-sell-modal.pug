@@ -98,6 +98,6 @@
           ng-disabled="isDisabled()"
           ng-show="onStep('summary') && !error")
       div(ng-show="onStep('review') || onStep('summary') && error")
-        button.button-primary(translate="CLOSE" ng-click="dismiss()")
+        button.button-primary(translate="CLOSE" ng-click="cancel()")
       div(ng-show="onStep('trade-formatted') && bitcoinReceived")
         button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")
