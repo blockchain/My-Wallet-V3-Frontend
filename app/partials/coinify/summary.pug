@@ -88,7 +88,6 @@
     .flex-row.flex-between.pam.pv-15(ng-show="isSell")
       span.em-500.colon(translate="SELL.CREDIT_OWED")
       span.em-500 {{ sellTransaction.fiat | format }} {{ sellTransaction.currency }}
-
   form.clearfix(ng-show="isBankTransfer()" name="rateForm" role="form" novalidate)
     .flex-row.flex-start.mtl
       div

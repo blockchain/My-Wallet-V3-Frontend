@@ -216,19 +216,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
   };
 
-  $scope.checkEmail = () => {
-    let email = MyWallet.wallet._accountInfo._email;
-    let re = /(@blockchain.com(?!.)|@coinify.com(?!.))/;
-    let bcEmail = re.test(email);
-    if (bcEmail === false) {
-      return false;
-    } else {
-      let fraction = options.partners.coinify.showSellFraction;
-      return Blockchain.Helpers.isEmailInvited(email, fraction);
-    }
-  };
+  let email = MyWallet.wallet.accountInfo.email;
+  let walletOptions = options;
+  $scope.canSeeSellTab = MyWallet.wallet.external.sellCheck(email, walletOptions);
 
-  $scope.tabs = $scope.checkEmail() ? ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'] : ['BUY_BITCOIN', 'ORDER_HISTORY'];
+  $scope.tabs = $scope.canSeeSellTab ? ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'] : ['BUY_BITCOIN', 'ORDER_HISTORY'];
 
   $scope.selectTab = (tab) => {
     $scope.selectedTab = $scope.selectedTab ? tab : null;
