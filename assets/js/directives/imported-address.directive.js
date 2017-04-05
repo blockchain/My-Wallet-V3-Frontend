@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $uibModal) => {
+angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $uibModal, modals) => {
   return {
     restrict: 'A',
     replace: true,
@@ -74,14 +74,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         }
       });
 
-      scope.spend = () => $uibModal.open({
-        templateUrl: 'partials/send.pug',
-        controller: 'SendCtrl',
-        windowClass: 'bc-modal auto',
-        resolve: {
-          paymentRequest: () => ({fromAccount: scope.address})
-        }
-      });
+      scope.spend = () => modals.open({ fromAccount: scope.address });
     }
   };
 });

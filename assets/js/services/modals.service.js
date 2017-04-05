@@ -32,6 +32,19 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
     };
   };
 
+  service.openSend = service.openOnce((paymentRequest = {}, options) =>
+    open({
+      templateUrl: 'partials/send.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'SendCtrl',
+      resolve: {
+        paymentRequest: () => paymentRequest,
+        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
+        options: () => Options.get()
+      }
+    }, options)
+  );
+
   service.openHelper = (helper) => open({
     controller ($scope) {
       let helperImages = {
