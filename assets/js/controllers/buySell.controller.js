@@ -218,7 +218,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
   let email = MyWallet.wallet.accountInfo.email;
   let walletOptions = options;
-  $scope.canSeeSellTab = MyWallet.wallet.external.sellCheck(email, walletOptions);
+  $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, walletOptions, 'coinify');
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',

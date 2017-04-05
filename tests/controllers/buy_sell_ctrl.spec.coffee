@@ -34,7 +34,7 @@ describe "SfoxCheckoutController", ->
           coinify: {
             profile: {}
           }
-          sellCheck: () -> true
+          shouldDisplaySellTab: () -> true
         }
       }
       Wallet.accounts = () -> []
