@@ -5,7 +5,7 @@
     .flex-column
       h2.em-300.mtn(translate="RECOVER_FUNDS")
       p(translate="RECOVER_BTC_LOST")
-  form.ptl.form-horizontal(name="passphraseForm" ng-submit="browser.disabled || nextStep()" autocomplete="off" ng-switch-when="1" novalidate)
+  form.ptl.form-horizontal(name="passphraseForm" ng-submit="browser.disabled || passphraseForm.$invalid || nextStep()" autocomplete="off" ng-switch-when="1" novalidate)
     fieldset(ng-disabled="browser.disabled || working")
       browser-detection(result="browser")
       .security-red.mbl.em-400.flex-center
@@ -42,7 +42,7 @@
           ng-model="fields.email"
           autofocus
           required)
-        span.help-block 
+        span.help-block
           span.help-block
             div(ng-show="recoveryForm.email.$touched")
               p(ng-show="recoveryForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
@@ -70,7 +70,7 @@
           ng-model="fields.confirmation"
           is-valid="fields.confirmation === fields.password"
           required)
-        span.help-block 
+        span.help-block
           div(ng-show="recoveryForm.confirmation.$touched")
             p(ng-show="recoveryForm.confirmation.$error.isValid" translate="NO_MATCH")
       .flex-center.flex-end.mtm.mbl
