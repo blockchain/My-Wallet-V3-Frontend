@@ -563,6 +563,7 @@
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
   "TX_FEE" : "Transaction Fee",
+  "TX_FEE_REQUIRED": "Transaction Fee (required by Bitcoin miners)",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TX_FEE_EXPLAINATION": "Bitcoin miners receive fees for verifying transactions. We set fees dynamically based on network conditions and transaction size. You can customize your fee in advanced send.",
   "TX_FEE_CONFIRM_EXPLAIN": "Transaction fees cover the mining network fees and the Blockchain infrastructure necessary to ensure fast and reliable transaction confirmation times. At this time, we recommend the transaction fee shown.",
