@@ -19,13 +19,16 @@ function transactionNote ($translate, $rootScope, Wallet, Labels) {
 
   function link (scope, elem, attrs) {
     scope.editNote = false;
-
     if (scope.transaction.txType === 'received') {
       if (scope.transaction.to.length) {
-        scope.label = Labels.getLabel(
-          scope.transaction.to[0].accountIndex,
-          scope.transaction.to[0].receiveIndex
-        );
+        if (scope.transaction.to[0].identity === 'imported') {
+          scope.label = scope.transaction.to[0].label;
+        } else {
+          scope.label = Labels.getLabel(
+            scope.transaction.to[0].accountIndex,
+            scope.transaction.to[0].receiveIndex
+          );
+        }
       }
     }
 
