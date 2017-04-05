@@ -4,7 +4,7 @@ angular
 
 function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options) {
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
-  const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.user.uid) === 'b';
+  const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
   const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
   const FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
   $scope.AB_TEST_FEE = FEE_OPTIONS != null;
