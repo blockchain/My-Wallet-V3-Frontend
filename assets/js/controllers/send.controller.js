@@ -206,7 +206,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
         Alerts.displaySentBitcoin(message);
 
         if ($scope.AB_TEST_FEE) {
-          Wallet.api.pushTxStats(Wallet.user.uid, $scope.advanced);
+          Wallet.api.pushTxStats(Wallet.my.wallet.guid, $scope.advanced);
         }
       });
     };
@@ -376,7 +376,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       .then(() => {
         $scope.confirmationStep = true;
         if ($scope.AB_TEST_FEE) {
-          Wallet.api.confirmationScreenStats(Wallet.user.uid);
+          Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
         }
       })
       .catch(handleNextStepError)
