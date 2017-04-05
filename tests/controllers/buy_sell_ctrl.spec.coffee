@@ -26,7 +26,17 @@ describe "SfoxCheckoutController", ->
       MyWalletHelpers = $injector.get('MyWalletHelpers')
       buySell = $injector.get('buySell')
 
-      MyWallet.wallet = {}
+      MyWallet.wallet = {
+        accountInfo: {
+          email: 'random'
+        },
+        external: {
+          coinify: {
+            profile: {}
+          }
+          sellCheck: () -> true
+        }
+      }
       Wallet.accounts = () -> []
       Wallet.settings = {
         currency: {
@@ -34,10 +44,6 @@ describe "SfoxCheckoutController", ->
         }
       }
       MyWalletHelpers.exponentialBackoff = () -> {}
-
-      MyWallet.wallet.external =
-        coinify:
-          profile: {}
 
       currency = $injector.get("currency")
       currency.conversions["USD"] = { conversion: 2 }

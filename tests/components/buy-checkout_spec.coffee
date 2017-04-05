@@ -67,10 +67,6 @@ describe "buy-checkout.component", ->
 
       currency.conversions["USD"] = { conversion: 2 }
 
-  describe "gen", ->
-    beforeEach ->
-      scope = getControllerScope(handlers)
-
   it "should get an initial quote but only set the rate", ->
     scope = getControllerScope(handlers)
     scope.$digest()

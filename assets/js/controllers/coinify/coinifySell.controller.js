@@ -231,7 +231,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
-  // NOTE this gets run upon controller load
   $scope.startPayment = () => {
     if ($scope.trade._state) return;
 
@@ -341,7 +340,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.status.waiting = true;
     $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
       .then(sellResult => {
-        console.log('sell created - result:', sellResult);
         handleSellResult(sellResult);
         return sellResult;
       })
@@ -355,7 +353,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         }
         $scope.payment.build();
 
-        // NOTE sending is turned off when below is commented out
         Wallet.askForSecondPasswordIfNeeded()
           .then(signAndPublish)
           .then(transactionSucceeded)
@@ -371,7 +368,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       });
   };
 
-  // TODO this whole thing needs to be refactored (or killed)
   $scope.formatBankInfo = (trade) => {
     if (trade.transferOut) {
       let n = trade.transferOut.details.account.number;
@@ -397,8 +393,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   if (!$scope.step) {
     $scope.nextStep();
   }
-
-  console.log('coinifySell controller', $scope);
 
   $scope.standardError = (err) => {
     console.log(err);
