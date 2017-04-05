@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.% n'est pas autorisé",
   "WALLET_SECOND_PASSWORD": "Deuxième mot de passe du portefeuille",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "Pour plus de sécurité, vous pouvez choisir un deuxième mot de passe qui vous sera demandé à chaque fois que vous voudrez dépenser des bitcoins. Attention, il n'y a pas de fonction de récupération de mot de passe.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Vous ne pouvez pas définir de deuxième mot de passe si vous avez un compte d'échange.",
   "SECOND_PASSWORD_SET": "Deuxième mot de passe activé",
   "REMOVE_SECOND_PASSWORD": "Supprimer le deuxième mot de passe",
   "SECOND_PASSWORD_INCORRECT": "Deuxième mot de passe incorrect, veuillez réessayer.",

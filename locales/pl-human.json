@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.% nie jest dozwoloną wartością",
   "WALLET_SECOND_PASSWORD": "Drugie hasło do portfela",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "Dla zwiększonego bezpieczeństwa możesz ustawić drugie hasło, o które zostaniesz poproszony za każdym razem, gdy będziesz chciał wydać bitcoiny. Pamiętaj, że nie istnieje możliwość zresetowania hasła.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Nie możesz ustawić drugiego hasła jeśli masz konto walutowe.",
   "SECOND_PASSWORD_SET": "Drugie hasło włączone",
   "REMOVE_SECOND_PASSWORD": "Usuń drugie hasło",
   "SECOND_PASSWORD_INCORRECT": "Niepoprawne drugie hasło, spróbuj ponownie.",

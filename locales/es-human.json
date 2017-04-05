@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "No se permite %.%.%.% ",
   "WALLET_SECOND_PASSWORD": "Segunda contraseña de la billetera",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "Para mayor seguridad, puede elegir una segunda contraseña que se le solicitará cuando desee usar bitcoins. Recuerde que no hay ninguna funcionalidad para restaurar la contraseña.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "No puede establecer una segunda contraseña si usted tiene una cuenta de intercambio.",
   "SECOND_PASSWORD_SET": "Segunda contraseña habilitada",
   "REMOVE_SECOND_PASSWORD": "Quitar segunda contraseña",
   "SECOND_PASSWORD_INCORRECT": "Segunda contraseña incorrecta, por favor, reinténtelo.",

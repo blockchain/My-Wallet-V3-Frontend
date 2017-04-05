@@ -47,7 +47,6 @@
             span.label.label-warning(ng-hide="settings.secondPassword", translate="DISABLED")
             span.label.label-success(translate="SECOND_PASSWORD_SET", ng-show="settings.secondPassword")
           p.em-300.alt-font.f-16.hidden-xs(translate="WALLET_SECOND_PASSWORD_EXPLAIN" ng-hide="userHasExchangeAcct")
-          p.em-300.alt-font.f-16.hidden-xs(translate="WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN" ng-show="userHasExchangeAcct")
         .col-sm-0.col-md-2
         .col-sm-12.col-md-6.setting-result(ng-hide="active || removing")
           button.button-primary.display-inline-block(ng-click="walletStatus.didConfirmRecoveryPhrase ? activate() : recoveryModal()" translate="SET_SECOND_PASSWORD" ng-disabled="userHasExchangeAcct" ng-hide="settings.secondPassword")

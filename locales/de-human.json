@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.% ist nicht erlaubt",
   "WALLET_SECOND_PASSWORD": "Zweites Wallet-Passwort",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "Als zusätzliche Sicherheit können Sie ein zweites, bei jeder Ausgabe von Bitcoins erbetenes Passwort wählen. Beachten Sie bitte, dass es keine Funktion zur Rücksetzung des Passwortes gibt.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Sollten Sie über ein Exchange-Konto verfügen, können Sie kein zweites Passwort einstellen.",
   "SECOND_PASSWORD_SET": "Zweites Passwort wurde aktiviert",
   "REMOVE_SECOND_PASSWORD": "Zweites Passwort entfernen",
   "SECOND_PASSWORD_INCORRECT": "Falsches zweites Passwort. Bitte erneut versuchen.",

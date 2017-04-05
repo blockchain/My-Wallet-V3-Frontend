@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.% izin verilmiyor",
   "WALLET_SECOND_PASSWORD": "İkinci Cüzdan Şifresi",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "İlave güvenlik için, bitcoin harcamak istediğiniz her zaman istenilen ikinci bir şifre seçebilirsiniz. Hiçbir şifre sıfırlama özelliğinin olmadığını dikkate alın.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Eğer takas hesabınız varsa ikinci bir şifre belirleyemezsiniz.",
   "SECOND_PASSWORD_SET": "İkinci Şifre Etkinleştirildi",
   "REMOVE_SECOND_PASSWORD": "İkinci Şifreyi Kaldır",
   "SECOND_PASSWORD_INCORRECT": "Yanlış İkinci Şifre, lütfen tekrar deneyin.",

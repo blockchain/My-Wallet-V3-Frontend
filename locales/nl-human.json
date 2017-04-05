@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.% is niet toegestaan",
   "WALLET_SECOND_PASSWORD": "Tweede wachtwoord van de portemonnee",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "U kunt voor extra veiligheid een tweede wachtwoord kiezen dat wordt gevraagd als u Bitcoins wilt besteden. Bedenk dat er geen functie is om het wachtwoord opnieuw in te stellen.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "U kunt geen tweede wachtwoord instellen als u een wisselrekening heeft.",
   "SECOND_PASSWORD_SET": "Tweede wachtwoord ingeschakeld",
   "REMOVE_SECOND_PASSWORD": "Tweede wachtwoord verwijderen",
   "SECOND_PASSWORD_INCORRECT": "Onjuist tweede wachtwoord, probeer het opnieuw.",

@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.%: není povoleno",
   "WALLET_SECOND_PASSWORD": "Heslo k druhé peněžence",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "Pro zvýšení zabezpečení si můžete vybrat druhé heslo, které bude vyžádáno vždy při odesílání bitcoinů. Mějte prosím na paměti, že neexistuje funkce obnovení hesla.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Nemůžete si nastavit druhé heslo, pokud máte účet typu Exchange.",
   "SECOND_PASSWORD_SET": "Druhé heslo je povolené",
   "REMOVE_SECOND_PASSWORD": "Odebrat druhé heslo",
   "SECOND_PASSWORD_INCORRECT": "Nesprávné druhé heslo, zkuste to prosím znovu.",

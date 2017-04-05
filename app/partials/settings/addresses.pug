@@ -30,17 +30,21 @@
       .type-lbl.em-500(translate="UNUSED_ADDRESSES")
       p.alt-font.f-16.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
       table.accounts-container.addresses.responsive.width-100
-        tr.width-100.pointer(ng-click="createAddress()")
+        tr.width-100.pointer(ng-click="createAddress()" ng-disabled="createAddressInProgress")
           td.col-md-6
             i.ti-plus.blue.mrm
             span(translate="ADD_NEXT_ADDRESS")
           td.col-md-6
+            img(ng-show="createAddressInProgress" src="img/spinner.gif")
         tr(
           account="account"
           ng-repeat="address in addresses | filter:presentFilter | filter:searchText | orderBy:'-index' track by address.index"
           hd-address="address"
           search-text="searchText"
-          remove="removeAddressLabel(address.index, addresses.indexOf(address))")
+          on-remove-label="removeAddressLabel"
+          on-change-label="changeLabel"
+        )
+        img(ng-show="loading" src="img/spinner.gif")
 
   .flex-between.flex-center.mvl.ptvl
     .type-lbl.em-500(translate="PAST_ADDRESSES")
@@ -49,9 +53,9 @@
     p.alt-font.f-16.em-300.mvm.pbm(translate="PAST_ADDRESSES_COPY")
     uib-pagination.pagination-sm(
       ng-model="page"
-      ng-show="totalUsed > pageLength"
-      ng-change="setAddresses(page)"
-      total-items="totalUsed"
+      ng-show="totalPast > pageLength"
+      ng-change="setPastAddressesPage(page)"
+      total-items="totalPast"
       items-per-page="pageLength"
       max-size="5"
       boundary-links="true")
@@ -72,5 +76,7 @@
             account="account"
             ng-repeat="address in pastAddressesPage(page, pageLength) | orderBy:'-index' track by address.index"
             hd-address="address"
-            remove="removeAddressLabel(address.index, address, true)"
-            past-address="true")
+            on-remove-label="removeAddressLabel"
+            on-change-label="changeLabel"
+            past-address="true"
+          )

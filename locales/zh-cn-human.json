@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "不允许%.%.%.% ",
   "WALLET_SECOND_PASSWORD": "钱包副密码",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "为了提高安全性，您可以选择只要花费比特币，就需要输入副密码。请注意，没有密码重置功能。",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "若您拥有一个交换帐户，则不能设置副密码。",
   "SECOND_PASSWORD_SET": "副密码已启用",
   "REMOVE_SECOND_PASSWORD": "移除副密码",
   "SECOND_PASSWORD_INCORRECT": "副密码不正确，请重试。",

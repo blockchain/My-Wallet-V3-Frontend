@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.%は許可されていません",
   "WALLET_SECOND_PASSWORD": "第二のウォレットパスワード",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "セキュリティ強化のため、ビットコイン使用の際に毎回必要となる第二のパスワードを選択できます。パスワードのリセット機能がないことにご注意ください。第二パスワードが有効です",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Exchangeアカウントがある場合、第二のパスワードを設定することはできません。",
   "SECOND_PASSWORD_SET": "第二パスワードが無効です",
   "REMOVE_SECOND_PASSWORD": "第二パスワードが無効です",
   "SECOND_PASSWORD_INCORRECT": "第二パスワードが正しくありません。再試行してください。",

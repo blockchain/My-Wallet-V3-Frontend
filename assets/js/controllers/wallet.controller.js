@@ -87,8 +87,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       event.preventDefault();
     }
     if (wallet && [
-      'wallet.common.buy-sell',
-      'wallet.common.settings.accounts_addresses'
+      'wallet.common.buy-sell'
+      // 'wallet.common.settings.accounts_addresses'
     ].includes(toState.name)) {
       let error;
 

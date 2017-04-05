@@ -412,7 +412,6 @@
   "IP_NOT_ALLOWED": "%.%.%.% tidak diizinkan",
   "WALLET_SECOND_PASSWORD": "Kata Sandi Dompet Kedua",
   "WALLET_SECOND_PASSWORD_EXPLAIN": "Untuk keamanan tambahan, Anda dapat memilih kata sandi kedua yang akan ditanyakan setiap kali Anda ingin membelanjakan bitcoin. Hati-hati karena tidak ada fungsi atur ulang kata sandi.",
-  "WALLET_SECOND_PASSWORD_DISABLED_EXPLAIN": "Anda tidak dapat mengatur kata sandi kedua jika Ana memiliki akun pertukaran.",
   "SECOND_PASSWORD_SET": "Kata Sandi Kedua Diaktifkan",
   "REMOVE_SECOND_PASSWORD": "Hapus Kata Sandi Kedua",
   "SECOND_PASSWORD_INCORRECT": "Kata Sandi Kedua Salah, silakan coba lagi.",
