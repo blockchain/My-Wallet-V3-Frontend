@@ -37,6 +37,7 @@ describe "SendCtrl", ->
       smartAccount = $injector.get("smartAccount")
 
       MyWallet.wallet =
+        guid: 'a'
         setNote: (-> )
         createPayment: (p, shouldFail, failWith) -> new MyWalletPayment(MyWallet.wallet, p, shouldFail, failWith)
         keys: [
@@ -66,9 +67,6 @@ describe "SendCtrl", ->
         currency: currency.currencies[0]
         btcCurrency: currency.bitCurrencies[0]
         feePerKB: 10000
-
-      Wallet.user =
-        uid: 'a'
 
       askForSecondPassword = $q.defer()
       Wallet.askForSecondPasswordIfNeeded = () ->

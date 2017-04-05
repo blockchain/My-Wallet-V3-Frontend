@@ -4,7 +4,7 @@ angular
 
 function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options) {
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
-  const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.user.uid) === 'b';
+  const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
   const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
   const FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
   $scope.AB_TEST_FEE = FEE_OPTIONS != null;
@@ -206,7 +206,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
         Alerts.displaySentBitcoin(message);
 
         if ($scope.AB_TEST_FEE) {
-          Wallet.api.pushTxStats(Wallet.user.uid, $scope.advanced);
+          Wallet.api.pushTxStats(Wallet.my.wallet.guid, $scope.advanced);
         }
       });
     };
@@ -376,7 +376,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       .then(() => {
         $scope.confirmationStep = true;
         if ($scope.AB_TEST_FEE) {
-          Wallet.api.confirmationScreenStats(Wallet.user.uid);
+          Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
         }
       })
       .catch(handleNextStepError)
