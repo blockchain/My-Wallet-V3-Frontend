@@ -1,22 +1,13 @@
-.flex-column.mbvl
+.flex-column.mb-5
   p.security-red.pointer.mbn.type-xs(ng-show="true")
     i.ti-search.mrm.right-align(ng-click="qa.ukInfo()")  QA UK
     i.ti-search.mrm.right-align(ng-click="qa.dkInfo()")  QA DK
     i.ti-search.mrm.right-align(ng-click="qa.sepaInfo()")  QA Germany(SEPA)
-  .flex-column.flex-center.phm
-    span.pvm.f-14.width-90(ng-show="!britishBank && !showDanish") Please enter your bank information below.
-    span.pvm.f-14.width-90(ng-show="britishBank") Please enter your information for your bank in the United Kingdom.
-    span.pvm.f-14.width-90(ng-show="showDanish") Please enter your information for your Danish bank account.
-    .form-group.flex-row.flex-between.width-90()
-      div.width-100
-        label.control-label(translate="Bank Account Country")
-        div
-          ui-select.mtm(ng-model="selectedBankCountry" on-select="selectCountry('bank', $item)")
-            ui-select-match(placeholder="Select Country") {{selectedBankCountry.name}}
-            ui-select-choices(repeat="c in sepaCountries | filter:$select.search track by c.name") {{c.name}}
+  .flex-column.flex-center.phm.mv-10.pb-15
+    span.f-14.width-90(ng-hide="showDanish" translate="SELL.ENTER_BANK_INFO")
+    span.f-14.width-90(ng-show="showDanish" translate="SELL.ENTER_DANISH_BANK")
 
-  .flex-column.flex-center.phm
-    //- form for non-Danish accounts
+  .flex-column.flex-center.phm.mbm
     form.input-group.width-90.amount-input(
       role="form"
       name="accountInfoForm"
@@ -47,8 +38,6 @@
             tabindex="1"
             placeholder=""
             required)
-      //- .width-100
-      //-   a(ng-click="setAccountType('danish')") I have a Danish bank account
 
     //- form for Danish accounts
     form.input-group.width-90.amount-input(
@@ -80,58 +69,3 @@
             tabindex="1"
             placeholder=""
             required)
-      //- .width-100
-      //-   a(ng-click="setAccountType('international')") I don't have a Danish bank account
-
-    form.input-group.width-90.amount-input(
-      role="form"
-      name="accountInfoForm"
-      ng-submit="commitValues()"
-      autocomplete="off"
-      novalidate
-      ng-show="britishBank")
-      .form-group.flex-column.width-100
-        label.control-lable(translate="Bank Name")
-        div
-          input.form-control(
-            type="text"
-            ng-model="$parent.bankAccount.bank.name"
-            ng-change="setParentError()"
-            name="bankName"
-            tabindex="1"
-            placeholder=""
-            required)
-      .form-group.flex-column.width-100
-        label.control-label Bank Address (Street and Number)
-        div
-          input.form-control(
-            type="text"
-            ng-model="$parent.bankAccount.bank.address.street"
-            ng-change="setParentError()"
-            name="bankStreet"
-            tabindex="1"
-            placeholder=""
-            required)
-      .form-group.flex-row.flex-between.width-100
-        div.width-45
-          label.control-label(translate="City")
-          div
-            input.form-control(
-              type="text"
-              ng-model="$parent.bankAccount.bank.address.city"
-              ng-change="setParentError()"
-              name="bankCity"
-              tabindex="1"
-              placeholder=""
-              required)
-        div.width-45
-          label.control-label(translate="Postal Code")
-          div
-            input.form-control(
-              type="text"
-              ng-model="$parent.bankAccount.bank.address.zipcode"
-              ng-change="setParentError()"
-              name="bankZip"
-              tabindex="1"
-              placeholder=""
-              required)

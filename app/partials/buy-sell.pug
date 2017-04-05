@@ -26,21 +26,23 @@
                         trading-disabled-reason="getIsTradingDisabledReason()"
                         open-pending-trade="buy(pendingTrade)"
                         pending-trade="pendingTrade"
+                        get-days="getDays()"
                         buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
       div(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
         //- SELL
-        sell-quick-start(limits="limits",
+        sell-quick-start(limits="sellLimits",
                         transaction="sellTransaction",
                         disabled="status.disabled",
                         sell-currency-symbol="sellCurrencySymbol",
                         modal-open="status.modalOpen",
                         change-currency="changeSellCurrency(currency)"
                         trading-disabled="getIsTradingDisabled()"
-                        open-pending-trade="buy(pendingTrade)"
-                        pending-trade="pendingTrade"
+                        trading-disabled-reason="getIsTradingDisabledReason()"
                         on-trigger="openSellKyc()"
+                        select-tab="selectTab(tab)"
+                        get-days="getDays()"
                         sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openSellKyc()" limits="sellLimits")

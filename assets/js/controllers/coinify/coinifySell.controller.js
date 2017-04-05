@@ -7,7 +7,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifySellCurrencies;
-  $scope.currencySymbol = null;
   $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
@@ -18,10 +17,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
   $scope.acceptTermsForm;
-  $scope.transaction = {};
   $scope.bankAccounts = accounts;
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
-  $scope.step;
 
   $scope.bankAccount = {
     account: {
@@ -79,10 +76,26 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
 
+  $scope.setAccountCurrency = (countryCode) => {
+    switch (countryCode) {
+      case 'DK':
+        $scope.bankAccount.account.currency = 'DKK';
+        break;
+      case 'GB':
+        $scope.bankAccount.account.currency = 'GBP';
+        break;
+      default:
+        $scope.bankAccount.account.currency = 'EUR';
+        break;
+    }
+  };
+
+  $scope.setAccountCurrency($scope.exchangeCountry);
+  $scope.bankAccount.holder.address.country = $scope.exchangeCountry;
+
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
-  $scope.needsKyc = () => false;
-  $scope.needsISX = () => false;
+  $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
   $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
 
   $scope.steps = {
@@ -105,7 +118,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.nextStep = () => {
     $scope.status = {};
-    if ($scope.trade._iSignThisID) {
+    if ($scope.isKYC) {
       $scope.goTo('isx');
       return;
     }
@@ -136,9 +149,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else if ($scope.onStep('email')) {
       return !$scope.user.isEmailVerified;
     } else if ($scope.onStep('account-info')) {
-      if ($scope.transaction.currency === 'GBP') {
-        return (!b.bank.address.street || !b.bank.name || !b.bank.address.city || !b.bank.address.zipcode || !b.account.number || !b.account.bic);
-      }
       return (!b.account.number || !b.account.bic);
     } else if ($scope.onStep('account-holder')) {
       return (!b.holder.name || !b.holder.address.street || !b.holder.address.zipcode || !b.holder.address.city || !b.holder.address.country);
@@ -214,14 +224,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
+    if ($scope.onStep('accept-terms') || $scope.onStep('account-info') || $scope.onStep('account-holder') || $scope.onStep('summary') || $scope.onStep('bank-link')) {
       $uibModalInstance.dismiss('');
     } else {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
     }
   };
 
-  // NOTE this gets run upon controller load
   $scope.startPayment = () => {
     if ($scope.trade._state) return;
 
@@ -257,8 +266,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.close = () => {
     let index;
     if (!$scope.exchange.user) index = 0;
-    else if (!$scope.trades.length && !$scope.trade) index = 1;
-    else index = 2;
+    else if ($scope.onStep('account-info') || $scope.onStep('account-holder')) index = 1;
+    else if ($scope.onStep('summary')) index = 2;
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
   };
 
@@ -273,7 +282,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       createTime: t.createdAt,
       transferIn: {receiveAmount: t._inAmount / 100000000},
       transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
-      bankDigits: t._lastSixBankAccountDigits
+      bankDigits: t._bankAccountNumber
     };
     $scope.tradeCompleted = $scope.isInCompletedState(t);
     $scope.inNegativeState = $scope.isInNegativeState(t);
@@ -296,6 +305,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       Wallet.beep();
       let message = 'BITCOIN_SENT';
       Alerts.displaySentBitcoin(message);
+      let note = `Coinify Sell Order ${$scope.sellTrade.id}`;
+      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
     }, 500);
   };
 
@@ -323,14 +334,12 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   const handlePaymentAssignment = () => {
     $scope.payment.to($scope.sendAddress);
     $scope.payment.amount($scope.sendAmount);
-    // $scope.payment.build();
   };
 
   $scope.sell = () => {
     $scope.status.waiting = true;
     $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
       .then(sellResult => {
-        console.log('sell created - result:', sellResult);
         handleSellResult(sellResult);
         return sellResult;
       })
@@ -344,7 +353,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         }
         $scope.payment.build();
 
-        // NOTE sending is turned off when below is commented out
         Wallet.askForSecondPasswordIfNeeded()
           .then(signAndPublish)
           .then(transactionSucceeded)
@@ -360,11 +368,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       });
   };
 
-  // TODO this whole thing needs to be refactored (or killed)
   $scope.formatBankInfo = (trade) => {
     if (trade.transferOut) {
       let n = trade.transferOut.details.account.number;
-      $scope.bankNameOrNumber = n.substring(n.length, n.length - 6);
+      $scope.bankNameOrNumber = n;
     }
   };
 
@@ -380,30 +387,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     if (trade._state === 'canceled' || trade._state === 'expired' || trade._state === 'rejected') {
       return true;
     }
-  };
-
-  $scope.finishISX = (state) => {
-    console.log('finishISX', state);
-    $scope.ISXState = state;
-    switch (state) {
-      case 'reviewing':
-        $scope.KYCState = 'TX_KYC_REVIEWING.BODY';
-        break;
-      case 'processing':
-        $scope.KYCState = 'SELL.KYC_SUCCESS';
-        break;
-      case 'cancelled':
-        $scope.KYCState = 'SELL.KYC_CANCELLED';
-        break;
-      case 'expired':
-        $scope.KYCState = 'SELL.KYC_EXPIRED';
-        break;
-      case 'rejected':
-        $scope.KYCState = 'SELL.KYC_REJECTETED';
-        break;
-    }
-    // TODO screens for ISX status
-    $scope.goTo('review');
   };
 
   $scope.startPayment();
@@ -431,6 +414,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.transaction.fiat = null;
   };
 
+  $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
     if (!$scope.currencySymbol) {
       let curr = $scope.transaction.currency || null;

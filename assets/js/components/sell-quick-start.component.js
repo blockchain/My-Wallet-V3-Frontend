@@ -6,11 +6,14 @@ angular
       limits: '=',
       disabled: '=',
       tradingDisabled: '=',
+      tradingDisabledReason: '=',
       openPendingTrade: '&',
       pendingTrade: '=',
       modalOpen: '=',
       transaction: '=',
       sellCurrencySymbol: '=',
+      selectTab: '&',
+      getDays: '&',
       changeCurrency: '&',
       onTrigger: '&'
     },
@@ -19,12 +22,14 @@ angular
     controllerAs: '$ctrl'
   });
 
-function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q) {
+function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams, $uibModal) {
   $scope.limits = this.limits;
   $scope.sellCurrencySymbol = this.sellCurrencySymbol;
   $scope.sellTransaction = this.transaction;
   $scope.sellExchangeRate = {};
   $scope.changeSellCurrency = this.changeCurrency;
+  $scope.tradingDisabled = this.tradingDisabled;
+  $scope.tradingDisabledReason = this.tradingDisabledReason;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
@@ -32,16 +37,25 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.sellTransaction.btc = null;
   $scope.selectedCurrency = $scope.sellTransaction.currency.code;
 
-  if (['EUR', 'DKK', 'GBP'].indexOf($scope.sellTransaction.currency.code) === -1) {
-    // NOTE make EUR default if currency is not eur, dkk, or gbp
-    $scope.sellTransaction.currency = { code: 'EUR', name: 'Euro' };
-    $scope.sellCurrencySymbol = currency.conversions['EUR'];
-  }
-
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   if ($scope.exchange._profile) {
     $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
+  }
+
+  const setInitialCurrencyAndSymbol = (code, name) => {
+    $scope.sellTransaction.currency = { code: code, name: name };
+    $scope.sellCurrencySymbol = currency.conversions[code];
+    $scope.limitsCurrencySymbol = currency.conversions[code];
+  };
+
+  if ($scope.exchangeCountry === 'DK') {
+    setInitialCurrencyAndSymbol('DKK', 'Danish Krone');
+  } else if ($scope.exchangeCountry === 'GB') {
+    setInitialCurrencyAndSymbol('GBP', 'Great British Pound');
+  } else {
+    setInitialCurrencyAndSymbol('EUR', 'Euro');
   }
 
   $scope.changeSymbol = (curr) => {
@@ -50,16 +64,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   };
 
-  $scope.increaseLimit = () => {
-    // TODO
-    console.log('show kyc here');
-  };
-
   (() => {
-    $scope.kyc = buySell.kycs[0];
+    $scope.kyc = exchange.kycs[0];
   })();
-
-  // $scope.establishKyc();
 
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
@@ -108,21 +115,50 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.getExchangeRate();
 
-  // TODO commented this out for dev
   $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
       $scope.tradingDisabled = true;
+      $scope.showZeroBalance = true;
       return;
     }
     if (newVal >= $scope.totalBalance) {
       $scope.error['moreThanInWallet'] = true;
       $scope.offerUseAll();
     } else if (newVal < $scope.totalBalance) {
+      $scope.checkForNoFee();
       $scope.error['moreThanInWallet'] = false;
     } else if (!newVal) {
+      $scope.checkForNoFee();
       $scope.error['moreThanInWallet'] = false;
     }
   });
+
+  $scope.request = modals.openOnce(() => {
+    Alerts.clear();
+    return $uibModal.open({
+      templateUrl: 'partials/request.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'RequestCtrl',
+      resolve: {
+        destination: () => null,
+        focus: () => false
+      }
+    });
+  });
+
+  $scope.checkForNoFee = () => {
+    if (!$scope.sellTransaction || !$scope.sellTransaction.btc || $scope.isSweepTransaction) return;
+    let tradeInSatoshi = currency.convertToSatoshi($scope.sellTransaction.btc, currency.bitCurrencies[0]);
+    let index = Wallet.getDefaultAccountIndex();
+    let pmt = Wallet.my.wallet.createPayment();
+    pmt.from(index).amount(tradeInSatoshi);
+    pmt.sideEffect(r => {
+      if (r.absoluteFeeBounds[0] === 0) {
+        $scope.error['moreThanInWallet'] = true;
+        $scope.offerUseAll();
+      }
+    });
+  };
 
   $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
     let curr = $scope.sellTransaction.currency || null;

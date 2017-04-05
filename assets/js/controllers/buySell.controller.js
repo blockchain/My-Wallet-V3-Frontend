@@ -31,6 +31,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
+    $scope.sellLimits = {card: {}, bank: {}};
     $scope.state = {buy: true};
     $scope.rating = 0;
 
@@ -42,7 +43,6 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.sell = (trade, options) => {
-      console.log('sell from buy sell ctrl', trade, options); // NOTE trade will be kyc if passed in
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
         buySell.openSellView(trade, options).finally(() => {
@@ -127,11 +127,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     };
 
     $scope.openSellKyc = () => {
-      buySell.triggerKYC()
-        .then(kyc => {
-          console.log('then kyc', kyc);
-          $scope.sell(kyc);
-        });
+      if (!$scope.kyc) {
+        buySell.triggerKYC().then(kyc => $scope.buy(kyc));
+      } else {
+        $scope.buy($scope.kyc);
+      }
     };
 
     $scope.changeCurrency = (curr) => {
@@ -165,15 +165,16 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
   $scope.getMaxMin = (sell) => {
     let transaction = sell ? 'sellTransaction' : 'transaction';
+    let limits = sell ? 'sellLimits' : 'limits';
 
     const calculateMin = (rate) => {
-      $scope.limits.card.min = (rate * 10).toFixed(2);
+      $scope[limits].card.min = (rate * 10).toFixed(2);
     };
 
     const calculateMax = (rate) => {
-      $scope.limits.bank.max = buySell.calculateMax(rate, 'bank').max;
-      $scope.limits.card.max = buySell.calculateMax(rate, 'card').max;
-      $scope.limits.currency = $scope.currencySymbol;
+      $scope[limits].bank.max = buySell.calculateMax(rate, 'bank').max;
+      $scope[limits].card.max = buySell.calculateMax(rate, 'card').max;
+      $scope[limits].currency = $scope.currencySymbol;
     };
 
     buySell.getRate('EUR', $scope[transaction].currency.code).then(calculateMin);
@@ -204,9 +205,21 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     }
   };
 
+  const ONE_DAY_MS = 86400000;
+
+  $scope.getDays = () => {
+    let profile = buySell.getExchange().profile;
+    let verifyDate = profile && profile.canTradeAfter;
+    return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
+  };
+
+  let email = MyWallet.wallet.accountInfo.email;
+  let walletOptions = options;
+  $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, walletOptions, 'coinify');
+
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: $rootScope.inMobileBuy
+    options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
       ? ['BUY_BITCOIN', 'ORDER_HISTORY']
       : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }

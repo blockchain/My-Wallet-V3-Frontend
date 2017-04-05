@@ -162,7 +162,6 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     limits.available > limits.max && (limits.available = limits.max);
     limits.available > 0 ? limits.available : 0;
     limits.max = limits.max.toFixed(2);
-
     return limits;
   }
 

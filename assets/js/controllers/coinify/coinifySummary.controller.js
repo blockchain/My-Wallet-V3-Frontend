@@ -3,13 +3,13 @@ angular
   .controller('CoinifySummaryController', CoinifySummaryController);
 
 function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
-  $scope.isSell = $scope.$parent.$parent.isSell;
   $scope.$parent.limits = {};
   $scope.format = currency.formatCurrencyForView;
   $scope.btcCurrency = currency.bitCurrencies[0];
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
 
+  $scope.isSell = $scope.$parent.$parent.isSell;
   $scope.sellTrade = $scope.$parent.$parent.trade;
   $scope.sellTransaction = $scope.$parent.$parent.transaction;
 

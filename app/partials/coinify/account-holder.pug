@@ -1,6 +1,6 @@
-.flex-column.mbvl
+.flex-column
   .flex-column.flex-between.pam
-    span.pvm.f-14.mbm Who owns this bank account? This information should match the holder's bank statement.
+    span.f-14.pb-30(translate="SELL.WHO_OWNS")
     form.input-group.width-100.amount-input(
       role="form"
       name="accountInfoForm"
@@ -52,8 +52,8 @@
               tabindex="1"
               placeholder=""
               required)
-      .form-group.flex-row.flex-between.width-100
-        div.width-45
+      .form-group.flex-row.flex-between.width-100.mbn
+        div.width-45.width-45-mobile.width-45-tablet
           label.control-label(translate="Country")
           div
             ui-select.mtm(ng-model="$parent.bankAccount.holder.address.country" on-select="selectCountry('holder', $item)")
