@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -20,6 +20,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     label: '',
     amount: null,
     viewQR: null,
+    amountType: null,
     requestCreated: null
   };
 
@@ -75,7 +76,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   };
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
-    let { amount, label } = $scope.state;
+    let { amount, label, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
     let url;
 
@@ -83,11 +84,21 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     else url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
-    else url += amount ? 'amount_local=' + $scope.fromSatoshi(amount || 0, currency) + '&' : '';
+    else url += amount ? amountType + '=' + $scope.fromSatoshi(amount || 0, baseCurr) + '&' : '';
+
+    if (!isBitcoinURI && amountType === 'amount_local') url += 'currency=' + currency.code + '&nosavecurrency=true&';
 
     url += label ? 'message=' + label + ' ' : '';
     return encodeURI(url.slice(0, -1));
   };
+
+  $scope.resetCopy = () => {
+    $scope.state.isAddressCopied = false;
+    $scope.state.isBitcoinURICopied = false;
+    $scope.state.isPaymentRequestCopied = false;
+  };
+
+  $scope.$watchGroup(['state.amount', 'state.label'], $scope.resetCopy);
 
   $scope.installLock();
 }
