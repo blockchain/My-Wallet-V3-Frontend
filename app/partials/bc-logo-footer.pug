@@ -1,0 +1,16 @@
+.flex-row.flex-center.flex-column-mobile.flex-between.bc-logo-footer.width-100.width-100-tablet
+  .container
+    .flex-row.flex-center.flex-between.flex-column-mobile
+      .flex-row.flex-center.flex-column-mobile.em-300
+        img(src="img/blue-logo.svg" alt="" height="40")
+        a.upper.white.ml-40(href="{{rootURL}}") .info Explorer
+        a.upper.white.ml-40(href="https://www.blockchain.com/about") About
+        a.upper.white.ml-40(href="https://blog.blockchain.com") Blog
+        a.upper.white.ml-40(href="https://support.blockchain.com") Support
+      li.dropup(uib-dropdown)
+        a(href="#" uib-dropdown-toggle)
+          span.white.upper.f-12 {{language}}
+          i.white.icon-down_arrow.f-8.ml-5
+        ul.languages_select(uib-dropdown-menu)
+          li(ng-repeat="lang in languages")
+            a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
