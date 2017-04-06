@@ -21,28 +21,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
   $scope.bankAccount = {
-    account: {
-      currency: null
-    },
-    bank: {
-      name: null,
-      address: {
-        country: null,
-        street: null, // required for UK
-        city: null, // required for UK
-        zipcode: null // required for UK
-      }
-    },
-    holder: {
-      name: null,
-      address: {
-        country: null,
-        street: null,
-        city: null,
-        zipcode: null,
-        state: null
-      }
-    }
+    account: { currency: null },
+    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
+    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
   };
 
   $scope.transaction = {
@@ -219,7 +200,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.getBankAccounts = () => {
     $q.resolve(buySell.getBankAccounts())
-      .then(result => handleGetBankAccounts(result))
+      .then(handleGetBankAccounts)
       .catch(e => console.log('error in getBankAccounts', e));
   };
 
