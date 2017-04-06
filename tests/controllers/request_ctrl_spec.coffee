@@ -187,3 +187,9 @@ describe "RequestCtrl", ->
       expect(scope.state.isAddressCopied).toBe(false)
       expect(scope.state.isBitcoinURICopied).toBe(false)
       expect(scope.state.isPaymentRequestCopied).toBe(false)
+      
+  describe "isToImportedAddress", ->
+    
+    it "should be true if destination is imported address", ->
+      scope.state.to = scope.destinations[2];
+      expect(scope.isToImportedAddress()).toBe(true)
