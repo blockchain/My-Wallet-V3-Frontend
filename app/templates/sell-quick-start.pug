@@ -52,7 +52,7 @@
               ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
                 li(ng-repeat="currency in currencies"
                    role="menuitem"
-                   ng-click="changeSellCurrency({currency: currency}); getExchangeRate(); changeSymbol({currency: currency}); getQuote();"
+                   ng-click="handleCurrencyClick({currency: currency})"
                    ng-class="{active: isCurrencySelected(currency)}")
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
         .mts.pos-rel.mb-10.mtm.pbl(ng-show="showZeroBalance")

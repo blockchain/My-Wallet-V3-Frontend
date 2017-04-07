@@ -13,7 +13,6 @@ angular
       transaction: '=',
       sellCurrencySymbol: '=',
       selectTab: '&',
-      openPendingTrade: '&',
       getDays: '&',
       changeCurrency: '&',
       onTrigger: '&'
@@ -182,6 +181,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     .then((paymentData) => {
       $scope.payment.useAll(paymentData.sweepFee);
     });
+  };
+
+  $scope.handleCurrencyClick = (curr) => {
+    $scope.changeSellCurrency(curr);
+    $scope.changeSymbol(curr);
+    $scope.getExchangeRate();
+    $scope.getQuote();
   };
 
   $scope.useAll = () => {
