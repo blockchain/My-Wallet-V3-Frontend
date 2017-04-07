@@ -13,7 +13,7 @@
     ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max && !isSell"
     translate="ERROR_MIN_LIMIT")
   p.mvm(ng-hide="isSell")
-    span(translate="ORDER_CONFIRMATION_COPY" ng-if="tempFiatForm.$valid" ng-hide="isBankTransfer()")
+    span(translate="ORDER_CONFIRMATION_COPY" ng-if="tempFiatForm.$valid || tempFiatForm.fiat.$error.required" ng-hide="isBankTransfer()")
     span(translate="ORDER_CONFIRMATION_BANK_COPY" ng-if="tempFiatForm.$valid" ng-hide="!isBankTransfer()")
     span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, max: limits.available}")
     span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && tempFiatForm.$error.min && !tempFiatForm.$error.max" translate-values="{code: tempCurrency.code, min: limits.min}")
