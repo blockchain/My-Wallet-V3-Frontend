@@ -68,9 +68,9 @@
               popup-name="coinify-verification"
               translate="WHY")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
-          span.pos-abs.type-sm(ng-show="isPendingSellTrade")
+          span.pos-abs.type-sm(ng-show="isPendingSellTrade('awaiting_transfer_in')")
             span.state-danger-text(translate="SELL.WAIT_FOR_TRADE_COMPLETE")
-          span.pos-abs.type-sm(ng-hide="isPendingSellTrade")
+          span.pos-abs.type-sm(ng-hide="isPendingSellTrade('awaiting_transfer_in')")
             a(ng-click="openPendingTrade()" translate="FINISH")
             | &nbsp;
             span(translate="OR")
