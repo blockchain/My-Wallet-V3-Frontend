@@ -70,7 +70,7 @@
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
           span.pos-abs.type-sm(ng-show="isPendingSellTrade")
             span.state-danger-text(translate="SELL.WAIT_FOR_TRADE_COMPLETE")
-          span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')" ng-hide="isPendingSellTrade")
+          span.pos-abs.type-sm(ng-hide="isPendingSellTrade")
             a(ng-click="openPendingTrade()" translate="FINISH")
             | &nbsp;
             span(translate="OR")

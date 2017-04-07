@@ -195,7 +195,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     let profile = $scope.exchange && $scope.exchange.profile;
     let cannotTradeReason = profile && profile.cannotTradeReason;
 
-    if (disabled) cannotTradeReason = 'disabqled';
+    if (disabled) cannotTradeReason = 'disabled';
     return cannotTradeReason;
   };
 

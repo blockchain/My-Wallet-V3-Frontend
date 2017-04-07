@@ -45,10 +45,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.hideIncreaseLimit = $scope.exchange._profile._level._name > 1;
   }
 
-  if (this.tradingDisabledReason === 'awaiting_first_trade_completion' && this.pendingTrade.medium === 'blockchain') {
-    $scope.isPendingSellTrade = true;
-  }
-
+  $scope.isPendingSellTrade = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium === 'blockchain';
   $scope.isPendingTradeState = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium !== 'blockchain';
 
   $scope.initializeCurrencyAndSymbol = () => {

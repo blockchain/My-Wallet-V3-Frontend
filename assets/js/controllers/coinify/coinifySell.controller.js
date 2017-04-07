@@ -304,9 +304,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     if (!sellResult.transferIn) {
       $scope.error = sellResult;
       $scope.error = JSON.parse($scope.error);
-      if ($scope.error.error === 'price_quote_expired') {
-        $scope.quoteError = true;
-      }
     } else {
       $scope.sellTrade = sellResult;
       $scope.sendAddress = sellResult.transferIn.details.account;
