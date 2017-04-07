@@ -189,13 +189,6 @@ describe "CoinifyController", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
 
-    it "should prompt for survey first", inject(($cookies) ->
-      spyOn($cookies, "getObject").and.returnValue(false)
-      scope.goTo('select-country')
-      scope.close(true)
-      expect(Alerts.confirm).toHaveBeenCalledWith('SURVEY_PROMPT', {friendly: true, action: 'TAKE_SURVEY', cancel: 'NO_THANKS'})
-    )
-
   describe "needsISX", ->
     it "should return true if trade is in a pending state", ->
       scope.trade =

@@ -25,13 +25,13 @@
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
-    div.width-80(ng-show="onStep('email')" ng-controller="CoinifyEmailController" ng-include="'./coinify/email'")
-    div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'./coinify/signup'")
-    div.width-80(ng-show="onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'./coinify/medium'")
-    div.width-80(ng-show="onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'./coinify/summary'")
+    div.width-80(ng-show="onStep('email')" ng-controller="CoinifyEmailController" ng-include="'partials/coinify/email.pug'")
+    div.width-80(ng-show="onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
+    div.width-80(ng-show="onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
+    div.width-80(ng-show="onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")
     div.iframe(ng-if="onStep('isx')")
       isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
-    div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')" ng-include="'./trade-summary'")
+    div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')" ng-include="'partials/trade-summary.pug'")
       p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
         i.ti-search.mrm
         span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
@@ -48,13 +48,6 @@
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary') || onStep('summary') && error")
       button.button-muted.mrm(ng-click="close() && goToOrderHistory()" translate="FINISH_LATER" ng-show="onStep('isx')")
       div(ng-hide="afterStep('summary')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="nextStep()"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('select-country')")
         button.button-primary(
           ladda-translate="CONTINUE"
           ng-click="nextStep()"
