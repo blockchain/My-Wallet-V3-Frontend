@@ -205,10 +205,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('account-info') || $scope.onStep('account-holder') || $scope.onStep('summary') || $scope.onStep('bank-link')) {
-      $uibModalInstance.dismiss('');
-    } else {
+    if (($scope.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
+    } else {
+      $uibModalInstance.dismiss('');
     }
   };
 

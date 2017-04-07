@@ -13,6 +13,7 @@ angular
       transaction: '=',
       sellCurrencySymbol: '=',
       selectTab: '&',
+      openPendingTrade: '&',
       getDays: '&',
       changeCurrency: '&',
       onTrigger: '&'
@@ -29,20 +30,27 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.sellExchangeRate = {};
   $scope.changeSellCurrency = this.changeCurrency;
   $scope.tradingDisabled = this.tradingDisabled;
-  $scope.tradingDisabledReason = this.tradingDisabledReason;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   $scope.sellTransaction.btc = null;
   $scope.selectedCurrency = $scope.sellTransaction.currency.code;
+  $scope.format = currency.formatCurrencyForView;
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   if ($scope.exchange._profile) {
     $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
+    $scope.hideIncreaseLimit = $scope.exchange._profile._level._name > 1;
   }
+
+  if (this.tradingDisabledReason === 'awaiting_first_trade_completion' && this.pendingTrade.medium === 'blockchain') {
+    $scope.isPendingSellTrade = true;
+  }
+
+  $scope.isPendingTradeState = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium !== 'blockchain';
 
   $scope.initializeCurrencyAndSymbol = () => {
     const setInitialCurrencyAndSymbol = (code, name) => {
@@ -151,6 +159,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
         $scope.offerUseAll();
       }
     });
+  };
+
+  $scope.cancelTrade = () => {
+    $scope.disabled = true;
+    buySell.cancelTrade(this.pendingTrade).finally(() => $scope.disabled = false);
   };
 
   $scope.offerUseAll = () => {

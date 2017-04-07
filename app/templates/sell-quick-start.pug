@@ -75,6 +75,20 @@
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
           span.pos-abs.type-sm
             span.state-danger-text(translate="TRADING_IS_DISABLED")
+        .mts.pos-rel(ng-show="$ctrl.tradingDisabled && $ctrl.tradingDisabledReason === 'awaiting_first_trade_completion'")
+          span.pos-abs.type-sm(ng-show="isPendingSellTrade")
+            span.state-danger-text(translate="SELL.WAIT_FOR_TRADE_COMPLETE")
+          span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')" ng-hide="isPendingSellTrade")
+            a(ng-click="$ctrl.openPendingTrade()" translate="FINISH")
+            | &nbsp;
+            span(translate="OR")
+            | &nbsp;
+            a(ng-click="cancelTrade()" translate="CANCEL")
+            | &nbsp;
+            span(translate="PURCHASE_PENDING")
+            | &nbsp;
+            span {{ format($ctrl.pendingTrade.sendAmount / 100, {code: $ctrl.pendingTrade.inCurrency}, true) }}
+            | .
         .mts.mb-15.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'after_first_trade'")
           span.pos-abs.type-sm
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: sellCurrencySymbol.symbol, amount: 0}")
@@ -83,26 +97,12 @@
               popup-days="{{$ctrl.getDays()}}"
               popup-name="coinify-verification"
               translate="WHY")
-        .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
-          span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')")
-            span.blue.pointer(ng-click="openPendingTrade()" translate="FINISH")
-            |
-            span(translate="OR")
-            |
-            span.blue.pointer(ng-click="cancelTrade()" translate="CANCEL")
-            |
-            span(translate="PURCHASE_PENDING")
-            |
-            span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
-            | .
-          span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")
-            span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
       .flex-row.mt-5(ng-hide="")
         div(ng-hide="!exchange._user || error.moreThanInWallet || tradingDisabled")
           span(translate="SELL.MAX_DAILY")
           | &nbsp;
           span {{limitsCurrencySymbol.symbol}}{{sellLimit}}.
           | &nbsp;
-          a(ng-click="$ctrl.onTrigger()") Increase my limit
-      .flex-end.pos-rel
-        button.button-primary.mt-10(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled || error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")
+          a(ng-click="$ctrl.onTrigger()" ng-hide="hideIncreaseLimit") Increase my limit
+      .flex-end.pos-rel.mt-20
+        button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled || error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")

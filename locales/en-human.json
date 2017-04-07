@@ -1359,7 +1359,8 @@
     "ENTER_BANK_INFO": "Please enter your bank information below.",
     "TRADE_COMPLETE": "Trade Complete",
     "SOLD": "SOLD",
-    "FIRST_CONFIRMATION": "The rate will be set after the first confirmation"
+    "FIRST_CONFIRMATION": "The rate will be set after the first confirmation",
+    "WAIT_FOR_TRADE_COMPLETE": "Trading is disabled until your pending trade is complete."
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
