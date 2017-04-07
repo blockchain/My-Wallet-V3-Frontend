@@ -38,11 +38,13 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     },
     trades: { completed: [], pending: [] },
     kycs: [],
+    mediums: [],
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
     init,
     getQuote,
+    getPaymentMediums,
     getSellQuote,
     getKYCs,
     getRate,
@@ -86,6 +88,15 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       amt = Math.trunc(amt * 100);
     }
     return $q.resolve(service.getExchange().getBuyQuote(amt, curr, quoteCurr));
+  }
+
+  function getPaymentMediums (quote) {
+    let success = (mediums) => {
+      console.log(mediums);
+      buySell.mediums = mediums;
+    };
+
+    return quote.getPaymentMediums().then(success);
   }
 
   function getSellQuote (amt, curr, quoteCurr) {

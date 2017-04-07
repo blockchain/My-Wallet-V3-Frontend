@@ -5,7 +5,7 @@ angular
 function CoinifyEmailController ($scope, Alerts, Wallet, $q) {
   $scope.toggleEmail = () => $scope.editEmail = !$scope.editEmail;
 
-  $scope.$parent.verifyEmail = () => {
+  $scope.verifyEmail = () => {
     $q(Wallet.verifyEmail.bind(null, $scope.$parent.fields.emailVerification)).catch((err) => {
       Alerts.displayError(err);
     });

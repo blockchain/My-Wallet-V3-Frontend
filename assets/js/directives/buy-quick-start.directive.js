@@ -48,10 +48,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
-    scope.triggerBuy = () => {
-      scope.buy({ fiat: scope.transaction.fiat, btc: scope.transaction.btc, quote: scope.quote });
-    };
-
     let fetchingQuote;
     let startFetchingQuote = () => {
       fetchingQuote = $interval(() => scope.getExchangeRate(), 1000 * 60);

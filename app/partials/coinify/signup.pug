@@ -1,4 +1,4 @@
-form.clearfix(name="signupForm" role="form" novalidate)
+form.modal-body.fade.clearfix(id="signupForm" name="signupForm" role="form" ng-submit="signup()" novalidate)
   span.type-h5.em-500.flex-start.pts(translate="ACCEPT_TERMS")
   p.mvl(ng-hide="isSell" translate="PARTNER" translate-values="{email: user.email}")
   p.mvl(ng-show="isSell" translate="SELL.PARTNER" translate-values="{email: user.email}")
@@ -11,3 +11,5 @@ form.clearfix(name="signupForm" role="form" novalidate)
     i.ti-alert.sent.mrs.type-h4
     span.sent.mrs(translate="EMAIL_IN_USE" translate-values="{email: user.email}")
     span.primary.pointer(translate="CLICK_TO_CHANGE" ng-click="nextStep();")
+.modal-footer.flex-end.flex-row
+  button.button-primary(type="submit" ng-disabled="signupForm.$invalid" form="signupForm" translate="CONTINUE")
