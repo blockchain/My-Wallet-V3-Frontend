@@ -65,10 +65,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     } else {
       setInitialCurrencyAndSymbol('EUR', 'Euro');
     }
-    $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
-      let curr = $scope.sellTransaction.currency || null;
-      $scope.currencySymbol = currency.conversions[curr.code];
-    });
   };
   $scope.initializeCurrencyAndSymbol();
 
@@ -196,6 +192,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.status.busy = true;
     buySell.getSellQuote(-$scope.sellTransaction.btc, 'BTC', $scope.sellTransaction.currency.code).then(success, error);
   };
+
+  $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
+    let curr = $scope.sellTransaction.currency || null;
+    $scope.currencySymbol = currency.conversions[curr.code];
+  });
 
   $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
