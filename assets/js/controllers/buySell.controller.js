@@ -74,6 +74,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
       $scope.status.loading = true;
       $scope.exchange = buySell.getExchange();
+      $scope.exchangeCountry = $scope.exchange._profile._country || $stateParams.countryCode;
 
       buySell.fetchProfile().then(() => {
         $scope.getMaxMin();
@@ -195,7 +196,6 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     let cannotTradeReason = profile && profile.cannotTradeReason;
 
     if (disabled) cannotTradeReason = 'disabled';
-
     return cannotTradeReason;
   };
 
@@ -222,7 +222,10 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
       ? ['BUY_BITCOIN', 'ORDER_HISTORY']
       : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
-    select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
+    select (tab) {
+      this.selectedTab = this.selectedTab ? tab : null;
+      $state.params.selectedTab = this.selectedTab;
+    }
   };
 
   $rootScope.$on('fetchExchangeProfile', () => {

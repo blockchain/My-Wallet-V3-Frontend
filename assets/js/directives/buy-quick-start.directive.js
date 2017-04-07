@@ -34,7 +34,8 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.inMobileBuy = $rootScope.inMobileBuy;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
-    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
+    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
+    scope.isPendingSellTrade = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium === 'blockchain';
 
     scope.getExchangeRate = () => {
       stopFetchingQuote();

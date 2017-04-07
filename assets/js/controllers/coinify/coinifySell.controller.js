@@ -21,28 +21,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
   $scope.bankAccount = {
-    account: {
-      currency: null
-    },
-    bank: {
-      name: null,
-      address: {
-        country: null,
-        street: null, // required for UK
-        city: null, // required for UK
-        zipcode: null // required for UK
-      }
-    },
-    holder: {
-      name: null,
-      address: {
-        country: null,
-        street: null,
-        city: null,
-        zipcode: null,
-        state: null
-      }
-    }
+    account: { currency: null },
+    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
+    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
   };
 
   $scope.transaction = {
@@ -219,15 +200,15 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.getBankAccounts = () => {
     $q.resolve(buySell.getBankAccounts())
-      .then(result => handleGetBankAccounts(result))
+      .then(handleGetBankAccounts)
       .catch(e => console.log('error in getBankAccounts', e));
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('account-info') || $scope.onStep('account-holder') || $scope.onStep('summary') || $scope.onStep('bank-link')) {
-      $uibModalInstance.dismiss('');
-    } else {
+    if (($scope.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
+    } else {
+      $uibModalInstance.dismiss('');
     }
   };
 
@@ -344,6 +325,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         return sellResult;
       })
       .then(sellData => {
+        if ($scope.error) return;
         handlePaymentAssignment();
         // for testing
         if (exchange._customAddress && exchange._customAmount) {

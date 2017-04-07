@@ -29,34 +29,41 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.sellExchangeRate = {};
   $scope.changeSellCurrency = this.changeCurrency;
   $scope.tradingDisabled = this.tradingDisabled;
-  $scope.tradingDisabledReason = this.tradingDisabledReason;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   $scope.sellTransaction.btc = null;
   $scope.selectedCurrency = $scope.sellTransaction.currency.code;
+  $scope.format = currency.formatCurrencyForView;
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   if ($scope.exchange._profile) {
     $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
+    $scope.hideIncreaseLimit = $scope.exchange._profile._level._name > 1;
   }
 
-  const setInitialCurrencyAndSymbol = (code, name) => {
-    $scope.sellTransaction.currency = { code: code, name: name };
-    $scope.sellCurrencySymbol = currency.conversions[code];
-    $scope.limitsCurrencySymbol = currency.conversions[code];
+  $scope.isPendingSellTrade = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium === 'blockchain';
+  $scope.isPendingTradeState = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium !== 'blockchain';
+
+  $scope.initializeCurrencyAndSymbol = () => {
+    const setInitialCurrencyAndSymbol = (code, name) => {
+      $scope.sellTransaction.currency = { code: code, name: name };
+      $scope.sellCurrencySymbol = currency.conversions[code];
+      $scope.limitsCurrencySymbol = currency.conversions[code];
+    };
+
+    if ($scope.exchangeCountry === 'DK') {
+      setInitialCurrencyAndSymbol('DKK', 'Danish Krone');
+    } else if ($scope.exchangeCountry === 'GB') {
+      setInitialCurrencyAndSymbol('GBP', 'Great British Pound');
+    } else {
+      setInitialCurrencyAndSymbol('EUR', 'Euro');
+    }
   };
-
-  if ($scope.exchangeCountry === 'DK') {
-    setInitialCurrencyAndSymbol('DKK', 'Danish Krone');
-  } else if ($scope.exchangeCountry === 'GB') {
-    setInitialCurrencyAndSymbol('GBP', 'Great British Pound');
-  } else {
-    setInitialCurrencyAndSymbol('EUR', 'Euro');
-  }
+  $scope.initializeCurrencyAndSymbol();
 
   $scope.changeSymbol = (curr) => {
     if (curr && $scope.currencies.some(c => c.code === curr.currency.code)) {
@@ -111,27 +118,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.status.waiting = true;
     $scope.$parent.sell({ fiat: $scope.sellTransaction.fiat, btc: $scope.sellTransaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
     $scope.status = {};
+    $timeout(() => {
+      $scope.sellTransaction = { currency: {} };
+      $scope.initializeCurrencyAndSymbol();
+    }, 1000);
   };
 
   $scope.getExchangeRate();
-
-  $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
-    if ($scope.totalBalance === 0) {
-      $scope.tradingDisabled = true;
-      $scope.showZeroBalance = true;
-      return;
-    }
-    if (newVal >= $scope.totalBalance) {
-      $scope.error['moreThanInWallet'] = true;
-      $scope.offerUseAll();
-    } else if (newVal < $scope.totalBalance) {
-      $scope.checkForNoFee();
-      $scope.error['moreThanInWallet'] = false;
-    } else if (!newVal) {
-      $scope.checkForNoFee();
-      $scope.error['moreThanInWallet'] = false;
-    }
-  });
 
   $scope.request = modals.openOnce(() => {
     Alerts.clear();
@@ -160,10 +153,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     });
   };
 
-  $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
-    let curr = $scope.sellTransaction.currency || null;
-    $scope.currencySymbol = currency.conversions[curr.code];
-  });
+  $scope.cancelTrade = () => {
+    $scope.disabled = true;
+    buySell.cancelTrade(this.pendingTrade).finally(() => $scope.disabled = false);
+  };
 
   $scope.offerUseAll = () => {
     $scope.status.busy = true;
@@ -183,10 +176,40 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     });
   };
 
+  $scope.handleCurrencyClick = (curr) => {
+    $scope.changeSellCurrency(curr);
+    $scope.changeSymbol(curr);
+    $scope.getExchangeRate();
+    $scope.getQuote();
+  };
+
   $scope.useAll = () => {
     $scope.sellTransaction.btc = $scope.sweepAmount / 100000000;
     $scope.isSweepTransaction = true;
     $scope.status.busy = true;
     buySell.getSellQuote(-$scope.sellTransaction.btc, 'BTC', $scope.sellTransaction.currency.code).then(success, error);
   };
+
+  $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
+    let curr = $scope.sellTransaction.currency || null;
+    $scope.currencySymbol = currency.conversions[curr.code];
+  });
+
+  $scope.$watch('sellTransaction.btc', (newVal, oldVal) => {
+    if ($scope.totalBalance === 0) {
+      $scope.tradingDisabled = true;
+      $scope.showZeroBalance = true;
+      return;
+    }
+    if (newVal >= $scope.totalBalance) {
+      $scope.error['moreThanInWallet'] = true;
+      $scope.offerUseAll();
+    } else if (newVal < $scope.totalBalance) {
+      $scope.checkForNoFee();
+      $scope.error['moreThanInWallet'] = false;
+    } else if (!newVal) {
+      $scope.checkForNoFee();
+      $scope.error['moreThanInWallet'] = false;
+    }
+  });
 }
