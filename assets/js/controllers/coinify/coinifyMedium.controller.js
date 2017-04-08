@@ -3,13 +3,10 @@ angular
   .controller('CoinifyMediumController', CoinifyMediumController);
 
 function CoinifyMediumController ($scope, Alerts, buySell) {
-  $scope.$parent.medium = $scope.trade ? $scope.trade.medium : undefined;
-  $scope.$parent.mediums = {};
-  $scope.$parent.getMedium = () => $scope.mediums[$scope.medium] || {};
-  $scope.$parent.isMedium = (medium) => $scope.getMedium().inMedium === medium;
+  let quote = $scope.vm.quote;
 
   $scope.showNote = (medium) => {
-    let isMedium = $scope.$parent.medium === medium;
+    let isMedium = $scope.vm.medium === medium;
 
     let trades = $scope.vm.exchange.trades || [];
     let tradesOfTypeMedium = trades.filter((t) => t.medium === medium).length > 0;
@@ -17,8 +14,16 @@ function CoinifyMediumController ($scope, Alerts, buySell) {
     return isMedium && !tradesOfTypeMedium;
   };
 
-  $scope.$parent.confirmOrContinue = () => {
-    let skipConfirm = $scope.needsKyc();
-    skipConfirm ? $scope.buy() : $scope.goTo('summary');
+  $scope.submit = () => {
+    let { medium } = $scope.vm;
+
+    $scope.mediums[medium].getAccounts()
+                          .then((accounts) => buySell.accounts = accounts)
+                          .then(() => $scope.vm.goTo('summary'))
+                          .catch((err) => console.log(err));
   };
+
+  quote.getPaymentMediums()
+       .then((mediums) => $scope.mediums = mediums)
+       .catch((err) => console.log(err));
 }

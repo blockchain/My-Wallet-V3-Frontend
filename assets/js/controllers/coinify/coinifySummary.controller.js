@@ -3,6 +3,15 @@ angular
   .controller('CoinifySummaryController', CoinifySummaryController);
 
 function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
+  let quote = $scope.vm.quote;
+  let medium = $scope.vm.medium;
+
+  $scope.trade = {};
+  $scope.trade.total = (quote.paymentMediums[medium].total / 100).toFixed(2);
+  $scope.trade.methodFee = (quote.paymentMediums[medium].fee / 100).toFixed(2);
+  $scope.trade.BTCAmount = currency.isBitCurrency(quote.baseCurrency) ? quote.baseAmount : quote.quoteAmount;
+  $scope.trade.fiatAmount = currency.isBitCurrency(quote.baseCurrency) ? quote.quoteAmount : quote.baseAmount;
+
   $scope.$parent.limits = {};
   $scope.format = currency.formatCurrencyForView;
   $scope.btcCurrency = currency.bitCurrencies[0];
@@ -13,14 +22,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.sellTrade = $scope.$parent.$parent.trade;
   $scope.sellTransaction = $scope.$parent.$parent.transaction;
 
-  $scope.trade = $scope.$parent.trade;
-  $scope.transaction = $scope.$parent.transaction;
-
   $scope.$parent.fields.rate = false;
-
-  if (!$scope.isSell) {
-    $scope.isBankTransfer = () => $scope.isMedium('bank');
-  }
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
@@ -37,14 +39,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
       return $q.all([min, max]).then($scope.setParentError);
     });
-  };
-
-  $scope.convertFeeToFiat = () => {
-    return $scope.transaction.fiat / $scope.fee;
-  };
-
-  $scope.setTotal = (baseAmount, fee) => {
-    return baseAmount - fee;
   };
 
   $scope.commitValues = () => {
@@ -79,28 +73,17 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.$parent.error = JSON.parse(err);
   };
 
-  $scope.$parent.buy = () => {
-    $scope.status.waiting = true;
-
+  $scope.buy = () => {
     let success = (trade) => {
-      $scope.$parent.trade = trade;
-      Alerts.clear($scope.alerts);
-      if ($scope.$parent.trade.bankAccount) $scope.formatTrade('bank_transfer');
+      $scope.vm.trade = trade;
       buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
-      $scope.nextStep();
     };
 
-    // check if bank transfer and kyc level
-    if ($scope.needsKyc()) {
-      return buySell.kycs.length && ['declined', 'rejected', 'expired'].indexOf(buySell.kycs[0].state) > -1
-        ? buySell.triggerKYC().then(success, $scope.standardError)
-        : buySell.getOpenKYC().then(success, $scope.standardError);
-    }
-
-    $scope.accounts[0].buy()
-                      .catch((e) => completeTradeError(e))
-                      .then(success, $scope.standardError)
-                      .then($scope.watchAddress);
+    buySell.accounts[0].buy()
+                       .catch((e) => completeTradeError(e))
+                       .then(success, $scope.standardError)
+                       .then($scope.vm.watchAddress)
+                       .then($scope.vm.goTo('isx'));
   };
 
   $scope.$watch('transaction.currency', (newVal, oldVal) => {

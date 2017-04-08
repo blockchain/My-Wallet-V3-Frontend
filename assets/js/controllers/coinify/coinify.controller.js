@@ -22,13 +22,14 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
-  let eventualError = (message) => Promise.reject.bind(Promise, { message });
+  this.eventualError = (message) => Promise.reject.bind(Promise, { message });
 
   $scope.steps = {
     'email': 0,
     'accept-terms': 1,
     'select-payment-medium': 2,
-    'summary': 3
+    'summary': 3,
+    'isx': 4
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -38,22 +39,19 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
+  if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
+    this.goTo('email');
+  } else if (!this.exchange.user) {
+    this.goTo('accept-terms');
+  } else {
+    this.goTo('select-payment-medium');
+  }
+
   $scope.fields = { email: $scope.user.email };
 
   $scope.hideQuote = () => $scope.isMedium('bank');
 
   $scope.userHasExchangeAcct = this.exchange.user;
-
-  $scope.getAccounts = () => {
-    if (!this.exchange.user) { return; }
-
-    let success = (accounts) => {
-      $scope.accounts = accounts;
-    };
-
-    let accountsError = eventualError('ERROR_ACCOUNTS_FETCH');
-    return $scope.mediums[$scope.medium].getAccounts().then(success, accountsError);
-  };
 
   $scope.standardError = (err) => {
     console.log(err);
@@ -70,29 +68,13 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     }
   };
 
-  $scope.updateAmounts = () => {
-    $scope.transaction.methodFee = ($scope.quote.paymentMediums[$scope.medium].fee / 100).toFixed(2);
-    $scope.transaction.total = ($scope.quote.paymentMediums[$scope.medium].total / 100).toFixed(2);
-  };
-
-  $scope.nextStep = () => {
-    if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
-      this.goTo('email');
-    } else if (!this.exchange.user) {
-      this.goTo('accept-terms');
-    } else if (!$scope.isMediumSelected) {
-      this.goTo('select-payment-medium');
-      $scope.isMediumSelected = true;
-    } else {
-      this.goTo('summary');
-    }
-  };
-
   $scope.watchAddress = () => {
     if ($rootScope.buySellDebug) {
-      console.log('$scope.watchAddress() for', $scope.trade);
+      console.log('$scope.watchAddress() for', this.trade);
     }
+    if (!this.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
+    this.trade.watchAddress().then(success);
   };
 
   $scope.formatTrade = (state) => {
@@ -146,15 +128,5 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     $scope.$digest();
   });
 
-  $scope.$watch('medium', (newVal) => newVal && $scope.getAccounts().then($scope.updateAmounts));
-  $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
-  $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
   $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
-
-  $scope.$watch('expiredQuote', (newVal) => {
-    if (newVal && !$scope.isKYC) {
-      $scope.status.gettingQuote = true;
-      $scope.getQuote();
-    }
-  });
 }

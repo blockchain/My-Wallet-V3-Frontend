@@ -28,9 +28,8 @@
   div(ng-if="onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
   div(ng-if="onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
   div(ng-if="onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")
-  div.iframe(ng-if="onStep('isx')")
-    isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
-  div.width-80(ng-if="onStep('trade-in-review', 'trade-formatted')" ng-include="'partials/trade-summary.pug'")
+  div(ng-if="onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")
+  div(ng-if="onStep('trade-in-review', 'trade-formatted')" ng-include="'partials/trade-summary.pug'")
     p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
       i.ti-search.mrm
       span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")

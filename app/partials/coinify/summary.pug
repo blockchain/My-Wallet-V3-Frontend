@@ -1,4 +1,4 @@
-.modal-body.fade
+form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng-submit="buy()" novalidate)
   .flex-column.mbl(ng-show="error || $parent.error")
     p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
     span.mvm(ng-hide="isSell" translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")
@@ -34,14 +34,14 @@
       .flex-row.flex-between.pam.border-bottom-light(ng-hide="isSell")
         span(ng-hide="isBankTransfer()" translate="BTC:")
         span(ng-show="isBankTransfer()" translate="BTC_APPROX_RATE")
-        span.success(ng-hide="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
-        span.success.tilda-before(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ transaction.btc }}
+        span.success(ng-hide="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ trade.BTCAmount }}
+        span.success.tilda-before(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ trade.BTCAmount }}
       .flex-row.flex-between.pam.pos-rel.pv-15(ng-show="isSell")
         span.colon(ng-show="isSell" translate="SELL.BTC_TO_SELL")
         span(ng-show="isSell") {{ sellTransaction.btc }} BTC
       .flex-row.flex-between.pam.pos-rel(ng-hide="isSell")
         span.colon(ng-hide="editAmount" translate="AMOUNT")
-        span(ng-hide="editAmount") {{ transaction.fiat | format }} {{ transaction.currency.code }}
+        span(ng-hide="editAmount") {{ trade.fiatAmount | format }} {{ trade.currency.code }}
         span.type-sm.blue.underline.pointer(
           ng-disabled="tempFiatForm.$invalid"
           ng-show="editAmount"
@@ -77,7 +77,7 @@
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
       .flex-row.flex-between.pam.border-bottom-light(ng-hide="isSell")
         span(translate="PAYMENT_FEE" ng-hide="isSell")
-        span(ng-hide="isSell") {{ transaction.methodFee | format }} {{ transaction.currency.code }}
+        span(ng-hide="isSell") {{ trade.methodFee | format }} {{ trade.currency.code }}
         //- Transaction Fees
       .flex-row.flex-between.pam.pv-15(ng-show="isSell")
         span.colon(ng-show="isSell" translate="SELL.BTC_TX_FEE")
@@ -85,7 +85,7 @@
       //- Transaction Totals
       .flex-row.flex-between.pam(ng-hide="isSell")
         span.em-500(translate="TOTAL_COST:")
-        span {{ currencySymbol.symbol }}{{ transaction.total }} {{ transaction.currency.code }}
+        span {{ currencySymbol.symbol }}{{ trade.total }} {{ trade.currency.code }}
       .flex-row.flex-between.pam.pv-15(ng-show="isSell")
         span.em-500.colon(translate="SELL.CREDIT_OWED")
         span.em-500 {{ sellTransaction.fiat | format }} {{ sellTransaction.currency }}
@@ -103,3 +103,5 @@
           label.mlm.em-300.f-12(for="rate" ng-show="isSell")
             span(translate="SELL_RATE_ACCEPT")
             helper-button(content="SELL.FIRST_CONFIRMATION")
+.modal-footer.flex-end.flex-row
+  button.button-primary(type="submit" form="summaryForm" translate="CONTINUE")

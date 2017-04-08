@@ -10,7 +10,6 @@ function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currenc
   $scope.signup = () => {
     return exchange.signup($stateParams.countryCode, fiatCurrency)
       .then(() => exchange.fetchProfile())
-      .then(() => buySell.getPaymentMediums(quote))
       .then(() => $scope.vm.goTo('select-payment-medium'))
       .catch((err) => { console.log(err); });
   };
