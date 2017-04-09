@@ -22,7 +22,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.sellTrade = $scope.$parent.$parent.trade;
   $scope.sellTransaction = $scope.$parent.$parent.transaction;
 
-  $scope.$parent.fields.rate = false;
+  $scope.$parent.fields = {rate: false};
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {

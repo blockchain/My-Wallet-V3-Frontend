@@ -6,10 +6,10 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
-  $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
   $scope.status = {};
+  this.user = Wallet.user;
   this.quote = quote;
 
   let links = options.partners.coinify.surveyLinks;
@@ -39,7 +39,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
-  if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
+  if ((!this.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('accept-terms');
@@ -47,11 +47,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     this.goTo('select-payment-medium');
   }
 
-  $scope.fields = { email: $scope.user.email };
-
   $scope.hideQuote = () => $scope.isMedium('bank');
-
-  $scope.userHasExchangeAcct = this.exchange.user;
 
   $scope.standardError = (err) => {
     console.log(err);

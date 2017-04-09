@@ -20,7 +20,9 @@ function CoinifyEmailController ($scope, Alerts, Wallet, $q) {
       .finally(() => { $scope.editEmail = false; });
   };
 
-  $scope.$watch('$parent.step', (newVal) => {
-    if ($scope.steps['email'] === newVal && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
+  $scope.$watch('$parent.step', (step) => {
+    if ($scope.steps['email'] === step && !Wallet.goal.firstLogin) Wallet.resendEmailConfirmation();
   });
+
+  $scope.$watch('vm.user.isEmailVerified', (verified) => verified && $scope.vm.goTo('accept-terms'));
 }

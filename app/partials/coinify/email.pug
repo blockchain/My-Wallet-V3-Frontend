@@ -2,12 +2,12 @@ form.modal-body.fade.clearfix(name="emailForm" ng-submit="vm.goTo('signup')")
   div(ng-hide="editEmail || rejectedEmail")
     span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
     p.mtl.mbm
-      span(translate="SENT_VERIFICATION" translate-values="{email: user.email}")
+      span(translate="SENT_VERIFICATION" translate-values="{email: vm.user.email}")
     .mtm
       span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
   bc-async-input(type="email"
                  is-required
-                 ng-model="user.email"
+                 ng-model="vm.user.email"
                  on-cancel="toggleEmail"
                  on-save="changeEmail"
                  ng-show="editEmail || rejectedEmail"
