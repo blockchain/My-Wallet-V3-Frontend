@@ -5,7 +5,7 @@
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
         .flex-center(ng-show="exchangeRate.fiat" ng-hide="status.fetching")
-          span.type-sm.em-500 1 BTC = {{sellCurrencySymbol.symbol}}{{ sellExchangeRate.fiat }}
+          span.type-sm.em-500 1 BTC = {{$ctrl.sellCurrencySymbol.symbol}}{{ sellExchangeRate.fiat }}
           helper-button(content="EXCHANGE_RATE_HELPER")
         .flex-row.flex-center(ng-show="status.fetching")
           img(src="img/spinner.gif")
@@ -66,8 +66,8 @@
           | &nbsp;
           a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
         .pos-rel.mt-10(ng-hide="tradingDisabled")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: $ctrl.limits.card.min, symbol: sellCurrencySymbol.symbol}")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH" translate-values="{limit: sellLimit, symbol: sellCurrencySymbol.symbol}")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: $ctrl.limits.card.min, symbol: $ctrl.sellCurrencySymbol.symbol}")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH" translate-values="{limit: sellLimit, symbol: $ctrl.sellCurrencySymbol.symbol}")
         .mtm.pos-rel(ng-if="error.moreThanInWallet")
           span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet" translate="SELL.MORE_THAN_BALANCE")
           br
