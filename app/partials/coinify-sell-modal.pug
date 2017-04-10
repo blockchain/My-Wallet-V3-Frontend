@@ -20,9 +20,6 @@
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
-          //- quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote" ng-class="{'fade': hideQuote() }")
-          //- p.security-red.pointer(ng-show="buySellDebug && quote.id")
-            i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
   .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
@@ -52,7 +49,7 @@
     button.button-muted(ng-show="onStep('account-holder')" ng-click="goTo('account-info')" translate="GO_BACK")
 
     .flex-1.flex-end(ng-hide="status.loading")
-      button.button-muted.mrm(ng-click="$close()" translate="CLOSE" ng-show="onStep('accept-terms')")
+      button.button-muted.mrm(ng-click="$close()" translate="CANCEL" ng-show="onStep('accept-terms') || onStep('email')")
       button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-show="onStep('summary') && !error")
       button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
       button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link') || onStep('account-info') || onStep('account-holder')")

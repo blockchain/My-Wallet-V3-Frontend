@@ -104,7 +104,7 @@
   "WALLETS" : "Wallets",
   "COUNTRIES_SERVED" : "Countries Served",
   "TRANSACTIONS_AMT" : "100 Million+",
-  "WALLETS_AMT" : "12 Million+",
+  "WALLETS_AMT" : "13 Million+",
   "COUNTRIES_SERVED_AMT" : "140+",
   "REQUEST" : "Request",
   "REQUEST_CREATED" : "Request Created",
@@ -1359,7 +1359,9 @@
     "ENTER_BANK_INFO": "Please enter your bank information below.",
     "TRADE_COMPLETE": "Trade Complete",
     "SOLD": "SOLD",
-    "FIRST_CONFIRMATION": "The rate will be set after the first confirmation"
+    "FIRST_CONFIRMATION": "The rate will be set after the first confirmation",
+    "WAIT_FOR_TRADE_COMPLETE": "Trading is disabled until your pending trade is complete.",
+    "QUOTE_EXPIRED_ERROR": "{{::error}} Please re-start your trade to complete the sale. If you continue to experience this issue, contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>."
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
