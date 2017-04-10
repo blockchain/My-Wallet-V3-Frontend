@@ -103,10 +103,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.status.didInitializeHD = true;
     }
     $window.name = 'blockchain-' + uid;
-    wallet.fetchAccountInfo().then((accountInfo) => {
+    wallet.fetchAccountInfo().then((guid) => {
       wallet.initExternal();
       wallet.status.isLoggedIn = true;
-      successCallback && successCallback(accountInfo);
+      successCallback && successCallback(guid);
     });
   };
 
@@ -200,8 +200,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     doLogin(uid, sessionGuid, sessionToken);
   };
 
-  wallet.fetchAccountInfo = (successCallback) => {
-    return $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
+  wallet.fetchAccountInfo = () => {
+    return wallet.my.wallet.fetchAccountInfo().then((result) => {
       const accountInfo = wallet.my.wallet.accountInfo;
 
       wallet.user.email = accountInfo.email;
@@ -264,7 +264,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.my.wallet.getHistory().then(didFetchTransactions);
       }
 
-      successCallback && successCallback(result.guid);
+      return result.guid;
     });
   };
 
