@@ -90,9 +90,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getQuote = () => {
     $scope.status.busy = true;
     if ($scope.lastInput === 'btc') {
-      buySell.getSellQuote(-$scope.sellTransaction.btc, 'BTC', $scope.sellTransaction.currency.code).then(success, error);
+      buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
     } else if ($scope.lastInput === 'fiat') {
-      buySell.getSellQuote($scope.sellTransaction.fiat, $scope.sellTransaction.currency.code, 'BTC').then(success, error);
+      buySell.getSellQuote(this.transaction.fiat, this.transaction.currency.code, 'BTC').then(success, error);
     } else {
       $scope.status = { busy: false };
     }
@@ -100,9 +100,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   const success = (quote) => {
     if (quote.quoteCurrency === 'BTC') {
-      $scope.sellTransaction.btc = -quote.quoteAmount / 100000000;
+      this.transaction.btc = -quote.quoteAmount / 100000000;
     } else {
-      $scope.sellTransaction.fiat = quote.quoteAmount / 100;
+      this.transaction.fiat = quote.quoteAmount / 100;
     }
     $scope.quote = quote;
     $scope.status = {};
@@ -116,7 +116,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.triggerSell = () => {
     $scope.status.waiting = true;
-    $scope.$parent.sell({ fiat: $scope.sellTransaction.fiat, btc: $scope.sellTransaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
+    $scope.$parent.sell({ fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
     $scope.status = {};
     $timeout(() => {
       $scope.sellTransaction = { currency: {} };

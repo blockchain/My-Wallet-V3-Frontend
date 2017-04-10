@@ -174,7 +174,7 @@
   },
   "CONFIRM_CLOSE_SELL": {
     "TITLE": "Are You Sure?",
-    "BODY": "You're just one click away from from completing your sale. Are you sure you want to stop?"
+    "BODY": "You're just one click away from completing your sale. Are you sure you want to stop?"
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
@@ -1156,7 +1156,7 @@
   "BUY_AMT_HIGH": "Buy amount too high.",
   "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
   "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
-  "SELL_AMT_HIGH": "Sell amount too high.",
+  "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
   "UPDATE": "Update",
   "BUY_SUBSCRIBE": {
