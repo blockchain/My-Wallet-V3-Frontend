@@ -26,6 +26,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
 
   $scope.destinations = smartAccount.getOptions();
   $scope.state.to = destination || Wallet.my.wallet.hdwallet.defaultAccount;
+  $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
 
   $scope.createPaymentRequest = () => {
     $scope.lock();
