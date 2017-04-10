@@ -104,4 +104,4 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
             span(translate="SELL_RATE_ACCEPT")
             helper-button(content="SELL.FIRST_CONFIRMATION")
 .modal-footer.flex-end.flex-row
-  button.button-primary(type="submit" form="summaryForm" translate="CONTINUE")
+  button.button-primary(type="submit" form="summaryForm" ng-disabled="locked" translate="CONTINUE")

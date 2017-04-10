@@ -12,4 +12,4 @@ form.modal-body.fade.clearfix(id="signupForm" name="signupForm" role="form" ng-s
     span.sent.mrs(translate="EMAIL_IN_USE" translate-values="{email: user.email}")
     span.primary.pointer(translate="CLICK_TO_CHANGE" ng-click="vm.goTo('email')")
 .modal-footer.flex-end.flex-row
-  button.button-primary(type="submit" ng-disabled="signupForm.$invalid" form="signupForm" translate="CONTINUE")
+  button.button-primary(type="submit" ng-disabled="signupForm.$invalid || locked" form="signupForm" translate="CONTINUE")

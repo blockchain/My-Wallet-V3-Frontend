@@ -14,10 +14,13 @@ function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currenc
   };
 
   $scope.signup = () => {
+    $scope.lock();
     return exchange.signup($stateParams.countryCode, fiatCurrency)
       .then(() => exchange.fetchProfile())
       .then(refreshQuote).then((q) => $scope.vm.quote = q)
       .then(() => $scope.vm.goTo('select-payment-medium'))
-      .catch((err) => { console.log(err); });
+      .then($scope.free).catch((err) => { console.log(err); });
   };
+
+  $scope.installLock();
 }

@@ -15,15 +15,18 @@ function CoinifyMediumController ($scope, Alerts, buySell) {
   };
 
   $scope.submit = () => {
+    $scope.lock();
     let { medium } = $scope.vm;
 
     $scope.mediums[medium].getAccounts()
                           .then((accounts) => buySell.accounts = accounts)
                           .then(() => $scope.vm.goTo('summary'))
-                          .catch((err) => console.log(err));
+                          .then($scope.free).catch((err) => console.log(err));
   };
 
   quote.getPaymentMediums()
        .then((mediums) => $scope.mediums = mediums)
        .catch((err) => console.log(err));
+
+  $scope.installLock();
 }

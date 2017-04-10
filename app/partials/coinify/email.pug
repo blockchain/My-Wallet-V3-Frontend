@@ -15,4 +15,4 @@ form.modal-body.fade.clearfix(name="emailForm" ng-submit="vm.goTo('signup')")
                  inline
                  editing="true")
 .modal-footer.flex-end.flex-row
-  button.button-primary(type="submit" ng-disabled="emailForm.$invalid" translate="CONTINUE")
+  button.button-primary(type="submit" ng-disabled="emailForm.$invalid || locked" translate="CONTINUE")

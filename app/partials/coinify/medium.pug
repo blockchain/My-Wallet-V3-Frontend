@@ -34,4 +34,4 @@ form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethodForm" ro
     .mlm.mbl.em-300.width-70(ng-show="showNote('bank')")
       span(translate="VERIFY_ID_NOTE")
 .modal-footer.flex-end.flex-row
-  button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || paymentMethodForm.$invalid" translate="CONTINUE")
+  button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")

@@ -74,6 +74,8 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   };
 
   $scope.buy = () => {
+    $scope.lock();
+
     let success = (trade) => {
       $scope.vm.trade = trade;
       buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
@@ -113,4 +115,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       }
     }
   });
+
+  $scope.installLock();
 }
