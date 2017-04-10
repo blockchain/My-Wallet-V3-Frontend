@@ -22,7 +22,9 @@ function transactionNote ($translate, $rootScope, Wallet, Labels) {
     if (scope.transaction.txType === 'received') {
       if (scope.transaction.to.length) {
         if (scope.transaction.to[0].identity === 'imported') {
-          scope.label = scope.transaction.to[0].label;
+          if (scope.transaction.to[0].label !== scope.transaction.to[0].address) {
+            scope.label = scope.transaction.to[0].label;
+          }
         } else {
           scope.label = Labels.getLabel(
             scope.transaction.to[0].accountIndex,
