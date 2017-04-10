@@ -201,7 +201,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.fetchAccountInfo = () => {
-    return wallet.my.wallet.fetchAccountInfo().then((result) => {
+    return $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
       const accountInfo = wallet.my.wallet.accountInfo;
 
       wallet.user.email = accountInfo.email;
