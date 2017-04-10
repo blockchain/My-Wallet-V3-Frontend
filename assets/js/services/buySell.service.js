@@ -49,6 +49,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     getKYCs,
     getRate,
     calculateMax,
+    getMaxLimits,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -165,6 +166,11 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     limits.available > 0 ? limits.available : 0;
     limits.max = limits.max.toFixed(2);
     return limits;
+  }
+
+  function getMaxLimits (curr, medium) {
+    return buySell.getRate(service.getExchange().profile.defaultCurrency, curr.code)
+                                  .then((rate) => service.calculateMax(rate, medium));
   }
 
   function triggerKYC () {

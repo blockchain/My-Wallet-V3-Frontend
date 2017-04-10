@@ -5,17 +5,17 @@ angular
 function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currency) {
   let quote = $scope.vm.quote;
   let exchange = buySell.getExchange();
-  let baseFiat = !currency.isBitCurrency({code: quote.baseCurrency});
-  let fiatCurrency = baseFiat ? quote.baseCurrency : quote.quoteCurrency;
+  let baseFiat = $scope.vm.baseFiat;
+  let fiatCurrency = $scope.vm.fiatCurrency;
 
   let refreshQuote = () => {
-    if (baseFiat) return buySell.getQuote(-quote.baseAmount / 100, quote.baseCurrency);
+    if (baseFiat()) return buySell.getQuote(-quote.baseAmount / 100, quote.baseCurrency);
     else return buySell.getQuote(-quote.baseAmount / 100000000, quote.baseCurrency, quote.quoteCurrency);
   };
 
   $scope.signup = () => {
     $scope.lock();
-    return exchange.signup($stateParams.countryCode, fiatCurrency)
+    return exchange.signup($stateParams.countryCode, fiatCurrency())
       .then(() => exchange.fetchProfile())
       .then(refreshQuote).then((q) => $scope.vm.quote = q)
       .then(() => $scope.vm.goTo('select-payment-medium'))

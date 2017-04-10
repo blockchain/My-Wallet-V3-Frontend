@@ -9,10 +9,11 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   $scope.trades = buySell.trades;
   $scope.alerts = [];
   $scope.status = {};
+
   this.user = Wallet.user;
   this.quote = quote;
-
-  let links = options.partners.coinify.surveyLinks;
+  this.baseFiat = () => !currency.isBitCurrency({code: quote.baseCurrency});
+  this.fiatCurrency = () => this.baseFiat ? quote.baseCurrency : quote.quoteCurrency;
 
   $scope.buySellDebug = $rootScope.buySellDebug;
 
@@ -23,6 +24,8 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
 
   this.eventualError = (message) => Promise.reject.bind(Promise, { message });
+
+  this.getMinimumInAmount = (medium, curr) => medium && curr && quote.paymentMediums[medium].minimumInAmounts[curr];
 
   $scope.steps = {
     'email': 0,
@@ -93,6 +96,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   $scope.close = () => {
     let index;
+    let links = options.partners.coinify.surveyLinks;
 
     if (!this.exchange.user) index = 0;
     else if (!$scope.trades.length) index = 1;

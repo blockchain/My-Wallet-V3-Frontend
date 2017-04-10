@@ -139,7 +139,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
       keyboard: false,
       resolve: {
         options: () => Options.get(),
-        quote () { return quote; }
+        quote () { return quote; },
+        paymentMediums () { return quote.getPaymentMediums(); }
       }
     });
   });
