@@ -133,9 +133,9 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
     console.log(trade);
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
-      windowClass: 'bc-modal auto buy',
       controller: 'CoinifyController',
       controllerAs: 'vm',
+      windowClass: 'bc-modal buy',
       backdrop: 'static',
       keyboard: false,
       resolve: {

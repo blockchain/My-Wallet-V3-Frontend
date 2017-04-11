@@ -209,17 +209,11 @@ i.ti-credit-card.bank {
 }
 
 .iframe {
-  height: 400px;
-  isignthis {
+  height: 500px;
+  #isx-iframe {
     position: absolute;
     overflow: auto;
     height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  #isx-iframe {
-    position: relative;
     width: 100%;
     border: 0;
     left: 0;

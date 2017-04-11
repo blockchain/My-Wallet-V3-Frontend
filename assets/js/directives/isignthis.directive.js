@@ -15,7 +15,7 @@ function isignthis ($sce, Options) {
       <iframe
         ng-src='{{ url }}'
         sandbox='allow-same-origin allow-scripts allow-forms'
-        scrolling = 'no'
+        scrolling = 'yes'
         id='isx-iframe'
         ng-if='showFrame'
       ></iframe>
@@ -155,8 +155,7 @@ function isignthis ($sce, Options) {
       // Inline Javascript from demo:
       var widget = {
         transaction_id: iSignThisID,
-        container_id: 'isx-iframe',
-        minimum_height: 400
+        container_id: 'isx-iframe'
       };
 
       var setState = (state) => {
