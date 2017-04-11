@@ -130,7 +130,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
   });
 
   service.openBuyView = service.openOnce((quote, trade) => {
-    console.log(trade);
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
       controller: 'CoinifyController',
