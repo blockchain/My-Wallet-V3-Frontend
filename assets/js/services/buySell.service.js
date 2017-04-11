@@ -218,7 +218,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       stop = MyWalletHelpers.exponentialBackoff(check, maxPollTime);
     });
 
-    let pollKyc = () => pollUntil(() => kyc.refresh(), () => kyc.state === 'completed');
+    let pollKyc = () => pollUntil(() => kyc && kyc.refresh(), () => kyc.state === 'completed');
     let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
 
     return {
@@ -259,7 +259,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      modals.openBuyView(trade, { bitcoinReceived: true });
+      modals.openBuyView(null, trade, { bitcoinReceived: true });
     });
   }
 

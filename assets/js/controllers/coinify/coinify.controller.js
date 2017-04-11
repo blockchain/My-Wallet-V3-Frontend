@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, quote, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options, buyMobile) {
+function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, quote, trade, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options, buyMobile) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -12,6 +12,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   this.user = Wallet.user;
   this.quote = quote;
+  this.trade = trade;
   this.baseFiat = () => !currency.isBitCurrency({code: quote.baseCurrency});
   this.fiatCurrency = () => this.baseFiat ? quote.baseCurrency : quote.quoteCurrency;
 
@@ -22,9 +23,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-
   this.eventualError = (message) => Promise.reject.bind(Promise, { message });
-
   this.getMinimumInAmount = (medium, curr) => medium && curr && quote.paymentMediums[medium].minimumInAmounts[curr];
 
   $scope.steps = {
@@ -32,7 +31,8 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     'accept-terms': 1,
     'select-payment-medium': 2,
     'summary': 3,
-    'isx': 4
+    'isx': 4,
+    'trade-complete': 5
   };
 
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
@@ -46,8 +46,12 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('accept-terms');
-  } else {
+  } else if (!this.trade) {
     this.goTo('select-payment-medium');
+  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade)) {
+    this.goTo('isx');
+  } else {
+    this.goTo('trade-complete');
   }
 
   $scope.hideQuote = () => $scope.isMedium('bank');

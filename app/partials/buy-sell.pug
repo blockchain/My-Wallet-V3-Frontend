@@ -24,7 +24,7 @@
                         change-currency="changeCurrency(currency)"
                         trading-disabled="getIsTradingDisabled()"
                         trading-disabled-reason="getIsTradingDisabledReason()"
-                        open-pending-trade="buy(pendingTrade)"
+                        open-pending-trade="buy(null, pendingTrade)"
                         pending-trade="pendingTrade"
                         get-days="getDays()"
                         buy="buy(quote)")
@@ -75,7 +75,6 @@
         .flex-column.mtl(ng-show="trades.pending.length || trades.completed.length" data-preflight-tag="BuySellTrades")
         .flex-row.flex-between.flex-center
           h4.type-h5 Completed Orders
-          //- h4.type-h4(translate="ORDER_HISTORY")          span Coinify Account: {{ exchange.profile.email }}
           span(ng-hide="trades.pending.length || inMobileBuy") Coinify Account: {{ exchange.profile.email }}
         table.width-100.mb-30
           tr.border.bg-light-blue
