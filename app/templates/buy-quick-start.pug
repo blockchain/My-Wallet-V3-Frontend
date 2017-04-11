@@ -20,8 +20,8 @@
               ng-change="updateLastInput('fiat'); getExchangeRate();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
-              min="{{limits.card.min}}"
-              max="{{limits.bank.available > limits.card.available ? limits.bank.available : limits.card.available}}"
+              min="{{limits.absoluteMin}}"
+              max="{{limits.absoluteMax}}"
               step="any"
               prevent-event="mousewheel"
               required)

@@ -3,16 +3,8 @@ angular
   .controller('CoinifyMediumController', CoinifyMediumController);
 
 function CoinifyMediumController ($scope, Alerts, buySell) {
-  let quote = $scope.vm.quote;
-
-  $scope.showNote = (medium) => {
-    let isMedium = $scope.vm.medium === medium;
-
-    let trades = $scope.vm.exchange.trades || [];
-    let tradesOfTypeMedium = trades.filter((t) => t.medium === medium).length > 0;
-
-    return isMedium && !tradesOfTypeMedium;
-  };
+  $scope.installLock();
+  let { quote, getMaxMin, fiatCurrency } = $scope.vm;
 
   $scope.submit = () => {
     $scope.lock();
@@ -24,9 +16,10 @@ function CoinifyMediumController ($scope, Alerts, buySell) {
                           .then($scope.free).catch((err) => console.log(err));
   };
 
+  $scope.lock();
+
   quote.getPaymentMediums()
        .then((mediums) => $scope.mediums = mediums)
-       .catch((err) => console.log(err));
-
-  $scope.installLock();
+       .then(() => getMaxMin(fiatCurrency()))
+       .then($scope.free).catch((err) => console.log(err));
 }

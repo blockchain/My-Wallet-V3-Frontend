@@ -83,5 +83,12 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.$parent.$parent.sellRateForm = $scope.rateForm;
   });
 
+  $scope.$watch('tempTrade.fiatCurrency', (newVal) => {
+    if (newVal) {
+      $scope.lock();
+      $scope.vm.getMaxMin(newVal).then($scope.free);
+    }
+  });
+
   $scope.installLock();
 }

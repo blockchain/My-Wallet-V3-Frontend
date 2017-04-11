@@ -16,8 +16,6 @@ form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethodForm" ro
               span.flex-row
                 span.em-300(translate="CARD_TRANSFER.TITLE")
         helper-button.mb-5(content="CARD_TRANSFER.COPY")
-    .mlm.mbl.em-300.width-70(ng-show="showNote('card')")
-      span(translate="VERIFY_CARD_NOTE")
     .flex-row.flex-center.pointer(ng-hide="inMobileBuy")
       input.man(type="radio" name="inMedium" id="bank" ng-model="vm.medium" value="bank" ng-disabled="status.waiting")
       .flex-row.flex-align-end.flex-1.mlm.pointer
@@ -31,7 +29,5 @@ form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethodForm" ro
               span.flex-row
                 span.em-300(translate="BANK_TRANSFER.TITLE")
         helper-button.mb-5(content="BANK_TRANSFER.COPY")
-    .mlm.mbl.em-300.width-70(ng-show="showNote('bank')")
-      span(translate="VERIFY_ID_NOTE")
 .modal-footer.flex-end.flex-row
   button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")
