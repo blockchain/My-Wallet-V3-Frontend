@@ -43,7 +43,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
-  if ((!this.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
+  if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('accept-terms');
@@ -111,4 +111,5 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   });
 
   $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
+  $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });
 }
