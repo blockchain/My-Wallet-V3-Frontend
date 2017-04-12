@@ -137,6 +137,9 @@ function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $tr
           case 'RU': // Russia
             cur = 'RUB';
             break;
+          case 'IN': // India
+            cur = 'INR';
+            break;
           default:
             cur = 'USD'; // One day this will be BTC
         }
