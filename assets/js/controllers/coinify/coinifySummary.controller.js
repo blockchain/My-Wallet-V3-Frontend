@@ -9,6 +9,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     editAmount: false
   };
 
+  $scope.limits = buySell.limits;
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -81,13 +82,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
   $scope.$watch('sellRateForm', () => {
     $scope.$parent.$parent.sellRateForm = $scope.rateForm;
-  });
-
-  $scope.$watch('tempTrade.fiatCurrency', (newVal) => {
-    if (newVal) {
-      $scope.lock();
-      $scope.vm.getMaxMin(newVal).then($scope.free);
-    }
   });
 
   $scope.installLock();

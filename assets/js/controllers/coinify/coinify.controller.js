@@ -54,30 +54,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     this.goTo('trade-complete');
   }
 
-  this.getMaxMin = (fiatCurrency) => {
-    this.limits = {
-      bank: {},
-      card: {}
-    };
-
-    const calculateMin = (rate) => {
-      this.limits.min = (rate * 10).toFixed(2);
-      this.limits.absoluteMin = this.limits.min;
-    };
-
-    const calculateMax = (rate) => {
-      this.limits.bank.max = buySell.calculateMax(rate, 'bank').max;
-      this.limits.card.max = buySell.calculateMax(rate, 'card').max;
-      this.limits.currency = $scope.currencySymbol;
-      this.limits.absoluteMax = this.limits.bank.max > this.limits.card.max ? this.limits.bank.max : this.limits.card.max;
-    };
-
-    let min = buySell.getRate('EUR', fiatCurrency).then(calculateMin);
-    let max = buySell.getRate(this.exchange.profile.defaultCurrency, fiatCurrency).then(calculateMax);
-
-    return $q.all([min, max]);
-  };
-
   $scope.hideQuote = () => $scope.isMedium('bank');
 
   $scope.standardError = (err) => {

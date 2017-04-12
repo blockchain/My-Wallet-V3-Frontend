@@ -9,7 +9,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     replace: true,
     scope: {
       buy: '&',
-      limits: '=',
       disabled: '=',
       tradingDisabled: '=',
       tradingDisabledReason: '=',
@@ -17,7 +16,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       pendingTrade: '=',
       modalOpen: '=',
       transaction: '=',
-      currencySymbol: '=',
       changeCurrency: '&',
       getDays: '&'
     },
@@ -43,6 +41,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
+        scope.getMinLimits(quote);
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
       }, error).finally(scope.getQuote);
     };
@@ -87,6 +86,10 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.cancelTrade = () => {
       scope.disabled = true;
       buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
+    };
+
+    scope.getMinLimits = (quote) => {
+      buySell.getMinLimits(quote).then(scope.limits = buySell.limits);
     };
 
     scope.getExchangeRate();

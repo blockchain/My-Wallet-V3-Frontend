@@ -1149,7 +1149,7 @@
   "ORDER_ID_REFERENCE": "*Must be included in your transfer*",
   "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
-  "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
+  "MAX_MIN_HELPER": "Minimum buy amount is {{::min}} {{::code}}. Maximum buy amount is {{::max}} {{::code}}.",
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
   "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",

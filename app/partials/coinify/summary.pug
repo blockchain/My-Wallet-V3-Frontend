@@ -15,16 +15,16 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
     p.mvm
       span(translate="ORDER_CONFIRMATION_COPY" ng-if="summaryForm.fiat.$valid" ng-hide="isBankTransfer()")
       span(translate="ORDER_CONFIRMATION_BANK_COPY" ng-if="summaryForm.fiat.$valid" ng-hide="!isBankTransfer()")
-      span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && summaryForm.fiat.$error.max" translate-values="{code: tempTrade.currency.code, max: vm.limits[vm.medium].max}")
-      span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate-values="{code: tempTrade.currency.code, min: vm.limits.min}")
+      span(translate="ERROR_DAILY_LIMIT_COPY" ng-show="isBankTransfer() && summaryForm.fiat.$error.max" translate-values="{code: tempTrade.fiatCurrency, max: limits[vm.medium].max}")
+      span(translate="ERROR_MIN_LIMIT_COPY" ng-show="isBankTransfer() && summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate-values="{code: tempTrade.fiatCurrency, min: limits.absoluteMin[tempTrade.fiatCurrency]}")
     .flex-center.flex-between.flex-row-reverse
       .mam
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = true" ng-hide="state.editAmount" translate="EDIT_ORDER")
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = false" ng-show="state.editAmount" translate="CANCEL")
       .flex-center(ng-show="(summaryForm.fiat.$error.max || summaryForm.fiat.$error.min) && !isBankTransfer()")
         i.ti-alert.state-danger-text.mrs.type-h4
-        span.state-danger-text.mrs(ng-show="summaryForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempTrade.currency.code, max: vm.limits[vm.medium].max}")
-        span.state-danger-text.mrs(ng-show="summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempTrade.currency.code, min: limits.min}")
+        span.state-danger-text.mrs(ng-show="summaryForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempTrade.fiatCurrency, max: limits.absoluteMax(tempTrade.fiatCurrency)}")
+        span.state-danger-text.mrs(ng-show="summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempTrade.fiatCurrency, min: limits.absoluteMin(tempTrade.fiatCurrency)}")
     .border.pam(ng-class="{'bg-grey': state.editAmount}")
       .flex-row.flex-between.pam.border-bottom-light
         span(ng-hide="isBankTransfer()" translate="BTC:")
@@ -47,8 +47,8 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
               ng-model="tempTrade.fiatAmount"
               tabindex="1"
               focus-when="state.editAmount"
-              min="{{vm.limits.absoluteMin}}"
-              max="{{vm.limits.absoluteMax}}"
+              min="{{limits.absoluteMin(tempTrade.fiatCurrency)}}"
+              max="{{limits.absoluteMax(tempTrade.fiatCurrency)}}"
               step="0.01"
               required)
             div.input-group-btn(uib-dropdown uib-keyboard-nav-style)

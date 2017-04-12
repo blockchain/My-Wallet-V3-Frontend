@@ -16,8 +16,7 @@
       .flex-row.flex-column-tablet
       div(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
         //- BUY
-        buy-quick-start(limits="limits"
-                        transaction="transaction"
+        buy-quick-start(transaction="transaction"
                         disabled="status.disabled"
                         currency-symbol="currencySymbol"
                         modal-open="status.modalOpen"
