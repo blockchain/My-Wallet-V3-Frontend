@@ -1084,12 +1084,16 @@
   "CARD": "Credit/Debit Card",
   "BANK": "Bank Transfer",
   "CARD_TRANSFER": {
-    "TITLE": "Instant transaction | 3% payment fee",
-    "COPY": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed."
+    "COPY1": "Receive bitcoin instantly",
+    "COPY2": "3% convenience fee",
+    "COPY3": "Visa or Mastercard",
+    "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
+    "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
   },
   "BANK_TRANSFER": {
-    "TITLE": "2-3 days | No payment fees",
-    "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
+    "COPY1": "One time ID Verification",
+    "COPY2": "No payment fee",
+    "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card."
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
@@ -1188,7 +1192,6 @@
   "VERIFY_EMAIL": "Verify email:",
   "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your purchase.",
   "ACCEPT_TERMS": "Coinify account terms:",
-  "SELECT_PAYMENT_MEDIUM": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",

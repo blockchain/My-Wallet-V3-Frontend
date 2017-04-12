@@ -4,8 +4,16 @@ angular
 
 function CoinifyMediumController ($scope, Alerts, buySell) {
   $scope.installLock();
-  let { quote } = $scope.vm;
   $scope.limits = buySell.limits;
+  let { quote, baseFiat, fiatCurrency } = $scope.vm;
+
+  let fiatAmount = baseFiat() ? -quote.baseAmount / 100 : -quote.quoteAmount / 100;
+  $scope.belowCardMax = fiatAmount < parseFloat($scope.limits.card.max[fiatCurrency()]);
+  // $scope.belowCardMax = false;
+  $scope.aboveBankMin = fiatAmount > parseFloat($scope.limits.bank.min[fiatCurrency()]);
+  // $scope.aboveBankMin = false;
+
+  $scope.vm.medium = $scope.belowCardMax ? 'card' : 'bank';
 
   $scope.submit = () => {
     $scope.lock();

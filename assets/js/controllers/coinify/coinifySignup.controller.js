@@ -3,10 +3,8 @@ angular
   .controller('CoinifySignupController', CoinifySignupController);
 
 function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currency) {
-  let quote = $scope.vm.quote;
   let exchange = buySell.getExchange();
-  let baseFiat = $scope.vm.baseFiat;
-  let fiatCurrency = $scope.vm.fiatCurrency;
+  let { quote, baseFiat, fiatCurrency } = $scope.vm;
 
   let refreshQuote = () => {
     if (baseFiat()) return buySell.getQuote(-quote.baseAmount / 100, quote.baseCurrency);
@@ -17,6 +15,7 @@ function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currenc
     $scope.lock();
     return exchange.signup($stateParams.countryCode, fiatCurrency())
       .then(() => exchange.fetchProfile())
+      .then((p) => buySell.getMaxLimits(p.defaultCurrency))
       .then(refreshQuote).then((q) => $scope.vm.quote = q)
       .then(() => $scope.vm.goTo('select-payment-medium'))
       .then($scope.free).catch((err) => { console.log(err); });
