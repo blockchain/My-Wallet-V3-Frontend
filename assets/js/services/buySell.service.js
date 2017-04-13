@@ -160,8 +160,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       service.limits.bank.max[curr] = service.calculateMax(rate, 'bank');
       service.limits.card.max[curr] = service.calculateMax(rate, 'card');
       service.limits.absoluteMax = (curr) => {
-        let cardMax = parseInt(service.limits.card.max[curr], 0);
-        let bankMax = parseInt(service.limits.bank.max[curr], 0);
+        let cardMax = parseFloat(service.limits.card.max[curr], 0);
+        let bankMax = parseFloat(service.limits.bank.max[curr], 0);
         return bankMax > cardMax ? bankMax : cardMax;
       };
     };
@@ -182,8 +182,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       service.limits.bank.min = mediums.bank.minimumInAmounts;
       service.limits.card.min = mediums.bank.minimumInAmounts;
       service.limits.absoluteMin = (curr) => {
-        let cardMin = parseInt(service.limits.card.min[curr], 0);
-        let bankMin = parseInt(service.limits.bank.min[curr], 0);
+        let cardMin = parseFloat(service.limits.card.min[curr], 0);
+        let bankMin = parseFloat(service.limits.bank.min[curr], 0);
         return bankMin > cardMin ? bankMin : cardMin;
       };
     };
