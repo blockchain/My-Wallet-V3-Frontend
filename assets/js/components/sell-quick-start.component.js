@@ -83,6 +83,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.getQuote = () => {
+    $scope.status.fetching = true;
     $scope.status.busy = true;
     if ($scope.lastInput === 'btc') {
       buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
@@ -100,7 +101,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       this.transaction.fiat = quote.quoteAmount / 100;
     }
     $scope.quote = quote;
-    if ($scope.totalBalance >= this.transaction.btc) {
+    if (this.transaction.btc > $scope.totalBalance) {
       $scope.status.busy = true;
     } else {
       $scope.status = {};
@@ -139,6 +140,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   });
 
   $scope.checkForNoFee = () => {
+    $scope.status.busy = true;
     if (!this.transaction || !this.transaction.btc || $scope.isSweepTransaction) return;
     let tradeInSatoshi = currency.convertToSatoshi(this.transaction.btc, currency.bitCurrencies[0]);
     let index = Wallet.getDefaultAccountIndex();
@@ -148,6 +150,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       if (r.absoluteFeeBounds[0] === 0) {
         $scope.error['moreThanInWallet'] = true;
         $scope.offerUseAll();
+      } else {
+        $scope.status = {};
       }
     });
   };
@@ -181,6 +185,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.getQuote();
   };
 
+  $scope.numLabels = () => Wallet.my.wallet.labels._accounts.length;
+
   $scope.useAll = () => {
     this.transaction.btc = $scope.sweepAmount / 100000000;
     $scope.isSweepTransaction = true;
@@ -188,11 +194,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
   };
 
-  this.$onChanges = (changes) => {
-    if (changes.transaction.currentValue.currency.code === 'USD') {
-      this.transaction.currency = {code: 'EUR', name: 'Euro'};
-    }
-  };
   $scope.$watch('$ctrl.transaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
       $scope.tradingDisabled = true;

@@ -27,7 +27,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
-    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency() };
+    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency(undefined, true) };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
@@ -56,7 +56,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
     $scope.$watch('settings.currency', () => {
       $scope.transaction.currency = buySell.getCurrency();
-      $scope.sellTransaction.currency = buySell.getCurrency();
+      $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
     }, true);
 
     $scope.$watch('transaction.currency', (newVal, oldVal) => {
