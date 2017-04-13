@@ -1,6 +1,6 @@
 form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethodForm" role="form" ng-submit="submit()" novalidate)
   span.type-h5.em-500.flex-start.pts(translate="PAYMENT_METHOD")
-  .radio-group.group.inline.flex-between.mt-20
+  .radio-group.group.inline.flex-between.mv-20
     .radio-label-alt.width-45(ng-show="aboveBankMin")
       input(type="radio" name="inMedium" id="bank" ng-model="vm.medium" value="bank" required)
       label.flex-column.height-100(for="bank")
@@ -29,4 +29,5 @@ form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethod
       div.mb-20(translate="CARD_TRANSFER.RECOMMENDATION" translate-values="{max: limits.card.max[vm.fiatCurrency()], code: vm.fiatCurrency()}")
       label.pointer.em-300.primary(for="card" ng-click="$timeout(submit, 1)" translate="I want to pay via credit/debit card")
 .modal-footer.flex-end.flex-row
+  button.button-muted.mrm(ng-click="$close()" translate="CANCEL_ORDER")
   button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")

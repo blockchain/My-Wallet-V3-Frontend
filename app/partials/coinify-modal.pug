@@ -39,22 +39,3 @@
       a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
         img(src="img/coinify-logo.svg")
         span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-//- .modal-footer.flex-end.flex-row
-//-   button.button-muted(ng-show="onStep('summary') && !error" ng-click="goTo('select-payment-medium')" translate="GO_BACK")
-//-   .flex-1.flex-end(ng-hide="status.loading")
-//-     button.button-muted.mrm(ng-click="$close() && goToOrderHistory()" translate="CLOSE" ng-show="onStep('trade-formatted') && bitcoinReceived")
-//-     button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-hide="afterStep('summary') || onStep('summary') && error")
-//-     button.button-muted.mrm(ng-click="close() && goToOrderHistory()" translate="FINISH_LATER" ng-show="onStep('isx')")
-//-     div(ng-hide="afterStep('summary')")
-//-       button.button-primary(
-//-         ladda-translate="CONFIRM"
-//-         ng-click="buy()"
-//-         data-style="expand-left"
-//-         ui-ladda="status.waiting"
-//-         ng-disabled="isDisabled() || fiatFormInvalid || status.gettingQuote"
-//-         ng-show="onStep('summary') && !error")
-//-     div(ng-show="onStep('trade-in-review') || onStep('summary') && error || onStep('trade-formatted') && !bitcoinReceived")
-//-       button.button-primary(translate="CLOSE" ng-click="cancel() && goToOrderHistory()")
-//-     div(ng-show="onStep('trade-formatted') && bitcoinReceived")
-//-       button.button-primary(translate="SEE_BITCOIN" ng-hide="inMobileBuy" ng-click="cancel()" ui-sref="wallet.common.transactions")
-//-       button.button-primary(translate="SEE_BITCOIN" ng-show="inMobileBuy" ng-click="exitToNativeTx()")
