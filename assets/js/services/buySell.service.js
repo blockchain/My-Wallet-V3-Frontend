@@ -157,17 +157,17 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
 
   function getMaxLimits (defaultCurrency) {
     const calculateMax = (rate, curr) => {
-      service.limits.bank.max = service.calculateMax(rate, 'bank');
+      service.limits.bank.max[curr] = service.calculateMax(rate, 'bank');
       service.limits.card.max[curr] = service.calculateMax(rate, 'card');
-      service.limits.absoluteMax = (curr) => service.limits.bank.max[curr] > service.limits.card.max[curr] ? service.limits.bank.max[curr] : service.limits.card.max[curr];
+      service.limits.absoluteMax = (curr) => {
+        let cardMax = parseInt(service.limits.card.max[curr], 0);
+        let bankMax = parseInt(service.limits.bank.max[curr], 0);
+        return bankMax > cardMax ? bankMax : cardMax;
+      };
     };
 
-    let DKK = service.getRate(defaultCurrency, 'DKK').then((rate) => calculateMax(rate, 'DKK'));
-    let EUR = service.getRate(defaultCurrency, 'EUR').then((rate) => calculateMax(rate, 'EUR'));
-    let USD = service.getRate(defaultCurrency, 'USD').then((rate) => calculateMax(rate, 'USD'));
-    let GBP = service.getRate(defaultCurrency, 'GBP').then((rate) => calculateMax(rate, 'GBP'));
-
-    return $q.all([DKK, EUR, USD, GBP]);
+    let getMax = (c) => service.getRate(defaultCurrency, c).then(r => calculateMax(r, c));
+    return $q.all(['DKK', 'EUR', 'USD', 'GBP'].map(getMax));
   }
 
   function calculateMax (rate, medium) {
@@ -181,7 +181,11 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     const calculateMin = (mediums) => {
       service.limits.bank.min = mediums.bank.minimumInAmounts;
       service.limits.card.min = mediums.bank.minimumInAmounts;
-      service.limits.absoluteMin = (curr) => service.limits.bank.min[curr] < service.limits.card.min[curr] ? service.limits.bank.min[curr] : service.limits.card.min[curr];
+      service.limits.absoluteMin = (curr) => {
+        let cardMin = parseInt(service.limits.card.min[curr], 0);
+        let bankMin = parseInt(service.limits.bank.min[curr], 0);
+        return bankMin > cardMin ? bankMin : cardMin;
+      };
     };
 
     return quote.getPaymentMediums().then(calculateMin);
