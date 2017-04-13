@@ -6,8 +6,8 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   let medium = $scope.vm.medium;
   let fiatCurrency = $scope.vm.fiatCurrency;
   let limits = $scope.limits = buySell.limits;
-  let max = parseInt(limits[medium].max[fiatCurrency()], 0);
-  let min = parseInt(limits[medium].min[fiatCurrency()], 0);
+  let max = parseFloat(limits[medium].max[fiatCurrency()], 0);
+  let min = parseFloat(limits[medium].min[fiatCurrency()], 0);
 
   $scope.state = {};
   $scope.format = currency.formatCurrencyForView;
@@ -49,11 +49,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
               .finally(() => $scope.state.editAmount = false);
   };
 
-  const completeTradeError = (err) => {
-    $scope.status.waiting = false;
-    $scope.$parent.error = JSON.parse(err);
-  };
-
   $scope.buy = () => {
     $scope.lock();
 
@@ -63,10 +58,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     };
 
     buySell.accounts[0].buy()
-                       .catch((e) => completeTradeError(e))
-                       .then(success, $scope.standardError)
-                       .then($scope.vm.watchAddress)
-                       .then($scope.vm.goTo('isx'));
+                       .then(success)
+                       .then(() => $scope.vm.goTo('isx'))
+                       .then(() => $scope.vm.watchAddress())
+                       .catch((e) => Alerts.displayError(JSON.parse(e).error_description));
   };
 
   $scope.$watch('rateForm', () => {
