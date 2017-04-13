@@ -4,12 +4,12 @@ angular
 
 function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
   let medium = $scope.vm.medium;
+  let fiatCurrency = $scope.vm.fiatCurrency;
+  let limits = $scope.limits = buySell.limits;
+  let max = parseInt(limits[medium].max[fiatCurrency()], 0);
+  let min = parseInt(limits[medium].min[fiatCurrency()], 0);
 
-  $scope.state = {
-    editAmount: false
-  };
-
-  $scope.limits = buySell.limits;
+  $scope.state = {};
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -33,18 +33,11 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   };
 
   setTrade();
+  $scope.state.editAmount = $scope.trade.fiatAmount > max || $scope.trade.fiatAmount < min;
 
   let getQuote = () => {
     return buySell.getQuote($scope.tempTrade.fiatAmount, $scope.tempTrade.fiatCurrency);
   };
-
-  $scope.$parent.limits = {};
-
-  $scope.isSell = $scope.$parent.$parent.isSell;
-  $scope.sellTrade = $scope.$parent.$parent.trade;
-  $scope.sellTransaction = $scope.$parent.$parent.transaction;
-
-  $scope.$parent.fields = {rate: false};
 
   $scope.commitValues = () => {
     $scope.lock();
@@ -78,10 +71,6 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
 
   $scope.$watch('rateForm', () => {
     $scope.$parent.rateForm = $scope.rateForm;
-  });
-
-  $scope.$watch('sellRateForm', () => {
-    $scope.$parent.$parent.sellRateForm = $scope.rateForm;
   });
 
   $scope.installLock();
