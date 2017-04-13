@@ -29,5 +29,7 @@ form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethod
       div.mb-20(translate="CARD_TRANSFER.RECOMMENDATION" translate-values="{max: limits.card.max[vm.fiatCurrency()], code: vm.fiatCurrency()}")
       label.pointer.em-300.primary(for="card" ng-click="$timeout(submit, 1)" translate="I want to pay via credit/debit card")
 .modal-footer.flex-end.flex-row
-  button.button-muted.mrm(ng-click="$close()" translate="CANCEL_ORDER")
+  button.button-muted.mrm(ng-show="belowCardMax && !aboveBankMin" ng-click="vm.close(1)" translate="CANCEL_ORDER")
+  button.button-muted.mrm(ng-show="belowCardMax && aboveBankMin" ng-click="vm.close(2)" translate="CANCEL_ORDER")
+  button.button-muted.mrm(ng-show="!belowCardMax && aboveBankMin" ng-click="vm.close(3)" translate="CANCEL_ORDER")
   button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")

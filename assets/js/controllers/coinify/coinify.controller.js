@@ -72,7 +72,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     }
   };
 
-  $scope.cancel = () => {
+  this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     buySell.getTrades().then(() => {
@@ -80,13 +80,10 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     });
   };
 
-  $scope.close = (idx) => {
+  this.close = (idx) => {
     let links = options.partners.coinify.surveyLinks;
-
-    if (!this.exchange.user) idx = 0;
-    else if (!$scope.trades.length) idx = 1;
-    else idx = 2;
-    Alerts.surveyCloseConfirm('survey-opened', links, idx).then($scope.cancel);
+    if (idx > links.length - 1) { this.cancel(); return; }
+    Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
   };
 
   $scope.exitToNativeTx = () => {

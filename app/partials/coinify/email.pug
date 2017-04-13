@@ -15,5 +15,5 @@ form.modal-body.fade.clearfix(name="emailForm" ng-submit="vm.goTo('signup')")
                  inline
                  editing="true")
 .modal-footer.flex-end.flex-row
-  button.button-muted.mrm(ng-click="$close()" translate="CANCEL_ORDER")
+  button.button-muted.mrm(ng-click="vm.close(0)" translate="CANCEL_ORDER")
   button.button-primary(type="submit" ng-disabled="emailForm.$invalid" translate="CONTINUE")

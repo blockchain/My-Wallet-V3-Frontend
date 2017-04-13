@@ -1,4 +1,4 @@
 .modal-body.fade.clearfix.iframe
   isignthis(transaction-id='vm.trade.iSignThisID' on-load="loadPayment()" on-complete="formatTrade" payment-info="paymentInfo" on-resize="onResize(step)")
 .modal-footer.flex-end.flex-row
-  button.button-muted(ng-click="$close() && vm.goToOrderHistory()" translate="FINISH_LATER")
+  button.button-muted(ng-click="vm.close(4) && vm.goToOrderHistory()" translate="FINISH_LATER")
