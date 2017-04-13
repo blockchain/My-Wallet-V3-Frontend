@@ -4,6 +4,7 @@ angular
 
 function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, quote, trade, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options, buyMobile) {
   $scope.settings = Wallet.settings;
+  $scope.buySellDebug = $rootScope.buySellDebug;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.trades = buySell.trades;
@@ -14,9 +15,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   this.quote = quote;
   this.trade = trade;
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
+  this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
+  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
-
-  $scope.buySellDebug = $rootScope.buySellDebug;
 
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
@@ -54,23 +55,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     this.goTo('trade-complete');
   }
 
-  $scope.hideQuote = () => $scope.isMedium('bank');
-
-  $scope.standardError = (err) => {
-    console.log(err);
-    $scope.status = {};
-    try {
-      let e = JSON.parse(err);
-      let msg = e.error.toUpperCase();
-      if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
-      else Alerts.displayError(msg, true, $scope.alerts, {user: this.exchange.user});
-    } catch (e) {
-      let msg = e.error || err.message;
-      if (msg) Alerts.displayError(msg, true, $scope.alerts);
-      else Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
-    }
-  };
-
   $scope.watchAddress = () => {
     if ($rootScope.buySellDebug) {
       console.log('$scope.watchAddress() for', this.trade);
@@ -88,8 +72,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     }
   };
 
-  $scope.onResize = (step) => $scope.isxStep = step;
-
   $scope.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
@@ -98,14 +80,13 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     });
   };
 
-  $scope.close = () => {
-    let index;
+  $scope.close = (idx) => {
     let links = options.partners.coinify.surveyLinks;
 
-    if (!this.exchange.user) index = 0;
-    else if (!$scope.trades.length) index = 1;
-    else index = 2;
-    Alerts.surveyCloseConfirm('survey-opened', links, index).then($scope.cancel);
+    if (!this.exchange.user) idx = 0;
+    else if (!$scope.trades.length) idx = 1;
+    else idx = 2;
+    Alerts.surveyCloseConfirm('survey-opened', links, idx).then($scope.cancel);
   };
 
   $scope.exitToNativeTx = () => {

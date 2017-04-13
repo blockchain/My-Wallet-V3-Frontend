@@ -30,7 +30,7 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
         span(ng-hide="isBankTransfer()" translate="BTC:")
         span(ng-show="isBankTransfer()" translate="BTC_APPROX_RATE")
         span.success(ng-hide="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
-        span.success.tilda-before(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ trade.BTCAmount }}
+        span.success.tilda(ng-show="isBankTransfer()" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ trade.BTCAmount }}
       .flex-row.flex-between.pam.pos-rel
         span.colon(ng-hide="state.editAmount" translate="AMOUNT")
         span(ng-hide="state.editAmount") {{ format(trade.fiatAmount, dollars, true) }}

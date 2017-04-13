@@ -15,17 +15,15 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
   $scope.fromSatoshi = currency.convertFromSatoshi;
 
   let setTrade = () => {
-    let quote = $scope.vm.quote;
-    let baseFiat = $scope.vm.baseFiat;
-    let fiatCurrency = $scope.vm.fiatCurrency;
+    let { quote, fiatCurrency, fiatAmount, BTCAmount } = $scope.vm;
     $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
     $scope.dollars = currency.currencies.filter(c => c.code === fiatCurrency())[0];
 
     $scope.trade = {
       fee: (quote.paymentMediums[medium].fee / 100).toFixed(2),
       total: (quote.paymentMediums[medium].total / 100).toFixed(2),
-      BTCAmount: !baseFiat() ? quote.baseAmount : quote.quoteAmount,
-      fiatAmount: baseFiat() ? -quote.baseAmount / 100 : -quote.quoteAmount / 100,
+      BTCAmount: BTCAmount(),
+      fiatAmount: fiatAmount(),
       fiatCurrency: fiatCurrency()
     };
 

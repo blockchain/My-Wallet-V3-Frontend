@@ -5,22 +5,20 @@
     .flex-1(ng-class="inMobileBuy ? 'flex-row-reverse flex-center flex-between' : 'flex-column'")
       .flex-row.flex-between.flex-center
         .hidden-xs
-          h3(ng-hide="isPendingBankTransfer() || onStep('isx')" translate="BUY_BITCOIN")
-          h3(ng-show="isPendingBankTransfer()" translate="BANK_TRANSFER_HEADING")
-          h3(ng-show="onStep('isx')") Identity Verification
+          h3(translate="BUY_BITCOIN")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
         .flex-column.flex-align-end(ng-hide="status.gettingQuote"
                                     uib-tooltip="{{getQuoteHelper() | translate}}"
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top")
-          .flex-row.type-h5.em-500
-            span(ng-hide="!transaction.btc || trade || needsKyc()") {{ transaction.btc }} BTC
-            span(ng-show="trade && !isKYC && !needsKyc()" ng-class="{italic: expiredQuote && needsISX(), 'tilda-before': expiredQuote && needsISX()}") {{ expiredQuote && needsISX() ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} BTC
+          .flex-row.f-16.em-300
+            span(ng-if="!vm.trade") {{ vm.BTCAmount() / 100000000 }} BTC
+            span.italic.tilda(ng-if="vm.trade") {{ vm.trade.outAmountExpected / 100000000 }} BTC
             | &nbsp;
-            span(ng-hide="!transaction.btc || trade || needsKyc()") ({{currencySymbol.symbol}}{{ transaction.fiat }})
-            span(ng-show="trade && !isKYC && !needsKyc()") ({{currencySymbol.symbol}}{{ transaction.total }})
-          quote-countdown.mid-grey(ng-hide="isKYC" quote="quote" trade-obj="trade" expired-quote="expiredQuote")
+            span(ng-if="!vm.trade") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
+            span(ng-if="vm.trade") ({{ vm.trade.sendAmount / 100 }} {{ vm.trade.inCurrency }})
+          quote-countdown.mid-grey(ng-if="!vm.trade" quote="vm.quote" trade-obj="vm.trade" expired-quote="expiredQuote")
           p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
   

@@ -6,7 +6,6 @@ function isignthis ($sce, Options) {
   const directive = {
     restrict: 'E',
     scope: {
-      onResize: '&',
       onComplete: '=',
       paymentInfo: '=',
       transactionId: '='
@@ -207,7 +206,6 @@ function isignthis ($sce, Options) {
           console.log('route. e=' + JSON.stringify(e));
 
           scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
-          scope.onResize({step: e.route.match(/\/(.*)\//)[1]});
 
           setState(e.compound_state);
         })
