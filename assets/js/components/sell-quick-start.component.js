@@ -100,7 +100,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       this.transaction.fiat = quote.quoteAmount / 100;
     }
     $scope.quote = quote;
-    $scope.status = {};
+    if ($scope.totalBalance >= this.transaction.btc) {
+      $scope.status.busy = true;
+    } else {
+      $scope.status = {};
+    }
     Alerts.clear();
   };
 
@@ -184,6 +188,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
   };
 
+  this.$onChanges = (changes) => {
+    if (changes.transaction.currentValue.currency.code === 'USD') {
+      this.transaction.currency = {code: 'EUR', name: 'Euro'};
+    }
+  };
   $scope.$watch('$ctrl.transaction.btc', (newVal, oldVal) => {
     if ($scope.totalBalance === 0) {
       $scope.tradingDisabled = true;
