@@ -35,6 +35,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       fiat: null
     }
   };
+  this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
+  this.selectedBankAccount = null;
+  this.accounts = accounts;
+  this.trade = trade;
 
   $scope.assignFiatCurrency = () => {
     if ($scope.trade._state) return;
@@ -95,35 +99,35 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
   $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
 
-  $scope.goTo = (step) => $scope.step = $scope.steps[step];
+  this.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
     $scope.status = {};
     if ($scope.isKYC) {
-      $scope.goTo('isx');
+      this.goTo('isx');
       return;
     }
 
     if (($scope.trade._state && !$scope.trade._iSignThisID) && $scope.user.isEmailVerified) {
       $scope.mapTradeDetails();
-      $scope.goTo('review');
+      this.goTo('review');
       return;
     } else {
       if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
-        $scope.goTo('email');
+        this.goTo('email');
       } else if (!$scope.exchange.user) {
-        $scope.goTo('accept-terms');
+        this.goTo('accept-terms');
       } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
-        $scope.goTo('account-info');
+        this.goTo('account-info');
       } else if ($scope.bankAccounts) {
-        $scope.goTo('bank-link');
+        this.goTo('bank-link');
       } else {
-        $scope.goTo('summary');
+        this.goTo('summary');
       }
     }
   };
 
-  $scope.isDisabled = () => {
+  this.isDisabled = () => {
     const b = $scope.bankAccount;
     if ($scope.onStep('accept-terms')) {
       return !$scope.fields.acceptTOS;
@@ -134,7 +138,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else if ($scope.onStep('account-holder')) {
       return (!b.holder.name || !b.holder.address.street || !b.holder.address.zipcode || !b.holder.address.city || !b.holder.address.country);
     } else if ($scope.onStep('bank-link')) {
-      return !$scope.selectedBankAccount;
+      return !this.selectedBankAccount;
     } else if ($scope.onStep('summary')) {
       if ($scope.sellRateForm) {
         if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
@@ -147,14 +151,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
-  $scope.insufficientFunds = () => {
-    const tx = $scope.transaction;
-    const combined = tx.btc + tx.fee.btc;
-    if (combined > $scope.totalBalance) {
-      return true;
-    }
-  };
-
   $scope.fields = { email: $scope.user.email };
 
   const handleAccountCreateError = (e) => {
@@ -162,15 +158,15 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     Alerts.displayError(accountError.error_description);
     $scope.status = {};
     if (accountError.error === 'invalid_iban') $scope.ibanError = true;
-    $scope.goTo('account-info');
+    this.goTo('account-info');
   };
 
   const handleAfterAccountCreate = (d) => {
     if (!d) {
       Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED');
-      $scope.goTo('account-info');
+      this.goTo('account-info');
     } else {
-      $scope.goTo('summary');
+      this.goTo('summary');
     }
   };
 
@@ -187,24 +183,24 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       .catch(e => handleAccountCreateError(e));
   };
 
-  const handleGetBankAccounts = (result) => {
-    if (result) {
-      $scope.registeredBankAccount = true;
-      $scope.bankAccounts = result;
-      return result;
-    } else {
-      $scope.registeredBankAccount = false;
-      $scope.bankAccounts = null;
-    }
-  };
+  // const handleGetBankAccounts = (result) => {
+  //   if (result) {
+  //     $scope.registeredBankAccount = true;
+  //     $scope.bankAccounts = result;
+  //     return result;
+  //   } else {
+  //     $scope.registeredBankAccount = false;
+  //     $scope.bankAccounts = null;
+  //   }
+  // };
+  //
+  // $scope.getBankAccounts = () => {
+  //   $q.resolve(buySell.getBankAccounts())
+  //     .then(handleGetBankAccounts)
+  //     .catch(e => console.log('error in getBankAccounts', e));
+  // };
 
-  $scope.getBankAccounts = () => {
-    $q.resolve(buySell.getBankAccounts())
-      .then(handleGetBankAccounts)
-      .catch(e => console.log('error in getBankAccounts', e));
-  };
-
-  $scope.goToOrderHistory = () => {
+  this.goToOrderHistory = () => {
     if (($scope.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
     } else {
@@ -231,6 +227,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
       $scope.payment.amount(amountAfterFee / 100000000); // in SATOSHI
     });
+    return $scope.transaction;
   };
 
   $scope.cancel = () => {
@@ -239,12 +236,12 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.reset();
     $scope.trade = null;
     buySell.getTrades().then(() => {
-      $scope.goToOrderHistory();
+      this.goToOrderHistory();
     });
   };
 
   let links = options.partners.coinify.sellSurveyLinks;
-  $scope.close = () => {
+  this.close = () => {
     let index;
     if (!$scope.exchange.user) index = 0;
     else if ($scope.onStep('account-info') || $scope.onStep('account-holder')) index = 1;
@@ -252,7 +249,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
   };
 
-  $scope.dismiss = () => {
+  this.dismiss = () => {
     $uibModalInstance.dismiss('');
   };
 
@@ -302,6 +299,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   const handleSellResult = (sellResult) => {
     if (!sellResult.transferIn) {
+      console.log('set error', sellResult);
       $scope.error = sellResult;
       $scope.error = JSON.parse($scope.error);
     } else {
@@ -317,9 +315,11 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.payment.amount($scope.sendAmount);
   };
 
-  $scope.sell = () => {
+  this.sell = () => {
     $scope.status.waiting = true;
-    $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
+    this.waiting = true;
+    console.log('sell running', this)
+    $q.resolve(buySell.createSellTrade(this.trade.quote, this.selectedBankAccount))
       .then(sellResult => {
         handleSellResult(sellResult);
         return sellResult;
@@ -335,18 +335,19 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         }
         $scope.payment.build();
 
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
-          .then(transactionSucceeded)
-          .catch(err => {
-            console.log('err when publishing', err);
-            transactionFailed(err);
-          });
+        // Wallet.askForSecondPasswordIfNeeded()
+        //   .then(signAndPublish)
+        //   .then(transactionSucceeded)
+        //   .catch(err => {
+        //     console.log('err when publishing', err);
+        //     transactionFailed(err);
+        //   });
       })
       .catch((e) => console.log(e))
       .finally(() => {
         $scope.status.waiting = false;
-        if (!$scope.error) $scope.goTo('review');
+        this.waiting = false;
+        if (!$scope.error) this.goTo('review');
       });
   };
 
@@ -371,10 +372,15 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
-  $scope.startPayment();
+  this.transaction = $scope.startPayment();
   if (!$scope.step) {
     $scope.nextStep();
   }
+
+  this.selectAccount = (account) => {
+    console.log('selectAccount', account);
+    this.selectedBankAccount = account;
+  };
 
   $scope.standardError = (err) => {
     console.log(err);

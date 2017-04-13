@@ -270,6 +270,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',
       controller: 'CoinifySellController',
+      controllerAs: 'vm',
       backdrop: 'static',
       keyboard: false,
       resolve: {
