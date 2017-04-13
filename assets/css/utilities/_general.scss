@@ -12,8 +12,14 @@ body {
   color: $text;
   height: 100%;
   width: 100%;
-  overflow: hidden;
   @extend .flex-column;
+}
+
+@media (min-width: 768px) {
+  html,
+  body {
+    overflow: hidden;
+  }
 }
 
 .wallet-top-navigation.navbar-inverse {
