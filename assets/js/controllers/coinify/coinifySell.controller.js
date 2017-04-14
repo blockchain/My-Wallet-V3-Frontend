@@ -145,42 +145,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
-  this.isDisabled = () => {
-    const b = $scope.bankAccount;
-    if ($scope.onStep('accept-terms')) {
-      return !$scope.fields.acceptTOS;
-    } else if ($scope.onStep('email')) {
-      return !$scope.user.isEmailVerified;
-    } else if ($scope.onStep('summary')) {
-      if ($scope.sellRateForm) {
-        if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
-          return true;
-        }
-      }
-      if ($scope.trade) {
-        if (!$scope.trade.quote) true;
-      }
-    }
-  };
-
   $scope.fields = { email: $scope.user.email };
-
-  const handleGetBankAccounts = (result) => {
-    if (result) {
-      $scope.registeredBankAccount = true;
-      $scope.bankAccounts = result;
-      return result;
-    } else {
-      $scope.registeredBankAccount = false;
-      $scope.bankAccounts = null;
-    }
-  };
-
-  $scope.getBankAccounts = () => {
-    $q.resolve(buySell.getBankAccounts())
-      .then(handleGetBankAccounts)
-      .catch(e => console.log('error in getBankAccounts', e));
-  };
 
   this.goToOrderHistory = () => {
     if (($scope.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
