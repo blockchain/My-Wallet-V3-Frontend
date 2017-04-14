@@ -314,6 +314,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
     let exchange = service.getExchange();
     let coinifyCode = exchange && exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
+    if (sellCheck && coinifyCode === 'USD') coinifyCode = 'EUR';
     return isCoinifyCompatible ? walletCurrency : coinifyCurrencies.filter(c => c.code === coinifyCode)[0];
   }
 
