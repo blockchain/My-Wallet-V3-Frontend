@@ -1,19 +1,23 @@
-form.modal-body.fade.clearfix(name="emailForm" ng-submit="vm.goTo('signup')")
-  div(ng-hide="editEmail || rejectedEmail")
+form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
+  div(ng-hide="$ctrl.state.editing || $ctrl.rejectedEmail")
     span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
     p.mtl.mbm
-      span(translate="SENT_VERIFICATION" translate-values="{email: vm.user.email}")
+      span(translate="SENT_VERIFICATION" translate-values="{email: $ctrl.email}")
     .mtm
-      span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
-  bc-async-input(type="email"
-                 is-required
-                 ng-model="vm.user.email"
-                 on-cancel="toggleEmail"
-                 on-save="changeEmail"
-                 ng-show="editEmail || rejectedEmail"
-                 action-title="'CHANGE' | translate"
-                 inline
-                 editing="true")
+      span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="$ctrl.toggleEditing()")
+  bc-async-input(
+    type="email"
+    is-required
+    ng-model="$ctrl.email"
+    on-cancel="$ctrl.toggleEditing"
+    on-save="$ctrl.changeEmail"
+    ng-show="$ctrl.state.editing || $ctrl.rejectedEmail"
+    action-title="'CHANGE' | translate"
+    inline
+    editing="true")
 .modal-footer.flex-end.flex-row
   button.button-muted.mrm(ng-click="vm.close(0)" translate="CANCEL_ORDER")
-  button.button-primary(type="submit" ng-disabled="emailForm.$invalid" translate="CONTINUE")
+  button.button-primary(
+    type="submit"
+    ng-disabled="!$ctrl.verified || $ctrl.rejectedEmail || emailForm.$invalid"
+    translate="CONTINUE")

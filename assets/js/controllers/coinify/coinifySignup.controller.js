@@ -11,6 +11,10 @@ function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currenc
     else return buySell.getQuote(-quote.baseAmount / 100000000, quote.baseCurrency, quote.quoteCurrency);
   };
 
+  let tryParse = (json) => {
+    try { return JSON.parse(json); } catch (e) { return json; }
+  };
+
   $scope.signup = () => {
     $scope.lock();
     return exchange.signup($stateParams.countryCode, fiatCurrency())
@@ -18,7 +22,14 @@ function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currenc
       .then((p) => buySell.getMaxLimits(p.defaultCurrency))
       .then(refreshQuote).then((q) => $scope.vm.quote = q)
       .then(() => $scope.vm.goTo('select-payment-medium'))
-      .then($scope.free).catch((err) => { console.log(err); });
+      .catch((err) => {
+        err = tryParse(err);
+        if (err.error && err.error.toUpperCase() === 'EMAIL_ADDRESS_IN_USE') {
+          $scope.vm.rejectedEmail = true;
+          $scope.vm.goTo('email');
+        }
+      })
+      .then($scope.free);
   };
 
   $scope.installLock();

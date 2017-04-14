@@ -104,7 +104,7 @@ module.exports = (grunt) ->
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/**/*.js'
-          'build/js/components/*.js'
+          'build/js/components/**/*.js'
           'build/js/directives/*.js'
           'build/js/filters.js'
           'bower_components/angular-audio/app/angular.audio.js'
