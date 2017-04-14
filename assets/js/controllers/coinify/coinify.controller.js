@@ -18,6 +18,10 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
   this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.refreshQuote = () => {
+    if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
+    else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
+  };
 
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
@@ -91,9 +95,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.getQuoteHelper = () => {
-    if ($scope.quote && !$scope.expiredQuote && $scope.beforeStep('trade-formatted')) return 'AUTO_REFRESH';
-    else if ($scope.quote && !$scope.quote.id) return 'EST_QUOTE_1';
-    else if ($scope.expiredQuote) return 'EST_QUOTE_2';
+    if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
+    else if (this.quote) return 'AUTO_REFRESH';
+    else if (this.trade) return 'EST_QUOTE_2';
     else return 'RATE_WILL_EXPIRE';
   };
 

@@ -51,6 +51,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.lock();
 
     let success = (trade) => {
+      $scope.vm.quote = null;
       $scope.vm.trade = trade;
       buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     };

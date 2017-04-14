@@ -4,12 +4,7 @@ angular
 
 function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currency) {
   let exchange = buySell.getExchange();
-  let { quote, baseFiat, fiatCurrency } = $scope.vm;
-
-  let refreshQuote = () => {
-    if (baseFiat()) return buySell.getQuote(-quote.baseAmount / 100, quote.baseCurrency);
-    else return buySell.getQuote(-quote.baseAmount / 100000000, quote.baseCurrency, quote.quoteCurrency);
-  };
+  let { fiatCurrency, refreshQuote } = $scope.vm;
 
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }

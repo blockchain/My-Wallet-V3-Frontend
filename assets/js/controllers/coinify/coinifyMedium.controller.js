@@ -20,13 +20,14 @@ function CoinifyMediumController ($scope, $timeout, Alerts, buySell) {
 
   $scope.submit = () => {
     $scope.lock();
-    let { medium } = $scope.vm;
+    let { medium, quote } = $scope.vm;
 
     // cache accounts in My-Wallet-V3 instead
-    $scope.mediums[medium].getAccounts()
-                          .then((accounts) => buySell.accounts = accounts)
-                          .then(() => $scope.vm.goTo('summary'))
-                          .then($scope.free).catch((err) => console.log(err));
+    quote.getPaymentMediums()
+         .then((mediums) => mediums[medium].getAccounts())
+         .then((accounts) => buySell.accounts = accounts)
+         .then(() => $scope.vm.goTo('summary'))
+         .then($scope.free).catch((err) => console.log(err));
   };
 
   $scope.lock();
