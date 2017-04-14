@@ -131,7 +131,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         errorCallback('uid', 'UNKNOWN_IDENTIFIER');
       } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
-      } else if (error.length && error.indexOf('Invalid authentication code') > -1 || error.indexOf('Authentication code is incorrect') > -1) {
+      } else if ((error.length && error.indexOf('Invalid authentication code') > -1) || (error.length && error.indexOf('Authentication code is incorrect') > -1)) {
         errorCallback('twoFactor', error);
       } else {
         Alerts.displayError(error.message || error, true);
