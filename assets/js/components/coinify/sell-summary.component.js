@@ -14,7 +14,8 @@ angular
       onComplete: '&',
       sell: '&',
       close: '&',
-      dismiss: '&'
+      dismiss: '&',
+      onSuccess: '&'
     },
     templateUrl: 'partials/coinify/sell-summary.pug',
     controller: CoinifySellSummaryController,
@@ -53,6 +54,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       this.error = sellResult;
       this.error = JSON.parse(this.error);
     } else {
+      this.onSellSuccess({trade: sellResult});
       // $scope.sellTrade = sellResult;
       // $scope.sendAddress = sellResult.transferIn.details.account;
       // $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
