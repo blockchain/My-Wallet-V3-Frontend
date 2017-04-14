@@ -28,21 +28,29 @@
   sell-account-info(
       ng-if="onStep('account-info')" 
       on-complete="vm.goTo('account-holder')" 
-      country="vm.exchangeCountry" 
+      country="vm.exchangeCountry"
+      bank-account="vm.bankAccount"
       build-bank-account="vm.buildBankAccount(account)" 
       iban-error="vm.ibanError" 
       close="vm.close()")
   sell-account-holder(
       ng-if="onStep('account-holder')"
+      sepa-countries="vm.sepaCountries"
+      holder-country="vm.holderCountry"
+      country="vm.exchangeCountry"
+      build-bank-holder="vm.buildBankHolder(holder)"
+      select-country="vm.changeHolderCountry(country)"
+      bank-account="vm.bankAccount"
       on-complete="vm.goTo('summary')"
-      build-bank-holder="buildBankHolder(holder)"
-      close="vm.close()")
+      on-success="vm.onCreateBankSuccess(bankId)"
+      close="vm.close()"
+      set-iban-error="vm.setIbanError()")
   sell-bank-link(
       ng-if="onStep('bank-link')" 
       on-complete="vm.goTo('summary')" 
       accounts="vm.accounts" 
       transaction="vm.transaction" 
-      selectedBankAccount="vm.selectedBankAccount" 
+      selected-bank-account="vm.selectedBankAccount" 
       select-account="vm.selectAccount(account)" 
       new-account="vm.goTo('account-info')" 
       close="vm.close()")
@@ -52,7 +60,8 @@
       transaction="vm.transaction" 
       sell="vm.sell()" 
       total-balance="vm.totalBalance" 
-      error="vm.error" close="vm.close()" 
+      error="vm.error" 
+      close="vm.close()" 
       dismiss="vm.dismiss()" 
       waiting="vm.waiting")
   //- .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")

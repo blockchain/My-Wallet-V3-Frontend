@@ -16,7 +16,7 @@
           div
             input.form-control(
               type="text"
-              ng-model="$ctrl.account.number"
+              ng-model="$ctrl.bankAccount.account.number"
               ng-change="setParentError(); $ctrl.turnOffIbanError();"
               name="bankIban"
               tabindex="1"
@@ -28,7 +28,7 @@
           div
             input.form-control(
               type="text"
-              ng-model="$ctrl.account.bic"
+              ng-model="$ctrl.bankAccount.account.bic"
               ng-change="setParentError()"
               name="bankBic"
               tabindex="1"
@@ -69,5 +69,5 @@
     button.button-muted.mrm(ng-click="$ctrl.close()" translate="CLOSE")
     button.button-primary(
       translate="CONTINUE"
-      ng-click="$ctrl.buildBankAccount({account: $ctrl.account}); $ctrl.onComplete();"
+      ng-click="$ctrl.buildBankAccount({account: $ctrl.bankAccount.account}); $ctrl.onComplete();"
       ng-disabled="$ctrl.isDisabled()")

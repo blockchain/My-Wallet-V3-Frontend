@@ -4,6 +4,7 @@ angular
     bindings: {
       country: '<',
       ibanError: '<',
+      bankAccount: '<',
       buildBankAccount: '&',
       close: '&',
       onComplete: '&'
@@ -24,16 +25,5 @@ function CoinifySellAccountInfoController (buySell, Alerts, $scope) {
 
   this.turnOffIbanError = () => this.ibanError = false;
 
-  this.selectCountry = (type, country) => {
-    this.selectedBankCountry = country;
-    if (type === 'bank') {
-      this.setAccountType();
-      this.bankAccount.bank.address.country = country.code;
-      this.country = country.name;
-    } else if (type === 'holder') {
-      this.bankAccount.holder.address.country = country.code;
-    }
-  };
-
-  this.isDisabled = () => !this.account.number || !this.account.bic;
+  this.isDisabled = () => !this.bankAccount.account.number || !this.bankAccount.account.bic;
 }

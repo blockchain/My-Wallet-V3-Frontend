@@ -51,11 +51,4 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
   this.isDisabled = () => {
     return !this.selectedBankAccount;
   };
-  // $watch('selectedBankAccount', () => {
-  //   selectedBankAccount = selectedBankAccount;
-  // });
-  //
-  // $watch('bankAccounts', () => {
-  //   bankAccounts = bankAccounts;
-  // });
 }

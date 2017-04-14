@@ -20,12 +20,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.bankAccounts = accounts;
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
-  $scope.bankAccount = {
-    account: { currency: null },
-    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
-    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
-  };
-
   $scope.transaction = {
     btc: $scope.trade.btc,
     fiat: $scope.trade.fiat,
@@ -39,6 +33,18 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   this.selectedBankAccount = null;
   this.accounts = accounts;
   this.trade = trade;
+  this.sepaCountries = country.sepaCountryCodes;
+
+  $scope.bankAccount = {
+    account: { currency: null },
+    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
+    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
+  };
+  this.bankAccount = {
+    account: { currency: null },
+    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
+    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
+  };
 
   $scope.assignFiatCurrency = () => {
     if ($scope.trade._state) return;
@@ -52,6 +58,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.assignFiatHelper = (currencyType) => {
     $scope.transaction.currency = $scope.trade.quote[currencyType];
     $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
+    this.bankAccount.account.currency = $scope.trade.quote[currencyType];
     $scope.currencySymbol = currency.conversions[$scope.trade.quote[currencyType]]['symbol'];
   };
 
@@ -61,23 +68,31 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
+  this.bankAccount.bank.address.country = this.exchangeCountry;
+  $scope.bankAccount.bank.address.country = this.exchangeCountry;
+  this.holderCountry = this.exchangeCountry;
 
   $scope.setAccountCurrency = (countryCode) => {
     switch (countryCode) {
       case 'DK':
         $scope.bankAccount.account.currency = 'DKK';
+        this.bankAccount.account.currency = 'DKK';
         break;
       case 'GB':
         $scope.bankAccount.account.currency = 'GBP';
+        this.bankAccount.account.currency = 'GBP';
         break;
       default:
         $scope.bankAccount.account.currency = 'EUR';
+        this.bankAccount.account.currency = 'EUR';
         break;
     }
   };
 
   $scope.setAccountCurrency($scope.exchangeCountry);
-  $scope.bankAccount.holder.address.country = $scope.exchangeCountry;
+  $scope.bankAccount.holder.address.country = $scope.exchangeCountry.code;
+
+  console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction)
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
@@ -101,6 +116,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
 
   this.goTo = (step) => $scope.step = $scope.steps[step];
+  $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
     $scope.status = {};
@@ -148,52 +164,22 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   $scope.fields = { email: $scope.user.email };
 
-  const handleAccountCreateError = (e) => {
-    let accountError = JSON.parse(e);
-    Alerts.displayError(accountError.error_description);
-    $scope.status = {};
-    if (accountError.error === 'invalid_iban') this.ibanError = true;
-    this.goTo('account-info');
-  };
-
-  const handleAfterAccountCreate = (d) => {
-    if (!d) {
-      Alerts.displayError('BANK_ACCOUNT_CREATION_FAILED');
-      this.goTo('account-info');
+  const handleGetBankAccounts = (result) => {
+    if (result) {
+      $scope.registeredBankAccount = true;
+      $scope.bankAccounts = result;
+      return result;
     } else {
-      this.goTo('summary');
+      $scope.registeredBankAccount = false;
+      $scope.bankAccounts = null;
     }
   };
 
-  $scope.createBankAccount = () => {
-    $scope.status.waiting = true;
-    $scope.bankAccount.account.currency = $scope.transaction.currency;
-    $q.resolve(buySell.createBankAccount($scope.bankAccount))
-      .then((result) => {
-        $scope.selectedBankAccount = result;
-        $scope.status = {};
-        return result;
-      })
-      .then(data => handleAfterAccountCreate(data))
-      .catch(e => handleAccountCreateError(e));
+  $scope.getBankAccounts = () => {
+    $q.resolve(buySell.getBankAccounts())
+      .then(handleGetBankAccounts)
+      .catch(e => console.log('error in getBankAccounts', e));
   };
-
-  // const handleGetBankAccounts = (result) => {
-  //   if (result) {
-  //     $scope.registeredBankAccount = true;
-  //     $scope.bankAccounts = result;
-  //     return result;
-  //   } else {
-  //     $scope.registeredBankAccount = false;
-  //     $scope.bankAccounts = null;
-  //   }
-  // };
-  //
-  // $scope.getBankAccounts = () => {
-  //   $q.resolve(buySell.getBankAccounts())
-  //     .then(handleGetBankAccounts)
-  //     .catch(e => console.log('error in getBankAccounts', e));
-  // };
 
   this.goToOrderHistory = () => {
     if (($scope.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
@@ -377,9 +363,29 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   this.buildBankAccount = (data) => {
-    console.log('build bank acct', data)
-    $scope.bankAccount['account'].number = data.number;
-    $scope.bankAccount['account'].bic = data.bic;
+    this.bankAccount.account = Object.assign(this.bankAccount.account, data);
+    $scope.bankAccount.account = Object.assign($scope.bankAccount.account, data);
+  };
+
+  this.buildBankHolder = (data) => {
+    this.bankAccount.holder = Object.assign(this.bankAccount.holder, data);
+    $scope.bankAccount.holder = Object.assign($scope.bankAccount.holder, data);
+  };
+
+  this.changeHolderCountry = (country) => {
+    this.bankAccount.holder.address.country = country;
+    $scope.bankAccount.holder.address.country = country;
+    this.holderCountry = country;
+  };
+
+  this.onCreateBankSuccess = (bankId) => {
+    console.log('bank success', bankId);
+    this.bankId = bankId;
+  };
+
+  this.setIbanError = () => {
+    this.ibanError = true;
+    this.goTo('account-info');
   };
 
   $scope.standardError = (err) => {
