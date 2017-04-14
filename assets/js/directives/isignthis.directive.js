@@ -160,28 +160,22 @@ function isignthis ($sce, Options) {
       var setState = (state) => {
         console.log('setState', state);
         switch (state) {
-          case 'SUCCESS.MANUAL_ACCEPTED':
-          case 'SUCCESS.COMPLETE':
+          case 'SUCCESS':
             scope.onComplete('processing');
             break;
-          case 'CANCELLED.CANCELLED':
+          case 'CANCELLED':
             scope.onComplete('cancelled');
             break;
-          case 'EXPIRED.EXPIRED':
+          case 'EXPIRED':
             scope.onComplete('expired');
             break;
-          case 'DECLINED.CARD_ISSUER_COUNTRY':
-          case 'DECLINED.SPLIT_TOKEN_DENIED':
-          case 'DECLINED.TOO_MANY_ATTEMPTS':
-          case 'DECLINED.OTP_TOKEN_DENIED':
-          case 'DECLINED.UNKNOWN_ERROR':
-          case 'FAILED.UNEXPECTED_ERROR':
-          case 'REJECTED.UPSTREAM_REJECTED':
+          case 'DECLINED':
+          case 'FAILED':
+          case 'REJECTED':
             scope.onComplete('rejected');
             break;
-          case 'PENDING.PROCESSING_DOCUMENT':
-          case 'PROCESSING_DOCUMENT.PENDING':
-          case 'PENDING.MANUAL_REVIEW':
+          case 'PENDING':
+          case 'PROCESSING_DOCUMENT':
             scope.onComplete('reviewing');
             break;
         }
@@ -194,7 +188,7 @@ function isignthis ($sce, Options) {
         .done(function (e) {
           console.log('completed. e=', JSON.stringify(e));
 
-          setState(e.compound_state);
+          setState(e.state);
         })
         .fail(function (e) {
           console.log('error. e=' + JSON.stringify(e));
@@ -204,10 +198,7 @@ function isignthis ($sce, Options) {
         })
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
-
           scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
-
-          setState(e.compound_state);
         })
         .publish();
     };

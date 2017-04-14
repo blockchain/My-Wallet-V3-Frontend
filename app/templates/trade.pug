@@ -28,7 +28,6 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
     span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
       span.display-inline-block.left-align
         //- quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
-      br
       span(ng-if="buySellDebug")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now

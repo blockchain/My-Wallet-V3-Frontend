@@ -3,5 +3,6 @@ angular
   .controller('CoinifyISXController', CoinifyISXController);
 
 function CoinifyISXController ($scope) {
-  console.log($scope.vm.trade);
+  let trade = $scope.vm.trade;
+  trade.medium === 'bank' && $scope.vm.goTo('trade-complete');
 }

@@ -53,7 +53,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     this.goTo('accept-terms');
   } else if (!this.trade) {
     this.goTo('select-payment-medium');
-  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade)) {
+  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
     this.goTo('isx');
   } else {
     this.goTo('trade-complete');

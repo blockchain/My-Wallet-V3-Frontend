@@ -12,6 +12,6 @@
           span.em-300.right-align.capitalize(ng-bind="val" ng-class="{'em-500': prop === 'TOTAL_COST', 'capitalize' : prop !== 'RECEIVING_ADDRESS'}")
           span.security-red.plm(ng-if="$last && isPendingBankTransfer && isPendingBankTransfer()" translate="ORDER_ID_REFERENCE")
 .modal-footer.flex-end.flex-row
-  button.button-primary(translate="CLOSE" ng-show="!inMobileBuy && !bitcoinReceived" ng-click="$close()")
+  button.button-primary(translate="CLOSE" ng-show="!inMobileBuy && !bitcoinReceived" ng-click="vm.cancel()")
   button.button-primary(translate="SEE_BITCOIN" ng-show="!inMobileBuy && bitcoinReceived" ng-click="$close()" ui-sref="wallet.common.transactions")
   button.button-primary(translate="SEE_BITCOIN" ng-show="inMobileBuy && bitcoinReceived" ng-click="exitToNativeTx()")
