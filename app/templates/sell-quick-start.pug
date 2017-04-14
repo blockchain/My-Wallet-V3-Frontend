@@ -69,8 +69,8 @@
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: $ctrl.limits.card.min, symbol: $ctrl.sellCurrencySymbol.symbol}")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH" translate-values="{limit: sellLimit, symbol: $ctrl.sellCurrencySymbol.symbol}")
         .mtm.pos-rel(ng-show="error.moreThanInWallet && !fiatForm.fiat.$error.min")
-          span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet && numLabels() <= 1" translate="SELL.MORE_THAN_BALANCE")
-          span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet && numLabels() > 1" translate="SELL.MORE_THAN_BALANCE_LABELS")
+          span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
+          span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS")
           br
           a.pos-abs.type-sm(ng-show="error.moreThanInWallet" ng-click="useAll()" translate="SELL.SELL_ALL")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")

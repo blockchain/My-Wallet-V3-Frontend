@@ -101,11 +101,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       this.transaction.fiat = quote.quoteAmount / 100;
     }
     $scope.quote = quote;
-    if (this.transaction.btc > $scope.totalBalance) {
-      $scope.status.busy = true;
-    } else {
-      $scope.status = {};
-    }
+    $scope.status = {};
     Alerts.clear();
   };
 
@@ -185,7 +181,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.getQuote();
   };
 
-  $scope.numLabels = () => Wallet.my.wallet.labels._accounts.length;
+  $scope.multipleAccounts = () => Wallet.accounts().length > 1;
 
   $scope.useAll = () => {
     this.transaction.btc = $scope.sweepAmount / 100000000;
