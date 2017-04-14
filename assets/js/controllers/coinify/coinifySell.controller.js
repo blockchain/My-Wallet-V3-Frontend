@@ -34,6 +34,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
+  this.isSweepTransaction = buySellOptions.isSweepTransaction;
 
   $scope.bankAccount = {
     account: { currency: null },
@@ -208,7 +209,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
       $scope.payment.amount(amountAfterFee / 100000000); // in SATOSHI
     });
-    return $scope.transaction;
+    return {transaction: $scope.transaction, payment: $scope.payment};
   };
 
   $scope.cancel = () => {
@@ -248,90 +249,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.formatBankInfo(t);
   };
 
-  const transactionFailed = (message) => {
-    let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
-    if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
-
-    if (msgText.indexOf('Transaction Already Exists') > -1) {
-      $uibModalInstance.close();
-    } else {
-      Alerts.displayError(msgText, false, $scope.alerts);
-    }
-  };
-
-  const transactionSucceeded = (tx) => {
-    $timeout(() => {
-      Wallet.beep();
-      let message = 'BITCOIN_SENT';
-      Alerts.displaySentBitcoin(message);
-      let note = `Coinify Sell Order ${$scope.sellTrade.id}`;
-      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
-    }, 500);
-  };
-
-  const setCheckpoint = (payment) => {
-    $scope.paymentCheckpoint = payment;
-  };
-
-  const signAndPublish = (passphrase) => {
-    return $scope.payment.sideEffect(setCheckpoint)
-      .sign(passphrase).publish().payment;
-  };
-
-  const handleSellResult = (sellResult) => {
-    if (!sellResult.transferIn) {
-      console.log('set error', sellResult);
-      $scope.error = sellResult;
-      $scope.error = JSON.parse($scope.error);
-    } else {
-      $scope.sellTrade = sellResult;
-      $scope.sendAddress = sellResult.transferIn.details.account;
-      $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
-      $scope.formatBankInfo(sellResult);
-    }
-  };
-
-  const handlePaymentAssignment = () => {
-    $scope.payment.to($scope.sendAddress);
-    $scope.payment.amount($scope.sendAmount);
-  };
-
-  this.sell = () => {
-    $scope.status.waiting = true;
-    this.waiting = true;
-    console.log('sell running', this)
-    $q.resolve(buySell.createSellTrade(this.trade.quote, this.selectedBankAccount))
-      .then(sellResult => {
-        handleSellResult(sellResult);
-        return sellResult;
-      })
-      .then(sellData => {
-        if ($scope.error) return;
-        handlePaymentAssignment();
-        // for testing
-        if (exchange._customAddress && exchange._customAmount) {
-          console.log('customAddress and customAmount', exchange._customAddress, exchange._customAmount);
-          $scope.payment.to(exchange._customAddress);
-          $scope.payment.amount(exchange._customAmount);
-        }
-        $scope.payment.build();
-
-        // Wallet.askForSecondPasswordIfNeeded()
-        //   .then(signAndPublish)
-        //   .then(transactionSucceeded)
-        //   .catch(err => {
-        //     console.log('err when publishing', err);
-        //     transactionFailed(err);
-        //   });
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
-        $scope.status.waiting = false;
-        this.waiting = false;
-        if (!$scope.error) this.goTo('review');
-      });
-  };
-
   $scope.formatBankInfo = (trade) => {
     if (trade.transferOut) {
       let n = trade.transferOut.details.account.number;
@@ -353,13 +270,17 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
-  this.transaction = $scope.startPayment();
+  let startedPayment = $scope.startPayment();
+  this.transaction = startedPayment.transaction;
+  this.payment = startedPayment.payment;
+
   if (!$scope.step) {
     $scope.nextStep();
   }
 
   this.selectAccount = (account) => {
     this.selectedBankAccount = account;
+    this.bankId = account.id;
   };
 
   this.buildBankAccount = (data) => {
@@ -378,15 +299,16 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     this.holderCountry = country;
   };
 
-  this.onCreateBankSuccess = (bankId) => {
-    console.log('bank success', bankId);
-    this.bankId = bankId;
-  };
+  this.onCreateBankSuccess = (bankId) => this.bankId = bankId;
 
   this.setIbanError = () => {
     this.ibanError = true;
     this.goTo('account-info');
   };
+
+  this.onSellSuccess = (trade) => {
+    console.log('onSellSuccess', trade)
+  }
 
   $scope.standardError = (err) => {
     console.log(err);
