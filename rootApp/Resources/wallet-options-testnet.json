@@ -9,12 +9,16 @@
                     "SK", "SI", "ES", "SE", "CH"
                   ],
       "partnerId": 24,
+      "iSignThisDomain": "https://stage-verify.isignthis.com",
       "surveyLinks": ["https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_205rqJvYy7mRxnn",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_ac9wCotxdlnCzU9",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_agg8sRcpEsWbEnb",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_1RF9VhC96M8xXh3"],
-      "iSignThisDomain": "https://stage-verify.isignthis.com"
+      "sellSurveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_56iZITjrjyMOrzL",
+                          "https://blockchain.co1.qualtrics.com/jfe/form/SV_9u8XxkrkiUUy6z3",
+                          "https://blockchain.co1.qualtrics.com/jfe/form/SV_9ysiGRC4rkMFwFv"],
+      "showSellFraction": 0
     },
     "sfox": {
       "countries": [],

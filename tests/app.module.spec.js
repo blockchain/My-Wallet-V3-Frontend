@@ -48,6 +48,7 @@ angular.module('walletApp', modules).run(($rootScope) => {
   };
 
   $rootScope.isProduction = true;
+  $rootScope.size = { xs: false, sm: false, md: false, lg: true };
 });
 
 beforeEach(module('templates-main'));

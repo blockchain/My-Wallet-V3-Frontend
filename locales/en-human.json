@@ -174,7 +174,7 @@
   },
   "CONFIRM_CLOSE_SELL": {
     "TITLE": "Are You Sure?",
-    "BODY": "You're just one click away from from completing your sale. Are you sure you want to stop?"
+    "BODY": "You're just one click away from completing your sale. Are you sure you want to stop?"
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
@@ -1158,7 +1158,7 @@
   "BUY_AMT_HIGH": "Buy amount too high.",
   "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
   "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
-  "SELL_AMT_HIGH": "Sell amount too high.",
+  "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
   "UPDATE": "Update",
   "BUY_SUBSCRIBE": {
@@ -1346,7 +1346,8 @@
     "KYC_CANCELLED": "This transaction has been cancelled.",
     "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity.",
-    "MORE_THAN_BALANCE": "The amount entered is more than your balance.",
+    "MORE_THAN_BALANCE": "Amount entered is more than your balance.",
+    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than your default wallet balance",
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -1367,5 +1368,6 @@
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
   "BUY_SELL_BITCOIN": "Buy Bitcoin",
+  "SHOW_MORE": "Show more",
   "": ""
 }

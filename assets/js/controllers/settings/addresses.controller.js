@@ -40,11 +40,12 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
   $scope.createAddress = () => {
     $scope.createAddressInProgress = true;
 
-    Labels.addLabel(accountIndex, 15, $translate.instant('DEFAULT_NEW_ADDRESS_LABEL'))
-      .catch(Alerts.displayError)
+    $q.resolve(Labels.addLabel(accountIndex, 15, $translate.instant('DEFAULT_NEW_ADDRESS_LABEL')))
+      .catch((error) => {
+        Alerts.displayError(error); // Promise is intentionally not returned
+      })
       .then(() => {
         $scope.createAddressInProgress = false;
-        $rootScope.$safeApply();
       });
   };
 

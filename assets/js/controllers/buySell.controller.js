@@ -14,9 +14,6 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   $scope.walletStatus = Wallet.status;
   $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
-  $scope.tradeLimit = 5;
-  $scope.scrollTrades = () => { $scope.tradeLimit += 5; };
-
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;
     $scope.kyc = buySell.kycs[0];
@@ -27,7 +24,8 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
-    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency() };
+    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency(undefined, true) };
+    $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.sellLimits = {card: {}, bank: {}};
@@ -55,7 +53,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
     $scope.$watch('settings.currency', () => {
       $scope.transaction.currency = buySell.getCurrency();
-      $scope.sellTransaction.currency = buySell.getCurrency();
+      $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
     }, true);
 
     $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
