@@ -18,7 +18,7 @@
           quote-countdown.mid-grey(ng-if="vm.quote" quote="vm.quote" refresh-quote="vm.refreshQuote()")
           p.security-red.pointer(ng-show="buySellDebug && vm.quote.id")
             i.ti-search.mrm.right-align(ng-click="vm.quote.expire()")  QA: Now
-  coinify-email(ng-if="onStep('email')" on-complete="vm.goTo('accept-terms')" email="vm.user.email" verified="vm.user.isEmailVerified" rejected-email="vm.rejectedEmail")
+  coinify-email(ng-if="onStep('email')" on-complete="vm.goTo('accept-terms')" on-close="vm.close(0)" email="vm.user.email" verified="vm.user.isEmailVerified" rejected-email="vm.rejectedEmail")
   div(ng-if="onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
   div(ng-if="onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
   div(ng-if="onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")

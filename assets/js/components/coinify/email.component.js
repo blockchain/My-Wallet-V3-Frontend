@@ -5,6 +5,7 @@ angular
       email: '<',
       verified: '<',
       rejectedEmail: '<',
+      onClose: '&',
       onComplete: '&'
     },
     templateUrl: 'partials/coinify/email.pug',
