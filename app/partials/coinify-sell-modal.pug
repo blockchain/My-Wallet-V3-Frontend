@@ -20,7 +20,7 @@
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
- 
+  sell-account-info(ng-if="onStep('account-info')" on-complete="vm.goTo('account-holder')" country="vm.exchangeCountry" build-bank-account="buildBankAccount(accountNumbers)" iban-error="ibanError")
   sell-bank-link(ng-if="onStep('bank-link')" on-complete="vm.goTo('summary')" accounts="vm.accounts" transaction="vm.transaction" selectedBankAccount="vm.selectedBankAccount" select-account="vm.selectAccount(account)" new-account="vm.goTo('account-info')" close="vm.close()")
   sell-summary(ng-if="onStep('summary')" sell-trade="trade" transaction="vm.transaction" sell="vm.sell()" total-balance="vm.totalBalance" error="vm.error" close="vm.close()" dismiss="vm.dismiss()" waiting="vm.waiting")
   //- .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")

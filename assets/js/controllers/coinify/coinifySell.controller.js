@@ -60,6 +60,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
+  this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
 
   $scope.setAccountCurrency = (countryCode) => {
     switch (countryCode) {
@@ -157,7 +158,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     let accountError = JSON.parse(e);
     Alerts.displayError(accountError.error_description);
     $scope.status = {};
-    if (accountError.error === 'invalid_iban') $scope.ibanError = true;
+    if (accountError.error === 'invalid_iban') this.ibanError = true;
     this.goTo('account-info');
   };
 
@@ -380,6 +381,11 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   this.selectAccount = (account) => {
     console.log('selectAccount', account);
     this.selectedBankAccount = account;
+  };
+
+  this.buildBankAccount = (data) => {
+    $scope.account.number = data.number;
+    $scope.account.bic = data.bic;
   };
 
   $scope.standardError = (err) => {
