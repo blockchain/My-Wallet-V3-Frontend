@@ -8,25 +8,25 @@
           h3(translate="BUY_BITCOIN")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
-        .flex-column.flex-align-end.ng-hide(ng-hide="status.gettingQuote"
+        .flex-column.flex-align-end(ng-hide="status.gettingQuote"
                                     uib-tooltip="{{getQuoteHelper() | translate}}"
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top")
           .flex-row.f-16.em-300
-            span.ng-hide(ng-if="!vm.trade") {{ vm.BTCAmount() / 100000000 }} BTC
-            span.ng-hide.italic.tilda(ng-if="vm.trade") {{ vm.trade.outAmountExpected / 100000000 }} BTC
+            span(ng-if="!vm.trade") {{ vm.BTCAmount() / 100000000 }} BTC
+            span.italic.tilda(ng-if="vm.trade") {{ vm.trade.outAmountExpected / 100000000 }} BTC
             | &nbsp;
-            span.ng-hide(ng-if="!vm.trade") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
-            span.ng-hide(ng-if="vm.trade") ({{ vm.trade.sendAmount / 100 }} {{ vm.trade.inCurrency }})
-          quote-countdown.mid-grey.ng-hide(ng-if="!vm.trade" quote="vm.quote" trade-obj="vm.trade" expired-quote="expiredQuote")
-          p.security-red.pointer.ng-hide(ng-show="buySellDebug && quote.id")
+            span(ng-if="!vm.trade") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
+            span(ng-if="vm.trade") ({{ vm.trade.sendAmount / 100 }} {{ vm.trade.inCurrency }})
+          quote-countdown.mid-grey(ng-if="!vm.trade" quote="vm.quote" trade-obj="vm.trade" expired-quote="expiredQuote")
+          p.security-red.pointer(ng-show="buySellDebug && quote.id")
             i.ti-search.mrm.right-align(ng-click="quote.expire()")  QA: Now
-  div.ng-hide(ng-if="onStep('email')" ng-controller="CoinifyEmailController" ng-include="'partials/coinify/email.pug'")
-  div.ng-hide(ng-if="onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
-  div.ng-hide(ng-if="onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
-  div.ng-hide(ng-if="onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")
-  div.ng-hide(ng-if="onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")
-  div.ng-hide(ng-if="onStep('trade-complete')" ng-controller="CoinifyTradeSummaryController" ng-include="'partials/trade-summary.pug'")
+  div(ng-if="onStep('email')" ng-controller="CoinifyEmailController" ng-include="'partials/coinify/email.pug'")
+  div(ng-if="onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
+  div(ng-if="onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
+  div(ng-if="onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")
+  div(ng-if="onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")
+  div(ng-if="onStep('trade-complete')" ng-controller="CoinifyTradeSummaryController" ng-include="'partials/trade-summary.pug'")
     p.security-red.pointer(ng-show="buySellDebug && trade.bankAccount && trade.state === 'awaiting_transfer_in'")
       i.ti-search.mrm
       span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
