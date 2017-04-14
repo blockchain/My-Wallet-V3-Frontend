@@ -10,7 +10,7 @@
         ng-submit="commitValues()"
         autocomplete="off"
         novalidate
-        ng-hide="showDanish")
+        ng-hide="$ctrl.showDanish")
         .form-group.flex-column.width-100
           label.control-label(translate="International Bank Account Number (IBAN)")
           div
@@ -41,7 +41,7 @@
         ng-submit="commitValues()"
         autocomplete="off"
         novalidate
-        ng-show="showDanish")
+        ng-show="$ctrl.showDanish")
         .form-group.flex-column.width-100
           label.control-label(translate="Basic Bank Account Number (BBAN)")
           div
@@ -68,8 +68,6 @@
   .flex-1.flex-end
     button.button-muted.mrm(ng-click="$ctrl.close()" translate="CLOSE")
     button.button-primary(
-      ladda-translate="CONTINUE"
-      ng-click="goTo('account-holder')"
-      data-style="expand-left"
-      ui-ladda="status.waiting"
+      translate="CONTINUE"
+      ng-click="$ctrl.buildBankAccount({account: $ctrl.account}); $ctrl.onComplete();"
       ng-disabled="$ctrl.isDisabled()")

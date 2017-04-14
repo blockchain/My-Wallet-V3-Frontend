@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyBankAccountController', CoinifyBankAccountController);
 
-function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, $stateParams) {
+function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, currency, $stateParams) {
   $scope.exchange = buySell.getExchange();
   $scope.qa = {};
   $scope.accountCurrency = $scope.$parent.bankAccount.account.currency;

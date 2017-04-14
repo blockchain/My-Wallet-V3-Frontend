@@ -20,9 +20,41 @@
                                     tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
-  sell-account-info(ng-if="onStep('account-info')" on-complete="vm.goTo('account-holder')" country="vm.exchangeCountry" build-bank-account="buildBankAccount(accountNumbers)" iban-error="ibanError")
-  sell-bank-link(ng-if="onStep('bank-link')" on-complete="vm.goTo('summary')" accounts="vm.accounts" transaction="vm.transaction" selectedBankAccount="vm.selectedBankAccount" select-account="vm.selectAccount(account)" new-account="vm.goTo('account-info')" close="vm.close()")
-  sell-summary(ng-if="onStep('summary')" sell-trade="trade" transaction="vm.transaction" sell="vm.sell()" total-balance="vm.totalBalance" error="vm.error" close="vm.close()" dismiss="vm.dismiss()" waiting="vm.waiting")
+            
+  div.width-90(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
+    include ./coinify/email
+  div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
+    include ./coinify/signup
+  sell-account-info(
+      ng-if="onStep('account-info')" 
+      on-complete="vm.goTo('account-holder')" 
+      country="vm.exchangeCountry" 
+      build-bank-account="vm.buildBankAccount(account)" 
+      iban-error="vm.ibanError" 
+      close="vm.close()")
+  sell-account-holder(
+      ng-if="onStep('account-holder')"
+      on-complete="vm.goTo('summary')"
+      build-bank-holder="buildBankHolder(holder)"
+      close="vm.close()")
+  sell-bank-link(
+      ng-if="onStep('bank-link')" 
+      on-complete="vm.goTo('summary')" 
+      accounts="vm.accounts" 
+      transaction="vm.transaction" 
+      selectedBankAccount="vm.selectedBankAccount" 
+      select-account="vm.selectAccount(account)" 
+      new-account="vm.goTo('account-info')" 
+      close="vm.close()")
+  sell-summary(
+      ng-if="onStep('summary')" 
+      sell-trade="trade" 
+      transaction="vm.transaction" 
+      sell="vm.sell()" 
+      total-balance="vm.totalBalance" 
+      error="vm.error" close="vm.close()" 
+      dismiss="vm.dismiss()" 
+      waiting="vm.waiting")
   //- .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
     .alert-in-app
       alerts(context="alerts")
@@ -46,7 +78,7 @@
         a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
           img(src="img/coinify-logo.svg")
           span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-  //- .modal-footer.flex-end.flex-row
+  .modal-footer.flex-end.flex-row(ng-show="onStep('email') || onStep('accept-terms')")
     button.button-muted(ng-show="onStep('account-holder')" ng-click="goTo('account-info')" translate="GO_BACK")
 
     .flex-1.flex-end(ng-hide="status.loading")
@@ -54,13 +86,6 @@
       button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
       button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link') || onStep('account-info') || onStep('account-holder')")
       div(ng-hide="afterStep('summary')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="goTo('account-holder')"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('account-info')")
         button.button-primary(
           translate="CONTINUE"
           ng-click="goTo('accept-terms')"

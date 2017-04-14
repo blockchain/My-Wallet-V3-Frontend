@@ -134,12 +134,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return !$scope.fields.acceptTOS;
     } else if ($scope.onStep('email')) {
       return !$scope.user.isEmailVerified;
-    } else if ($scope.onStep('account-info')) {
-      return (!b.account.number || !b.account.bic);
-    } else if ($scope.onStep('account-holder')) {
-      return (!b.holder.name || !b.holder.address.street || !b.holder.address.zipcode || !b.holder.address.city || !b.holder.address.country);
-    } else if ($scope.onStep('bank-link')) {
-      return !this.selectedBankAccount;
     } else if ($scope.onStep('summary')) {
       if ($scope.sellRateForm) {
         if ($scope.insufficientFunds() === true || !$scope.sellRateForm.$valid) {
@@ -379,13 +373,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   }
 
   this.selectAccount = (account) => {
-    console.log('selectAccount', account);
     this.selectedBankAccount = account;
   };
 
   this.buildBankAccount = (data) => {
-    $scope.account.number = data.number;
-    $scope.account.bic = data.bic;
+    console.log('build bank acct', data)
+    $scope.bankAccount['account'].number = data.number;
+    $scope.bankAccount['account'].bic = data.bic;
   };
 
   $scope.standardError = (err) => {
