@@ -83,6 +83,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.getQuote = () => {
+    $scope.status.fetching = true;
     $scope.status.busy = true;
     if ($scope.lastInput === 'btc') {
       buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
@@ -135,6 +136,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   });
 
   $scope.checkForNoFee = () => {
+    $scope.status.busy = true;
     if (!this.transaction || !this.transaction.btc || $scope.isSweepTransaction) return;
     let tradeInSatoshi = currency.convertToSatoshi(this.transaction.btc, currency.bitCurrencies[0]);
     let index = Wallet.getDefaultAccountIndex();
@@ -144,6 +146,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       if (r.absoluteFeeBounds[0] === 0) {
         $scope.error['moreThanInWallet'] = true;
         $scope.offerUseAll();
+      } else {
+        $scope.status = {};
       }
     });
   };
@@ -176,6 +180,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.getExchangeRate();
     $scope.getQuote();
   };
+
+  $scope.multipleAccounts = () => Wallet.accounts().length > 1;
 
   $scope.useAll = () => {
     this.transaction.btc = $scope.sweepAmount / 100000000;
