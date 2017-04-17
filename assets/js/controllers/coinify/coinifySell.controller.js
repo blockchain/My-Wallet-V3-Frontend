@@ -57,6 +57,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.assignFiatHelper = (currencyType) => {
+    console.log('assignFiatHelper', $scope.transaction)
     $scope.transaction.currency = $scope.trade.quote[currencyType];
     $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
     this.bankAccount.account.currency = $scope.trade.quote[currencyType];
@@ -110,7 +111,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     'review': 6,
     'isx': 7
   };
-
+  console.log('here1')
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
   $scope.afterStep = (step) => $scope.step > $scope.steps[step];
   $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
@@ -120,6 +121,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
+    console.log('scope.nextStep', $scope.transaction, $scope.trade)
     $scope.status = {};
     if ($scope.isKYC) {
       this.goTo('isx');
@@ -127,7 +129,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
 
     if (($scope.trade._state && !$scope.trade._iSignThisID) && $scope.user.isEmailVerified) {
-      $scope.mapTradeDetails();
+      // $scope.mapTradeDetails();
       this.goTo('review');
       return;
     } else {
@@ -144,7 +146,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       }
     }
   };
-
+  console.log('here2')
   $scope.fields = { email: $scope.user.email };
 
   this.goToOrderHistory = () => {
@@ -164,6 +166,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.payment.from(index).amount(tradeInSatoshi);
 
     $scope.payment.sideEffect(result => {
+      console.log('sideEffect', $scope.transaction)
       let firstBlockFee = result.absoluteFeeBounds[0];
       if ($scope.isSweepTransaction) {
         firstBlockFee = result.sweepFee;
@@ -186,7 +189,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       this.goToOrderHistory();
     });
   };
-
+  console.log('here3')
   let links = options.partners.coinify.sellSurveyLinks;
   this.close = () => {
     let index;
@@ -234,10 +237,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return true;
     }
   };
-
+  console.log('here4')
   let startedPayment = $scope.startPayment();
-  this.transaction = startedPayment.transaction;
-  this.payment = startedPayment.payment;
+  if (startedPayment) {
+    this.transaction = startedPayment.transaction;
+    console.log('this.transaction', this.transaction);
+    this.payment = startedPayment.payment;
+  }
 
   if (!$scope.step) {
     $scope.nextStep();
@@ -274,7 +280,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   this.onSellSuccess = (trade) => {
     console.log('onSellSuccess', trade);
     this.sellTrade = trade;
-  }
+  };
 
   $scope.standardError = (err) => {
     console.log(err);
