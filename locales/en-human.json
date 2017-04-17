@@ -73,6 +73,8 @@
   "EXPLORE": "Explore",
   "WHATS_NEW": "What's New",
   "WHATS_NEW_EXPLAIN": "We now have a \"What's New\" section where we'll let you know about all the changes we've been making to the Blockchain Wallet.",
+  "WHATS_NEW_EMPTY": "All caught up!",
+  "WHATS_NEW_EMPTY_TEXT": "Check back later for updates.",
   "SIGN_VERIFY" : "Sign and Verify",
   "SIGN_VERIFY_EXPLAIN" : "Prove that you own a bitcoin address by signing a message. Verify to confirm someone else owns an address.",
   "TRANSFER_ALL_EXPLAIN" : "Move all funds from your imported addresses to your HD addresses for added privacy and security.",
