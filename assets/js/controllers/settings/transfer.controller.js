@@ -48,7 +48,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
         values: {
           archivable: $scope.archivable.length,
           account: $scope.selectedAccount.label,
-          total: $scope.ncomplete + $scope.nfailed
+          total: $scope.ncomplete
         },
         action: 'ARCHIVE',
         friendly: true
