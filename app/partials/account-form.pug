@@ -1,4 +1,4 @@
-form.bc-form(role="form" name="accountForm" ng-submit="submit()" autocomplete="off" novalidate data-preflight-tag="AccountForm")
+form.bc-form(role="form" name="accountForm" ng-submit="accountForm.$valid && submit()" autocomplete="off" novalidate data-preflight-tag="AccountForm")
   .modal-header
     .flex-center
       h3.man.mrm(translate="{{status.edit ? 'RENAME_ACCOUNT':'ADD_WALLET'}}")
