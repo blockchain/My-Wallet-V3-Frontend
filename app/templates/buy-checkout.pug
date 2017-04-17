@@ -46,7 +46,7 @@ form.bc-form(
             span.mhm {{bitcoin.code}}
         .f-12.mts
           span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | Your daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
+            | Your remaining daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
             | &nbsp;
           span.primary.pointer(popup
                                popup-name="sfox-identity"
