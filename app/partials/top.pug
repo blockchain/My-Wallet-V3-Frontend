@@ -13,7 +13,10 @@
         button.btn.button-default.button-short-wide.type-h5.pos-rel(ng-click="request()")
           i.mrs.media-middle.icon-receive
           span.em-300(translate="REQUEST")
-        button.btn.button-default.button-short.type-h5(ng-if="browserCanExecCommand" on-click-copy="nextAddress()" ng-mouseleave="resetCopy()")
+        button.btn.button-default.button-short.type-h5(ng-if="browserCanExecCommand" on-click-copy="nextAddress()" ng-mouseleave="resetCopy()"
+                                                      uib-tooltip="{{'RECEIVE_HELPER' | translate}}"
+                                                      tooltip-append-to-body="true"
+                                                      tooltip-placement="top")
           i.mhs(ng-class="copied ? 'ti-check' : 'ti-clipboard'")
   .hidden-xs.mt-5
     include ./main-balance
