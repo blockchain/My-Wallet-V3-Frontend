@@ -2,7 +2,7 @@ div
   .flex-row.flex-between.flex-center(ng-hide="$root.inMobileBuy && !browserWithCamera")
     label.f-14.colon(ng-hide="state.webcam.active" translate="{{idType + '_ID'}}.UPLOAD_SELECT")
     label.f-14.colon(ng-show="state.webcam.active" translate="{{idType + '_ID'}}.UPLOAD_TITLE")
-    span.f-14.blue.pointer(ng-if="state.webcam.active || invalidFile" ng-click="reset()") Go Back
+    span.f-14.primary.pointer(ng-if="state.webcam.active || invalidFile" ng-click="reset()") Go Back
 
   div(ng-hide="state.webcam.active || file || invalidFile || ($root.inMobileBuy && !browserWithCamera)")
     div.file-upload(ngf-drop ng-model="file" ngf-model-invalid="invalidFile" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'")
@@ -21,15 +21,20 @@ div
       span Upload From Device
 
   div(ng-if="state.webcam.active")
-    div.webcam(ng-if="!state.webcam.error")
-      webcam(channel="webcam" on-error="webcamError()")
+    div.webcam(ng-class="{hidden: !state.webcam.stream || state.webcam.error}")
+      webcam(channel="webcam" on-error="webcamError()" on-stream="webcamStream()")
       span.help(translate="{{idType + '_ID'}}.HELP")
-    div.webcam.disabled.flex-center.flex-justify(ng-if="state.webcam.error")
+    div.webcam.disabled.flex-center.flex-justify(ng-if="!state.webcam.stream && !state.webcam.error")
       span.f-16.white
         i.mr-10.ti-arrow-top-left
         span Please allow webcam access.
+    div.webcam.disabled.flex-center.flex-justify(ng-if="!state.webcam.stream && state.webcam.error")
+      span.f-16.white
+        span Permission to use webcam denied.
+        br
+        span Please allow webcam access and refresh the page.
     form(ng-submit="capture()")
-      button.btn.button-primary.full.mt-20(ng-disabled="state.webcam.error || state.webcam.disabled" type="submit")
+      button.btn.button-primary.full.mt-20(ng-disabled="!state.webcam.stream || state.webcam.disabled" type="submit")
         i.mr-10.ti-camera
         span Capture
 
