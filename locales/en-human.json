@@ -24,11 +24,11 @@
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
-      "Q": "How do I buy Bitcoin?",
+      "Q": "How do I buy bitcoin?",
       "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
     },
     "CAN_I_BUY_UNINVITED": {
-      "Q": "Can I buy Bitcoin?",
+      "Q": "Can I buy bitcoin?",
       "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <a>click here</a>."
     },
     "WALLET_SAFETY": {
