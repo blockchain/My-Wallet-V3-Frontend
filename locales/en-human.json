@@ -29,7 +29,7 @@
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy Bitcoin?",
-      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <span class='pointer blue'>click here</span>."
+      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <a>click here</a>."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
