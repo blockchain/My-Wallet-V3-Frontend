@@ -19,7 +19,7 @@
           .flex-row
             span.f-16.bg-grey.ph-25.pv-10.width-100 {{ address() }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browserCanExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
-            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isAddressCopied")
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
       
       .group.mb-20
         .item
@@ -90,7 +90,7 @@
           .flex-row
             span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden {{ paymentRequestURL(true) }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isBitcoinURICopied || !browserCanExecCommand" copy-content="{{ paymentRequestURL(true) }}" ng-click="state.isBitcoinURICopied = true")
-            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied")
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied" ng-mouseleave="state.isBitcoinURICopied = false")
           
   div(ng-show="state.requestCreated")
     p.f-14.mb-25(translate="Send the link below to your friend or contact (via email or other messaging service), and they will be able to send bitcoin directly to your wallet.")
@@ -112,6 +112,6 @@
       span.f-12(style="word-break: break-all;") {{ paymentRequestURL() }}
       
     button.btn.button-primary.full.upper.mt-20(single-click-select copy-content="{{ paymentRequestURL() }}" ng-click="state.isPaymentRequestCopied = true" ng-hide="state.isPaymentRequestCopied || !browserCanExecCommand" translate="COPY_LINK")
-    button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED")
+    button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED" ng-mouseleave="state.isPaymentRequestCopied = false")
     
     a.display-block.center.mt-20(ng-click="$close()") Close

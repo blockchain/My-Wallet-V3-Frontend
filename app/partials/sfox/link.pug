@@ -44,7 +44,7 @@
       )
       .mvvl(ng-if="!inMobileBuy")
         span.or-horizontal.flex-justify(translate="OR")
-      button.btn.button-primary-inverse.full(translate="Manually Enter Account & Routing" ng-hide="state.enableBankAccountForm" ng-click="state.enableBankAccountForm = true")
+      button.btn.button-primary-inverse.full(translate="Manually Enter Account & Routing Numbers" ng-hide="state.enableBankAccountForm" ng-click="state.enableBankAccountForm = true")
       form.bc-form(name="bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
         fieldset(ng-disabled="locked")
           .group.full.mb-30
