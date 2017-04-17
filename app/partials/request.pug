@@ -103,13 +103,13 @@
     .bg-grey.pv-30.ph-60.flex-column.center
       span.received.f-28.mb-10.em-600 {{ format(fromSatoshi(state.amount || 0, settings.btcCurrency), settings.btcCurrency, true) }}
       span.received.f-20.em-300 {{ format(fromSatoshi(state.amount || 0, settings.currency), settings.currency, true) }}
-      span.f-16.em-300.mt-20.mbn(ng-show="state.label")
+      span.f-16.em-300.mt-20.mbn.request-link-container(ng-show="state.label")
         span For
         |  
         span.italic "{{ state.label }}"
     
     .bg-grey.pv-10.ph-30.center.border-top
-      span.f-12(style="word-break: break-all;") {{ paymentRequestURL() }}
+      div.f-12.request-link-container {{ paymentRequestURL() }}
       
     button.btn.button-primary.full.upper.mt-20(single-click-select copy-content="{{ paymentRequestURL() }}" ng-click="state.isPaymentRequestCopied = true" ng-hide="state.isPaymentRequestCopied || !browserCanExecCommand" translate="COPY_LINK")
     button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED" ng-mouseleave="state.isPaymentRequestCopied = false")
