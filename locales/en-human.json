@@ -471,7 +471,7 @@
   "SWEEP" : "Sweep",
   "VERIFY_RECOVERY_PHRASE" : "Backup Recovery Phrase",
   "SWEEP_FAIL" : "Some addresses could not be swept automatically",
-  "SWEEP_LOW_BALANCE_WARN" : "Some funds cannot be transferred automatically",
+  "SWEEP_LOW_BALANCE_WARN" : "Some of your addresses do not have a high enough balance for a transfer to be done automatically",
   "SECURITY_TIP" : "Security Tip",
   "DO_NOT_STORE_ON_COMPUTER" : "Do not store your Recovery Phrase on your computer or online. It is very important to keep your Recovery Phrase offline in a safe and private place. Anyone with access to your Recovery Phrase has access to your funds.",
   "PRINTABLE_SHEET" : "We have created a printable Recovery Sheet to help you conveniently keep your Recovery Phrase safe. Print the blank Recovery Sheet and then move onto the next step to fill it in.",
