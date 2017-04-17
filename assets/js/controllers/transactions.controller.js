@@ -22,7 +22,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
 
-  let all = { label: $translate.instant('ALL'), index: '', type: 'Accounts' };
+  let all = { label: $translate.instant('ALL_ACCOUNTS'), index: '', type: 'Accounts' };
   $scope.accounts = smartAccount.getOptions();
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
@@ -74,7 +74,11 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.$on('$destroy', unsub);
 
   // Searching and filtering
-  $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  if (window.innerWidth <= 768) {
+    $scope.filterTypes = ['ALL_TRANSACTIONS', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  } else {
+    $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  }
   $scope.setFilterType = (type) => $scope.filterBy.type = $scope.filterTypes[type];
   $scope.isFilterType = (type) => $scope.filterBy.type === $scope.filterTypes[type];
   $scope.setFilterType(0);
