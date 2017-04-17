@@ -21,7 +21,7 @@ div
       span Upload From Device
 
   div(ng-if="state.webcam.active")
-    div.webcam(ng-if="!state.webcam.error")
+    div.webcam-container(ng-if="!state.webcam.error")
       webcam(channel="webcam" on-error="webcamError()")
       span.help(translate="{{idType + '_ID'}}.HELP")
     div.webcam.disabled.flex-center.flex-justify(ng-if="state.webcam.error")
