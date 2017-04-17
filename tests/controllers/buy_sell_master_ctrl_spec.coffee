@@ -22,7 +22,7 @@ describe "BuySellMasterController", ->
       MyWallet = $injector.get("MyWallet")
       
       cta =
-        setBuyCtaDissmissed: () ->
+        setBuyCtaDismissed: () ->
 
       MyWallet.wallet =
         external: external
@@ -36,10 +36,10 @@ describe "BuySellMasterController", ->
       $uibModalInstance: { close: (->) dismiss: (->) }
       exchange: { profile: profile }
 
-  it "should set buy cta dissmissed", ->
-    spyOn(cta, 'setBuyCtaDissmissed')
+  it "should set buy cta dismissed", ->
+    spyOn(cta, 'setBuyCtaDismissed')
     ctrl = getController()
-    expect(cta.setBuyCtaDissmissed).toHaveBeenCalled()
+    expect(cta.setBuyCtaDismissed).toHaveBeenCalled()
     
   describe ".resolveState()", ->
     

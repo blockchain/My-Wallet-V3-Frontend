@@ -11,7 +11,7 @@ function cta ($cookies, Wallet, buyStatus) {
 
   const service = {
     shouldShowBuyCta,
-    setBuyCtaDissmissed,
+    setBuyCtaDismissed,
     shouldShowSecurityWarning,
     setSecurityWarningDismissed,
     getSecurityWarningMessage
@@ -31,7 +31,7 @@ function cta ($cookies, Wallet, buyStatus) {
     return !hasAccount && !hasSeenCta;
   }
 
-  function setBuyCtaDissmissed () {
+  function setBuyCtaDismissed () {
     $cookies.put(BUY_CTA_KEY, true);
     cacheCookies();
   }

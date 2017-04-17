@@ -3,7 +3,7 @@ angular
   .controller('BuySellMasterController', BuySellMasterController);
 
 function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies, cta) {
-  cta.setBuyCtaDissmissed();
+  cta.setBuyCtaDismissed();
 
   this.base = 'wallet.common.buy-sell';
   this.external = MyWallet.wallet.external;
