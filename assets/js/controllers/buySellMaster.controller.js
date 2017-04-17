@@ -2,8 +2,8 @@ angular
   .module('walletApp')
   .controller('BuySellMasterController', BuySellMasterController);
 
-function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies) {
-  $cookies.put('buy-alert-seen', true);
+function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies, cta) {
+  cta.setBuyCtaDismissed();
 
   this.base = 'wallet.common.buy-sell';
   this.external = MyWallet.wallet.external;

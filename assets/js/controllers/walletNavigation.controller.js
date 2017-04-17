@@ -9,7 +9,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.userHasAccount = buyStatus.userHasAccount();
 
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
-  $scope.setBuyCtaDismissed = cta.setBuyCtaDissmissed;
+  $scope.setBuyCtaDismissed = cta.setBuyCtaDismissed;
   $scope.shouldShowSecurityWarning = cta.shouldShowSecurityWarning;
   $scope.setSecurityWarningDismissed = cta.setSecurityWarningDismissed;
   $scope.getSecurityWarningMessage = cta.getSecurityWarningMessage;

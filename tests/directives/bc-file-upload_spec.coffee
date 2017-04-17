@@ -61,3 +61,9 @@ describe "BC File Upload Directive", ->
     it "should set the webcam error state", ->
       isoScope.webcamError()
       expect(isoScope.state.webcam.error).toBe(true)
+  
+  describe "webcamStream()", ->
+
+    it "should set the webcam stream state", ->
+      isoScope.webcamStream()
+      expect(isoScope.state.webcam.stream).toBe(true)
