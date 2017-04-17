@@ -39,42 +39,47 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
     $scope.importForm.privateKey.$setValidity('isValid', valid);
   };
 
+  $scope.importSuccess = (address) => {
+    $scope.status.busy = false;
+    $scope.address = address;
+    $scope.step = 2;
+    $scope.$safeApply();
+  };
+
+  $scope.importError = (err) => {
+    $scope.status.busy = false;
+    $scope.$safeApply();
+
+    switch (err instanceof Error ? err.message : err) {
+      case 'presentInWallet':
+        $scope.importForm.privateKey.$setValidity('present', false);
+        $scope.BIP38 = false;
+        break;
+      case 'wrongBipPass':
+        $scope.importForm.bipPassphrase.$setValidity('wrong', false);
+        break;
+      case 'importError':
+        $scope.importForm.privateKey.$setValidity('check', false);
+        $scope.step = 1;
+        $scope.BIP38 = false;
+        $scope.proceedWithBip38 = undefined;
+        break;
+      default: {
+        Alerts.displayError('UNKNOWN_ERROR');
+      }
+    }
+  };
+
+  $scope.importCancel = () => {
+    $scope.status.busy = false;
+    $scope.$safeApply();
+  };
+
   $scope.import = () => {
     $scope.status.busy = true;
     $scope.$safeApply();
     let addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim();
     let bip38passphrase = $scope.fields.bip38passphrase.trim();
-
-    const success = (address) => {
-      $scope.status.busy = false;
-      $scope.address = address;
-      $scope.step = 2;
-      $scope.$safeApply();
-    };
-
-    const error = (err) => {
-      $scope.status.busy = false;
-      $scope.$safeApply();
-
-      switch (err instanceof Error ? err.message : err) {
-        case 'presentInWallet':
-          $scope.importForm.privateKey.$setValidity('present', false);
-          $scope.BIP38 = false;
-          break;
-        case 'wrongBipPass':
-          $scope.importForm.bipPassphrase.$setValidity('wrong', false);
-          break;
-        case 'importError':
-          $scope.importForm.privateKey.$setValidity('check', false);
-          $scope.step = 1;
-          $scope.BIP38 = false;
-          $scope.proceedWithBip38 = undefined;
-          break;
-        default: {
-          Alerts.displayError('UNKNOWN_ERROR');
-        }
-      }
-    };
 
     const needsBipPassphrase = (proceed) => {
       $scope.status.busy = false;
@@ -82,13 +87,14 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
       $timeout(() => { $scope.BIP38 = true; });
     };
 
-    const cancel = () => {
-      $scope.status.busy = false;
-      $scope.$safeApply();
-    };
-
-    const attemptImport = Wallet.addAddressOrPrivateKey.bind(null,
-      addressOrPrivateKey, needsBipPassphrase, success, error, cancel);
+    const attemptImport = Wallet.addAddressOrPrivateKey.bind(
+      null,
+      addressOrPrivateKey,
+      needsBipPassphrase,
+      $scope.importSuccess,
+      $scope.importError,
+      $scope.importCancel
+    );
 
     $timeout(() => {
       if (!$scope.BIP38) {
