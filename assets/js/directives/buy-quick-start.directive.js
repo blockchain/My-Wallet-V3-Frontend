@@ -1,8 +1,6 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-const ONE_DAY_MS = 86400000;
-
 buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
 
 function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, modals) {
@@ -20,7 +18,8 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       modalOpen: '=',
       transaction: '=',
       currencySymbol: '=',
-      changeCurrency: '&'
+      changeCurrency: '&',
+      getDays: '&'
     },
     templateUrl: 'templates/buy-quick-start.pug',
     link: link
@@ -32,9 +31,11 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.status = {ready: true};
     scope.currencies = currency.coinifyCurrencies;
     scope.format = currency.formatCurrencyForView;
+    scope.inMobileBuy = $rootScope.inMobileBuy;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
-    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state;
+    scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
+    scope.isPendingSellTrade = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium === 'blockchain';
 
     scope.getExchangeRate = () => {
       stopFetchingQuote();
@@ -90,12 +91,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.cancelTrade = () => {
       scope.disabled = true;
       buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
-    };
-
-    scope.getDays = () => {
-      let profile = buySell.getExchange().profile;
-      let verifyDate = profile && profile.canTradeAfter;
-      return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
     };
 
     scope.getExchangeRate();

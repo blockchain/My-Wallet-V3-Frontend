@@ -4,12 +4,12 @@
       a(ui-sref="wallet.common.home")
         i.icon-home
         span(translate="HOME")
-    li.scroll-parent.header(ui-sref-active="current")
+    li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
       a(ui-sref="wallet.common.transactions")
         i.icon-tx
         span(translate="MY_TRANSACTIONS")
     // Don't forget to update controllers/buySell.controller.js
-    li.header(ui-sref-active="current" ng-show="canBuy || shouldShowInviteForm")
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
         active-when="shouldShowBuyCta() && !shouldShowInviteForm"
         on-dismiss="setBuyCtaDismissed()"
@@ -21,11 +21,11 @@
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
         i.icon-bitcoin
-        span(translate="BUY_BITCOIN")
+        span(translate="BUY_SELL_BITCOIN")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
         i.icon-bitcoin
-        span(translate="BUY_BITCOIN")
+        span(translate="BUY_SELL_BITCOIN")
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(

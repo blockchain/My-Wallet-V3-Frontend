@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
 
   $scope.openSfoxSignup = (quote) => {
@@ -40,16 +40,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.inspectTrade = modals.openTradeSummary;
 
-  $scope.tabs = ['BUY_BITCOIN', /* 'SELL_BITCOIN', */ 'ORDER_HISTORY'];
-  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
-
-  $scope.selectTab = (tab) => {
-    $scope.selectedTab = $scope.selectedTab ? tab : null;
-  };
-
-  $scope.moveTab = (offset) => (event) => {
-    let nextTab = $scope.tabs[$scope.tabs.indexOf($scope.selectedTab) + offset];
-    if (nextTab) $scope.selectTab(nextTab);
+  $scope.tabs = {
+    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
+    options: ['BUY_BITCOIN', 'ORDER_HISTORY'],
+    select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
   $scope.account = accounts[0];
@@ -57,12 +51,13 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {
-    $scope.selectTab('ORDER_HISTORY');
+    $scope.tabs.select('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
+    buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
   };
 
   $scope.buyError = () => {
-    Alerts.displayError('Error connecting to our exchange partner');
+    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
 }

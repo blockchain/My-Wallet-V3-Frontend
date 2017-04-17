@@ -51,6 +51,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
+  let loadWalletModule = ($ocLazyLoad) => (
+    $ocLazyLoad.load('walletLazyLoad')
+  );
+
   $stateProvider
     .state('wallet', {
       views: {
@@ -60,13 +64,29 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
-        }
+        loadWalletModule
       }
     })
     .state('wallet.common', {
       views: commonViews
+    });
+
+  $stateProvider
+    .state('intermediate', {
+      url: '/intermediate',
+      views: {
+        body: {
+          template: '<blocket-loading loading="true"></blocket-loading>',
+          controller (buyMobile, Wallet) {
+            if (!Wallet.status.isLoggedIn) {
+              buyMobile.callMobileInterface(buyMobile.FRONTEND_INITIALIZED);
+            }
+          }
+        }
+      },
+      resolve: {
+        loadWalletModule
+      }
     });
 
   $stateProvider
@@ -86,9 +106,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
-        }
+        loadWalletModule
       }
     })
     .state('public.login-no-uid', {
@@ -296,7 +314,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.pug',
       controller: 'BuySellCtrl',
-      params: { countryCode: null },
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
       resolve: {
         options (Options) { return Options.get(); }
       }
@@ -309,16 +327,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet, sfox) {
+        // Using Options.get is a hack to prevent route error while waiting for sfox api key
+        _loadExchangeData ($q, MyWallet, sfox, Options) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? sfox.fetchExchangeData(exchange)
+            ? Options.get().then(() => sfox.fetchExchangeData(exchange))
             : $q.resolve();
         },
-        accounts ($q, MyWallet) {
+        accounts ($q, MyWallet, Options) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.hasAccount
-            ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+            ? Options.get().then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
             : $q.resolve([]);
         },
         options (Options) { return Options.get(); },
@@ -387,17 +406,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         settings: {
           templateUrl: 'partials/settings/addresses.pug',
           controller: 'SettingsAddressesCtrl'
-        }
-      },
-      resolve: {
-        paymentRequests: ($stateParams, $q, $injector) => {
-          try {
-            let Wallet = $injector.get('Wallet');
-            let index = parseInt($stateParams.account, 10);
-            return Wallet.getPendingPayments(index).catch(() => $q.reject('LOAD_ADDR_ERR'));
-          } catch (e) {
-            return $q.resolve([]);
-          }
         }
       }
     })

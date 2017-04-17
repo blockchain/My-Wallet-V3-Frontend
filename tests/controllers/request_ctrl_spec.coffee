@@ -42,6 +42,7 @@ describe "RequestCtrl", ->
 
       currency.conversions.EUR = { conversion: 400000 }
 
+      $rootScope.rootURL = 'https://blockchain.info/'
       scope = $rootScope.$new()
       template = $templateCache.get('partials/request.pug')
 
@@ -53,23 +54,17 @@ describe "RequestCtrl", ->
         focus: false,
         hasLegacyAddress: true
 
-      scope.model = { fields: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
+      scope.model = { state: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} }
       $compile(template)(scope)
 
       scope.$digest()
 
-      scope.fields.amount = '1'
+      scope.state.amount = '1'
       scope.$apply()
 
       return
 
     return
-
-  it "should toggle between advanced (customize) and regular receive", ->
-    scope.advancedReceive()
-    expect(scope.advanced).toBe(true)
-    scope.regularReceive()
-    expect(scope.advanced).toBe(false)
 
   describe "destinations", ->
     it "should include accounts",  ->
@@ -117,82 +112,84 @@ describe "RequestCtrl", ->
       expect(foundAccount).toBe(true)
       expect(foundLegacyAddress).toBe(true)
 
-    it "should close", inject((Alerts) ->
-      spyOn(Alerts, "clear")
-      scope.done()
-      expect(Alerts.clear).toHaveBeenCalled()
-    )
+  describe "paymentRequestURL", ->
 
-    it "should show a payment request address when legacy address is selected", inject(()->
-      scope.fields.to = scope.legacyAddresses()[0]
+    it "should use the latest currency", ->
+      scope.state.to = scope.legacyAddresses()[0]
+      scope.state.amountType = 'amount_local'
+      scope.state.baseCurr = scope.settings.currency
+      scope.state.amount = 10000000
+      
+      expect(scope.paymentRequestURL()).toContain("USD")
+    
+    it "should show a payment URL when legacy address is selected", ->
+      scope.state.to = scope.legacyAddresses()[0]
       scope.$digest()
-      expect(scope.paymentRequestAddress()).toBe(scope.fields.to.address)
-    )
-
-    describe "showPaymentRequestURL", ->
-      it "should be set as false initially", ->
-        expect(scope.showPaymentRequestURL).toBe(false);
-
-    describe "paymentRequestURL", ->
-
-      it "should show a payment URL when legacy address is selected", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.$digest()
-        expect(scope.paymentRequestURL()).toBeDefined()
-        expect(scope.paymentRequestURL()).toContain("bitcoin:")
+      expect(scope.paymentRequestURL()).toBeDefined()
+      expect(scope.paymentRequestURL()).toContain("payment_request")
 
 
-      it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.fields.amount = 10000000
-        scope.$digest()
-        expect(scope.paymentRequestURL()).toBeDefined()
-        expect(scope.paymentRequestURL()).toContain("amount=0.1")
+    it "should show a payment URL with amount when legacy address is selected and amount > 0", ->
+      scope.state.to = scope.legacyAddresses()[0]
+      scope.state.amountType = 'amount_local'
+      scope.state.amount = 10000000
+      scope.$digest()
+      expect(scope.paymentRequestURL()).toBeDefined()
+      expect(scope.paymentRequestURL()).toContain("amount_local")
 
-      it "should not have amount argument in URL if amount is zero, null or empty", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.fields.amount = "0"
-        scope.$digest()
-        expect(scope.paymentRequestURL()).toBeDefined()
-        expect(scope.paymentRequestURL()).not.toContain("amount=")
+    it "should not have amount argument in URL if amount is zero, null or empty", ->
+      scope.state.to = scope.legacyAddresses()[0]
+      scope.state.amount = null
+      scope.$digest()
+      expect(scope.paymentRequestURL()).toBeDefined()
+      expect(scope.paymentRequestURL()).not.toContain("amount_local=")
 
-        scope.fields.amount = null
-        scope.$digest()
-        expect(scope.paymentRequestURL()).not.toContain("amount=")
+      scope.state.amount = null
+      scope.$digest()
+      expect(scope.paymentRequestURL()).not.toContain("amount_local=")
 
-        scope.fields.amount = ""
-        scope.$digest()
-        expect(scope.paymentRequestURL()).not.toContain("amount=")
+      scope.state.amount = ""
+      scope.$digest()
+      expect(scope.paymentRequestURL()).not.toContain("amount_local=")
 
-      it "should generate a valid bitcoin url", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.fields.amount = 10000000
-        scope.fields.label = "Label Label Label"
-        scope.$digest()
+    it "should generate a valid payment request url", ->
+      scope.state.to = scope.legacyAddresses()[0]
+      scope.state.label = "Label Label Label"
+      scope.state.amount = null
+      scope.$digest()
 
-        expect(scope.paymentRequestURL()).toBe('bitcoin:1asdf?amount=0.1&message=Label%20Label%20Label')
+      expect(scope.paymentRequestURL()).toBe('https://blockchain.info/payment_request?address=1asdf&message=Label%20Label%20Label')
 
-      it "should generate a valid bitcoin url with only an amount and address", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.fields.amount = 10000000
-        scope.$digest()
+    it "should contain amountType", ->
+      scope.state.to = scope.legacyAddresses()[0]
+      scope.state.label = "Label Label Label"
+      scope.state.amountType = 'amount_local'
+      scope.state.amount = 100
+      scope.$digest()
 
-        expect(scope.paymentRequestURL()).not.toContain('&')
-        expect(scope.paymentRequestURL()).toBe('bitcoin:1asdf?amount=0.1')
+      expect(scope.paymentRequestURL()).toContain('amount_local=')
+    
+    it "should generate a bitcoin url with a message param instead of a label", ->
+      scope.state.to = scope.legacyAddresses()[0]
+      scope.state.label = "This is a message, though we save it as a label"
+      scope.$digest()
 
-      it "should generate a valid bitcoin url with only a label and address", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.fields.label = "Label Label Label"
-        scope.fields.amount = 0
-        scope.$digest()
-
-        expect(scope.paymentRequestURL()).not.toContain('&')
-        expect(scope.paymentRequestURL()).toBe("bitcoin:1asdf?message=Label%20Label%20Label")
-
-      it "should generate a bitcoin url with a message param instead of a label", ->
-        scope.fields.to = scope.legacyAddresses()[0]
-        scope.fields.label = "This is a message, though we save it as a label"
-        scope.$digest()
-
-        expect(scope.paymentRequestURL()).toContain('message')
-        expect(scope.paymentRequestURL()).not.toContain('label=')
+      expect(scope.paymentRequestURL()).toContain('message')
+      expect(scope.paymentRequestURL()).not.toContain('label=')
+  
+  describe "resetCopy()", ->
+    
+    it "should reset copy buttons", ->
+      scope.state.isAddressCopied = true
+      scope.state.isBitcoinURICopied = true
+      scope.state.isPaymentRequestCopied = true
+      scope.resetCopy()
+      expect(scope.state.isAddressCopied).toBe(false)
+      expect(scope.state.isBitcoinURICopied).toBe(false)
+      expect(scope.state.isPaymentRequestCopied).toBe(false)
+      
+  describe "isToImportedAddress", ->
+    
+    it "should be true if destination is imported address", ->
+      scope.state.to = scope.destinations[2];
+      expect(scope.isToImportedAddress()).toBe(true)

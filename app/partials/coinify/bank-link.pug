@@ -1,0 +1,23 @@
+.bank-link
+  span.type-h5.f-14.flex-start.pb-5(translate="SELL.WHERE_FUNDS_SENT" ng-hide="hideWhenNoAccounts")
+  span.type-h5.f-14.flex-start.pvl(translate="SELL.PLEASE_ADD_ACCOUNT" ng-show="hideWhenNoAccounts")
+  .flex-row.flex-between.mt-15.mb-10(ng-hide="hideWhenNoAccounts")
+    span.type-lbl.colon(translate="SELL.SELECT_ACCOUNT")
+    a.underline(ng-show="selecting" ng-click="bankLinkEdit()" translate="EDIT_NOTE")
+    a.underline(ng-show="!selecting" ng-click="bankLinkEdit()" translate="SELL.DONE")
+  form(name="bankLinkForm" novalidate)
+    .flex-column
+      .flex-row.flex-center.border-top.border-right.border-left.plvl(ng-repeat="account in bankAccounts")
+        label.pv-25.mbn.pointer.width-100.flex-row(for="{{account.id}}")
+          div.width-10
+            input(ng-show="selecting" type="radio" name="bankRadios" ng-value="bankAccounts[$index]" ng-model="$parent.$parent.selectedBankAccount" id="{{account.id}}")
+            i.ti-trash.pointer.state-danger-text.f-16(ng-hide="selecting" ng-click="deleteAccount(account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
+          div.width-90
+            img(src="img/bank.png")
+            span.pv-25.em-300.pl-20 {{ account.account.number }}
+      .flex-row.flex-center.border.plvl(ng-show="selecting")
+        input(type="radio" name="bankRadios" ng-click="addBankAccount()")
+        a.pal(ng-click="addBankAccount()" translate="SELL.ADD_NEW_ACCOUNT")
+      .flex-row.flex-center.border.plvl.opacity-5(ng-hide="selecting")
+        input.disabled(type="radio" disabled)
+        span.pal(translate="SELL.ADD_NEW_ACCOUNT")

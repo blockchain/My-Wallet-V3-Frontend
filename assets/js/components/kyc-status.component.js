@@ -24,12 +24,14 @@ angular
         'rejected': { ns: 'KYC_DENIED', i: 'ti-na' },
         'manualRejected': { ns: 'KYC_DENIED', i: 'ti-na' }
       };
+
       this.getState = () => this.stateMap[this.state];
 
       this.profile = buySell.getExchange().profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
       this.getCardMax = () => {
+        if (typeof limits === 'number') return;
         let symbol = this.limits.currency && this.limits.currency.symbol;
         let amt = this.limits.card && this.limits.card.max;
         return (symbol || '€') + (amt || '300.00');

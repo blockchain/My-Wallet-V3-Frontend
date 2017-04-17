@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options) {
+function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams, modals) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -14,9 +14,6 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   $scope.walletStatus = Wallet.status;
   $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
-  $scope.tradeLimit = 5;
-  $scope.scrollTrades = () => { $scope.tradeLimit += 5; };
-
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;
     $scope.kyc = buySell.kycs[0];
@@ -27,15 +24,27 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
+    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency(undefined, true) };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
+    $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
+    $scope.sellLimits = {card: {}, bank: {}};
     $scope.state = {buy: true};
     $scope.rating = 0;
 
     $scope.buy = (trade, options) => {
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
-        buySell.openBuyView(trade, options).finally($scope.onCloseModal);
+        modals.openBuyView(trade, options).result.finally($scope.onCloseModal);
+      }
+    };
+
+    $scope.sell = (trade, options) => {
+      if (!$scope.status.modalOpen) {
+        $scope.status.modalOpen = true;
+        buySell.openSellView(trade, options).finally(() => {
+          $scope.onCloseModal();
+        });
       }
     };
 
@@ -44,6 +53,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
     $scope.$watch('settings.currency', () => {
       $scope.transaction.currency = buySell.getCurrency();
+      $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
     }, true);
 
     $scope.$watch('transaction.currency', (newVal, oldVal) => {
@@ -52,9 +62,16 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       if (newVal !== oldVal) $scope.getMaxMin();
     });
 
+    $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
+      let curr = $scope.sellTransaction.currency || null;
+      $scope.sellCurrencySymbol = currency.conversions[curr.code];
+      if (newVal !== oldVal) $scope.getMaxMin(true);
+    });
+
     if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
       $scope.status.loading = true;
       $scope.exchange = buySell.getExchange();
+      $scope.exchangeCountry = $scope.exchange._profile._country || $stateParams.countryCode;
 
       buySell.fetchProfile().then(() => {
         $scope.getMaxMin();
@@ -70,7 +87,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
         let getKYCs = buySell.getKYCs().then(() => {
           $scope.kyc = buySell.kycs[0];
-          if ($scope.exchange) {
+          if ($scope.exchange.profile) { // NOTE added .profile here
             if (+$scope.exchange.profile.level.name < 2) {
               if ($scope.kyc) {
                 buySell.pollKYC();
@@ -91,9 +108,11 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         $q.all([getTrades, getKYCs, getCurrencies]).then(() => {
           $scope.status.loading = false;
           $scope.status.disabled = false;
-        }).catch(() => {
-          $scope.status.exchangeDown = true;
         });
+      }).catch(() => {
+        $scope.status.loading = false;
+        $scope.status.exchangeDown = true;
+        $scope.$safeApply();
       });
     } else {
       $scope.status.disabled = false;
@@ -105,9 +124,24 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
         : $scope.buy($scope.kyc);
     };
 
+    $scope.openSellKyc = () => {
+      if (!$scope.kyc) {
+        buySell.triggerKYC().then(kyc => $scope.buy(kyc));
+      } else {
+        $scope.buy($scope.kyc);
+      }
+    };
+
     $scope.changeCurrency = (curr) => {
       if (curr && $scope.currencies.some(c => c.code === curr.code)) {
         $scope.transaction.currency = curr;
+      }
+    };
+
+    $scope.changeSellCurrency = (curr) => {
+      if (curr && $scope.currencies.some(c => c.code === curr.code)) {
+        $scope.sellTransaction.currency = curr;
+        $scope.sellCurrencySymbol = currency.conversions[curr.code];
       }
     };
 
@@ -127,19 +161,22 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     });
   }
 
-  $scope.getMaxMin = () => {
+  $scope.getMaxMin = (sell) => {
+    let transaction = sell ? 'sellTransaction' : 'transaction';
+    let limits = sell ? 'sellLimits' : 'limits';
+
     const calculateMin = (rate) => {
-      $scope.limits.card.min = (rate * 10).toFixed(2);
+      $scope[limits].card.min = (rate * 10).toFixed(2);
     };
 
     const calculateMax = (rate) => {
-      $scope.limits.bank.max = buySell.calculateMax(rate, 'bank').max;
-      $scope.limits.card.max = buySell.calculateMax(rate, 'card').max;
-      $scope.limits.currency = $scope.currencySymbol;
+      $scope[limits].bank.max = buySell.calculateMax(rate, 'bank').max;
+      $scope[limits].card.max = buySell.calculateMax(rate, 'card').max;
+      $scope[limits].currency = $scope.currencySymbol;
     };
 
-    buySell.getRate('EUR', $scope.transaction.currency.code).then(calculateMin);
-    buySell.getRate($scope.exchange.profile.defaultCurrency, $scope.transaction.currency.code).then(calculateMax);
+    buySell.getRate('EUR', $scope[transaction].currency.code).then(calculateMin);
+    buySell.getRate($scope.exchange.profile.defaultCurrency, $scope[transaction].currency.code).then(calculateMax);
   };
 
   $scope.getIsTradingDisabled = () => {
@@ -156,8 +193,36 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     let cannotTradeReason = profile && profile.cannotTradeReason;
 
     if (disabled) cannotTradeReason = 'disabled';
-
     return cannotTradeReason;
+  };
+
+  $scope.setSellLimits = () => {
+    if ($scope.exchange._profile) {
+      $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
+    }
+  };
+
+  const ONE_DAY_MS = 86400000;
+
+  $scope.getDays = () => {
+    let profile = buySell.getExchange().profile;
+    let verifyDate = profile && profile.canTradeAfter;
+    return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
+  };
+
+  let email = MyWallet.wallet.accountInfo.email;
+  let walletOptions = options;
+  $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, walletOptions, 'coinify');
+
+  $scope.tabs = {
+    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
+    options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
+      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
+    select (tab) {
+      this.selectedTab = this.selectedTab ? tab : null;
+      $state.params.selectedTab = this.selectedTab;
+    }
   };
 
   $rootScope.$on('fetchExchangeProfile', () => {

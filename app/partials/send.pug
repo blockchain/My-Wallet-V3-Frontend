@@ -1,9 +1,10 @@
 .modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
   .flex-center
-    img(src="img/arrow-up.png")
-    h3(ng-show="!confirmationStep && !advanced", translate="SEND_BITCOIN")
-    h3(ng-show="advanced && !confirmationStep", translate="ADVANCED_SEND")
-    h3(ng-show="confirmationStep", translate="CONFIRM")
+    h3
+      i.mr-10.icon-send
+      span(ng-show="!confirmationStep && !advanced", translate="SEND_BITCOIN")
+      span(ng-show="advanced && !confirmationStep", translate="ADVANCED_SEND")
+      span(ng-show="confirmationStep", translate="CONFIRM")
   h5(ng-show="!confirmationStep && !advanced", translate="SEND_STEP_1")
   h5(ng-show="confirmationStep", translate="SEND_STEP_2")
   h5(ng-show="advanced && !confirmationStep", translate="SEND_STEP_1_ADVANCED")
@@ -197,7 +198,7 @@
           span.account.width-50-mobile.width-60.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
           .width-50.width-50-mobile.flex-between
             span.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
-            span.security-red -
+            span.security-red -&nbsp;
               fiat.mrml(btc="getTransactionTotal(true)")
 .modal-footer.flex-between.flex-center.pal
   .flex-center

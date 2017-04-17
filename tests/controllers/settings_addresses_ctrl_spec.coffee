@@ -5,6 +5,7 @@ describe "SettingsAddressesCtrl", ->
   Wallet = undefined
   Alerts = undefined
   MyBlockchainApi = undefined
+  Labels = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -18,16 +19,15 @@ describe "SettingsAddressesCtrl", ->
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
       MyBlockchainApi = $injector.get("MyBlockchainApi")
+      Labels = $injector.get("Labels")
 
       account =
         index: 0
         receiveIndex: 3
-        receivingAddressesLabels: [{ index: 2, label: 'pending' }, { index: 1, label: 'labelled_address' }]
         receiveAddressAtIndex: (i) -> 'addr_at_index_' + i
-        setLabelForReceivingAddress: (i) ->
-        removeLabelForReceivingAddress: (i) ->
 
       Wallet.accounts = () -> [account]
+      Wallet.status = {isLoggedIn: true}
 
       MyBlockchainApi.getBalances = (addrs) ->
         response = {}
@@ -39,23 +39,20 @@ describe "SettingsAddressesCtrl", ->
         $q.resolve(response)
 
       scope = $rootScope.$new()
+
       $controller "SettingsAddressesCtrl",
         $scope: scope,
         $state: $state,
         $stateParams: { account: 0 }
         Wallet: Wallet
+        Labels: Labels
         $uibModal: modal
-        paymentRequests: [{ address: '1aaa', label: 'pending', index: 2 }]
-
 
   it "should have payment requests", ->
-    expect(scope.paymentRequests.length).toEqual(1)
+    expect(scope.addresses.length).toEqual(4)
 
-  it "should calculate total number of used addresses", ->
-    expect(scope.totalUsed).toEqual(3)
-
-  it "should create the hd label map", ->
-    expect(scope.hdLabels[1]).toEqual('labelled_address')
+  it "should calculate total number of past addresses", ->
+    expect(scope.totalPast).toEqual(4)
 
   it "should open modal to edit an account", ->
     spyOn(modal, "open")
@@ -69,16 +66,10 @@ describe "SettingsAddressesCtrl", ->
 
   describe "createAddress", ->
     it "should label the next receive address", ->
-      spyOn(Wallet, 'addAddressForAccount').and.callThrough()
+      spyOn(Labels, 'addLabel').and.callThrough()
       scope.createAddress()
-      expect(Wallet.addAddressForAccount).toHaveBeenCalledWith(scope.account)
-
-    it "should add the new address to the paymentRequests array", ->
-      expect(scope.paymentRequests.length).toEqual(1)
-      scope.createAddress()
-      scope.$digest()
-      expect(scope.paymentRequests.length).toEqual(2)
-      expect(scope.paymentRequests[1]).toEqual({ index: 3, address: 'addr_at_index_3', label: 'DEFAULT_NEW_ADDRESS_LABEL' })
+      expect(Labels.addLabel).toHaveBeenCalled()
+      expect(Labels.addLabel.calls.argsFor(0)[0]).toEqual(0)
 
   describe "removeAddressLabel", ->
     it "should prompt the user before removing the label", ->
@@ -88,18 +79,10 @@ describe "SettingsAddressesCtrl", ->
 
     it "should remove the address label", ->
       spyOn(Alerts, "confirm").and.returnValue($q.resolve())
-      spyOn(scope.account, 'removeLabelForReceivingAddress')
+      spyOn(Labels, 'removeLabel').and.callThrough()
       scope.removeAddressLabel(2, 0)
       scope.$digest()
-      expect(scope.account.removeLabelForReceivingAddress).toHaveBeenCalledWith(2)
-      expect(scope.paymentRequests.length).toEqual(0)
-
-    it "should remove the address label for a used address", ->
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve())
-      scope.usedAddresses = [{ index: 1, label: 'labelled_address' }]
-      scope.removeAddressLabel(2, 0, true)
-      scope.$digest()
-      expect(scope.usedAddresses[0].label).toEqual(null)
+      expect(Labels.removeLabel).toHaveBeenCalledWith(0, 2)
 
   describe "toggleShowPast", ->
     it "should prompt the user to confirm when showing past addresses", ->
@@ -114,40 +97,17 @@ describe "SettingsAddressesCtrl", ->
       scope.toggleShowPast()
       expect(scope.showPast).toEqual(false)
 
-  describe "setAddresses", ->
-    it "should set addresses array to generated addresses for page", ->
-      spyOn(scope, 'generatePage').and.returnValue([])
-      scope.setAddresses(1)
-      expect(scope.generatePage).toHaveBeenCalledWith(1)
-      expect(scope.usedAddresses).toEqual([])
-
-  describe "generatePage", ->
+  describe "setPastAddressesPage", ->
     beforeEach ->
-      spyOn(MyBlockchainApi, 'getBalances').and.callThrough()
+      spyOn(Labels, 'fetchBalance').and.callThrough()
 
-    it "should get the first page of addresses", ->
-      page = scope.generatePage(1)
-      expect(page.length).toEqual(3)
-      expect(page[0].index).toEqual(3)
+    it "should fetch the balance for the first page of addresses", ->
+      scope.addresses = Labels.all(0)
 
-    it "should set the tx count and balance of each address", ->
-      page = scope.generatePage(1)
-      scope.$digest()
-      expect(MyBlockchainApi.getBalances).toHaveBeenCalled()
-      expect(page[0].ntxs).toEqual(1)
-      expect(page[0].balance).toEqual(1000)
-
-  describe "getIndexesForPage", ->
-    it "should get the unused address indexes", ->
-      indexes = scope.getIndexesForPage(1)
-      expect(indexes).toEqual([3, 1, 0])
-
-    it "should get the unused address indexes for different page length", ->
-      scope.pageLength = 2
-      indexes = scope.getIndexesForPage(1)
-      expect(indexes).toEqual([3, 1])
-      indexes = scope.getIndexesForPage(2)
-      expect(indexes).toEqual([0])
+      expectedFirstPage = [scope.addresses[3]]
+      scope.pageLength = 1
+      scope.setPastAddressesPage(1)
+      expect(Labels.fetchBalance).toHaveBeenCalledWith(expectedFirstPage)
 
   it "should redirect to accounts page if account is archived", inject(($state) ->
     spyOn($state, "go").and.callThrough()

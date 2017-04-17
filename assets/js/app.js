@@ -1,5 +1,10 @@
 'use strict';
 
+let debugLog = [];
+let log = console.log.bind(console);
+console.log = (...args) => { debugLog.push(args); log(...args); };
+console.replay = () => debugLog.forEach(l => log(...l));
+
 if (browserDetection().browser === 'ie' && browserDetection().version < 11) {
   if (confirm("Your browser is out of date! It looks like you're using an old version of Internet Explorer. For the best Blockchain experience, please update your browser or hit cancel to return to our homepage.")) {
     window.location = 'http://browsehappy.com/';
@@ -79,7 +84,7 @@ angular.module('walletApp', modules)
   { title: 'TRANSFER_ALL', desc: 'TRANSFER_ALL_EXPLAIN', date: 1461556800000 },
   { title: 'DEV_THEMES', desc: 'DEV_THEMES_EXPLAIN', date: 1474862400000 }
 ])
-.run(($rootScope, $uibModal, $state, $q, $timeout, $location, languages) => {
+.run(($rootScope, $window, $uibModal, $state, $q, $timeout, $location, languages) => {
   $rootScope.$safeApply = (scope = $rootScope, before) => {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
@@ -154,4 +159,16 @@ angular.module('walletApp', modules)
     this.lock = () => { this.locked = true; };
     this.free = () => { this.locked = false; };
   };
+
+  let setSizes = (width) => {
+    let size = $rootScope.size = {};
+    size.xs = width < 768;
+    size.sm = width >= 768 && width < 992;
+    size.md = width >= 992 && width < 1200;
+    size.lg = width >= 1200;
+    $rootScope.$safeApply();
+  };
+
+  setSizes($window.innerWidth);
+  angular.element($window).bind('resize', () => setSizes($window.innerWidth));
 });

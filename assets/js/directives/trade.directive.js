@@ -14,6 +14,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       disabled: '=',
       trade: '=',
       buy: '=',
+      sell: '=',
       usa: '='
     },
     templateUrl: 'templates/trade.pug',
@@ -36,6 +37,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.status = {};
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
+    scope.dateFormat = scope.$root.size.xs ? 'MMM d' : scope.dateFormat;
 
     scope.cancel = () => {
       scope.disabled = true;
@@ -47,6 +49,11 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
       scope.buy(t);
     };
 
+    scope.triggerSell = () => {
+      let t = scope.trade;
+      scope.sell(t);
+    };
+
     scope.updateBTCExpected = () => {
       scope.status.gettingQuote = true;
 
@@ -55,7 +62,11 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
         scope.btcExpected = quote;
       };
 
-      scope.trade.btcExpected().then(success);
+      const error = (e) => {
+        scope.status.gettingQuote = false;
+      };
+
+      scope.trade.btcExpected().then(success).catch(error);
     };
 
     scope.logDetails = (trade) => {

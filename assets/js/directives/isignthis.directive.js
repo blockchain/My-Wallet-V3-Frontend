@@ -160,6 +160,7 @@ function isignthis ($sce, Options) {
       };
 
       var setState = (state) => {
+        console.log('setState', state);
         switch (state) {
           case 'SUCCESS.MANUAL_ACCEPTED':
           case 'SUCCESS.COMPLETE':

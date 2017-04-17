@@ -7,10 +7,10 @@ div
       span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="toggleEmail()")
   form.clearfix(name="emailForm" ng-show="editEmail || rejectedEmail")
     bc-async-input(type="email"
-                   is-required 
-                   ng-model="user.email" 
-                   on-cancel="toggleEmail" 
-                   on-save="changeEmail" 
-                   action-title="'CHANGE' | translate" 
-                   inline 
+                   is-required
+                   ng-model="user.email"
+                   on-cancel="toggleEmail"
+                   on-save="changeEmail"
+                   action-title="'CHANGE' | translate"
+                   inline
                    editing="true")

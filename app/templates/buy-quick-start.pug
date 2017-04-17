@@ -1,11 +1,10 @@
-.quick-start
-  span.f-20.em-500(translate="BUY_BITCOIN")
-  .mt-15.pt-30.pb-30.pl-15.pr-15.phm.border
+.quick-start.col-md-6.col-sm-12.col-xs-12.pln.prn
+  .pt-30.pb-30.border-desktop(ng-class="{'ph-15': !inMobileBuy}")
     form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && triggerBuy()" novalidate)
       .flex-row.flex-between
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
-          helper-button(ng-disabled="false" ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
+          helper-button.mbs(ng-disabled="false" ng-show="limits.card.min && limits.card.max" content="MAX_MIN_HELPER" values="{cardMax: limits.card.max, min: limits.card.min, bankMax: limits.bank.max, symbol: currencySymbol.symbol}")
         .flex-center(ng-show="exchangeRate.fiat")
           span.type-sm.em-500 1 BTC = {{currencySymbol.symbol}}{{ exchangeRate.fiat }}
           helper-button(content="EXCHANGE_RATE_HELPER")
@@ -32,7 +31,7 @@
                 span.caret
               ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
                 li(ng-repeat="currency in currencies"
-                   role="menuitem" 
+                   role="menuitem"
                    ng-click="changeCurrency({currency: currency}); getExchangeRate();"
                    ng-class="{active: isCurrencySelected(currency)}")
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
@@ -52,7 +51,8 @@
               placeholder="{{placeholder}}"
               required)
             div.input-group-btn
-              button.btn.btn-default.brdrn BTC
+              button.btn.btn-default.brdrn
+                span.btc BTC
         .mts.pos-rel(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
@@ -62,21 +62,23 @@
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'after_first_trade'")
           span.pos-abs.type-sm
             span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: currencySymbol.symbol, amount: 0}")
-            span  
+            span &nbsp;
             a(popup
               popup-days="{{getDays()}}"
               popup-name="coinify-verification"
               translate="WHY")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
-          span.pos-abs.type-sm(ng-show="isPendingTradeState('awaiting_transfer_in')")
+          span.pos-abs.type-sm(ng-show="isPendingSellTrade('awaiting_transfer_in')")
+            span.state-danger-text(translate="SELL.WAIT_FOR_TRADE_COMPLETE")
+          span.pos-abs.type-sm(ng-hide="isPendingSellTrade('awaiting_transfer_in') || isPendingTradeState('reviewing')")
             a(ng-click="openPendingTrade()" translate="FINISH")
-            | 
+            | &nbsp;
             span(translate="OR")
-            | 
+            | &nbsp;
             a(ng-click="cancelTrade()" translate="CANCEL")
-            | 
+            | &nbsp;
             span(translate="PURCHASE_PENDING")
-            | 
+            | &nbsp;
             span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
             | .
           span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")

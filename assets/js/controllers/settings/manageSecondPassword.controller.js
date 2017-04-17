@@ -17,8 +17,6 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
   $scope.validateSecondPassword = Wallet.validateSecondPassword;
 
-  $scope.userHasExchangeAcct = MyWallet.wallet.external &&
-                               MyWallet.wallet.external.hasExchangeAccount;
   $scope.reset = () => {
     $scope.fields = {
       password: '',

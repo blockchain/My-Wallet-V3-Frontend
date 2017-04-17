@@ -56,8 +56,9 @@ describe "CoinifySummaryController", ->
       }
 
   getControllerScope = (params = {}) ->
-    scope = $rootScope.$new()
-    scope.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: {symbol: 'E', code: 'EUR'}};
+    scope = $rootScope.$new().$new().$new()
+    scope.$parent.fields = {}
+    scope.$parent.transaction = {fiat: 0, btc: 0, fee: 0, total: 0, currency: {symbol: 'E', code: 'EUR'}};
     $controller "CoinifySummaryController",
       $scope: scope
       exchange: {}

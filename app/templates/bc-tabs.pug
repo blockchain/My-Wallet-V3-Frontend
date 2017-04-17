@@ -1,0 +1,30 @@
+.filter-bar.auto.flex-center.flex-between.flex-start-mobile(
+  capture-key="{'ArrowLeft': $ctrl.moveTab(-1), 'ArrowRight': $ctrl.moveTab(1)}")
+
+  .filter-buttons.pvl.hidden-xs
+    a.black.em-400.upper.f-16(
+      ng-repeat="tab in $ctrl.tabOptions"
+      ng-class="{active: $ctrl.tab === tab, mrn: $last, spaced: !$last}"
+      ng-click="$ctrl.selectTab(tab)"
+      translate="{{tab}}")
+    span.badge.mbs(ng-if="$ctrl.badge > 0") {{$ctrl.badge}}
+
+  .filter-buttons.flex-grow.visible-xs
+    .pvl(
+      ng-repeat="tab in $ctrl.tabOptions"
+      ng-click="$ctrl.selectTab(tab)"
+      ng-show="$ctrl.tab === tab || $ctrl.state.expanded")
+      a.black.em-400.upper.f-16(
+        ng-class="{active: $ctrl.tab === tab}"
+        translate="{{tab}}")
+      span.badge.mbs(ng-if="$last && $ctrl.badge > 0") {{$ctrl.badge}}
+
+  .pvl.mts.f-12.visible-xs(ng-click="$ctrl.toggleExpanded()")
+    i.icon-up_arrow(ng-show="$ctrl.state.expanded")
+    i.icon-down_arrow(ng-hide="$ctrl.state.expanded")
+
+  ng-transclude
+
+.filter-bar.backdrop.fade(
+  ng-show="$ctrl.state.expanded"
+  ng-click="$ctrl.state.expanded = false")

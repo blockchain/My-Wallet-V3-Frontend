@@ -26,7 +26,17 @@ describe "SfoxCheckoutController", ->
       MyWalletHelpers = $injector.get('MyWalletHelpers')
       buySell = $injector.get('buySell')
 
-      MyWallet.wallet = {}
+      MyWallet.wallet = {
+        accountInfo: {
+          email: 'random'
+        },
+        external: {
+          coinify: {
+            profile: {}
+          }
+          shouldDisplaySellTab: () -> true
+        }
+      }
       Wallet.accounts = () -> []
       Wallet.settings = {
         currency: {
@@ -34,10 +44,6 @@ describe "SfoxCheckoutController", ->
         }
       }
       MyWalletHelpers.exponentialBackoff = () -> {}
-
-      MyWallet.wallet.external =
-        coinify:
-          profile: {}
 
       currency = $injector.get("currency")
       currency.conversions["USD"] = { conversion: 2 }
@@ -102,3 +108,11 @@ describe "SfoxCheckoutController", ->
 
     it "should set modalOpen to false", ->
       expect(scope.status.modalOpen).toBe(false);
+
+  describe "getDays()", ->
+    it "should calculate the correct number of days", ->
+      scope = getControllerScope()
+      spyOn(Date, "now").and.returnValue(new Date('12/20/2016'))
+      spyOn(buySell, "getExchange").and.returnValue
+        profile: { canTradeAfter: new Date('12/21/2016') }
+      expect(scope.getDays()).toBe(1);

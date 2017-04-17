@@ -1,42 +1,44 @@
-h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
-.clearfix(role="form",name="form",novalidate)  
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="WalletId")
-    .col-sm-12.col-md-6
-      label.em-400.type-h5(translate="UID")
-      p.alt-font.f-16.em-300.hidden-xs
-        span(translate="UID_EXPLAIN")
-        span 
-        span.security-red(translate="UID_EXPLAIN_WARN")
-    .col-sm-12.col-md-6.setting-result.flex-column
-      label.em-400.type-h5(ng-bind="guid")
+.settings-category
+  h5.well.em-400.type-h5.hidden-xs(translate="WALLET_INFO_EXPLAIN")
+  .clearfix(role="form" name="form" novalidate)
+    .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="WalletId")
+      .col-sm-12.col-md-6
+        label.em-400.type-h5(translate="UID")
+        p.alt-font.f-16.em-300.hidden-xs
+          span(translate="UID_EXPLAIN")
+          span &nbsp;
+          span.security-red(translate="UID_EXPLAIN_WARN")
+      .col-sm-12.col-md-6.setting-result.flex-column
+        label.em-400.type-h5(ng-bind="guid")
 
-  .form-group.mbn.border-bottom.clearfix.pvl(ng-if="alias" data-preflight-tag="WalletAlias")
-    .col-sm-12.col-md-6
-      label.em-400.type-h5(translate="ALIAS")
-      p.alt-font.f-16.em-300.hidden-xs(translate="ALIAS_EXPLAIN")
-    .col-sm-12.col-md-6.setting-result
-      p.em-400.type-h5.mbm(ng-bind="alias")
-      button.button-primary(ng-click="removeAlias()" ladda-translate="REMOVE" ui-ladda="loading.alias" ng-disabled="loading.alias" data-style="expand-right")
+    .form-group.mbn.border-bottom.clearfix.pvl(ng-if="alias" data-preflight-tag="WalletAlias")
+      .col-sm-12.col-md-6
+        label.em-400.type-h5(translate="ALIAS")
+        p.alt-font.f-16.em-300.hidden-xs(translate="ALIAS_EXPLAIN")
+      .col-sm-12.col-md-6.setting-result
+        p.em-400.type-h5.mbm(ng-bind="alias")
+        button.button-primary(ng-click="removeAlias()" ladda-translate="REMOVE" ui-ladda="loading.alias" ng-disabled="loading.alias" data-style="expand-right")
 
-  .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="PairingCode")
-    .col-sm-12.col-md-6
-      label.em-400.type-h5(translate="PAIRING_CODE")
-      p.alt-font.f-16.em-300.hidden-xs
-        span(translate="PAIRING_CODE_EXPLAIN")
-        | 
-        span(translate="DOWNLOAD_THE")
-        | 
-        a(translate="IOS_APP_HERE" href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank" rel="noopener noreferrer")
-        | 
-        span(translate="AND_THE")  
-        | 
-        a(translate="ANDROID_APP_HERE" href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank" rel="noopener noreferrer")
-        span .
+    .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="PairingCode")
+      .col-sm-12.col-md-6
+        label.em-400.type-h5(translate="PAIRING_CODE")
+        p.alt-font.f-16.em-300.hidden-xs
+          span(translate="PAIRING_CODE_EXPLAIN")
+          | &nbsp;
+          span(translate="DOWNLOAD_THE")
+          | &nbsp;
+          a(translate="IOS_APP_HERE" href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank" rel="noopener noreferrer")
+          | &nbsp;
+          span(translate="AND_THE")
+          | &nbsp;
+          a(translate="ANDROID_APP_HERE" href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank" rel="noopener noreferrer")
+          span .&nbsp;
+          span.security-red(translate="PAIRING_CODE_EXPLAIN_WARN")
 
-    .col-sm-12.col-md-6.setting-result
-      button.button-primary(ng-click="showPairingCode()" ng-hide="pairingCode" ladda-translate="SHOW_PAIRING_CODE" ui-ladda="loading.code" ng-disabled="loading.code" data-style="expand-right")
-      button.button-primary(ng-click="hidePairingCode()" ng-show="pairingCode" translate="HIDE_PAIRING_CODE")
+      .col-sm-12.col-md-6.setting-result
+        button.button-primary(ng-click="showPairingCode()" ng-hide="pairingCode" ladda-translate="SHOW_PAIRING_CODE" ui-ladda="loading.code" ng-disabled="loading.code" data-style="expand-right")
+        button.button-primary(ng-click="hidePairingCode()" ng-show="pairingCode" translate="HIDE_PAIRING_CODE")
 
-      .qr.ptl.mtl
-        span(ng-show="pairingCode")
-          qr(text="pairingCode" size="180" image="true")
+        .qr.ptl.mtl
+          span(ng-show="pairingCode")
+            qr(text="pairingCode" size="180" image="true")

@@ -2,75 +2,86 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $state, $stateParams, $q, $sce, Wallet, MyWalletHelpers, MyBlockchainApi, Alerts, paymentRequests, $uibModal) {
-  $scope.paymentRequests = paymentRequests;
+function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, MyBlockchainApi, Alerts, $uibModal) {
+  if (!Wallet.status.isLoggedIn) {
+    console.error('Controller depends on being logged in');
+    return;
+  }
+
+  let accountIndex = parseInt($stateParams.account, 10);
+
+  $scope.presentFilter = (address) => address && address.label !== null && address.used === false;
+
+  $scope.pastAddressesPage = (page, pageLength) => {
+    let pastFilter = (address) => address && (address.label === null || address.used === true);
+
+    return $scope.addresses.filter(pastFilter)
+                           .reverse().slice((page - 1) * pageLength, page * pageLength);
+  };
+
+  $scope.addresses = Labels.all(accountIndex);
+
+  $scope.loading = true;
+
+  Labels.checkIfUsed(accountIndex).then(() => {
+    $scope.loading = false;
+    $rootScope.$safeApply();
+  });
+
   $scope.account = Wallet.accounts()[$stateParams.account];
+
   $scope.receiveIndex = $scope.account.receiveIndex;
 
   $scope.page = 1;
   $scope.pageLength = 20;
-  $scope.totalUsed = $scope.receiveIndex - $scope.paymentRequests.length + 1;
-  $scope.hdLabels = $scope.account.receivingAddressesLabels.reduce((acc, address) => { acc[address.index] = address.label; return acc; }, {});
+  let totalLabeled = $scope.addresses.filter($scope.presentFilter).length;
+  $scope.totalPast = $scope.addresses.length - totalLabeled;
 
   $scope.createAddress = () => {
-    Wallet.addAddressForAccount($scope.account)
-      .then(address => $scope.paymentRequests.push(address))
-      .catch(Alerts.displayError);
+    $scope.createAddressInProgress = true;
+
+    $q.resolve(Labels.addLabel(accountIndex, 15, $translate.instant('DEFAULT_NEW_ADDRESS_LABEL')))
+      .catch((error) => {
+        Alerts.displayError(error); // Promise is intentionally not returned
+      })
+      .then(() => {
+        $scope.createAddressInProgress = false;
+      });
   };
 
-  $scope.removeAddressLabel = (addressIndex, i, used) => {
+  $scope.removeAddressLabel = (address) => {
     Alerts.confirm('CONFIRM_REMOVE_LABEL').then(() => {
-      $scope.account.removeLabelForReceivingAddress(addressIndex);
-      used
-        ? $scope.usedAddresses[i].label = null
-        : $scope.paymentRequests.splice(i, 1);
-    });
-  };
-
-  $scope.toggleShowPast = () => $scope.showPast
-    ? $scope.showPast = false
-    : Alerts.confirm('CONFIRM_SHOW_PAST').then(() => $scope.showPast = true);
-
-  $scope.setAddresses = (page) => {
-    $scope.usedAddresses = $scope.generatePage(page);
-  };
-
-  $scope.generatePage = MyWalletHelpers.memoize((page) => {
-    let addresses = $scope.getIndexesForPage(page).map(index => ({
-      index,
-      address: Wallet.getReceiveAddress($scope.account.index, index),
-      label: $scope.hdLabels[index]
-    }));
-    if (addresses.length === 0) return;
-    $q.resolve(
-      MyBlockchainApi.getBalances(addresses.map(a => a.address))
-    ).then((data) => {
-      addresses.forEach((a) => {
-        if (!data[a.address]) return;
-        a.balance = data[a.address].final_balance;
-        a.ntxs = data[a.address].n_tx;
+      Labels.removeLabel(accountIndex, address).then().then(() => {
+        $rootScope.$safeApply();
       });
     });
-    return addresses;
-  });
+  };
 
-  $scope.getIndexesForPage = (page) => {
-    let indexes = [];
-    let used = [];
-    for (let i = 0; i < $scope.paymentRequests.length; i++) {
-      used[$scope.paymentRequests[i].index] = true;
+  $scope.changeLabel = (address, label) => {
+    return Labels.setLabel(accountIndex, address, label).then().then(() => {
+      $rootScope.$safeApply();
+    });
+  };
+
+  $scope.toggleShowPast = () => {
+    if (!$scope.showPast) {
+      if (!$scope.didLoadPast) {
+        Alerts.confirm('CONFIRM_SHOW_PAST').then(() => {
+          $scope.didLoadPast = true;
+          $scope.showPast = true;
+        });
+      } else {
+        $scope.showPast = true;
+      }
+    } else {
+      $scope.showPast = false;
     }
-    for (
-      let i = $scope.account.receiveIndex, n = i;
-      i >= 0 && n >= 0 && indexes.length < $scope.pageLength;
-      i--
-    ) {
-      if (used[i]) continue;
-      let start = $scope.receiveIndex - (page - 1) * $scope.pageLength;
-      if (n <= start && n > start - $scope.pageLength) indexes.push(i);
-      n--;
-    }
-    return indexes;
+  };
+
+  $scope.setPastAddressesPage = (page) => {
+    $scope.page = page;
+    let addresses = $scope.pastAddressesPage(page, $scope.pageLength);
+    Labels.fetchBalance(addresses).then(() => { $rootScope.$safeApply(); });
   };
 
   $scope.newAccount = () => {

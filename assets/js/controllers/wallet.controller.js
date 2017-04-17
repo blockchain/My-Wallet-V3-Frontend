@@ -27,7 +27,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.getTheme = () => $scope.settings.theme && $scope.settings.theme.class;
 
   $scope.inactivityCheck = () => {
-    if (!Wallet.status.isLoggedIn) return;
+    if (!Wallet.status.isLoggedIn || $rootScope.inMobileBuy) return;
     let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
     if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
@@ -47,7 +47,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     Alerts.clear();
     return $uibModal.open({
       templateUrl: 'partials/request.pug',
-      windowClass: 'bc-modal auto',
+      windowClass: 'bc-modal initial',
       controller: 'RequestCtrl',
       resolve: {
         destination: () => null,
@@ -86,13 +86,26 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
       event.preventDefault();
     }
-    if (wallet && toState.name === 'wallet.common.buy-sell') {
+    if (wallet && [
+      'wallet.common.buy-sell'
+      // 'wallet.common.settings.accounts_addresses'
+    ].includes(toState.name)) {
       let error;
 
-      if (wallet.external && !wallet.external.loaded) error = 'POOR_CONNECTION';
-      else if (wallet.isDoubleEncrypted) error = 'MUST_DISABLE_2ND_PW';
-      else if ($rootScope.needsRefresh) error = 'NEEDS_REFRESH';
-
+      if (!wallet.isMetadataReady) {
+        Wallet.askForSecondPasswordIfNeeded().then(pw => {
+          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+            Alerts.displaySuccess('NEEDS_REFRESH');
+            $rootScope.needsRefresh = true;
+          });
+        });
+        event.preventDefault();
+      } else if ($rootScope.needsRefresh) {
+        error = 'NEEDS_REFRESH';
+      } else if (wallet.external === null) {
+        // Metadata service connection failed
+        error = 'POOR_CONNECTION';
+      }
       if (error) {
         event.preventDefault();
         Alerts.displayError(error);
@@ -129,6 +142,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   };
 
   $scope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
+    console.log(error.message);
     let message = typeof error === 'string' ? error : 'ROUTE_ERROR';
     Alerts.displayError(message);
   });

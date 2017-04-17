@@ -10,7 +10,14 @@
                     "SK", "SI", "ES", "SE", "CH"
                   ],
       "partnerId": 19,
-      "iSignThisDomain": "https://verify.isignthis.com"
+      "iSignThisDomain": "https://verify.isignthis.com",
+      "surveyLinks": ["https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp",
+                      "https://blockchain.co1.qualtrics.com/SE/?SID=SV_4ZuHusilGeNWm6V",
+                      "https://blockchain.co1.qualtrics.com/SE/?SID=SV_1RF9VhC96M8xXh3"],
+      "sellSurveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_56iZITjrjyMOrzL",
+                          "https://blockchain.co1.qualtrics.com/jfe/form/SV_9u8XxkrkiUUy6z3",
+                          "https://blockchain.co1.qualtrics.com/jfe/form/SV_9ysiGRC4rkMFwFv"],
+      "showSellFraction": 0
     },
     "sfox": {
       "countries": ["US"],
@@ -20,7 +27,11 @@
       "apiKey": "f31614a7-5074-49f2-8c2a-bfb8e55de2bd",
       "plaid": "0b041cd9e9fbf1e7d93a0d5a39f5b9",
       "plaidEnv": "production",
-      "siftScience": "a19cc360a1"
+      "siftScience": "a19cc360a1",
+      "surveyLinks": ["https://blockchain.co1.qualtrics.com/SE/?SID=SV_bPCcv7eZgqlQSrP",
+                      "https://blockchain.co1.qualtrics.com/SE/?SID=SV_4HIEh5KIodM8UTP",
+                      "https://blockchain.co1.qualtrics.com/SE/?SID=SV_51qOIk4EXHshNFX",
+                      "https://blockchain.co1.qualtrics.com/SE/?SID=SV_78S6RzM5ipN66fb"]
     }
   }
 }

@@ -21,7 +21,7 @@ pgp: node_modules
 # just tagged a release. Use the previous tag instead.
 IS_TAGGED_COMMIT:=$(shell git describe --exact-match HEAD > /dev/null && echo 1 || echo 0)
 ifeq ($(IS_TAGGED_COMMIT), 1)
-	TAG=$(shell git tag --sort=version:refname | tail -n2 | head -1)
+	TAG=$(shell git tag --sort=version:refname | grep '^v[0-9]*\.[0-9]*\.[0-9]*' | tail -n2 | head -1)
 	TAG_ARG:=-t $(TAG)
 else
   TAG_ARG:=
@@ -29,7 +29,7 @@ endif
 
 ifndef VERSION
 ifdef TAG_ARG
-export VERSION=$(TAG);
+export VERSION=$(TAG)
 else
 export VERSION:=vIntermediate
 endif
@@ -54,11 +54,11 @@ helperApp/dist: bower_components
 dist: helperApp/dist bower_components
 	grunt build --skipWebpack=1
 
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=${NETWORK}
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=$(NETWORK)
 	cp -r helperApp/dist dist/wallet-helper
 
 dist_fixed_domain: helperApp/dist bower_components build
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=${NETWORK}
+	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=$(NETWORK)
 	cp -r helperApp/dist dist/wallet-helper
 
 changelog: node_modules

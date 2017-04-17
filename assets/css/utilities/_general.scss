@@ -12,38 +12,17 @@ body {
   color: $text;
   height: 100%;
   width: 100%;
+  overflow: hidden;
+  @extend .flex-column;
 }
 
 .wallet-top-navigation.navbar-inverse {
-  position: fixed;
+  flex: 0 0 60px;
   width: 100%;
-  left: 0;
-  top: 0;
-}
-
-.wallet-container {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 60px;
   @media (max-width: 767px) {
-    top: 50px;
+    flex: 0 0 50px;
   }
 }
-
-.display-block { display: block; }
-.display-inline-block { display: inline-block; }
-
-.pointer { cursor: pointer; }
-.cursor-text { cursor: text; }
-.pos-rel { position: relative; }
-.pos-abs { position: absolute; }
-.row { vertical-align: bottom; }
-.row.spacing {
-  height: 20px;
-  background: transparent;
-}
-.margin-0-auto { margin: 0 auto; }
 
 .line-split {
   position: relative;
@@ -78,8 +57,6 @@ noscript {
   }
 }
 
-.lh1 { line-height: 1; }
-
 .ph-form {
   @media(max-width: 375px) {
     padding: 0 0;
@@ -88,9 +65,3 @@ noscript {
 }
 
 .mw { max-width: 100%; }
-
-.tilda-before {
-  &:before {
-    content: '~';
-  }
-}

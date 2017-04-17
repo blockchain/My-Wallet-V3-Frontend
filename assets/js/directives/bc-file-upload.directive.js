@@ -9,6 +9,7 @@ function bcFileUpload ($rootScope, Alerts) {
     restrict: 'E',
     scope: {
       file: '=',
+      locked: '=',
       idType: '=',
       onUpload: '='
     },
@@ -20,6 +21,12 @@ function bcFileUpload ($rootScope, Alerts) {
   function link (scope, elem, attrs) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.state = { webcam: {} };
+
+    scope.reset = () => {
+      scope.file = null;
+      scope.invalidFile = null;
+      scope.disableWebcam();
+    };
 
     scope.enableWebcam = () => {
       scope.state.webcam.active = true;

@@ -2,11 +2,13 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySell, country, state, options, buyStatus) {
+function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, buySell, country, state, options, buyStatus, modals) {
   buyStatus.canBuy().then((canBuy) => {
     if (!canBuy) {
       $state.go('wallet.common.home');
-      return;
+      if ($scope.inMobileBuy) {
+        $timeout(() => modals.openFullScreen('partials/buy-subscribe-modal.pug', 'SubscribeCtrl'));
+      }
     }
   });
 

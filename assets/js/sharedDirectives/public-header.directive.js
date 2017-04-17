@@ -24,7 +24,7 @@ function publicHeader ($rootScope, $location) {
             <li class="item active"><a href="#" translate="WALLET" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}charts" translate="CHARTS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}stats" translate="STATS" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="https://markets.blockchain.info" translate="MARKETS" class="upper"></a></li>
+            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}markets" translate="MARKETS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="upper"></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right hidden-sm">
@@ -32,7 +32,7 @@ function publicHeader ($rootScope, $location) {
               <form action="{{searchUrl}}" class="bc-form" method="GET">
                 <div class="group">
                   <div class="item search">
-                    <input type="text" name="search" class="form-control input-sm search-query" placeholder="{{'SEARCH'|translate}}">
+                    <input type="text" name="search" id="header-search" class="form-control" placeholder="{{'SEARCH_FOR_BLOCK_ETC'|translate}}">
                     <i class="icon-search"></i>
                   </div>
                 </div>
@@ -53,6 +53,8 @@ function publicHeader ($rootScope, $location) {
   function link (scope, elem, attrs) {
     scope.rootURL = $rootScope.rootURL;
     scope.path = () => $location.path();
-    scope.isTestnet = $rootScope.network === 'testnet';
+    // Grunt will replace this, since BlockchainConstants.NETWORK is not available on landing page:
+    const network = $rootScope.network || 'bitcoin';
+    scope.isTestnet = network === 'testnet';
   }
 }

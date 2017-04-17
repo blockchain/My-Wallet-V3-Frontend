@@ -23,6 +23,15 @@ describe "BC File Upload Directive", ->
       isoScope = element.isolateScope()
       isoScope.$digest()
 
+  describe "reset", ->
+    
+    it "should reset file, invalidFile, and call disableWebcam", ->
+      spyOn(isoScope, 'disableWebcam')
+      isoScope.reset()
+      expect(isoScope.file).toBe(null)
+      expect(isoScope.invalidFile).toBe(null)
+      expect(isoScope.disableWebcam).toHaveBeenCalled()
+
   describe "enableWebcam()", ->
 
     it "should activate the webcam", ->

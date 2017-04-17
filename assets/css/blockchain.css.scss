@@ -1,34 +1,48 @@
 @import 'angular-csp';
-@import 'bootstrap-blockchain';
+//import global blockchain CSS
+@import 'blockchain-css/sass/bootstrap-blockchain';
+@import 'blockchain-css/sass/variables';
+@import 'blockchain-css/sass/fonts';
+
+//import global utilities
+@import 'blockchain-css/sass/utilities/general';
+@import 'blockchain-css/sass/utilities/colors';
+@import 'blockchain-css/sass/utilities/flex';
+@import 'blockchain-css/sass/utilities/spacing';
+@import 'blockchain-css/sass/utilities/layout';
+@import 'blockchain-css/sass/utilities/borders';
+@import 'blockchain-css/sass/utilities/typography';
+
+//import global elements
+@import 'blockchain-css/sass/elements/buttons';
+@import 'blockchain-css/sass/elements/inputs';
+@import 'blockchain-css/sass/elements/forms';
+@import 'blockchain-css/sass/elements/links';
+
+//import global modules
+@import 'blockchain-css/sass/modules/header';
+@import 'blockchain-css/sass/modules/footer';
+
+//import global components
+@import 'blockchain-css/sass/components/modals';
 
 //import utilitarian CSS
-@import 'utilities/colors';
-@import 'utilities/animations';
-@import 'utilities/flex';
-@import 'utilities/spacing';
-@import 'utilities/typography';
 @import 'utilities/shadows';
-@import 'utilities/borders';
 @import 'utilities/addresses';
+@import 'utilities/animations';
 
 //import elements
-@import 'elements/buttons';
-@import 'elements/inputs';
 @import 'elements/labels';
-@import 'elements/links';
 @import 'elements/tables';
 @import 'elements/carousel';
-@import 'elements/footer';
 
 // import themes
 @import 'themes/dev';
 @import 'themes/filters';
 
 //import components
-@import 'components/forms';
 @import 'components/video-container';
 @import 'components/qr-scan';
-@import 'components/modals';
 @import 'components/transfer-all';
 @import 'components/alerts';
 @import 'components/bitcoin-addresses';
@@ -39,6 +53,7 @@
 @import 'components/activity-feed';
 @import 'components/virtual-keyboard';
 @import 'components/spinner';
+@import 'components/modals';
 
 @import 'modules/destination-input';
 @import 'modules/home';

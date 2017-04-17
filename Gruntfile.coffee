@@ -139,6 +139,8 @@ module.exports = (grunt) ->
         dest: "build/js/bc-phone-number.js"
 
     sass:
+      options:
+        includePaths: ["node_modules", "bower_components"]
       build:
         files: [{
           expand: true,
@@ -170,7 +172,6 @@ module.exports = (grunt) ->
           "build/css/fonts.css"
           "build/css/angular-csp.css"
           "build/css/blockchain.css"
-          "build/css/fonts.css"
         ],
         dest: "build/css/wallet.css"
       }
@@ -248,10 +249,7 @@ module.exports = (grunt) ->
       fonts:
         files: [
           {src: ["bootstrap/*"], dest: "build/fonts", cwd: "bower_components/bootstrap-sass/assets/fonts", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/montserrat", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/gillsans", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/icomoon", expand: true}
-          {src: ["*"], dest: "build/fonts", cwd: "assets/fonts/themify", expand: true}
+          {src: ["*/*"], dest: "build/fonts", cwd: "node_modules/blockchain-css/fonts", expand: true}
 
         ]
 
@@ -274,7 +272,7 @@ module.exports = (grunt) ->
           spawn: false
 
       css:
-        files: ['assets/css/**/*.scss']
+        files: ['assets/css/**/*.scss', 'node_modules/blockchain-css/**/*.scss']
         tasks: ['sass', 'concat_css', 'copy:fonts']
         options:
           spawn: false
@@ -500,7 +498,7 @@ module.exports = (grunt) ->
               "customApiDomain = 'https://" + @apiDomain + "/'"
         }]
       network:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/wallet.js', 'build/js/sharedDirectives/public-header.directive.js'],
         overwrite: true,
         replacements: [{
           from: "network = $rootScope.network"

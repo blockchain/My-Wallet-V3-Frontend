@@ -2,11 +2,25 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts) {
+function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
   $scope.$parent.limits = {};
+  $scope.format = currency.formatCurrencyForView;
+  $scope.btcCurrency = currency.bitCurrencies[0];
   $scope.exchange = buySell.getExchange();
   $scope.toggleEditAmount = () => $scope.$parent.editAmount = !$scope.$parent.editAmount;
-  $scope.isBankTransfer = () => $scope.isMedium('bank');
+
+  $scope.isSell = $scope.$parent.$parent.isSell;
+  $scope.sellTrade = $scope.$parent.$parent.trade;
+  $scope.sellTransaction = $scope.$parent.$parent.transaction;
+
+  $scope.trade = $scope.$parent.trade;
+  $scope.transaction = $scope.$parent.transaction;
+
+  $scope.$parent.fields.rate = false;
+
+  if (!$scope.isSell) {
+    $scope.isBankTransfer = () => $scope.isMedium('bank');
+  }
 
   $scope.getMaxMin = (curr) => {
     const calculateMin = (rate) => {
@@ -23,6 +37,14 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       let max = buySell.getRate($scope.exchange.profile.defaultCurrency, curr.code).then(calculateMax);
       return $q.all([min, max]).then($scope.setParentError);
     });
+  };
+
+  $scope.convertFeeToFiat = () => {
+    return $scope.transaction.fiat / $scope.fee;
+  };
+
+  $scope.setTotal = (baseAmount, fee) => {
+    return baseAmount - fee;
   };
 
   $scope.commitValues = () => {
@@ -52,7 +74,10 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     });
   };
 
-  let eventualError = (message) => Promise.reject.bind(Promise, { message });
+  const completeTradeError = (err) => {
+    $scope.status.waiting = false;
+    $scope.$parent.error = JSON.parse(err);
+  };
 
   $scope.$parent.buy = () => {
     $scope.status.waiting = true;
@@ -61,7 +86,7 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
       $scope.$parent.trade = trade;
       Alerts.clear($scope.alerts);
       if ($scope.$parent.trade.bankAccount) $scope.formatTrade('bank_transfer');
-
+      buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
       $scope.nextStep();
     };
 
@@ -72,10 +97,8 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
         : buySell.getOpenKYC().then(success, $scope.standardError);
     }
 
-    let buyError = eventualError('ERROR_TRADE_CREATE');
-
     $scope.accounts[0].buy()
-                      .catch(buyError)
+                      .catch((e) => completeTradeError(e))
                       .then(success, $scope.standardError)
                       .then($scope.watchAddress);
   };
@@ -92,12 +115,16 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.$parent.rateForm = $scope.rateForm;
   });
 
+  $scope.$watch('sellRateForm', () => {
+    $scope.$parent.$parent.sellRateForm = $scope.rateForm;
+  });
+
   $scope.$watch('step', () => {
     if ($scope.onStep('summary')) {
       $scope.getMaxMin($scope.tempCurrency);
 
       // Get a new quote if using a fake quote.
-      if (!$scope.$parent.quote.id) {
+      if (!$scope.$parent.quote.id && !$scope.$parent.sell) {
         $scope.$parent.quote = null;
         $scope.getQuote();
       }

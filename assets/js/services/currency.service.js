@@ -17,6 +17,12 @@ function currency ($q, MyBlockchainApi) {
     'USD': 'U.S. Dollar'
   };
 
+  const coinifySellCurrencyCodes = {
+    'DKK': 'Danish Krone',
+    'EUR': 'Euro',
+    'GBP': 'Great British Pound'
+  };
+
   const currencyCodes = {
     'USD': 'U.S. Dollar',
     'EUR': 'Euro',
@@ -63,6 +69,7 @@ function currency ($q, MyBlockchainApi) {
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
+    coinifySellCurrencies: formatCurrencies(coinifySellCurrencyCodes),
     bitCurrencies,
     conversions,
 
