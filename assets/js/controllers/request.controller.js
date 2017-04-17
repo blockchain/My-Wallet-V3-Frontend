@@ -93,13 +93,5 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     return encodeURI(url.slice(0, -1));
   };
 
-  $scope.resetCopy = () => {
-    $scope.state.isAddressCopied = false;
-    $scope.state.isBitcoinURICopied = false;
-    $scope.state.isPaymentRequestCopied = false;
-  };
-
-  $scope.$watchGroup(['state.amount', 'state.label'], $scope.resetCopy);
-
   $scope.installLock();
 }

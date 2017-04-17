@@ -21,14 +21,14 @@ div
       span Upload From Device
 
   div(ng-if="state.webcam.active")
-    div.webcam(ng-class="{hidden: !state.webcam.stream || state.webcam.error}")
+    div.webcam-container(ng-hide="!state.webcam.stream || state.webcam.error")
       webcam(channel="webcam" on-error="webcamError()" on-stream="webcamStream()")
       span.help(translate="{{idType + '_ID'}}.HELP")
-    div.webcam.disabled(ng-if="!state.webcam.stream && !state.webcam.error")
+    div.webcam-container.disabled(ng-if="!state.webcam.stream && !state.webcam.error")
       span.f-16.white
         i.mr-10.ti-arrow-top-left
         span Please allow webcam access.
-    div.webcam.disabled(ng-if="!state.webcam.stream && state.webcam.error")
+    div.webcam-container.disabled(ng-if="!state.webcam.stream && state.webcam.error")
       span.f-16.white
         span Permission to use webcam denied.
         br

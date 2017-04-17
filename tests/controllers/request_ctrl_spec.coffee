@@ -176,17 +176,6 @@ describe "RequestCtrl", ->
 
       expect(scope.paymentRequestURL()).toContain('message')
       expect(scope.paymentRequestURL()).not.toContain('label=')
-  
-  describe "resetCopy()", ->
-    
-    it "should reset copy buttons", ->
-      scope.state.isAddressCopied = true
-      scope.state.isBitcoinURICopied = true
-      scope.state.isPaymentRequestCopied = true
-      scope.resetCopy()
-      expect(scope.state.isAddressCopied).toBe(false)
-      expect(scope.state.isBitcoinURICopied).toBe(false)
-      expect(scope.state.isPaymentRequestCopied).toBe(false)
       
   describe "isToImportedAddress", ->
     
