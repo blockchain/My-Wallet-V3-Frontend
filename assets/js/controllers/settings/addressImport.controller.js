@@ -56,7 +56,7 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
       $scope.status.busy = false;
       $scope.$safeApply();
 
-      switch (err.message) {
+      switch (err instanceof Error ? err.message : err) {
         case 'presentInWallet':
           $scope.importForm.privateKey.$setValidity('present', false);
           $scope.BIP38 = false;
@@ -70,6 +70,9 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
           $scope.BIP38 = false;
           $scope.proceedWithBip38 = undefined;
           break;
+        default: {
+          Alerts.displayError('UNKNOWN_ERROR');
+        }
       }
     };
 
