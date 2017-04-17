@@ -73,6 +73,8 @@
   "EXPLORE": "Explore",
   "WHATS_NEW": "What's New",
   "WHATS_NEW_EXPLAIN": "We now have a \"What's New\" section where we'll let you know about all the changes we've been making to the Blockchain Wallet.",
+  "WHATS_NEW_EMPTY": "All caught up!",
+  "WHATS_NEW_EMPTY_TEXT": "Check back later for updates.",
   "SIGN_VERIFY" : "Sign and Verify",
   "SIGN_VERIFY_EXPLAIN" : "Prove that you own a bitcoin address by signing a message. Verify to confirm someone else owns an address.",
   "TRANSFER_ALL_EXPLAIN" : "Move all funds from your imported addresses to your HD addresses for added privacy and security.",
@@ -104,7 +106,7 @@
   "WALLETS" : "Wallets",
   "COUNTRIES_SERVED" : "Countries Served",
   "TRANSACTIONS_AMT" : "100 Million+",
-  "WALLETS_AMT" : "12 Million+",
+  "WALLETS_AMT" : "13 Million+",
   "COUNTRIES_SERVED_AMT" : "140+",
   "REQUEST" : "Request",
   "REQUEST_CREATED" : "Request Created",
@@ -174,7 +176,7 @@
   },
   "CONFIRM_CLOSE_SELL": {
     "TITLE": "Are You Sure?",
-    "BODY": "You're just one click away from from completing your sale. Are you sure you want to stop?"
+    "BODY": "You're just one click away from completing your sale. Are you sure you want to stop?"
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
@@ -471,7 +473,7 @@
   "SWEEP" : "Sweep",
   "VERIFY_RECOVERY_PHRASE" : "Backup Recovery Phrase",
   "SWEEP_FAIL" : "Some addresses could not be swept automatically",
-  "SWEEP_LOW_BALANCE_WARN" : "Some funds cannot be transferred automatically",
+  "SWEEP_LOW_BALANCE_WARN" : "Some of your addresses do not have a high enough balance for a transfer to be done automatically",
   "SECURITY_TIP" : "Security Tip",
   "DO_NOT_STORE_ON_COMPUTER" : "Do not store your Recovery Phrase on your computer or online. It is very important to keep your Recovery Phrase offline in a safe and private place. Anyone with access to your Recovery Phrase has access to your funds.",
   "PRINTABLE_SHEET" : "We have created a printable Recovery Sheet to help you conveniently keep your Recovery Phrase safe. Print the blank Recovery Sheet and then move onto the next step to fill it in.",
@@ -1156,7 +1158,7 @@
   "BUY_AMT_HIGH": "Buy amount too high.",
   "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
   "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
-  "SELL_AMT_HIGH": "Sell amount too high.",
+  "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
   "UPDATE": "Update",
   "BUY_SUBSCRIBE": {
@@ -1291,7 +1293,7 @@
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
-  "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='blue'>click here to start</span> buying bitcoin.",
+  "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
   "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
   "OR": "or",
@@ -1345,7 +1347,8 @@
     "KYC_CANCELLED": "This transaction has been cancelled.",
     "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity.",
-    "MORE_THAN_BALANCE": "The amount entered is more than your balance.",
+    "MORE_THAN_BALANCE": "Amount entered is more than your balance.",
+    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than your default wallet balance",
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -1359,10 +1362,13 @@
     "ENTER_BANK_INFO": "Please enter your bank information below.",
     "TRADE_COMPLETE": "Trade Complete",
     "SOLD": "SOLD",
-    "FIRST_CONFIRMATION": "The rate will be set after the first confirmation"
+    "FIRST_CONFIRMATION": "The rate will be set after the first confirmation",
+    "WAIT_FOR_TRADE_COMPLETE": "Trading is disabled until your pending trade is complete.",
+    "QUOTE_EXPIRED_ERROR": "{{::error}} Please re-start your trade to complete the sale. If you continue to experience this issue, contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>."
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
   "BUY_SELL_BITCOIN": "Buy Bitcoin",
+  "SHOW_MORE": "Show more",
   "": ""
 }

@@ -103,10 +103,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.status.didInitializeHD = true;
     }
     $window.name = 'blockchain-' + uid;
-    wallet.fetchAccountInfo().then((accountInfo) => {
+    wallet.fetchAccountInfo().then((guid) => {
       wallet.initExternal();
       wallet.status.isLoggedIn = true;
-      successCallback && successCallback(accountInfo);
+      successCallback && successCallback(guid);
     });
   };
 
@@ -131,7 +131,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         errorCallback('uid', 'UNKNOWN_IDENTIFIER');
       } else if (error.length && error.indexOf('password') > -1) {
         errorCallback('password', error);
-      } else if (error.length && error.indexOf('Invalid authentication code') > -1 || error.indexOf('Authentication code is incorrect') > -1) {
+      } else if ((error.length && error.indexOf('Invalid authentication code') > -1) || (error.length && error.indexOf('Authentication code is incorrect') > -1)) {
         errorCallback('twoFactor', error);
       } else {
         Alerts.displayError(error.message || error, true);
@@ -200,7 +200,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     doLogin(uid, sessionGuid, sessionToken);
   };
 
-  wallet.fetchAccountInfo = (successCallback) => {
+  wallet.fetchAccountInfo = () => {
     return $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
       const accountInfo = wallet.my.wallet.accountInfo;
 
@@ -264,7 +264,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.my.wallet.getHistory().then(didFetchTransactions);
       }
 
-      successCallback && successCallback(result.guid);
+      return result.guid;
     });
   };
 

@@ -92,3 +92,15 @@ describe "Imported Address Directive", ->
       isoScope.showPrivKey()
       expect($uibModal.open).toHaveBeenCalled()
     )
+
+  describe "spend", ->
+
+    it "should open a modal", inject(($uibModal, modals) ->
+      addr = "1asdf"
+      spyOn(modals, "openSend").and.callThrough()
+      spyOn($uibModal, "open").and.callThrough()
+      isoScope.address = addr
+      isoScope.spend()
+      expect(modals.openSend).toHaveBeenCalledWith({ fromAccount: addr })
+      expect($uibModal.open).toHaveBeenCalled()
+    )

@@ -25,7 +25,6 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
   function link (scope, elem, attrs) {
     scope.buySellDebug = $rootScope.buySellDebug;
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
-    scope.inMobileBuy = $rootScope.inMobileBuy;
 
     scope.update = () => angular.extend(scope, {
       error: buySell.tradeStateIn(buySell.states.error)(scope.trade),
@@ -38,7 +37,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.status = {};
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
-    scope.dateFormat = scope.inMobileBuy ? 'MMM d' : scope.dateFormat;
+    scope.dateFormat = scope.$root.size.xs ? 'MMM d' : scope.dateFormat;
 
     scope.cancel = () => {
       scope.disabled = true;

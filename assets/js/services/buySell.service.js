@@ -281,13 +281,14 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     }).result;
   }
 
-  function getCurrency (trade) {
+  function getCurrency (trade, sellCheck) {
     if (trade && trade.inCurrency) return currency.currencies.filter(t => t.code === trade.inCurrency)[0];
-    let coinifyCurrencies = currency.coinifyCurrencies;
+    let coinifyCurrencies = !sellCheck ? currency.coinifyCurrencies : currency.coinifySellCurrencies;
     let walletCurrency = Wallet.settings.currency;
     let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
     let exchange = service.getExchange();
     let coinifyCode = exchange && exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
+    if (sellCheck && coinifyCode === 'USD') coinifyCode = 'EUR';
     return isCoinifyCompatible ? walletCurrency : coinifyCurrencies.filter(c => c.code === coinifyCode)[0];
   }
 

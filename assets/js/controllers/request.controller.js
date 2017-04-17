@@ -26,6 +26,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
 
   $scope.destinations = smartAccount.getOptions();
   $scope.state.to = destination || Wallet.my.wallet.hdwallet.defaultAccount;
+  $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
 
   $scope.createPaymentRequest = () => {
     $scope.lock();
@@ -91,14 +92,6 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     url += label ? 'message=' + label + ' ' : '';
     return encodeURI(url.slice(0, -1));
   };
-
-  $scope.resetCopy = () => {
-    $scope.state.isAddressCopied = false;
-    $scope.state.isBitcoinURICopied = false;
-    $scope.state.isPaymentRequestCopied = false;
-  };
-
-  $scope.$watchGroup(['state.amount', 'state.label'], $scope.resetCopy);
 
   $scope.installLock();
 }

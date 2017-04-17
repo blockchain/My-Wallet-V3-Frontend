@@ -20,7 +20,11 @@ function bcFileUpload ($rootScope, Alerts) {
 
   function link (scope, elem, attrs) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
-    scope.state = { webcam: {} };
+    scope.state = {
+      webcam: {
+        stream: false
+      }
+    };
 
     scope.reset = () => {
       scope.file = null;
@@ -36,14 +40,17 @@ function bcFileUpload ($rootScope, Alerts) {
       scope.state.webcam = {};
     };
 
-    scope.upload = () => {
-      scope.disableWebcam();
-      scope.onUpload();
+    scope.webcamStream = () => {
+      scope.state.webcam.stream = true;
     };
 
     scope.webcamError = () => {
       scope.state.webcam.error = true;
-      Alerts.displayError('CAMERA_PERMISSION_DENIED');
+    };
+
+    scope.upload = () => {
+      scope.disableWebcam();
+      scope.onUpload();
     };
 
     scope.webcam = {

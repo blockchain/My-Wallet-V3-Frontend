@@ -9,7 +9,7 @@
     p.pb-15.ptn.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
-  .flex-column.bg-grey.pal.border
+  .flex-column.bg-grey.phm.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.TRADE_ID")
       span {{ sellTrade.id }}
@@ -20,8 +20,8 @@
       span.colon(translate="SELL.BTC_SOLD")
       span {{ sellTrade.transferIn.receiveAmount }} BTC
   .left-align
-    p.colon.em-500.mbs.type-lbl.mt-15(translate="SELL.PAYOUT_DETAILS") 
-  .flex-column.bg-grey.pal.border
+    p.colon.em-500.mbs.type-lbl.mt-25(translate="SELL.PAYOUT_DETAILS") 
+  .flex-column.bg-grey.phm.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")
       span {{ sellTrade.bankDigits || bankNameOrNumber }}
@@ -40,7 +40,7 @@
     span.f-14(translate="SELL.RECEIVE_EMAIL_RECEIPT")
   .left-align
     p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
-  .flex-column.bg-grey.pal.border
+  .flex-column.bg-grey.phm.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.TRADE_ID")
       span {{ sellTrade.id }}
@@ -51,8 +51,8 @@
       span.colon(translate="SELL.BTC_SOLD")
       span {{ sellTrade.transferIn.receiveAmount }} BTC
   .left-align
-    p.colon.em-500.mbs.type-lbl.mtl(translate="SELL.PAYOUT_DETAILS") 
-  .flex-column.bg-grey.pal.border
+    p.colon.em-500.mbs.type-lbl.mt-25(translate="SELL.PAYOUT_DETAILS") 
+  .flex-column.bg-grey.phm.border
     .flex-row.flex-between.pvm
       span.colon(translate="SELL.BANK_ACCOUNT")
       span {{ sellTrade.bankDigits }}
