@@ -76,7 +76,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
 
       return $scope.wait(250).then(signAndPublish)
         .then(() => {
-          $scope.selectedAccount.incrementReceiveIndex();
+          $scope.selectedAccount.lastUsedReceiveIndex = $scope.selectedAccount.receiveIndex;
           $scope.archivable.push($scope.addresses[i]);
         })
         .catch(e => $scope.nfailed++)
