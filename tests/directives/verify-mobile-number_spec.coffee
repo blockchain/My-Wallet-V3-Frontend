@@ -58,7 +58,7 @@ describe "Verify Mobile Number Directive", ->
 
     it "should call successful retry to send", ->
       error = () ->
-      Wallet.user.mobile = '639'
+      Wallet.user.mobileNumber = '639'
       spyOn(isoScope, "onSuccess")
       isoScope.retrySendCode()
       expect(isoScope.errors.retryFail).toBe(null)

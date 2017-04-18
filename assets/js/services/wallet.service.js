@@ -41,7 +41,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     user: {
       current_ip: null,
       email: null,
-      mobile: null,
       passwordHint: '',
       mobileNumber: null,
       alias: null
