@@ -77,12 +77,10 @@ function RequestCtrl ($rootScope, $scope, $window, Wallet, Alerts, currency, $ui
   };
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
+    let root = $rootScope.isProduction ? $window.location.origin + '/' : $rootScope.rootURL;
     let { amount, label, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
-    let root = $rootScope.rootURL;
     let url;
-
-    if ($rootScope.isProduction) root = $window.location.origin + '/';
 
     if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
     else url = root + 'payment_request?' + 'address=' + $scope.address() + '&';
