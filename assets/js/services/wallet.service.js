@@ -94,6 +94,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
     if (wallet.my.wallet.isUpgradedToHD) {
       wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
+    } else {
+      wallet.goal.firstTime = true;
     }
     wallet.user.uid = uid;
     wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted;
