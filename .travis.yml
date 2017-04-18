@@ -9,6 +9,7 @@ before_install:
 - gem install sass
 before_script:
 - node_modules/.bin/semistandard --verbose | snazzy
+- ./node_modules/.bin/eslint assets/js/**/*
 script:
 - make build
 - make test
