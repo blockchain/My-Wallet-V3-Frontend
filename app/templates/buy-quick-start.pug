@@ -17,8 +17,7 @@
               name="fiat"
               tabindex="1"
               focus-when="status.ready"
-              ng-change="updateLastInput('fiat'); getExchangeRate();"
-              ng-model-options="{debounce: 250}"
+              ng-change="updateLastInput('fiat'); transaction.fiat && getQuote();"
               placeholder="{{placeholder}}"
               min="{{limits.absoluteMin(transaction.currency.code)}}"
               max="{{limits.absoluteMax(transaction.currency.code)}}"
@@ -32,7 +31,7 @@
               ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
                 li(ng-repeat="currency in currencies"
                    role="menuitem"
-                   ng-click="changeCurrency({currency: currency}); getExchangeRate();"
+                   ng-click="changeCurrency({currency: currency}); transaction.fiat && getQuote();"
                    ng-class="{active: isCurrencySelected(currency)}")
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
           i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
@@ -46,8 +45,7 @@
               prevent-event="mousewheel"
               tabindex="1"
               min="0.00000001"
-              ng-change="updateLastInput('btc'); getExchangeRate();"
-              ng-model-options="{debounce: 250}"
+              ng-change="updateLastInput('btc'); transaction.btc && getQuote();"
               placeholder="{{placeholder}}"
               required)
             div.input-group-btn
@@ -89,4 +87,4 @@
           a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
             img(src="img/coinify-logo.svg")
             span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || locked || tradingDisabled")
+        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled")

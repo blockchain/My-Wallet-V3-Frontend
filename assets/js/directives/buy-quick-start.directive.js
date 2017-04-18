@@ -35,9 +35,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
     scope.isPendingSellTrade = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium === 'blockchain';
 
-    scope.getExchangeRate = () => {
-      stopFetchingQuote();
-      startFetchingQuote();
+    scope.getInitialExchangeRate = () => {
       scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
@@ -46,41 +44,50 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       }, error).finally(scope.getQuote);
     };
 
+    scope.getExchangeRate = () => {
+      let rate, fiat;
+      let { baseAmount, quoteAmount, baseCurrency } = scope.quote;
+
+      if (baseCurrency === 'BTC') {
+        rate = 1 / (baseAmount / 100000000);
+        fiat = quoteAmount / 100;
+      } else {
+        rate = 1 / (quoteAmount / 100000000);
+        fiat = baseAmount / 100;
+      }
+
+      return Math.abs((rate * fiat)).toFixed(2);
+    };
+
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
-    let fetchingQuote;
-    let startFetchingQuote = () => {
-      fetchingQuote = $interval(() => scope.getExchangeRate(), 1000 * 60);
-    };
-
-    let stopFetchingQuote = () => {
-      $interval.cancel(fetchingQuote);
-    };
-
     scope.getQuote = () => {
+      scope.status.busy = true;
+
       if (scope.lastInput === 'btc') {
         buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
-      } else if (scope.lastInput === 'fiat') {
-        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
       } else {
-        scope.status = {};
+        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
       }
     };
 
     const success = (quote) => {
+      scope.status = {};
+      scope.quote = quote;
+      scope.exchangeRate.fiat = scope.getExchangeRate();
+
       if (quote.baseCurrency === 'BTC') {
         scope.transaction.fiat = -quote.quoteAmount / 100;
       } else {
         scope.transaction.btc = quote.quoteAmount / 100000000;
       }
-      scope.quote = quote;
-      scope.status = {};
+
       Alerts.clear();
     };
 
     const error = () => {
       scope.status = {};
-      Alerts.displayError('ERROR_QUOTE_FETCH');
+      scope.fiatForm.fiat.$setValidity('max', false);
     };
 
     scope.cancelTrade = () => {
@@ -92,10 +99,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       buySell.getMinLimits(quote).then(scope.limits = buySell.limits);
     };
 
-    scope.getExchangeRate();
-    scope.$on('$destroy', stopFetchingQuote);
-    scope.$watch('modalOpen', (modalOpen) => {
-      modalOpen ? stopFetchingQuote() : scope.getExchangeRate();
-    });
+    scope.getInitialExchangeRate();
   }
 }
