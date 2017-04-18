@@ -52,7 +52,7 @@
     p(translate="2FA_ERROR")
 .modal-footer.pal.flex-center.flex-between
   .flex-start
-    button.button-muted(ng-show="isStep('configure_mobile') || isStep('pair')" ng-click="goToStep('enable')" translate="CANCEL")
+    button.button-muted(ng-show="isStep('configure_mobile') || isStep('pair')" ng-click="goToStep('enable')" translate="GO_BACK")
   .flex-end
     button.button-muted(ng-click="mobileNumber.step = 1; goToStep('configure_mobile')" ng-show="mobileNumber.step === 2 && isStep('configure_mobile')") Change Mobile Number
     button.button-muted.mrm(ng-click="close()" translate="CLOSE")
