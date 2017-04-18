@@ -3,11 +3,12 @@ angular
   .controller('TopCtrl', TopCtrl);
 
 function TopCtrl ($scope, Wallet, currency) {
+  $scope.copied = false;
+  $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = currency.isBitCurrency;
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
-  $scope.status = Wallet.status;
-  $scope.copied = false;
+  $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.getTotal = () => Wallet.total();
   $scope.resetCopy = () => $scope.copied = false;

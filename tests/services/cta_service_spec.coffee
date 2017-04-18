@@ -36,17 +36,17 @@ describe "cta", () ->
       cta = getService(buyCta: "false")
       expect(cta.shouldShowBuyCta()).toEqual(true)
 
-  describe ".setBuyCtaDissmissed()", ->
+  describe ".setBuyCtaDismissed()", ->
     it "should set the buy-alert-seen cookie", ->
       cta = getService(buyCta: "")
-      cta.setBuyCtaDissmissed()
+      cta.setBuyCtaDismissed()
       expect($cookies.put).toHaveBeenCalledWith("buy-alert-seen", true)
 
     it "should reset the cookie jar", ->
       cta = getService(buyCta: "")
       expect(cta.shouldShowBuyCta()).toEqual(true)
       $cookies.get.and.returnValue("true")
-      cta.setBuyCtaDissmissed()
+      cta.setBuyCtaDismissed()
       expect(cta.shouldShowBuyCta()).toEqual(false)
 
   describe ".shouldShowSecurityWarning()", ->

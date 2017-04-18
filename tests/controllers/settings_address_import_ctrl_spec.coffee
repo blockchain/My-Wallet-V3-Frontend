@@ -16,13 +16,11 @@ describe "AddressImportCtrl", ->
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
 
-      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error, cancel) ->
-        if addressOrPrivateKey
-          success({address: "valid_import_address"})
+      Wallet.addAddressOrPrivateKey = (addressOrPrivateKey, bip38passphrase, success, error, cancel, _error) ->
+        if _error
+          error(_error)
         else
-          error('presentInWallet')
-          error('wrongBipPass')
-          error('importError')
+          success({address: "valid_import_address"})
 
       Wallet.accounts = () -> accounts
 
@@ -107,7 +105,6 @@ describe "AddressImportCtrl", ->
     )
 
     describe "error", ->
-
       beforeEach ->
         scope.success = () ->
         scope.cancel = () ->
@@ -117,21 +114,49 @@ describe "AddressImportCtrl", ->
         spyOn(scope, "error")
         scope.import()
         $timeout.flush()
-        Wallet.addAddressOrPrivateKey('', false, scope.success, scope.error, scope.cancel);
+        Wallet.addAddressOrPrivateKey('', false, scope.success, scope.error, scope.cancel, 'anyError');
         expect(scope.error).toHaveBeenCalled()
       )
-
-      it "should set validity based on error message", ->
-        scope.error = (error) -> error
-        Wallet.addAddressOrPrivateKey('presentInWallet', false, scope.success, scope.error, scope.cancel);
-        expect(scope.importForm.privateKey.$valid).toBe(false)
-
 
     it "should open the transfer window when the user clicks transfer", inject(($uibModal) ->
       spyOn($uibModal, 'open')
       scope.goToTransfer()
       expect($uibModal.open).toHaveBeenCalled()
     )
+
+  describe "import", ->
+    describe "success", ->
+      it "should set address and go to next step", ->
+        address = { address: '1asdf' }
+        scope.importSuccess(address)
+        expect(scope.status.busy).toEqual(false)
+        expect(scope.address).toEqual(address)
+        expect(scope.step).toEqual(2)
+
+    describe "error", ->
+      it "should set validity for presentInWallet error", ->
+        scope.importError('presentInWallet')
+        expect(scope.importForm.privateKey.$valid).toBe(false)
+
+      it "should set validity for wrongBipPass error", ->
+        scope.importError('wrongBipPass')
+        expect(scope.importForm.bipPassphrase.$valid).toBe(false)
+
+      it "should set validity for importError error", ->
+        scope.importError('importError')
+        expect(scope.step).toEqual(1)
+        expect(scope.BIP38).toEqual(false)
+        expect(scope.importForm.privateKey.$valid).toBe(false)
+
+      it "should fall back on an alert", ->
+        spyOn(Alerts, "displayError")
+        scope.importError('unknownError')
+        expect(Alerts.displayError).toHaveBeenCalled()
+
+    describe "cancel", ->
+      it "should set busy to false", ->
+        scope.importCancel()
+        expect(scope.status.busy).toEqual(false)
 
   describe "transfer", ->
     beforeEach ->

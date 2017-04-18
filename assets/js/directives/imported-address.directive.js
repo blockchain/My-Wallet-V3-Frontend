@@ -20,7 +20,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
             destination: () => scope.address,
             focus: () => true
           },
-          windowClass: 'bc-modal auto'
+          windowClass: 'bc-modal initial'
         });
       };
 
@@ -74,7 +74,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         }
       });
 
-      scope.spend = () => modals.open({ fromAccount: scope.address });
+      scope.spend = () => modals.openSend({ fromAccount: scope.address });
     }
   };
 });

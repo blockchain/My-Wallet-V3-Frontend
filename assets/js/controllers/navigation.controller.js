@@ -6,6 +6,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
+  const whatsNewDateCutoff = 7.884e+9; // ~3 months
   const lastViewedDefaultTime = 1231469665000;
   $scope.whatsNewTemplate = 'templates/whats-new.pug';
   $scope.lastViewedWhatsNew = null;
@@ -91,8 +92,9 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   }
 
   buyStatus.canBuy().then(canBuy => {
+    let now = Date.now();
     let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
-    $scope.feats = whatsNew.filter(filterBuy);
+    $scope.feats = whatsNew.filter(filterBuy).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {
