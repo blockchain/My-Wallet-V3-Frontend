@@ -1122,16 +1122,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     });
   };
 
-  wallet.disableRestrictToWhiteListedIPs = () => {
+  wallet.disableRestrictToWhiteListedIPs = () => $q((resolve, reject) => {
     wallet.settings_api.updateIPlockOn(false, () => {
       wallet.settings.restrictToWhitelist = false;
-      wallet.saveActivity(2);
-      $rootScope.$safeApply();
+      resolve();
     }, () => {
-      console.log('Failed');
-      $rootScope.$safeApply();
+      reject();
     });
-  };
+  });
 
   wallet.removeAlias = () => {
     return $q.resolve(wallet.settings_api.removeAlias()).then(
