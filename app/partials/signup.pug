@@ -18,7 +18,7 @@ form.bc-form.form-horizontal.mt-30(
   novalidate)
   browser-detection(result="browser")
   fieldset(ng-disabled="browser.disabled || working")
-    .group.mb-25(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
+    .group.mb-20(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
       .item
         label(translate="EMAIL")
         .pos-rel
@@ -31,7 +31,7 @@ form.bc-form.form-horizontal.mt-30(
           span.error(ng-show="signupForm.email.$touched")
             span(ng-show="signupForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
             span(ng-show="signupForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
-    .group.mb-25(ng-class="{'has-error': signupForm.password.$invalid && signupForm.password.$touched}")
+    .group.mb-20(ng-class="{'has-error': signupForm.password.$invalid && signupForm.password.$touched}")
       .item
         label(translate="NEW_PASSWORD")
         .pos-rel
@@ -48,7 +48,7 @@ form.bc-form.form-horizontal.mt-30(
             span(ng-show="signupForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
             span(ng-show="signupForm.password.$error.maxlength" translate="TOO_LONG")
           password-entropy.help-block.mbn(password="fields.password")
-    .group.mb-25(ng-class="{'has-error': signupForm.confirmation.$invalid && signupForm.confirmation.$touched}")
+    .group.mb-20(ng-class="{'has-error': signupForm.confirmation.$invalid && signupForm.confirmation.$touched}")
       .item
         label(translate="CONFIRM_PASSWORD")
         .pos-rel
@@ -60,7 +60,7 @@ form.bc-form.form-horizontal.mt-30(
             required)
           span.error(ng-show="signupForm.confirmation.$touched")
             span(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
-    .group.mb-25
+    .group.mb-20
       .item.check
         input(
           name="agreement"
