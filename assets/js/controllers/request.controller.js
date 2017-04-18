@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, $window, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout) {
+function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -77,7 +77,7 @@ function RequestCtrl ($rootScope, $scope, $window, Wallet, Alerts, currency, $ui
   };
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
-    let root = $rootScope.isProduction ? $window.location.origin + '/' : $rootScope.rootURL;
+    let root = $rootScope.isProduction ? 'https://blockchain.info/' : $rootScope.rootURL;
     let { amount, label, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
     let url;
