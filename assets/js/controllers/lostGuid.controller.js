@@ -25,7 +25,7 @@ function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Ale
     let success = (message) => {
       $scope.working = false;
       $scope.currentStep = 2;
-      Alerts.displaySuccess(message);
+      Alerts.displaySuccess('EMAIL_SENT');
       $rootScope.$safeApply();
     };
 
