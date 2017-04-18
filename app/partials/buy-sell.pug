@@ -88,6 +88,6 @@
             sell="sell"
             in-view="$last && !$root.size.xs && $render.next()")
           tr.border.center(ng-show="$root.size.xs && trades.completed.length > $render.limit")
-            td.pvl.italic.type-lbl.blue(colspan="5" ng-click="$render.next()" translate="SHOW_MORE")
+            td.pvl.italic.type-lbl.primary(colspan="5" ng-click="$render.next()" translate="SHOW_MORE")
 
 contact-support-footer(ng-hide="inMobileBuy")
