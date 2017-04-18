@@ -64,7 +64,7 @@ module.exports = function (config) {
       'assets/js/sharedDirectives/*.directive.js': ['babel', 'coverage'],
       'assets/js/core/*.service.js': ['babel'],
       'assets/js/routes.js': ['babel', 'coverage'],
-      'assets/js/app.js': ['babel'],
+      'assets/js/wallet-app.module.js': ['babel'],
       'assets/js/landingCtrl.js': ['babel', 'coverage'],
       'tests/**/*.coffee': ['coffee'],
       'tests/**/*.js': ['babel']
