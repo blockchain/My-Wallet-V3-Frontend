@@ -15,6 +15,10 @@ describe "SfoxVerifyController", ->
 
       Wallet = $injector.get("Wallet")
       Upload = $injector.get("Upload")
+      
+      $httpBackend = $injector.get("$httpBackend")
+
+      $httpBackend.expectGET('/Resources/wallet-options.json').respond({partners: {sfox: {plaid: "1"}}})
 
       $rootScope.installLock = () ->
         scope.locked = false;
