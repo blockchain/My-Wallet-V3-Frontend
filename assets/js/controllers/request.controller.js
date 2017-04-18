@@ -77,12 +77,13 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   };
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
+    let root = $rootScope.isProduction ? 'https://blockchain.info/' : $rootScope.rootURL;
     let { amount, label, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
     let url;
 
     if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
-    else url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
+    else url = root + 'payment_request?' + 'address=' + $scope.address() + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
     else url += amount ? amountType + '=' + $scope.fromSatoshi(amount || 0, baseCurr) + '&' : '';
