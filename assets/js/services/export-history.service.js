@@ -5,6 +5,7 @@ angular
 
 function ExportHistory ($q, Wallet, MyBlockchainApi) {
   const service = {}
+  const shouldEscape = '=+-'
 
   service.json2csv = (json) => {
     let headers = Object.keys(json[0])
@@ -12,8 +13,10 @@ function ExportHistory ($q, Wallet, MyBlockchainApi) {
     return [headers.join(',')].concat(json.map(makeRow)).join('\n')
   }
 
+  service.escapeCSV = (s) => shouldEscape.indexOf(s[0]) > -1 ? ('\'' + s) : s
+
   service.addNoteToTx = (tx) => {
-    tx.note = Wallet.getNote(tx.tx) || ''
+    tx.note = service.escapeCSV(Wallet.getNote(tx.tx) || '')
     return tx
   }
 

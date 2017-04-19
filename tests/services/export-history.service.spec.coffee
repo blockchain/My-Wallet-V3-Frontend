@@ -27,12 +27,27 @@ describe "ExportHistory service", ->
       csv = 'a,b\n1,"x"\n2,"y"\n3,"z"'
       expect(ExportHistory.json2csv(json)).toEqual(csv)
 
+  describe "escapeCSV", ->
+    it "should not escape a normal string", ->
+      expect(ExportHistory.escapeCSV("abc")).toEqual("abc")
+
+    it "should excape all blacklisted symbols", ->
+      blacklist = ["+", "=", "-"]
+      for symbol in blacklist
+        expect(ExportHistory.escapeCSV("#{symbol}abc")).toEqual("'#{symbol}abc")
+
   describe "addNoteToTx", ->
     it "should add the correct note to a tx object", ->
       tx = { tx: 'asdf', note: null }
       spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && 'test_note')
       ExportHistory.addNoteToTx(tx)
       expect(tx.note).toEqual('test_note')
+
+    it "should escape the note if necessary", ->
+      tx = { tx: 'asdf', note: null }
+      spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && "=evil")
+      ExportHistory.addNoteToTx(tx)
+      expect(tx.note).toEqual("'=evil")
 
   describe "with transactions", ->
     beforeEach ->
