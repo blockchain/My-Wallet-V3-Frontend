@@ -65,6 +65,10 @@ function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, f
       .finally(() => $scope.busy = false);
   };
 
+  $scope.$watchGroup(['start.date', 'end.date'], () => {
+    $scope.history = null;
+  });
+
   // need to open/close uib-datepicker-popup for it to validate minDate
   $timeout(() => { $scope.start.open = $scope.end.open = false; }, 100);
 }
