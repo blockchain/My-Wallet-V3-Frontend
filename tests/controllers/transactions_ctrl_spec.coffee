@@ -127,8 +127,3 @@ describe "TransactionsCtrl", ->
 
       it "should read all transactions if on mobile", ->
         expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS')
-
-    describe "filter options on desktop", ->
-
-      it "should be ALL if not mobile", ->
-        expect(scope.filterTypes[0]).not.toEqual('ALL')
