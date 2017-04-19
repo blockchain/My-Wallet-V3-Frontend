@@ -1,5 +1,5 @@
 angular
-  .module('sharedDirectives')
+  .module('shared')
   .directive('publicHeader', publicHeader);
 
 publicHeader.$inject = ['$rootScope', '$location'];

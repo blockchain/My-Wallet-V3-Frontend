@@ -1,5 +1,5 @@
 angular
-  .module('sharedDirectives')
+  .module('shared')
   .directive('videoContainer', videoContainer);
 
 videoContainer.$inject = ['$window', '$timeout', '$sce'];

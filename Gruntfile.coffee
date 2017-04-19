@@ -74,10 +74,9 @@ module.exports = (grunt) ->
           'bower_components/angular-ui-select/dist/select.js'
           'bower_components/ng-file-upload/ng-file-upload-shim.min.js'
           'bower_components/ng-file-upload/ng-file-upload.min.js'
-          "build/js/sharedDirectives.js"
-          "build/js/sharedDirectives/public-header.directive.js"
-          "build/js/sharedDirectives/video-container.directive.js"
-          "build/js/sharedDirectives/scroll-in-view.directive.js"
+          "build/js/shared.module.js"
+          "build/js/sharedDirectives/*.js"
+          "build/js/sharedServices/*.js"
           "build/js/translations.js"
           "build/js/wallet-app.module.js"
           "build/js/whats-new.constant.js"
@@ -279,7 +278,7 @@ module.exports = (grunt) ->
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/sharedServices/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
         tasks: ['babel:build', 'includeSource', 'concat:wallet']
         options:
           spawn: false
@@ -315,7 +314,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','sharedServices/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
