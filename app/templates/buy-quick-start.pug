@@ -18,6 +18,7 @@
               tabindex="1"
               focus-when="status.ready"
               ng-change="updateLastInput('fiat'); transaction.fiat && getQuote();"
+              ng-model-options="{debounce: 100}"
               placeholder="{{placeholder}}"
               min="{{limits.absoluteMin(transaction.currency.code)}}"
               max="{{limits.absoluteMax(transaction.currency.code)}}"
@@ -46,6 +47,7 @@
               tabindex="1"
               min="0.00000001"
               ng-change="updateLastInput('btc'); transaction.btc && getQuote();"
+              ng-model-options="{debounce: 100}"
               placeholder="{{placeholder}}"
               required)
             div.input-group-btn
