@@ -23,7 +23,7 @@
           type="email"
           name="email"
           ng-model="fields.email"
-          placeholder="{{ 'OPTIONAL' | translate }}")
+          required)
         p.help-block(translate="RESET_2FA_REGISTERED_EMAIL_EXPLAIN")
       .form-group(ng-class="{'has-error': form.newEmail.$invalid && form.newEmail.$touched}")
         label(translate="RESET_2FA_NEW_EMAIL")
