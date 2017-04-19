@@ -11,7 +11,6 @@ describe "ExportHistory service", ->
       $rootScope = _$rootScope_
       Wallet = $injector.get("Wallet")
       ExportHistory = $injector.get("ExportHistory")
-      console.log ExportHistory
       MyBlockchainApi = $injector.get("MyBlockchainApi")
 
       Wallet.settings.currency = { code: 'USD' }
@@ -21,6 +20,19 @@ describe "ExportHistory service", ->
         getHistory: () -> $q.resolve()
 
       MyBlockchainApi.exportHistory = () ->
+
+  describe "json2csv", ->
+    it "should convert json to csv", ->
+      json = [{ a: 1, b: 'x' }, { a: 2, b: 'y' }, { a: 3, b: 'z' }]
+      csv = 'a,b\n1,"x"\n2,"y"\n3,"z"'
+      expect(ExportHistory.json2csv(json)).toEqual(csv)
+
+  describe "addNoteToTx", ->
+    it "should add the correct note to a tx object", ->
+      tx = { tx: 'asdf', note: null }
+      spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && 'test_note')
+      ExportHistory.addNoteToTx(tx)
+      expect(tx.note).toEqual('test_note')
 
   describe "with transactions", ->
     beforeEach ->
