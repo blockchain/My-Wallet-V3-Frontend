@@ -447,6 +447,7 @@
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
+  "SECOND_PASSWORD_INCORRECT_SHORT" : "Incorrect second password",
   "SET_SECOND_PASSWORD" : "Set Second Password",
   "SET_PASSWORD" : "Set Password",
   "UPGRADE_WALLET" : "Welcome to your Blockchain Wallet!",
