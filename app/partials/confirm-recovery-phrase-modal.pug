@@ -7,13 +7,13 @@
         i.ti-shield.prm
         span(translate="SECURITY_TIP")
     p(translate="DO_NOT_STORE_ON_COMPUTER").recovery-instruction-text
-    
+
     hr
     .row
       .col-xs-12
         p(translate="PRINTABLE_SHEET")
-        
-        
+
+
     .row
       .col-xs-12
         p.center
@@ -21,18 +21,20 @@
             span
               i.ti-printer.prm
               span(translate="PRINT_RECOVERY_SHEET")
-              
+
   span(ng-show="step==1")
     p.blue
       b
         i.ti-pencil.prm
         span(translate="WRITE_DOWN")
     p(translate="WRITE_DOWN_EXPLAIN").recovery-instruction-text
-    
+
     .row
       .col-xs-3(ng-repeat="word in recoveryPhrase | limitTo:4:offset track by $index")
         p.center
-          b {{ offset + $index + 1 }}. {{ word }}
+          b
+            | {{ offset + $index + 1 }}.
+            span(translate="no") {{ word }}
     .row
       .col-xs-12
         p.center
@@ -42,26 +44,26 @@
           a.btn.btn-inverse(ng-click="nextWords()" ng-hide="offset >= 8")
             span(translate="NEXT_4_WORDS").prm
             i.ti-arrow-right
-    
+
   span(ng-show="step==2")
     p.blue
       b
         i.ti-check.prm
         span(translate="VERIFY")
     p(translate="ENTER_WORDS").recovery-instruction-text
-    
+
     .row
       .col-xs-3(ng-repeat="word in words")
         .form-group(ng-class="{'has-error': word.error}")
           p(translate="{{'WORD_' + word.index}}")
           input.form-control(type="text" ng-model="word.value")
-    
+
   span(ng-show="step==3")
     .row
       .col-xs-12
         p.full-circle.center
           i.ti-check.big-white
-    .row 
+    .row
       .col-xs-12
         p
     .row
