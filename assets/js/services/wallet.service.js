@@ -93,6 +93,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
     if (wallet.my.wallet.isUpgradedToHD) {
       wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
+    } else {
+      wallet.goal.firstTime = true;
     }
     wallet.user.uid = uid;
     wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted;
@@ -1119,16 +1121,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     });
   };
 
-  wallet.disableRestrictToWhiteListedIPs = () => {
+  wallet.disableRestrictToWhiteListedIPs = () => $q((resolve, reject) => {
     wallet.settings_api.updateIPlockOn(false, () => {
       wallet.settings.restrictToWhitelist = false;
-      wallet.saveActivity(2);
-      $rootScope.$safeApply();
+      resolve();
     }, () => {
-      console.log('Failed');
-      $rootScope.$safeApply();
+      reject();
     });
-  };
+  });
 
   wallet.removeAlias = () => {
     return $q.resolve(wallet.settings_api.removeAlias()).then(
