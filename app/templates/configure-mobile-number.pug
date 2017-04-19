@@ -1,11 +1,11 @@
 .edit-mobile(ng-class="{'offset-flag': fullWidth}")
-  p.alt-font.f-16(translate="ENABLE_2FA_ENTER_MOBILE")
   form(ng-class="{'width-100 flex' : fullWidth}" role="form" name="mobileForm" ng-submit="changeMobile()")
     span(ng-hide="status.disableChangeBecause2FA()")
+      p.alt-font.f-16(translate="ENABLE_2FA_ENTER_MOBILE")
       bc-phone-number(
-        ng-model='fields.newMobile' 
-        default-country='{{ mobileDefaultCountry }}' 
-        preferred-countries='us ca gb au' 
+        ng-model='fields.newMobile'
+        default-country='{{ mobileDefaultCountry }}'
+        preferred-countries='us ca gb au'
         ng-disabled="status.busy || status.disableChangeBecause2FA()"
         ng-class="{'prl' : fullWidth}"
         name="mobile"
@@ -15,13 +15,13 @@
     div(ng-class="{'flex-1': fullWidth, 'mll': fullWidth}")
       button.button-muted.button-sm(
         type="button"
-        ng-if="!fullWidth" 
-        ng-click="cancel()" 
+        ng-if="!fullWidth"
+        ng-click="cancel()"
         translate="CANCEL"
       )
       button.button-primary(
-        type="submit" 
+        type="submit"
         ui-ladda="status.busy"
-        ng-disabled="mobileForm.mobile.$invalid || !numberChanged() || status.disableChangeBecause2FA()" 
-        ladda-translate="SAVE" 
+        ng-disabled="mobileForm.mobile.$invalid || !numberChanged() || status.disableChangeBecause2FA()"
+        ladda-translate="SAVE"
       )
