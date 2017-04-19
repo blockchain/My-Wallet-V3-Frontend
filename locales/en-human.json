@@ -965,6 +965,9 @@
     "TITLE": "Copy & Share Address",
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below."
   },
+  "COPY_AND_SHARE_IMPORTED_ADDRESS": {
+    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet."
+  },
   "SCAN": "Scan",
   "SIMPLE": "Simple",
   "CROSS_PLATFORM": "Cross-platform",
