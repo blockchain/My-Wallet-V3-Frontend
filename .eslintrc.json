@@ -10,6 +10,7 @@
         "typeSeparator": "dot",
         "nameStyle": "dash"
       }
-    ]
+    ],
+    "angular/function-type": [2, "named"]
   }
 }
