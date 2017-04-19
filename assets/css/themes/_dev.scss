@@ -1,5 +1,5 @@
 body.dev-theme {
-  *:not(.ad-btn):not(.ad-btn-image) {
+  *:not(.ad-btn):not(.ad-btn-image):not(.ignore-theme) {
     color: #76FF03 !important;
     background: #1e1e1e !important;
     background-color: #1e1e1e !important;

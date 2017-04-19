@@ -30,7 +30,7 @@
     .col-xs-12.mtl.flex-center.flex-justify(ng-show="pairWith == 'authenticator'")
       img(ng-hide="settings.googleAuthenticatorSecret" src="img/spinner.gif")
       .flex-column.flex-center(ng-if="settings.googleAuthenticatorSecret" ng-class="{'has-error': errors.authenticatorCode}")
-        qr.pal(text="settings.googleAuthenticatorSecret", size=100, image="true")
+        qr.pam.mam.bg-white.ignore-theme(text="settings.googleAuthenticatorSecret", size=100, image="true")
         .flex-column.flex-center
           p.width-75.left(translate="SCAN_QR_CODE_GA")
           input.form-control.width-75(type="text" ng-model="fields.authenticatorCode")
