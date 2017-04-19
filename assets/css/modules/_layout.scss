@@ -149,3 +149,12 @@
     left: 0px;
   }
 }
+
+.abs {
+  .bottom-right-footer {
+    @extend .pos-abs;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+}

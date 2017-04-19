@@ -45,13 +45,12 @@
             ng-show="activeSpendableAddresses().length > 0"
             ng-click="openTransferAll()"
           )
-          button.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+          button.btn.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
       include ./imported-addresses
 
   .row.spacing
-  .row.spacing
 
-  .row
+  .row.mvvl
     .col-xs-12
       a.button-default(
         ui-sref="wallet.common.settings.address_book"

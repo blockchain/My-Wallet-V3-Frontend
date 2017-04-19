@@ -14,7 +14,8 @@
           label.flex-between.flex-baseline
             span
               span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
-              helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER")
+              helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER" ng-hide="isToImportedAddress()")
+              helper-button(content="COPY_AND_SHARE_IMPORTED_ADDRESS.HELPER" ng-show="isToImportedAddress()")
             a.f-12.em-300(translate="VIEW_QR" ng-click="state.viewQR = true")
           .flex-row
             span.f-16.bg-grey.ph-25.pv-10.width-100(translate="no") {{ address() }}
@@ -24,8 +25,8 @@
       .group.mb-20
         .item
           .or-horizontal Or
-
-      .group.inline.mb-25
+        
+      .group.inline.mb-20
         .item.width-100
           label.capitalize(translate="ENTER_AMOUNT:")
           .flex-center
