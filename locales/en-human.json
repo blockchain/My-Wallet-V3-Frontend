@@ -1072,7 +1072,7 @@
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
-    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to the following account within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
+    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to Coinify's bank account below within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
