@@ -18,13 +18,19 @@
           a(ui-sref="public.reminder", translate="LOOK_IT_UP_HERE")
           span .
       .form-group(ng-class="{'has-error': form.email.$invalid && form.email.$touched}")
-        label(translate="RESET_2FA_REGISTERED_EMAIL")
-        input.form-control(
-          type="email"
-          name="email"
-          ng-model="fields.email"
-          required)
-        p.help-block(translate="RESET_2FA_REGISTERED_EMAIL_EXPLAIN")
+        .item
+          label(translate="RESET_2FA_REGISTERED_EMAIL")
+          div
+            input.form-control(
+              type="email"
+              name="email"
+              ng-model="fields.email"
+              required)
+            span.help-block
+              div(ng-show="form.email.$touched")
+                p(ng-show="form.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
+                p(ng-show="form.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
+            p.help-block(translate="RESET_2FA_REGISTERED_EMAIL_EXPLAIN")
       .form-group(ng-class="{'has-error': form.newEmail.$invalid && form.newEmail.$touched}")
         label(translate="RESET_2FA_NEW_EMAIL")
         input.form-control(
