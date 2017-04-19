@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ExportHistoryController', ExportHistoryController);
 
-function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, format, Wallet, activeIndex) {
+function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, format, Wallet, Alerts, ExportHistory, activeIndex) {
   $scope.limit = 50;
   $scope.incLimit = () => $scope.limit += 50;
 
@@ -56,11 +56,12 @@ function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, f
     let start = $scope.formatDate('/', $scope.start.date);
     let end = $scope.formatDate('/', $scope.end.date);
     let active = $scope.active.address || $scope.active.xpub;
-    Wallet.exportHistory(start, end, active)
+    ExportHistory.fetch(start, end, active)
       .then((data) => {
         $scope.history = data;
         $scope.canTriggerDownload && $scope.$broadcast('download');
       })
+      .catch((error) => { Alerts.displayError(error || 'UNKNOWN_ERROR'); })
       .finally(() => $scope.busy = false);
   };
 

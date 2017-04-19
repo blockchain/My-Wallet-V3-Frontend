@@ -2,6 +2,7 @@ describe "ExportHistoryController", ->
   $rootScope = undefined
   $controller = undefined
   Wallet = undefined
+  ExportHistory = undefined
   scope = undefined
 
   beforeEach angular.mock.module("walletApp")
@@ -12,6 +13,7 @@ describe "ExportHistoryController", ->
       $controller = _$controller_
       $q = $injector.get("$q")
       Wallet = $injector.get("Wallet")
+      ExportHistory = $injector.get("ExportHistory")
 
       Wallet.legacyAddresses = () -> [
         { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }
@@ -25,7 +27,7 @@ describe "ExportHistoryController", ->
         { label: "Something", index: 2, archived: true, extendedPublicKey: 'xpub3' }
       ]
 
-      Wallet.exportHistory = () -> $q.resolve()
+      ExportHistory.fetch = () -> $q.resolve()
 
   getCtrlScope = (activeIndex) ->
     scope = $rootScope.$new()
@@ -65,7 +67,7 @@ describe "ExportHistoryController", ->
   describe "submit", ->
     beforeEach ->
       scope = getCtrlScope('')
-      spyOn(Wallet, 'exportHistory').and.callThrough()
+      spyOn(ExportHistory, 'fetch').and.callThrough()
       spyOn(scope, 'formatDate').and.returnValue('date')
 
     it "should format the dates", ->
@@ -74,7 +76,7 @@ describe "ExportHistoryController", ->
 
     it "should call exportHistory", ->
       scope.submit()
-      expect(Wallet.exportHistory).toHaveBeenCalledWith('date', 'date', ['xpub1', 'xpub2', 'some_address', 'watch_address'])
+      expect(ExportHistory.fetch).toHaveBeenCalledWith('date', 'date', ['xpub1', 'xpub2', 'some_address', 'watch_address'])
 
     it "should toggle busy status", ->
       scope.submit()

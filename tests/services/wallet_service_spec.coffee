@@ -523,36 +523,3 @@ describe "walletServices", () ->
     it "should be null if not logged in", ->
       Wallet.status.isLoggedIn = false
       expect(Wallet.accounts()).toBe(null)
-
-  describe "exportHistory", ->
-    beforeEach ->
-      Wallet.settings.currency = { code: 'USD' }
-      MyBlockchainApi.exportHistory = () ->
-      spyOn(Alerts, 'displayError')
-
-    describe "with transactions", ->
-      beforeEach ->
-        history = [{ sent: 1, receive: 0, tx: 'asdf' }, { sent: 0, receive: 2, tx: 'qwer' }]
-        spyOn(MyBlockchainApi, 'exportHistory').and.returnValue(history)
-
-      it "should call API.exportHistory with correct arguments", ->
-        Wallet.exportHistory('01/01/2015', '01/01/2016', ['1asdf'])
-        expect(MyBlockchainApi.exportHistory).toHaveBeenCalledWith(['1asdf'], 'USD', { start: '01/01/2015', end: '01/01/2016' })
-
-      it "should convert to csv with notes and broadcast broadcast download event", (done) ->
-        spyOn(Wallet, 'getNote').and.callFake((hash) -> hash == 'asdf' && 'test_note')
-        spyOn($rootScope, '$broadcast')
-        Wallet.exportHistory().then (data) ->
-          expect(data).toEqual('sent,receive,tx,note\n1,0,"asdf","test_note"\n0,2,"qwer",""')
-          done()
-        $rootScope.$digest()
-
-    describe "with no transactions", ->
-      beforeEach ->
-        spyOn(MyBlockchainApi, 'exportHistory').and.returnValue([])
-
-      it "should show an error", (done) ->
-        Wallet.exportHistory().finally ->
-          expect(Alerts.displayError).toHaveBeenCalledWith('NO_HISTORY')
-          done()
-        $rootScope.$digest()
