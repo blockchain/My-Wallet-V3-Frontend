@@ -329,7 +329,7 @@
   "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
-  "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Please contact support.",
+  "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Try again.",
   "RECOVERY_BEFORE_SECOND_PASSWORD": "Backup your funds first!",
   "RECOVERY_BEFORE_SECOND_EXPLAINER": "We highly recommend you backup your wallet's recovery phrase before setting a second password. Backing up your wallet will ensure your bitcoins are safe in case you lose your password. For your security, we do not keep any passwords on file.",
   "BACKUP_NOW": "Backup Now",
