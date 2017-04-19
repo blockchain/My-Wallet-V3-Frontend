@@ -6,3 +6,4 @@
     div(ng-if="vm.onStep('verify')" ng-include="'partials/sfox/verify.pug'" ng-controller="SfoxVerifyController")
     div(ng-if="vm.onStep('link')" ng-include="'partials/sfox/link.pug'" ng-controller="SfoxLinkController")
     div(ng-if="vm.onStep('buy')" ng-include="'partials/sfox/buy.pug'" ng-controller="SfoxBuyController")
+  contact-support-footer.abs(ng-hide="inMobileBuy")
