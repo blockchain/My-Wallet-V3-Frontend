@@ -37,11 +37,20 @@ function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, f
   $scope.active = $scope.activeCount === 1
     ? all : $scope.targets.filter(t => t.index.toString() === activeIndex)[0];
 
+  let roundDate = (d) => {
+    d = new Date(d);
+    d.setHours(0);
+    d.setMinutes(0);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+    return d;
+  };
+
   $scope.format = 'dd/MM/yyyy';
   $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
 
-  $scope.start = { open: true, date: Date.now() - 604800000 };
-  $scope.end = { open: true, date: Date.now() };
+  $scope.start = { open: true, date: roundDate(Date.now() - 604800000) };
+  $scope.end = { open: true, date: roundDate(Date.now()) };
 
   $scope.formatDate = (sep, date) => $filter('date')(date, `dd${sep}MM${sep}yyyy`);
 
