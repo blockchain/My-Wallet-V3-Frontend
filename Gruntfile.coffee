@@ -77,7 +77,7 @@ module.exports = (grunt) ->
           "build/js/shared.module.js"
           "build/js/sharedDirectives/*.js"
           "build/js/sharedServices/*.js"
-          "build/js/translations.js"
+          "build/js/wallet-translations.module.js"
           "build/js/wallet-app.module.js"
           "build/js/whats-new.constant.js"
           'build/js/landingCtrl.js'
@@ -100,7 +100,7 @@ module.exports = (grunt) ->
       wallet:
         src: [
           'node_modules/babel-polyfill/dist/polyfill.js'
-          'build/js/core/core.module.js'
+          'build/js/core/wallet-app.core.module.js'
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/**/*.js'
@@ -117,7 +117,7 @@ module.exports = (grunt) ->
           'bower_components/qrcode/lib/qrcode.js'
           'bower_components/angular-qr/src/angular-qr.js'
           'bower_components/compare-versions/index.js'
-          'build/js/walletLazyLoad.js'
+          'build/js/wallet-lazy-load.module.js'
         ]
 
         dest: "build/js/wallet.js"

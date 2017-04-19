@@ -17,11 +17,10 @@ const modules = [
   'ngAnimate',
   'ngSanitize',
   'pascalprecht.translate',
-  'bcTranslateStaticFilesLoader',
   'ui.bootstrap',
   'ui.router',
-  'translations',
   'shared',
+  'walletTranslations',
   'oc.lazyLoad',
   // Not needed for landing page, but loading it now for the config step below:
   'ui.select',

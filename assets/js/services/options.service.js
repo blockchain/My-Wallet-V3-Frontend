@@ -1,5 +1,5 @@
 angular
-  .module('options', [])
+  .module('walletApp')
   .factory('Options', Options);
 
 Options.$inject = ['$http', '$rootScope', 'BlockchainConstants'];

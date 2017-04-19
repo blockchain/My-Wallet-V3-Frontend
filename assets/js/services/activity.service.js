@@ -1,5 +1,5 @@
 angular
-  .module('activity', [])
+  .module('walletApp')
   .factory('Activity', Activity);
 
 Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet', 'buySell'];

@@ -5,21 +5,19 @@ describe "Public Header directive", ->
   isoScope = undefined
 
   beforeEach module("walletApp")
-  beforeEach module("shared")
+  # beforeEach module("shared")
 
   beforeEach inject((_$compile_, _$rootScope_) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
     $rootScope.rootURL = 'blockchain.info'
-
-    return
   )
 
   beforeEach ->
-    element = ($compile)('<public-header></public-header')($rootScope)
+    element = ($compile)('<public-header></public-header>')($rootScope)
     $rootScope.$digest()
     isoScope = element.isolateScope()
     isoScope.$digest()
 
-  it "shold have access to the rootURL", ->
+  it "should have access to the rootURL", ->
     expect(isoScope.rootURL).toBe('blockchain.info')

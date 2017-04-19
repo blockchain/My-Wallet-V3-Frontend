@@ -2,12 +2,6 @@ const modules = [
   'walletApp.core',
 
   'walletFilters',
-  'walletServices',
-  'securityCenter',
-  'didYouKnow',
-  'activity',
-  'adverts',
-  'options',
   'ui.router',
   'ui.bootstrap',
   'ngCookies',
@@ -19,10 +13,11 @@ const modules = [
   'ngSanitize',
   'ja.qr',
   'pascalprecht.translate',
-  'bcTranslateStaticFilesLoader',
   'angular-inview',
   'webcam',
   'bcQrReader',
+
+  'shared',
 
   'bcPhoneNumber',
 
