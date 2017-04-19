@@ -986,6 +986,7 @@
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
   "SELL_BITCOIN": "Sell Bitcoin",
+  "ORDER_HISTORY": "Order History",
   "BANK_TRANSFER_HEADING": "Bank Transfer",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<a>Click here.</a>",
