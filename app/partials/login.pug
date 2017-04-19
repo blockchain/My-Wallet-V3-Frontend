@@ -11,7 +11,7 @@
       p.alt-font.f-16(translate="LOGIN_BELOW")
 
   // GUID & Password fields
-  form.bc-form.mt-30.form-horizontal.clearfix(name="loginForm" ng-submit="browser.disabled || login()" role="form" autocomplete="off" novalidate)
+  form.bc-form.mt-30.form-horizontal.clearfix(name="loginForm" ng-submit="browser.disabled || login()" role="form" autocomplete="off" novalidate method="POST")
     browser-detection(result="browser")
     fieldset(ng-disabled="browser.disabled || status.busy")
       .group.mb-15(ng-class="{'has-error': errors.uid}")
@@ -44,7 +44,7 @@
               span
             p.form-control-static(ng-show="settings.twoFactorMethod == 5")
               img(ng-show="status.resending" src="img/spinner.gif")
-              a(ng-click="resend()" ng-hide="status.resending" translate="RESEND") 
+              a(ng-click="resend()" ng-hide="status.resending" translate="RESEND")
       .group.full.mt-15
         button.button-primary.button-heavy(
           type="submit"
@@ -56,5 +56,5 @@
   .ptl.flex-end
     div(ng-hide="didLogout")
       span(translate="HAVING_TROUBLE")
-      |  
+      | &nbsp;
       a(ui-sref="public.help" translate="VIEW_OPTIONS")

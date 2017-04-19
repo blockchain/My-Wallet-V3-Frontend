@@ -304,7 +304,8 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.setPrivateKey = (priv) => {
-    $scope.sendForm.priv.$setTouched();
+    let field = $scope.sendForm.priv;
+    priv ? field.$setTouched() : field.$setUntouched();
     $scope.transaction.priv = priv;
   };
 
@@ -316,6 +317,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     let fee = $scope.advanced ? tx.fee : undefined;
     if (origin === lastOrigin) return;
     lastOrigin = origin;
+    $scope.setPrivateKey();
     $scope.payment.from(origin, fee);
   };
 
