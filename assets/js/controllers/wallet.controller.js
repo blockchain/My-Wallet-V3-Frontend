@@ -165,7 +165,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Alerts.clear();
         Wallet.goal.auth = void 0;
       }
-      if (Wallet.goal.firstTime) {
+      if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         buyStatus.canBuy().then((canBuy) => {
           let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({

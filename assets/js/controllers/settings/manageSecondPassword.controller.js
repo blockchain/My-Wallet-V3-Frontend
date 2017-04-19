@@ -15,7 +15,13 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
 
   $scope.walletStatus = Wallet.status;
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
-  $scope.validateSecondPassword = Wallet.validateSecondPassword;
+  $scope.isSecondPassword = Wallet.validateSecondPassword;
+
+  $scope.validateSecondPassword = (pw) => (
+    $scope.settings.secondPassword
+      ? Wallet.validateSecondPassword(pw)
+      : !$scope.isPasswordHint(pw) && !$scope.isMainPassword(pw)
+  );
 
   $scope.reset = () => {
     $scope.fields = {
