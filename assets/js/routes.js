@@ -104,10 +104,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         body: {
           templateUrl: 'partials/public.pug',
           controller: function ($scope, $state, languages) {
-            $scope.path = $state.current.url;
+            let overflows = ['/reset-2fa'];
+
+            $scope.state = $state;
+            $scope.path = $scope.state.current.url;
             $scope.languages = languages.languages;
             $scope.$watch(languages.get, (code) => {
               $scope.language = languages.mapCodeToName(code);
+            });
+            $scope.$watch('state.current.url', (newVal) => {
+              $scope.isUIOverflow = overflows.indexOf(newVal) > -1;
             });
           }
         }
