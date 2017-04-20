@@ -98,6 +98,7 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
   }
 
   function getBankAccounts () {
+    console.log('getBankAccounts', service.getExchange())
     return $q.resolve(service.getExchange().bank.getAll())
       .then(accounts => {
         if (accounts) {
@@ -265,7 +266,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function openSellView (trade, buySellOptions = { sell: true }) {
+  function openSellView (trade, accounts, buySellOptions = { sell: true }) {
+    console.log('openSellView', trade, accounts)
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',
@@ -274,8 +276,8 @@ function buySell ($rootScope, $timeout, $q, $state, $uibModal, $uibModalStack, W
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        accounts: () => service.getBankAccounts(),
         trade: () => trade,
+        accounts: () => accounts,
         buySellOptions: () => buySellOptions,
         options: () => Options.get()
       }

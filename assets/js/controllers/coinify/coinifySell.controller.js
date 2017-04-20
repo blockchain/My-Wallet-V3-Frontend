@@ -35,6 +35,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
   this.isSweepTransaction = buySellOptions.isSweepTransaction;
+  this.paymentAccount = accounts.accounts[0];
+
+  console.log('coinify sell ctrl this', this)
 
   $scope.bankAccount = {
     account: { currency: null },
@@ -137,9 +140,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         this.goTo('email');
       } else if (!$scope.exchange.user) {
         this.goTo('accept-terms');
-      } else if (!$scope.bankAccounts || !$scope.bankAccounts.length) {
+      } else if (!this.accounts) {
         this.goTo('account-info');
-      } else if ($scope.bankAccounts) {
+      } else if (this.accounts) {
         this.goTo('bank-link');
       } else {
         this.goTo('summary');
@@ -250,6 +253,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   }
 
   this.selectAccount = (account) => {
+    console.log('selectAccount', account)
     this.selectedBankAccount = account;
     this.bankId = account.id;
   };

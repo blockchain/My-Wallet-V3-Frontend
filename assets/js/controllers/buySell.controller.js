@@ -42,10 +42,10 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       }
     };
 
-    $scope.sell = (trade, options) => {
+    $scope.sell = (trade, accounts, options) => {
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
-        buySell.openSellView(trade, options).finally(() => {
+        buySell.openSellView(trade, accounts, options).finally(() => {
           $scope.onCloseModal();
         });
       }

@@ -7,6 +7,7 @@ angular
       bankAccount: '<',
       holderCountry: '<',
       selectedBankCountry: '<',
+      paymentAccount: '<',
       buildBankHolder: '&',
       selectCountry: '&',
       close: '&',
@@ -49,13 +50,19 @@ function CoinifySellAccountHolderController ($q, buySell, Alerts, $scope) {
     this.status.waiting = true;
     if (!this.bankAccount.account.currency || !this.bankAccount.holder.name || !this.bankAccount.bank.address.country) return;
     console.log('createBankAccount', this.bankAccount);
-    $q.resolve(buySell.createBankAccount(this.bankAccount))
-      .then(result => {
-        console.log('result', result);
-        this.onSuccess({bankId: result.id});
-      })
-      .then(() => this.onComplete())
-      .catch(e => handleError(e));
+    this.paymentAccount.add(this.bankAccount).then(res => {
+      console.log('add bank account', res._account.account);
+      this.onSuccess({bankId: res._account.account.id});
+    })
+    .then(this.onComplete)
+    .catch(handleError);
+    // $q.resolve(buySell.createBankAccount(this.bankAccount))
+    //   .then(result => {
+    //     console.log('result', result);
+    //     this.onSuccess({bankId: result.id});
+    //   })
+    //   .then(() => this.onComplete())
+    //   .catch(e => handleError(e));
       // .then(data => handleAfterAccountCreate(data))
     this.status = {};
   };
