@@ -1,6 +1,7 @@
 describe "SfoxVerifyController", ->
   scope = undefined
   Wallet = undefined
+  Options = undefined
   $rootScope = undefined
   $controller = undefined
   $q = undefined
@@ -15,9 +16,15 @@ describe "SfoxVerifyController", ->
 
       Wallet = $injector.get("Wallet")
       Upload = $injector.get("Upload")
+      Options = $injector.get("Options")
+      
+      Options =
+        options:
+          partners:
+            sfox:
+              states: ['NY', 'PA', 'CA']
       
       $httpBackend = $injector.get("$httpBackend")
-
       $httpBackend.expectGET('/Resources/wallet-options.json').respond({partners: {sfox: {plaid: "1"}}})
 
       $rootScope.installLock = () ->
@@ -54,6 +61,7 @@ describe "SfoxVerifyController", ->
 
     $controller "SfoxVerifyController",
       $scope: scope
+      Options: Options
     scope
 
   beforeEach ->

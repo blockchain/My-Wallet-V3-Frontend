@@ -4,17 +4,8 @@ angular
 
 function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modals, Upload, QA, Options) {
   let exchange = $scope.vm.exchange;
-
-  let processOptions = (options) => {
-    let states = options.partners.sfox.states;
-    $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
-  };
-
-  if (Options.didFetch) {
-    processOptions(Options.options);
-  } else {
-    Options.get().then(processOptions);
-  }
+  let states = Options.options.partners.sfox.states;
+  $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
 
   $scope.openHelper = modals.openHelper;
 
