@@ -18,7 +18,7 @@
               helper-button(content="COPY_AND_SHARE_IMPORTED_ADDRESS.HELPER" ng-show="isToImportedAddress()")
             a.f-12.em-300(translate="VIEW_QR" ng-click="state.viewQR = true")
           .flex-row
-            span.f-16.bg-grey.ph-25.pv-10.width-100(translate="no") {{ address() }}
+            span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden(translate="no") {{ address() }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browserCanExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
             span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
 
@@ -89,7 +89,7 @@
           .flex-justify.flex-center.flex-column.mv-25
             qr(text="paymentRequestURL(true)" size=250 image="true")
           .flex-row
-            span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden {{ paymentRequestURL(true) }}
+            span.f-16.bg-grey.ph-25.pv-10.text-overflow-hidden {{ paymentRequestURL(true) }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isBitcoinURICopied || !browserCanExecCommand" copy-content="{{ paymentRequestURL(true) }}" ng-click="state.isBitcoinURICopied = true")
             span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied" ng-mouseleave="state.isBitcoinURICopied = false")
 
