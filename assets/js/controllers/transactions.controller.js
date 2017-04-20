@@ -74,7 +74,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.$on('$destroy', unsub);
 
   // Searching and filtering
-  if (window.innerWidth <= 768) {
+  if ($scope.$root.size.sm || $scope.$root.size.xs) {
     $scope.filterTypes = ['ALL_TRANSACTIONS', 'SENT', 'RECEIVED', 'TRANSFERRED'];
   } else {
     $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];

@@ -33,9 +33,16 @@ describe "TransactionsCtrl", ->
       Wallet.legacyAddresses = () -> ['1A2B3C']
       Wallet.accounts = () -> MyWallet.wallet.hdwallet.accounts
 
-      window.innerWidth = 415
-
       scope = $rootScope.$new()
+
+      scope.root = {
+        size: {
+          xs: false,
+          sm: false,
+          md: false,
+          lg: true
+        }
+      }
 
       $controller "TransactionsCtrl",
         $scope: scope,
@@ -123,7 +130,7 @@ describe "TransactionsCtrl", ->
         txs = scope.filterByAddress({address:'123'})
         expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
 
-    describe "filter options on mobile", ->
+    describe "filter options on desktop", ->
 
-      it "should read all transactions if on mobile", ->
-        expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS')
+      it "should read all if size is lg", ->
+        expect(scope.filterTypes[0]).toEqual('ALL')
