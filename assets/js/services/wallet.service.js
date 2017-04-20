@@ -1150,35 +1150,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.isValidBIP39Mnemonic = (mnemonic) =>
     MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
 
-  wallet.exportHistory = (start, end, active) => {
-    let json2csv = (json) => {
-      let headers = Object.keys(json[0]);
-      let makeRow = (obj) => JSON.stringify(Object.keys(obj).map(key => obj[key])).slice(1, -1);
-      return [headers.join(',')].concat(json.map(makeRow)).join('\n');
-    };
-
-    let addTxNote = (tx) => {
-      tx.note = wallet.getNote(tx.tx) || '';
-      return tx;
-    };
-
-    let currency = wallet.settings.currency;
-    let p = MyBlockchainApi.exportHistory(active, currency.code, { start, end });
-    return $q.resolve(p)
-      .then(history => {
-        if (!history.length) return $q.reject('NO_HISTORY');
-        return json2csv(history.map(addTxNote));
-      })
-      .catch(e => {
-        let error = e.message || e;
-        if (typeof error === 'string' && error.indexOf('Too many transactions') > -1) {
-          error = 'TOO_MANY_TXS';
-        }
-        Alerts.displayError(error || 'UNKNOWN_ERROR');
-        return $q.reject(error);
-      });
-  };
-
   wallet.removeSecondPassword = (password, successCallback, errorCallback) => {
     let success = () => {
       wallet.settings.secondPassword = false;

@@ -5,9 +5,15 @@
 .btn-info {
   background: $mid-grey;
   border-color: $mid-grey;
-  font-size: 100%;
-  font-weight: normal;
 }
+
+ul.uib-datepicker-popup {
+  padding: 10px;
+  .uib-button-bar {
+    padding: 10px 0px 0px 0px;
+  }
+}
+
 
 .btn-info:hover, .btn-info:focus, .btn-info.focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
   background: darken($mid-grey, 5%);

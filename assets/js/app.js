@@ -31,7 +31,7 @@ const modules = [
 
 angular.module('walletApp', modules)
 .config(($compileProvider, uiSelectConfig, $ocLazyLoadProvider) => {
-  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|data):/);
   uiSelectConfig.theme = 'bootstrap';
 
   // @if !PRODUCTION
