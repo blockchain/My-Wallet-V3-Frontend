@@ -24,12 +24,12 @@
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
-      "Q": "How do I buy Bitcoin?",
+      "Q": "How do I buy bitcoin?",
       "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
     },
     "CAN_I_BUY_UNINVITED": {
-      "Q": "Can I buy Bitcoin?",
-      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <span class='pointer blue'>click here</span>."
+      "Q": "Can I buy bitcoin?",
+      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <a>click here</a>."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
@@ -665,7 +665,8 @@
   "MOBILE_NUMBER_TOOLTIP" : "@:MOBILE_NUMBER_EXPLAIN",
   "2FA_TOOLTIP" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt.",
   "BLOCK_TOR_TOOLTIP" : "Prevent IP addresses that are known to be part of the Tor anonymizing network from accessing your wallet.",
-  "ALL" : "All",
+  "ALL_ACCOUNTS" : "All Accounts",
+  "ALL_TRANSACTIONS": "All Transactions",
   "NOTE_LC" : "Note:",
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
@@ -932,7 +933,7 @@
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",
   "EXISTING_USERS": "Existing Users",
-  "EXISTING_USERS_COPY": "If you have previously created a Blockchain Wallet click below to login.",
+  "EXISTING_USERS_COPY": "If you have previously created a Blockchain Wallet, click below to login.",
   "LOGIN_NOW": "Login Now",
   "OR_LOGIN": "or Login",
   "HOW_IT_WORKS": "How It Works",
@@ -974,7 +975,7 @@
   "ACCESS_ANYWHERE": "Desktop, iOS and Android apps allow you to access your Bitcoin wallet from any device, anytime, anywhere.",
   "GLOBAL": "Global",
   "SAFE_AND_SECURE": "Safe & Secure",
-  "SECURITY_INFO": "Our step-by-step Security Center helps you backup your funds, and protect them from unauthorized access.",
+  "SECURITY_INFO": "Our step-by-step Security Center helps you backup your funds and protect them from unauthorized access.",
   "SUPPORTED": "Supported",
   "SOPHISTICATED": "Sophisticated",
   "SOPHISTICATED_INFO": "Hierarchical deterministic addresses. Dynamic transaction fees. Monitoring and spending from Watch Only addresses.",
@@ -1203,9 +1204,9 @@
   "LANDING": {
     "NEW_TO_BITCOIN" : "New To Bitcoin?",
     "WHAT_IS_BITCOIN": "What is Bitcoin?",
-    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries, which translates to greater control of funds and lower fees.",
     "WHY_USE" : "Why use it?",
-    "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
+    "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure, and immutable. Its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency, so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
     "" : ""
   },
@@ -1374,6 +1375,7 @@
   "LINK_COPIED": "Link Copied To Clipboard!",
   "BUY_SELL_BITCOIN": "Buy Bitcoin",
   "SHOW_MORE": "Show more",
+  "RECEIVE_HELPER": "Copy a receive address to your clipboard.",
   "EMAIL_SENT": "Email Sent",
   "": ""
 }

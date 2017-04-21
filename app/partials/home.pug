@@ -14,7 +14,8 @@ blocket-loading(loading="!isWalletInitialized()")
             fiat-or-btc(btc="getLegacyTotal()")
           ul(ng-show="activeLegacyAddresses().length <= 5")
             li.flex-between.border-bottom-light.mid-grey(ng-repeat="address in activeLegacyAddresses()")
-              span(translate="no") {{address.label ? address.label : address.address}}
+              .width-60.width-40-mobile
+                span.text-overflow-hidden(title="{{address.address}}") {{address.label ? address.label : address.address}}
               fiat-or-btc(btc="address.balance")
           li.flex-between.basic-grey.em-500
             span Total

@@ -14,7 +14,7 @@ function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, f
 
   let all = {
     index: '',
-    label: $translate.instant('ALL'),
+    label: $translate.instant('ALL_ACCOUNTS'),
     address: accounts.map(a => a.extendedPublicKey).concat(addresses)
   };
 

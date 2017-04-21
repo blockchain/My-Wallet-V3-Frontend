@@ -35,6 +35,13 @@ describe "TransactionsCtrl", ->
 
       scope = $rootScope.$new()
 
+      scope.root = {
+        size: {
+          xs: true,
+          lg: false
+        }
+      }
+
       $controller "TransactionsCtrl",
         $scope: scope,
 
@@ -100,21 +107,18 @@ describe "TransactionsCtrl", ->
 
         result = scope.filterByType(tx)
         expect(result).toBe(true)
-    
+
     describe "checkLabelDiff", ->
-      
+
       it "should return the address when the label is the same as the address", ->
         label = 'abc'
         address = 'abc'
-        
         result = scope.checkLabelDiff(label, address)
         expect(result).toBe('abc')
-        
-      
+
       it "should return a concatenate combination when the label is different from the address", ->
         label = 'abc'
         address = 'bcd'
-        
         result = scope.checkLabelDiff(label, address)
         expect(result).toBe('abc, bcd')
 
@@ -123,3 +127,8 @@ describe "TransactionsCtrl", ->
       it "should return all transactions associated with an address", ->
         txs = scope.filterByAddress({address:'123'})
         expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
+
+    describe "filter options", ->
+
+      it "should read all transactions on mobile", ->
+        expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS')
