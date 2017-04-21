@@ -79,6 +79,7 @@ module.exports = (grunt) ->
           "build/js/sharedServices/*.js"
           "build/js/wallet-translations.module.js"
           "build/js/wallet-filters.module.js"
+          "build/js/filters/*.js"
           "build/js/wallet-app.module.js"
           "build/js/constants/*.js"
           'build/js/landingCtrl.js'
@@ -107,6 +108,7 @@ module.exports = (grunt) ->
           'build/js/controllers/**/*.js'
           'build/js/components/*.js'
           'build/js/directives/*.js'
+          'build/js/filters/*.js'
           'bower_components/angular-audio/app/angular.audio.js'
           'bower_components/angular-inview/angular-inview.js'
           'bower_components/angular-cookies/angular-cookies.min.js'
@@ -278,7 +280,7 @@ module.exports = (grunt) ->
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/sharedServices/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/constants/**/*.js','assets/js/*.js']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/sharedServices/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/constants/**/*.js','assets/js/filters/**/*.js','assets/js/*.js']
         tasks: ['babel:build', 'includeSource', 'concat:wallet']
         options:
           spawn: false
@@ -314,7 +316,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','sharedServices/**/*.js','directives/**/*.js','constants/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','sharedServices/**/*.js','directives/**/*.js','constants/**/*.js','filters/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
