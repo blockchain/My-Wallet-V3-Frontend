@@ -2,8 +2,8 @@ angular
   .module('walletApp')
   .controller('CoinifyMediumController', CoinifyMediumController);
 
-function CoinifyMediumController ($scope, $timeout, Alerts, buySell) {
-  $scope.installLock();
+function CoinifyMediumController ($scope, $timeout, AngularHelper, Alerts, buySell) {
+  AngularHelper.installLock.call($scope);
   $scope.$timeout = $timeout;
   $scope.limits = buySell.limits;
   let { quote, baseFiat, fiatCurrency } = $scope.vm;

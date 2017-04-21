@@ -207,5 +207,5 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     $scope.initialize();
   });
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

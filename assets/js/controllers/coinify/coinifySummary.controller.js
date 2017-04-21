@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, currency, Alerts, buyMobile) {
+function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, buySell, currency, Alerts, buyMobile) {
   let medium = $scope.vm.medium;
   let fiatCurrency = $scope.vm.fiatCurrency;
   let limits = $scope.limits = buySell.limits;
@@ -67,5 +67,5 @@ function CoinifySummaryController ($scope, $q, $timeout, Wallet, buySell, curren
     $scope.$parent.rateForm = $scope.rateForm;
   });
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

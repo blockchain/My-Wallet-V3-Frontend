@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySignupController', CoinifySignupController);
 
-function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currency) {
+function CoinifySignupController ($scope, $stateParams, AngularHelper, Alerts, buySell, currency) {
   let exchange = buySell.getExchange();
   let { fiatCurrency, refreshQuote } = $scope.vm;
 
@@ -27,5 +27,5 @@ function CoinifySignupController ($scope, $stateParams, Alerts, buySell, currenc
       .then($scope.free);
   };
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }
