@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('settingsForm', settingsForm);
 
-function settingsForm () {
+function settingsForm (AngularHelper) {
   const directive = {
     restrict: 'A',
     scope: {},
@@ -30,7 +30,7 @@ function settingsForm () {
 
         scope.$parent.form.$setPristine();
         scope.$parent.form.$setUntouched();
-        scope.$parent.$root.$safeApply(scope.$parent);
+        AngularHelper.$safeApply(scope.$parent);
       });
     }
   };

@@ -17,20 +17,15 @@ describe "SfoxVerifyController", ->
       Wallet = $injector.get("Wallet")
       Upload = $injector.get("Upload")
       Options = $injector.get("Options")
-      
+
       Options =
         options:
           partners:
             sfox:
               states: ['NY', 'PA', 'CA']
-      
+
       $httpBackend = $injector.get("$httpBackend")
       $httpBackend.expectGET('/Resources/wallet-options.json').respond({partners: {sfox: {plaid: "1"}}})
-
-      $rootScope.installLock = () ->
-        scope.locked = false;
-        scope.lock = () -> scope.locked = true;
-        scope.free = () -> scope.locked = false;
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('siftScience', siftScience);
 
-function siftScience ($sce, $rootScope, Options) {
+function siftScience ($sce, $rootScope, AngularHelper, Options) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -67,7 +67,7 @@ function siftScience ($sce, $rootScope, Options) {
           return;
       }
 
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     window.addEventListener('message', receiveMessage, false);
