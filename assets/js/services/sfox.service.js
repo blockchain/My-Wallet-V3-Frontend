@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($rootScope, $q, Alerts, modals, Options) {
+function sfox ($q, Alerts, modals, Options, Env) {
   const watching = {};
 
   const service = {
@@ -20,11 +20,13 @@ function sfox ($rootScope, $q, Alerts, modals, Options) {
   return service;
 
   function init (sfox) {
-    return Options.get().then(options => {
-      sfox.api.production = $rootScope.sfoxUseStaging === null ? $rootScope.isProduction : !Boolean($rootScope.sfoxUseStaging);
-      sfox.api.apiKey = $rootScope.sfoxApiKey || options.partners.sfox.apiKey;
-      if (sfox.trades) service.watchTrades(sfox.trades);
-      sfox.monitorPayments();
+    return Env.then((env) => {
+      return Options.get().then(options => {
+        sfox.api.production = env.sfoxUseStaging === null ? env.isProduction : !Boolean(env.sfoxUseStaging);
+        sfox.api.apiKey = env.sfoxApiKey || options.partners.sfox.apiKey;
+        if (sfox.trades) service.watchTrades(sfox.trades);
+        sfox.monitorPayments();
+      });
     });
   }
 

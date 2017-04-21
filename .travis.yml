@@ -9,6 +9,17 @@ before_install:
 - gem install sass
 before_script:
 - node_modules/.bin/semistandard --verbose | snazzy
+- ./node_modules/.bin/eslint assets/js/*.module.js
+- ./node_modules/.bin/eslint assets/js/components/*.js
+- ./node_modules/.bin/eslint assets/js/constants/*.js
+- # ./node_modules/.bin/eslint assets/js/controllers/*.js
+- # ./node_modules/.bin/eslint assets/js/core/*.js
+- # ./node_modules/.bin/eslint assets/js/directives/*.js
+- ./node_modules/.bin/eslint assets/js/filters/*.js
+- ./node_modules/.bin/eslint assets/js/services/*.js
+- ./node_modules/.bin/eslint assets/js/sharedDirectives/*.js
+- ./node_modules/.bin/eslint assets/js/sharedServices/*.js
+- # ./node_modules/.bin/eslint assets/js/**/*
 script:
 - make build
 - make test

@@ -1,6 +1,10 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
-function LandingCtrl ($scope, $state, $sce, languages) {
+function LandingCtrl ($scope, $state, $sce, languages, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   $scope.fields = {
     email: undefined
   };

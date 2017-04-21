@@ -20,10 +20,10 @@ regex = /window\.open/
 Dir.glob(['assets/js/**/*.js']) do |path|
   matches = File.read(path).match(regex)
   if matches
-    if path == "assets/js/app.js" && matches.length <= 1
+    if path == "assets/js/sharedServices/browser-helper.service.js" && matches.length <= 1
       break
     end
-    puts path + " contains window.open, use $rootScope.safeWindowOpen() instaed"
+    puts path + " contains window.open, use BrowserHelper.safeWindowOpen() instaed"
     puts ""
     didMatch = true
   end
