@@ -23,6 +23,16 @@ function CoinifySellAccountInfoController (buySell, Alerts, $scope) {
     this.showDanish = true;
   }
 
+  const insertSpaces = (str) => {
+    let s = str.replace(/[^\dA-Z]/g, ''); // sanitize
+    return s.replace(/.{4}/g, (a) => a + ' ');
+  };
+
+  this.formatIban = () => {
+    let num = this.bankAccount.account.number;
+    this.bankAccount.account.number = insertSpaces(num);
+  };
+
   this.turnOffIbanError = () => this.ibanError = false;
 
   this.isDisabled = () => !this.bankAccount.account.number || !this.bankAccount.account.bic;

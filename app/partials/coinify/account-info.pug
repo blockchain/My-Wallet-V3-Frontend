@@ -17,7 +17,7 @@
             input.form-control(
               type="text"
               ng-model="$ctrl.bankAccount.account.number"
-              ng-change="setParentError(); $ctrl.turnOffIbanError();"
+              ng-change="setParentError(); $ctrl.turnOffIbanError(); $ctrl.formatIban()"
               name="bankIban"
               tabindex="1"
               placeholder=""
