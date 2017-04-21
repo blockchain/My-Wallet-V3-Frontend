@@ -78,6 +78,7 @@ module.exports = (grunt) ->
           "build/js/sharedDirectives/*.js"
           "build/js/sharedServices/*.js"
           "build/js/wallet-translations.module.js"
+          "build/js/wallet-filters.module.js"
           "build/js/wallet-app.module.js"
           "build/js/constants/*.js"
           'build/js/landingCtrl.js'
@@ -106,7 +107,6 @@ module.exports = (grunt) ->
           'build/js/controllers/**/*.js'
           'build/js/components/*.js'
           'build/js/directives/*.js'
-          'build/js/filters.js'
           'bower_components/angular-audio/app/angular.audio.js'
           'bower_components/angular-inview/angular-inview.js'
           'bower_components/angular-cookies/angular-cookies.min.js'
