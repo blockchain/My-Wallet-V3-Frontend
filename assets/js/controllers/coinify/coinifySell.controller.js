@@ -35,9 +35,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
   this.isSweepTransaction = buySellOptions.isSweepTransaction;
-  this.paymentAccount = accounts.accounts[0];
+  if (accounts) this.paymentAccount = accounts.accounts[0];
 
-  console.log('coinify sell ctrl this', this)
+  console.log('coinify sell ctrl this', this);
 
   $scope.bankAccount = {
     account: { currency: null },
@@ -60,7 +60,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.assignFiatHelper = (currencyType) => {
-    console.log('assignFiatHelper', $scope.transaction)
+    console.log('assignFiatHelper', $scope.transaction);
     $scope.transaction.currency = $scope.trade.quote[currencyType];
     $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
     this.bankAccount.account.currency = $scope.trade.quote[currencyType];
@@ -71,6 +71,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   let exchange = buySell.getExchange();
   $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.bankAccount.bank.address.country = this.exchangeCountry;
@@ -97,7 +98,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.setAccountCurrency($scope.exchangeCountry);
   $scope.bankAccount.holder.address.country = $scope.exchangeCountry.code;
 
-  console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction)
+  console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction);
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
@@ -114,7 +115,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     'review': 6,
     'isx': 7
   };
-  console.log('here1')
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
   $scope.afterStep = (step) => $scope.step > $scope.steps[step];
   $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
@@ -124,15 +124,16 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
-    console.log('scope.nextStep', $scope.transaction, $scope.trade)
+    console.log('scope.nextStep', $scope.transaction, $scope.trade);
     $scope.status = {};
     if ($scope.isKYC) {
       this.goTo('isx');
       return;
     }
 
-    if (($scope.trade._state && !$scope.trade._iSignThisID) && $scope.user.isEmailVerified) {
+    if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
       // $scope.mapTradeDetails();
+      console.log('goTo review')
       this.goTo('review');
       return;
     } else {
@@ -149,7 +150,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       }
     }
   };
-  console.log('here2')
   $scope.fields = { email: $scope.user.email };
 
   this.goToOrderHistory = () => {
@@ -169,16 +169,14 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.payment.from(index).amount(tradeInSatoshi);
 
     $scope.payment.sideEffect(result => {
-      console.log('sideEffect', $scope.transaction)
+      console.log('sideEffect', $scope.transaction);
       let firstBlockFee = result.absoluteFeeBounds[0];
       if ($scope.isSweepTransaction) {
         firstBlockFee = result.sweepFee;
       }
       $scope.payment.fee(firstBlockFee);
       $scope.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
-      const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
-      $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
-      $scope.payment.amount(amountAfterFee / 100000000); // in SATOSHI
+      $scope.transaction.btcAfterFee = parseFloat(($scope.transaction.btc + $scope.transaction.fee.btc).toFixed(8));
     });
     return {transaction: $scope.transaction, payment: $scope.payment};
   };
@@ -192,7 +190,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       this.goToOrderHistory();
     });
   };
-  console.log('here3')
   let links = options.partners.coinify.sellSurveyLinks;
   this.close = () => {
     let index;
@@ -240,7 +237,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       return true;
     }
   };
-  console.log('here4')
   let startedPayment = $scope.startPayment();
   if (startedPayment) {
     this.transaction = startedPayment.transaction;
@@ -253,7 +249,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   }
 
   this.selectAccount = (account) => {
-    console.log('selectAccount', account)
+    console.log('selectAccount', account);
     this.selectedBankAccount = account;
     this.bankId = account.id;
   };

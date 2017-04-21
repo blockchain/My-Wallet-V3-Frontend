@@ -18,4 +18,21 @@ function CoinifySellReviewController () {
   this.btcSold = this.sellTrade.sendAmount / 100000000;
   this.bank = this.sellTrade._bankAccountNumber;
   this.creditIssued = `${this.sellTrade.outAmountExpected / 100} ${this.sellTrade.outCurrency}`;
+  switch (this.sellTrade._state) {
+    case 'completed':
+      this.tradeCompleted = true;
+      break;
+    case 'expired':
+      this.tradeCompleted = true;
+      break;
+    case 'cancelled':
+      this.tradeCompleted = true;
+      break;
+    case 'rejected':
+      this.tradeCompleted = true;
+      break;
+    default:
+      this.tradeCompleted = false;
+      break;
+  }
 }

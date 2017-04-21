@@ -54,7 +54,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       this.error = sellResult;
       this.error = JSON.parse(this.error);
     } else {
-      this.onSellSuccess({trade: sellResult});
+      this.onSuccess({trade: sellResult});
       // $scope.sellTrade = sellResult;
       // $scope.sendAddress = sellResult.transferIn.details.account;
       // $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;

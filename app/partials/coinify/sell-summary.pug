@@ -29,10 +29,11 @@
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end
     button.button-primary(ng-show="$ctrl.error" translate="CLOSE" ng-click="$ctrl.dismiss()")
-    button.button-muted.mrm(ng-click="$ctrl.close()" translate="CANCEL_ORDER" ng-show="!$ctrl.error")
+    button.button-muted.mrm(ng-click="$ctrl.close()" translate="CANCEL_ORDER" ng-show="!$ctrl.error" ng-disabled="$ctrl.waiting")
     button.button-primary(
       ladda-translate="SELL.PLACE_ORDER"
       ng-click="$ctrl.sell()"
       data-style="expand-left"
       ui-ladda="$ctrl.waiting"
+      ng-hide="$ctrl.error"
       ng-disabled="$ctrl.isDisabled()")
