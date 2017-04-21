@@ -2,7 +2,11 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser) {
+function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -84,7 +88,7 @@ function RequestCtrl ($rootScope, $scope, AngularHelper, Wallet, Alerts, currenc
     let url;
 
     if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
-    else url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
+    else url = $scope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
     else url += amount ? amountType + '=' + $scope.fromSatoshi(amount || 0, baseCurr) + '&' : '';

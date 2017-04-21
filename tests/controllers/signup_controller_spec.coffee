@@ -11,9 +11,8 @@ describe "SignupCtrl", ->
     angular.mock.inject ($injector, $rootScope, $controller, $compile, $templateCache) ->
       Wallet = $injector.get("Wallet")
 
-      $rootScope.rootURL = "/"
       $httpBackend = $injector.get("$httpBackend")
-      $httpBackend.expectGET("/wallet/browser-info").respond {country_code: "NL"}
+      $httpBackend.expectGET("https://blockchain.info/wallet/browser-info").respond {country_code: "NL"}
 
       Wallet.my.browserCheck = () -> true
       Wallet.my.browserCheckFast = () -> true

@@ -76,45 +76,5 @@ angular.module('walletApp', modules)
     }]
   });
 })
-.run(($rootScope, $location) => {
-  $rootScope.$watch('rootURL', () => {
-    // If a custom rootURL is set by index.pug:
-    //                    Grunt can replace this:
-    const customRootURL = $rootScope.rootURL;
-    // If customRootURL is set by Grunt:
-    $rootScope.rootURL = customRootURL;
-
-    const absUrl = $location.absUrl();
-    const path = $location.path();
-    if (absUrl && path && path.length) {
-      // e.g. https://blockchain.info/wallet/#
-      $rootScope.rootPath = $location.absUrl().slice(0, -$location.path().length);
-    }
-
-    // These are set by grunt dist:
-    $rootScope.versionFrontend = null;
-    $rootScope.versionMyWallet = null;
-
-    // Not set by grunt dist:
-    $rootScope.isProduction = $rootScope.rootURL === 'https://blockchain.info/' || $rootScope.rootURL === '/';
-    $rootScope.buySellDebug = false;
-
-    console.info(
-      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
-      $rootScope.versionFrontend, $rootScope.versionMyWallet, $rootScope.rootURL
-    );
-
-    if ($rootScope.sfoxUseStaging === undefined) {
-      $rootScope.sfoxUseStaging = null;
-    }
-
-    if ($rootScope.sfoxUseStaging) {
-      console.info(
-        'Using SFOX staging environment with API key %s, Plaid environment %s and Sift Science key %s.',
-        $rootScope.sfoxApiKey,
-        $rootScope.sfoxPlaidEnv,
-        $rootScope.sfoxSiftScienceKey
-      );
-    }
-  });
+.run(() => {
 });

@@ -456,7 +456,7 @@ module.exports = (grunt) ->
 
     replace:
       root_url:
-        src: ['build/js/wallet-app.module.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'customRootURL = $rootScope.rootURL'
@@ -470,7 +470,7 @@ module.exports = (grunt) ->
                 "customRootURL = 'http://" + @rootDomain + "/'"
         }]
       web_socket_url:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
@@ -478,7 +478,7 @@ module.exports = (grunt) ->
             "customWebSocketURL = '#{ @webSocketURL }'"
         }]
       wallet_helper_url:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'http://localhost:8081'
@@ -487,25 +487,25 @@ module.exports = (grunt) ->
         }]
 
       api_domain:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
-          from: 'customApiDomain = $rootScope.apiDomain'
+          from: 'apiDomain = $rootScope.apiDomain'
           to: () =>
             if @rootDomain && @rootDomain.substr(0,5) == "local"
-              "customApiDomain = 'http://" + @apiDomain + "/'"
+              "apiDomain = 'http://" + @apiDomain + "/'"
             else
-              "customApiDomain = 'https://" + @apiDomain + "/'"
+              "apiDomain = 'https://" + @apiDomain + "/'"
         }]
       network:
-        src: ['build/js/wallet.js', 'build/js/sharedDirectives/public-header.directive.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: "network = $rootScope.network"
           to: () => "network = '" + @network + "'"
         }]
       version_frontend:
-        src: ['build/js/wallet-app.module.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'versionFrontend = null'
@@ -513,7 +513,7 @@ module.exports = (grunt) ->
             "versionFrontend = '" + @versionFrontend + "'"
         }]
       version_my_wallet:
-        src: ['build/js/wallet-app.module.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'versionMyWallet = null'

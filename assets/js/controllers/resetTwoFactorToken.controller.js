@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('ResetTwoFactorTokenCtrl', ResetTwoFactorTokenCtrl);
 
-// Wallet is injected to ensure it's lazy-load before this controller is
-// initialized. Otherwise $rootScope.rootUrl will be incorrect.
-function ResetTwoFactorTokenCtrl ($scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, Wallet) {
+function ResetTwoFactorTokenCtrl ($scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   Alerts.clear();
 
   const success = (obj) => {

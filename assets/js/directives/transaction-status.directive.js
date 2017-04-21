@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('transactionStatus', transactionStatus);
 
-function transactionStatus ($rootScope, BrowserHelper) {
+function transactionStatus (BrowserHelper, Env) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -17,7 +17,9 @@ function transactionStatus ($rootScope, BrowserHelper) {
 
   function link (scope, elem, attrs) {
     scope.verify = () => {
-      BrowserHelper.safeWindowOpen($rootScope.rootURL + 'tx/' + scope.transaction.hash);
+      Env.then(env => {
+        BrowserHelper.safeWindowOpen(env.rootURL + 'tx/' + scope.transaction.hash);
+      });
     };
 
     scope.$watch('transaction.confirmations', () => {

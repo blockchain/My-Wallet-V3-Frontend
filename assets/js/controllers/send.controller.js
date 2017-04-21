@@ -2,7 +2,11 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $rootScope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options) {
+function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
   const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
   const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
@@ -221,7 +225,7 @@ function SendCtrl ($scope, $rootScope, AngularHelper, $log, Wallet, Alerts, curr
   };
 
   $scope.sendInputMetrics = (metric) => {
-    let root = $rootScope.rootURL ? $rootScope.rootURL : '/';
+    let root = $scope.rootURL ? $scope.rootURL : '/';
     $http.get(`${root}event?name=wallet_web_tx_from_${metric}`);
   };
 

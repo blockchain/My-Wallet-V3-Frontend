@@ -10,7 +10,6 @@ describe "Public Header directive", ->
   beforeEach inject((_$compile_, _$rootScope_) ->
     $compile = _$compile_
     $rootScope = _$rootScope_
-    $rootScope.rootURL = 'blockchain.info'
   )
 
   beforeEach ->
@@ -20,4 +19,4 @@ describe "Public Header directive", ->
     isoScope.$digest()
 
   it "should have access to the rootURL", ->
-    expect(isoScope.rootURL).toBe('blockchain.info')
+    expect(isoScope.rootURL).toBe('https://blockchain.info/')

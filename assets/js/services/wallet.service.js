@@ -4,9 +4,9 @@ angular
   .module('walletApp')
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env) {
   const wallet = {
     goal: {
       auth: false,
@@ -56,37 +56,27 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
-  //              Grunt can replace this:
-  const network = $rootScope.network || 'bitcoin';
-  BlockchainConstants.NETWORK = network;
+  Env.then(env => {
+    wallet.api.ROOT_URL = env.rootURL; // Explorer endpoints
+    wallet.api.API_ROOT_URL = env.apiDomain; // API endpoints
 
-  // $rootScope.rootURL is already set because this file is lazy loaded.
-  wallet.api.ROOT_URL = $rootScope.rootURL;
+    if (env.customWebSocketURL) {
+      wallet.my.ws.wsUrl = env.customWebSocketURL;
+    }
 
-  //                         Grunt can replace this:
-  const customWebSocketURL = $rootScope.webSocketURL;
-  if (customWebSocketURL) {
-    wallet.my.ws.wsUrl = customWebSocketURL;
-  }
+    BlockchainConstants.NETWORK = env.network;
 
-  // If a custom apiDomain is set by index.pug:
-  //                             Grunt can replace this:
-  const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
-  $rootScope.apiDomain = customApiDomain;
-  if (customApiDomain) {
-    wallet.api.API_ROOT_URL = customApiDomain;
-  }
+    if ($window.location.hostname === 'localhost' || !env.isProduction) {
+      const KEY = 'qa-tools-enabled';
+      env.buySellDebug = $cookies.get(KEY) === 'true';
+      let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
+      $window.enableQA = () => reloadWithDebug(true);
+      $window.disableQA = () => reloadWithDebug(false);
+    }
+  });
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
-
-  if (window.location.hostname === 'localhost' || !$rootScope.isProduction) {
-    const KEY = 'qa-tools-enabled';
-    $rootScope.buySellDebug = $cookies.get(KEY) === 'true';
-    let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
-    $window.enableQA = () => reloadWithDebug(true);
-    $window.disableQA = () => reloadWithDebug(false);
-  }
 
   wallet.didLogin = (uid, successCallback) => {
     currency.fetchExchangeRate();
@@ -689,7 +679,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.isSynchronizedWithServer = () =>
     wallet.store.isSynchronizedWithServer();
 
-  window.onbeforeunload = (event) => {
+  $window.onbeforeunload = (event) => {
     if (!wallet.isSynchronizedWithServer() && wallet.my.wallet.isEncryptionConsistent) {
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';

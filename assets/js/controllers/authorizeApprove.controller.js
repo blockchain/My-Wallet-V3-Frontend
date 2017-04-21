@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('AuthorizeApproveCtrl', AuthorizeApproveCtrl);
 
-// Wallet is injected to ensure it's lazy-load before this controller is
-// initialized. Otherwise $rootScope.rootUrl will be incorrect.
-function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, MyWalletHelpers, Wallet) {
+function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, MyWalletHelpers, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   $scope.success = false;
 
   const success = (res) => {
