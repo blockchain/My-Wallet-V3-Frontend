@@ -37,10 +37,8 @@ describe "TransactionsCtrl", ->
 
       scope.root = {
         size: {
-          xs: false,
-          sm: false,
-          md: false,
-          lg: true
+          xs: true,
+          lg: false
         }
       }
 
@@ -130,7 +128,7 @@ describe "TransactionsCtrl", ->
         txs = scope.filterByAddress({address:'123'})
         expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
 
-    describe "filter options on desktop", ->
+    fdescribe "filter options", ->
 
-      it "should read all if size is lg", ->
-        expect(scope.filterTypes[0]).toEqual('ALL')
+      it "should read all transactions on mobile", ->
+        expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS')
