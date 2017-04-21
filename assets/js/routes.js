@@ -102,7 +102,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('public', {
       views: {
         body: {
-          templateUrl: 'partials/public.pug'
+          templateUrl: 'partials/public.pug',
+          controller: function ($scope, $state, languages, Env) {
+            Env.then(env => {
+              $scope.rootURL = env.rootURL;
+            });
+            $scope.path = $state.current.url;
+            $scope.languages = languages.languages;
+            $scope.$watch(languages.get, (code) => {
+              $scope.language = languages.mapCodeToName(code);
+            });
+          }
         }
       },
       resolve: {

@@ -1,10 +1,10 @@
 angular
-  .module('sharedDirectives')
+  .module('shared')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope', '$location'];
+publicHeader.$inject = ['$rootScope', '$location', 'Env'];
 
-function publicHeader ($rootScope, $location) {
+function publicHeader ($rootScope, $location, Env) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -32,7 +32,7 @@ function publicHeader ($rootScope, $location) {
               <form action="{{searchUrl}}" class="bc-form" method="GET">
                 <div class="group">
                   <div class="item search">
-                    <input type="text" name="search" id="header-search" class="form-control" placeholder="{{'SEARCH_FOR_BLOCK_ETC'|translate}}">
+                    <input type="text" name="search" ng-click="$event.stopPropagation()" id="header-search" class="form-control" placeholder="{{'SEARCH_FOR_BLOCK_ETC'|translate}}">
                     <i class="icon-search"></i>
                   </div>
                 </div>
@@ -51,7 +51,9 @@ function publicHeader ($rootScope, $location) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.rootURL = $rootScope.rootURL;
+    Env.then(env => {
+      scope.rootURL = env.rootURL;
+    });
     scope.path = () => $location.path();
     // Grunt will replace this, since BlockchainConstants.NETWORK is not available on landing page:
     const network = $rootScope.network || 'bitcoin';

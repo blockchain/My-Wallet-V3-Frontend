@@ -1,12 +1,12 @@
 'use strict';
 
 angular
-  .module('walletServices', [])
+  .module('walletApp')
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env) {
   const wallet = {
     goal: {
       auth: false,
@@ -41,7 +41,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     user: {
       current_ip: null,
       email: null,
-      mobile: null,
       passwordHint: '',
       mobileNumber: null,
       alias: null
@@ -57,43 +56,35 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
-  //              Grunt can replace this:
-  const network = $rootScope.network || 'bitcoin';
-  BlockchainConstants.NETWORK = network;
+  Env.then(env => {
+    wallet.api.ROOT_URL = env.rootURL; // Explorer endpoints
+    wallet.api.API_ROOT_URL = env.apiDomain; // API endpoints
 
-  // $rootScope.rootURL is already set because this file is lazy loaded.
-  wallet.api.ROOT_URL = $rootScope.rootURL;
+    if (env.customWebSocketURL) {
+      wallet.my.ws.wsUrl = env.customWebSocketURL;
+    }
 
-  //                         Grunt can replace this:
-  const customWebSocketURL = $rootScope.webSocketURL;
-  if (customWebSocketURL) {
-    wallet.my.ws.wsUrl = customWebSocketURL;
-  }
+    BlockchainConstants.NETWORK = env.network;
 
-  // If a custom apiDomain is set by index.pug:
-  //                             Grunt can replace this:
-  const customApiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
-  $rootScope.apiDomain = customApiDomain;
-  if (customApiDomain) {
-    wallet.api.API_ROOT_URL = customApiDomain;
-  }
+    if ($window.location.hostname === 'localhost' || !env.isProduction) {
+      const KEY = 'qa-tools-enabled';
+      env.buySellDebug = $cookies.get(KEY) === 'true';
+      let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
+      $window.enableQA = () => reloadWithDebug(true);
+      $window.disableQA = () => reloadWithDebug(false);
+    }
+  });
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
-
-  if (window.location.hostname === 'localhost' || !$rootScope.isProduction) {
-    const KEY = 'qa-tools-enabled';
-    $rootScope.buySellDebug = $cookies.get(KEY) === 'true';
-    let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
-    $window.enableQA = () => reloadWithDebug(true);
-    $window.disableQA = () => reloadWithDebug(false);
-  }
 
   wallet.didLogin = (uid, successCallback) => {
     currency.fetchExchangeRate();
     wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
     if (wallet.my.wallet.isUpgradedToHD) {
       wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
+    } else {
+      wallet.goal.firstTime = true;
     }
     wallet.user.uid = uid;
     wallet.settings.secondPassword = wallet.my.wallet.isDoubleEncrypted;
@@ -122,7 +113,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       needsTwoFactorCallback(method);
 
       wallet.settings.twoFactorMethod = method;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     let loginError = (error) => {
@@ -137,7 +128,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         Alerts.displayError(error.message || error, true);
         errorCallback();
       }
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     if (two_factor_code != null && two_factor_code !== '') {
@@ -149,7 +140,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let authorizationRequired = () => {
       wallet.goal.auth = true;
       Alerts.displayWarning('CHECK_EMAIL_VERIFY_BROWSER', true);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     var two_factor = null;
@@ -259,7 +250,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           }
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
-          $rootScope.$safeApply();
+          AngularHelper.$safeApply();
         };
         wallet.my.wallet.getHistory().then(didFetchTransactions);
       }
@@ -287,7 +278,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.status.didLoadTransactions = true;
       });
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     let error = () => {
@@ -424,12 +415,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.makePairingCode = (successCallback, errorCallback) => {
     let success = (code) => {
       successCallback(code);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     let error = () => {
       errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     wallet.my.makePairingCode(success, error);
@@ -463,12 +454,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.resendEmailConfirmation = (successCallback, errorCallback) => {
     let success = () => {
       successCallback && successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     let error = () => {
       errorCallback && errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     wallet.settings_api.resendEmailConfirmation(wallet.user.email, success, error);
@@ -477,11 +468,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.sendConfirmationCode = (successCallback, errorCallback) => {
     let success = () => {
       successCallback && successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let error = () => {
       errorCallback && errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     wallet.settings_api.sendConfirmationCode(success, error);
   };
@@ -490,7 +481,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = (res) => {
       if (res.success) {
         wallet.user.isEmailVerified = 1;
-        $rootScope.$safeApply();
+        AngularHelper.$safeApply();
         successCallback();
       } else {
         error(res.error);
@@ -499,7 +490,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     let error = (err) => {
       errorCallback(err);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     wallet.settings_api.verifyEmail(code, success, error);
@@ -518,10 +509,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.updateLoggingLevel(level, () => {
       wallet.settings.loggingLevel = level;
       wallet.saveActivity(4);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       Alerts.displayError('Failed to update logging level');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -545,7 +536,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.addAddressOrPrivateKey = (addressOrPrivateKey, needsBipPassphraseCallback, successCallback, errorCallback, cancel) => {
     let success = (address) => {
       successCallback(address);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     let proceed = (secondPassword = '') => {
@@ -555,7 +546,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         } else {
           errorCallback(message);
         }
-        $rootScope.$safeApply();
+        AngularHelper.$safeApply();
       };
 
       let proceedWithBip38 = (bipPassphrase) => {
@@ -688,7 +679,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.isSynchronizedWithServer = () =>
     wallet.store.isSynchronizedWithServer();
 
-  window.onbeforeunload = (event) => {
+  $window.onbeforeunload = (event) => {
     if (!wallet.isSynchronizedWithServer() && wallet.my.wallet.isEncryptionConsistent) {
       event.preventDefault();
       return 'There are unsaved changes. Are you sure?';
@@ -834,7 +825,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.fetchAccountInfo(wallet.initExternal);
     } else {
     }
-    $rootScope.$safeApply();
+    AngularHelper.$safeApply();
   };
 
   wallet.store.addEventListener((event, data) => {
@@ -854,7 +845,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.setNote = (tx, text) => {
     wallet.my.wallet.setNote(tx.hash, text);
-    $rootScope.$safeApply();
+    AngularHelper.$safeApply();
   };
 
   wallet.deleteNote = (tx) => {
@@ -915,10 +906,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.user.email = email;
       wallet.user.isEmailVerified = 0;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       Alerts.displayError('CHANGE_EMAIL_FAILED');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
       errorCallback();
     });
   };
@@ -952,11 +943,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.user.mobileNumber = mobile;
       wallet.user.isMobileVerified = false;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       Alerts.displayError('CHANGE_MOBILE_FAILED');
       errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -964,12 +955,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.verifyMobile(code, () => {
       wallet.user.isMobileVerified = true;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       $translate('VERIFY_MOBILE_FAILED').then((translation) => {
         errorCallback(translation);
       });
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -977,10 +968,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.updatePasswordHint1(hint, () => {
       wallet.user.passwordHint = hint;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, (err) => {
       errorCallback(err);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -990,10 +981,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.unsetTwoFactor(() => {
       wallet.settings.needs2FA = false;
       wallet.settings.twoFactorMethod = null;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       console.log('Failed');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -1001,10 +992,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.setTwoFactorSMS(() => {
       wallet.settings.needs2FA = true;
       wallet.settings.twoFactorMethod = 5;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       console.log('Failed');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -1012,10 +1003,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.setTwoFactorEmail(() => {
       wallet.settings.needs2FA = true;
       wallet.settings.twoFactorMethod = 2;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       console.log('Failed');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -1024,21 +1015,21 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.settings.needs2FA = true;
       wallet.settings.twoFactorMethod = 1;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, (error) => {
       console.log(error);
       errorCallback(error);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
   wallet.setTwoFactorGoogleAuthenticator = () => {
     wallet.settings_api.setTwoFactorGoogleAuthenticator((secret) => {
       wallet.settings.googleAuthenticatorSecret = secret;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       console.log('Failed');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -1048,10 +1039,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.settings.twoFactorMethod = 4;
       wallet.settings.googleAuthenticatorSecret = null;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -1059,11 +1050,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       wallet.settings.rememberTwoFactor = true;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let error = () => {
       errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     wallet.settings_api.toggleSave2FA(false, success, error);
   };
@@ -1074,11 +1065,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       // This takes effect immedidately:
       $cookies.remove('session');
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let error = () => {
       errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     wallet.settings_api.toggleSave2FA(true, success, error);
   };
@@ -1092,20 +1083,20 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.enableBlockTOR = () => {
     wallet.settings_api.updateTorIpBlock(1, () => {
       wallet.settings.blockTOR = true;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       console.log('Failed');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
   wallet.disableBlockTOR = () => {
     wallet.settings_api.updateTorIpBlock(0, () => {
       wallet.settings.blockTOR = false;
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       console.log('Failed');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -1113,23 +1104,21 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.updateIPlockOn(true, () => {
       wallet.settings.restrictToWhitelist = true;
       wallet.saveActivity(2);
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     }, () => {
       Alerts.displayError('ERR_ENABLE_IP_RESTRICT');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
-  wallet.disableRestrictToWhiteListedIPs = () => {
+  wallet.disableRestrictToWhiteListedIPs = () => $q((resolve, reject) => {
     wallet.settings_api.updateIPlockOn(false, () => {
       wallet.settings.restrictToWhitelist = false;
-      wallet.saveActivity(2);
-      $rootScope.$safeApply();
+      resolve();
     }, () => {
-      console.log('Failed');
-      $rootScope.$safeApply();
+      reject();
     });
-  };
+  });
 
   wallet.removeAlias = () => {
     return $q.resolve(wallet.settings_api.removeAlias()).then(
@@ -1151,44 +1140,15 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.isValidBIP39Mnemonic = (mnemonic) =>
     MyWalletHelpers.isValidBIP39Mnemonic(mnemonic);
 
-  wallet.exportHistory = (start, end, active) => {
-    let json2csv = (json) => {
-      let headers = Object.keys(json[0]);
-      let makeRow = (obj) => JSON.stringify(Object.keys(obj).map(key => obj[key])).slice(1, -1);
-      return [headers.join(',')].concat(json.map(makeRow)).join('\n');
-    };
-
-    let addTxNote = (tx) => {
-      tx.note = wallet.getNote(tx.tx) || '';
-      return tx;
-    };
-
-    let currency = wallet.settings.currency;
-    let p = MyBlockchainApi.exportHistory(active, currency.code, { start, end });
-    return $q.resolve(p)
-      .then(history => {
-        if (!history.length) return $q.reject('NO_HISTORY');
-        return json2csv(history.map(addTxNote));
-      })
-      .catch(e => {
-        let error = e.message || e;
-        if (typeof error === 'string' && error.indexOf('Too many transactions') > -1) {
-          error = 'TOO_MANY_TXS';
-        }
-        Alerts.displayError(error || 'UNKNOWN_ERROR');
-        return $q.reject(error);
-      });
-  };
-
   wallet.removeSecondPassword = (password, successCallback, errorCallback) => {
     let success = () => {
       wallet.settings.secondPassword = false;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let error = () => {
       errorCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let decrypting = () => {
       console.log('Decrypting...');
@@ -1222,11 +1182,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       Alerts.displaySuccess('Second password set.');
       wallet.settings.secondPassword = true;
       successCallback();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let error = () => {
       Alerts.displayError('Second password cannot be set. Contact support.');
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
     let encrypting = () => {
       console.log('Encrypting...');
