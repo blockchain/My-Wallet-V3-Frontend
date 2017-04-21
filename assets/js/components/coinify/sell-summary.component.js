@@ -23,7 +23,7 @@ angular
   });
 
 function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Alerts, $timeout) {
-  console.log('summary component', this)
+  console.log('summary component', this);
   // this.$onInit = () => this.startPayment();
 
   this.sellRateForm;
@@ -92,9 +92,10 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       .sign(passphrase).publish().payment;
   };
 
-  const handlePaymentAssignment = () => {
+  const assignAndBuildPayment = () => {
     this.payment.to(this.sellResult.transferIn.details.account);
     this.payment.amount(this.sellResult.transferIn.details.receiveAmount);
+    this.payment.build();
   };
   // need to send a bankobj with an id for now
   this.sell = () => {
@@ -110,14 +111,13 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       })
       .then(sellData => {
         if (this.error) return;
-        handlePaymentAssignment();
         // for testing
         // if (exchange._customAddress && exchange._customAmount) {
         //   console.log('customAddress and customAmount', exchange._customAddress, exchange._customAmount);
         //   $scope.payment.to(exchange._customAddress);
         //   $scope.payment.amount(exchange._customAmount);
         // }
-        this.payment.build();
+        assignAndBuildPayment();
 
         // Wallet.askForSecondPasswordIfNeeded()
         //   .then(signAndPublish)
@@ -130,7 +130,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       .catch((e) => console.log(e))
       .finally(() => {
         this.waiting = false;
-        if (!$scope.error) this.goTo('review');
+        if (!$scope.error) this.onComplete();
       });
   };
 }

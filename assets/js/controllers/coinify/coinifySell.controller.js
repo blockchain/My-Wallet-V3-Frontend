@@ -279,7 +279,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   this.onSellSuccess = (trade) => {
     console.log('onSellSuccess', trade);
-    this.sellTrade = trade;
+    this.completedTrade = trade;
   };
 
   $scope.standardError = (err) => {

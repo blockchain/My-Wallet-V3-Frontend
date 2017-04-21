@@ -13,7 +13,7 @@
     .flex-column.bg-grey.phm.border
       .flex-row.flex-between.pvm
         span.colon(translate="SELL.TRADE_ID")
-        span {{ $ctrl.sellTrade.id }}
+        span {{ $ctrl.id }}
       .flex-row.flex-between.pvm
         span.colon(translate="SELL.DATE_INITIALIZED")
         span {{ $ctrl.sellTrade.createdAt | date:$ctrl.dateFormat }}
