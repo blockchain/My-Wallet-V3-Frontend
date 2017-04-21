@@ -2,7 +2,11 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout) {
+function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -11,6 +15,8 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
+
+  $scope.browser = browser;
 
   $scope.destinationLimit = 50;
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
@@ -82,7 +88,7 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     let url;
 
     if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
-    else url = $rootScope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
+    else url = $scope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
     else url += amount ? amountType + '=' + $scope.fromSatoshi(amount || 0, baseCurr) + '&' : '';
@@ -93,5 +99,5 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     return encodeURI(url.slice(0, -1));
   };
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

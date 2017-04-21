@@ -2,7 +2,11 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options) {
+function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+  });
+
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
   const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
   const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
@@ -62,7 +66,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     tx.feeBounds = data.absoluteFeeBounds;
     tx.sweepFees = data.sweepFees;
     tx.size = data.txSize;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
   };
 
   $scope.paymentOnError = (error) => {
@@ -221,7 +225,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.sendInputMetrics = (metric) => {
-    let root = $rootScope.rootURL ? $rootScope.rootURL : '/';
+    let root = $scope.rootURL ? $scope.rootURL : '/';
     $http.get(`${root}event?name=wallet_web_tx_from_${metric}`);
   };
 
@@ -369,7 +373,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       if (modalErrors.indexOf(errorMsg) === -1) Alerts.displayError(errorMsg, false, $scope.alerts);
       if (error === 'cancelled') $scope.advancedSend();
       $scope.backToForm();
-      $scope.$safeApply();
+      AngularHelper.$safeApply($scope);
     };
 
     $scope.checkPriv()

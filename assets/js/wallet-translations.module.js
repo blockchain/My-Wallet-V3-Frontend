@@ -1,6 +1,6 @@
-'use strict';
+// Translations need its own module, or tests will go haywire.
 angular
-  .module('translations', [])
+  .module('walletTranslations', [])
   .config(TranslationsConfig);
 
 TranslationsConfig.$inject = ['$translateProvider'];
