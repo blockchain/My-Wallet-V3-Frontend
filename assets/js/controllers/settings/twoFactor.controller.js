@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TwoFactorCtrl', TwoFactorCtrl);
 
-function TwoFactorCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
+function TwoFactorCtrl ($scope, AngularHelper, Wallet, Alerts, $uibModalInstance, $translate, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -100,7 +100,7 @@ function TwoFactorCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate, $
 
   $scope.goToStep = (step) => {
     if (steps.indexOf(step) < 0) return;
-    $scope.$root.$safeApply($scope);
+    AngularHelper.$safeApply($scope);
     $scope.step = step;
   };
 

@@ -1,5 +1,5 @@
 angular
-  .module('adverts', [])
+  .module('walletApp')
   .factory('Adverts', Adverts);
 
 Adverts.$inject = ['$http', '$rootScope'];

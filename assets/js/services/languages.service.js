@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .factory('languages', languages);
 
-languages.$inject = ['$translate'];
+languages.$inject = ['$translate', '$location'];
 
-function languages ($translate) {
+function languages ($translate, $location) {
   const languageCodes = {
     'de': 'German',
     // 'cs': 'Czech', // Pending backend support
@@ -44,6 +44,9 @@ function languages ($translate) {
     mapCodeToName: (code) => languageCodes[code],
     parseFromUrl
   };
+
+  let code = parseFromUrl($location.absUrl());
+  if (code) $translate.use(code);
 
   return service;
 

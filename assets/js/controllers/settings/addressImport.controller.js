@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AddressImportCtrl', AddressImportCtrl);
 
-function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout) {
+function AddressImportCtrl ($scope, AngularHelper, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = [];
@@ -43,12 +43,12 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
     $scope.status.busy = false;
     $scope.address = address;
     $scope.step = 2;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
   };
 
   $scope.importError = (err) => {
     $scope.status.busy = false;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
 
     switch (err instanceof Error ? err.message : err) {
       case 'presentInWallet':
@@ -72,12 +72,12 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
 
   $scope.importCancel = () => {
     $scope.status.busy = false;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
   };
 
   $scope.import = () => {
     $scope.status.busy = true;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
     let addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim();
     let bip38passphrase = $scope.fields.bip38passphrase.trim();
 

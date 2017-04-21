@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
+function TransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -55,7 +55,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
       : $scope.filterByAddress($scope.filterBy.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
   };
 
   $scope.exportHistory = () => $uibModal.open({

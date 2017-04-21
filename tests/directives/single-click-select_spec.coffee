@@ -21,9 +21,10 @@ describe "Click to highlight directive", ->
     element = $compile("<span single-click-select>some copy</span>")($rootScope)
     $rootScope.$digest()
     $scope.$apply()
+    $scope.browser = {canExecCommand: false}
 
   it "will check a browser version", ->
-    expect($scope.browserCanExecCommand).toBeDefined()
+    expect($scope.browser.canExecCommand).toBeDefined()
 
   it "can fire the select function", ->
     spyOn($scope, "select").and.callThrough()
@@ -31,7 +32,7 @@ describe "Click to highlight directive", ->
     expect($scope.select).toHaveBeenCalled()
 
   beforeEach ->
-    $scope.browserCanExecCommand = true
+    $scope.browser = {canExecCommand: true}
 
     it "has a browser that can copy to clipboard", ->
       spyOn($scope, "select").and.callThrough()

@@ -568,7 +568,7 @@ describe "SendCtrl", ->
 
     describe "sendInputMetrics", ->
       it "should record the event correctly", ->
-        $httpBackend.expectGET("/event?name=wallet_web_tx_from_paste").respond('success')
+        $httpBackend.expectGET("https://blockchain.info/event?name=wallet_web_tx_from_paste").respond('success')
         scope.sendInputMetrics("paste")
         $httpBackend.verifyNoOutstandingExpectation()
 

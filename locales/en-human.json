@@ -640,7 +640,7 @@
   "NOT_STORED" : "Not Stored",
   "PHRASE_BACKED" : "Phrase Backed",
   "EMAIL_VERIFIED" : "Email Verified",
-  "THANK_YOU_FOR_JOINING": "Welcome! Thank you for joining over 7 million Blockchain wallet users.",
+  "THANK_YOU_FOR_JOINING": "Welcome! Thank you for joining over 13 million Blockchain wallet users.",
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
@@ -765,7 +765,7 @@
   "LOST_WALLET_ID": "I've lost my Wallet ID",
   "LOST_WALLET_PWD": "I've lost my Wallet Password",
   "LOST_2FA": "I've lost my 2FA Device",
-  "LOST_ID_DESC": "Email me a reminder with my Wallet ID to my verified email address",
+  "LOST_ID_DESC": "Email me a reminder with my Wallet ID to my email address",
   "LOST_PWD_DESC": "Recover your funds with your 12 word recovery passphrase",
   "RESET_2FA" : "Reset 2FA",
   "REMIND_ME": "Remind Me",
@@ -965,6 +965,9 @@
   "COPY_AND_SHARE_ADDRESS": {
     "TITLE": "Copy & Share Address",
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below."
+  },
+  "COPY_AND_SHARE_IMPORTED_ADDRESS": {
+    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet."
   },
   "SCAN": "Scan",
   "SIMPLE": "Simple",

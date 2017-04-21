@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('singleClickSelect', singleClickSelect);
 
-function singleClickSelect ($window) {
+function singleClickSelect ($window, AngularHelper, browser) {
   const directive = {
     restrict: 'A',
     scope: false,
@@ -21,9 +21,9 @@ function singleClickSelect ($window) {
       document.body.appendChild(hidden);
       hidden.select();
 
-      if (scope.browserCanExecCommand) {
+      if (browser.canExecCommand) {
         $window.document.execCommand('copy');
-        scope.$safeApply();
+        AngularHelper.$safeApply();
       }
 
       document.body.removeChild(hidden);
