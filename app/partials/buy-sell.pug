@@ -68,7 +68,7 @@
 
         .flex-row.flex-between.flex-center.mtl
           h4.type-h5 Completed Orders
-          span.hidden-xs(ng-show="!trades.pending.length") Coinify Account: {{ exchange.profile.email }}
+          span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
         table.width-100.mb-30(gradual-render)
           tr.border.bg-light-blue
             th.pvs.width-5-mobile.visible-xs
