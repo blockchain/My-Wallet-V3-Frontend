@@ -23,7 +23,7 @@ Dir.glob(['assets/js/**/*.js']) do |path|
     if path == "assets/js/wallet-app.module.js" && matches.length <= 1
       break
     end
-    puts path + " contains window.open, use $rootScope.safeWindowOpen() instaed"
+    puts path + " contains window.open, use BrowserHelper.safeWindowOpen() instaed"
     puts ""
     didMatch = true
   end

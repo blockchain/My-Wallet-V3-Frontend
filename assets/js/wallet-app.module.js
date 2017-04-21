@@ -75,12 +75,7 @@ angular.module('walletApp', modules)
     }]
   });
 })
-.run(($rootScope, $window, $uibModal, $state, $q, $timeout, $location, languages) => {
-  $rootScope.safeWindowOpen = (url) => {
-    let otherWindow = window.open(url, '_blank');
-    otherWindow.opener = null;
-  };
-
+.run(($rootScope, $uibModal, $state, $q, $timeout, $location, languages) => {
   $rootScope.browserCanExecCommand = (
     (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
     (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
