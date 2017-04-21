@@ -13,9 +13,6 @@
   .inprv {
     bottom: -12px;
   }
-  .divider {
-    margin: 0px auto;
-  }
   .open > .uib-dropdown-menu {
     overflow-y: auto;
     max-height: 160px;
@@ -287,6 +284,12 @@
 
 .popover {
   z-index: 1060;
+}
+
+.ui-select-container {
+  .divider {
+    margin: 0px auto;
+  }
 }
 
 #sign-msg {
