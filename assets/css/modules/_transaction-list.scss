@@ -347,3 +347,10 @@ a.date,p.date { color: $black; }
     .helper { display: none; }
   }
 }
+
+.input-group {
+  .ti-calendar {
+    z-index: 4;
+    position: relative;
+  }
+}

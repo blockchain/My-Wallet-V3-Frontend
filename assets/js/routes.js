@@ -107,10 +107,15 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             Env.then(env => {
               $scope.rootURL = env.rootURL;
             });
+            let overflows = ['/reset-2fa'];
+            $scope.state = $state;
             $scope.path = $state.current.url;
             $scope.languages = languages.languages;
             $scope.$watch(languages.get, (code) => {
               $scope.language = languages.mapCodeToName(code);
+            });
+            $scope.$watch('state.current.url', (newVal) => {
+              $scope.isUIOverflow = overflows.indexOf(newVal) > -1;
             });
           }
         }
