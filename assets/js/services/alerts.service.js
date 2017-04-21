@@ -55,11 +55,18 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
 
   function displayResetTwoFactor (message) {
     $translate(['SUCCESS']).then(translations => {
-      $rootScope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: message
+      $uibModal.open({
+        templateUrl: 'partials/modal-notification.pug',
+        controller: 'ModalNotificationCtrl',
+        windowClass: 'notification-modal',
+        resolve: {
+          notification: () => ({
+            type: 'verified-email',
+            icon: 'ti-email',
+            heading: translations.SUCCESS,
+            msg: message
+          })
+        }
       });
     });
   }

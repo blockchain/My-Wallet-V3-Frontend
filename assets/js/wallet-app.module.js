@@ -76,16 +76,7 @@ angular.module('walletApp', modules)
     }]
   });
 })
-.run(($rootScope, $uibModal, $state, $q, $timeout, $location, languages) => {
-  $rootScope.$on('showNotification', (_, notification) => {
-    $uibModal.open({
-      templateUrl: 'partials/modal-notification.pug',
-      controller: 'ModalNotificationCtrl',
-      windowClass: 'notification-modal',
-      resolve: { notification: () => notification }
-    });
-  });
-
+.run(($rootScope, $location) => {
   $rootScope.$watch('rootURL', () => {
     // If a custom rootURL is set by index.pug:
     //                    Grunt can replace this:
@@ -126,7 +117,4 @@ angular.module('walletApp', modules)
       );
     }
   });
-
-  let code = languages.parseFromUrl($location.absUrl());
-  if (code) languages.set(code);
 });
