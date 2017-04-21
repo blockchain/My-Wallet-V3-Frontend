@@ -39,6 +39,7 @@ module.exports = function (config) {
       'assets/js/wallet-filters.module.js',
       'assets/js/services/**/*.service.js',
       'assets/js/directives/*.directive.js',
+      'assets/js/constants/**/*.constant.js',
       'assets/js/wallet-lazy-load.module.js',
       'assets/js/core/*.js',
       'tests/filters/*.coffee',

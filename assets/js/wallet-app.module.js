@@ -77,12 +77,6 @@ angular.module('walletApp', modules)
   });
 })
 .run(($rootScope, $uibModal, $state, $q, $timeout, $location, languages) => {
-  $rootScope.browserCanExecCommand = (
-    (browserDetection().browser === 'chrome' && browserDetection().version > 42) ||
-    (browserDetection().browser === 'firefox' && browserDetection().version > 40) ||
-    (browserDetection().browser === 'ie' && browserDetection().version > 10)
-  );
-
   $rootScope.$on('showNotification', (_, notification) => {
     $uibModal.open({
       templateUrl: 'partials/modal-notification.pug',
