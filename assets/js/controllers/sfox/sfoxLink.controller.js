@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, $rootScope) {
+function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Options, $rootScope) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
@@ -117,7 +117,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
     if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
     e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
   };
 
   window.addEventListener('message', receiveMessage, false);
