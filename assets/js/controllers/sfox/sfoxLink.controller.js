@@ -122,5 +122,5 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
 
   window.addEventListener('message', receiveMessage, false);
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

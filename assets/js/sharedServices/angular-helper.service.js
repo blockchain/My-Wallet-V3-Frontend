@@ -18,11 +18,18 @@ function AngularHelper ($rootScope, $window) {
   angular.element($window).bind('resize', () => setSizes($window.innerWidth));
 
   return {
-    $safeApply: $safeApply
+    $safeApply: $safeApply,
+    installLock: installLock
   };
 
   function $safeApply (scope = $rootScope, before) {
     before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
+  }
+
+  function installLock () {
+    this.locked = false;
+    this.lock = () => { this.locked = true; };
+    this.free = () => { this.locked = false; };
   }
 }

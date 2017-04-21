@@ -31,12 +31,6 @@ angular.module('walletApp', modules).run(($rootScope) => {
   $rootScope.scheduleRefresh = () => {};
   $rootScope.cancelRefresh = () => {};
 
-  $rootScope.installLock = function () {
-    this.locked = false;
-    this.lock = () => { this.locked = true; };
-    this.free = () => { this.locked = false; };
-  };
-
   $rootScope.isProduction = true;
   $rootScope.size = { xs: false, sm: false, md: false, lg: true };
 });

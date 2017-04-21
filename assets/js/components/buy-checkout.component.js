@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
+function BuyCheckoutController ($rootScope, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -143,6 +143,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
-  $scope.$root.installLock.call($scope);
+  AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, $timeout, $q, $cookies, Wallet, Alerts, sfox, bcPhoneNumber) {
+function SfoxCreateAccountController ($scope, AngularHelper, $timeout, $q, $cookies, Wallet, Alerts, sfox, bcPhoneNumber) {
   const views = ['summary', 'email', 'mobile'];
   const cookieIds = { SENT_EMAIL: 'sentEmailCode', SENT_MOBILE: 'sentMobileCode' };
   let exchange = $scope.vm.exchange;
@@ -130,5 +130,5 @@ function SfoxCreateAccountController ($scope, $timeout, $q, $cookies, Wallet, Al
   $scope.$watch('state.sentMobileCode', syncCookie(cookieIds.SENT_MOBILE));
 
   $scope.setState();
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modals, Upload, QA, Options) {
+function SfoxVerifyController ($rootScope, AngularHelper, $scope, $q, state, $http, sfox, modals, Upload, QA, Options) {
   let exchange = $scope.vm.exchange;
   let states = Options.options.partners.sfox.states;
   $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
@@ -102,7 +102,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, modal
     complete && $scope.vm.goTo('link');
   };
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
