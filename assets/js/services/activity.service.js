@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
+Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
 
-function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
+function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell) {
   var txSub;
 
   const activity = {
@@ -72,7 +72,7 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
       .filter(hasTime)
       .sort(timeSort)
       .slice(0, activity.limit);
-    $rootScope.$safeApply();
+    AngularHelper.$safeApply();
   }
 
   function factory (type, obj) {

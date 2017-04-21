@@ -76,11 +76,6 @@ angular.module('walletApp', modules)
   });
 })
 .run(($rootScope, $window, $uibModal, $state, $q, $timeout, $location, languages) => {
-  $rootScope.$safeApply = (scope = $rootScope, before) => {
-    before = before;
-    if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
-  };
-
   $rootScope.safeWindowOpen = (url) => {
     let otherWindow = window.open(url, '_blank');
     otherWindow.opener = null;
@@ -150,16 +145,4 @@ angular.module('walletApp', modules)
     this.lock = () => { this.locked = true; };
     this.free = () => { this.locked = false; };
   };
-
-  let setSizes = (width) => {
-    let size = $rootScope.size = {};
-    size.xs = width < 768;
-    size.sm = width >= 768 && width < 992;
-    size.md = width >= 992 && width < 1200;
-    size.lg = width >= 1200;
-    $rootScope.$safeApply();
-  };
-
-  setSizes($window.innerWidth);
-  angular.element($window).bind('resize', () => setSizes($window.innerWidth));
 });

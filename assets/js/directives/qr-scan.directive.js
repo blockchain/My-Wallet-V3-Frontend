@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .directive('qrScan', qrScan);
 
-function qrScan ($rootScope, $timeout, $translate, Wallet, Alerts) {
+function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Alerts) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -33,7 +33,7 @@ function qrScan ($rootScope, $timeout, $translate, Wallet, Alerts) {
                           Wallet.isValidPrivateKey(result) ||
                           Wallet.isValidAddress(result);
 
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
 
       if (scope.scanSuccess && scope.onScan && scope.cameraOn) scope.onScan(result);
 
