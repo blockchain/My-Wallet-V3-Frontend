@@ -274,6 +274,15 @@
   .ui-select-bootstrap > .ui-select-choices {
     max-height: 168px;
   }
+  // ff specific fix
+  @-moz-document url-prefix() {
+    .text-overflow-hidden {
+      max-width: 450px;
+      @media (max-width: 767px) {
+        max-width: 350px;
+      }
+    }
+  }
 }
 
 .popover {

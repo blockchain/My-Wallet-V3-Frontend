@@ -20,22 +20,38 @@ div.login-form {
   }
 }
 
-@media (max-height: 700px) {
-  html, body {
+@mixin block-login {
+  height: 100%;
+  display: block !important;
+  .navbar {
     position: relative;
   }
-  .login-pg {
-    height: 100%;
-    display: block !important;
-    .navbar {
-      position: relative;
-    }
+  .bc-logo-footer {
+    position: relative;
   }
   .login-box-container {
     margin-top: 0px;
   }
   .login-box {
     max-height: none !important;
+  }
+}
+
+.login-pg {
+  &.display-block {
+    @include block-login;
+  }
+  @media (max-height: 700px) {
+    @include block-login;
+  }
+  @media (max-width: 767px) {
+    @include block-login;
+  }
+}
+
+@media (max-height: 700px) {
+  html, body {
+    position: relative;
   }
 }
 
