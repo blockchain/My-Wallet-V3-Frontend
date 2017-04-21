@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams, modals) {
+function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams, modals) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -112,7 +112,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       }).catch(() => {
         $scope.status.loading = false;
         $scope.status.exchangeDown = true;
-        $scope.$safeApply();
+        AngularHelper.$safeApply($scope);
       });
     } else {
       $scope.status.disabled = false;

@@ -2,7 +2,7 @@
 // Thanks to @knalli: https://github.com/angular-translate/bower-angular-translate-loader-static-files/pull/15#issuecomment-94441414
 
 angular
-  .module('bcTranslateStaticFilesLoader', [])
+  .module('walletApp')
   .factory('BCTranslateStaticFilesLoader', BCTranslateStaticFilesLoader);
 
 BCTranslateStaticFilesLoader.$inject = ['$http', '$q', '$translateStaticFilesLoader', '$rootScope'];

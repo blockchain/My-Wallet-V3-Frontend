@@ -1,0 +1,8 @@
+build
+dist
+tests
+helperApp
+*.rb
+*.json
+coverage
+coverage-lcov

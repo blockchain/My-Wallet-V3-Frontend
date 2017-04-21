@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AccountFormCtrl', AccountFormCtrl);
 
-function AccountFormCtrl ($scope, $q, $uibModalInstance, Wallet, Alerts, account) {
+function AccountFormCtrl (AngularHelper, $scope, $q, $uibModalInstance, Wallet, Alerts, account) {
   $scope.accounts = Wallet.accounts;
   $scope.status = {};
   $scope.isNameUnused = (name) => $scope.accounts().every(a => a.label !== name);
@@ -20,7 +20,7 @@ function AccountFormCtrl ($scope, $q, $uibModalInstance, Wallet, Alerts, account
 
     let done = () => {
       $scope.status.busy = false;
-      $scope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     $scope.status.busy = true;

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('hdAddress', hdAddress);
 
-function hdAddress ($rootScope, $sce, Alerts) {
+function hdAddress ($rootScope, $sce, Alerts, Env) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -23,7 +23,9 @@ function hdAddress ($rootScope, $sce, Alerts) {
     scope.cancelEdit = () => scope.editing = false;
     scope.removeLabel = () => scope.onRemoveLabel(scope.address);
 
-    scope.addressLink = (address) => $sce.trustAsResourceUrl(`${$rootScope.rootURL}address/${address}`);
+    Env.then(env => {
+      scope.addressLink = (address) => $sce.trustAsResourceUrl(`${env.rootURL}address/${address}`);
+    });
 
     scope.changeLabel = (label, successCallback, errorCallback) => {
       let success = () => {
