@@ -128,7 +128,7 @@ describe "TransactionsCtrl", ->
         txs = scope.filterByAddress({address:'123'})
         expect(txs).toEqual([{ result: 1, txType: 'received', processedInputs: [{'address': '123'}], processedOutputs: [{'address': '456'}]}])
 
-    fdescribe "filter options", ->
+    describe "filter options", ->
 
       it "should read all transactions on mobile", ->
         expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS')
