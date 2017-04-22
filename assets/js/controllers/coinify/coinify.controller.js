@@ -2,14 +2,13 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, quote, trade, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options, buyMobile) {
+function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile) {
   $scope.settings = Wallet.settings;
   $scope.buySellDebug = $rootScope.buySellDebug;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
-  $scope.status = {};
 
   this.user = Wallet.user;
   this.quote = quote;
@@ -28,10 +27,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.eventualError = (message) => Promise.reject.bind(Promise, { message });
   this.getMinimumInAmount = (medium, curr) => medium && curr && quote.paymentMediums[medium].minimumInAmounts[curr];
 
-  $scope.steps = {
+  this.steps = {
     'email': 0,
     'accept-terms': 1,
     'select-payment-medium': 2,
@@ -40,12 +38,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     'trade-complete': 5
   };
 
-  $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
-  $scope.afterStep = (step) => $scope.step > $scope.steps[step];
-  $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
-  $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
-
-  this.goTo = (step) => $scope.step = $scope.steps[step];
+  this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
+  this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
+  this.goTo = (step) => this.step = this.steps[step];
 
   if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
     this.goTo('email');
@@ -66,14 +61,6 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
     if (!this.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
     this.trade.watchAddress().then(success);
-  };
-
-  $scope.formatTrade = (state) => {
-    if ($scope.needsKyc()) {
-      let poll = buySell.pollUserLevel(buySell.kycs[0]);
-      $scope.$on('$destroy', poll.cancel);
-      return poll.result.then($scope.buy);
-    }
   };
 
   this.cancel = () => {
