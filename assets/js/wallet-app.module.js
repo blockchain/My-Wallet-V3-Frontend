@@ -76,6 +76,10 @@ angular.module('walletApp', modules)
       files: bcPhoneNumberLazyLoadFiles
     }]
   });
+}).config((localStorageServiceProvider) => {
+  localStorageServiceProvider
+    // We delete existing cookies; make sure we don't go in circles.
+    .setDefaultToCookie(false);
 })
 .run(() => {
 });
