@@ -4,9 +4,10 @@ angular
   .module('walletApp')
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', '$cookies', 'localStorageService', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env', 'BrowserHelper'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, $cookies, localStorageService, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env, BrowserHelper) {
+  BrowserHelper.migrateCookiesToLocalStorage();
   const wallet = {
     goal: {
       auth: false,
@@ -160,8 +161,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       // Immedidately store the new guid and session token, in case the user needs
       // to refresh their browser:
       const newSessionToken = (token) => {
-        $cookies.put('session', token);
-        $cookies.put('uid', uid);
+        localStorageService.set('session', token);
+        localStorageService.set('guid', uid);
       };
 
       wallet.my.login(
@@ -185,8 +186,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     };
 
     // Check if we already have a session token:
-    let sessionToken = $cookies.get('session');
-    let sessionGuid = $cookies.get('uid');
+    let sessionToken = localStorageService.get('session');
+    let sessionGuid = localStorageService.get('guid');
 
     doLogin(uid, sessionGuid, sessionToken);
   };
@@ -307,8 +308,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
-      $cookies.put('session', sessionToken);
-      $cookies.put('uid', uid);
+      localStorageService.set('session', sessionToken);
+      localStorageService.set('guid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid);
       wallet.goal.firstTime = true;
 
@@ -408,7 +409,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let { auto = false } = options;
     wallet.autoLogout = auto;
     $window.name = wallet.askForDeauth() ? 'blockchain-logout' : 'blockchain';
-    $cookies.remove('password');
+    localStorageService.remove('password');
     wallet.my.logout(true);
   };
 
