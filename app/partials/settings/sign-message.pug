@@ -12,7 +12,7 @@
       label.control-label(translate="MESSAGE")
       span.type-lbl :
       textarea.form-control(rows="3" ng-model="message" ng-disabled="signature" required placeholder="{{ 'THANKS_FOR_ACCEPTING' | translate }}")
-    .form-group.flex-row(ng-show="signature")
+    .form-group.flex-row.flex-justify(ng-show="signature")
       label.control-label(translate="SIGNATURE")
       span.type-lbl :
       p.form-control-static.bitcoin-address(single-click-select copy-content="{{signature}}")
