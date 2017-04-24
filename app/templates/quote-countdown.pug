@@ -1,3 +1,5 @@
 div.type-sm
   span.fade(ng-show="!count || expiredQuote" translate="PLACEHOLDER")
   span(ng-show="count && !expiredQuote" translate="RATE_GUARANTEED" translate-values="{count: count}")
+  p.security-red.pointer.right-align(ng-show="buySellDebug && quote.id")
+    i.ti-search.mrm(ng-click="expireCounter()")  QA: Now

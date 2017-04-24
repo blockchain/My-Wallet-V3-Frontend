@@ -18,7 +18,10 @@ function quoteCountdown ($interval) {
   return directive;
 
   function link (scope, elem, attrs) {
-    let timeToExpiration = scope.quote.timeToExpiration;
+    let timeToExpiration;
+    scope.expireCounter = () => timeToExpiration = 3000;
+    scope.cancelCounter = () => $interval.cancel(scope.counter);
+    scope.resetCounter = () => timeToExpiration = scope.quote.timeToExpiration;
 
     scope.counter = $interval(() => {
       if (!scope.quote.id) return;
@@ -30,12 +33,10 @@ function quoteCountdown ($interval) {
       if (time <= 0) scope.refreshQuote();
 
       timeToExpiration -= 1000;
-
       scope.count = timeToExpiration <= 0 ? '0:00' : minutes + ':' + seconds;
     }, 1000);
 
-    scope.cancelCounter = () => $interval.cancel(scope.counter);
-
     scope.$on('$destroy', scope.cancelCounter);
+    scope.$watch('quote.id', (id) => id && scope.resetCounter());
   }
 }

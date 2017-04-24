@@ -16,8 +16,6 @@
             span(ng-if="!vm.trade") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
             span(ng-if="vm.trade") ({{ vm.trade.sendAmount / 100 }} {{ vm.trade.inCurrency }})
           quote-countdown.mid-grey(ng-if="vm.quote" quote="vm.quote" refresh-quote="vm.refreshQuote()")
-          p.security-red.pointer(ng-show="buySellDebug && vm.quote.id")
-            i.ti-search.mrm.right-align(ng-click="vm.quote.expire()")  QA: Now
   coinify-email(ng-if="vm.onStep('email')" on-complete="vm.goTo('accept-terms')" on-close="vm.close(0)" email="vm.user.email" verified="vm.user.isEmailVerified" rejected-email="vm.rejectedEmail")
   div(ng-if="vm.onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
   div(ng-if="vm.onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
