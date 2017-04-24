@@ -89,11 +89,7 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
-      $uibModalInstance.dismiss('');
-    } else {
-      $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
-    }
+    this.onStep('isx') && $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
   };
 
   $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => {
