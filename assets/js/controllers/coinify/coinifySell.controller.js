@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buySellOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, country, accounts, $state, smartAccount, options, $stateParams) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $rootScope, country, accounts, $state, options, $stateParams) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
@@ -83,8 +83,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
   };
 
-  $scope.setAccountCurrency($scope.exchangeCountry);
-  this.bankAccount.holder.address.country = $scope.exchangeCountry.code;
+  $scope.setAccountCurrency(this.exchangeCountry);
+  this.bankAccount.holder.address.country = this.exchangeCountry.code;
 
   console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction);
 
@@ -119,9 +119,9 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       this.goTo('review');
       return;
     } else {
-      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
+      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
         this.goTo('email');
-      } else if (!$scope.exchange.user) {
+      } else if (!this.exchange.user) {
         this.goTo('accept-terms');
       } else if (!this.accounts) {
         this.goTo('account-info');
@@ -176,7 +176,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   let links = options.partners.coinify.sellSurveyLinks;
   this.close = () => {
     let index;
-    if (!$scope.exchange.user) index = 0;
+    if (!this.exchange.user) index = 0;
     else if ($scope.onStep('account-info') || $scope.onStep('account-holder')) index = 1;
     else if ($scope.onStep('summary')) index = 2;
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
@@ -198,7 +198,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   }
 
   this.selectAccount = (account) => {
-    console.log('selectAccount', account);
     this.selectedBankAccount = account;
     this.bankId = account.id;
   };
@@ -224,7 +223,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   this.onSellSuccess = (trade) => {
-    console.log('onSellSuccess', trade);
     this.completedTrade = trade;
   };
 
@@ -235,7 +233,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       let e = JSON.parse(err);
       let msg = e.error.toUpperCase();
       if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
-      else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
+      else Alerts.displayError(msg, true, $scope.alerts, {user: this.exchange.user});
     } catch (e) {
       let msg = e.error || err.message;
       if (msg) Alerts.displayError(msg, true, $scope.alerts);

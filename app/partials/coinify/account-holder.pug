@@ -57,8 +57,9 @@
           div.width-45.width-45-mobile.width-45-tablet
             label.control-label(translate="Country")
             div
-              ui-select.mtm(ng-model="$ctrl.bankAccount.holder.address.country" on-select="$ctrl.selectCountry({country: $item.code})")
-                ui-select-match(placeholder="Select Country") {{$ctrl.bankAccount.holder.address.country}} 
+              ui-select.mtm(ng-model="$ctrl.selectedBankCountry.name" on-select="$ctrl.selectCountry({country: $item.code})")
+                //- ui-select-match {{$ctrl.selectedBankCountry.name}} 
+                ui-select-match(placeholder="Select a country")
                 ui-select-choices(repeat="c in $ctrl.sepaCountries | filter:$select.search track by c.name") {{c.name}}
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end

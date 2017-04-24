@@ -37,7 +37,6 @@ function CoinifySellAccountHolderController ($q, buySell, Alerts, $scope) {
   };
 
   const handleError = (e) => {
-    console.log('error', e);
     let accountError = JSON.parse(e);
     Alerts.displayError(accountError.error_description);
     $scope.status = {};
