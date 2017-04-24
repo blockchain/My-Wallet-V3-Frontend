@@ -48,6 +48,7 @@ describe "RequestCtrl", ->
 
       $controller "RequestCtrl",
         $scope: scope,
+        $rootScope: $rootScope,
         $stateParams: {},
         $uibModalInstance: modalInstance,
         destination: undefined,
@@ -158,7 +159,7 @@ describe "RequestCtrl", ->
       scope.state.amount = null
       scope.$digest()
 
-      expect(scope.paymentRequestURL()).toBe('https://blockchain.info/payment_request?address=1asdf&message=Label%20Label%20Label')
+      expect(scope.paymentRequestURL()).toContain('/payment_request?address=1asdf&message=Label%20Label%20Label')
 
     it "should contain amountType", ->
       scope.state.to = scope.legacyAddresses()[0]

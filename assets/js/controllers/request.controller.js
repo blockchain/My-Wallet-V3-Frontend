@@ -5,6 +5,7 @@ angular
 function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
+    $scope.isProduction = env.isProduction;
   });
 
   $scope.status = Wallet.status;
@@ -83,12 +84,14 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
+    let root = $scope.isProduction ? 'https://blockchain.info/' : $scope.rootURL;
     let { amount, label, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
     let url;
 
     if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
-    else url = $scope.rootURL + 'payment_request?' + 'address=' + $scope.address() + '&';
+
+    else url = root + 'payment_request?' + 'address=' + $scope.address() + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
     else url += amount ? amountType + '=' + $scope.fromSatoshi(amount || 0, baseCurr) + '&' : '';

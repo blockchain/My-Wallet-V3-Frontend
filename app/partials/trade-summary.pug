@@ -5,7 +5,6 @@
       p.ptm(translate="{{formattedTrade.namespace}}.BODY" translate-values="formattedTrade.values")
     div(ng-if="formattedTrade.tx")
       label.em-500.flex-start.mb-15(ng-hide="isPendingBankTransfer && isPendingBankTransfer()" translate="{{isKYC || needsKyc() ? 'DETAILS' : 'ORDER_DETAILS'}}")
-      p.flex-start.mb-15(ng-show="isPendingBankTransfer && isPendingBankTransfer()" translate="BANK_ORDER_DETAILS")
       ul.em-300.bg-grey.border-top.pan.mb-15(ng-class="{'bank-transfer': isPendingBankTransfer && isPendingBankTransfer()}")
         li.pam.border-right.border-left.border-bottom-light.flex-between(ng-repeat="(prop, val) in formattedTrade.tx track by $index" ng-if="val")
           span.em-300.colon(translate="{{prop}}" ng-class="{'em-500': prop === 'TOTAL_COST'}")

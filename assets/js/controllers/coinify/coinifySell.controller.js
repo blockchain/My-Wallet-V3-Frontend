@@ -109,7 +109,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       $scope.goTo('review');
       return;
     } else {
-      if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
+      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
         $scope.goTo('email');
       } else if (!$scope.exchange.user) {
         $scope.goTo('accept-terms');
@@ -227,9 +227,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       }
       $scope.payment.fee(firstBlockFee);
       $scope.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
-      const amountAfterFee = $scope.transaction.btc + $scope.transaction.fee.btc;
-      $scope.transaction.btcAfterFee = parseFloat(amountAfterFee.toFixed(8));
-      $scope.payment.amount(amountAfterFee / 100000000); // in SATOSHI
+      $scope.transaction.btcAfterFee = parseFloat(($scope.transaction.btc + $scope.transaction.fee.btc).toFixed(8));
     });
   };
 
@@ -317,6 +315,13 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $scope.payment.amount($scope.sendAmount);
   };
 
+  const handleError = (e) => {
+    console.error('error publishing', e.error);
+    console.log(JSON.stringify(e.payment, null, 2));
+    if (e.error.message) console.error(e.error.message);
+    transactionFailed(e);
+  };
+
   $scope.sell = () => {
     $scope.status.waiting = true;
     $q.resolve(buySell.createSellTrade($scope.trade.quote, $scope.selectedBankAccount))
@@ -338,10 +343,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
         Wallet.askForSecondPasswordIfNeeded()
           .then(signAndPublish)
           .then(transactionSucceeded)
-          .catch(err => {
-            console.log('err when publishing', err);
-            transactionFailed(err);
-          });
+          .catch(handleError);
       })
       .catch((e) => console.log(e))
       .finally(() => {

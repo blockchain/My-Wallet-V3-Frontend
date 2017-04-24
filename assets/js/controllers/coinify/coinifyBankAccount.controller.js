@@ -19,7 +19,7 @@ function CoinifyBankAccountController ($scope, $q, $timeout, Wallet, buySell, cu
 
   // TODO refactor this gross thing
   $scope.setAccountType = (tx) => {
-    if ($scope.selectedBankCountry.name === 'Denmark') {
+    if ($scope.selectedBankCountry.name === 'Denmark' && $scope.$parent.transaction.currency === 'DKK') {
       $scope.showDanish = true;
       setAccountTypeHelper('DK', 'Denmark');
     }
