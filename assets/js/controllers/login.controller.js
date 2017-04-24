@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork) {
+function LoginCtrl ($scope, $rootScope, $window, $cookies, localStorageService, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -13,8 +13,8 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
   $scope.uid = $stateParams.uid || Wallet.guid || $cookies.get('uid');
   $scope.uidAvailable = !!$scope.uid;
 
-  if ($cookies.get('password')) {
-    $scope.password = $cookies.get('password');
+  if (localStorageService.get('password')) {
+    $scope.password = localStorageService.get('password');
   }
 
   $scope.login = () => {
@@ -22,7 +22,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     Alerts.clear();
 
     if ($scope.autoReload && $scope.password) {
-      $cookies.put('password', $scope.password);
+      localStorageService.set('password', $scope.password);
     }
 
     let success = () => {

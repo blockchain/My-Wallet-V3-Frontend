@@ -23,6 +23,7 @@ const modules = [
   'walletTranslations',
   'walletFilters',
   'oc.lazyLoad',
+  'LocalStorageModule',
   // Not needed for landing page, but loading it now for the config step below:
   'ui.select',
   // Not needed for landing page, TODO: lazy load

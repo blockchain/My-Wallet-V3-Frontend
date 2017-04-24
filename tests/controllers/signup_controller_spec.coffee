@@ -132,23 +132,23 @@ describe "SignupCtrl", ->
       expect(Wallet.create).toHaveBeenCalled()
     )
 
-    it "should add password to cookies in dev mode", inject(($cookies) ->
-      spyOn($cookies, 'put')
+    it "should add password to local storage in dev mode", inject((localStorageService) ->
+      spyOn(localStorageService, 'set')
       scope.autoReload = true
       scope.fields.password = "testing"
 
       scope.signup()
       scope.$digest()
-      expect($cookies.put).toHaveBeenCalledWith('password', "testing")
+      expect(localStorageService.set).toHaveBeenCalledWith('password', "testing")
     )
 
-    it "should not add password to cookies in production mode", inject(($cookies) ->
-      spyOn($cookies, 'put')
+    it "should not add password to local storage in production mode", inject((localStorageService) ->
+      spyOn(localStorageService, 'set')
       scope.autoReload = false
       scope.fields.password = "testing"
 
       scope.signup()
-      expect($cookies.put).not.toHaveBeenCalledWith('password', "testing")
+      expect(localStorageService.set).not.toHaveBeenCalledWith('password', "testing")
     )
 
   describe "language", ->
