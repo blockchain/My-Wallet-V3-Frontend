@@ -2,11 +2,7 @@ angular
   .module('walletApp')
   .controller('ResetTwoFactorTokenCtrl', ResetTwoFactorTokenCtrl);
 
-function ResetTwoFactorTokenCtrl ($scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, Env) {
-  Env.then(env => {
-    $scope.rootURL = env.rootURL;
-  });
-
+function ResetTwoFactorTokenCtrl ($scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper) {
   Alerts.clear();
 
   const success = (obj) => {

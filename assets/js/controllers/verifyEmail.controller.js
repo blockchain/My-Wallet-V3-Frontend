@@ -2,11 +2,7 @@ angular
   .module('walletApp')
   .controller('VerifyEmailCtrl', VerifyEmailCtrl);
 
-function VerifyEmailCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $q, MyWalletHelpers, Env) {
-  Env.then(env => {
-    $scope.rootURL = env.rootURL;
-  });
-
+function VerifyEmailCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, MyWalletHelpers) {
   $scope.state = 'pending';
 
   const success = (res) => {
@@ -22,5 +18,5 @@ function VerifyEmailCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $
     $scope.error = res.initial_error || res.error;
   };
 
-  $q.resolve(WalletTokenEndpoints.verifyEmail($stateParams.token)).then(success, error);
+  WalletTokenEndpoints.verifyEmail($stateParams.token).then(success, error);
 }
