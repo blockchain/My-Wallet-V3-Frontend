@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('shared')
   .directive('translate', translate);
 
 function translate () {
