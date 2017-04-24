@@ -1,4 +1,4 @@
-angular.module('walletApp.core').factory 'Labels', () ->
+angular.module('walletApp').factory 'Labels', () ->
   addLabel: () -> Promise.resolve()
   getLabel: (accountIdx, receiveIdx) ->
     if (receiveIdx == 1)

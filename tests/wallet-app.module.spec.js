@@ -2,12 +2,6 @@ const modules = [
   'walletApp.core',
 
   'walletFilters',
-  'walletServices',
-  'securityCenter',
-  'didYouKnow',
-  'activity',
-  'adverts',
-  'options',
   'ui.router',
   'ui.bootstrap',
   'ngCookies',
@@ -19,10 +13,11 @@ const modules = [
   'ngSanitize',
   'ja.qr',
   'pascalprecht.translate',
-  'bcTranslateStaticFilesLoader',
   'angular-inview',
   'webcam',
   'bcQrReader',
+
+  'shared',
 
   'bcPhoneNumber',
 
@@ -30,24 +25,13 @@ const modules = [
   'oc.lazyLoad'
 ];
 
-angular.module('walletApp', modules).run(($rootScope) => {
-  $rootScope.$safeApply = (scope = $rootScope, before) => {
-    before = before;
-    if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
-  };
-
-  $rootScope.safeWindowOpen = () => {};
-
+angular.module('walletApp', modules).run(($rootScope, Env) => {
   $rootScope.scheduleRefresh = () => {};
   $rootScope.cancelRefresh = () => {};
 
-  $rootScope.installLock = function () {
-    this.locked = false;
-    this.lock = () => { this.locked = true; };
-    this.free = () => { this.locked = false; };
-  };
-
   $rootScope.isProduction = true;
+  $rootScope.rootURL = 'https://blockchain.info/';
+
   $rootScope.size = { xs: false, sm: false, md: false, lg: true };
 });
 

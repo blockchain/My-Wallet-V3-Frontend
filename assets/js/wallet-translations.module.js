@@ -1,6 +1,6 @@
-'use strict';
+// Translations need its own module, or tests will go haywire.
 angular
-  .module('translations', [])
+  .module('walletTranslations', [])
   .config(TranslationsConfig);
 
 TranslationsConfig.$inject = ['$translateProvider'];
@@ -19,4 +19,7 @@ function TranslationsConfig ($translateProvider) {
   $translateProvider.determinePreferredLanguage();
   $translateProvider.fallbackLanguage('en');
   $translateProvider.useSanitizeValueStrategy('escaped');
+
+  // Use our custom directive in some cases:
+  $translateProvider.directivePriority(0);
 }

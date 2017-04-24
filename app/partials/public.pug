@@ -1,10 +1,11 @@
-.login-pg.overflow-scroll.flex-justify.flex-center
-  public-header(i18n-loaded='i18nLoaded')
+.login-pg.overflow-scroll.flex-justify.flex-center(ng-class="{'display-block': isUIOverflow}")
+  include ./bc-logo-header
   .flex-center.flex-justify.flex-column
     .flex.flex-justify
       .alert-in-app
         alerts
     .login-box.mhs(ui-view="contents")
+  include ./bc-logo-footer
   .versions(ng-show="versionFrontend && versionMyWallet")
     a(href="https://github.com/blockchain/My-Wallet-V3-Frontend/releases" target="_blank" rel="noopener noreferrer") {{ versionFrontend }} &nbsp;
     a(href="https://github.com/blockchain/My-Wallet-V3/releases" target="_blank" rel="noopener noreferrer") (MyWallet v{{ versionMyWallet }})

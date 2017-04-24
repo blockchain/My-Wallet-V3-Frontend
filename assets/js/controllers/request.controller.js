@@ -2,7 +2,12 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout) {
+function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env) {
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+    $scope.isProduction = env.isProduction;
+  });
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
@@ -11,6 +16,8 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
+
+  $scope.browser = browser;
 
   $scope.destinationLimit = 50;
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
@@ -77,12 +84,13 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
   };
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
-    let root = $rootScope.isProduction ? 'https://blockchain.info/' : $rootScope.rootURL;
+    let root = $scope.isProduction ? 'https://blockchain.info/' : $scope.rootURL;
     let { amount, label, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
     let url;
 
     if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
+
     else url = root + 'payment_request?' + 'address=' + $scope.address() + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
@@ -94,13 +102,5 @@ function RequestCtrl ($rootScope, $scope, Wallet, Alerts, currency, $uibModalIns
     return encodeURI(url.slice(0, -1));
   };
 
-  $scope.resetCopy = () => {
-    $scope.state.isAddressCopied = false;
-    $scope.state.isBitcoinURICopied = false;
-    $scope.state.isPaymentRequestCopied = false;
-  };
-
-  $scope.$watchGroup(['state.amount', 'state.label'], $scope.resetCopy);
-
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

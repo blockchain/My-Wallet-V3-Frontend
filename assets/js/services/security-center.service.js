@@ -1,5 +1,5 @@
 angular
-  .module('securityCenter', [])
+  .module('walletApp')
   .factory('SecurityCenter', SecurityCenter);
 
 SecurityCenter.$inject = ['$rootScope', 'Wallet'];

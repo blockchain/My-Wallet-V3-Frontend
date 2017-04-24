@@ -1,5 +1,5 @@
 angular
-  .module('didYouKnow', [])
+  .module('walletApp')
   .factory('DidYouKnow', DidYouKnow);
 
 function DidYouKnow () {

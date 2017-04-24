@@ -5,9 +5,15 @@
 .btn-info {
   background: $mid-grey;
   border-color: $mid-grey;
-  font-size: 100%;
-  font-weight: normal;
 }
+
+ul.uib-datepicker-popup {
+  padding: 10px;
+  .uib-button-bar {
+    padding: 10px 0px 0px 0px;
+  }
+}
+
 
 .btn-info:hover, .btn-info:focus, .btn-info.focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
   background: darken($mid-grey, 5%);
@@ -76,7 +82,7 @@ $select-fg: #686868;
   }
   .ui-select-choices-group-label.dropdown-header { //idk what you want to call these colors.
     color: $select-fg;
-    padding: .4em 1.25em;
+    padding: 4px 12px;
     background: #F4F4F4;
     text-shadow: 0px 1px 0px #FFFFFF;
     font-weight: 500;

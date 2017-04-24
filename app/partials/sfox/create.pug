@@ -29,9 +29,9 @@
             input(ng-model="state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
             .help
-              span.state-danger-text Sorry, this email is already registered with SFOX.
-            .help.flex-end.hidden-xs
-              span.blue.pointer(ng-click="view('email')") Change Email
+              span(ng-click="view('email')")
+                a.state-danger-text Sorry, this email is already registered with SFOX. 
+                a Change Email
         .group.pb-40
           .item
             label Phone Number

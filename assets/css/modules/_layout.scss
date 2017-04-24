@@ -4,6 +4,7 @@
   height: 100%;
   flex-grow: 1;
   display: flex;
+  min-height: 0;
 }
 
 .left-nav {
@@ -146,5 +147,14 @@
   background-color: $grey-transparent;
   @media (max-width: 767px) {
     left: 0px;
+  }
+}
+
+.abs {
+  .bottom-right-footer {
+    @extend .pos-abs;
+    width: 100%;
+    bottom: 0;
+    left: 0;
   }
 }

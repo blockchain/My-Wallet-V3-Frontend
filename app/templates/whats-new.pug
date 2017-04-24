@@ -1,10 +1,13 @@
 li(
-  ng-if="status.didUpgradeToHd"
+  ng-if="status.didUpgradeToHd && feats.length"
   ng-repeat="feat in feats | orderBy:'-date' track by $index"
   ng-class="::{flash: feat.date > lastViewedWhatsNew}")
   h4 {{::feat.title | translate}}
     small.border-grey.mlm {{::feat.date | date:'shortDate'}}
   p
     span(translate="{{::feat.desc}}")
-    |  
+    | &nbsp;
     span.blue.pointer.period(translate="LEARN_MORE" ng-if="::feat.ref" ng-click="$event.stopPropagation()" ui-sref="{{feat.ref}}")
+li.center.pts(ng-if="!feats.length")
+  h4(translate="WHATS_NEW_EMPTY")
+  p(translate="WHATS_NEW_EMPTY_TEXT")

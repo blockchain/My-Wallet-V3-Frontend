@@ -44,7 +44,7 @@ function verifyMobileNumber ($translate, Wallet, $filter) {
         scope.errors.retryFail = 'Error resending verification code';
       };
 
-      Wallet.changeMobile(Wallet.user.mobile, success, error);
+      Wallet.changeMobile(Wallet.user.mobileNumber, success, error);
     };
 
     scope.verifyMobile = (code) => {

@@ -21,7 +21,7 @@
     },
     "sfox": {
       "countries": ["US"],
-      "states": ["AL", "AZ", "CA", "CO", "GA", "IN", "KS", "MD", "MA", "MO", "MT", "SC", "TX"],
+      "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
       "inviteFormFraction": 0.1,
       "showCheckoutFraction": 0,
       "apiKey": "f31614a7-5074-49f2-8c2a-bfb8e55de2bd",

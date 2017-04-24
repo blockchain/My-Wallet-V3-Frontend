@@ -1,5 +1,5 @@
 angular
-  .module('labels', [])
+  .module('walletApp')
   .factory('Labels', Labels);
 
 Labels.$inject = ['MyWallet'];
