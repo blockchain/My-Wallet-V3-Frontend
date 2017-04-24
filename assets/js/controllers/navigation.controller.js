@@ -2,10 +2,11 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
+  const whatsNewDateCutoff = 7.884e+9; // ~3 months
   const lastViewedDefaultTime = 1231469665000;
   $scope.whatsNewTemplate = 'templates/whats-new.pug';
   $scope.lastViewedWhatsNew = null;
@@ -55,7 +56,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
     let rememberChoice = (id) => () => $cookies.put(id, true);
 
     let goToBackup = () => $q.all([$state.go('wallet.common.security-center', {promptBackup: true}), $q.reject('backing_up')]);
-    let openSurvey = () => { $rootScope.safeWindowOpen('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
+    let openSurvey = () => { BrowserHelper.safeWindowOpen('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
 
     let remindBackup = () =>
       Alerts.confirm('BACKUP_REMINDER', options({ cancel: 'CONTINUE_LOGOUT', action: 'VERIFY_RECOVERY_PHRASE' }))
@@ -91,8 +92,9 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   }
 
   buyStatus.canBuy().then(canBuy => {
+    let now = Date.now();
     let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
-    $scope.feats = whatsNew.filter(filterBuy);
+    $scope.feats = whatsNew.filter(filterBuy).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {

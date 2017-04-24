@@ -7,7 +7,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
   .flex-row.flex-column-tablet(ng-show="!showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
     .width-50.border.mrl.pal.flex-column.flex-between.flex-center
       span.type-h4.width-100 Just a few steps away!
-      .mvl.flex-column.flex-center.blue.type-h4
+      .mvl.flex-column.flex-center.primary.type-h4
         i.type-lrg(ng-class="stepDescription().i")
         span(translate="{{stepDescription().text}}")
       form.width-100(ng-submit="openSfoxSignup()")

@@ -119,7 +119,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       this.goTo('review');
       return;
     } else {
-      if (!$scope.user.isEmailVerified || $scope.rejectedEmail) {
+      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
         this.goTo('email');
       } else if (!$scope.exchange.user) {
         this.goTo('accept-terms');

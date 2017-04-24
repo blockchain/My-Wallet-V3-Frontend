@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
+function BuyCheckoutController ($rootScope, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -69,8 +69,7 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
-      let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
@@ -143,6 +142,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
-  $scope.$root.installLock.call($scope);
+  AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }

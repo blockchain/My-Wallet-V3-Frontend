@@ -48,6 +48,7 @@ describe "RequestCtrl", ->
 
       $controller "RequestCtrl",
         $scope: scope,
+        $rootScope: $rootScope,
         $stateParams: {},
         $uibModalInstance: modalInstance,
         destination: undefined,
@@ -158,7 +159,7 @@ describe "RequestCtrl", ->
       scope.state.amount = null
       scope.$digest()
 
-      expect(scope.paymentRequestURL()).toBe('https://blockchain.info/payment_request?address=1asdf&message=Label%20Label%20Label')
+      expect(scope.paymentRequestURL()).toContain('/payment_request?address=1asdf&message=Label%20Label%20Label')
 
     it "should contain amountType", ->
       scope.state.to = scope.legacyAddresses()[0]
@@ -176,17 +177,6 @@ describe "RequestCtrl", ->
 
       expect(scope.paymentRequestURL()).toContain('message')
       expect(scope.paymentRequestURL()).not.toContain('label=')
-  
-  describe "resetCopy()", ->
-    
-    it "should reset copy buttons", ->
-      scope.state.isAddressCopied = true
-      scope.state.isBitcoinURICopied = true
-      scope.state.isPaymentRequestCopied = true
-      scope.resetCopy()
-      expect(scope.state.isAddressCopied).toBe(false)
-      expect(scope.state.isBitcoinURICopied).toBe(false)
-      expect(scope.state.isPaymentRequestCopied).toBe(false)
       
   describe "isToImportedAddress", ->
     

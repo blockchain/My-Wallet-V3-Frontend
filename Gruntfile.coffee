@@ -54,7 +54,7 @@ module.exports = (grunt) ->
 
       js:
         expand: true
-        src: ['build/js/app.js']
+        src: ['build/js/wallet-app.module.js']
         dest: ''
 
     concat:
@@ -74,15 +74,17 @@ module.exports = (grunt) ->
           'bower_components/angular-ui-select/dist/select.js'
           'bower_components/ng-file-upload/ng-file-upload-shim.min.js'
           'bower_components/ng-file-upload/ng-file-upload.min.js'
-          "build/js/sharedDirectives.js"
-          "build/js/sharedDirectives/public-header.directive.js"
-          "build/js/sharedDirectives/video-container.directive.js"
-          "build/js/sharedDirectives/scroll-in-view.directive.js"
-          "build/js/translations.js"
-          "build/js/app.js"
+          "build/js/shared.module.js"
+          "build/js/sharedDirectives/*.js"
+          "build/js/sharedServices/*.js"
+          "build/js/wallet-translations.module.js"
+          "build/js/wallet-filters.module.js"
+          "build/js/filters/*.js"
+          "build/js/wallet-app.module.js"
+          "build/js/constants/*.js"
           'build/js/landingCtrl.js'
           'build/js/routes.js'
-          "build/js/services/bcTranslationLoader.service.js"
+          "build/js/services/bctranslate-static-files-loader.service.js"
           "build/js/services/languages.service.js"
         ]
         dest: "build/js/landing-not-minified-dependencies.js"
@@ -100,13 +102,13 @@ module.exports = (grunt) ->
       wallet:
         src: [
           'node_modules/babel-polyfill/dist/polyfill.js'
-          'build/js/core/core.module.js'
+          'build/js/core/wallet-app.core.module.js'
           'build/js/core/*.service.js'
           'build/js/services/*.js'
           'build/js/controllers/**/*.js'
           'build/js/components/**/*.js'
           'build/js/directives/*.js'
-          'build/js/filters.js'
+          'build/js/filters/*.js'
           'bower_components/angular-audio/app/angular.audio.js'
           'bower_components/angular-inview/angular-inview.js'
           'bower_components/angular-cookies/angular-cookies.min.js'
@@ -117,7 +119,7 @@ module.exports = (grunt) ->
           'bower_components/qrcode/lib/qrcode.js'
           'bower_components/angular-qr/src/angular-qr.js'
           'bower_components/compare-versions/index.js'
-          'build/js/walletLazyLoad.js'
+          'build/js/wallet-lazy-load.module.js'
         ]
 
         dest: "build/js/wallet.js"
@@ -278,7 +280,7 @@ module.exports = (grunt) ->
           spawn: false
 
       es6:
-        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/*.js']
+        files: ['assets/js/controllers/**/*.js','assets/js/services/**/*.js','assets/js/sharedDirectives/**/*.js','assets/js/sharedServices/**/*.js','assets/js/components/**/*.js','assets/js/directives/**/*.js','assets/js/core/**/*.js','assets/js/constants/**/*.js','assets/js/filters/**/*.js','assets/js/*.js']
         tasks: ['babel:build', 'includeSource', 'concat:wallet']
         options:
           spawn: false
@@ -314,7 +316,7 @@ module.exports = (grunt) ->
         files: [{
           expand: true,
           cwd: 'assets/js',
-          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','directives/**/*.js','core/**/*.js','*.js'],
+          src: ['**/*.controller.js','**/*.component.js','services/**/*.js','sharedDirectives/**/*.js','sharedServices/**/*.js','directives/**/*.js','constants/**/*.js','filters/**/*.js','core/**/*.js','*.js'],
           dest: 'build/js',
         }]
 
@@ -456,7 +458,7 @@ module.exports = (grunt) ->
 
     replace:
       root_url:
-        src: ['build/js/app.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'customRootURL = $rootScope.rootURL'
@@ -470,7 +472,7 @@ module.exports = (grunt) ->
                 "customRootURL = 'http://" + @rootDomain + "/'"
         }]
       web_socket_url:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'customWebSocketURL = $rootScope.webSocketURL'
@@ -478,7 +480,7 @@ module.exports = (grunt) ->
             "customWebSocketURL = '#{ @webSocketURL }'"
         }]
       wallet_helper_url:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'http://localhost:8081'
@@ -487,25 +489,25 @@ module.exports = (grunt) ->
         }]
 
       api_domain:
-        src: ['build/js/wallet.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
-          from: 'customApiDomain = $rootScope.apiDomain'
+          from: 'apiDomain = $rootScope.apiDomain'
           to: () =>
             if @rootDomain && @rootDomain.substr(0,5) == "local"
-              "customApiDomain = 'http://" + @apiDomain + "/'"
+              "apiDomain = 'http://" + @apiDomain + "/'"
             else
-              "customApiDomain = 'https://" + @apiDomain + "/'"
+              "apiDomain = 'https://" + @apiDomain + "/'"
         }]
       network:
-        src: ['build/js/wallet.js', 'build/js/sharedDirectives/public-header.directive.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: "network = $rootScope.network"
           to: () => "network = '" + @network + "'"
         }]
       version_frontend:
-        src: ['build/js/app.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'versionFrontend = null'
@@ -513,7 +515,7 @@ module.exports = (grunt) ->
             "versionFrontend = '" + @versionFrontend + "'"
         }]
       version_my_wallet:
-        src: ['build/js/app.js'],
+        src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
           from: 'versionMyWallet = null'

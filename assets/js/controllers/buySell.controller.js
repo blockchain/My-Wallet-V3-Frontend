@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams, modals) {
+function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $cookies, $q, options, $stateParams, modals) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -14,9 +14,6 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
   $scope.walletStatus = Wallet.status;
   $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
-  $scope.tradeLimit = 5;
-  $scope.scrollTrades = () => { $scope.tradeLimit += 5; };
-
   $scope.onCloseModal = () => {
     $scope.status.modalOpen = false;
     $scope.kyc = buySell.kycs[0];
@@ -27,7 +24,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
-    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency() };
+    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency(undefined, true) };
     $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
@@ -56,7 +53,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
 
     $scope.$watch('settings.currency', () => {
       $scope.transaction.currency = buySell.getCurrency();
-      $scope.sellTransaction.currency = buySell.getCurrency();
+      $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
     }, true);
 
     $scope.$watch('transaction.currency', (newVal, oldVal) => {
@@ -115,7 +112,7 @@ function BuySellCtrl ($rootScope, $scope, $state, Alerts, Wallet, currency, buyS
       }).catch(() => {
         $scope.status.loading = false;
         $scope.status.exchangeDown = true;
-        $scope.$safeApply();
+        AngularHelper.$safeApply($scope);
       });
     } else {
       $scope.status.disabled = false;

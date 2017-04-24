@@ -1,4 +1,4 @@
-tr.border(ng-click="inMobileBuy && triggerBuy()")
+tr.border(ng-click="$root.size.xs && triggerBuy()")
   td.width-5-mobile.right-align.visible-xs(ng-click="cancel(trade); $event.stopPropagation();")
     i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
     i.ti-trash.fade(ng-hide="canCancel")

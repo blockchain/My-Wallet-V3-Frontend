@@ -24,12 +24,12 @@
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
     "CAN_I_BUY": {
-      "Q": "How do I buy Bitcoin?",
+      "Q": "How do I buy bitcoin?",
       "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
     },
     "CAN_I_BUY_UNINVITED": {
-      "Q": "Can I buy Bitcoin?",
-      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <span class='pointer blue'>click here</span>."
+      "Q": "Can I buy bitcoin?",
+      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <a>click here</a>."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
@@ -73,6 +73,8 @@
   "EXPLORE": "Explore",
   "WHATS_NEW": "What's New",
   "WHATS_NEW_EXPLAIN": "We now have a \"What's New\" section where we'll let you know about all the changes we've been making to the Blockchain Wallet.",
+  "WHATS_NEW_EMPTY": "All caught up!",
+  "WHATS_NEW_EMPTY_TEXT": "Check back later for updates.",
   "SIGN_VERIFY" : "Sign and Verify",
   "SIGN_VERIFY_EXPLAIN" : "Prove that you own a bitcoin address by signing a message. Verify to confirm someone else owns an address.",
   "TRANSFER_ALL_EXPLAIN" : "Move all funds from your imported addresses to your HD addresses for added privacy and security.",
@@ -185,7 +187,7 @@
   "VERIFIED" : "Verified",
   "UNVERIFIED" : "Unverified",
   "MOBILE_NUMBER" : "Mobile Number",
-  "MOBILE_NUMBER_EXPLAIN" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access.",
+  "MOBILE_NUMBER_EXPLAIN" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access, and to send bitcoin payment alerts when you receive funds.",
   "ADD_MOBILE_NUMBER" : "Link Mobile Number",
   "WALLET_PASSWORD" : "Wallet Password",
   "WALLET_PASSWORD_EXPLAIN" : "Your password is never shared with our servers, which means we cannot help reset your password if you forget it. Make sure you write down your recovery phrase which can restore access to your wallet in the event of a lost password.",
@@ -329,7 +331,7 @@
   "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
-  "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Please contact support.",
+  "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Try again.",
   "RECOVERY_BEFORE_SECOND_PASSWORD": "Backup your funds first!",
   "RECOVERY_BEFORE_SECOND_EXPLAINER": "We highly recommend you backup your wallet's recovery phrase before setting a second password. Backing up your wallet will ensure your bitcoins are safe in case you lose your password. For your security, we do not keep any passwords on file.",
   "BACKUP_NOW": "Backup Now",
@@ -445,6 +447,7 @@
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
+  "SECOND_PASSWORD_INCORRECT_SHORT" : "Incorrect second password",
   "SET_SECOND_PASSWORD" : "Set Second Password",
   "SET_PASSWORD" : "Set Password",
   "UPGRADE_WALLET" : "Welcome to your Blockchain Wallet!",
@@ -471,7 +474,7 @@
   "SWEEP" : "Sweep",
   "VERIFY_RECOVERY_PHRASE" : "Backup Recovery Phrase",
   "SWEEP_FAIL" : "Some addresses could not be swept automatically",
-  "SWEEP_LOW_BALANCE_WARN" : "Some funds cannot be transferred automatically",
+  "SWEEP_LOW_BALANCE_WARN" : "Some of your addresses do not have a high enough balance for a transfer to be done automatically",
   "SECURITY_TIP" : "Security Tip",
   "DO_NOT_STORE_ON_COMPUTER" : "Do not store your Recovery Phrase on your computer or online. It is very important to keep your Recovery Phrase offline in a safe and private place. Anyone with access to your Recovery Phrase has access to your funds.",
   "PRINTABLE_SHEET" : "We have created a printable Recovery Sheet to help you conveniently keep your Recovery Phrase safe. Print the blank Recovery Sheet and then move onto the next step to fill it in.",
@@ -637,7 +640,7 @@
   "NOT_STORED" : "Not Stored",
   "PHRASE_BACKED" : "Phrase Backed",
   "EMAIL_VERIFIED" : "Email Verified",
-  "THANK_YOU_FOR_JOINING": "Welcome! Thank you for joining over 7 million Blockchain wallet users.",
+  "THANK_YOU_FOR_JOINING": "Welcome! Thank you for joining over 13 million Blockchain wallet users.",
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
@@ -659,10 +662,11 @@
   "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send bitcoin payment alerts when you receive funds.",
   "RECOVERY_PHRASE_TOOLTIP" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers.",
   "PASSWORD_HINT_TOOLTIP" : "Allows us to send your password hint to your verified email address in case you forget your password.",
-  "MOBILE_NUMBER_TOOLTIP" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access.",
+  "MOBILE_NUMBER_TOOLTIP" : "@:MOBILE_NUMBER_EXPLAIN",
   "2FA_TOOLTIP" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt.",
   "BLOCK_TOR_TOOLTIP" : "Prevent IP addresses that are known to be part of the Tor anonymizing network from accessing your wallet.",
-  "ALL" : "All",
+  "ALL_ACCOUNTS" : "All Accounts",
+  "ALL_TRANSACTIONS": "All Transactions",
   "NOTE_LC" : "Note:",
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
@@ -761,7 +765,7 @@
   "LOST_WALLET_ID": "I've lost my Wallet ID",
   "LOST_WALLET_PWD": "I've lost my Wallet Password",
   "LOST_2FA": "I've lost my 2FA Device",
-  "LOST_ID_DESC": "Email me a reminder with my Wallet ID to my verified email address",
+  "LOST_ID_DESC": "Email me a reminder with my Wallet ID to my email address",
   "LOST_PWD_DESC": "Recover your funds with your 12 word recovery passphrase",
   "RESET_2FA" : "Reset 2FA",
   "REMIND_ME": "Remind Me",
@@ -929,7 +933,7 @@
   "NEW_USERS": "New Users",
   "NEW_USERS_COPY": "Creating a Blockchain Wallet takes a few seconds. Send and receive payments immediately.",
   "EXISTING_USERS": "Existing Users",
-  "EXISTING_USERS_COPY": "If you have previously created a Blockchain Wallet click below to login.",
+  "EXISTING_USERS_COPY": "If you have previously created a Blockchain Wallet, click below to login.",
   "LOGIN_NOW": "Login Now",
   "OR_LOGIN": "or Login",
   "HOW_IT_WORKS": "How It Works",
@@ -962,13 +966,16 @@
     "TITLE": "Copy & Share Address",
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below."
   },
+  "COPY_AND_SHARE_IMPORTED_ADDRESS": {
+    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet."
+  },
   "SCAN": "Scan",
   "SIMPLE": "Simple",
   "CROSS_PLATFORM": "Cross-platform",
   "ACCESS_ANYWHERE": "Desktop, iOS and Android apps allow you to access your Bitcoin wallet from any device, anytime, anywhere.",
   "GLOBAL": "Global",
   "SAFE_AND_SECURE": "Safe & Secure",
-  "SECURITY_INFO": "Our step-by-step Security Center helps you backup your funds, and protect them from unauthorized access.",
+  "SECURITY_INFO": "Our step-by-step Security Center helps you backup your funds and protect them from unauthorized access.",
   "SUPPORTED": "Supported",
   "SOPHISTICATED": "Sophisticated",
   "SOPHISTICATED_INFO": "Hierarchical deterministic addresses. Dynamic transaction fees. Monitoring and spending from Watch Only addresses.",
@@ -983,6 +990,7 @@
   "EDIT_PROFILE": "Edit Your Profile",
   "BUY_BITCOIN": "Buy Bitcoin",
   "SELL_BITCOIN": "Sell Bitcoin",
+  "ORDER_HISTORY": "Order History",
   "BANK_TRANSFER_HEADING": "Bank Transfer",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<a>Click here.</a>",
@@ -1069,7 +1077,7 @@
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
-    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to the following account within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
+    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to Coinify's bank account below within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1197,9 +1205,9 @@
   "LANDING": {
     "NEW_TO_BITCOIN" : "New To Bitcoin?",
     "WHAT_IS_BITCOIN": "What is Bitcoin?",
-    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries, which translates to greater control of funds and lower fees.",
     "WHY_USE" : "Why use it?",
-    "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure and immutable. And its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
+    "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure, and immutable. Its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency, so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
     "" : ""
   },
@@ -1291,7 +1299,7 @@
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
-  "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='blue'>click here to start</span> buying bitcoin.",
+  "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
   "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
   "OR": "or",
@@ -1345,7 +1353,8 @@
     "KYC_CANCELLED": "This transaction has been cancelled.",
     "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity.",
-    "MORE_THAN_BALANCE": "The amount entered is more than your balance.",
+    "MORE_THAN_BALANCE": "Amount entered is more than your balance.",
+    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than your default wallet balance",
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -1366,5 +1375,8 @@
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
   "BUY_SELL_BITCOIN": "Buy Bitcoin",
+  "SHOW_MORE": "Show more",
+  "RECEIVE_HELPER": "Copy a receive address to your clipboard.",
+  "EMAIL_SENT": "Email Sent",
   "": ""
 }

@@ -90,6 +90,7 @@ describe "SendCtrl", ->
         element = angular.element(
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
+          '<input type="text" name="priv" ng-model="transaction.priv" required />' +
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
           '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
           '<input type="number" name="amountsFiat0" ng-model="transaction.amountsFiat[0]" ng-change="" min="1" required />' +
@@ -567,7 +568,7 @@ describe "SendCtrl", ->
 
     describe "sendInputMetrics", ->
       it "should record the event correctly", ->
-        $httpBackend.expectGET("/event?name=wallet_web_tx_from_paste").respond('success')
+        $httpBackend.expectGET("https://blockchain.info/event?name=wallet_web_tx_from_paste").respond('success')
         scope.sendInputMetrics("paste")
         $httpBackend.verifyNoOutstandingExpectation()
 
@@ -826,6 +827,7 @@ describe "SendCtrl", ->
         element = angular.element(
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
+          '<input type="text" name="priv" ng-model="transaction.priv" required />' +
           '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
           '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
           '<input type="number" name="fee" ng-model="transaction.fee" ng-change="" min="0" required />' +

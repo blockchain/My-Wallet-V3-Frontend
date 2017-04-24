@@ -10,13 +10,13 @@
       .col-sm-12.col-md-8
         p
           label(translate="ADDRESS")
-          span : {{ address }}
+          span(translate="no") : {{ address }}
         p
           label(translate="BALANCE")
-          span : {{ balance | convert }}
+          span(translate="no") : {{ balance | convert }}
         p
-          label(translate="YOUR_PRIVATE_KEY") 
-          span : {{ privKeys[format] }}
+          label(translate="YOUR_PRIVATE_KEY")
+          span(translate="no") : {{ privKeys[format] }}
         .flex-row.flex-center
           label.prs
             span(translate="PK_FORMAT")

@@ -2,7 +2,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
   .modal-header
     .flex-center.pam
       h3.man.mrm(translate="EXPORT_HISTORY")
-      helper-button(content="EXPORT_HISTORY_EXPLAIN")
+      helper-button.show(content="EXPORT_HISTORY_EXPLAIN")
 
   .modal-body
     .ph-form.flex-row
@@ -21,6 +21,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
         .flex-row.flex-center.flex-between.pal(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
           p.input-group.flex-center
             input.form-control(
+              id="start-search"
               type="text"
               name="start"
               ng-model="start.date"
@@ -34,6 +35,7 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
           i.ti-arrow-right.blue.pll.prl
           p.input-group.flex-center
             input.form-control(
+              id="end-search"
               type="text"
               name="end"
               ng-model="end.date"

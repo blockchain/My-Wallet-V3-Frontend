@@ -32,8 +32,8 @@
           td.col-md-3
           td.col-md-3
 
-      .flex-between.flex-center.mbl.mvvl
-        div
+      .flex-between.flex-center.flex-column-mobile.flex-start-mobile.mbl.mvvl
+        .width-40-tablet.width-50
           span.type-md.em-500(translate="IMPORTED_ADDRESSES")
           |  
           i.ti-alert.security-red.hidden-xs
@@ -45,13 +45,12 @@
             ng-show="activeSpendableAddresses().length > 0"
             ng-click="openTransferAll()"
           )
-          button.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
+          button.btn.button-default(translate="VERIFY_MESSAGE" ng-click="openVerifyMessage()")
       include ./imported-addresses
 
   .row.spacing
-  .row.spacing
 
-  .row
+  .row.mvvl
     .col-xs-12
       a.button-default(
         ui-sref="wallet.common.settings.address_book"

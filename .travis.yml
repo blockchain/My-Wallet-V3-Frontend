@@ -9,13 +9,21 @@ before_install:
 - gem install sass
 before_script:
 - node_modules/.bin/semistandard --verbose | snazzy
+- ./node_modules/.bin/eslint assets/js/*.module.js
+- ./node_modules/.bin/eslint assets/js/components/*.js
+- ./node_modules/.bin/eslint assets/js/constants/*.js
+- # ./node_modules/.bin/eslint assets/js/controllers/*.js
+- # ./node_modules/.bin/eslint assets/js/core/*.js
+- # ./node_modules/.bin/eslint assets/js/directives/*.js
+- ./node_modules/.bin/eslint assets/js/filters/*.js
+- ./node_modules/.bin/eslint assets/js/services/*.js
+- ./node_modules/.bin/eslint assets/js/sharedDirectives/*.js
+- ./node_modules/.bin/eslint assets/js/sharedServices/*.js
+- # ./node_modules/.bin/eslint assets/js/**/*
 script:
 - make build
 - make test
 - grunt coveralls
-notifications:
-  slack:
-    secure: iz0CoBcz79s70KyZ3Kb4fcQqSRl3mK0mAqoqz5TiXwHRq0tPL/CIy+kNQ15YKykNXg9++7lvhOmxedq6H+0mQSZA4xpTbBPVAgISoPgkW0O7wQv6JFXCh2jhUEcPWx1FFaTNkrrN580XX7IONd+iwjauFb4RTU+388Qa+PkL/Zqq6UEqQluAg1H+njy0+klvi/Iz0eAHBTNPwiqZweZQBRYLkEjsmev/bPY94C2UViQGxCMZ+UEV2LMSLeumqkLMuD9vYrXTGqtg00WW36HcPax2Kju0aLjoycuqqypSZOVRuTdOZ4jvB4YUg+mMn9oC7/NFwvPre+zKHfd6jrjbtX3+4rdCr7AL+npSwAx2wKRkhJthHB+OfQ1paeQ/GRL735+VEpweQJumZ4aGOVbd6NF0kbFR9DpPO+xEUp/9V71FpFvBh5bJd8tcfgDrQLk2FzwsVI935yLdBYcbPb5zWOBwy9lz5uFmaZpeLpNwZRHgKLeC8XrEUsSOq6ef8aZkXBqRXpRD3ZNp9hwK6T7Mpi0gZNc4bRaZBanF1W9E1Hlegm7UNMh3v6ePc+B81eh7KUiydlYurQHuw/eXo+H+91VXkKdjCWowmugXsq8XmBUVNJtglG2A77e7uflsm6bwWKnnds4nwMzEBsAvoiYCm98USv1Fl1vdXRVfoI+zcgo=
 before_deploy:
   - make pgp
   - export VERSION=$TRAVIS_TAG
