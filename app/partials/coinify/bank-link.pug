@@ -1,9 +1,9 @@
 .modal-body
   div
     .bank-link
-      span.type-h5.f-14.flex-start.pb-5(translate="SELL.WHERE_FUNDS_SENT" ng-hide="hideWhenNoAccounts")
-      span.type-h5.f-14.flex-start.pvl(translate="SELL.PLEASE_ADD_ACCOUNT" ng-show="hideWhenNoAccounts")
-      .flex-row.flex-between.mt-15.mb-10(ng-hide="hideWhenNoAccounts")
+      span.type-h5.f-14.flex-start.pb-5(translate="SELL.WHERE_FUNDS_SENT" ng-hide="$ctrl.hideWhenNoAccounts")
+      span.type-h5.f-14.flex-start.pvl(translate="SELL.PLEASE_ADD_ACCOUNT" ng-show="$ctrl.hideWhenNoAccounts")
+      .flex-row.flex-between.mt-15.mb-10(ng-hide="$ctrl.hideWhenNoAccounts")
         span.type-lbl.colon(translate="SELL.SELECT_ACCOUNT")
         a.underline(ng-show="selecting" ng-click="bankLinkEdit()" translate="EDIT_NOTE")
         a.underline(ng-show="!selecting" ng-click="bankLinkEdit()" translate="SELL.DONE")

@@ -21,6 +21,8 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
 
   this.banks = this.accounts.accounts;
 
+  if (!this.banks.length) this.hideWhenNoAccounts = true;
+
   $scope.selecting = true;
   $scope.bankLinkEdit = () => $scope.selecting = !$scope.selecting;
 
