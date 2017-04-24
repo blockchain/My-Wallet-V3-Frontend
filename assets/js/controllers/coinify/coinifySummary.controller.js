@@ -56,11 +56,11 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
       buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     };
 
-    buySell.accounts[0].buy()
-                       .then(success)
-                       .then(() => $scope.vm.goTo('isx'))
-                       .then(() => $scope.vm.watchAddress())
-                       .catch((e) => Alerts.displayError(JSON.parse(e).error_description));
+    $q.resolve(buySell.accounts[0].buy())
+                                  .then(success)
+                                  .then(() => $scope.vm.goTo('isx'))
+                                  .then(() => $scope.vm.watchAddress())
+                                  .catch((e) => Alerts.displayError(JSON.parse(e).error_description));
   };
 
   $scope.$watch('rateForm', () => {

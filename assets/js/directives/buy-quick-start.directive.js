@@ -1,9 +1,9 @@
 angular.module('walletApp')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', 'modals'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals'];
 
-function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, modals) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -65,9 +65,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.status.busy = true;
 
       if (scope.lastInput === 'btc') {
-        buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code).then(success, error);
+        $q.resolve(buySell.getQuote(-scope.transaction.btc, 'BTC', scope.transaction.currency.code)).then(success, error);
       } else {
-        buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code).then(success, error);
+        $q.resolve(buySell.getQuote(scope.transaction.fiat, scope.transaction.currency.code)).then(success, error);
       }
     };
 
@@ -92,7 +92,8 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
     scope.cancelTrade = () => {
       scope.disabled = true;
-      buySell.cancelTrade(scope.pendingTrade).finally(() => scope.disabled = false);
+      $q.resolve(buySell.cancelTrade(scope.pendingTrade))
+        .finally(() => scope.disabled = false);
     };
 
     scope.getMinLimits = (quote) => {

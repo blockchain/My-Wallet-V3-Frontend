@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyMediumController', CoinifyMediumController);
 
-function CoinifyMediumController ($scope, $timeout, AngularHelper, Alerts, buySell) {
+function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, buySell) {
   AngularHelper.installLock.call($scope);
   $scope.$timeout = $timeout;
   $scope.limits = buySell.limits;
@@ -23,11 +23,11 @@ function CoinifyMediumController ($scope, $timeout, AngularHelper, Alerts, buySe
     let { medium, quote } = $scope.vm;
 
     // cache accounts in My-Wallet-V3 instead
-    quote.getPaymentMediums()
-         .then((mediums) => mediums[medium].getAccounts())
-         .then((accounts) => buySell.accounts = accounts)
-         .then(() => $scope.vm.goTo('summary'))
-         .then($scope.free).catch((err) => console.log(err));
+    $q.resolve(quote.getPaymentMediums())
+      .then((mediums) => mediums[medium].getAccounts())
+      .then((accounts) => buySell.accounts = accounts)
+      .then(() => $scope.vm.goTo('summary'))
+      .then($scope.free).catch((err) => console.log(err));
   };
 
   $scope.lock();
