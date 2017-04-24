@@ -13,10 +13,10 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.status = {};
   $scope.trade = trade;
   $scope.quote = buySellOptions.quote;
-  $scope.isSell = buySellOptions.sell;
+  // $scope.isSell = buySellOptions.sell;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
-  $scope.acceptTermsForm;
+  // $scope.acceptTermsForm;
   $scope.bankAccounts = accounts;
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
@@ -29,6 +29,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       fiat: null
     }
   };
+
   this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   this.selectedBankAccount = null;
   this.accounts = accounts;
@@ -39,11 +40,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   console.log('coinify sell ctrl this', this);
 
-  $scope.bankAccount = {
-    account: { currency: null },
-    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
-    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
-  };
   this.bankAccount = {
     account: { currency: null },
     bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
@@ -60,9 +56,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   };
 
   $scope.assignFiatHelper = (currencyType) => {
-    console.log('assignFiatHelper', $scope.transaction);
     $scope.transaction.currency = $scope.trade.quote[currencyType];
-    $scope.bankAccount.account.currency = $scope.trade.quote[currencyType];
     this.bankAccount.account.currency = $scope.trade.quote[currencyType];
     $scope.currencySymbol = currency.conversions[$scope.trade.quote[currencyType]]['symbol'];
   };
@@ -70,33 +64,27 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
   $scope.assignFiatCurrency();
 
   let exchange = buySell.getExchange();
-  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.bankAccount.bank.address.country = this.exchangeCountry;
-  $scope.bankAccount.bank.address.country = this.exchangeCountry;
   this.holderCountry = this.exchangeCountry;
 
   $scope.setAccountCurrency = (countryCode) => {
     switch (countryCode) {
       case 'DK':
-        $scope.bankAccount.account.currency = 'DKK';
         this.bankAccount.account.currency = 'DKK';
         break;
       case 'GB':
-        $scope.bankAccount.account.currency = 'GBP';
         this.bankAccount.account.currency = 'GBP';
         break;
       default:
-        $scope.bankAccount.account.currency = 'EUR';
         this.bankAccount.account.currency = 'EUR';
         break;
     }
   };
 
   $scope.setAccountCurrency($scope.exchangeCountry);
-  $scope.bankAccount.holder.address.country = $scope.exchangeCountry.code;
+  this.bankAccount.holder.address.country = $scope.exchangeCountry.code;
 
   console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction);
 
@@ -116,12 +104,8 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     'isx': 7
   };
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
-  $scope.afterStep = (step) => $scope.step > $scope.steps[step];
-  $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
-  $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
 
   this.goTo = (step) => $scope.step = $scope.steps[step];
-  $scope.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
     console.log('scope.nextStep', $scope.transaction, $scope.trade);
@@ -132,8 +116,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     }
 
     if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
-      // $scope.mapTradeDetails();
-      console.log('goTo review')
       this.goTo('review');
       return;
     } else {
@@ -150,6 +132,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
       }
     }
   };
+
   $scope.fields = { email: $scope.user.email };
 
   this.goToOrderHistory = () => {
@@ -203,40 +186,6 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     $uibModalInstance.dismiss('');
   };
 
-  $scope.mapTradeDetails = () => {
-    const t = $scope.trade;
-    $scope.sellTrade = {
-      id: t._id,
-      createTime: t.createdAt,
-      transferIn: {receiveAmount: t._inAmount / 100000000},
-      transferOut: {receiveAmount: t.outAmountExpected / 100, currency: t._outCurrency},
-      bankDigits: t._bankAccountNumber
-    };
-    $scope.tradeCompleted = $scope.isInCompletedState(t);
-    $scope.inNegativeState = $scope.isInNegativeState(t);
-    $scope.formatBankInfo(t);
-  };
-
-  $scope.formatBankInfo = (trade) => {
-    if (trade.transferOut) {
-      let n = trade.transferOut.details.account.number;
-      $scope.bankNameOrNumber = n;
-    }
-  };
-
-  $scope.isInCompletedState = (trade) => {
-    if (trade._state === 'awaiting_transfer_in' || trade._state === 'processing') {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  $scope.isInNegativeState = (trade) => {
-    if (trade._state === 'canceled' || trade._state === 'expired' || trade._state === 'rejected') {
-      return true;
-    }
-  };
   let startedPayment = $scope.startPayment();
   if (startedPayment) {
     this.transaction = startedPayment.transaction;
@@ -256,17 +205,14 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
 
   this.buildBankAccount = (data) => {
     this.bankAccount.account = Object.assign(this.bankAccount.account, data);
-    $scope.bankAccount.account = Object.assign($scope.bankAccount.account, data);
   };
 
   this.buildBankHolder = (data) => {
     this.bankAccount.holder = Object.assign(this.bankAccount.holder, data);
-    $scope.bankAccount.holder = Object.assign($scope.bankAccount.holder, data);
   };
 
   this.changeHolderCountry = (country) => {
     this.bankAccount.holder.address.country = country;
-    $scope.bankAccount.holder.address.country = country;
     this.holderCountry = country;
   };
 

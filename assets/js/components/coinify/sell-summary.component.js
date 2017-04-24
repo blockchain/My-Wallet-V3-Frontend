@@ -69,7 +69,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     if (msgText.indexOf('Transaction Already Exists') > -1) {
       $uibModalInstance.close();
     } else {
-      Alerts.displayError(msgText, false, $scope.alerts);
+      Alerts.displayError(msgText, false, this.alerts);
     }
   };
 
@@ -78,17 +78,17 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       Wallet.beep();
       let message = 'BITCOIN_SENT';
       Alerts.displaySentBitcoin(message);
-      let note = `Coinify Sell Order ${$scope.sellTrade.id}`;
+      let note = `Coinify Sell Order ${this.sellResult.id}`;
       if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
     }, 500);
   };
 
   const setCheckpoint = (payment) => {
-    $scope.paymentCheckpoint = payment;
+    this.paymentCheckpoint = payment;
   };
 
   const signAndPublish = (passphrase) => {
-    return $scope.payment.sideEffect(setCheckpoint)
+    return this.payment.sideEffect(setCheckpoint)
       .sign(passphrase).publish().payment;
   };
 
@@ -130,7 +130,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       .catch((e) => console.log(e))
       .finally(() => {
         this.waiting = false;
-        if (!$scope.error) this.onComplete();
+        if (!this.error) this.onComplete();
       });
   };
 }

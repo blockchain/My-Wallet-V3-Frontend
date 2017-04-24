@@ -13,11 +13,6 @@
         h3.mlm(ng-if="onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
         .flex-column.flex-align-end(ng-show="status.gettingQuote")
           img(src="img/spinner.gif")
-        .flex-row-reverse.flex-align-end(ng-hide="status.gettingQuote"
-                                    uib-tooltip="{{getQuoteHelper() | translate}}"
-                                    tooltip-append-to-body="true"
-                                    tooltip-placement="top"
-                                    tooltip-enable="!hideQuote()")
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
             
@@ -78,37 +73,11 @@
       completed-trade="vm.completedTrade"
       dismiss="vm.dismiss()"
     )
-  //- .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
-    .alert-in-app
-      alerts(context="alerts")
-    div.iframe(ng-if="onStep('isx')")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX" payment-info="paymentInfo" on-resize="onResize(step)")
-    div.width-90(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
-      include ./coinify/email
-    div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
-      include ./coinify/signup
-    div.width-90(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
-      include ./coinify/account-info
-    div.width-90(ng-show="onStep('account-holder')" ng-controller="CoinifyBankAccountController")
-      include ./coinify/account-holder
-    //- div.width-90(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
-    //-   include ./coinify/bank-link
-    div.width-95(ng-if="onStep('review')")
-      include ./coinify/review
-    .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
-      span.pos-rel
-        span.mrs.type-sm(translate="POWERED_BY")
-        a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
-          img(src="img/coinify-logo.svg")
-          span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
   .modal-footer.flex-end.flex-row(ng-show="onStep('email') || onStep('accept-terms')")
-    button.button-muted(ng-show="onStep('account-holder')" ng-click="goTo('account-info')" translate="GO_BACK")
-
     .flex-1.flex-end(ng-hide="status.loading")
       button.button-muted.mrm(ng-click="$close()" translate="CANCEL" ng-show="onStep('accept-terms') || onStep('email')")
       button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
-      button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link') || onStep('account-info') || onStep('account-holder')")
-      div(ng-hide="afterStep('summary')")
+      div
         button.button-primary(
           translate="CONTINUE"
           ng-click="goTo('accept-terms')"
@@ -116,19 +85,8 @@
           ng-show="onStep('email')")
         button.button-primary(
           ladda-translate="CONTINUE"
-          ng-click="createBankAccount()"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('account-holder')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
           ng-click="acceptTerms()"
           data-style="expand-left"
           ui-ladda="status.waiting"
           ng-disabled="isDisabled()"
           ng-show="onStep('accept-terms')")
-      div(ng-show="onStep('review') || onStep('summary') && error")
-        button.button-primary(translate="CLOSE" ng-click="cancel()")
-      div(ng-show="onStep('trade-formatted') && bitcoinReceived")
-        button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")
