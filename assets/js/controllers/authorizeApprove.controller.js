@@ -2,11 +2,7 @@ angular
   .module('walletApp')
   .controller('AuthorizeApproveCtrl', AuthorizeApproveCtrl);
 
-function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, MyWalletHelpers, Env) {
-  Env.then(env => {
-    $scope.rootURL = env.rootURL;
-  });
-
+function AuthorizeApproveCtrl ($window, $scope, WalletTokenEndpoints, $stateParams, $state, Alerts, $translate, AngularHelper, MyWalletHelpers) {
   $scope.success = false;
 
   const success = (res) => {
