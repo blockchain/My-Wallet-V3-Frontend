@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('cta', cta);
 
-function cta ($cookies, Wallet, buyStatus) {
+function cta (localStorageService, Wallet, buyStatus) {
   const cookieJar = {};
   const ONE_WEEK = 604800000;
   const BUY_CTA_KEY = 'buy-alert-seen';
@@ -21,18 +21,18 @@ function cta ($cookies, Wallet, buyStatus) {
   return service;
 
   function cacheCookies () {
-    cookieJar[BUY_CTA_KEY] = $cookies.get(BUY_CTA_KEY);
-    cookieJar[SECURITY_WARNING_KEY] = $cookies.getObject(SECURITY_WARNING_KEY);
+    cookieJar[BUY_CTA_KEY] = localStorageService.get(BUY_CTA_KEY);
+    cookieJar[SECURITY_WARNING_KEY] = localStorageService.get(SECURITY_WARNING_KEY);
   }
 
   function shouldShowBuyCta () {
     let hasAccount = buyStatus.userHasAccount();
-    let hasSeenCta = cookieJar[BUY_CTA_KEY] === 'true';
+    let hasSeenCta = cookieJar[BUY_CTA_KEY];
     return !hasAccount && !hasSeenCta;
   }
 
   function setBuyCtaDismissed () {
-    $cookies.put(BUY_CTA_KEY, true);
+    localStorageService.set(BUY_CTA_KEY, true);
     cacheCookies();
   }
 
@@ -52,7 +52,7 @@ function cta ($cookies, Wallet, buyStatus) {
     let messageCookie = cookieJar[SECURITY_WARNING_KEY];
     let index = messageCookie ? messageCookie.index + 1 : 0;
     let when = nextWeek();
-    $cookies.putObject(SECURITY_WARNING_KEY, { index, when });
+    localStorageService.set(SECURITY_WARNING_KEY, { index, when });
     cacheCookies();
   }
 

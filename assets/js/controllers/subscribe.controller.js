@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SubscribeCtrl', SubscribeCtrl);
 
-function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, buySell, $cookies, $uibModalStack) {
+function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, buySell, localStorageService, $uibModalStack) {
   $scope.countries = country;
   $scope.states = state;
   $scope.data = {};
@@ -19,7 +19,7 @@ function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, buySell, $
   };
 
   $scope.subscribe = () => {
-    $cookies.put('subscribed', true);
+    localStorageService.set('subscribed', true);
     $rootScope.isSubscribed = true;
     $uibModalStack.dismissAll();
   };

@@ -189,8 +189,8 @@ describe "CoinifyController", ->
     beforeEach ->
       spyOn(Alerts, 'confirm').and.callThrough()
 
-    it "should prompt for survey first", inject(($cookies) ->
-      spyOn($cookies, "getObject").and.returnValue(false)
+    it "should prompt for survey first", inject((localStorageService) ->
+      spyOn(localStorageService, "get").and.returnValue(false)
       scope.goTo('select-country')
       scope.close(true)
       expect(Alerts.confirm).toHaveBeenCalledWith('SURVEY_PROMPT', {friendly: true, action: 'TAKE_SURVEY', cancel: 'NO_THANKS'})
