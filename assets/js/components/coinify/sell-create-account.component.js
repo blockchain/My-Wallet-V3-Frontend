@@ -57,6 +57,7 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
              !this.selectedBankCountry;
     }
   };
+  console.log('sell account component', this);
 
   this.selectedBankCountry = this.sepaCountries.find(c => c.code === this.holderCountry);
   this.bankAccount.holder.address.country = this.selectedBankCountry.code;
@@ -86,6 +87,4 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
     .catch(handleError);
     this.status = {};
   };
-
-  console.log('sell account component', this);
 }

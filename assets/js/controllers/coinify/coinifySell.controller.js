@@ -5,7 +5,6 @@ angular
 function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
-  $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
@@ -21,10 +20,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     btc: $scope.trade.btc,
     fiat: $scope.trade.fiat,
     currency: { name: 'Euro', code: 'EUR' },
-    fee: {
-      btc: null,
-      fiat: null
-    }
+    fee: { btc: null, fiat: null }
   };
 
   this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
@@ -65,28 +61,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.bankAccount.bank.address.country = this.exchangeCountry;
-  this.holderCountry = this.exchangeCountry;
-
-  $scope.setAccountCurrency = (countryCode) => {
-    switch (countryCode) {
-      case 'DK':
-        this.bankAccount.account.currency = 'DKK';
-        break;
-      case 'GB':
-        this.bankAccount.account.currency = 'GBP';
-        break;
-      default:
-        this.bankAccount.account.currency = 'EUR';
-        break;
-    }
-  };
-
-  $scope.setAccountCurrency(this.exchangeCountry);
   this.bankAccount.holder.address.country = this.exchangeCountry.code;
-
-  console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction);
-
-  $scope.dateFormat = 'd MMMM yyyy, HH:mm';
+  this.holderCountry = this.exchangeCountry;
 
   $scope.steps = {
     'email': 0,

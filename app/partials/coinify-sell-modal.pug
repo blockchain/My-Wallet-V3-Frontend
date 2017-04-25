@@ -10,8 +10,7 @@
         h3.mlm(ng-if="onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
         h3.mlm(ng-if="onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
         h3.mlm(ng-if="onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
-        .flex-column.flex-align-end(ng-show="status.gettingQuote")
-          img(src="img/spinner.gif")
+        .flex-column.flex-align-end
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
             

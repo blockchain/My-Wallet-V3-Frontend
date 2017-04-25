@@ -15,7 +15,7 @@
                 input(ng-show="selecting" type="radio" name="bankRadios" ng-value="$ctrl.banks[$index]._account" ng-model="$ctrl.selectedBankAccount" ng-click="$ctrl.selectAccount({account: $ctrl.banks[$index]._account})" id="{{bank._account.id}}")
                 i.ti-trash.pointer.state-danger-text.f-16(ng-hide="selecting" ng-click="$ctrl.deleteAccount(bank._account)" uib-tooltip="{{'CLICK_TO_DELETE_ACCOUNT' | translate}}")
               div.width-90
-                img(src="img/bank.png")
+                img.hidden-xs(src="img/bank.png")
                 span.pv-25.em-300.pl-20 {{ bank._account.account.number }}
           .flex-row.flex-center.border.plvl(ng-show="selecting")
             input(type="radio" name="bankRadios" ng-click="$ctrl.newAccount()")
