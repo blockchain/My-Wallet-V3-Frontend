@@ -3,8 +3,7 @@
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3.mlm(ng-if="onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
-        h3.mlm(ng-if="onStep('account-info')" translate="SELL.ADD_BANK_ACCOUNT")
-        h3.mlm(ng-if="onStep('account-holder')" translate="SELL.ACCOUNT_HOLDER")
+        h3.mlm(ng-if="onStep('account')" translate="SELL.ADD_BANK_ACCOUNT")
         h3.mlm(ng-if="onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
         h3.mlm(ng-if="onStep('review') && !KYCState" ng-hide="onStep('review') && trade._state === 'completed'" translate="SELL.ORDER_PLACED")
         h3.mlm(ng-if="onStep('review') && trade._state === 'completed'" translate="SELL.TRADE_COMPLETE")
@@ -20,27 +19,19 @@
     include ./coinify/email
   div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
     include ./coinify/signup
-  sell-account-info(
-      ng-if="onStep('account-info')" 
-      on-complete="vm.goTo('account-holder')" 
-      country="vm.exchangeCountry"
-      bank-account="vm.bankAccount"
-      build-bank-account="vm.buildBankAccount(account)" 
-      iban-error="vm.ibanError" 
-      close="vm.close()")
-  sell-account-holder(
-      ng-if="onStep('account-holder')"
+  sell-create-account(
+      ng-if="onStep('account')"
+      tx-currency="vm.txCurrency"
       sepa-countries="vm.sepaCountries"
+      bank-account="vm.bankAccount"
       holder-country="vm.holderCountry"
       country="vm.exchangeCountry"
       payment-account="vm.paymentAccount"
       build-bank-holder="vm.buildBankHolder(holder)"
       select-country="vm.changeHolderCountry(country)"
-      bank-account="vm.bankAccount"
       on-complete="vm.goTo('summary')"
       on-success="vm.onCreateBankSuccess(bankId)"
-      close="vm.close()"
-      set-iban-error="vm.setIbanError()")
+      close="vm.close()")
   sell-bank-link(
       ng-if="onStep('bank-link')" 
       on-complete="vm.goTo('summary')" 
@@ -49,7 +40,7 @@
       payment-account="vm.paymentAccount"
       selected-bank-account="vm.selectedBankAccount" 
       select-account="vm.selectAccount(account)" 
-      new-account="vm.goTo('account-info')" 
+      new-account="vm.goTo('account')" 
       close="vm.close()")
   sell-summary(
       ng-if="onStep('summary')"

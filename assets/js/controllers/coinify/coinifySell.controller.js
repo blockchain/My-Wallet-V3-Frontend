@@ -29,12 +29,11 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   this.selectedBankAccount = null;
-  this.masterAccount = masterPaymentAccount;
+  this.paymentAccount = masterPaymentAccount.paymentAccount;
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
   this.isSweepTransaction = buySellOptions.isSweepTransaction;
-  if (accounts) this.paymentAccount = accounts.accounts[0];
 
   console.log('coinify sell ctrl this', this);
 
@@ -56,6 +55,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.assignFiatHelper = (currencyType) => {
     $scope.transaction.currency = $scope.trade.quote[currencyType];
     this.bankAccount.account.currency = $scope.trade.quote[currencyType];
+    this.txCurrency = $scope.trade.quote[currencyType];
     $scope.currencySymbol = currency.conversions[$scope.trade.quote[currencyType]]['symbol'];
   };
 
@@ -87,28 +87,21 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   console.log('scope.trade and scope.tx', $scope.trade, $scope.transaction);
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
-  $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
 
   $scope.steps = {
     'email': 0,
     'accept-terms': 1,
-    'account-info': 2,
-    'account-holder': 3,
-    'bank-link': 4,
-    'summary': 5,
-    'review': 6,
-    'isx': 7
+    'account': 2,
+    'bank-link': 3,
+    'summary': 4,
+    'review': 5,
+    'isx': 6
   };
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
     $scope.status = {};
-    if ($scope.isKYC) {
-      this.goTo('isx');
-      return;
-    }
-
     if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
       this.goTo('review');
       return;
@@ -118,7 +111,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
       } else if (!this.exchange.user) {
         this.goTo('accept-terms');
       } else if (!this.accounts) {
-        this.goTo('account-info');
+        this.goTo('account');
       } else if (this.accounts) {
         this.goTo('bank-link');
       } else {
@@ -177,10 +170,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
   };
 
-  this.dismiss = () => {
-    $uibModalInstance.dismiss('');
-  };
-
   let startedPayment = $scope.startPayment();
   if (startedPayment) {
     this.transaction = startedPayment.transaction;
@@ -196,29 +185,14 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.bankId = account.id;
   };
 
-  this.buildBankAccount = (data) => {
-    this.bankAccount.account = Object.assign(this.bankAccount.account, data);
-  };
-
-  this.buildBankHolder = (data) => {
-    this.bankAccount.holder = Object.assign(this.bankAccount.holder, data);
-  };
-
   this.changeHolderCountry = (country) => {
     this.bankAccount.holder.address.country = country;
     this.holderCountry = country;
   };
 
   this.onCreateBankSuccess = (bankId) => this.bankId = bankId;
-
-  this.setIbanError = () => {
-    this.ibanError = true;
-    this.goTo('account-info');
-  };
-
-  this.onSellSuccess = (trade) => {
-    this.completedTrade = trade;
-  };
+  this.onSellSuccess = (trade) => this.completedTrade = trade;
+  this.dismiss = () => $uibModalInstance.dismiss('');
 
   $scope.standardError = (err) => {
     console.log(err);
