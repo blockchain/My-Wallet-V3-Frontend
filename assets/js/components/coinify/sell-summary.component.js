@@ -10,6 +10,8 @@ angular
       waiting: '<',
       isSweepTransaction: '<',
       payment: '<',
+      paymentAccount: '<',
+      masterAccount: '<',
       bankId: '<',
       onComplete: '&',
       sell: '&',
@@ -97,12 +99,9 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     this.payment.amount(this.sellResult.transferIn.details.receiveAmount);
     this.payment.build();
   };
-  // need to send a bankobj with an id for now
   this.sell = () => {
     this.waiting = true;
-    console.log('sell running', this);
-    let bank = {id: this.bankId};
-    $q.resolve(buySell.createSellTrade(this.sellTrade.quote, bank))
+    this.masterAccount.paymentAccount.sell(this.bankId)
       .then(sellResult => {
         console.log('sellResult', sellResult);
         handleSellResult(sellResult);

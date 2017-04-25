@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $rootScope, country, accounts, $state, options, $stateParams) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
@@ -12,11 +12,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.alerts = [];
   $scope.status = {};
   $scope.trade = trade;
-  $scope.quote = buySellOptions.quote;
-  // $scope.isSell = buySellOptions.sell;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
-  // $scope.acceptTermsForm;
   $scope.bankAccounts = accounts;
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
@@ -32,6 +29,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   this.selectedBankAccount = null;
+  this.masterAccount = masterPaymentAccount;
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
@@ -90,8 +88,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.dateFormat = 'd MMMM yyyy, HH:mm';
   $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
-  $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
-  $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
 
   $scope.steps = {
     'email': 0,
@@ -104,11 +100,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     'isx': 7
   };
   $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
-
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
-    console.log('scope.nextStep', $scope.transaction, $scope.trade);
     $scope.status = {};
     if ($scope.isKYC) {
       this.goTo('isx');
@@ -173,6 +167,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
       this.goToOrderHistory();
     });
   };
+
   let links = options.partners.coinify.sellSurveyLinks;
   this.close = () => {
     let index;
@@ -189,7 +184,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   let startedPayment = $scope.startPayment();
   if (startedPayment) {
     this.transaction = startedPayment.transaction;
-    console.log('this.transaction', this.transaction);
     this.payment = startedPayment.payment;
   }
 

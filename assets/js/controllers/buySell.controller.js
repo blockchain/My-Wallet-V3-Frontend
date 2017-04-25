@@ -39,10 +39,11 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
       }
     };
 
-    $scope.sell = (trade, accounts, options) => {
+    $scope.sell = (trade, accounts, paymentAccount, options) => {
       if (!$scope.status.modalOpen) {
+        console.log('buySell Ctrl sell', paymentAccount);
         $scope.status.modalOpen = true;
-        buySell.openSellView(trade, accounts, options).finally(() => {
+        buySell.openSellView(trade, accounts, paymentAccount, options).finally(() => {
           $scope.onCloseModal();
         });
       }
