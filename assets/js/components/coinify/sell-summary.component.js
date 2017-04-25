@@ -96,6 +96,13 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     this.payment.build();
   };
 
+  const handleError = (e) => {
+    console.error('error publishing', e.error);
+    console.log(JSON.stringify(e.payment, null, 2));
+    if (e.error.message) console.error(e.error.message);
+    transactionFailed(e);
+  };
+
   this.sell = () => {
     this.waiting = true;
     this.paymentAccount.sell(this.bankId)
@@ -113,10 +120,8 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
         // Wallet.askForSecondPasswordIfNeeded()
         //   .then(signAndPublish)
         //   .then(transactionSucceeded)
-        //   .catch(err => {
-        //     console.log('err when publishing', err);
-        //     transactionFailed(err);
-        //   });
+        //   .catch(handleError);
+
         this.waiting = false;
         this.onComplete();
       })
