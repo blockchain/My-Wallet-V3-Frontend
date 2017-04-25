@@ -11,7 +11,6 @@ angular
       isSweepTransaction: '<',
       payment: '<',
       paymentAccount: '<',
-      masterAccount: '<',
       bankId: '<',
       onComplete: '&',
       sell: '&',
@@ -52,17 +51,14 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
 
   const handleSellResult = (sellResult) => {
     if (!sellResult.transferIn) {
-      console.log('set error', sellResult);
       this.error = sellResult;
       this.error = JSON.parse(this.error);
     } else {
       this.onSuccess({trade: sellResult});
-      // $scope.sellTrade = sellResult;
-      // $scope.sendAddress = sellResult.transferIn.details.account;
-      // $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
-      // $scope.formatBankInfo(sellResult);
     }
   };
+
+  const handleBadRequest = (e) => this.error = JSON.parse(e);
 
   const transactionFailed = (message) => {
     let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
@@ -96,12 +92,13 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
 
   const assignAndBuildPayment = () => {
     this.payment.to(this.sellResult.transferIn.details.account);
-    this.payment.amount(this.sellResult.transferIn.details.receiveAmount);
+    this.payment.amount(this.sellResult.transferIn.sendAmount * 100000000);
     this.payment.build();
   };
+
   this.sell = () => {
     this.waiting = true;
-    this.masterAccount.paymentAccount.sell(this.bankId)
+    this.paymentAccount.sell(this.bankId)
       .then(sellResult => {
         console.log('sellResult', sellResult);
         handleSellResult(sellResult);
@@ -110,13 +107,8 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       })
       .then(sellData => {
         if (this.error) return;
-        // for testing
-        // if (exchange._customAddress && exchange._customAmount) {
-        //   console.log('customAddress and customAmount', exchange._customAddress, exchange._customAmount);
-        //   $scope.payment.to(exchange._customAddress);
-        //   $scope.payment.amount(exchange._customAmount);
-        // }
         assignAndBuildPayment();
+        console.log('payment built', this);
 
         // Wallet.askForSecondPasswordIfNeeded()
         //   .then(signAndPublish)
@@ -125,11 +117,9 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
         //     console.log('err when publishing', err);
         //     transactionFailed(err);
         //   });
-      })
-      .catch((e) => console.log(e))
-      .finally(() => {
         this.waiting = false;
-        if (!this.error) this.onComplete();
-      });
+        this.onComplete();
+      })
+      .catch(handleBadRequest);
   };
 }

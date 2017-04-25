@@ -220,7 +220,7 @@ function buySell ($rootScope, BrowserHelper, $timeout, $q, $state, $uibModal, $u
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function openSellView (trade, accounts, paymentAccount, buySellOptions) {
+  function openSellView (trade, accounts, paymentAccount, buySellOptions = { sell: true }) {
     console.log('opensellview in buy-sell service', paymentAccount);
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',

@@ -29,7 +29,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   this.selectedBankAccount = null;
-  this.paymentAccount = masterPaymentAccount.paymentAccount;
+  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount.paymentAccount;
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
