@@ -47,12 +47,6 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
       });
   };
 
-  this.$onChanges = (changes) => {
-    console.log('bank link changes', changes);
-    this.selectedBankAccount = changes.selectedBankAccount.currentValue;
-  };
-
-  this.isDisabled = () => {
-    return !this.selectedBankAccount || !this.banks.length;
-  };
+  this.$onChanges = (changes) => this.selectedBankAccount = changes.selectedBankAccount.currentValue;
+  this.isDisabled = () => !this.selectedBankAccount || !this.banks.length;
 }

@@ -9,7 +9,6 @@ angular
       holderCountry: '<',
       selectedBankCountry: '<',
       paymentAccount: '<',
-      buildBankHolder: '&',
       selectCountry: '&',
       close: '&',
       onComplete: '&',

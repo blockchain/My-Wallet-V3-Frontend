@@ -29,7 +29,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
-  this.isSweepTransaction = buySellOptions.isSweepTransaction;
 
   console.log('coinify sell ctrl this', this);
 
