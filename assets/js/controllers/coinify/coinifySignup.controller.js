@@ -21,7 +21,6 @@ function CoinifySignupController ($scope, $stateParams, $q, AngularHelper, Alert
                err = tryParse(err);
                if (err.error && err.error.toUpperCase() === 'EMAIL_ADDRESS_IN_USE') {
                  $scope.vm.rejectedEmail = true;
-                 $scope.vm.goTo('email');
                }
              })
              .then($scope.free);
