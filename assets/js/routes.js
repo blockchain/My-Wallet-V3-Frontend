@@ -106,6 +106,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: function ($scope, $state, languages, Env) {
             Env.then(env => {
               $scope.rootURL = env.rootURL;
+              $scope.versionMyWallet = env.versionMyWallet;
+              $scope.versionFrontend = env.versionFrontend;
             });
             let overflows = ['/reset-2fa'];
             $scope.state = $state;

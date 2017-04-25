@@ -89,19 +89,21 @@ div.login-form {
 .versions {
   position: absolute;
   bottom: 10px;
-  opacity: 0.8;
   right: 15px;
-  &:hover {
-    opacity: 1;
-  }
   a {
+    opacity: 0.6;
     color: white !important;
     text-decoration: none !important;
+    &:hover {
+      opacity: 1;
+    }
   }
-  @media (max-width: 768px) and (max-height: 600px) {
+  @media screen and (max-width: 767px), screen and (max-height: 600px) {
     position: relative;
-    bottom: -10px;
-    right: -15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    bottom: initial;
+    right: initial;
   }
 }
 
