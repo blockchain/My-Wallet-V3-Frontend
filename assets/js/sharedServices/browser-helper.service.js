@@ -16,7 +16,7 @@ function BrowserHelper ($window, $cookies, localStorageService) {
   }
 
   function migrateCookiesToLocalStorage () {
-    // Migrate any cookies to local storage:
+    // Rename uid to guid
     if ($cookies.get('uid')) {
       localStorageService.set('guid', $cookies.get('uid'));
       $cookies.remove('uid');
@@ -32,10 +32,11 @@ function BrowserHelper ($window, $cookies, localStorageService) {
           key,
           $cookies.get(key) === 'true'
         );
+        $cookies.remove(key);
       }
     }
 
-    // Convert cookie keys to localstorage
+    // Convert regular cookie keys to localstorage
     for (let key of [
       'password',
       'session',
