@@ -2,10 +2,11 @@ angular
   .module('walletApp')
   .factory('formatTrade', formatTrade);
 
-formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'];
+formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency', 'Env'];
 
-function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
+function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   const service = {
+    awaiting_transfer_in,
     confirm,
     reviewing,
     processing,
@@ -16,13 +17,11 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     completed,
     completed_test,
     initiated,
-
     reject_card,
     kyc,
     error,
     success,
-    labelsForCurrency,
-    bank_transfer
+    labelsForCurrency
   };
 
   let errorStates = {
@@ -56,9 +55,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(trade.sendAmount / 100, { code: trade.inCurrency })
     };
-    if ($rootScope.buySellDebug) {
-      transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
-    }
+    Env.then(env => {
+      if (env.buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    });
     return transaction;
   };
 
@@ -171,7 +170,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     return { accountNumber: 'IBAN', bankCode: 'BIC' };
   }
 
-  function bank_transfer (trade) {
+  function awaiting_transfer_in (trade) {
     const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',

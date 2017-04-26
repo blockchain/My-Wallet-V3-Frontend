@@ -41,6 +41,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     trades: { completed: [], pending: [] },
     kycs: [],
+    mediums: [],
+    accounts: [],
+    limits: { bank: { max: {} }, card: { max: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
@@ -50,6 +53,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getKYCs,
     getRate,
     calculateMax,
+    getMaxLimits,
+    getMinLimits,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -153,19 +158,40 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(getRate);
   }
 
+  function getMaxLimits (defaultCurrency) {
+    const calculateMax = (rate, curr) => {
+      service.limits.bank.max[curr] = service.calculateMax(rate, 'bank');
+      service.limits.card.max[curr] = service.calculateMax(rate, 'card');
+      service.limits.absoluteMax = (curr) => {
+        let cardMax = parseFloat(service.limits.card.max[curr], 0);
+        let bankMax = parseFloat(service.limits.bank.max[curr], 0);
+        return bankMax > cardMax ? bankMax : cardMax;
+      };
+    };
+
+    let getMax = (c) => service.getRate(defaultCurrency, c).then(r => calculateMax(r, c));
+    return $q.all(['DKK', 'EUR', 'USD', 'GBP'].map(getMax));
+  }
+
   function calculateMax (rate, medium) {
-    let currentLimit = service.getExchange().profile.currentLimits[medium].inRemaining;
-    let userLimits = service.getExchange().profile.level.limits;
-    let dailyLimit = userLimits[medium].inDaily;
+    let limit = service.getExchange().profile.currentLimits[medium].inRemaining;
+    return (rate * limit).toFixed(2);
+  }
 
-    let limits = {};
-    limits.max = (Math.round(((rate * dailyLimit) / 100)) * 100);
-    limits.available = (rate * currentLimit).toFixed(2);
+  function getMinLimits (quote, fiatCurrency) {
+    if (service.limits.bank.min && service.limits.card.min) return $q.resolve();
 
-    limits.available > limits.max && (limits.available = limits.max);
-    limits.available > 0 ? limits.available : 0;
-    limits.max = limits.max.toFixed(2);
-    return limits;
+    const calculateMin = (mediums) => {
+      service.limits.bank.min = mediums.bank.minimumInAmounts;
+      service.limits.card.min = mediums.bank.minimumInAmounts;
+      service.limits.absoluteMin = (curr) => {
+        let cardMin = parseFloat(service.limits.card.min[curr], 0);
+        let bankMin = parseFloat(service.limits.bank.min[curr], 0);
+        return bankMin > cardMin ? bankMin : cardMin;
+      };
+    };
+
+    return quote.getPaymentMediums().then(calculateMin);
   }
 
   function triggerKYC () {
@@ -213,7 +239,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       stop = MyWalletHelpers.exponentialBackoff(check, maxPollTime);
     });
 
-    let pollKyc = () => pollUntil(() => kyc.refresh(), () => kyc.state === 'completed');
+    let pollKyc = () => pollUntil(() => kyc && kyc.refresh(), () => kyc.state === 'completed');
     let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
 
     return {
@@ -254,7 +280,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     watching[trade.receiveAddress] = true;
     trade.watchAddress().then(() => {
       if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      modals.openBuyView(trade, { bitcoinReceived: true });
+      modals.openBuyView(null, trade, { bitcoinReceived: true });
     });
   }
 

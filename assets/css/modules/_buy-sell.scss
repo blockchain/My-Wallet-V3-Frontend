@@ -116,19 +116,6 @@
   height: 44px;
 }
 
-.payment-methods {
-  input {
-    & ~ .flex-row img {
-      width: 30px;
-      &.checked { display: none; }
-    }
-  }
-  input:checked ~ .flex-row img:not(.cc-shadow) {
-    display: none;
-    &.checked { display: inline-block; }
-  }
-}
-
 .bank-link {
   img {
     width: 25px;
@@ -137,121 +124,7 @@
 
 #buy {
   .modal-body {
-    @media (max-width: 768px) {
-      opacity: 1 !important;
-    }
-    &.fade {
-      opacity: 1;
-      @include bc-ng-animate('summary', 'height', '260px', '325px');
-      @include bc-ng-animate('result', 'height', '500px', '335px');
-      @include bc-ng-animate('isx', 'height', '320px', '450px');
-      @include bc-ng-animate('capture', 'height', '250px', '500px', '!important');
-      @include bc-ng-animate('secret', 'height', '500px', '400px', '!important');
-      @include bc-ng-animate('otp', 'height', '400px', '415px', '!important');
-      @include bc-ng-animate('otp-pin', 'height', '415px', '500px', '!important');
-      @include bc-ng-animate('pin', 'height', '500px', '366px', '!important');
-      @include bc-ng-animate('verify-pin', 'height', '366px', '347px', '!important');
-      @include bc-ng-animate('kyc', 'height', '347px', '500px', '!important');
-      @include bc-ng-animate('documents', 'height', '500px', '500px', '!important');
-      #isx-iframe {
-        margin-bottom: -5px;
-      }
-      &.isx {
-        height: 500px;
-        #isx-iframe {
-          height: 500px;
-        }
-      }
-      &.capture {
-        height: 500px;
-        @media (max-width: 767px) {
-          height: 1050px;
-        }
-        #isx-iframe {
-          height: 650px;
-          @media (max-width: 767px) {
-            height: 1000px;
-          }
-        }
-      }
-      &.secret {
-        height: 400px;
-        #isx-iframe {
-          height: 400px;
-          @media (max-width: 767px) {
-            height: 700px;
-          }
-        }
-      }
-      &.otp {
-        height: 415px;
-        #isx-iframe {
-          height: 445px;
-          @media (max-width: 767px) {
-            height: 745px;
-          }
-        }
-      }
-      &.otp-pin {
-        height: 500px;
-        #isx-iframe {
-          height: 632px;
-          @media (max-width: 767px) {
-            height: 930px;
-          }
-        }
-      }
-      &.pin {
-        height: 366px;
-        #isx-iframe {
-          height: 366px;
-          @media (max-width: 767px) {
-            height: 600px;
-          }
-        }
-      }
-      &.verify-pin {
-        height: 347px;
-        #isx-iframe {
-          height: 347px;
-          @media (max-width: 767px) {
-            height: 650px;
-          }
-        }
-      }
-      &.kyc {
-        height: 500px;
-        #isx-iframe {
-          height: 700px;
-          @media (max-width: 767px) {
-            height: 1460px;
-          }
-        }
-      }
-      &.documents {
-        height: 500px;
-        #isx-iframe {
-          height: 520px;
-          @media (max-width: 767px) {
-            height: 1450px;
-          }
-        }
-      }
-      // default height
-      min-height: 260px;
-      @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
-        min-height: 260px !important;
-        &.summary {
-          height: 325px !important;
-        }
-        &.result {
-          height: 335px !important;
-        }
-        &.isx {
-          height: 450px !important;
-        }
-      }
-    }
+    opacity: 1 !important;
   }
 }
 
@@ -323,16 +196,11 @@ i.ti-credit-card.bank {
 }
 
 .iframe {
-  isignthis {
+  height: 500px;
+  #isx-iframe {
     position: absolute;
     overflow: auto;
     height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  #isx-iframe {
-    position: relative;
     width: 100%;
     border: 0;
     left: 0;
@@ -346,11 +214,6 @@ i.ti-credit-card.bank {
     opacity: 0.6;
     cursor: no-drop;
   }
-}
-
-.o-3 {
-  opacity: 0.3;
-  @include transition(opacity $fast);
 }
 
 .modal .buy-steps {
@@ -415,11 +278,6 @@ i.ti-credit-card.bank {
 
 .find-partner {
   height: 350px;
-}
-
-.cc-shadow {
-  box-shadow: 0px 4px 5px 1px #CCC;
-  width: 30px;
 }
 
 .signup-steps {

@@ -1,11 +1,18 @@
-describe "CoinifySummaryController", ->
+describe "CoinifySignupController", ->
   $q = undefined
   scope = undefined
   Wallet = undefined
   $rootScope = undefined
   $controller = undefined
   buySell = undefined
-
+  
+  profile =
+    defaultCurrency: 'EUR'
+    currentLimits: {
+      bank: {}
+      card: {}
+    }
+  
   mediums =
     'card':
       getAccounts: () -> $q.resolve([])
@@ -18,11 +25,6 @@ describe "CoinifySummaryController", ->
     baseCurrency: 'USD'
     paymentMediums: mediums
     getPaymentMediums: () -> $q.resolve(mediums)
-  
-  trade =
-    state: 'awaiting_transfer_in'
-    inCurrency: 'USD'
-    outCurrency: 'BTC'
 
   beforeEach angular.mock.module("walletApp")
 
@@ -35,41 +37,25 @@ describe "CoinifySummaryController", ->
       Wallet = $injector.get("Wallet")
       buySell = $injector.get("buySell")
       
-      buySell.limits =
-        bank:
-          min:
-            'EUR': 10
-          max:
-            'EUR': 1000
-        card:
-          min:
-            'EUR': 10
-          max:
-            'EUR': 1000
-      
       buySell.getExchange = () -> {
         getBuyQuote: () ->
+        exchangeRate:
+          get: () -> $q.resolve()
+        signup: () -> $q.resolve()
+        fetchProfile: () -> $q.resolve(profile)
       }
       
-      buySell.accounts = [
-        {
-          buy: () -> $q.resolve(trade)
-        }
-      ]
+      buySell.getMaxLimits = () ->
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
     scope.vm =
       quote: quote
-      medium: 'card'
-      baseFiat: () -> true
-      watchAddress: () ->
+      refreshQuote: () ->
       fiatCurrency: () -> 'USD'
-      fiatAmount: () -> -100
-      BTCAmount: () -> 1
       goTo: (state) ->
 
-    $controller "CoinifySummaryController",
+    $controller "CoinifySignupController",
       $scope: scope,
     scope
 
@@ -77,23 +63,15 @@ describe "CoinifySummaryController", ->
     scope = getControllerScope()
     $rootScope.$digest()
 
-  describe ".commitValues()", ->
+  describe ".signup()", ->
 
     it "should disable the form", ->
       spyOn(scope, 'lock')
-      scope.commitValues()
+      scope.signup()
       expect(scope.lock).toHaveBeenCalled()
-
-  describe ".buy()", ->
     
-    it "should call buy", ->
-      spyOn(buySell.accounts[0], 'buy')
-      scope.buy()
-      expect(buySell.accounts[0].buy).toHaveBeenCalled()
-    
-    it "should reset the quote and set the trade", ->
-      scope.buy()
+    it "should call signup and go to payment medium step", ->
+      spyOn(scope.vm, 'goTo')
+      scope.signup()
       scope.$digest()
-      expect(scope.vm.quote).toBe(null)
-      expect(scope.vm.trade).toBe(trade)
-      
+      expect(scope.vm.goTo).toHaveBeenCalledWith('select-payment-medium')

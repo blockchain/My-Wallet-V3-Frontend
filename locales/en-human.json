@@ -1092,12 +1092,16 @@
   "CARD": "Credit/Debit Card",
   "BANK": "Bank Transfer",
   "CARD_TRANSFER": {
-    "TITLE": "Instant transaction | 3% payment fee",
-    "COPY": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed."
+    "COPY1": "Receive bitcoin instantly",
+    "COPY2": "3% convenience fee",
+    "COPY3": "Visa or Mastercard",
+    "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
+    "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
   },
   "BANK_TRANSFER": {
-    "TITLE": "2-3 days | No payment fees",
-    "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
+    "COPY1": "Receive bitcoin in 2-3 days",
+    "COPY2": "No payment fees",
+    "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card."
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
@@ -1131,8 +1135,6 @@
   },
   "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
-  "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
-  "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity. You will only have to do this once.",
   "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "DATE_INITIALIZED": "Date Ordered",
   "TOTAL_COST": "Total Cost",
@@ -1157,12 +1159,12 @@
   "ORDER_DETAILS": "Order Details:",
   "BANK_ORDER_DETAILS": "Send your funds to the following bank account:",
   "ORDER_ID_REFERENCE": "*Must be included in your transfer*",
-  "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
-  "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
-  "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
+  "MAX_LIMIT_EXCEEDED": "To pay via {{::medium}}, please decrease your amount below {{::max}} {{::code}}.",
+  "BELOW_MIN_LIMIT": "To pay via {{::medium }}, please increase your amount to {{::min}} {{::code}} or more.",
+  "MAX_MIN_HELPER": "Minimum buy amount is {{::min}} {{::code}}. Maximum buy amount is {{::max}} {{::code}}.",
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
-  "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
+  "BUY_AMT_IS": "Your limit is set to {{::amount}} {{::code}}.",
   "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
   "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
@@ -1198,7 +1200,6 @@
   "VERIFY_EMAIL": "Verify email:",
   "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your purchase.",
   "ACCEPT_TERMS": "Coinify account terms:",
-  "SELECT_PAYMENT_MEDIUM": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",

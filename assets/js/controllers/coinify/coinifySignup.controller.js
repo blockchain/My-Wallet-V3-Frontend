@@ -2,19 +2,29 @@ angular
   .module('walletApp')
   .controller('CoinifySignupController', CoinifySignupController);
 
-function CoinifySignupController ($scope, $stateParams, Alerts, buySell) {
-  $scope.$parent.signup = () => {
-    $scope.status.waiting = true;
-    Alerts.clear($scope.alerts);
-    $scope.$parent.exchange = buySell.getExchange();
+function CoinifySignupController ($scope, $stateParams, $q, AngularHelper, Alerts, buySell, currency) {
+  let exchange = buySell.getExchange();
+  let { fiatCurrency, refreshQuote } = $scope.vm;
 
-    return $scope.exchange.signup($stateParams.countryCode, $scope.transaction.currency.code)
-      .then(() => $scope.exchange.fetchProfile())
-      .then(() => $scope.getPaymentMediums())
-      .catch($scope.standardError);
+  let tryParse = (json) => {
+    try { return JSON.parse(json); } catch (e) { return json; }
   };
 
-  $scope.$watch('signupForm', () => {
-    $scope.$parent.signupForm = $scope.signupForm;
-  });
+  $scope.signup = () => {
+    $scope.lock();
+    return $q.resolve(exchange.signup($stateParams.countryCode, fiatCurrency()))
+             .then(() => exchange.fetchProfile())
+             .then((p) => buySell.getMaxLimits(p.defaultCurrency))
+             .then(refreshQuote).then((q) => $scope.vm.quote = q)
+             .then(() => $scope.vm.goTo('select-payment-medium'))
+             .catch((err) => {
+               err = tryParse(err);
+               if (err.error && err.error.toUpperCase() === 'EMAIL_ADDRESS_IN_USE') {
+                 $scope.vm.rejectedEmail = true;
+               }
+             })
+             .then($scope.free);
+  };
+
+  AngularHelper.installLock.call($scope);
 }

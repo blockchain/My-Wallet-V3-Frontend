@@ -2,23 +2,37 @@ angular
   .module('walletApp')
   .controller('CoinifyMediumController', CoinifyMediumController);
 
-function CoinifyMediumController ($scope, Alerts, buySell) {
-  $scope.$parent.medium = $scope.trade ? $scope.trade.medium : undefined;
-  $scope.$parent.mediums = {};
-  $scope.$parent.getMedium = () => $scope.mediums[$scope.medium] || {};
-  $scope.$parent.isMedium = (medium) => $scope.getMedium().inMedium === medium;
+function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, buySell) {
+  AngularHelper.installLock.call($scope);
+  $scope.$timeout = $timeout;
+  $scope.limits = buySell.limits;
+  let { quote, baseFiat, fiatCurrency } = $scope.vm;
 
-  $scope.showNote = (medium) => {
-    let isMedium = $scope.$parent.medium === medium;
+  let fiatAmount = baseFiat() ? -quote.baseAmount / 100 : -quote.quoteAmount / 100;
+  $scope.belowCardMax = fiatAmount < parseFloat($scope.limits.card.max[fiatCurrency()]);
+  // i.e card max is 300 and buy amount is 500
+  // $scope.belowCardMax = false;
+  $scope.aboveBankMin = fiatAmount > parseFloat($scope.limits.bank.min[fiatCurrency()]);
+  // i.e bank min is 50 and buy amount is 30
+  // $scope.aboveBankMin = false;
 
-    let trades = $scope.$parent.exchange.trades || [];
-    let tradesOfTypeMedium = trades.filter((t) => t.medium === medium).length > 0;
+  $scope.vm.medium = $scope.belowCardMax ? 'card' : 'bank';
 
-    return isMedium && !tradesOfTypeMedium;
+  $scope.submit = () => {
+    $scope.lock();
+    let { medium, quote } = $scope.vm;
+
+    // cache accounts in My-Wallet-V3 instead
+    $q.resolve(quote.getPaymentMediums())
+      .then((mediums) => mediums[medium].getAccounts())
+      .then((accounts) => buySell.accounts = accounts)
+      .then(() => $scope.vm.goTo('summary'))
+      .then($scope.free).catch((err) => console.log(err));
   };
 
-  $scope.$parent.confirmOrContinue = () => {
-    let skipConfirm = $scope.needsKyc();
-    skipConfirm ? $scope.buy() : $scope.goTo('summary');
-  };
+  $scope.lock();
+
+  quote.getPaymentMediums()
+       .then((mediums) => $scope.mediums = mediums)
+       .then($scope.free).catch((err) => console.log(err));
 }

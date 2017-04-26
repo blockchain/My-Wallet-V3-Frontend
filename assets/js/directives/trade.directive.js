@@ -47,8 +47,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     };
 
     scope.triggerBuy = () => {
-      let t = scope.trade;
-      scope.buy(t);
+      scope.buy(null, scope.trade);
     };
 
     scope.triggerSell = () => {

@@ -16,18 +16,16 @@
       .flex-row.flex-column-tablet
       div(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
         //- BUY
-        buy-quick-start(limits="limits"
-                        transaction="transaction"
+        buy-quick-start(transaction="transaction"
                         disabled="status.disabled"
-                        currency-symbol="currencySymbol"
                         modal-open="status.modalOpen"
                         change-currency="changeCurrency(currency)"
                         trading-disabled="getIsTradingDisabled()"
                         trading-disabled-reason="getIsTradingDisabledReason()"
-                        open-pending-trade="buy(pendingTrade)"
+                        open-pending-trade="buy(null, pendingTrade)"
                         pending-trade="pendingTrade"
                         get-days="getDays()"
-                        buy="buy(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
+                        buy="buy(quote)")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
       div(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
@@ -70,7 +68,7 @@
 
         .flex-row.flex-between.flex-center.mtl
           h4.type-h5 Completed Orders
-          span.hidden-xs(ng-show="!trades.pending.length") Coinify Account: {{ exchange.profile.email }}
+          span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
         table.width-100.mb-30(gradual-render)
           tr.border.bg-light-blue
             th.pvs.width-5-mobile.visible-xs

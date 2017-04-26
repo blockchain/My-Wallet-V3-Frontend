@@ -2,263 +2,73 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, Env, $cookies, $window, $state, options, buyMobile) {
+function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile, Env) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
-  $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
-  $scope.status = {};
-  $scope.trade = trade;
-  $scope.quote = buyOptions.quote;
 
-  let links = options.partners.coinify.surveyLinks;
+  this.user = Wallet.user;
+  this.quote = quote;
+  this.trade = trade;
+  this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
+  this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
+  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
+  this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.refreshQuote = () => {
+    if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
+    else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
+  };
 
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    this.buySellDebug = env.buySellDebug;
   });
 
-  let accountIndex = $scope.trade && $scope.trade.accountIndex ? $scope.trade.accountIndex : MyWallet.wallet.hdwallet.defaultAccount.index;
+  let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   let exchange = buySell.getExchange();
-  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  this.getMinimumInAmount = (medium, curr) => medium && curr && quote.paymentMediums[medium].minimumInAmounts[curr];
 
-  $scope.isKYC = $scope.trade && $scope.trade.constructor.name === 'CoinifyKYC';
-  $scope.needsKyc = () => $scope.isMedium('bank') && +$scope.exchange.profile.level.name < 2;
-  $scope.needsISX = () => $scope.trade && !$scope.trade.bankAccount && buySell.tradeStateIn(buySell.states.pending)($scope.trade) || $scope.isKYC;
-  $scope.needsReview = () => $scope.trade && buySell.tradeStateIn(buySell.states.pending)($scope.trade);
-  $scope.isPendingBankTransfer = () => $scope.medium === 'bank' && $scope.trade && $scope.trade.state === 'awaiting_transfer_in';
-  $scope.hideBuySteps = () => $scope.trades.completed.length >= 1;
-
-  $scope.expiredQuote = $scope.trade && new Date() > $scope.trade.quoteExpireTime && $scope.trade.id;
-  let updateBTCExpected = (quote) => { $scope.status.gettingQuote = false; $scope.btcExpected = quote; };
-
-  let eventualError = (message) => Promise.reject.bind(Promise, { message });
-
-  $scope.steps = {
+  this.steps = {
     'email': 0,
     'accept-terms': 1,
     'select-payment-medium': 2,
     'summary': 3,
     'isx': 4,
-    'trade-in-review': 5,
-    'trade-formatted': 6
+    'trade-complete': 5
   };
 
-  $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
-  $scope.afterStep = (step) => $scope.step > $scope.steps[step];
-  $scope.beforeStep = (step) => $scope.step < $scope.steps[step];
-  $scope.currentStep = () => Object.keys($scope.steps).filter($scope.onStep)[0];
+  this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
+  this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
+  this.goTo = (step) => this.step = this.steps[step];
 
-  $scope.goTo = (step) => $scope.step = $scope.steps[step];
-
-  $scope.formattedTrade = undefined;
-  $scope.bitcoinReceived = buyOptions.bitcoinReceived && $scope.trade && $scope.trade.bitcoinReceived;
-
-  $scope.fields = { email: $scope.user.email };
-
-  $scope.transaction = trade == null
-    ? ({ fiat: buyOptions.fiat, btc: buyOptions.btc, fee: 0, total: 0, currency: buyOptions.currency || buySell.getCurrency() })
-    : ({ fiat: $scope.trade.inAmount / 100, btc: 0, fee: 0, total: 0, currency: buySell.getCurrency($scope.trade) });
-
-  $scope.changeCurrencySymbol = (curr) => { $scope.currencySymbol = currency.conversions[curr.code]; };
-  $scope.changeCurrencySymbol($scope.transaction.currency);
-
-  $timeout(() => !$scope.isKYC && $scope.changeCurrency($scope.transaction.currency));
-  $timeout(() => $scope.rendered = true, $scope.bitcoinReceived ? 0 : 4000);
-
-  $scope.hideQuote = () => (
-    $scope.afterStep('isx') ||
-    $scope.isMedium('bank') ||
-    $scope.expiredQuote || ($scope.quote && !$scope.quote.id && !$scope.trade)
-  );
-
-  $scope.userHasExchangeAcct = $scope.exchange.user;
-
-  $scope.getAccounts = () => {
-    if (!$scope.exchange.user) { return; }
-
-    let success = (accounts) => {
-      $scope.accounts = accounts;
-    };
-
-    let accountsError = eventualError('ERROR_ACCOUNTS_FETCH');
-    return $scope.mediums[$scope.medium].getAccounts().then(success, accountsError);
-  };
-
-  $scope.getPaymentMediums = () => {
-    if (!$scope.exchange.user) { return; }
-
-    // reset buyOptions
-    buyOptions = {};
-
-    $scope.status.waiting = true;
-
-    let success = (mediums) => {
-      $scope.mediums = mediums;
-      $scope.status.waiting = false;
-      $scope.medium && $scope.updateAmounts();
-    };
-
-    let mediumsError = eventualError('ERROR_PAYMENT_MEDIUMS_FETCH');
-    return $scope.quote.getPaymentMediums().then(success, mediumsError);
-  };
-
-  $scope.changeCurrency = (curr) => {
-    if (!curr) curr = buySell.getCurrency();
-    if ($scope.trade && !$scope.isKYC) curr = {code: $scope.trade.inCurrency};
-    $scope.transaction.currency = curr;
-    $scope.changeCurrencySymbol(curr);
-    $scope.getQuote();
-  };
-
-  $scope.standardError = (err) => {
-    console.log(err);
-    $scope.status = {};
-    try {
-      let e = JSON.parse(err);
-      let msg = e.error.toUpperCase();
-      if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
-      else Alerts.displayError(msg, true, $scope.alerts, {user: $scope.exchange.user});
-    } catch (e) {
-      let msg = e.error || err.message;
-      if (msg) Alerts.displayError(msg, true, $scope.alerts);
-      else Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
-    }
-  };
-
-  $scope.updateAmounts = () => {
-    if (!$scope.trade && (!$scope.quote || !$scope.exchange.user)) return;
-
-    if ($scope.quote) {
-      $scope.transaction.methodFee = ($scope.quote.paymentMediums[$scope.medium].fee / 100).toFixed(2);
-      $scope.transaction.total = ($scope.quote.paymentMediums[$scope.medium].total / 100).toFixed(2);
-    } else if ($scope.trade) {
-      $scope.transaction.total = ($scope.trade.sendAmount / 100).toFixed(2);
-    }
-  };
-
-  $scope.getQuote = () => {
-    if ($scope.trade) { $scope.updateAmounts(); return; }
-    if (buyOptions.quote) { $scope.getPaymentMediums(); return; }
-
-    $scope.quote = null;
-    $scope.status.waiting = true;
-    $scope.status.gettingQuote = true;
-
-    let quoteError = eventualError('ERROR_QUOTE_FETCH');
-    let baseCurr = buyOptions.btc ? 'BTC' : $scope.transaction.currency.code;
-    let quoteCurr = buyOptions.btc ? $scope.transaction.currency.code : 'BTC';
-    let amount = buyOptions.btc ? -Math.round($scope.transaction.btc * 100000000) : Math.round($scope.transaction.fiat * 100);
-
-    const success = (quote) => {
-      $scope.status = {};
-      $scope.expiredQuote = false;
-      $scope.quote = quote;
-      Alerts.clear($scope.alerts);
-      if (quote.baseCurrency === 'BTC') {
-        $scope.transaction.btc = quote.baseAmount / 100000000;
-        $scope.transaction.fiat = -quote.quoteAmount / 100;
-      } else {
-        $scope.transaction.fiat = -quote.baseAmount / 100;
-        $scope.transaction.btc = quote.quoteAmount / 100000000;
-      }
-    };
-
-    return buySell.getExchange().getBuyQuote(amount, baseCurr, quoteCurr)
-      .then(success, quoteError)
-      .then($scope.getPaymentMediums)
-      .then($scope.getAccounts)
-      .catch($scope.standardError);
-  };
-
-  $scope.isCurrencySelected = (currency) => currency === $scope.transaction.currency;
-
-  $scope.nextStep = () => {
-    if (!$scope.trade) {
-      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !$scope.exchange.user) {
-        $scope.goTo('email');
-      } else if (!$scope.exchange.user) {
-        $scope.goTo('accept-terms');
-      } else if (!$scope.isMediumSelected) {
-        $scope.goTo('select-payment-medium');
-        $scope.isMediumSelected = true;
-      } else {
-        $scope.goTo('summary');
-      }
-    } else {
-      if ($scope.needsISX() && !$scope.formattedTrade) {
-        $scope.goTo('isx');
-      } else if ($scope.needsReview()) {
-        $scope.goTo('trade-in-review');
-      } else {
-        $scope.goTo('trade-formatted');
-      }
-    }
-  };
-
-  $scope.isDisabled = () => {
-    if ($scope.onStep('email')) {
-      return !$scope.user.isEmailVerified;
-    } else if ($scope.onStep('accept-terms')) {
-      return !$scope.signupForm.$valid;
-    } else if ($scope.onStep('select-payment-medium')) {
-      return !$scope.quote || !$scope.medium;
-    } else if ($scope.onStep('summary')) {
-      if ($scope.isMedium('bank') && !$scope.rateForm.$valid) {
-        return true;
-      }
-      return $scope.editAmount || !$scope.limits.max;
-    }
-  };
-
-  $scope.watchAddress = () => {
-    if ($scope.buySellDebug) {
-      console.log('$scope.watchAddress() for', $scope.trade);
-    }
-    if (!$scope.trade || $scope.bitcoinReceived || $scope.isKYC) return;
-    const success = () => $timeout(() => $scope.bitcoinReceived = true);
-    $scope.trade.watchAddress().then(success);
-  };
-
-  $scope.formatTrade = (state) => {
-    $scope.formattedTrade = formatTrade[state]($scope.trade);
-
-    if ($scope.needsKyc()) {
-      let poll = buySell.pollUserLevel(buySell.kycs[0]);
-      $scope.$on('$destroy', poll.cancel);
-      return poll.result.then($scope.buy);
-    }
-  };
-
-  if ($scope.trade && !$scope.needsISX()) {
-    let state = $scope.trade.state;
-    if (!$scope.bitcoinReceived) $scope.watchAddress();
-    if ($scope.trade.bankAccount && $scope.trade.state === 'awaiting_transfer_in') state = 'bank_transfer';
-
-    $scope.formattedTrade = formatTrade[state]($scope.trade);
+  if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
+    this.goTo('email');
+  } else if (!this.exchange.user) {
+    this.goTo('accept-terms');
+  } else if (!this.trade) {
+    this.goTo('select-payment-medium');
+  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
+    this.goTo('isx');
+  } else {
+    this.goTo('trade-complete');
   }
 
-  $scope.onResize = (step) => $scope.isxStep = step;
-
-  $scope.cancel = () => {
+  this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
-    $scope.trade = null;
     buySell.getTrades().then(() => {
       $scope.goToOrderHistory();
     });
   };
 
-  $scope.close = () => {
-    let index;
-
-    if (!$scope.exchange.user) index = 0;
-    else if (!$scope.trades.length && !$scope.trade) index = 1;
-    else index = 2;
-    Alerts.surveyCloseConfirm('survey-opened', links, index).then($scope.cancel);
+  this.close = (idx) => {
+    let links = options.partners.coinify.surveyLinks;
+    if (idx > links.length - 1) { this.cancel(); return; }
+    Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
   };
 
   $scope.exitToNativeTx = () => {
@@ -266,35 +76,15 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.getQuoteHelper = () => {
-    if ($scope.quote && !$scope.expiredQuote && $scope.beforeStep('trade-formatted')) return 'AUTO_REFRESH';
-    else if ($scope.quote && !$scope.quote.id) return 'EST_QUOTE_1';
-    else if ($scope.expiredQuote) return 'EST_QUOTE_2';
+    if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
+    else if (this.quote) return 'AUTO_REFRESH';
+    else if (this.trade) return 'EST_QUOTE_2';
     else return 'RATE_WILL_EXPIRE';
   };
 
   $scope.goToOrderHistory = () => {
-    if ($scope.onStep('accept-terms') || $scope.onStep('trade-formatted') || !$scope.trades.pending.length || $state.params.selectedTab === 'ORDER_HISTORY') {
-      $uibModalInstance.dismiss('');
-    } else {
-      $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
-    }
+    this.onStep('isx') && $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
   };
 
-  $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => {
-    $scope.formatTrade('processing');
-    $scope.$digest();
-  });
-
-  $scope.$watch('medium', (newVal) => newVal && $scope.getAccounts().then($scope.updateAmounts));
-  $scope.$watchGroup(['exchange.user', 'paymentInfo', 'formattedTrade'], $scope.nextStep);
-  $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
-  $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
-
-  $scope.$watch('expiredQuote', (newVal) => {
-    if (newVal && !$scope.isKYC) {
-      $scope.status.gettingQuote = true;
-      if (!$scope.trade) $scope.getQuote();
-      else $scope.trade.btcExpected().then(updateBTCExpected);
-    }
-  });
+  $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });
 }

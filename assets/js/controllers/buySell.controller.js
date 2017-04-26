@@ -25,17 +25,16 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
     $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency(undefined, true) };
-    $scope.currencySymbol = currency.conversions[$scope.transaction.currency.code];
     $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.sellLimits = {card: {}, bank: {}};
     $scope.state = {buy: true};
     $scope.rating = 0;
 
-    $scope.buy = (trade, options) => {
+    $scope.buy = (quote, trade) => {
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
-        modals.openBuyView(trade, options).result.finally($scope.onCloseModal);
+        modals.openBuyView(quote, trade).result.finally($scope.onCloseModal).catch($scope.onCloseModal);
       }
     };
 
@@ -56,16 +55,10 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
       $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
     }, true);
 
-    $scope.$watch('transaction.currency', (newVal, oldVal) => {
-      let curr = $scope.transaction.currency || null;
-      $scope.currencySymbol = currency.conversions[curr.code];
-      if (newVal !== oldVal) $scope.getMaxMin();
-    });
-
     $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
       let curr = $scope.sellTransaction.currency || null;
       $scope.sellCurrencySymbol = currency.conversions[curr.code];
-      if (newVal !== oldVal) $scope.getMaxMin(true);
+      // if (newVal !== oldVal) $scope.getMaxMin($scope.sellLimits, $scope.sellTransaction);
     });
 
     if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
@@ -74,9 +67,11 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
       $scope.exchangeCountry = $scope.exchange._profile._country || $stateParams.countryCode;
 
       buySell.fetchProfile().then(() => {
-        $scope.getMaxMin();
-
+        let currency = buySell.getExchange().profile.defaultCurrency;
         let getCurrencies = buySell.getExchange().getBuyCurrencies().then(currency.updateCoinifyCurrencies);
+
+        let getMaxLimits = buySell.getMaxLimits(currency).then($scope.limits = buySell.limits)
+                                                         .catch(() => $scope.fetchLimitsError = true);
 
         let getTrades = buySell.getTrades().then(() => {
           let pending = buySell.trades.pending;
@@ -105,7 +100,7 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
           $scope.fetchKYCError = true;
         });
 
-        $q.all([getTrades, getKYCs, getCurrencies]).then(() => {
+        $q.all([getTrades, getKYCs, getCurrencies, getMaxLimits]).then(() => {
           $scope.status.loading = false;
           $scope.status.disabled = false;
         });
@@ -161,24 +156,6 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     });
   }
 
-  $scope.getMaxMin = (sell) => {
-    let transaction = sell ? 'sellTransaction' : 'transaction';
-    let limits = sell ? 'sellLimits' : 'limits';
-
-    const calculateMin = (rate) => {
-      $scope[limits].card.min = (rate * 10).toFixed(2);
-    };
-
-    const calculateMax = (rate) => {
-      $scope[limits].bank.max = buySell.calculateMax(rate, 'bank').max;
-      $scope[limits].card.max = buySell.calculateMax(rate, 'card').max;
-      $scope[limits].currency = $scope.currencySymbol;
-    };
-
-    buySell.getRate('EUR', $scope[transaction].currency.code).then(calculateMin);
-    buySell.getRate($scope.exchange.profile.defaultCurrency, $scope[transaction].currency.code).then(calculateMax);
-  };
-
   $scope.getIsTradingDisabled = () => {
     let profile = $scope.exchange && $scope.exchange.profile;
     let disabled = options.partners.coinify.disabled;
@@ -229,4 +206,6 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     $scope.status.disabled = true;
     $scope.initialize();
   });
+
+  AngularHelper.installLock.call($scope);
 }
