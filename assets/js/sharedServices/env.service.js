@@ -67,6 +67,8 @@ function Env ($rootScope, $location, $q) {
 
     env.buySellDebug = $rootScope.buySellDebug;
 
+    env.walletHelperUrl = $rootScope.walletHelperUrl || 'http://localhost:8081';
+
     defer.resolve(env);
   });
 

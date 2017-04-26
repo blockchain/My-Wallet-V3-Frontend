@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell ($rootScope, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants, modals) {
+function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants, modals) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -25,7 +25,10 @@ function buySell ($rootScope, BrowserHelper, $timeout, $q, $state, $uibModal, $u
       return null;
     }
     if (!_buySellMyWallet) {
-      _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, $rootScope.buySellDebug);
+      _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, false);
+      Env.then(env => {
+        _buySellMyWallet.debug = env.buySellDebug;
+      });
     }
     return _buySellMyWallet;
   };

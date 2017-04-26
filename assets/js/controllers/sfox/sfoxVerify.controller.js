@@ -2,7 +2,11 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, AngularHelper, $scope, $q, state, $http, sfox, modals, Upload, QA, Options) {
+function SfoxVerifyController (AngularHelper, Env, $scope, $q, state, $http, sfox, modals, Upload, QA, Options) {
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+  });
+
   let exchange = $scope.vm.exchange;
   let states = Options.options.partners.sfox.states;
   $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
