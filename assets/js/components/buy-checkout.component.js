@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($rootScope, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
+function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -27,6 +27,10 @@ function BuyCheckoutController ($rootScope, AngularHelper, $scope, $timeout, $q,
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
+
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+  });
 
   let state = $scope.state = {
     btc: null,
@@ -117,7 +121,7 @@ function BuyCheckoutController ($rootScope, AngularHelper, $scope, $timeout, $q,
       sfox.buy(this.buyAccount, quote)
         .then(trade => {
           // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-          if ($rootScope.buySellDebug) {
+          if ($scope.buySellDebug) {
             console.info('Load Sift Science iframe');
           }
           $scope.tradeId = trade.id;
