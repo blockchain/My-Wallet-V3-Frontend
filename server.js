@@ -123,6 +123,24 @@ if (runWalletHelper) {
       // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
       res.render('sift-science/index.html');
       return;
+    } else if (req.url === '/wallet-helper/google/') {
+      cspHeader = ([
+        'img-src https://www.google-analytics.com https://stats.g.doubleclick.net',
+        "style-src 'none'",
+        "child-src 'none'",
+        "frame-src 'none'",
+        'frame-ancestors http://localhost:8080',
+        "script-src 'self' https://ajax.googleapis.com https://www.google-analytics.com",
+        "connect-src 'none'",
+        "object-src 'none'",
+        "media-src 'none'",
+        "font-src 'none'"
+      ]).join('; ');
+      res.setHeader('content-security-policy', cspHeader);
+      // Not supported in Chrome, so using frame-ancestors instead
+      // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
+      res.render('google/index.html');
+      return;
     }
     if (dist) {
       res.setHeader('Cache-Control', 'public, max-age=31557600');

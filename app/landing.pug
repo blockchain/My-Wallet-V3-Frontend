@@ -1,4 +1,9 @@
 .landing-page(translate-namespace="LANDING")
+  iframe#google-analytics(
+    ng-src='{{ googleAnalyticsUrl }}'
+    sandbox='allow-same-origin allow-scripts'
+    scrolling = 'no'
+  )
   public-header(i18n-loaded='i18nLoaded')
   .banner(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
@@ -18,12 +23,12 @@
         .flex-column.pos-rel.width-100-mobile.center
           button.button-primary.btn.button-vlg.button-heavy.mtl(
             type="submit"
-            ui-sref="public.signup"
+            ng-click="signup()"
             translate="CREATE_YOUR_WALLET")
           span.f-20.mtm(translate="OR")
           button.button-purple.button-heavy.upper.btn.button-vlg.mtm(
             type="submit"
-            ui-sref="public.login-no-uid"
+            ng-click="login()"
             translate="LOGIN_NOW")
   .newtobitcoin.container
     #newToBTC.container-max-width.container-fluid.width-100

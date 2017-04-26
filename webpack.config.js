@@ -9,7 +9,8 @@ var outputRoot = DIST ? './helperApp/dist' : './helperApp/build';
 module.exports = {
   entry: {
     'plaid/plaid': './helperApp/plaid/index.js',
-    'sift-science/sift-science': './helperApp/sift-science/index.js'
+    'sift-science/sift-science': './helperApp/sift-science/index.js',
+    'google/google': './helperApp/google/index.js'
   },
   output: {
     path: outputRoot,
@@ -40,6 +41,11 @@ module.exports = {
       template: './helperApp/sift-science/index.html',
       filename: 'sift-science/index.html',
       chunks: ['sift-science/sift-science']
+    }),
+    new HtmlWebpackPlugin({
+      template: './helperApp/google/index.html',
+      filename: 'google/index.html',
+      chunks: ['google/google']
     }),
     new ExtractTextPlugin(
       DIST ? '[name]-[hash].css' : '[name].css'

@@ -69,6 +69,8 @@ function Env ($rootScope, $location, $q) {
 
     env.walletHelperUrl = $rootScope.walletHelperUrl || 'http://localhost:8081';
 
+    env.googleAnalyticsKey = 'UA-75417471-1';
+
     defer.resolve(env);
   });
 
