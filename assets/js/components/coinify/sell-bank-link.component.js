@@ -23,18 +23,18 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
 
   if (!this.banks.length) this.hideWhenNoAccounts = true;
 
-  $scope.selecting = true;
-  $scope.bankLinkEdit = () => $scope.selecting = !$scope.selecting;
+  this.selecting = true;
+  this.bankLinkEdit = () => this.selecting = !this.selecting;
 
   const handleAccountDelete = (account) => {
     let accounts = this.banks;
     for (let i = 0; i < accounts.length; i++) {
       if (accounts[i]['_account']['id'] === account['id']) accounts.splice(i, 1);
     }
-    $scope.selecting = false;
-    $scope.bankLinkEdit();
+    this.selecting = false;
+    this.bankLinkEdit();
     if (this.accounts.length === 0) {
-      $scope.hideWhenNoAccounts = true;
+      this.hideWhenNoAccounts = true;
     }
   };
 
@@ -48,5 +48,5 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
   };
 
   this.$onChanges = (changes) => this.selectedBankAccount = changes.selectedBankAccount.currentValue;
-  this.isDisabled = () => !this.selectedBankAccount || !this.banks.length;
+  this.isDisabled = () => !this.selectedBankAccount || !this.banks.length || !this.selecting;
 }
