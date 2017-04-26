@@ -14,7 +14,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
   $scope.bankAccounts = accounts;
-  $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
 
   $scope.transaction = {
     btc: $scope.trade.btc,
@@ -23,7 +22,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     fee: { btc: null, fiat: null }
   };
 
-  this.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
+  this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
   if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount.paymentAccount;
   this.accounts = accounts;

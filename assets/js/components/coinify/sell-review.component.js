@@ -11,7 +11,8 @@ angular
     controllerAs: '$ctrl'
   });
 
-function CoinifySellReviewController () {
+function CoinifySellReviewController (currency) {
+  console.log('sell review component', this);
   this.dateFormat = 'd MMMM yyyy, HH:mm';
   const determineTradeState = (state) => {
     switch (state) {
@@ -41,10 +42,9 @@ function CoinifySellReviewController () {
     this.creditIssued = this.completedTrade.outAmountExpected + ' ' + this.completedTrade.outCurrency;
   } else {
     this.id = this.sellTrade.id;
-    this.btcSold = this.sellTrade.sendAmount / 100000000;
+    this.btcSold = currency.convertFromSatoshi(this.sellTrade.sendAmount, currency.bitCurrencies[0]);
     this.bank = this.sellTrade._bankAccountNumber;
     this.creditIssued = `${this.sellTrade.outAmountExpected / 100} ${this.sellTrade.outCurrency}`;
     this.tradeCompleted = determineTradeState(this.sellTrade._state);
   }
-  console.log('sell review component', this);
 }

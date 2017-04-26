@@ -46,16 +46,13 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
 
   // ---- for making a sell trade ---- //
 
-  const handleSellResult = (sellResult) => {
-    if (!sellResult.transferIn) {
-      this.error = sellResult;
-      this.error = JSON.parse(this.error);
+  const handleBadRequest = (e) => {
+    if (e instanceof SyntaxError) {
+      this.onComplete();
     } else {
-      this.onSuccess({trade: sellResult});
+      this.error = JSON.parse(e);
     }
   };
-
-  const handleBadRequest = (e) => this.error = JSON.parse(e);
 
   const transactionFailed = (message) => {
     let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
@@ -75,21 +72,22 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       Alerts.displaySentBitcoin(message);
       let note = `Coinify Sell Order ${this.sellResult.id}`;
       if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+      this.waiting = false;
+      this.onComplete();
     }, 500);
   };
 
-  const setCheckpoint = (payment) => {
-    this.paymentCheckpoint = payment;
-  };
+  const setCheckpoint = (payment) => this.paymentCheckpoint = payment;
 
   const signAndPublish = (passphrase) => {
     return this.payment.sideEffect(setCheckpoint)
       .sign(passphrase).publish().payment;
   };
 
-  const assignAndBuildPayment = () => {
-    this.payment.to(this.sellResult.transferIn.details.account);
-    this.payment.amount(this.sellResult.transferIn.sendAmount * 100000000);
+  const assignAndBuildPayment = (sellResult) => {
+    let amount = currency.convertToSatoshi(sellResult._transferIn.sendAmount, currency.bitCurrencies[0]);
+    this.payment.to(sellResult._transferIn.details.account);
+    this.payment.amount(amount);
     this.payment.build();
   };
 
@@ -100,25 +98,29 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     transactionFailed(e);
   };
 
+  const handleSellResult = (sellResult) => {
+    if (!sellResult._transferIn) {
+      this.error = sellResult;
+      this.error = JSON.parse(this.error);
+    } else {
+      this.sellResult = sellResult;
+      this.onSuccess({trade: sellResult});
+      assignAndBuildPayment(sellResult);
+    }
+    return sellResult;
+  };
+
   this.sell = () => {
     this.waiting = true;
     this.paymentAccount.sell(this.bankId)
-      .then(sellResult => {
-        console.log('sellResult', sellResult);
-        handleSellResult(sellResult);
-        this.sellResult = sellResult;
-        return sellResult;
-      })
-      .then(sellData => {
-        if (this.error) return;
-        assignAndBuildPayment();
-        console.log('payment built', this);
-
+      .then(handleSellResult)
+      .then(() => {
         // Wallet.askForSecondPasswordIfNeeded()
         //   .then(signAndPublish)
         //   .then(transactionSucceeded)
         //   .catch(handleError);
 
+        // for when sending btc is disabled
         this.waiting = false;
         this.onComplete();
       })
