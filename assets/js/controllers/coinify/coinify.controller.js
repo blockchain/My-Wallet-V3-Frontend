@@ -2,7 +2,11 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile, Env) {
+function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile, Env) {
+  Env.then(env => {
+    this.buySellDebug = env.buySellDebug;
+  });
+
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -21,41 +25,12 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
   };
 
-  Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
-  });
-
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.getMinimumInAmount = (medium, curr) => medium && curr && quote.paymentMediums[medium].minimumInAmounts[curr];
-
-  this.steps = {
-    'email': 0,
-    'accept-terms': 1,
-    'select-payment-medium': 2,
-    'summary': 3,
-    'isx': 4,
-    'trade-complete': 5
-  };
-
-  this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
-  this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
-  this.goTo = (step) => this.step = this.steps[step];
-
-  if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
-    this.goTo('email');
-  } else if (!this.exchange.user) {
-    this.goTo('accept-terms');
-  } else if (!this.trade) {
-    this.goTo('select-payment-medium');
-  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
-    this.goTo('isx');
-  } else {
-    this.goTo('trade-complete');
-  }
 
   this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
@@ -69,6 +44,23 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     let links = options.partners.coinify.surveyLinks;
     if (idx > links.length - 1) { this.cancel(); return; }
     Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
+  };
+
+  this.state = {
+    email: {
+      valid: true
+    }
+  };
+
+  this.onEmailChange = (valid) => {
+    this.state.email.valid = valid;
+  };
+
+  this.onSignupComplete = () => {
+    return $q.resolve(exchange.fetchProfile())
+             .then((p) => buySell.getMaxLimits(p.defaultCurrency))
+             .then(this.refreshQuote).then((q) => this.quote = q)
+             .then(() => this.goTo('select-payment-medium'));
   };
 
   $scope.exitToNativeTx = () => {
@@ -86,5 +78,28 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     this.onStep('isx') && $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
   };
 
-  $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });
+  this.steps = {
+    'email': 0,
+    'signup': 1,
+    'select-payment-medium': 2,
+    'summary': 3,
+    'isx': 4,
+    'trade-complete': 5
+  };
+
+  this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
+  this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
+  this.goTo = (step) => this.step = this.steps[step];
+
+  if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
+    this.goTo('email');
+  } else if (!this.exchange.user) {
+    this.goTo('signup');
+  } else if (!this.trade) {
+    this.goTo('select-payment-medium');
+  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
+    this.goTo('isx');
+  } else {
+    this.goTo('trade-complete');
+  }
 }

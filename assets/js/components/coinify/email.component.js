@@ -4,9 +4,10 @@ angular
     bindings: {
       email: '<',
       verified: '<',
-      rejectedEmail: '<',
+      validEmail: '<',
       onClose: '&',
-      onComplete: '&'
+      onComplete: '&',
+      onEmailChange: '&'
     },
     templateUrl: 'partials/coinify/email.pug',
     controller: CoinifyEmailController
@@ -23,12 +24,12 @@ function CoinifyEmailController ($q, Wallet) {
   };
 
   this.$onInit = () => {
-    if (!Wallet.goal.firstLogin && !this.rejectedEmail) Wallet.resendEmailConfirmation();
-    this.state.editing = Boolean(this.rejectedEmail);
+    if (!Wallet.goal.firstLogin && this.validEmail) Wallet.resendEmailConfirmation();
+    this.state.editing = Boolean(!this.validEmail);
   };
 
   this.$onChanges = (changes) => {
     let { verified } = changes;
-    if (verified && verified.currentValue && !this.rejectedEmail) this.onComplete();
+    if (verified && verified.currentValue && this.validEmail) this.onComplete();
   };
 }

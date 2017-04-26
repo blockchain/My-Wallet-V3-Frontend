@@ -1,5 +1,5 @@
 form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
-  div(ng-hide="$ctrl.state.editing || $ctrl.rejectedEmail")
+  div(ng-hide="$ctrl.state.editing || !$ctrl.validEmail")
     span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
     p.mtl.mbm
       span(translate="SENT_VERIFICATION" translate-values="{email: $ctrl.email}")
@@ -11,7 +11,8 @@ form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
     ng-model="$ctrl.email"
     on-cancel="$ctrl.toggleEditing"
     on-save="$ctrl.changeEmail"
-    ng-show="$ctrl.state.editing || $ctrl.rejectedEmail"
+    on-change="$ctrl.onEmailChange()"
+    ng-show="$ctrl.state.editing || !$ctrl.validEmail"
     action-title="'CHANGE' | translate"
     inline
     editing="true")
@@ -19,5 +20,5 @@ form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
   button.button-muted.mrm(ng-click="$ctrl.onClose()" translate="CANCEL_ORDER")
   button.button-primary(
     type="submit"
-    ng-disabled="!$ctrl.verified || $ctrl.rejectedEmail || emailForm.$invalid"
+    ng-disabled="!$ctrl.verified || !$ctrl.validEmail || emailForm.$invalid"
     translate="CONTINUE")
