@@ -3,14 +3,12 @@ angular
   .component('sellSummary', {
     bindings: {
       transaction: '<',
-      fields: '<',
       sellTrade: '<',
       totalBalance: '<',
       payment: '<',
       paymentAccount: '<',
       bankId: '<',
       onComplete: '&',
-      sell: '&',
       close: '&',
       dismiss: '&',
       onSuccess: '&'
@@ -22,7 +20,6 @@ angular
 
 function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Alerts, $timeout) {
   console.log('summary component', this);
-  // this.$onInit = () => this.startPayment();
 
   this.sellRateForm;
 
@@ -41,8 +38,6 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       if (!this.sellTrade.quote) true;
     }
   };
-
-  this.status = {};
 
   // ---- for making a sell trade ---- //
 

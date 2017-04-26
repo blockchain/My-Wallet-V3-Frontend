@@ -5,7 +5,6 @@ angular
       country: '<',
       sepaCountries: '<',
       txCurrency: '<',
-      bankAccount: '<',
       paymentAccount: '<',
       close: '&',
       onComplete: '&',
@@ -23,14 +22,9 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
     holder: { name: null, address: { country: this.country.code, street: null, city: null, zipcode: null, state: null } }
   };
 
-  this.holder = { name: null, address: {} };
   this.status = {};
-
   this.viewInfo = true;
-
-  if (this.country === 'DK' && this.txCurrency === 'DKK') {
-    this.showDanish = true;
-  }
+  if (this.country === 'DK' && this.txCurrency === 'DKK') this.showDanish = true;
 
   this.switchView = () => this.viewInfo = !this.viewInfo;
 
@@ -46,8 +40,6 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
 
   this.turnOffIbanError = () => this.ibanError = false;
 
-  this.isDisabled = () =>
-
   this.isDisabled = () => {
     if (this.viewInfo) {
       return !this.bankAccount.account.number || !this.bankAccount.account.bic;
@@ -61,12 +53,11 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
   };
 
   this.changeCountry = (country) => {
-    this.bankAccount.holder.address.country = country;
     this.country = country;
+    this.bankAccount.holder.address.country = this.selectedBankCountry.code;
   };
 
   this.selectedBankCountry = this.sepaCountries.find(c => c.code === this.country);
-  this.bankAccount.holder.address.country = this.selectedBankCountry.code;
 
   const handleError = (e) => {
     let accountError = JSON.parse(e);

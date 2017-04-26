@@ -2,7 +2,6 @@ angular
   .module('walletApp')
   .component('sellBankLink', {
     bindings: {
-      transaction: '<',
       accounts: '<',
       selectedBankAccount: '<',
       paymentAccount: '<',
@@ -17,12 +16,8 @@ angular
   });
 
 function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
-  console.log('sell bank link component', this);
-
   this.banks = this.accounts;
-
   if (!this.banks.length) this.hideWhenNoAccounts = true;
-
   this.selecting = true;
   this.bankLinkEdit = () => this.selecting = !this.selecting;
 

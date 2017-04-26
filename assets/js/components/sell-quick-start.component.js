@@ -230,7 +230,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   });
 
   $scope.getMinLimits = (quote) => {
-    console.log('getMinLimits');
     buySell.getMinLimits(quote).then($scope.limits = buySell.limits);
   };
 

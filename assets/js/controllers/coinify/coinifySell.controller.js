@@ -81,7 +81,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
         this.goTo('email');
       } else if (!this.exchange.user) {
         this.goTo('accept-terms');
-      } else if (!this.accounts) {
+      } else if (!this.accounts.length) {
         this.goTo('account');
       } else if (this.accounts.length) {
         this.goTo('bank-link');
