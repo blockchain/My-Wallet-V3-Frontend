@@ -34,7 +34,7 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
     Wallet.goal.firstLogin = Boolean(firstLogin);
     prepMobileBuy()
     Options.get()
-      .then(() => { MyWallet.loginFromJSON(json, externalJson, magicHash, password) })
+      .then(() => MyWallet.loginFromJSON(json, externalJson, magicHash, password))
       .then(() => $q(resolve => { Wallet.didLogin(MyWallet.wallet.guid, resolve) }))
       .then(toBuySell)
   }
