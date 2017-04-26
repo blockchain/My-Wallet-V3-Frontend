@@ -175,6 +175,7 @@ function isignthis ($sce, Options) {
           case 'DECLINED.OTP_TOKEN_DENIED':
           case 'DECLINED.UNKNOWN_ERROR':
           case 'FAILED.UNEXPECTED_ERROR':
+          case 'REJECTED.AUTO_REJECTED':
           case 'REJECTED.UPSTREAM_REJECTED':
           case 'DECLINED':
           case 'FAILED':

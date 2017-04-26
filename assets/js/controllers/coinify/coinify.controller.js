@@ -2,9 +2,8 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile) {
+function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile, Env) {
   $scope.settings = Wallet.settings;
-  $scope.buySellDebug = $rootScope.buySellDebug;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.trades = buySell.trades;
@@ -21,6 +20,10 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
     else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
   };
+
+  Env.then(env => {
+    this.buySellDebug = env.buySellDebug;
+  });
 
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
@@ -55,8 +58,8 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
   }
 
   this.watchAddress = () => {
-    if ($rootScope.buySellDebug) {
-      console.log('watchAddress for', this.trade);
+    if (this.buySellDebug) {
+      console.log('this.watchAddress() for', $scope.trade);
     }
     if (!this.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
@@ -91,11 +94,6 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
   $scope.goToOrderHistory = () => {
     this.onStep('isx') && $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
   };
-
-  $scope.fakeBankTransfer = () => $scope.trade.fakeBankTransfer().then(() => {
-    $scope.formatTrade('processing');
-    $scope.$digest();
-  });
 
   $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
   $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });

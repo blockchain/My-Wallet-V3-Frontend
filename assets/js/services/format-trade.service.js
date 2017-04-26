@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('formatTrade', formatTrade);
 
-formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'];
+formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency', 'Env'];
 
-function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
+function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   const service = {
     awaiting_transfer_in,
     confirm,
@@ -55,9 +55,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(trade.sendAmount / 100, { code: trade.inCurrency })
     };
-    if ($rootScope.buySellDebug) {
-      transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
-    }
+    Env.then(env => {
+      if (env.buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    });
     return transaction;
   };
 

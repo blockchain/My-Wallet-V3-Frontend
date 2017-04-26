@@ -10,6 +10,7 @@ function quoteCountdown ($interval) {
     replace: true,
     scope: {
       refreshQuote: '&',
+      debug: '=',
       quote: '='
     },
     templateUrl: 'templates/quote-countdown.pug',
