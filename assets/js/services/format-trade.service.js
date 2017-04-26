@@ -6,6 +6,7 @@ formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'
 
 function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   const service = {
+    awaiting_transfer_in,
     confirm,
     reviewing,
     processing,
@@ -16,13 +17,11 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     completed,
     completed_test,
     initiated,
-
     reject_card,
     kyc,
     error,
     success,
-    labelsForCurrency,
-    bank_transfer
+    labelsForCurrency
   };
 
   let errorStates = {
@@ -171,7 +170,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     return { accountNumber: 'IBAN', bankCode: 'BIC' };
   }
 
-  function bank_transfer (trade) {
+  function awaiting_transfer_in (trade) {
     const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',

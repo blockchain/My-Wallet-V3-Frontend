@@ -54,9 +54,9 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     this.goTo('trade-complete');
   }
 
-  $scope.watchAddress = () => {
+  this.watchAddress = () => {
     if ($rootScope.buySellDebug) {
-      console.log('$scope.watchAddress() for', this.trade);
+      console.log('watchAddress for', this.trade);
     }
     if (!this.trade || $scope.bitcoinReceived || $scope.isKYC) return;
     const success = () => $timeout(() => $scope.bitcoinReceived = true);
