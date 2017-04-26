@@ -112,7 +112,20 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.triggerSell = () => {
     $scope.status.waiting = true;
-    $scope.$parent.sell({ fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote }, { sell: true, isSweepTransaction: $scope.isSweepTransaction });
+    $scope.quote.getPayoutMediums().then(mediums => {
+      console.log('mediums', mediums);
+      mediums.bank.getAccounts().then(accounts => {
+        console.log('accounts', accounts[0]);
+        accounts[0].getAll().then(banks => {
+          $scope.$parent.sell(
+            { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
+            { accounts: banks },
+            { paymentAccount: accounts[0] },
+            { sell: true, isSweepTransaction: $scope.isSweepTransaction }
+          );
+        });
+      });
+    });
     $scope.status = {};
     $timeout(() => {
       this.transaction = { currency: {} };
