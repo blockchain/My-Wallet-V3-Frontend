@@ -22,11 +22,8 @@
       ng-if="onStep('account')"
       tx-currency="vm.txCurrency"
       sepa-countries="vm.sepaCountries"
-      bank-account="vm.bankAccount"
-      holder-country="vm.holderCountry"
       country="vm.exchangeCountry"
       payment-account="vm.paymentAccount"
-      select-country="vm.changeHolderCountry(country)"
       on-complete="vm.goTo('summary')"
       on-success="vm.onCreateBankSuccess(bankId)"
       close="vm.close()")

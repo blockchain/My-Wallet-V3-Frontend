@@ -36,10 +36,10 @@ function CoinifySellReviewController (currency) {
 
   if (!this.sellTrade._state) {
     this.id = this.completedTrade.id;
-    this.sellTrade.createdAt = this.completedTrade.createTime;
-    this.btcSold = this.completedTrade.inAmount;
-    this.bank = this.completedTrade.transferOut.details.account.number;
-    this.creditIssued = this.completedTrade.outAmountExpected + ' ' + this.completedTrade.outCurrency;
+    this.sellTrade.createdAt = this.completedTrade.createdAt;
+    this.btcSold = currency.convertFromSatoshi(this.completedTrade.inAmount, currency.bitCurrencies[0]);
+    this.bank = this.completedTrade._bankAccountNumber;
+    this.creditIssued = (this.completedTrade.outAmountExpected / 100) + ' ' + this.completedTrade.outCurrency;
   } else {
     this.id = this.sellTrade.id;
     this.btcSold = currency.convertFromSatoshi(this.sellTrade.sendAmount, currency.bitCurrencies[0]);

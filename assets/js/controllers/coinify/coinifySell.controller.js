@@ -9,7 +9,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
-  $scope.status = {};
   $scope.trade = trade;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
@@ -29,13 +28,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
 
-  console.log('coinify sell ctrl this', this);
-
-  this.bankAccount = {
-    account: { currency: null },
-    bank: { name: null, address: { country: null, street: null, city: null, zipcode: null } },
-    holder: { name: null, address: { country: null, street: null, city: null, zipcode: null, state: null } }
-  };
+  console.log('coinify sell ctrl', this);
 
   $scope.assignFiatCurrency = () => {
     if ($scope.trade._state) return;
@@ -47,8 +40,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   $scope.assignFiatHelper = (currencyType) => {
-    $scope.transaction.currency = $scope.trade.quote[currencyType];
-    this.bankAccount.account.currency = $scope.trade.quote[currencyType];
     this.txCurrency = $scope.trade.quote[currencyType];
     $scope.currencySymbol = currency.conversions[$scope.trade.quote[currencyType]]['symbol'];
   };
@@ -58,9 +49,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
-  this.bankAccount.bank.address.country = this.exchangeCountry;
-  this.bankAccount.holder.address.country = this.exchangeCountry.code;
-  this.holderCountry = this.exchangeCountry;
 
   $scope.steps = {
     'email': 0,
@@ -75,7 +63,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
-    $scope.status = {};
     if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
       this.goTo('review');
       return;
@@ -84,9 +71,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
         this.goTo('email');
       } else if (!this.exchange.user) {
         this.goTo('accept-terms');
-      } else if (!this.accounts) {
+      } else if (!this.accounts.accounts.length) {
         this.goTo('account');
-      } else if (this.accounts) {
+      } else if (this.accounts.accounts.length) {
         this.goTo('bank-link');
       } else {
         this.goTo('summary');
@@ -159,18 +146,12 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.bankId = account.id;
   };
 
-  this.changeHolderCountry = (country) => {
-    this.bankAccount.holder.address.country = country;
-    this.holderCountry = country;
-  };
-
   this.onCreateBankSuccess = (bankId) => this.bankId = bankId;
   this.onSellSuccess = (trade) => this.completedTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
 
   $scope.standardError = (err) => {
     console.log(err);
-    $scope.status = {};
     try {
       let e = JSON.parse(err);
       let msg = e.error.toUpperCase();
@@ -191,7 +172,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
     if (!$scope.currencySymbol) {
-      let curr = $scope.transaction.currency || null;
+      let curr = this.txCurrency || null;
       $scope.currencySymbol = currency.conversions[curr.code];
     }
     if (!newVal) return;

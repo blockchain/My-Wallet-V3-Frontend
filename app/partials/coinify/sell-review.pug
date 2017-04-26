@@ -59,7 +59,7 @@
         span {{ $ctrl.sellTrade._bankAccountNumber }}
       .flex-row.flex-between.pvm
         span.colon(translate="SELL.CREDIT_ISSUED")
-        span {{ $ctrl.sellTrade._outAmountExpected / 100 }} {{ $ctrl.sellTrade._outCurrency }}
+        span {{ $ctrl.creditIssued }} {{ $ctrl.sellTrade._outCurrency }}
     .mvm
       span.f-12(translate="SELL.PLEASE_NOTE_BANK_POLICIES")
 .modal-footer.flex-end.flex-row

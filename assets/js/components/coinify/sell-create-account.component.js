@@ -6,10 +6,7 @@ angular
       sepaCountries: '<',
       txCurrency: '<',
       bankAccount: '<',
-      holderCountry: '<',
-      selectedBankCountry: '<',
       paymentAccount: '<',
-      selectCountry: '&',
       close: '&',
       onComplete: '&',
       onSuccess: '&'
@@ -20,6 +17,12 @@ angular
   });
 
 function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
+  this.bankAccount = {
+    account: { currency: this.txCurrency },
+    bank: { name: null, address: { country: this.country, street: null, city: null, zipcode: null } },
+    holder: { name: null, address: { country: this.country.code, street: null, city: null, zipcode: null, state: null } }
+  };
+
   this.holder = { name: null, address: {} };
   this.status = {};
 
@@ -56,14 +59,14 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
              !this.selectedBankCountry;
     }
   };
-  console.log('sell account component', this);
 
-  this.selectedBankCountry = this.sepaCountries.find(c => c.code === this.holderCountry);
-  this.bankAccount.holder.address.country = this.selectedBankCountry.code;
-
-  this.$onChanges = (changes) => {
-    console.log('holder changes', changes);
+  this.changeCountry = (country) => {
+    this.bankAccount.holder.address.country = country;
+    this.country = country;
   };
+
+  this.selectedBankCountry = this.sepaCountries.find(c => c.code === this.country);
+  this.bankAccount.holder.address.country = this.selectedBankCountry.code;
 
   const handleError = (e) => {
     let accountError = JSON.parse(e);
