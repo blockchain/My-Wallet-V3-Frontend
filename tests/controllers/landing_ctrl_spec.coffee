@@ -4,11 +4,17 @@ describe "LandingCtrl", ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, $rootScope, $controller) ->
+    angular.mock.inject ($injector, $rootScope, $controller, $q) ->
       scope = $rootScope.$new()
 
       $controller "LandingCtrl",
         $scope: scope
+        Env: $q.resolve({
+          googleAnalyticsKey: "analytics_key",
+          walletHelperUrl: "https://wallet-helper/"
+        })
+
+      scope.$digest()
 
       return
 
@@ -16,11 +22,11 @@ describe "LandingCtrl", ->
 
   describe "signup", ->
 
-    it "should navigate to public.signup", inject(($state) ->
+    it "should navigate to public.signup", inject(() ->
       scope.fields = {email: null}
-      spyOn($state, "go")
+      spyOn(scope, "trackAndGo")
       scope.signup()
-      expect($state.go).toHaveBeenCalled()
+      expect(scope.trackAndGo).toHaveBeenCalledWith('public.signup')
     )
 
     it "should trust the video src", inject(($sce)->
@@ -55,4 +61,19 @@ describe "LandingCtrl", ->
       languages.get = () -> "uk"
       scope.firstLoad()
       expect($sce.trustAsResourceUrl.calls.argsFor(1)[0]).toContain('-ru.mp4')
+    )
+
+  describe "login", ->
+    it "should navigate to public.login-no-uid", inject(() ->
+      spyOn(scope, "trackAndGo")
+      scope.login()
+      expect(scope.trackAndGo).toHaveBeenCalledWith('public.login-no-uid')
+    )
+
+  describe "track", ->
+    it "should set googleAnalyticsUrl", inject(($sce)->
+      scope.track('test')
+      expect($sce.valueOf(scope.googleAnalyticsUrl)).toEqual(
+        'https://wallet-helper//wallet-helper/google/#/analytics/analytics_key/test'
+      )
     )
