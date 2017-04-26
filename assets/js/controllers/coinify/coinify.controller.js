@@ -57,15 +57,6 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     this.goTo('trade-complete');
   }
 
-  this.watchAddress = () => {
-    if (this.buySellDebug) {
-      console.log('this.watchAddress() for', $scope.trade);
-    }
-    if (!this.trade || $scope.bitcoinReceived || $scope.isKYC) return;
-    const success = () => $timeout(() => $scope.bitcoinReceived = true);
-    this.trade.watchAddress().then(success);
-  };
-
   this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
@@ -95,6 +86,5 @@ function CoinifyController ($rootScope, $scope, MyWallet, Wallet, Alerts, curren
     this.onStep('isx') && $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
   };
 
-  $scope.$watch('bitcoinReceived', (newVal) => newVal && ($scope.formattedTrade = formatTrade['success']($scope.trade)));
   $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });
 }

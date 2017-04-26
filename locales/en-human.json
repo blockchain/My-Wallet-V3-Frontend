@@ -1164,7 +1164,7 @@
   "MAX_MIN_HELPER": "Minimum buy amount is {{::min}} {{::code}}. Maximum buy amount is {{::max}} {{::code}}.",
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
-  "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
+  "BUY_AMT_IS": "Your limit is set to {{::amount}} {{::code}}.",
   "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
   "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
