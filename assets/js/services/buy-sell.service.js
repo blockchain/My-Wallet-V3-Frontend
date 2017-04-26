@@ -63,11 +63,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     submitFeedback,
     tradeStateIn,
     cancelTrade,
-    states,
-    getBankAccounts,
-    createBankAccount,
-    deleteBankAccount,
-    createSellTrade
+    states
   };
 
   return service;
@@ -98,47 +94,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       amt = Math.trunc(amt * 100);
     }
     return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr));
-  }
-
-  function getBankAccounts () {
-    return $q.resolve(service.getExchange().bank.getAll())
-      .then(accounts => {
-        if (accounts) {
-          return accounts;
-        } else {
-          return [];
-        }
-      })
-      .catch(e => {
-        console.log('error getting accounts', e);
-        return e;
-      });
-  }
-
-  function createBankAccount (bankObject) {
-    return $q.resolve(service.getExchange().bank.create(bankObject)).then(response => {
-      return response;
-    });
-  }
-
-  function deleteBankAccount (bankId) {
-    return $q.resolve(service.getExchange().bank.deleteOne(bankId)).then(response => {
-      return response;
-    });
-  }
-
-  function createSellTrade (quote, bank) {
-    return $q.resolve(service.getExchange().sell(quote, bank)).then(response => {
-      console.log('*** SELL TRADE RESPONSE ***', response);
-      return response;
-    })
-    .then(data => {
-      service.getTrades();
-      return data;
-    })
-    .catch(err => {
-      return err;
-    });
   }
 
   function getKYCs () {
@@ -268,16 +223,19 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function openSellView (trade, buySellOptions = { sell: true }) {
+  function openSellView (trade, accounts, paymentAccount, buySellOptions = { sell: true }) {
+    console.log('opensellview in buy-sell service', paymentAccount);
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',
       controller: 'CoinifySellController',
+      controllerAs: 'vm',
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        accounts: () => service.getBankAccounts(),
         trade: () => trade,
+        accounts: () => accounts,
+        masterPaymentAccount: () => paymentAccount,
         buySellOptions: () => buySellOptions,
         options: () => Options.get()
       }

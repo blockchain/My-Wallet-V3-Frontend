@@ -90,9 +90,9 @@
             | &nbsp;
             span {{ format($ctrl.pendingTrade.sendAmount / 100, {code: $ctrl.pendingTrade.inCurrency}, true) }}
             | .
-        .mts.mb-15.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'after_first_trade'")
+        .mts.mb-15.pos-rel(ng-show="$ctrl.tradingDisabled && $ctrl.tradingDisabledReason === 'after_first_trade'")
           span.pos-abs.type-sm
-            span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: sellCurrencySymbol.symbol, amount: 0}")
+            span.state-danger-text(translate="BUY_AMT_IS" translate-values="{symbol: $ctrl.sellCurrencySymbol.symbol, amount: 0}")
             span &nbsp;
             a(popup
               popup-days="{{$ctrl.getDays()}}"

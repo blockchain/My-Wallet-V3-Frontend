@@ -1,0 +1,67 @@
+.modal-body
+  //- .flex-column(ng-if="ISXState")
+  //-   .mvl.em-500
+  //-     span.f-14 Identity Verification Status
+  //-   div
+  //-     span(translate="{{KYCState}}")
+
+  .flex-column.mvm(ng-if="!$ctrl.tradeCompleted")
+    div
+      p.pb-15.ptn.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
+    .left-align
+      p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
+    .flex-column.bg-grey.phm.border
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.TRADE_ID")
+        span {{ $ctrl.id }}
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.DATE_INITIALIZED")
+        span {{ $ctrl.sellTrade.createdAt | date:$ctrl.dateFormat }}
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.BTC_SOLD")
+        span {{ $ctrl.btcSold }} BTC
+    .left-align
+      p.colon.em-500.mbs.type-lbl.mt-25(translate="SELL.PAYOUT_DETAILS") 
+    .flex-column.bg-grey.phm.border
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.BANK_ACCOUNT")
+        span {{ $ctrl.bank }}
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.CREDIT_ISSUED")
+        span {{ $ctrl.creditIssued }}
+    .left-align
+      p.type-sm.mtl(translate="SELL.1_2_DAYS")
+        
+  .flex-column(ng-if="$ctrl.tradeCompleted")
+    .mvl.em-500(ng-show="$ctrl.sellTrade._state !== 'completed'")
+      span.pvm.type-h5.state-danger-text(translate="Trade")
+      | &nbsp;
+      span.type-h5.state-danger-text {{$ctrl.sellTrade._state}}.
+    .mb-20.mtn(ng-show="$ctrl.sellTrade._state === 'completed'")
+      span.f-14(translate="SELL.RECEIVE_EMAIL_RECEIPT")
+    .left-align
+      p.colon.em-500.mbs.type-lbl(translate="SELL.ORDER_DETAILS")
+    .flex-column.bg-grey.phm.border
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.TRADE_ID")
+        span {{ $ctrl.sellTrade.id }}
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.DATE_INITIALIZED")
+        span {{ $ctrl.sellTrade.createdAt | date:$ctrl.dateFormat }}
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.BTC_SOLD")
+        span {{ $ctrl.sellTrade._sendAmount / 100000000 }} BTC
+    .left-align
+      p.colon.em-500.mbs.type-lbl.mt-25(translate="SELL.PAYOUT_DETAILS") 
+    .flex-column.bg-grey.phm.border
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.BANK_ACCOUNT")
+        span {{ $ctrl.sellTrade._bankAccountNumber }}
+      .flex-row.flex-between.pvm
+        span.colon(translate="SELL.CREDIT_ISSUED")
+        span {{ $ctrl.creditIssued }} {{ $ctrl.sellTrade._outCurrency }}
+    .mvm
+      span.f-12(translate="SELL.PLEASE_NOTE_BANK_POLICIES")
+.modal-footer.flex-end.flex-row
+  .flex-1.flex-end
+    button.button-primary(translate="CLOSE" ng-click="$ctrl.dismiss()")
