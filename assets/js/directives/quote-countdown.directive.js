@@ -33,8 +33,8 @@ function quoteCountdown ($interval) {
       if (seconds < 10) seconds = '0' + seconds;
       if (time <= 0) scope.refreshQuote();
 
-      timeToExpiration -= 1000;
       scope.count = timeToExpiration <= 0 ? '0:00' : minutes + ':' + seconds;
+      timeToExpiration -= 1000;
     }, 1000);
 
     scope.$on('$destroy', scope.cancelCounter);

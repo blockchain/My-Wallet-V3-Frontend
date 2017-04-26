@@ -15,7 +15,7 @@ function CoinifyTradeSummaryController ($scope, $q, formatTrade) {
   };
 
   if (buySellDebug) {
-    console.log('this.watchAddress() for', $scope.trade);
+    console.log('this.watchAddress() for', trade);
   }
 
   $q.resolve(trade.watchAddress())

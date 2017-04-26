@@ -3,12 +3,16 @@ describe "CoinifyTradeSummaryController", ->
   $rootScope = undefined
   $controller = undefined
   formatTrade = undefined
+  $q = undefined
   
   trade =
+    id: 1
     state: 'processing'
     medium: 'card'
     inCurrency: 'USD'
     outCurrency: 'BTC'
+    refresh: () -> $q.resolve(trade)
+    watchAddress: () -> $q.resolve()
 
   beforeEach angular.mock.module("walletApp")
 
@@ -17,6 +21,7 @@ describe "CoinifyTradeSummaryController", ->
       $rootScope = _$rootScope_
       $controller = _$controller_
 
+      $q = $injector.get("$q")
       formatTrade = $injector.get("formatTrade")
 
   getControllerScope = (params = {}) ->
