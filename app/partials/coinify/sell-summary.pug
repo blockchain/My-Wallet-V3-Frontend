@@ -17,7 +17,7 @@
         span {{ $ctrl.transaction.fee.btc }} BTC
       .flex-row.flex-between.pam.pv-15
         span.em-500.colon(translate="SELL.CREDIT_OWED")
-        span.em-500 {{ $ctrl.transaction.fiat | format }} {{ $ctrl.transaction.currency }}
+        span.em-500 {{ $ctrl.transaction.fiat | format }} {{ $ctrl.transaction.currency.code }}
     form.clearfix(name="$ctrl.sellRateForm" role="form" novalidate)
       .flex-row.flex-start.mtl
         div

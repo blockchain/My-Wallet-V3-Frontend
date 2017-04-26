@@ -30,21 +30,20 @@
           kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
       div(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
         //- SELL
-        sell-quick-start(limits="sellLimits"
-                        transaction="sellTransaction"
-                        disabled="status.disabled"
-                        sell-currency-symbol="sellCurrencySymbol"
-                        exchange-country="exchangeCountry"
-                        modal-open="status.modalOpen"
-                        change-currency="changeSellCurrency(currency)"
-                        trading-disabled="getIsTradingDisabled()"
-                        trading-disabled-reason="getIsTradingDisabledReason()"
-                        on-trigger="openSellKyc()"
-                        select-tab="tabs.select(tab)"
-                        pending-trade="pendingTrade"
-                        open-pending-trade="buy(pendingTrade)"
-                        get-days="getDays()"
-                        sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
+        sell-quick-start(transaction="sellTransaction"
+                         disabled="status.disabled"
+                         sell-currency-symbol="sellCurrencySymbol"
+                         exchange-country="exchangeCountry"
+                         modal-open="status.modalOpen"
+                         change-currency="changeSellCurrency(currency)"
+                         trading-disabled="getIsTradingDisabled()"
+                         trading-disabled-reason="getIsTradingDisabledReason()"
+                         on-trigger="openSellKyc()"
+                         select-tab="tabs.select(tab)"
+                         pending-trade="pendingTrade"
+                         open-pending-trade="buy(pendingTrade)"
+                         get-days="getDays()"
+                         sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
           kyc-status(state="kyc.state" on-trigger="openSellKyc()" limits="sellLimits")
       .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")

@@ -249,8 +249,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function openSellView (trade, accounts, paymentAccount, buySellOptions = { sell: true }) {
-    console.log('opensellview in buy-sell service', paymentAccount);
+  function openSellView (trade, mediums, buySellOptions = { sell: true }) {
+    let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal auto buy',
@@ -260,8 +260,22 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       keyboard: false,
       resolve: {
         trade: () => trade,
-        accounts: () => accounts,
-        masterPaymentAccount: () => paymentAccount,
+        masterPaymentAccount: () => {
+          if (exchange.profile) {
+            return mediums.mediums.bank.getAccounts().then(accounts => {
+              return accounts[0];
+            });
+          }
+        },
+        accounts: () => {
+          if (exchange.profile) {
+            return mediums.mediums.bank.getAccounts().then(accounts => {
+              return accounts[0].getAll().then(banks => {
+                return banks;
+              });
+            });
+          }
+        },
         buySellOptions: () => buySellOptions,
         options: () => Options.get()
       }

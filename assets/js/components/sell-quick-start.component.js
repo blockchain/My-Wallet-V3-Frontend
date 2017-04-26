@@ -3,7 +3,6 @@ angular
   .component('sellQuickStart', {
     bindings: {
       sell: '&',
-      limits: '=',
       disabled: '=',
       tradingDisabled: '=',
       tradingDisabledReason: '=',
@@ -23,13 +22,14 @@ angular
   });
 
 function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams, $uibModal) {
-  $scope.sellExchangeRate = {};
+  $scope.exchangeRate = {};
   $scope.tradingDisabled = this.tradingDisabled;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.error = {};
   $scope.status = { ready: true };
   $scope.totalBalance = Wallet.my.wallet.balanceActiveAccounts / 100000000;
   $scope.selectedCurrency = this.transaction.currency.code;
+  $scope.transaction = this.transaction;
   $scope.format = currency.formatCurrencyForView;
 
   let exchange = buySell.getExchange();
@@ -72,14 +72,29 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
-  $scope.getExchangeRate = () => {
+  $scope.getInitialExchangeRate = () => {
     $scope.status.fetching = true;
 
     buySell.getQuote(-1, 'BTC', this.transaction.currency.code)
-      .then(function (quote) {
-        $scope.sellExchangeRate.fiat = (quote.quoteAmount / -100).toFixed(2);
+      .then(quote => {
+        $scope.getMinLimits(quote);
+        $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
         $scope.status = {};
-      }, error);
+      }, error).finally($scope.getQuote);
+  };
+
+  $scope.getExchangeRate = () => {
+    let rate, fiat;
+    let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
+
+    if (baseCurrency === 'BTC') {
+      rate = 1 / (baseAmount / 100000000);
+      fiat = quoteAmount / 100;
+    } else {
+      rate = 1 / (quoteAmount / 100000000);
+      fiat = baseAmount / 100;
+    }
+    return Math.abs((rate * fiat)).toFixed(2);
   };
 
   $scope.getQuote = () => {
@@ -95,13 +110,16 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   const success = (quote) => {
+    $scope.status = {};
+    $scope.quote = quote;
+    $scope.exchangeRate.fiat = $scope.getExchangeRate();
+
     if (quote.quoteCurrency === 'BTC') {
       this.transaction.btc = -quote.quoteAmount / 100000000;
     } else {
       this.transaction.fiat = quote.quoteAmount / 100;
     }
-    $scope.quote = quote;
-    $scope.status = {};
+
     Alerts.clear();
   };
 
@@ -113,18 +131,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.triggerSell = () => {
     $scope.status.waiting = true;
     $scope.quote.getPayoutMediums().then(mediums => {
-      console.log('mediums', mediums);
-      mediums.bank.getAccounts().then(accounts => {
-        console.log('accounts', accounts[0]);
-        accounts[0].getAll().then(banks => {
-          $scope.$parent.sell(
-            { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
-            { accounts: banks },
-            { paymentAccount: accounts[0] },
-            { sell: true, isSweepTransaction: $scope.isSweepTransaction }
-          );
-        });
-      });
+      $scope.$parent.sell(
+        { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
+        { mediums: mediums },
+        { sell: true, isSweepTransaction: $scope.isSweepTransaction }
+      );
     });
     $scope.status = {};
     $timeout(() => {
@@ -132,8 +143,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       $scope.initializeCurrencyAndSymbol();
     }, 1000);
   };
-
-  $scope.getExchangeRate();
 
   $scope.request = modals.openOnce(() => {
     Alerts.clear();
@@ -190,7 +199,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.handleCurrencyClick = (curr) => {
     this.changeCurrency(curr);
     $scope.changeSymbol(curr);
-    $scope.getExchangeRate();
     $scope.getQuote();
   };
 
@@ -220,4 +228,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       $scope.error['moreThanInWallet'] = false;
     }
   });
+
+  $scope.getMinLimits = (quote) => {
+    console.log('getMinLimits');
+    buySell.getMinLimits(quote).then($scope.limits = buySell.limits);
+  };
+
+  $scope.getInitialExchangeRate();
 }

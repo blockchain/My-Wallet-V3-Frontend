@@ -2,24 +2,22 @@
   .modal-header.bc-modal-header.flex-between.flex-center()
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3.mlm(ng-if="onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
-        h3.mlm(ng-if="onStep('account')" translate="SELL.ADD_BANK_ACCOUNT")
-        h3.mlm(ng-if="onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
-        h3.mlm(ng-if="onStep('review') && !KYCState" ng-hide="onStep('review') && trade._state === 'completed'" translate="SELL.ORDER_PLACED")
-        h3.mlm(ng-if="onStep('review') && trade._state === 'completed'" translate="SELL.TRADE_COMPLETE")
-        h3.mlm(ng-if="onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
-        h3.mlm(ng-if="onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
-        h3.mlm(ng-if="onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
+        h3.mlm(ng-if="vm.onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
+        h3.mlm(ng-if="vm.onStep('account')" translate="SELL.ADD_BANK_ACCOUNT")
+        h3.mlm(ng-if="vm.onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
+        h3.mlm(ng-if="vm.onStep('review') && !KYCState" ng-hide="vm.onStep('review') && trade._state === 'completed'" translate="SELL.ORDER_PLACED")
+        h3.mlm(ng-if="vm.onStep('review') && trade._state === 'completed'" translate="SELL.TRADE_COMPLETE")
+        h3.mlm(ng-if="vm.onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
+        h3.mlm(ng-if="vm.onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
+        h3.mlm(ng-if="vm.onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
         .flex-column.flex-align-end
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
             
-  div.width-90(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
-    include ./coinify/email
-  div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
-    include ./coinify/signup
+  coinify-email(ng-if="vm.onStep('email')" on-complete="vm.goTo('accept-terms')" on-close="vm.close()" email="vm.user.email" verified="vm.user.isEmailVerified" rejected-email="vm.rejectedEmail")
+  div(ng-if="vm.onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
   sell-create-account(
-      ng-if="onStep('account')"
+      ng-if="vm.onStep('account')"
       tx-currency="vm.txCurrency"
       sepa-countries="vm.sepaCountries"
       country="vm.exchangeCountry"
@@ -28,7 +26,7 @@
       on-success="vm.onCreateBankSuccess(bankId)"
       close="vm.close()")
   sell-bank-link(
-      ng-if="onStep('bank-link')" 
+      ng-if="vm.onStep('bank-link')" 
       on-complete="vm.goTo('summary')" 
       accounts="vm.accounts" 
       transaction="vm.transaction" 
@@ -38,7 +36,7 @@
       new-account="vm.goTo('account')" 
       close="vm.close()")
   sell-summary(
-      ng-if="onStep('summary')"
+      ng-if="vm.onStep('summary')"
       sell-trade="trade"
       transaction="vm.transaction"
       sell="vm.sell()"
@@ -52,25 +50,8 @@
       on-success="vm.onSellSuccess(trade)"
       on-complete="vm.goTo('review')")
   sell-review(
-      ng-if="onStep('review')"
+      ng-if="vm.onStep('review')"
       sell-trade="vm.trade"
       completed-trade="vm.completedTrade"
       dismiss="vm.dismiss()"
     )
-  .modal-footer.flex-end.flex-row(ng-show="onStep('email') || onStep('accept-terms')")
-    .flex-1.flex-end(ng-hide="status.loading")
-      button.button-muted.mrm(ng-click="$close()" translate="CANCEL" ng-show="onStep('accept-terms') || onStep('email')")
-      button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
-      div
-        button.button-primary(
-          translate="CONTINUE"
-          ng-click="goTo('accept-terms')"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('email')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="acceptTerms()"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('accept-terms')")

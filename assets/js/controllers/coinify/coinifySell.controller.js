@@ -7,6 +7,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.user = Wallet.user;
+  this.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
   $scope.trade = trade;
@@ -21,14 +22,23 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     fee: { btc: null, fiat: null }
   };
 
+  this.quote = trade.quote;
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
-  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount.paymentAccount;
+  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
 
-  console.log('coinify sell ctrl', this);
+  // for signup controller - will be removed
+  this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
+  this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.refreshQuote = () => {
+    if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
+    else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
+  };
+
+  console.log('coinify sell ctrl', this, masterPaymentAccount, accounts);
 
   $scope.assignFiatCurrency = () => {
     if ($scope.trade._state) return;
@@ -59,7 +69,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     'review': 5,
     'isx': 6
   };
-  $scope.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
+  this.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
   this.goTo = (step) => $scope.step = $scope.steps[step];
 
   $scope.nextStep = () => {
@@ -71,9 +81,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
         this.goTo('email');
       } else if (!this.exchange.user) {
         this.goTo('accept-terms');
-      } else if (!this.accounts.accounts.length) {
+      } else if (!this.accounts) {
         this.goTo('account');
-      } else if (this.accounts.accounts.length) {
+      } else if (this.accounts.length) {
         this.goTo('bank-link');
       } else {
         this.goTo('summary');
@@ -84,7 +94,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.fields = { email: $scope.user.email };
 
   this.goToOrderHistory = () => {
-    if (($scope.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
+    if ((this.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
     } else {
       $uibModalInstance.dismiss('');
@@ -126,8 +136,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.close = () => {
     let index;
     if (!this.exchange.user) index = 0;
-    else if ($scope.onStep('account-info') || $scope.onStep('account-holder')) index = 1;
-    else if ($scope.onStep('summary')) index = 2;
+    else if (this.onStep('account-info') || this.onStep('account-holder')) index = 1;
+    else if (this.onStep('summary')) index = 2;
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
   };
 
@@ -169,7 +179,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     $scope.transaction.fiat = null;
   };
 
-  $scope.$watch('user.isEmailVerified', () => $scope.onStep('email') && $scope.nextStep());
+  $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });
+  $scope.$watch('user.isEmailVerified', () => this.onStep('email') && $scope.nextStep());
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
     if (!$scope.currencySymbol) {
       let curr = this.txCurrency || null;
