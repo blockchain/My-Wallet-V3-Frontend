@@ -11,5 +11,5 @@ form.modal-body.fade.clearfix(id="signupForm" name="signupForm" role="form" ng-s
     span.sent.mrs(translate="EMAIL_IN_USE" translate-values="{email: $ctrl.email}")
     span.primary.pointer(translate="CLICK_TO_CHANGE" ng-click="$ctrl.onError()")
 .modal-footer.flex-end.flex-row
-  button.button-muted.mrm(ng-click="onClose()" translate="CANCEL_ORDER")
+  button.button-muted.mrm(ng-click="$ctrl.onClose()" translate="CANCEL_ORDER")
   button.button-primary(type="submit" ng-disabled="!$ctrl.validEmail || signupForm.$invalid || $ctrl.locked" form="signupForm" translate="CONTINUE")

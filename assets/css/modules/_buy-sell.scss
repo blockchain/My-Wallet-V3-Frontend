@@ -17,6 +17,9 @@
       }
     }
   }
+  @media (max-width: 767px) {
+    padding: 10px 0px;
+  }
   &.loading {
     height: 100%;
     overflow: hidden;
