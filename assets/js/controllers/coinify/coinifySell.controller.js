@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
@@ -30,14 +30,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
 
-  // for signup controller - will be removed
-  this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
-  this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
-  this.refreshQuote = () => {
-    if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
-    else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
-  };
-
   console.log('coinify sell ctrl', this, masterPaymentAccount, accounts);
 
   $scope.assignFiatCurrency = () => {
@@ -59,6 +51,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
+  this.fiat = () => this.txCurrency;
 
   $scope.steps = {
     'email': 0,
@@ -77,7 +70,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
       this.goTo('review');
       return;
     } else {
-      if ((!$scope.user.isEmailVerified || $scope.rejectedEmail) && !this.exchange.user) {
+      if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
         this.goTo('email');
       } else if (!this.exchange.user) {
         this.goTo('accept-terms');
@@ -160,6 +153,28 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.onSellSuccess = (trade) => this.completedTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
 
+  this.state = { email: { valid: true } };
+
+  this.onEmailChange = (valid) => {
+    this.state.email.valid = valid;
+  };
+
+  this.onSignupComplete = () => {
+    this.quote.getPayoutMediums().then(mediums => {
+      mediums.bank.getAccounts().then(accounts => {
+        this.paymentAccount = accounts[0];
+        return accounts[0];
+      })
+      .then(account => {
+        account.getAll()
+          .then(banks => {
+            this.accounts = banks;
+            this.goTo('account');
+          });
+      });
+    });
+  };
+
   $scope.standardError = (err) => {
     console.log(err);
     try {
@@ -179,8 +194,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     $scope.transaction.fiat = null;
   };
 
-  $scope.$watch('vm.user.email', () => { this.rejectedEmail = false; });
-  $scope.$watch('user.isEmailVerified', () => this.onStep('email') && $scope.nextStep());
   $scope.$watch('currencySymbol', (newVal, oldVal) => {
     if (!$scope.currencySymbol) {
       let curr = this.txCurrency || null;

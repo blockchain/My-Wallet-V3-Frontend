@@ -68,7 +68,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     submitFeedback,
     tradeStateIn,
     cancelTrade,
-    states
+    states,
+    getPayoutAccounts,
+    getSellBankAccounts
   };
 
   return service;
@@ -249,6 +251,16 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
+  function getPayoutAccounts (mediums) {
+    return mediums.bank.getAccounts()
+      .then(accounts => accounts[0]);
+  }
+
+  function getSellBankAccounts (account) {
+    return account.getAll()
+      .then(banks => banks);
+  }
+
   function openSellView (trade, mediums, buySellOptions = { sell: true }) {
     let exchange = service.getExchange();
     return $uibModal.open({
@@ -261,18 +273,12 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       resolve: {
         trade: () => trade,
         masterPaymentAccount: () => {
-          if (exchange.profile) {
-            return mediums.mediums.bank.getAccounts().then(accounts => {
-              return accounts[0];
-            });
-          }
+          if (exchange.profile) return service.getPayoutAccounts(mediums);
         },
         accounts: () => {
           if (exchange.profile) {
-            return mediums.mediums.bank.getAccounts().then(accounts => {
-              return accounts[0].getAll().then(banks => {
-                return banks;
-              });
+            return mediums.bank.getAccounts().then(accounts => {
+              return service.getSellBankAccounts(accounts[0]);
             });
           }
         },

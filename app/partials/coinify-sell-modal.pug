@@ -14,8 +14,24 @@
           .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
             span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
             
-  coinify-email(ng-if="vm.onStep('email')" on-complete="vm.goTo('accept-terms')" on-close="vm.close()" email="vm.user.email" verified="vm.user.isEmailVerified" rejected-email="vm.rejectedEmail")
-  div(ng-if="vm.onStep('accept-terms')" ng-controller="CoinifySignupController" ng-include="'partials/coinify/signup.pug'")
+  coinify-email(
+      ng-if="vm.onStep('email')"
+      on-complete="vm.goTo('accept-terms')"
+      on-close="vm.close()"
+      email="vm.user.email"
+      valid-email="vm.state.email.valid"
+      verified="vm.user.isEmailVerified"
+      on-email-change="vm.onEmailChange(true)"
+      rejected-email="vm.rejectedEmail")
+  coinify-signup(
+      ng-if="vm.onStep('accept-terms')"
+      on-complete="vm.onSignupComplete()"
+      on-error="vm.goTo('email')"
+      on-close="vm.close()"
+      email="vm.user.email"
+      valid-email="vm.state.email.valid"
+      on-email-change="vm.onEmailChange(false)"
+      fiat-currency="vm.fiat()")
   sell-create-account(
       ng-if="vm.onStep('account')"
       tx-currency="vm.txCurrency"
@@ -50,5 +66,4 @@
       ng-if="vm.onStep('review')"
       sell-trade="vm.trade"
       completed-trade="vm.completedTrade"
-      dismiss="vm.dismiss()"
-    )
+      dismiss="vm.dismiss()")

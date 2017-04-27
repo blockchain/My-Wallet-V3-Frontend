@@ -18,8 +18,14 @@ angular
 function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
   this.bankAccount = {
     account: { currency: this.txCurrency },
-    bank: { name: null, address: { country: this.country, street: null, city: null, zipcode: null } },
-    holder: { name: null, address: { country: this.country.code, street: null, city: null, zipcode: null, state: null } }
+    bank: {
+      name: null,
+      address: { country: this.country, street: null, city: null, zipcode: null }
+    },
+    holder: {
+      name: null,
+      address: { country: this.country, street: null, city: null, zipcode: null, state: null }
+    }
   };
 
   this.status = {};

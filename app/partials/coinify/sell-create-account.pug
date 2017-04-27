@@ -19,10 +19,9 @@
                   input.form-control(
                     type="text"
                     ng-model="$ctrl.bankAccount.account.number"
-                    ng-change="setParentError(); $ctrl.turnOffIbanError(); $ctrl.formatIban()"
+                    ng-change="setParentError(); $ctrl.turnOffIbanError(); $ctrl.bankAccount.account.number && $ctrl.formatIban()"
                     name="bankIban"
                     tabindex="1"
-                    placeholder=""
                     ng-class="{'input-error': $ctrl.ibanError}"
                     required)
               .form-group.flex-column.width-100
@@ -31,10 +30,8 @@
                   input.form-control(
                     type="text"
                     ng-model="$ctrl.bankAccount.account.bic"
-                    ng-change="setParentError()"
                     name="bankBic"
                     tabindex="1"
-                    placeholder=""
                     required)
             //- form for Danish accounts
             .input-group.width-90(ng-show="$ctrl.showDanish")
@@ -44,10 +41,8 @@
                   input.form-control(
                     type="text"
                     ng-model="$ctrl.bankAccount.account.number"
-                    ng-change="setParentError()"
                     name="bankNumber"
                     tabindex="1"
-                    placeholder=""
                     required)
               .form-group.flex-column.width-100
                 label.control-label(translate="SELL.REG")
@@ -55,10 +50,8 @@
                   input.form-control(
                     type="text"
                     ng-model="$ctrl.bankAccount.account.bic"
-                    ng-change="setParentError()"
                     name="bankReg"
                     tabindex="1"
-                    placeholder=""
                     required)  
         div(ng-if="!$ctrl.viewInfo")  
           span.f-14.pb-30(translate="SELL.WHO_OWNS")
@@ -68,10 +61,8 @@
               input.form-control(
                 type="text"
                 ng-model="$ctrl.bankAccount.holder.name"
-                ng-change="setParentError()"
                 name="holderName"
                 tabindex="1"
-                placeholder=""
                 required)
           .form-group.flex-column.width-100
             label.control-label(translate="SELL.HOLDER_STREET")
@@ -79,10 +70,8 @@
               input.form-control(
                 type="text"
                 ng-model="$ctrl.bankAccount.holder.address.street"
-                ng-change="setParentError()"
                 name="holderStreet"
                 tabindex="1"
-                placeholder=""
                 required)
           .form-group.flex-row.flex-between.width-100
             div.width-45
@@ -91,10 +80,8 @@
                 input.form-control(
                   type="text"
                   ng-model="$ctrl.bankAccount.holder.address.city"
-                  ng-change="setParentError()"
                   name="holderCity"
                   tabindex="1"
-                  placeholder=""
                   required)
             div.width-45
               label.control-label(translate="SELL.HOLDER_POSTAL")
@@ -102,10 +89,8 @@
                 input.form-control(
                   type="text"
                   ng-model="$ctrl.bankAccount.holder.address.zipcode"
-                  ng-change="setParentError()"
                   name="bankZip"
                   tabindex="1"
-                  placeholder=""
                   required)
           .form-group.flex-row.flex-between.width-100.mbn
             div.width-45.width-45-mobile.width-45-tablet
