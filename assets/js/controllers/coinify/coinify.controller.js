@@ -70,7 +70,8 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   $scope.getQuoteHelper = () => {
     if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
     else if (this.quote) return 'AUTO_REFRESH';
-    else if (this.trade) return 'EST_QUOTE_2';
+    else if (this.trade) return 'RATE_WILL_EXPIRE';
+    else if (this.trade.expired) return 'EST_QUOTE_2';
     else return 'RATE_WILL_EXPIRE';
   };
 
