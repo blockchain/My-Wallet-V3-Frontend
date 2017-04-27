@@ -273,10 +273,10 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       resolve: {
         trade: () => trade,
         masterPaymentAccount: () => {
-          if (exchange.profile) return service.getPayoutAccounts(mediums);
+          if (exchange.profile && !trade.state) return service.getPayoutAccounts(mediums);
         },
         accounts: () => {
-          if (exchange.profile) {
+          if (exchange.profile && !trade.state) {
             return mediums.bank.getAccounts().then(accounts => {
               return service.getSellBankAccounts(accounts[0]);
             });

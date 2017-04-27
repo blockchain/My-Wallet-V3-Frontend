@@ -67,6 +67,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.nextStep = () => {
     if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
+      this.sellTrade = this.trade;
       this.goTo('review');
       return;
     } else {
@@ -115,7 +116,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     return {transaction: $scope.transaction, payment: $scope.payment};
   };
 
-  $scope.cancel = () => {
+  this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     $scope.reset();
@@ -129,8 +130,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.close = () => {
     let index;
     if (!this.exchange.user) index = 0;
-    else if (this.onStep('account-info') || this.onStep('account-holder')) index = 1;
-    else if (this.onStep('summary')) index = 2;
+    else if (this.onStep('account')) index = 1;
+    else if (this.onStep('sell-summary')) index = 2;
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
   };
 
@@ -150,7 +151,10 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   this.onCreateBankSuccess = (bankId) => this.bankId = bankId;
-  this.onSellSuccess = (trade) => this.completedTrade = trade;
+  this.onSellSuccess = (trade) => {
+    console.log('onSellSuccess', trade);
+    this.sellTrade = trade;
+  }
   this.dismiss = () => $uibModalInstance.dismiss('');
 
   this.state = { email: { valid: true } };

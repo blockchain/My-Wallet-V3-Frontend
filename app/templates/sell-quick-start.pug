@@ -98,7 +98,7 @@
               popup-days="{{$ctrl.getDays()}}"
               popup-name="coinify-verification"
               translate="WHY")
-      .flex-row.mt-5(ng-hide="")
+      .flex-row.mt-5(ng-hide="$ctrl.tradingDisabled")
         div.pos-abs(ng-hide="!exchange._user || error.moreThanInWallet || tradingDisabled || fiatForm.fiat.$error.min || fiatForm.fiat.$error.max")
           span(translate="SELL.MAX_DAILY")
           | &nbsp;
@@ -106,4 +106,4 @@
           | &nbsp;
           a(ng-click="$ctrl.onTrigger()" ng-hide="hideIncreaseLimit") Increase my limit
       .flex-end.pos-rel.mt-30
-        button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled || error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")
+        button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || $ctrl.status.busy || $ctrl.tradingDisabled || error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")

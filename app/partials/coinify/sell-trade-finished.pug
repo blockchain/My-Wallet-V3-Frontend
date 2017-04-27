@@ -59,9 +59,9 @@
         span {{ $ctrl.sellTrade._bankAccountNumber }}
       .flex-row.flex-between.pvm
         span.colon(translate="SELL.CREDIT_ISSUED")
-        span {{ $ctrl.creditIssued }} {{ $ctrl.sellTrade._outCurrency }}
+        span {{ $ctrl.creditIssued }}
     .mvm
-      span.f-12(translate="SELL.PLEASE_NOTE_BANK_POLICIES")
+      span.f-12(ng-show="$ctrl.showNote()" translate="SELL.PLEASE_NOTE_BANK_POLICIES")
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end
     button.button-primary(translate="CLOSE" ng-click="$ctrl.dismiss()")
