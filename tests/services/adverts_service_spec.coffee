@@ -23,7 +23,7 @@ describe "AdvertsServices", () ->
   describe "fetch()", ->
     beforeEach ->
       rootScope.apiDomain = "https://api.blockchain.info/"
-      $httpBackend.expectGET("https://api.blockchain.info/ads/get?wallet=true&n=2").respond sampleAds
+      $httpBackend.expectGET("https://api.blockchain.info/bci-ads/get?wallet=true&n=2").respond sampleAds
 
       Adverts.fetch()
 
@@ -47,7 +47,7 @@ describe "AdvertsServices", () ->
   describe "bad ads fetch()", ->
     beforeEach ->
       rootScope.apiDomain = "https://api.blockchain.info/"
-      $httpBackend.expectGET("https://api.blockchain.info/ads/get?wallet=true&n=2").respond sampleBadAds
+      $httpBackend.expectGET("https://api.blockchain.info/bci-ads/get?wallet=true&n=2").respond sampleBadAds
 
       Adverts.fetch()
 
