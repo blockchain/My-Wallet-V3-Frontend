@@ -1379,7 +1379,8 @@
     "HOLDER_NAME": "Account Holder's Full Name",
     "HOLDER_STREET": "Street and Number",
     "HOLDER_CITY": "City",
-    "HOLDER_POSTAL": "Postal Code"
+    "HOLDER_POSTAL": "Postal Code",
+    "SELL_BITCOIN": "Sell bitcoin"
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",

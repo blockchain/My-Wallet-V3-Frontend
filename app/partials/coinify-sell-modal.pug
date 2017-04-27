@@ -1,19 +1,9 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="SellModal")
-  .modal-header.bc-modal-header.flex-between.flex-center()
+  //- .modal-header.bc-modal-header.flex-between.flex-center()
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
         h3(ng-if="vm.onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
-        h3(ng-if="vm.onStep('account')" translate="SELL.ADD_BANK_ACCOUNT")
-        h3(ng-if="vm.onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
-        h3(ng-if="vm.onStep('review') && !KYCState" ng-hide="vm.onStep('review') && trade._state === 'completed'" translate="SELL.ORDER_PLACED")
-        h3(ng-if="vm.onStep('review') && trade._state === 'completed'" translate="SELL.TRADE_COMPLETE")
-        h3(ng-if="vm.onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
         h3(ng-if="vm.onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
-        h3(ng-if="vm.onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
-        .flex-column.flex-align-end
-          .flex-row.type-h5.em-500(ng-hide="vm.onStep('review') || vm.onStep('isx')")
-            span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
-            
   coinify-email(
       ng-if="vm.onStep('email')"
       on-complete="vm.goTo('accept-terms')"
@@ -34,9 +24,9 @@
       fiat-currency="vm.fiat()")
   sell-create-account(
       ng-if="vm.onStep('account')"
-      tx-currency="vm.txCurrency"
       sepa-countries="vm.sepaCountries"
       country="vm.exchangeCountry"
+      transaction="vm.transaction"
       payment-account="vm.paymentAccount"
       on-complete="vm.goTo('summary')"
       on-success="vm.onCreateBankSuccess(bankId)"
@@ -44,7 +34,8 @@
   sell-bank-link(
       ng-if="vm.onStep('bank-link')" 
       on-complete="vm.goTo('summary')" 
-      accounts="vm.accounts" 
+      accounts="vm.accounts"
+      transaction="vm.transaction"
       payment-account="vm.paymentAccount"
       selected-bank-account="vm.selectedBankAccount" 
       select-account="vm.selectAccount(account)" 

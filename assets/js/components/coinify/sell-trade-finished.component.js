@@ -11,6 +11,7 @@ angular
   });
 
 function CoinifySellTradeFinishedController (currency) {
+  this.title = 'SELL.SELL_BITCOIN';
   this.dateFormat = 'd MMMM yyyy, HH:mm';
 
   if (this.sellTrade.state === 'completed' ||

@@ -5,6 +5,7 @@ angular
       accounts: '<',
       selectedBankAccount: '<',
       paymentAccount: '<',
+      transaction: '<',
       onComplete: '&',
       newAccount: '&',
       close: '&',
@@ -16,6 +17,7 @@ angular
   });
 
 function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
+  this.title = 'SELL.LINKED_ACCOUNTS';
   this.banks = this.accounts;
   if (!this.banks.length) this.hideWhenNoAccounts = true;
   this.selecting = true;

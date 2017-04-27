@@ -4,7 +4,7 @@ angular
     bindings: {
       country: '<',
       sepaCountries: '<',
-      txCurrency: '<',
+      transaction: '<',
       paymentAccount: '<',
       close: '&',
       onComplete: '&',
@@ -16,8 +16,9 @@ angular
   });
 
 function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
+  this.title = 'SELL.ADD_BANK_ACCOUNT';
   this.bankAccount = {
-    account: { currency: this.txCurrency },
+    account: { currency: this.transaction.currency.code },
     bank: {
       name: null,
       address: { country: this.country, street: null, city: null, zipcode: null }
@@ -30,7 +31,7 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
 
   this.status = {};
   this.viewInfo = true;
-  if (this.country === 'DK' && this.txCurrency === 'DKK') this.showDanish = true;
+  if (this.country === 'DK' && this.transaction.currency.code === 'DKK') this.showDanish = true;
 
   this.switchView = () => this.viewInfo = !this.viewInfo;
 

@@ -20,6 +20,7 @@ angular
 
 function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Alerts, $timeout) {
   console.log('summary component', this);
+  this.title = 'SELL.CONFIRM_SELL_ORDER';
 
   this.sellRateForm;
 
