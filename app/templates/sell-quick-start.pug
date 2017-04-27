@@ -20,7 +20,7 @@
               prevent-event="mousewheel"
               tabindex="1"
               min="0.00000001"
-              ng-change="updateLastInput('btc'); getQuote();"
+              ng-change="updateLastInput('btc'); $ctrl.transaction.btc && getQuote();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
               ng-class="{'input-error': error.moreThanInWallet}"
@@ -36,7 +36,7 @@
               name="fiat"
               tabindex="1"
               focus-when="status.ready"
-              ng-change="updateLastInput('fiat'); transaction.fiat && getQuote();"
+              ng-change="updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
               min="{{limits.absoluteMin(transaction.currency.code)}}"
@@ -52,7 +52,7 @@
               ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
                 li(ng-repeat="currency in currencies"
                    role="menuitem"
-                   ng-click="handleCurrencyClick({currency: currency})"
+                   ng-click="handleCurrencyClick({currency: currency}); getQuote();"
                    ng-class="{active: isCurrencySelected(currency)}")
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
         .mts.pos-rel.mb-10.mtm.pbl(ng-show="showZeroBalance")
@@ -67,12 +67,12 @@
           a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
         .pos-rel.mt-10(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.bank.min[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !error.moreThanInWallet" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.max[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-        .mtm.pos-rel(ng-show="error.moreThanInWallet && !fiatForm.fiat.$error.min")
-          span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
-          span.pos-abs.state-danger-text(ng-show="error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !$ctrl.error.moreThanInWallet" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.max[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
+        .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet && !fiatForm.fiat.$error.min")
+          span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
+          span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS")
           br
-          a.pos-abs.type-sm(ng-show="error.moreThanInWallet" ng-click="useAll()" translate="SELL.SELL_ALL")
+          a.pos-abs.type-sm(ng-show="$ctrl.error.moreThanInWallet" ng-click="useAll()" translate="SELL.SELL_ALL")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
           span.pos-abs.type-sm
             span.state-danger-text(translate="TRADING_IS_DISABLED")
@@ -99,11 +99,11 @@
               popup-name="coinify-verification"
               translate="WHY")
       .flex-row.mt-5(ng-hide="$ctrl.tradingDisabled")
-        div.pos-abs(ng-hide="!exchange._user || error.moreThanInWallet || tradingDisabled || fiatForm.fiat.$error.min || fiatForm.fiat.$error.max")
+        div.pos-abs(ng-hide="!exchange._user || $ctrl.error.moreThanInWallet || $ctrl.tradingDisabled || fiatForm.fiat.$error.min || fiatForm.fiat.$error.max")
           span(translate="SELL.MAX_DAILY")
           | &nbsp;
           span {{limitsCurrencySymbol.symbol}}{{sellLimit}}.
           | &nbsp;
           a(ng-click="$ctrl.onTrigger()" ng-hide="hideIncreaseLimit") Increase my limit
       .flex-end.pos-rel.mt-30
-        button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || $ctrl.status.busy || $ctrl.tradingDisabled || error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")
+        button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || $ctrl.status.busy || $ctrl.tradingDisabled || $ctrl.error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")

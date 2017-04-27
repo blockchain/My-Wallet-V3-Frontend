@@ -199,7 +199,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.handleCurrencyClick = (curr) => {
     this.changeCurrency(curr);
     $scope.changeSymbol(curr);
-    $scope.getQuote();
   };
 
   $scope.multipleAccounts = () => Wallet.accounts().length > 1;

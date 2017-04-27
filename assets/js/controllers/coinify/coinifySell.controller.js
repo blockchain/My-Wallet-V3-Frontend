@@ -22,7 +22,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     fee: { btc: null, fiat: null }
   };
 
-  this.quote = trade.quote;
+  this.quote = trade.qusote;
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
   if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
@@ -197,12 +197,4 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     $scope.transaction.btc = null;
     $scope.transaction.fiat = null;
   };
-
-  $scope.$watch('currencySymbol', (newVal, oldVal) => {
-    if (!$scope.currencySymbol) {
-      let curr = this.txCurrency || null;
-      $scope.currencySymbol = currency.conversions[curr.code];
-    }
-    if (!newVal) return;
-  });
 }
