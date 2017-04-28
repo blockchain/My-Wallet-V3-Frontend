@@ -7,6 +7,8 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.buySellDebug = env.buySellDebug;
   });
 
+  let now = () => new Date().getTime();
+
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -20,6 +22,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
   this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.timeToExpiration = () => this.quote ? this.quote.expiresAt - now() : this.trade.expiresAt - now();
   this.refreshQuote = () => {
     if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
     else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
@@ -70,8 +73,8 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   $scope.getQuoteHelper = () => {
     if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
     else if (this.quote) return 'AUTO_REFRESH';
-    else if (this.trade) return 'RATE_WILL_EXPIRE';
     else if (this.trade.expired) return 'EST_QUOTE_2';
+    else if (this.trade) return 'RATE_WILL_EXPIRE';
     else return 'RATE_WILL_EXPIRE';
   };
 
