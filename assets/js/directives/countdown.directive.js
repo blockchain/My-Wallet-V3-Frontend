@@ -36,6 +36,5 @@ function countdown ($interval) {
     }, 1000);
 
     scope.$on('$destroy', scope.cancelCounter);
-    scope.$watch()
   }
 }
