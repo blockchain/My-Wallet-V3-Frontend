@@ -27,6 +27,9 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
     else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
   };
+  this.expireTrade = () => {
+    return $q.resolve(this.state.trade.expired = true);
+  };
 
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
