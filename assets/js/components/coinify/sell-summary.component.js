@@ -54,11 +54,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
     if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-    if (msgText.indexOf('Transaction Already Exists') > -1) {
-      $uibModalInstance.close();
-    } else {
-      Alerts.displayError(msgText, false, this.alerts);
-    }
+    Alerts.displayError(msgText, false, this.alerts);
   };
 
   const transactionSucceeded = (tx) => {
@@ -111,14 +107,14 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     this.paymentAccount.sell(this.bankId)
       .then(handleSellResult)
       .then(() => {
-        // Wallet.askForSecondPasswordIfNeeded()
-        //   .then(signAndPublish)
-        //   .then(transactionSucceeded)
-        //   .catch(handleError);
+        Wallet.askForSecondPasswordIfNeeded()
+          .then(signAndPublish)
+          .then(transactionSucceeded)
+          .catch(handleError);
 
         // for when sending btc is disabled
-        this.waiting = false;
-        this.onComplete();
+        // this.waiting = false;
+        // this.onComplete();
       })
       .catch(handleBadRequest);
   };
