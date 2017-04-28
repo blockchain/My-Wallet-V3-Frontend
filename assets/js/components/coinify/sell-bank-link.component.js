@@ -18,15 +18,13 @@ angular
 
 function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
   this.title = 'SELL.LINKED_ACCOUNTS';
-  this.banks = this.accounts;
-  if (!this.banks.length) this.hideWhenNoAccounts = true;
+  if (!this.accounts.length) this.hideWhenNoAccounts = true;
   this.selecting = true;
   this.bankLinkEdit = () => this.selecting = !this.selecting;
 
-  const handleAccountDelete = (account) => {
-    let accounts = this.banks;
-    for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i]['_account']['id'] === account['id']) accounts.splice(i, 1);
+  this.handleAccountDelete = (account) => {
+    for (let i = 0; i < this.accounts.length; i++) {
+      if (this.accounts[i]['id'] === account['id']) this.accounts.splice(i, 1);
     }
     this.selecting = false;
     this.bankLinkEdit();
@@ -39,11 +37,11 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
     Alerts.confirm('CONFIRM_DELETE_BANK')
       .then(() => {
         this.paymentAccount.delete(account.id)
-        .then(handleAccountDelete(account))
+        .then(this.handleAccountDelete(account))
         .catch(e => console.error('Error deleting bank', e));
       });
   };
 
   this.$onChanges = (changes) => this.selectedBankAccount = changes.selectedBankAccount.currentValue;
-  this.isDisabled = () => !this.selectedBankAccount || !this.banks.length || !this.selecting;
+  this.isDisabled = () => !this.selectedBankAccount || !this.accounts.length || !this.selecting;
 }
