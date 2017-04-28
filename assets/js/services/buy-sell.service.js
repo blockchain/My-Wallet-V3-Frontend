@@ -262,7 +262,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function openSellView (trade, mediums, payment, buySellOptions = { sell: true }) {
-    console.log('openSellView', payment)
+    console.log('openSellView', payment);
     let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
