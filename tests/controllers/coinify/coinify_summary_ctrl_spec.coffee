@@ -5,6 +5,8 @@ describe "CoinifySummaryController", ->
   $rootScope = undefined
   $controller = undefined
   buySell = undefined
+  Alerts = undefined
+  validBuy = true
 
   mediums =
     'card':
@@ -33,6 +35,7 @@ describe "CoinifySummaryController", ->
       $q = _$q_
 
       Wallet = $injector.get("Wallet")
+      Alerts = $injector.get("Alerts")
       buySell = $injector.get("buySell")
       
       buySell.limits =
@@ -51,9 +54,11 @@ describe "CoinifySummaryController", ->
         getBuyQuote: () ->
       }
       
+      buySell.getQuote = () -> $q.resolve(quote)
+      
       buySell.accounts = [
         {
-          buy: () -> $q.resolve(trade)
+          buy: () -> if validBuy then $q.resolve(trade) else $q.reject({error_description: 'Error'})
         }
       ]
 
@@ -83,6 +88,11 @@ describe "CoinifySummaryController", ->
       spyOn(scope, 'lock')
       scope.commitValues()
       expect(scope.lock).toHaveBeenCalled()
+      
+    it "should set a new quote", ->
+      scope.commitValues()
+      scope.$digest()
+      expect(scope.vm.quote).toBe(quote)
 
   describe ".buy()", ->
     
@@ -96,4 +106,11 @@ describe "CoinifySummaryController", ->
       scope.$digest()
       expect(scope.vm.quote).toBe(null)
       expect(scope.vm.trade).toBe(trade)
+    
+    it "should display an error", ->
+      spyOn(Alerts, 'displayError')
+      validBuy = false
+      scope.buy()
+      scope.$digest()
+      expect(Alerts.displayError).toHaveBeenCalled()
       

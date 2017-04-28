@@ -14,6 +14,10 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
 
+  let tryParse = (json) => {
+    try { return JSON.parse(json); } catch (e) { return json; }
+  };
+
   let setTrade = () => {
     let { quote, fiatCurrency, fiatAmount, BTCAmount } = $scope.vm;
     $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
@@ -60,7 +64,10 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
                                   .then(success)
                                   .then(() => $scope.vm.goTo('isx'))
                                   .then(() => $scope.vm.watchAddress())
-                                  .catch((e) => Alerts.displayError(JSON.parse(e).error_description));
+                                  .catch((err) => {
+                                    err = tryParse(err);
+                                    if (err.error_description) Alerts.displayError(err.error_description);
+                                  });
   };
 
   $scope.$watch('rateForm', () => {
