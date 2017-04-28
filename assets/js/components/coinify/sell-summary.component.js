@@ -54,11 +54,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
     if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-    if (msgText.indexOf('Transaction Already Exists') > -1) {
-      $uibModalInstance.close();
-    } else {
-      Alerts.displayError(msgText, false, this.alerts);
-    }
+    Alerts.displayError(msgText, false, this.alerts);
   };
 
   const transactionSucceeded = (tx) => {
