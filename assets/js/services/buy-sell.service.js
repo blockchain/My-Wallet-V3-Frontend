@@ -261,7 +261,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       .then(banks => banks);
   }
 
-  function openSellView (trade, mediums, buySellOptions = { sell: true }) {
+  function openSellView (trade, mediums, payment, buySellOptions = { sell: true }) {
+    console.log('openSellView', payment)
     let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
@@ -283,7 +284,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
           }
         },
         buySellOptions: () => buySellOptions,
-        options: () => Options.get()
+        options: () => Options.get(),
+        payment: () => payment || undefined
       }
     }).result;
   }

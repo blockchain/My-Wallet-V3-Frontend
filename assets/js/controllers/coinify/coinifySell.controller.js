@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount, payment) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
@@ -25,12 +25,13 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.quote = trade.quote;
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
-  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
   this.accounts = accounts;
   this.trade = trade;
   this.sepaCountries = country.sepaCountryCodes;
+  this.payment = payment;
+  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
 
-  console.log('coinify sell ctrl', this, masterPaymentAccount, accounts);
+  console.log('coinify sell ctrl', this);
 
   $scope.assignFiatCurrency = () => {
     if (this.trade._state) return;
@@ -88,7 +89,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.fields = { email: $scope.user.email };
 
   this.goToOrderHistory = () => {
-    if ((this.onStep('review') && $scope.sellTrade) && $state.params.selectedTab !== 'ORDER_HISTORY') {
+    if ((this.onStep('review')) && $state.params.selectedTab !== 'ORDER_HISTORY') {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
     } else {
       $uibModalInstance.dismiss('');
@@ -97,22 +98,13 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.startPayment = () => {
     if (this.trade._state) return;
-    const index = Wallet.getDefaultAccountIndex();
-    $scope.payment = Wallet.my.wallet.createPayment();
-    const tradeInSatoshi = currency.convertToSatoshi(this.transaction.btc, currency.bitCurrencies[0]);
-    $scope.payment.from(index).amount(tradeInSatoshi);
-
-    $scope.payment.sideEffect(result => {
-      console.log('sideEffect', result);
-      let firstBlockFee = result.absoluteFeeBounds[0];
-      if ($scope.isSweepTransaction) {
-        firstBlockFee = result.sweepFee;
-      }
-      $scope.payment.fee(firstBlockFee);
-      this.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
-      this.transaction.btcAfterFee = parseFloat((this.transaction.btc + this.transaction.fee.btc).toFixed(8));
-    });
-    return {transaction: this.transaction, payment: $scope.payment};
+    let firstBlockFee = this.payment.absoluteFeeBounds[0];
+    if ($scope.isSweepTransaction) firstBlockFee = this.payment.sweepFees[0];
+    this.finalPayment = Wallet.my.wallet.createPayment(this.payment);
+    this.finalPayment.fee(firstBlockFee);
+    this.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
+    this.transaction.btcAfterFee = parseFloat((this.transaction.btc + this.transaction.fee.btc).toFixed(8));
+    return {transaction: this.transaction};
   };
 
   this.cancel = () => {
@@ -131,14 +123,11 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     if (!this.exchange.user) index = 0;
     else if (this.onStep('account')) index = 1;
     else if (this.onStep('sell-summary')) index = 2;
-    Alerts.surveyCloseConfirm('survey-opened', links, index, true).then($scope.cancel);
+    Alerts.surveyCloseConfirm('survey-opened', links, index, true).then(this.cancel);
   };
 
   let startedPayment = $scope.startPayment();
-  if (startedPayment) {
-    this.transaction = Object.assign(this.transaction, startedPayment.transaction);
-    this.payment = startedPayment.payment;
-  }
+  if (startedPayment) this.transaction = Object.assign(this.transaction, startedPayment.transaction);
 
   if (!$scope.step) {
     $scope.nextStep();

@@ -134,6 +134,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       $scope.$parent.sell(
         { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
         { bank: mediums.bank },
+        $scope.payment,
         { sell: true, isSweepTransaction: $scope.isSweepTransaction }
       );
     });
@@ -162,12 +163,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     if (!this.transaction || !this.transaction.btc || $scope.isSweepTransaction) return;
     let tradeInSatoshi = currency.convertToSatoshi(this.transaction.btc, currency.bitCurrencies[0]);
     let index = Wallet.getDefaultAccountIndex();
-    let pmt = Wallet.my.wallet.createPayment();
-    pmt.from(index).amount(tradeInSatoshi);
-    pmt.sideEffect(r => {
+    $scope.payment = Wallet.my.wallet.createPayment();
+    $scope.payment.from(index).amount(tradeInSatoshi);
+    $scope.payment.sideEffect(r => {
       if (r.absoluteFeeBounds[0] === 0) {
-        this.error['moreThanInWallet'] = true;
-        $scope.offerUseAll();
+        $scope.offerUseAll($scope.payment, r);
       } else {
         this.status = {};
       }
@@ -179,21 +179,13 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     buySell.cancelTrade(this.pendingTrade).finally(() => $scope.disabled = false);
   };
 
-  $scope.offerUseAll = () => {
+  $scope.offerUseAll = (payment, paymentInfo) => {
+    this.error['moreThanInWallet'] = true;
     this.status.busy = true;
-    $scope.payment = Wallet.my.wallet.createPayment();
-
-    const index = Wallet.getDefaultAccountIndex();
-    $scope.payment.from(index);
-
-    $scope.payment.sideEffect(result => {
-      $scope.sweepAmount = result.sweepAmount;
-      this.status = {};
-      return result;
-    })
-    .then((paymentData) => {
-      $scope.payment.useAll(paymentData.sweepFee);
-    });
+    $scope.payment = Wallet.my.wallet.createPayment(payment);
+    $scope.maxSpendableAmount = paymentInfo.maxSpendableAmounts[0];
+    let maxSweepFee = paymentInfo.sweepFees[0];
+    $scope.payment.amount($scope.maxSpendableAmount).fee(maxSweepFee);
   };
 
   $scope.handleCurrencyClick = (curr) => {
@@ -204,7 +196,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.multipleAccounts = () => Wallet.accounts().length > 1;
 
   $scope.useAll = () => {
-    this.transaction.btc = $scope.sweepAmount / 100000000;
+    this.transaction.btc = currency.convertFromSatoshi($scope.maxSpendableAmount, currency.bitCurrencies[0]);
     $scope.isSweepTransaction = true;
     this.status.busy = true;
     buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
@@ -218,7 +210,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
     if (newVal >= $scope.totalBalance) {
       this.error['moreThanInWallet'] = true;
-      $scope.offerUseAll();
+      $scope.checkForNoFee();
     } else if (newVal < $scope.totalBalance) {
       $scope.checkForNoFee();
       this.error['moreThanInWallet'] = false;
