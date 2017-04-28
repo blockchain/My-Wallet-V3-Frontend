@@ -52,6 +52,9 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.state = {
     email: {
       valid: true
+    },
+    trade: {
+      expired: this.trade && this.trade.expiresAt - now() < 1
     }
   };
 
@@ -73,7 +76,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   $scope.getQuoteHelper = () => {
     if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
     else if (this.quote) return 'AUTO_REFRESH';
-    else if (this.trade.expired) return 'EST_QUOTE_2';
+    else if (this.state.trade.expired) return 'EST_QUOTE_2';
     else if (this.trade) return 'RATE_WILL_EXPIRE';
     else return 'RATE_WILL_EXPIRE';
   };
