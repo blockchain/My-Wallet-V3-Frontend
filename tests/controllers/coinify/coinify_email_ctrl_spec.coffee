@@ -18,7 +18,8 @@ describe "CoinifyEmailComponentController", ->
 
       bindings =
         email: "test@example.com"
-        verified: false
+        verified: false,
+        validEmail: true,
         onComplete: jasmine.createSpy('onComplete')
 
       Wallet = $injector.get("Wallet")
