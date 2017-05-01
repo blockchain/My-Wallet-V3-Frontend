@@ -27,7 +27,7 @@
                         get-days="getDays()"
                         buy="buy(quote)")
         .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
-          kyc-status(state="kyc.state" on-trigger="openKyc()" limits="limits")
+          kyc-status(state="kyc.state" on-trigger="openKyc()" currency="transaction.currency")
       div(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
         //- SELL
         sell-quick-start(transaction="sellTransaction"

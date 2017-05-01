@@ -9,6 +9,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     awaiting_transfer_in,
     confirm,
     reviewing,
+    pending,
     processing,
     cancelled,
     rejected,
@@ -45,6 +46,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   function expired (trade) { return service.error(trade); }
   function completed (trade) { return service.success(trade); }
   function completed_test (trade) { return service.success(trade); }
+  function pending (trade) { return service.reviewing(trade); }
 
   let addTradeDetails = (trade, account) => {
     let showTradeID = !account;

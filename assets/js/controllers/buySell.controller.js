@@ -116,7 +116,7 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     $scope.openKyc = () => {
       ['declined', 'rejected', 'expired'].indexOf($scope.kyc.state) > -1
         ? buySell.triggerKYC().then(kyc => $scope.buy(kyc))
-        : $scope.buy($scope.kyc);
+        : $scope.buy(null, $scope.kyc);
     };
 
     $scope.openSellKyc = () => {
