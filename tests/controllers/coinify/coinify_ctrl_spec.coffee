@@ -84,6 +84,15 @@ describe "CoinifyController", ->
     
     it "should return fiat currency", ->
       expect(ctrl.fiatCurrency()).toBe('USD')
+      
+  describe ".expireTrade()", ->
+    ctrl = undefined
+    beforeEach -> ctrl = getController(quote)
+    
+    it "should expire the trade", ->
+      ctrl.expireTrade()
+      $rootScope.$digest()
+      expect(ctrl.state.trade.expired).toBe(true)
   
   describe ".timeToExpiration()", ->
     ctrl = undefined
@@ -118,15 +127,6 @@ describe "CoinifyController", ->
       ctrl.expireTrade()
       $rootScope.$digest()
       expect(ctrl.state.trade.expired).toBe(true)
-      
-  # describe ".close()", ->
-  #   ctrl = undefined
-  #   beforeEach -> ctrl = getController(quote, null, options)
-  #   
-  #   it "should open survey", ->
-  #     spyOn(Alerts, 'surveyCloseConfirm')
-  #     ctrl.close()
-  #     expect(Alerts.surveyCloseConfirm).toHaveBeenCalled()
   
   describe ".goTo()", ->
     ctrl = undefined
