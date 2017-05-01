@@ -41,7 +41,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
       $scope.assignFiatHelper('quoteCurrency');
     }
   };
-
   $scope.assignFiatHelper = (currencyType) => {
     this.transaction.currency.code = this.trade.quote[currencyType];
     this.transaction.currency.symbol = currency.conversions[this.trade.quote[currencyType]]['symbol'];
