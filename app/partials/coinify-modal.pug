@@ -23,12 +23,3 @@
   div(ng-if="vm.onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")
   div(ng-if="vm.onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")
   div(ng-if="vm.onStep('trade-complete')" ng-controller="CoinifyTradeSummaryController" ng-include="'partials/trade-summary.pug'")
-    p.security-red.pointer(ng-show="vm.buySellDebug && vm.trade.bankAccount && vm.trade.state === 'awaiting_transfer_in'")
-      i.ti-search.mrm
-      span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
-  .flex-end.flex-center.mtl.coinify-logo.hidden-xs(ng-hide="afterStep('summary')")
-    span.pos-rel
-      span.mrs.type-sm(translate="POWERED_BY")
-      a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
-        img(src="img/coinify-logo.svg")
-        span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
