@@ -12,7 +12,6 @@ angular
   });
 
 function CoinifySellTradeFinishedController (currency) {
-  console.log('trade-finished', this)
   this.dateFormat = 'd MMMM yyyy, HH:mm';
 
   if (this.completedState) {

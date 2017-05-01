@@ -15,7 +15,8 @@ describe "sell-create-account.component", ->
       type: 'sepa',
       account: {
         number: 'ABCDEFGH123456',
-        bic: 'abc123'
+        bic: 'abc123',
+        currency: 'EUR'
       },
       bank: {
         address: {
@@ -31,12 +32,16 @@ describe "sell-create-account.component", ->
     }
   ]
 
-  country = "DK"
-
   transaction = {
     currency: {
       code: "DKK"
     }
+  }
+
+  onSuccess = (bankId) -> $q.resolve()
+
+  paymentAccount = {
+    add: (bankAccount) -> $q.resolve('12345').then(ctrl.onSuccess({bankId: '12345'}))
   }
 
   sepaCountries = [
@@ -54,16 +59,27 @@ describe "sell-create-account.component", ->
 
   bankAccount = {
     account: {
-      number: "1234ABCD5678EFGH"
+      number: "1234ABCD5678EFGH",
+      currency :'EUR'
+    },
+    holder: {
+      name: 'PW'
+    },
+    bank: {
+      address: {
+        country: 'ES'
+      }
     }
   }
 
   handlers =
     accounts: accounts,
-    country: country,
     sepaCountries: sepaCountries,
     transaction: transaction
     bankAccount: bankAccount
+    paymentAccount: paymentAccount
+    onSuccess: onSuccess
+    country: 'DK',
 
 
   getController = (bindings) ->
@@ -109,6 +125,22 @@ describe "sell-create-account.component", ->
       ctrl = getController(handlers)
       ctrl.createBankAccount()
       expect(ctrl.status.waiting).toEqual(true)
+
+    it "should check for a bank account and not call if one of the checks fails", ->
+      ctrl = getController(handlers)
+      ctrl.bankAccount.holder.name = 'Snoop Dog'
+      ctrl.bankAccount.bank.address.country = undefined
+      spyOn(ctrl.paymentAccount, 'add')
+      ctrl.createBankAccount()
+      $rootScope.$digest()
+      expect(ctrl.paymentAccount.add).not.toHaveBeenCalled()
+
+    it "should call paymentAccount.add()", ->
+      ctrl = getController(handlers)
+      ctrl.bankAccount.holder.name = 'Snoop Dog'
+      spyOn(ctrl.paymentAccount, 'add')
+      ctrl.createBankAccount()
+      expect(ctrl.paymentAccount.add).toHaveBeenCalled()
 
   describe ".formatIban()", ->
     beforeEach ->

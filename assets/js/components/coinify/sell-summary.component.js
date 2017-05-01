@@ -19,7 +19,6 @@ angular
   });
 
 function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Alerts, $timeout) {
-  console.log('summary component', this);
   this.title = 'SELL.CONFIRM_SELL_ORDER';
 
   this.sellRateForm;
@@ -101,20 +100,19 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     }
     return sellResult;
   };
-
   this.sell = () => {
     this.waiting = true;
-    this.paymentAccount.sell(this.bankId)
+    $q.resolve(this.paymentAccount.sell(this.bankId))
       .then(handleSellResult)
       .then(() => {
-        // Wallet.askForSecondPasswordIfNeeded()
-        //   .then(signAndPublish)
-        //   .then(transactionSucceeded)
-        //   .catch(handleError);
+        Wallet.askForSecondPasswordIfNeeded()
+          .then(signAndPublish)
+          .then(transactionSucceeded)
+          .catch(handleError);
 
         // for when sending btc is disabled
-        this.waiting = false;
-        this.onComplete();
+        // this.waiting = false;
+        // this.onComplete();
       })
       .catch(handleBadRequest);
   };

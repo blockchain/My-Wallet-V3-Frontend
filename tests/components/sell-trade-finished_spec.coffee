@@ -9,7 +9,6 @@ describe "sell-trade-finished.component", ->
   $templateCache = undefined
   $componentController = undefined
 
-
   sellTrade = {
     id: '12345',
     state: 'awaiting_transfer_in',

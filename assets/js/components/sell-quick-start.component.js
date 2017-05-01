@@ -33,11 +33,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.format = currency.formatCurrencyForView;
 
   let exchange = buySell.getExchange();
-  $scope.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  $scope.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
-  if ($scope.exchange._profile) {
-    $scope.sellLimit = $scope.exchange._profile._currentLimits._bank._outRemaining.toString();
-    $scope.hideIncreaseLimit = $scope.exchange._profile._level._name > 1;
+  this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
+  if (this.exchange._profile) {
+    $scope.sellLimit = this.exchange._profile._currentLimits._bank._outRemaining.toString();
+    $scope.hideIncreaseLimit = this.exchange._profile._level._name > 1;
   }
 
   $scope.isPendingSellTrade = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium === 'blockchain';
@@ -50,9 +50,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
       $scope.limitsCurrencySymbol = currency.conversions[code];
     };
 
-    if ($scope.exchangeCountry === 'DK') {
+    if (this.exchangeCountry === 'DK') {
       setInitialCurrencyAndSymbol('DKK', 'Danish Krone');
-    } else if ($scope.exchangeCountry === 'GB') {
+    } else if (this.exchangeCountry === 'GB') {
       setInitialCurrencyAndSymbol('GBP', 'Great British Pound');
     } else {
       setInitialCurrencyAndSymbol('EUR', 'Euro');
@@ -101,7 +101,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     this.status.fetching = true;
     this.status.busy = true;
     if ($scope.lastInput === 'btc') {
-      buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
+      $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error));
     } else if ($scope.lastInput === 'fiat') {
       buySell.getSellQuote(this.transaction.fiat, this.transaction.currency.code, 'BTC').then(success, error);
     } else {

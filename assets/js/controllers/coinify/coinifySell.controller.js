@@ -23,9 +23,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.payment = payment;
   if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
 
-  console.log('coinify sell ctrl', this.trade);
-
-  $scope.steps = {
+  this.steps = {
     'email': 0,
     'accept-terms': 1,
     'account': 2,
@@ -34,9 +32,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     'trade-complete': 5,
     'isx': 6
   };
-  this.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
-  this.goTo = (step) => $scope.step = $scope.steps[step];
-
+  this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
+  this.goTo = (step) => this.step = this.steps[step];
   this.nextStep = () => {
     if (this.isKYC) {
       this.goTo('isx');
@@ -63,7 +60,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   if (!this.trade.btc && !this.trade.fiat) {
     this.isKYC = this.trade && this.trade.constructor.name === 'CoinifyKYC';
-    console.log('isKYC', this.isKYC);
     this.isKYC ? this.nextStep() : '';
   }
 
@@ -118,7 +114,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
-    $scope.reset();
+    this.reset();
     this.trade = null;
     buySell.getTrades().then(() => {
       this.goToOrderHistory();
@@ -130,14 +126,14 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     let index;
     if (!this.exchange.user) index = 0;
     else if (this.onStep('account')) index = 1;
-    else if (this.onStep('sell-summary')) index = 2;
+    else if (this.onStep('summary')) index = 2;
     Alerts.surveyCloseConfirm('survey-opened', links, index, true).then(this.cancel);
   };
 
   let startedPayment = $scope.startPayment();
   if (startedPayment) this.transaction = Object.assign(this.transaction, startedPayment.transaction);
 
-  if (!$scope.step) {
+  if (!this.step) {
     this.nextStep();
   }
 
@@ -172,21 +168,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     });
   };
 
-  $scope.standardError = (err) => {
-    console.log(err);
-    try {
-      let e = JSON.parse(err);
-      let msg = e.error.toUpperCase();
-      if (msg === 'EMAIL_ADDRESS_IN_USE') $scope.rejectedEmail = true;
-      else Alerts.displayError(msg, true, $scope.alerts, {user: this.exchange.user});
-    } catch (e) {
-      let msg = e.error || err.message;
-      if (msg) Alerts.displayError(msg, true, $scope.alerts);
-      else Alerts.displayError('INVALID_REQUEST', true, $scope.alerts);
-    }
-  };
-
-  $scope.reset = () => {
+  this.reset = () => {
     this.transaction.btc = null;
     this.transaction.fiat = null;
   };

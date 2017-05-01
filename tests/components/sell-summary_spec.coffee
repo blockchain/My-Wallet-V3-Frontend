@@ -39,10 +39,16 @@ describe "sell-summary.component", ->
     }
   }
 
+  paymentAccount = {
+    sell: (bankId) -> $q.resolve(sellTrade)
+  }
 
   handlers =
     transaction: transaction
     sellTrade: sellTrade
+    paymentAccount: paymentAccount
+    sellRateForm: true
+    fields: true
 
 
   getController = (bindings) ->
@@ -59,7 +65,7 @@ describe "sell-summary.component", ->
       $compile = _$compile_
       $templateCache = _$templateCache_
       $componentController = _$componentController_
-
+      $q = $injector.get('$q')
       Wallet = $injector.get("Wallet")
       buySell = $injector.get("buySell")
 
@@ -72,3 +78,41 @@ describe "sell-summary.component", ->
       ctrl.totalBalance = 0.001
       result = ctrl.insufficientFunds()
       expect(result).toEqual(true)
+
+  describe ".isDisabled()", ->
+    beforeEach ->
+      ctrl = undefined
+
+    it "should be disabled if insufficient funds", ->
+      ctrl = getController(handlers)
+      ctrl.totalBalance = 0.001
+      result = ctrl.isDisabled()
+      expect(result).toEqual(true)
+
+    it "should disable if the form is invalid", ->
+      ctrl = getController(handlers)
+      ctrl.sellRateForm.$valid = false
+      result = ctrl.isDisabled()
+      expect(result).toEqual(true)
+
+    it "should disable if there is no quote attached to sell Trade", ->
+      ctrl = getController(handlers)
+      ctrl.totalBalane = 1
+      ctrl.sellRateForm.$valid = true
+      result = ctrl.isDisabled()
+      expect(result).toEqual(undefined)
+
+  describe ".sell()", ->
+    beforeEach ->
+      ctrl = undefined
+
+    it "should set waiting to true", ->
+      ctrl = getController(handlers)
+      ctrl.sell()
+      expect(ctrl.waiting).toEqual(true)
+
+    it "should call paymentAccount.sell(bankId)", ->
+      ctrl = getController(handlers)
+      spyOn(ctrl.paymentAccount, 'sell')
+      ctrl.sell()
+      expect(ctrl.paymentAccount.sell).toHaveBeenCalled()

@@ -4,6 +4,7 @@ describe "CoinifyController", ->
   options = undefined
   buySell = undefined
   $scope = undefined
+  Alerts = undefined
 
   quote = {
     quoteAmount: 1
@@ -11,7 +12,7 @@ describe "CoinifyController", ->
     baseCurrency: 'USD'
     getPaymentMediums: () -> $q.resolve()
   }
-  
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
@@ -22,13 +23,14 @@ describe "CoinifyController", ->
       MyWallet = $injector.get("MyWallet")
       currency = $injector.get("currency")
       buySell = $injector.get("buySell")
-      
+      Alerts = $injector.get("Alerts")
+
       options = {
         partners: {
           coinify: {}
         }
       }
-      
+
       MyWallet.wallet = {
         hdwallet: {
           defaultAccount: {
@@ -37,55 +39,53 @@ describe "CoinifyController", ->
           accounts: [{label: ''}]
         }
       }
-      
+
       buySell: {
         getQuote: (quote) -> $q.resolve(quote)
       }
 
   getController = (quote, trade) ->
     scope = $rootScope.$new()
-    
+
     $controller "CoinifyController",
       $scope: scope
       trade: trade || {}
       quote: quote || {}
       options: options || {}
       $uibModalInstance: { close: (->), dismiss: (->) }
-  
+
   describe ".baseFiat()", ->
     ctrl = undefined
     beforeEach -> ctrl = getController(quote)
-    
+
     it "should be true if baseCurrency is fiat", ->
       expect(ctrl.baseFiat()).toBe(true)
-  
+
   describe ".BTCAmount()", ->
     ctrl = undefined
     beforeEach -> ctrl = getController(quote)
-    
+
     it "should return BTC amount", ->
       expect(ctrl.BTCAmount()).toBe(1)
-  
+
   describe ".fiatAmount()", ->
     ctrl = undefined
     beforeEach -> ctrl = getController(quote)
-    
+
     it "should return fiat amount", ->
       expect(ctrl.fiatAmount()).toBe(1)
-  
+
   describe ".fiatCurrency()", ->
     ctrl = undefined
     beforeEach -> ctrl = getController(quote)
-    
+
     it "should return fiat currency", ->
       expect(ctrl.fiatCurrency()).toBe('USD')
-  
+
   describe ".goTo()", ->
     ctrl = undefined
     beforeEach -> ctrl = getController()
-    
+
     it "should set the step", ->
       ctrl.goTo('email')
       expect(ctrl.currentStep()).toBe('email')
-      
-    
