@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .directive('trade', trade);
 
-trade.$inject = ['$rootScope', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];
+trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];
 
-function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
+function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -23,7 +23,9 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.buySellDebug = $rootScope.buySellDebug;
+    Env.then(env => {
+      scope.buySellDebug = env.buySellDebug;
+    });
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
 
     scope.update = () => angular.extend(scope, {

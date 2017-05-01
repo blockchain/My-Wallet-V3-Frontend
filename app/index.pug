@@ -8,7 +8,7 @@ html(
     webSocketURL='${ process.env.WEB_SOCKET_URL }';\
     apiDomain='${ process.env.API_DOMAIN }/';\
     network='${ process.env.NETWORK || '' }';\
-    helperAppDomain='http://localhost:${ (process.env.PORT || 80) + 1 }';\
+    walletHelperUrl='${ process.env.WALLET_HELPER_URL || '' }';\
     sfoxUseStaging=${ process.env.SFOX_USE_STAGING || null };\
     sfoxApiKey='${ process.env.SFOX_API_KEY || ''}';\
     sfoxPlaidEnv='${ process.env.SFOX_PLAID_ENV || ''}';\
