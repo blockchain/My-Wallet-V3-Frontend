@@ -18,8 +18,10 @@ function CoinifyTradeSummaryController ($scope, $q, formatTrade) {
     console.log('this.watchAddress() for', trade);
   }
 
-  $q.resolve(trade.watchAddress())
+  if (trade.watchAddress) {
+    $q.resolve(trade.watchAddress())
     .then(() => trade.refresh())
     .then((trade) => $scope.vm.trade = trade)
     .then(() => $scope.formattedTrade = formatTrade['success']($scope.vm.trade));
+  }
 }

@@ -43,7 +43,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     kycs: [],
     mediums: [],
     accounts: [],
-    limits: { bank: { max: {} }, card: { max: {} } },
+    limits: { bank: { max: {}, yearlyMax: {} }, card: { max: {}, yearlyMax: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
@@ -52,7 +52,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getSellQuote,
     getKYCs,
     getRate,
-    calculateMax,
     getMaxLimits,
     getMinLimits,
     triggerKYC,
@@ -116,9 +115,11 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getMaxLimits (defaultCurrency) {
-    const calculateMax = (rate, curr) => {
-      service.limits.bank.max[curr] = service.calculateMax(rate, 'bank');
-      service.limits.card.max[curr] = service.calculateMax(rate, 'card');
+    const setMax = (rate, curr) => {
+      service.limits.bank.max[curr] = calculateMax(rate, 'bank');
+      service.limits.card.max[curr] = calculateMax(rate, 'card');
+      service.limits.bank.yearlyMax[curr] = calculateYearlyMax(rate, 'bank');
+      service.limits.card.yearlyMax[curr] = calculateYearlyMax(rate, 'card');
       service.limits.absoluteMax = (curr) => {
         let cardMax = parseFloat(service.limits.card.max[curr], 0);
         let bankMax = parseFloat(service.limits.bank.max[curr], 0);
@@ -126,12 +127,17 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       };
     };
 
-    let getMax = (c) => service.getRate(defaultCurrency, c).then(r => calculateMax(r, c));
+    let getMax = (c) => service.getRate(defaultCurrency, c).then(r => setMax(r, c));
     return $q.all(['DKK', 'EUR', 'USD', 'GBP'].map(getMax));
   }
 
   function calculateMax (rate, medium) {
     let limit = service.getExchange().profile.currentLimits[medium].inRemaining;
+    return (rate * limit).toFixed(2);
+  }
+
+  function calculateYearlyMax (rate, medium) {
+    let limit = service.getExchange().profile.level.limits[medium].inYearly;
     return (rate * limit).toFixed(2);
   }
 

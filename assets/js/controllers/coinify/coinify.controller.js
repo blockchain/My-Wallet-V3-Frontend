@@ -7,36 +7,25 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.buySellDebug = env.buySellDebug;
   });
 
-  let now = () => new Date().getTime();
+  let exchange = buySell.getExchange();
 
-  $scope.settings = Wallet.settings;
-  $scope.btcCurrency = $scope.settings.btcCurrency;
-  $scope.currencies = currency.coinifyCurrencies;
-  $scope.trades = buySell.trades;
-  $scope.alerts = [];
-
-  this.user = Wallet.user;
   this.quote = quote;
   this.trade = trade;
+  this.user = Wallet.user;
+  this.now = () => new Date().getTime();
+  this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
   this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
   this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
-  this.timeToExpiration = () => this.quote ? this.quote.expiresAt - now() : this.trade.expiresAt - now();
+  this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
   this.refreshQuote = () => {
-    if (this.baseFiat()) return buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency).then((q) => this.quote = q);
-    else return buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency).then((q) => this.quote = q);
+    if (this.baseFiat()) return $q.resolve(buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency)).then((q) => this.quote = q);
+    else return $q.resolve(buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
   };
   this.expireTrade = () => {
     return $q.resolve(this.state.trade.expired = true);
   };
-
-  let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
-  $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
-
-  let exchange = buySell.getExchange();
-  this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.getMinimumInAmount = (medium, curr) => medium && curr && quote.paymentMediums[medium].minimumInAmounts[curr];
 
   this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
@@ -57,7 +46,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
       valid: true
     },
     trade: {
-      expired: this.trade && this.trade.expiresAt - now() < 1
+      expired: this.trade && this.trade.expiresAt - this.now() < 1
     }
   };
 
@@ -101,7 +90,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
 
-  if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
+  if (!this.user.isEmailVerified) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('signup');

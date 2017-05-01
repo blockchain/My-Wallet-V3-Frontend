@@ -3,7 +3,7 @@ angular
   .component('kycStatus', {
     bindings: {
       state: '<',
-      limits: '<',
+      currency: '<',
       onTrigger: '&'
     },
     templateUrl: 'templates/kyc-status.pug',
@@ -30,11 +30,6 @@ angular
       this.profile = buySell.getExchange().profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
-      this.getCardMax = () => {
-        if (typeof limits === 'number') return;
-        let symbol = this.limits.currency && this.limits.currency.symbol;
-        let amt = this.limits.card && this.limits.card.max;
-        return (symbol || '€') + (amt || '300.00');
-      };
+      this.getCardMax = () => buySell.limits.card.max[this.currency.code] + ' ' + this.currency.code;
     }
   });
