@@ -7,13 +7,65 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
   $scope.user = Wallet.user;
-  this.user = Wallet.user;
   $scope.trades = buySell.trades;
   $scope.alerts = [];
-  this.trade = trade;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
   $scope.bankAccounts = accounts;
+
+  this.user = Wallet.user;
+  this.trade = trade;
+  this.quote = trade.quote;
+  this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
+  this.selectedBankAccount = null;
+  this.accounts = accounts;
+  this.sepaCountries = country.sepaCountryCodes;
+  this.payment = payment;
+  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
+
+  console.log('coinify sell ctrl', this.trade);
+
+  $scope.steps = {
+    'email': 0,
+    'accept-terms': 1,
+    'account': 2,
+    'bank-link': 3,
+    'summary': 4,
+    'trade-complete': 5,
+    'isx': 6
+  };
+  this.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
+  this.goTo = (step) => $scope.step = $scope.steps[step];
+
+  this.nextStep = () => {
+    if (this.isKYC) {
+      this.goTo('isx');
+      return;
+    }
+    if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
+      this.sellTrade = this.trade;
+      this.goTo('trade-complete');
+      return;
+    } else {
+      if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
+        this.goTo('email');
+      } else if (!this.exchange.user) {
+        this.goTo('accept-terms');
+      } else if (!this.accounts.length) {
+        this.goTo('account');
+      } else if (this.accounts.length) {
+        this.goTo('bank-link');
+      } else {
+        this.goTo('summary');
+      }
+    }
+  };
+
+  if (!this.trade.btc && !this.trade.fiat) {
+    this.isKYC = this.trade && this.trade.constructor.name === 'CoinifyKYC';
+    console.log('isKYC', this.isKYC);
+    this.isKYC ? this.nextStep() : '';
+  }
 
   this.transaction = {
     btc: this.trade.btc,
@@ -21,17 +73,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     currency: { name: 'Euro', code: 'EUR' },
     fee: { btc: null, fiat: null }
   };
-
-  this.quote = trade.quote;
-  this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
-  this.selectedBankAccount = null;
-  this.accounts = accounts;
-  this.trade = trade;
-  this.sepaCountries = country.sepaCountryCodes;
-  this.payment = payment;
-  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
-
-  console.log('coinify sell ctrl', this);
 
   $scope.assignFiatCurrency = () => {
     if (this.trade._state) return;
@@ -53,42 +94,10 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
   this.fiat = () => this.transaction.currency.code;
 
-  $scope.steps = {
-    'email': 0,
-    'accept-terms': 1,
-    'account': 2,
-    'bank-link': 3,
-    'summary': 4,
-    'review': 5,
-    'isx': 6
-  };
-  this.onStep = (...steps) => steps.some(s => $scope.step === $scope.steps[s]);
-  this.goTo = (step) => $scope.step = $scope.steps[step];
-
-  $scope.nextStep = () => {
-    if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
-      this.sellTrade = this.trade;
-      this.goTo('review');
-      return;
-    } else {
-      if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
-        this.goTo('email');
-      } else if (!this.exchange.user) {
-        this.goTo('accept-terms');
-      } else if (!this.accounts.length) {
-        this.goTo('account');
-      } else if (this.accounts.length) {
-        this.goTo('bank-link');
-      } else {
-        this.goTo('summary');
-      }
-    }
-  };
-
   $scope.fields = { email: $scope.user.email };
 
   this.goToOrderHistory = () => {
-    if ((this.onStep('review')) && $state.params.selectedTab !== 'ORDER_HISTORY') {
+    if ((this.onStep('trade-complete')) && $state.params.selectedTab !== 'ORDER_HISTORY') {
       $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'ORDER_HISTORY'});
     } else {
       $uibModalInstance.dismiss('');
@@ -129,7 +138,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   if (startedPayment) this.transaction = Object.assign(this.transaction, startedPayment.transaction);
 
   if (!$scope.step) {
-    $scope.nextStep();
+    this.nextStep();
   }
 
   this.selectAccount = (account) => {

@@ -52,8 +52,10 @@
       payment="vm.finalPayment"
       bank-id="vm.bankId"
       on-success="vm.onSellSuccess(trade)"
-      on-complete="vm.goTo('review')")
+      on-complete="vm.goTo('trade-complete')")
   sell-trade-finished(
-      ng-if="vm.onStep('review')"
+      ng-if="vm.onStep('trade-complete')"
       sell-trade="vm.sellTrade"
+      completed-state="vm.completedState"
       dismiss="vm.cancel()")
+  div(ng-if="vm.onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")

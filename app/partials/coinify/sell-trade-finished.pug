@@ -1,12 +1,12 @@
 sell-modal-header(title="$ctrl.title" hide="true")
 .modal-body
-  //- .flex-column(ng-if="ISXState")
-  //-   .mvl.em-500
-  //-     span.f-14 Identity Verification Status
-  //-   div
-  //-     span(translate="{{KYCState}}")
-
-  .flex-column.mvm(ng-if="!$ctrl.tradeCompleted")
+  .flex-column(ng-if="$ctrl.isx")
+    .mvl.em-500
+      span.f-14 Identity Verification Status
+    div
+      span(translate="{{$ctrl.completedState}}")
+        
+  .flex-column.mvm(ng-if="!$ctrl.tradeCompleted && !$ctrl.isx")
     div
       p.pb-15.ptn.f-14(translate="SELL.RECEIVE_EMAIL_CONFIRMATION")
     .left-align
@@ -33,7 +33,7 @@ sell-modal-header(title="$ctrl.title" hide="true")
     .left-align
       p.type-sm.mtl(translate="SELL.1_2_DAYS")
         
-  .flex-column(ng-if="$ctrl.tradeCompleted")
+  .flex-column(ng-if="$ctrl.tradeCompleted && !$ctrl.isx")
     .mvl.em-500(ng-show="$ctrl.sellTrade._state !== 'completed'")
       span.pvm.type-h5.state-danger-text(translate="Trade")
       | &nbsp;

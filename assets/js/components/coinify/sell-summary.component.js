@@ -107,14 +107,14 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     this.paymentAccount.sell(this.bankId)
       .then(handleSellResult)
       .then(() => {
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
-          .then(transactionSucceeded)
-          .catch(handleError);
+        // Wallet.askForSecondPasswordIfNeeded()
+        //   .then(signAndPublish)
+        //   .then(transactionSucceeded)
+        //   .catch(handleError);
 
         // for when sending btc is disabled
-        // this.waiting = false;
-        // this.onComplete();
+        this.waiting = false;
+        this.onComplete();
       })
       .catch(handleBadRequest);
   };

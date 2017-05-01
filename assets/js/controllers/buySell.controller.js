@@ -121,9 +121,9 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
 
     $scope.openSellKyc = () => {
       if (!$scope.kyc) {
-        buySell.triggerKYC().then(kyc => $scope.buy(kyc));
+        buySell.triggerKYC().then(kyc => $scope.sell(kyc));
       } else {
-        $scope.buy($scope.kyc);
+        $scope.sell($scope.kyc);
       }
     };
 

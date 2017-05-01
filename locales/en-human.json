@@ -1380,7 +1380,16 @@
     "HOLDER_STREET": "Street and Number",
     "HOLDER_CITY": "City",
     "HOLDER_POSTAL": "Postal Code",
-    "SELL_BITCOIN": "Sell bitcoin"
+    "SELL_BITCOIN": "Sell bitcoin",
+    "IDENTITY_VERIFICATION": "Identity Verification",
+    "ISX": {
+      "REVIEWING": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!",
+      "REJECTED": "There was an issue verifying your identity. Please try again. Increasing your limit is unavailable until we can successfully verify your identity.",
+      "PROCESSING": "Your request for authentication is processing. Please check back soon for an update.",
+      "CANCELLED": "Your request for authentication has been cancelled.",
+      "COMPLETED": "Your request for authentication has been completed, and your bitcoin sell limit has been increased.",
+      "EXPIRED": "Your request for authentication has expired."
+    }
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
