@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, $cookies, $window, $state, options, buyMobile) {
+function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpers, Alerts, currency, $uibModalInstance, trade, buyOptions, $timeout, $interval, formatTrade, buySell, $rootScope, Env, $cookies, $window, $state, options, buyMobile) {
   $scope.settings = Wallet.settings;
   $scope.btcCurrency = $scope.settings.btcCurrency;
   $scope.currencies = currency.coinifyCurrencies;
@@ -15,7 +15,9 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
 
   let links = options.partners.coinify.surveyLinks;
 
-  $scope.buySellDebug = $rootScope.buySellDebug;
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+  });
 
   let accountIndex = $scope.trade && $scope.trade.accountIndex ? $scope.trade.accountIndex : MyWallet.wallet.hdwallet.defaultAccount.index;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
@@ -213,7 +215,7 @@ function CoinifyController ($scope, $filter, $q, MyWallet, Wallet, MyWalletHelpe
   };
 
   $scope.watchAddress = () => {
-    if ($rootScope.buySellDebug) {
+    if ($scope.buySellDebug) {
       console.log('$scope.watchAddress() for', $scope.trade);
     }
     if (!$scope.trade || $scope.bitcoinReceived || $scope.isKYC) return;
