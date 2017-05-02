@@ -69,7 +69,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     cancelTrade,
     states,
     getPayoutAccounts,
-    getSellBankAccounts
+    getSellBankAccounts,
+    isPendingSellTrade
   };
 
   return service;
@@ -268,7 +269,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function openSellView (trade, mediums, payment, buySellOptions = { sell: true }) {
-    console.log('openSellView', payment);
     let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
@@ -305,6 +305,10 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     let coinifyCode = exchange && exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
     if (sellCheck && coinifyCode === 'USD') coinifyCode = 'EUR';
     return isCoinifyCompatible ? walletCurrency : coinifyCurrencies.filter(c => c.code === coinifyCode)[0];
+  }
+
+  function isPendingSellTrade (pendingTrade) {
+    return (pendingTrade && (pendingTrade.state === 'awaiting_transfer_in' || pendingTrade.state === 'processing')) && (pendingTrade.medium === 'blockchain');
   }
 
   function signupForAccess (email, country, state) {
