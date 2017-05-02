@@ -118,7 +118,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     const setMax = (rate, curr) => {
       service.limits.bank.max[curr] = calculateMax(rate, 'bank');
       service.limits.card.max[curr] = calculateMax(rate, 'card');
-      service.limits.bank.yearlyMax[curr] = 10;
+      service.limits.bank.yearlyMax[curr] = calculateYearlyMax(rate, 'bank');
       service.limits.card.yearlyMax[curr] = calculateYearlyMax(rate, 'card');
       service.limits.absoluteMax = (curr) => {
         let cardMax = parseFloat(service.limits.card.max[curr], 0);
