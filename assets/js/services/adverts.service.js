@@ -26,7 +26,7 @@ function Adverts ($http, Env) {
         return;
       }
 
-      let advertsFeed = env.apiDomain + 'ads/get?wallet=true&n=2';
+      let advertsFeed = env.apiDomain + 'bci-ads/get?wallet=true&n=2';
       $http.get(advertsFeed)
         .success(function (data) {
           data.forEach(function (ad) {

@@ -220,8 +220,8 @@ describe "walletServices", () ->
     )
 
 
-    it "should add uid to cookies", inject(($cookies) ->
-      spyOn($cookies, 'put')
+    it "should add uid to cookies", inject((localStorageService) ->
+      spyOn(localStorageService, 'set')
       Wallet.create("1234567890", "a@b.com", "EUR", "EN", callbacks.success)
-      expect($cookies.put).toHaveBeenCalledWith('uid', "new_guid")
+      expect(localStorageService.set).toHaveBeenCalledWith('uid', "new_guid")
     )

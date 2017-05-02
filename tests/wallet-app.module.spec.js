@@ -7,6 +7,7 @@ const modules = [
   'ngCookies',
   'ngAnimate',
   'ngFileUpload',
+  'LocalStorageModule',
 
   'ui.select',
   'ngAudio',

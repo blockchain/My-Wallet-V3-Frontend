@@ -4,7 +4,6 @@ describe "WalletCtrl", ->
   mockModalInstance = undefined
   $httpBackend = undefined
   $rootScope = undefined
-  $cookies = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -14,7 +13,6 @@ describe "WalletCtrl", ->
       MyWallet = $injector.get("MyWallet")
       buyStatus = $injector.get("buyStatus")
       $httpBackend = $injector.get("$httpBackend")
-      $cookies = $injector.get("$cookies")
       $rootScope.rootURL = "https://blockchain.info/"
       $rootScope.karma = true
 

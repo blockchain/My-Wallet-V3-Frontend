@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, $cookies, MyWallet, currency, $translate, $window, buyStatus, modals) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals) {
   $scope.goal = Wallet.goal;
 
   $scope.status = Wallet.status;
@@ -115,7 +115,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
     if (!$scope.isPublicState(toState.name) && !$scope.status.isLoggedIn) {
-      let showLogout = $window.name === 'blockchain-logout' && $cookies.get('session');
+      let showLogout = $window.name === 'blockchain-logout' && localStorageService.get('session');
       $state.go(`public.${showLogout ? 'logout' : 'login-no-uid'}`);
     }
     $rootScope.outOfApp = toState.name === 'landing';
