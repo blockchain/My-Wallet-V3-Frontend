@@ -154,7 +154,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
 
   function kyc (trade, state) {
     let classname = state === 'reviewing' ? 'blue' : 'state-danger-text';
-    let namespace = state === 'reviewing' ? 'TX_KYC_REVIEWING' : 'TX_KYC_REJECTED';
+    let namespace = state === 'reviewing' ? 'KYC_FLAGGED' : 'KYC_REJECTED';
 
     return {
       class: classname,

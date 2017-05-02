@@ -1,7 +1,5 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="BuyModal")
   .modal-header.bc-modal-header.flex-between.flex-center(ng-class="{'no-border': isPendingBankTransfer()}")
-    .alert-in-app
-      alerts(context="alerts")
     .flex-1(ng-class="inMobileBuy ? 'flex-row-reverse flex-center flex-between' : 'flex-column'")
       .flex-row.flex-between.flex-center
         .hidden-xs
@@ -16,7 +14,7 @@
             span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
             span(ng-if="vm.trade && vm.trade.sendAmount") ({{ vm.trade.sendAmount / 100 }} {{ vm.trade.inCurrency }})
           countdown.mid-grey(ng-if="vm.quote && vm.quote.id" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" debug="vm.buySellDebug")
-          countdown.mid-grey(ng-if="vm.trade && vm.trade.timeToExpiration && !vm.state.trade.expired" time-to-expiration="vm.timeToExpiration" on-expiration="vm.expireTrade()" debug="vm.buySellDebug")
+          countdown.mid-grey(ng-if="vm.trade && vm.trade.expiresAt && !vm.state.trade.expired" time-to-expiration="vm.timeToExpiration" on-expiration="vm.expireTrade()" debug="vm.buySellDebug")
   coinify-email(ng-if="vm.onStep('email')" on-complete="vm.goTo('signup')" on-close="vm.close(0)" email="vm.user.email" valid-email="vm.state.email.valid" verified="vm.user.isEmailVerified" on-email-change="vm.onEmailChange(true)")
   coinify-signup(ng-if="vm.onStep('signup')" on-complete="vm.onSignupComplete()" on-error="vm.goTo('email')" on-close="vm.close(0)" email="vm.user.email" valid-email="vm.state.email.valid" on-email-change="vm.onEmailChange(false)" fiat-currency="vm.fiatCurrency()")
   div(ng-if="vm.onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
