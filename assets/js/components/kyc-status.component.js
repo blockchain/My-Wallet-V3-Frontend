@@ -20,6 +20,6 @@ angular
       this.profile = buySell.getExchange().profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
-      this.getCardMax = () => buySell.limits.card.max[this.currency.code] + ' ' + this.currency.code;
+      this.getCardMax = () => this.currency && buySell.limits.card.max[this.currency.code] + ' ' + this.currency.code;
     }
   });
