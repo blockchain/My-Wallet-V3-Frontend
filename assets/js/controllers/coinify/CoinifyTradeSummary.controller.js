@@ -3,7 +3,7 @@ angular
   .controller('CoinifyTradeSummaryController', CoinifyTradeSummaryController);
 
 function CoinifyTradeSummaryController ($scope, $q, formatTrade) {
-  let { trade, buySellDebug } = $scope.vm;
+  let { trade } = $scope.vm;
   let completedState = $scope.vm.completedState || trade.state;
   $scope.formattedTrade = formatTrade[completedState](trade);
 
@@ -13,10 +13,6 @@ function CoinifyTradeSummaryController ($scope, $q, formatTrade) {
       .then((trade) => $scope.vm.trade = trade)
       .then($scope.formattedTrade = formatTrade['processing']($scope.vm.trade));
   };
-
-  if (buySellDebug) {
-    console.log('this.watchAddress() for', trade);
-  }
 
   if (trade.watchAddress) {
     $q.resolve(trade.watchAddress())

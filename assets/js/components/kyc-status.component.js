@@ -9,20 +9,10 @@ angular
     templateUrl: 'templates/kyc-status.pug',
     controller: function (buySell) {
       this.stateMap = {
-        'expired': { ns: 'KYC_EXPIRED', i: 'ti-na' },
-
         'pending': { ns: 'KYC_PENDING', i: 'ti-alert' },
-
-        'manualHold': { ns: 'KYC_IN_HOLD', i: 'ti-alert' },
-
+        'updateRequested': { ns: 'KYC_UPDATES_REQUESTED', i: 'ti-alert' },
         'reviewing': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-        'manual_review': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-        'manualReviewing': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-
-        'failed': { ns: 'KYC_DENIED', i: 'ti-na' },
-        'declined': { ns: 'KYC_DENIED', i: 'ti-na' },
-        'rejected': { ns: 'KYC_DENIED', i: 'ti-na' },
-        'manualRejected': { ns: 'KYC_DENIED', i: 'ti-na' }
+        'rejected': { ns: 'KYC_REJECTED', i: 'ti-na' }
       };
 
       this.getState = () => this.stateMap[this.state];

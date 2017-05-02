@@ -1063,14 +1063,6 @@
     "TITLE": "Transaction expired.",
     "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
   },
-  "TX_KYC_REVIEWING": {
-    "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
-  },
-  "TX_KYC_REJECTED": {
-    "TITLE": "@:KYC_DENIED.TITLE",
-    "BODY": "There was an issue verifying your identity. Please try again. Bank transfers are unavailable until we can successfully verify your identity."
-  },
   "TX_CARD_REJECTED": {
     "TITLE": "Transaction {{::state}}",
     "BODY": "Your purchase was rejected and unfortunately the reason cannot be disclosed. A refund has been issued and should appear in your card statement within a few days. We apologize for the inconvenience."
@@ -1108,10 +1100,19 @@
     "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to {{ccmax}} per day.",
     "LINK": "Review status"
   },
-  "KYC_DENIED": {
+  "KYC_FLAGGED": {
+    "TITLE": "@:KYC_IN_REVIEW.TITLE",
+    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
+  },
+  "KYC_REJECTED": {
     "TITLE": "Identity Verification Denied",
     "BODY": "There was an issue verifying your identity with the documents provided. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
     "LINK": "Try again"
+  },
+  "KYC_UPDATES_REQUESTED": {
+    "TITLE": "Identity Verification Updates Requested",
+    "BODY": "There was an issue verifying your identity with the documents provided. More information is needed.",
+    "LINK": "Finish verification"
   },
   "KYC_PENDING": {
     "TITLE": "Complete Identity Verification",
@@ -1123,19 +1124,9 @@
     "BODY": "Completing verification will raise your daily sell amount limit.",
     "LINK": "Finish verification"
   },
-  "KYC_EXPIRED": {
-    "TITLE": "Identity Verification Expired",
-    "BODY": "Your identity verification expired. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
-    "LINK": "Try again"
-  },
-  "KYC_IN_HOLD": {
-    "TITLE": "Identity Verification Put on Hold",
-    "BODY": "Your identity verification was put on hold. Bank transfers are unavailable until we can successfully verify your identity. We apologize for any inconvenience",
-    "LINK": "Review status"
-  },
+  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
-  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "DATE_INITIALIZED": "Date Ordered",
   "TOTAL_COST": "Total Cost",
   "BTC_PURCHASED": "BTC Purchased",
