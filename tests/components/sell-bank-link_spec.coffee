@@ -11,21 +11,23 @@ describe "sell-bank-link.component", ->
 
   accounts = [
     {
-      id: 12345,
-      type: 'sepa',
-      account: {
-        number: 123456789,
-        bic: '123abc'
-      },
-      bank: {
-        address: {
-          country: 'GB'
-        }
-      },
-      holder: {
-        name: 'John Smith',
-        address: {
-          country: 'GB'
+      _account : {
+        id: 12345,
+        type: 'sepa',
+        account: {
+          number: 123456789,
+          bic: '123abc'
+        },
+        bank: {
+          address: {
+            country: 'GB'
+          }
+        },
+        holder: {
+          name: 'John Smith',
+          address: {
+            country: 'GB'
+          }
         }
       }
     }
@@ -69,7 +71,7 @@ describe "sell-bank-link.component", ->
 
     it "should remove the account from the accounts array", ->
       ctrl = getController(handlers)
-      account = ctrl.accounts[0]
+      account = ctrl.accounts[0]['_account']
       ctrl.handleAccountDelete(account)
       scope.$digest()
       expect(ctrl.accounts).toEqual([])
