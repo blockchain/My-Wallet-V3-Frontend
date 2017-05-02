@@ -28,11 +28,9 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   };
 
   this.cancel = () => {
-    $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
-    buySell.getTrades().then(() => {
-      $scope.goToOrderHistory();
-    });
+    $rootScope.$broadcast('fetchExchangeProfile');
+    this.trade && this.trade.sendAmount && buySell.getTrades().then($scope.goToOrderHistory());
   };
 
   this.close = (idx) => {
