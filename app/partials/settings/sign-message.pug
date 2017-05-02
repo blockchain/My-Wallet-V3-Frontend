@@ -7,7 +7,7 @@
     .form-group.row.pbm.flex-justify.flex-center
       label.control-label.mbn(translate="ADDRESS")
       span.type-lbl :
-      .flex-1.type-lbl {{ address.address }}
+      .flex-1.type-lbl(translate="no") {{ address.address }}
     .form-group.row.pbm.flex-row.flex-justify.note
       label.control-label(translate="MESSAGE")
       span.type-lbl :
@@ -15,9 +15,9 @@
     .form-group.flex-row(ng-show="signature")
       label.control-label(translate="SIGNATURE")
       span.type-lbl :
-      p.form-control-static.bitcoin-address(single-click-select copy-content="{{signature}}") 
+      p.form-control-static.bitcoin-address(single-click-select copy-content="{{signature}}")
         button.clipboard.btn.btn-default
-        span {{ signature }}
+        span(translate="no") {{ signature }}
 
 .modal-footer
   div(ng-hide="signature")

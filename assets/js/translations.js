@@ -19,4 +19,7 @@ function TranslationsConfig ($translateProvider) {
   $translateProvider.determinePreferredLanguage();
   $translateProvider.fallbackLanguage('en');
   $translateProvider.useSanitizeValueStrategy('escaped');
+
+  // Use our custom directive in some cases:
+  $translateProvider.directivePriority(0);
 }

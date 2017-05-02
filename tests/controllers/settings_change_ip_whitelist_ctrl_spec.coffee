@@ -31,6 +31,7 @@ describe "ChangeIpWhitelistCtrl", ->
     spyOn(Wallet, "setIPWhitelist").and.callThrough()
     scope.fields.ipWhitelist = "10.0.0.85"
     scope.setIPWhitelist()
+    scope.$digest()
     expect(Wallet.setIPWhitelist).toHaveBeenCalled()
 
   describe "valid", ->

@@ -14,18 +14,19 @@
           label.flex-between.flex-baseline
             span
               span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
-              helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER")
+              helper-button(content="COPY_AND_SHARE_ADDRESS.HELPER" ng-hide="isToImportedAddress()")
+              helper-button(content="COPY_AND_SHARE_IMPORTED_ADDRESS.HELPER" ng-show="isToImportedAddress()")
             a.f-12.em-300(translate="VIEW_QR" ng-click="state.viewQR = true")
           .flex-row
-            span.f-16.bg-grey.ph-25.pv-10.width-100 {{ address() }}
+            span.f-16.bg-grey.ph-25.pv-10.width-100(translate="no") {{ address() }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browserCanExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
-            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isAddressCopied")
-      
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
+
       .group.mb-20
         .item
           .or-horizontal Or
         
-      .group.inline.mb-25
+      .group.inline.mb-20
         .item.width-100
           label.capitalize(translate="ENTER_AMOUNT:")
           .flex-center
@@ -55,7 +56,7 @@
                 max="2100000000000000"
                 required)
               span.mhm {{ settings.currency.code }}
-      
+
       .group.mb-20(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': state.to.isWatchOnly}")
         .item
           label(translate="RECEIVE_TO")
@@ -66,12 +67,12 @@
               span(in-view="$last && destination.type==='Imported Addresses' && increaseLimit()")
                 label-origin(origin="::destination" highlight="$select.search")
           span.help-block(ng-show="state.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
-        
+
       .group.mb-20
         .item
           label(translate="DESCRIPTION:")
-          textarea(name="label" ng-model="state.label" rows="8" cols="80" placeholder="What's this transaction for?" required)
-      
+          textarea(name="label" ng-model="state.label" maxlength="512" rows="8" cols="80" placeholder="What's this transaction for?" required)
+
       .group.mb-10
         .item
           button.btn.button-primary.upper(ng-disabled="requestForm.$invalid || locked" translate="NEXT" type="submit")
@@ -90,28 +91,28 @@
           .flex-row
             span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden {{ paymentRequestURL(true) }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isBitcoinURICopied || !browserCanExecCommand" copy-content="{{ paymentRequestURL(true) }}" ng-click="state.isBitcoinURICopied = true")
-            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied")
-          
+            span.f-14.ph-25.pv-10.upper.white.bg-success(translate="COPIED" ng-show="state.isBitcoinURICopied" ng-mouseleave="state.isBitcoinURICopied = false")
+
   div(ng-show="state.requestCreated")
     p.f-14.mb-25(translate="Send the link below to your friend or contact (via email or other messaging service), and they will be able to send bitcoin directly to your wallet.")
-    
+
     form.bc-form
       .group
         .item
           label(translate="Payment Request:")
-    
+
     .bg-grey.pv-30.ph-60.flex-column.center
       span.received.f-28.mb-10.em-600 {{ format(fromSatoshi(state.amount || 0, settings.btcCurrency), settings.btcCurrency, true) }}
       span.received.f-20.em-300 {{ format(fromSatoshi(state.amount || 0, settings.currency), settings.currency, true) }}
-      span.f-16.em-300.mt-20.mbn(ng-show="state.label")
+      span.f-16.em-300.mt-20.mbn.request-link-container(ng-show="state.label")
         span For
-        |  
+        |
         span.italic "{{ state.label }}"
-    
+
     .bg-grey.pv-10.ph-30.center.border-top
-      span.f-12(style="word-break: break-all;") {{ paymentRequestURL() }}
-      
+      div.f-12.request-link-container {{ paymentRequestURL() }}
+
     button.btn.button-primary.full.upper.mt-20(single-click-select copy-content="{{ paymentRequestURL() }}" ng-click="state.isPaymentRequestCopied = true" ng-hide="state.isPaymentRequestCopied || !browserCanExecCommand" translate="COPY_LINK")
-    button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED")
-    
+    button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED" ng-mouseleave="state.isPaymentRequestCopied = false")
+
     a.display-block.center.mt-20(ng-click="$close()") Close

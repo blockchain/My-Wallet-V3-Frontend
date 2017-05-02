@@ -54,6 +54,7 @@ describe "NavigationCtrl", ->
 
       Wallet.store.setIsSynchronizedWithServer(true)
 
+      spyOn(Date, 'now').and.returnValue(4)
       spyOn($cookies, 'get').and.returnValue(2)
 
       scope = $rootScope.$new()
@@ -114,7 +115,6 @@ describe "NavigationCtrl", ->
 
       it "should update metadata service when new is viewed", inject(($timeout) ->
         spyOn(scope.metaData, 'update')
-        spyOn(Date, 'now').and.returnValue(4)
         $timeout.flush()
         expect(scope.nLatestFeats).toEqual(1)
         scope.viewedWhatsNew()
@@ -137,7 +137,6 @@ describe "NavigationCtrl", ->
 
       it "should set new cookie when whats new is viewed", inject(($cookies, $timeout) ->
         spyOn($cookies, 'put')
-        spyOn(Date, 'now').and.returnValue(4)
         $timeout.flush()
         expect(scope.nLatestFeats).toEqual(1)
         scope.viewedWhatsNew()
@@ -161,7 +160,6 @@ describe "NavigationCtrl", ->
 
       it "should set new cookie when whats new is viewed", inject(($cookies, $timeout) ->
         spyOn($cookies, 'put')
-        spyOn(Date, 'now').and.returnValue(4)
         $timeout.flush()
         expect(scope.nLatestFeats).toEqual(1)
         scope.viewedWhatsNew()

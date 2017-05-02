@@ -1,4 +1,4 @@
-.modal-body(translate-namespace="{{::namespace}}" data-preflight-tag="Confirm")
+.modal-body(translate-namespace="{{::namespace}}" capture-key="{'Enter': $close}" data-preflight-tag="Confirm")
   h4
     i.security-red.mrs(ng-class="{'{{iconClass}}': iconClass, 'ti-alert': !iconClass, success: success}")
     span(translate=".TITLE")
