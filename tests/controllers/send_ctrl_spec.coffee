@@ -129,7 +129,7 @@ describe "SendCtrl", ->
         expect(scope.sending).toEqual(false)
 
       it "should not start on the confirmation step", ->
-        expect(scope.confirmationStep).toEqual(false)
+        expect(scope.confirm).toEqual(false)
 
       it "should not start in advanced send mode", ->
         expect(scope.advanced).toEqual(false)
@@ -572,26 +572,6 @@ describe "SendCtrl", ->
         scope.sendInputMetrics("paste")
         $httpBackend.verifyNoOutstandingExpectation()
 
-    describe "resetSendForm", ->
-
-      beforeEach ->
-        scope.transaction.from = Wallet.legacyAddresses()[1]
-        scope.transaction.destinations = [Wallet.accounts()[1]]
-        scope.transaction.amounts = [1111]
-        scope.transaction.fee = 9000
-
-      it "should set transaction to equal the template", ->
-        scope.resetSendForm()
-        expect(scope.transaction.destinations).toEqual([null])
-        expect(scope.transaction.amounts).toEqual([null])
-        expect(scope.transaction.fee).toEqual(0)
-
-      # Not working for some reason
-      # it "should set transaction from field to default account", inject((MyWallet) ->
-      #   scope.resetSendForm()
-      #   expect(scope.transaction.from).toEqual(MyWallet.wallet.hdwallet.defaultAccount)
-      # )
-
     describe "numberOfActiveAccountsAndLegacyAddresses", ->
 
       it "should return the correct amount", ->
@@ -703,13 +683,13 @@ describe "SendCtrl", ->
         scope.goToConfirmation()
         scope.$digest()
         expect(scope.finalBuild).toHaveBeenCalled()
-        expect(scope.confirmationStep).toEqual(true)
+        expect(scope.confirm).toEqual(true)
       )
 
       it "should be able to go back from confirmation step", ->
-        scope.confirmationStep = true
+        scope.confirm = true
         scope.backToForm()
-        expect(scope.confirmationStep).toBeFalsy()
+        expect(scope.confirm).toBeFalsy()
 
       it "should be able to switch to advanced send", ->
         expect(scope.advanced).toBeFalsy()
@@ -730,20 +710,6 @@ describe "SendCtrl", ->
         scope.transaction.amounts = [null, null]
         scope.regularSend()
         expect(scope.transaction.amounts.length).toEqual(1)
-
-      beforeEach ->
-        scope.transaction.destinations = [null, null]
-        scope.transaction.amounts = [0.5, 1.2]
-
-      it "should be able to add a destination", ->
-        scope.addDestination()
-        expect(scope.transaction.destinations.length).toBe(3)
-        expect(scope.transaction.amounts.length).toBe(3)
-
-      it "should be able to remove a destination", ->
-        scope.removeDestination(0)
-        expect(scope.transaction.destinations.length).toBe(1)
-        expect(scope.transaction.amounts.length).toBe(1)
 
     describe "finalBuild", ->
 

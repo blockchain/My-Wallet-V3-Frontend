@@ -25,7 +25,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.increaseLimit = () => $scope.originLimit += 50;
 
   $scope.sending = false;
-  $scope.confirmationStep = false;
+  $scope.confirm = false;
   $scope.advanced = false;
   $scope.building = false;
 
@@ -114,17 +114,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     $scope.setPaymentAmount();
   };
 
-  $scope.resetSendForm = () => {
-    $scope.transaction = angular.copy($scope.transactionTemplate);
-    $scope.transaction.from = smartAccount.getDefault();
-    console.log($scope.transaction.from);
-    $scope.setPaymentFee();
-
-    // Remove error messages:
-    $scope.sendForm.$setPristine();
-    $scope.sendForm.$setUntouched();
-  };
-
   $scope.reopenModal = () => {
     $timeout(() => $uibModal.open({
       templateUrl: 'partials/send.pug',
@@ -133,20 +122,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       resolve: {paymentRequest}
     }), 500);
     $uibModalInstance.dismiss();
-  };
-
-  $scope.addDestination = () => {
-    $scope.transaction.amounts.push(null);
-    $scope.transaction.destinations.push(null);
-    $scope.setPaymentAmount();
-    $scope.setPaymentTo();
-  };
-
-  $scope.removeDestination = (index) => {
-    $scope.transaction.amounts.splice(index, 1);
-    $scope.transaction.destinations.splice(index, 1);
-    $scope.setPaymentAmount();
-    $scope.setPaymentTo();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -347,7 +322,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.backToForm = () => {
-    $scope.confirmationStep = false;
+    $scope.confirm = false;
   };
 
   $scope.advancedSend = () => {
@@ -380,7 +355,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       .then($scope.checkFee)
       .then($scope.finalBuild)
       .then(() => {
-        $scope.confirmationStep = true;
+        $scope.confirm = true;
         if ($scope.AB_TEST_FEE) {
           Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
         }

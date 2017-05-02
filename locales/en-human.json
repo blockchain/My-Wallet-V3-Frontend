@@ -611,7 +611,6 @@
   "2FA_ERROR" : "An error occurred while enabling 2FA. Please try again later.",
   "2FA_INVALID" : "The two factor authentication code could not be verified. Please try again.",
   "SEND_STEP_1" : "Instantly send bitcoin to any bitcoin address.",
-  "SEND_STEP_1_ADVANCED" : "Send bitcoin to one or more addresses and define your own miners fee",
   "SEND_STEP_2" : "Please review your transaction",
   "STEP" : "Step ",
   "OF_2" : " of 2",
