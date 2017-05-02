@@ -25,6 +25,7 @@ describe "CoinifySummaryController", ->
     state: 'awaiting_transfer_in'
     inCurrency: 'USD'
     outCurrency: 'BTC'
+    watchAddress: () -> $q.resolve()
 
   beforeEach angular.mock.module("walletApp")
 
