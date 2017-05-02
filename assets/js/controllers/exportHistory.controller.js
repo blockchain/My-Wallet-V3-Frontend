@@ -1,83 +1,93 @@
 angular
-  .module('walletApp')
-  .controller('ExportHistoryController', ExportHistoryController);
+    .module('walletApp')
+    .controller('ExportHistoryController', ExportHistoryController);
 
-function ExportHistoryController ($scope, $sce, $timeout, $translate, $filter, format, Wallet, Alerts, ExportHistory, activeIndex) {
-  $scope.limit = 50;
-  $scope.incLimit = () => $scope.limit += 50;
+function ExportHistoryController($scope, $timeout, $translate, browser, format, DateHelper, Wallet, Alerts, ExportHistory, activeIndex) {
 
-  $scope.ableBrowsers = ['chrome', 'firefox'];
-  $scope.canTriggerDownload = $scope.ableBrowsers.indexOf(browserDetection().browser) > -1;
+    // Private
+    let compatibleBrowsers = browser.canDownloadFile;
+    let currentBrowser = browserDetection().browser;
+    let accounts = Wallet.accounts().filter(a => !a.archived && a.index !== null);
+    let addresses = Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address);
+    let all_accounts = {
+        index: '',
+        label: $translate.instant('ALL_ACCOUNTS'),
+        address: accounts.map(a => a.extendedPublicKey).concat(addresses)
+    };
+    let imported_addresses = {
+        index: 'imported',
+        label: $translate.instant('IMPORTED_ADDRESSES'),
+        address: addresses
+    };
+    let startDate = DateHelper.round(DateHelper.subtractDays(DateHelper.now(), 7));
+    let endDate = DateHelper.round(DateHelper.now());
+    let dashedStartDate = DateHelper.toCustomShortDate('-', startDate);
+    let dashedEndDate = DateHelper.toCustomShortDate('-', endDate);
+    let slashedStartDate = DateHelper.toCustomShortDate('/', startDate);
+    let slashedEndDate = DateHelper.toCustomShortDate('/', endDate);
 
-  let accounts = Wallet.accounts().filter(a => !a.archived && a.index != null);
-  let addresses = Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address);
+    // Public
+    let vm = this;
+    vm.limit = 50;
+    vm.incLimit = () => vm.limit += 50;
+    vm.canTriggerDownload = compatibleBrowsers.indexOf(currentBrowser) > -1;
+    vm.format = DateHelper.format.shortDate;
 
-  let all = {
-    index: '',
-    label: $translate.instant('ALL_ACCOUNTS'),
-    address: accounts.map(a => a.extendedPublicKey).concat(addresses)
-  };
+    vm.targets = [all_accounts].concat(accounts.map(format.origin));
+    if (addresses.length) {
+        vm.targets.push(imported_addresses);
+    }
 
-  let imported = {
-    index: 'imported',
-    label: $translate.instant('IMPORTED_ADDRESSES'),
-    address: addresses
-  };
+    vm.isLast = (t) => t === vm.targets[limit - 1];
 
-  $scope.targets = [all].concat(accounts.map(format.origin));
-  if (addresses.length) $scope.targets.push(imported);
+    vm.activeCount = (
+        Wallet.accounts().filter(a => !a.archived).length +
+        Wallet.legacyAddresses().filter(a => !a.archived).length
+    );
 
-  $scope.isLast = (t) => t === $scope.targets[$scope.limit - 1];
+    vm.active = vm.activeCount === 1 ? all_accounts : vm.targets.filter(t => t.index.toString() === activeIndex)[0];
 
-  $scope.activeCount = (
-    Wallet.accounts().filter(a => !a.archived).length +
-    Wallet.legacyAddresses().filter(a => !a.archived).length
-  );
+    vm.options = {
+        minDate: DateHelper.bitcoinStartDate,
+        maxDate: DateHelper.now
+    };
 
-  $scope.active = $scope.activeCount === 1
-    ? all : $scope.targets.filter(t => t.index.toString() === activeIndex)[0];
+    vm.start = {
+        open: true,
+        date: startDate
+    };
 
-  let roundDate = (d) => {
-    d = new Date(d);
-    d.setHours(0);
-    d.setMinutes(0);
-    d.setSeconds(0);
-    d.setMilliseconds(0);
-    return d;
-  };
+    vm.end = {
+        open: true,
+        date: endDate
+    };
 
-  $scope.format = 'dd/MM/yyyy';
-  $scope.options = { minDate: new Date(1231024500000), maxDate: new Date() };
+    vm.filename = () => `history-${dashedStartDate}-${dashedEndDate}.csv`;
 
-  $scope.start = { open: true, date: roundDate(Date.now() - 604800000) };
-  $scope.end = { open: true, date: roundDate(Date.now()) };
+    vm.submit = () => {
 
-  $scope.formatDate = (sep, date) => $filter('date')(date, `dd${sep}MM${sep}yyyy`);
+        vm.busy = true;
 
-  $scope.formatFilename = () => {
-    let start = $scope.formatDate('-', $scope.start.date);
-    let end = $scope.formatDate('-', $scope.end.date);
-    return `history-${start}-${end}.csv`;
-  };
+        let activeAddress = vm.active.address || vm.active.xpub;
 
-  $scope.submit = () => {
-    $scope.busy = true;
-    let start = $scope.formatDate('/', $scope.start.date);
-    let end = $scope.formatDate('/', $scope.end.date);
-    let active = $scope.active.address || $scope.active.xpub;
-    ExportHistory.fetch(start, end, active)
-      .then((data) => {
-        $scope.history = data;
-        $scope.canTriggerDownload && $scope.$broadcast('download');
-      })
-      .catch((error) => { Alerts.displayError(error || 'UNKNOWN_ERROR'); })
-      .finally(() => $scope.busy = false);
-  };
+        ExportHistory.fetch(slashedStartDate, slashedEndDate, activeAddress)
+            .then((data) => {
+                vm.history = data;
+                vm.canTriggerDownload && $scope.$broadcast('download');
+            })
+            .catch((error) => {
+                Alerts.displayError(error || 'UNKNOWN_ERROR');
+            })
+            .finally(() => vm.busy = false);
+    };
 
-  $scope.$watchGroup(['start.date', 'end.date'], () => {
-    $scope.history = null;
-  });
+    $scope.$watchGroup(['vm.start.date', 'vm.end.date'], () => {
+        vm.history = null;
+    });
 
-  // need to open/close uib-datepicker-popup for it to validate minDate
-  $timeout(() => { $scope.start.open = $scope.end.open = false; }, 100);
+    // need to open/close uib-datepicker-popup for it to validate minDate
+    $timeout(() => {
+        vm.start.open = vm.end.open = false;
+    }, 100);
+
 }
