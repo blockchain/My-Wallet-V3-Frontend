@@ -110,7 +110,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
           .then(transactionSucceeded)
           .catch(handleError);
 
-        // for when sending btc is disabled
+        // undo these comments when sending btc is disabled
         // this.waiting = false;
         // this.onComplete();
       })

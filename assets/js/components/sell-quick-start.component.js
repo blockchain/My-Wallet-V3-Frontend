@@ -103,7 +103,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     if ($scope.lastInput === 'btc') {
       $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error));
     } else if ($scope.lastInput === 'fiat') {
-      buySell.getSellQuote(this.transaction.fiat, this.transaction.currency.code, 'BTC').then(success, error);
+      $q.resolve(buySell.getSellQuote(this.transaction.fiat, this.transaction.currency.code, 'BTC').then(success, error));
     } else {
       this.status = { busy: false };
     }
@@ -160,7 +160,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.checkForNoFee = () => {
     this.status.busy = true;
-    if (!this.transaction || !this.transaction.btc || $scope.isSweepTransaction) return;
+    if (!this.transaction || !this.transaction.btc) return;
     let tradeInSatoshi = currency.convertToSatoshi(this.transaction.btc, currency.bitCurrencies[0]);
     let index = Wallet.getDefaultAccountIndex();
     $scope.payment = Wallet.my.wallet.createPayment();

@@ -142,7 +142,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.bankId = account.id;
   };
 
-  this.onCreateBankSuccess = (bankId) => this.bankId = bankId;
+  this.onCreateBankSuccess = (bankId) => {
+    this.bankId = bankId.bankId;
+  };
   this.onSellSuccess = (trade) => this.sellTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
 

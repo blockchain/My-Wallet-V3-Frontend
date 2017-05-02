@@ -29,7 +29,7 @@
       transaction="vm.transaction"
       payment-account="vm.paymentAccount"
       on-complete="vm.goTo('summary')"
-      on-success="vm.onCreateBankSuccess(bankId)"
+      on-success="vm.onCreateBankSuccess({bankId})"
       close="vm.close()")
   sell-bank-link(
       ng-if="vm.onStep('bank-link')" 

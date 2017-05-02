@@ -24,7 +24,7 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
 
   this.handleAccountDelete = (account) => {
     for (let i = 0; i < this.accounts.length; i++) {
-      if (this.accounts[i]['id'] === account['id']) this.accounts.splice(i, 1);
+      if (this.accounts[i]['_account']['id'] === account['id']) this.accounts.splice(i, 1);
     }
     this.selecting = false;
     this.bankLinkEdit();

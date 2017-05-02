@@ -99,7 +99,7 @@
               popup-name="coinify-verification"
               translate="WHY")
       .flex-row.mt-5(ng-hide="$ctrl.tradingDisabled")
-        div.pos-abs(ng-hide="!exchange._user || $ctrl.error.moreThanInWallet || $ctrl.tradingDisabled || fiatForm.fiat.$error.min || fiatForm.fiat.$error.max")
+        div.pos-abs(ng-hide="!$ctrl.exchange._user || $ctrl.error.moreThanInWallet || $ctrl.tradingDisabled || fiatForm.fiat.$error.min || fiatForm.fiat.$error.max")
           span(translate="SELL.MAX_DAILY")
           | &nbsp;
           span {{limitsCurrencySymbol.symbol}}{{sellLimit}}.
