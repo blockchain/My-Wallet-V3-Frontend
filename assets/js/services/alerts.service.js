@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', '$cookies'];
+Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', 'localStorageService'];
 
-function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, $cookies) {
+function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, localStorageService) {
   const service = {
     alerts: [],
     close,
@@ -73,7 +73,7 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
 
   function surveyCloseConfirm (survey, links, index, sell) {
     let link = links[index];
-    let surveyOpened = $cookies.getObject(survey);
+    let surveyOpened = localStorageService.get(survey);
 
     let hasSeenPrompt = !links.length ||
                         index >= links.length ||
@@ -85,7 +85,7 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
       }
       return service.confirm('CONFIRM_CLOSE_BUY', {action: 'IM_DONE'});
     } else {
-      $cookies.putObject(survey, {index: index});
+      localStorageService.set(survey, {index: index});
       let openSurvey = () => BrowserHelper.safeWindowOpen(link);
       return service.confirm('SURVEY_PROMPT', {action: 'TAKE_SURVEY', friendly: true, cancel: 'NO_THANKS'})
                     .then(openSurvey)

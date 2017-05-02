@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ResetTwoFactorCtrl', ResetTwoFactorCtrl);
 
-function ResetTwoFactorCtrl ($scope, $cookies, $q, $sce, Alerts, Wallet, WalletNetwork) {
+function ResetTwoFactorCtrl ($scope, localStorageService, $q, $sce, Alerts, Wallet, WalletNetwork) {
   $scope.currentStep = 1;
 
   $scope.fields = {
@@ -13,7 +13,7 @@ function ResetTwoFactorCtrl ($scope, $cookies, $q, $sce, Alerts, Wallet, WalletN
     captcha: ''
   };
 
-  $scope.fields.uid = $cookies.get('uid');
+  $scope.fields.uid = localStorageService.get('guid');
 
   $scope.refreshCaptcha = () => $q.resolve(
     WalletNetwork.getCaptchaImage().then((data) => {

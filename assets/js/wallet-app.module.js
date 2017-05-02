@@ -23,6 +23,7 @@ const modules = [
   'walletTranslations',
   'walletFilters',
   'oc.lazyLoad',
+  'LocalStorageModule',
   // Not needed for landing page, but loading it now for the config step below:
   'ui.select',
   // Not needed for landing page, TODO: lazy load
@@ -75,6 +76,10 @@ angular.module('walletApp', modules)
       files: bcPhoneNumberLazyLoadFiles
     }]
   });
+}).config((localStorageServiceProvider) => {
+  localStorageServiceProvider
+    // We delete existing cookies; make sure we don't go in circles.
+    .setDefaultToCookie(false);
 })
 .run(() => {
 });

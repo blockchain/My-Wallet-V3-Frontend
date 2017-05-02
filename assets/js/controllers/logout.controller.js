@@ -2,15 +2,15 @@ angular
   .module('walletApp')
   .controller('LogoutController', LogoutController);
 
-function LogoutController ($scope, $cookies, $q, $timeout, $interval, $state, $window, Wallet, Alerts) {
+function LogoutController ($scope, localStorageService, $q, $timeout, $interval, $state, $window, Wallet, Alerts) {
   $scope.timeToRedirect = 10;
   $scope.toLogin = () => { $state.go('public.login-no-uid'); };
 
   $scope.deauth = () => {
     $scope.deauthorizing = true;
     $scope.timeToRedirect = -1;
-    let sessionToken = $cookies.get('session');
-    $cookies.remove('session');
+    let sessionToken = localStorageService.get('session');
+    localStorageService.remove('session');
 
     $q.resolve(Wallet.my.endSession(sessionToken))
       .then(() => $scope.deauthorized = true)

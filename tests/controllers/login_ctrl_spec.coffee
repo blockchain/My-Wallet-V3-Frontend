@@ -1,7 +1,7 @@
 describe "LoginCtrl", ->
   scope = undefined
   Alerts = undefined
-  cookies = undefined
+  localStorageService = undefined
 
   modal =
    open: (args) ->
@@ -44,8 +44,8 @@ describe "LoginCtrl", ->
     scope.login()
   )
 
-  it "should resend two factor sms", inject((Wallet, WalletNetwork, $cookies) ->
-    spyOn($cookies, "get").and.callFake((name) ->
+  it "should resend two factor sms", inject((Wallet, WalletNetwork, localStorageService) ->
+    spyOn(localStorageService, "get").and.callFake((name) ->
       if name == "session"
         "token"
     )
