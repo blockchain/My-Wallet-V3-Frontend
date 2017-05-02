@@ -129,17 +129,19 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
     });
   });
 
-  service.openBuyView = service.openOnce((trade = null, options = {}) => {
+  service.openBuyView = service.openOnce((quote, trade) => {
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
-      windowClass: 'bc-modal auto buy',
       controller: 'CoinifyController',
+      controllerAs: 'vm',
+      windowClass: 'bc-modal buy',
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        trade: () => trade && trade.refresh().then(() => trade),
         options: () => Options.get(),
-        buyOptions: () => options
+        quote () { return quote; },
+        trade () { return trade; },
+        paymentMediums () { return quote && quote.getPaymentMediums(); }
       }
     });
   });

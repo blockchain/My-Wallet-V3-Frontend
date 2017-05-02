@@ -1,0 +1,40 @@
+sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
+.modal-body
+  .flex-column.mbl(ng-show="$ctrl.error")
+    p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
+    span.mvm(ng-show="$ctrl.error.error !== 'price_quote_expired'" translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $ctrl.error.error_description}")
+    span.mvm(ng-show="$ctrl.error.error === 'price_quote_expired'" translate="SELL.QUOTE_EXPIRED_ERROR" translate-values="{error: $ctrl.error.error_description}")
+  .flex-column.mbl(ng-hide="$ctrl.error")
+    p.mvm.pb-10
+      span.em-500.f-14 {{ $ctrl.transaction.btcAfterFee }} BTC
+      | &nbsp;
+      span.f-14(translate="SELL.WILL_BE_SENT")    
+    .border.pam(ng-class="{'bg-grey': editAmount}")
+      .flex-row.flex-between.pam.pos-rel.pv-15
+        span.colon( translate="SELL.BTC_TO_SELL")
+        span {{ $ctrl.transaction.btc }} BTC
+      .flex-row.flex-between.pam.pv-15
+        span.colon(translate="SELL.BTC_TX_FEE")
+        span {{ $ctrl.transaction.fee.btc }} BTC
+      .flex-row.flex-between.pam.pv-15
+        span.em-500.colon(translate="SELL.CREDIT_OWED")
+        span.em-500 {{ $ctrl.transaction.fiat | format }} {{ $ctrl.transaction.currency.code }}
+    form.clearfix(name="$ctrl.sellRateForm" role="form" novalidate)
+      .flex-row.flex-start.mtl
+        div
+          input(type="checkbox" id="rate" name="rate" ng-model="$ctrl.fields.rate" required)
+        div
+          label.mlm.em-300.f-12(for="rate" )
+            span(translate="SELL_RATE_ACCEPT")
+            helper-button(content="SELL.FIRST_CONFIRMATION")
+.modal-footer.flex-end.flex-row
+  .flex-1.flex-end
+    button.button-primary(ng-show="$ctrl.error" translate="CLOSE" ng-click="$ctrl.dismiss()")
+    button.button-muted.mrm(ng-click="$ctrl.close()" translate="CANCEL_ORDER" ng-show="!$ctrl.error" ng-disabled="$ctrl.waiting")
+    button.button-primary(
+      ladda-translate="SELL.PLACE_ORDER"
+      ng-click="$ctrl.sell()"
+      data-style="expand-left"
+      ui-ladda="$ctrl.waiting"
+      ng-hide="$ctrl.error"
+      ng-disabled="$ctrl.isDisabled()")

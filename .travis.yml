@@ -6,7 +6,7 @@ cache:
 - bower_components
 before_install:
 - npm install -g grunt-cli snazzy
-- gem install sass
+- npm install node-sass
 before_script:
 - node_modules/.bin/semistandard --verbose | snazzy
 - ./node_modules/.bin/eslint assets/js/*.module.js

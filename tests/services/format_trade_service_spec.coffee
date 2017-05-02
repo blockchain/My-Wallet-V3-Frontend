@@ -44,11 +44,11 @@ describe "formatTrade service", () ->
 
 	describe "bank trade", ->
 		beforeEach ->
-			spyOn(formatTrade, "bank_transfer").and.callThrough()
+			spyOn(formatTrade, "awaiting_transfer_in").and.callThrough()
 
 		it "should return the correct labels", ->
 			trade = trade("DKK")
-			formatTrade.bank_transfer(trade)
-			expect(formatTrade.bank_transfer).toHaveBeenCalled()
+			formatTrade.awaiting_transfer_in(trade)
+			expect(formatTrade.awaiting_transfer_in).toHaveBeenCalled()
 			result = formatTrade.labelsForCurrency(trade.inCurrency)
 			expect(result).toEqual({accountNumber: "Account Number", bankCode: "Reg. Number"})
