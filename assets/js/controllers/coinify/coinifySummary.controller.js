@@ -63,7 +63,7 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
     $q.resolve(buySell.accounts[0].buy())
                                   .then(success)
                                   .then(() => $scope.vm.goTo('isx'))
-                                  .then(() => $scope.vm.watchAddress())
+                                  .then(() => $scope.vm.trade.watchAddress())
                                   .catch((err) => {
                                     err = tryParse(err);
                                     if (err.error_description) Alerts.displayError(err.error_description);
