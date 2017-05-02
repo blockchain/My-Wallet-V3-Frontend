@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buyStatus', buyStatus);
 
-function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, $cookies, Alerts, $state, $q) {
+function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, localStorageService, Alerts, $state, $q) {
   const service = {};
 
   let isCountryWhitelisted = null;
@@ -61,7 +61,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, $coo
 
   // check to make sure this does not get called on home
   service.shouldShowBuyReminder = () => {
-    let buyReminder = $cookies.getObject('buy-bitcoin-reminder');
+    let buyReminder = localStorageService.get('buy-bitcoin-reminder');
     let timeHasPassed = buyReminder ? new Date() > buyReminder.when : true;
     let shownTwice = buyReminder ? buyReminder.index >= 2 : false;
     let firstTime = Wallet.goal.firstTime;
@@ -71,7 +71,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, $coo
   };
 
   service.showBuyReminder = () => {
-    let buyReminder = $cookies.getObject('buy-bitcoin-reminder');
+    let buyReminder = localStorageService.get('buy-bitcoin-reminder');
 
     let options = (ops) => angular.merge({ friendly: true, modalClass: 'top' }, ops);
     let saidNoThanks = (e) => e === 'cancelled' ? $q.resolve() : $q.reject();
@@ -82,7 +82,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, $coo
     Alerts.confirm('BUY_BITCOIN_REMINDER', options({cancel: 'NO_THANKS', action: 'GET_BITCOIN', iconClass: 'hide'}))
           .then(goToBuy, saidNoThanks);
 
-    $cookies.putObject('buy-bitcoin-reminder', {
+    localStorageService.set('buy-bitcoin-reminder', {
       index: nextIndex,
       when: nextWeek()
     });

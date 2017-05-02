@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('pulseCta', pulseCta);
 
-pulseCta.$inject = ['$cookies'];
+pulseCta.$inject = [];
 
 function pulseCta () {
   const directive = {
