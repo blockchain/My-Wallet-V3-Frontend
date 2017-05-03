@@ -74,7 +74,7 @@ module.exports = (grunt) ->
           'bower_components/angular-ui-select/dist/select.js'
           'bower_components/ng-file-upload/ng-file-upload-shim.min.js'
           'bower_components/ng-file-upload/ng-file-upload.min.js'
-          'bower_components/angular-local-storage/dist/angular-local-storage.min.js'
+          'bower_components/angular-local-storage/dist/angular-local-storage.js'
           "build/js/shared.module.js"
           "build/js/sharedDirectives/*.js"
           "build/js/sharedServices/*.js"

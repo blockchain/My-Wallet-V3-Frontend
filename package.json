@@ -34,7 +34,7 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-pug": "^1.0.0",
-    "grunt-contrib-uglify": "1.0.*",
+    "grunt-contrib-uglify": "2.3.*",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-html2js": "WeWriteCode/grunt-html2js#pug-support",
     "grunt-include-source": "sjors/grunt-include-source#pug",
