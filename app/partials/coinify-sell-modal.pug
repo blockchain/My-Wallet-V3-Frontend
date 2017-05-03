@@ -29,7 +29,7 @@
       transaction="vm.transaction"
       payment-account="vm.paymentAccount"
       on-complete="vm.goTo('summary')"
-      on-success="vm.onCreateBankSuccess({bankId})"
+      on-success="vm.onCreateBankSuccess({bank})"
       close="vm.close()")
   sell-bank-link(
       ng-if="vm.onStep('bank-link')" 
@@ -48,9 +48,8 @@
       total-balance="vm.totalBalance"
       close="vm.close()"
       dismiss="vm.dismiss()"
-      payment-account="vm.paymentAccount"
+      bank-account="vm.selectedBankAccount"
       payment="vm.finalPayment"
-      bank-id="vm.bankId"
       on-success="vm.onSellSuccess(trade)"
       on-complete="vm.goTo('trade-complete')")
   sell-trade-finished(

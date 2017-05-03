@@ -79,8 +79,8 @@ function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
   this.createBankAccount = () => {
     this.status.waiting = true;
     if (!this.bankAccount.account.currency || !this.bankAccount.holder.name || !this.bankAccount.bank.address.country) return;
-    $q.resolve(this.paymentAccount.add(this.bankAccount))
-      .then(res => this.onSuccess({bankId: res._account.id}))
+    $q.resolve(this.paymentAccount.addBankAccount(this.bankAccount))
+      .then(createdBankAccount => this.onSuccess({bank: createdBankAccount}))
     .then(this.onComplete)
     .catch(handleError);
     this.status = {};

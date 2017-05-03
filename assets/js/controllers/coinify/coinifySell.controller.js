@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount, payment) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, bankMedium, payment) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
@@ -11,7 +11,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.alerts = [];
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
-  $scope.bankAccounts = accounts;
 
   this.user = Wallet.user;
   this.trade = trade;
@@ -21,7 +20,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.accounts = accounts;
   this.sepaCountries = country.sepaCountryCodes;
   this.payment = payment;
-  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
+  if (bankMedium) this.paymentAccount = bankMedium;
 
   this.steps = {
     'email': 0,
@@ -137,13 +136,14 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.nextStep();
   }
 
-  this.selectAccount = (account) => {
-    this.selectedBankAccount = account;
-    this.bankId = account.id;
+  this.selectAccount = (bank) => {
+    this.selectedBankAccount = bank;
+    this.bankId = bank.id;
   };
 
-  this.onCreateBankSuccess = (bankId) => {
-    this.bankId = bankId.bankId;
+  this.onCreateBankSuccess = (bank) => {
+    this.selectedBankAccount = bank.bank;
+    this.bankId = bank.bank._id;
   };
   this.onSellSuccess = (trade) => this.sellTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
@@ -156,16 +156,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   this.onSignupComplete = () => {
     this.quote.getPayoutMediums().then(mediums => {
-      mediums.bank.getAccounts().then(accounts => {
-        this.paymentAccount = accounts[0];
-        return accounts[0];
-      })
-      .then(account => {
-        account.getAll()
-          .then(banks => {
-            this.accounts = banks;
-            this.goTo('account');
-          });
+      mediums.bank.getAccounts().then(bankAccounts => {
+        this.accounts = bankAccounts;
+        this.goTo('account');
       });
     });
   };

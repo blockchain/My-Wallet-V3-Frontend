@@ -133,7 +133,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.quote.getPayoutMediums().then(mediums => {
       $scope.$parent.sell(
         { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
-        { bank: mediums.bank },
+        mediums.bank,
         $scope.payment,
         { sell: true, isSweepTransaction: $scope.isSweepTransaction }
       );

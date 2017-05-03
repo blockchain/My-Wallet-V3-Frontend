@@ -6,8 +6,7 @@ angular
       sellTrade: '<',
       totalBalance: '<',
       payment: '<',
-      paymentAccount: '<',
-      bankId: '<',
+      bankAccount: '<',
       onComplete: '&',
       close: '&',
       dismiss: '&',
@@ -102,7 +101,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
   };
   this.sell = () => {
     this.waiting = true;
-    $q.resolve(this.paymentAccount.sell(this.bankId))
+    $q.resolve(this.bankAccount.sell())
       .then(handleSellResult)
       .then(() => {
         Wallet.askForSecondPasswordIfNeeded()
