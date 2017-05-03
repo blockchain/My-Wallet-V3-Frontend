@@ -305,7 +305,7 @@ function CoinifySellController ($scope, $filter, $q, MyWallet, Wallet, MyWalletH
     } else {
       $scope.sellTrade = sellResult;
       $scope.sendAddress = sellResult.transferIn.details.account;
-      $scope.sendAmount = sellResult.transferIn.sendAmount * 100000000;
+      $scope.sendAmount = currency.convertToSatoshi(sellResult.transferIn.sendAmount, currency.bitCurrencies[0]);
       $scope.formatBankInfo(sellResult);
     }
   };
