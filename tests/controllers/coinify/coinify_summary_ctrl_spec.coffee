@@ -35,6 +35,7 @@ describe "CoinifySummaryController", ->
       $controller = _$controller_
       $q = _$q_
 
+      MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
       buySell = $injector.get("buySell")
