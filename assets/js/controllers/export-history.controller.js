@@ -66,8 +66,6 @@ function ExportHistoryController ($scope, $timeout, $translate, browser, format,
 
     let activeAddress = vm.active.address || vm.active.xpub;
 
-    console.log(vm);
-
     ExportHistory.fetch(convertToSlashed(vm.start.date), convertToSlashed(vm.end.date), activeAddress)
       .then((data) => {
         vm.history = data;
