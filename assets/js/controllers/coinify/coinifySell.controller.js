@@ -156,6 +156,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   this.onSignupComplete = () => {
     this.quote.getPayoutMediums().then(mediums => {
+      this.paymentAccount = mediums.bank;
       mediums.bank.getAccounts().then(bankAccounts => {
         this.accounts = bankAccounts;
         this.goTo('account');
