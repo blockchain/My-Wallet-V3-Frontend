@@ -13,6 +13,7 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
+  $scope.currencies = currency.coinifyCurrencies;
 
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }
