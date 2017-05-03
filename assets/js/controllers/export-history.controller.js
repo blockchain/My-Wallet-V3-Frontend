@@ -1,6 +1,6 @@
 angular
-    .module('walletApp')
-    .controller('ExportHistoryController', ExportHistoryController);
+  .module('walletApp')
+  .controller('ExportHistoryController', ExportHistoryController);
 
 function ExportHistoryController ($scope, $timeout, $translate, browser, format, DateHelper, Wallet, Alerts, ExportHistory, activeIndex) {
   // Private
