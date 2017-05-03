@@ -16,6 +16,7 @@ before_script:
 - # ./node_modules/.bin/eslint assets/js/core/*.js
 - # ./node_modules/.bin/eslint assets/js/directives/*.js
 - ./node_modules/.bin/eslint assets/js/filters/*.js
+- ./node_modules/.bin/eslint assets/js/helpers/*.js
 - ./node_modules/.bin/eslint assets/js/services/*.js
 - ./node_modules/.bin/eslint assets/js/sharedDirectives/*.js
 - ./node_modules/.bin/eslint assets/js/sharedServices/*.js
