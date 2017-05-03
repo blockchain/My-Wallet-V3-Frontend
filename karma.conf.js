@@ -27,6 +27,7 @@ module.exports = function (config) {
       'bower_components/browserdetection/src/browser-detection.js',
       'bower_components/compare-versions/index.js',
       'bower_components/ng-file-upload/ng-file-upload.min.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.min.js',
       'assets/js/shared.module.js',
       'assets/js/sharedServices/*.service.js',
       'assets/js/sharedDirectives/*.directive.js',

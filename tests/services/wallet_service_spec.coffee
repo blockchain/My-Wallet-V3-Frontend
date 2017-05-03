@@ -11,7 +11,7 @@ describe "walletServices", () ->
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
-    angular.mock.inject ($injector, _$rootScope_, $q, $cookies) ->
+    angular.mock.inject ($injector, _$rootScope_, $q, localStorageService) ->
       $rootScope = _$rootScope_
       Wallet = $injector.get("Wallet")
       MyBlockchainSettings = $injector.get("MyBlockchainSettings")
@@ -22,7 +22,7 @@ describe "walletServices", () ->
       Options.get = () ->
         Promise.resolve({})
 
-      spyOn($cookies, "get").and.callFake((name) ->
+      spyOn(localStorageService, "get").and.callFake((name) ->
         if name == "session"
           "token"
       )

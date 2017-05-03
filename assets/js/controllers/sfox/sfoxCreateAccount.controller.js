@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCreateAccountController', SfoxCreateAccountController);
 
-function SfoxCreateAccountController ($scope, AngularHelper, $timeout, $q, $cookies, Wallet, Alerts, sfox, bcPhoneNumber) {
+function SfoxCreateAccountController ($scope, AngularHelper, $timeout, $q, localStorageService, Wallet, Alerts, sfox, bcPhoneNumber) {
   const views = ['summary', 'email', 'mobile'];
   const cookieIds = { SENT_EMAIL: 'sentEmailCode', SENT_MOBILE: 'sentMobileCode' };
   let exchange = $scope.vm.exchange;
@@ -10,8 +10,8 @@ function SfoxCreateAccountController ($scope, AngularHelper, $timeout, $q, $cook
 
   let state = $scope.state = {
     terms: false,
-    sentEmailCode: $cookies.getObject(cookieIds.SENT_EMAIL),
-    sentMobileCode: $cookies.getObject(cookieIds.SENT_MOBILE),
+    sentEmailCode: localStorageService.get(cookieIds.SENT_EMAIL),
+    sentMobileCode: localStorageService.get(cookieIds.SENT_MOBILE),
     get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
 
@@ -112,20 +112,20 @@ function SfoxCreateAccountController ($scope, AngularHelper, $timeout, $q, $cook
   $scope.$watch('state.view', (view) => {
     let shouldSendEmail =
       !state.verifiedEmail &&
-      !$cookies.getObject('sentEmailCode') &&
+      !localStorageService.get('sentEmailCode') &&
       state.email &&
       state.email.indexOf('@') > -1;
 
     let shouldSendMobile =
       !state.verifiedMobile &&
-      !$cookies.getObject('sentMobileCode') &&
+      !localStorageService.get('sentMobileCode') &&
       bcPhoneNumber.isValid(state.mobile);
 
     if (view === 'email' && shouldSendEmail) $scope.sendEmailCode();
     if (view === 'mobile' && shouldSendMobile) $scope.sendMobileCode();
   });
 
-  let syncCookie = (id) => $cookies.putObject.bind($cookies, id);
+  let syncCookie = (id) => localStorageService.set.bind(localStorageService, id);
   $scope.$watch('state.sentEmailCode', syncCookie(cookieIds.SENT_EMAIL));
   $scope.$watch('state.sentMobileCode', syncCookie(cookieIds.SENT_MOBILE));
 

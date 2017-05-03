@@ -2,12 +2,14 @@ angular
   .module('walletApp')
   .factory('formatTrade', formatTrade);
 
-formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'];
+formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency', 'Env'];
 
-function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
+function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   const service = {
+    awaiting_transfer_in,
     confirm,
     reviewing,
+    pending,
     processing,
     cancelled,
     rejected,
@@ -16,13 +18,11 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     completed,
     completed_test,
     initiated,
-
     reject_card,
     kyc,
     error,
     success,
-    labelsForCurrency,
-    bank_transfer
+    labelsForCurrency
   };
 
   let errorStates = {
@@ -46,6 +46,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
   function expired (trade) { return service.error(trade); }
   function completed (trade) { return service.success(trade); }
   function completed_test (trade) { return service.success(trade); }
+  function pending (trade) { return service.reviewing(trade); }
 
   let addTradeDetails = (trade, account) => {
     let showTradeID = !account;
@@ -56,9 +57,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(trade.sendAmount / 100, { code: trade.inCurrency })
     };
-    if ($rootScope.buySellDebug) {
-      transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
-    }
+    Env.then(env => {
+      if (env.buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    });
     return transaction;
   };
 
@@ -153,7 +154,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
 
   function kyc (trade, state) {
     let classname = state === 'reviewing' ? 'blue' : 'state-danger-text';
-    let namespace = state === 'reviewing' ? 'TX_KYC_REVIEWING' : 'TX_KYC_REJECTED';
+    let namespace = state === 'reviewing' ? 'KYC_FLAGGED' : 'KYC_REJECTED';
 
     return {
       class: classname,
@@ -171,7 +172,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency) {
     return { accountNumber: 'IBAN', bankCode: 'BIC' };
   }
 
-  function bank_transfer (trade) {
+  function awaiting_transfer_in (trade) {
     const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',
