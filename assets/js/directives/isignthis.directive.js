@@ -14,7 +14,7 @@ function isignthis ($sce, Options) {
     template: `
       <iframe
         ng-src='{{ url }}'
-        sandbox='allow-same-origin allow-scripts allow-forms'
+        sandbox='allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation'
         scrolling = 'no'
         id='isx-iframe'
         ng-if='showFrame'
