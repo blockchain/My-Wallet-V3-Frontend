@@ -272,7 +272,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
         },
         accounts: () => {
           if (exchange.profile && !trade.state) {
-            return bankMedium.getAccounts().then(bankAccounts => {
+            return bankMedium.getBankAccounts().then(bankAccounts => {
               return bankAccounts;
             });
           }

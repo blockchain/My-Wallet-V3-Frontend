@@ -10,16 +10,15 @@ angular
       onComplete: '&',
       close: '&',
       dismiss: '&',
-      onSuccess: '&'
+      onSuccess: '&',
+      quote: '<'
     },
     templateUrl: 'partials/coinify/sell-summary.pug',
     controller: CoinifySellSummaryController,
     controllerAs: '$ctrl'
   });
 
-function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Alerts, $timeout) {
-  this.title = 'SELL.CONFIRM_SELL_ORDER';
-
+function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   this.sellRateForm;
 
   this.insufficientFunds = () => {
@@ -37,6 +36,16 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
       if (!this.sellTrade.quote) true;
     }
   };
+
+  this.checkForUpdatedQuote = () => {
+    let updated = new Date(this.quote.expiresAt).getTime();
+    let original = new Date(this.bankAccount._quote._expiresAt).getTime();
+    if ((updated && original) && (updated > original)) {
+      this.bankAccount.updateQuote(this.quote);
+    }
+  };
+
+  this.checkForUpdatedQuote();
 
   // ---- for making a sell trade ---- //
 

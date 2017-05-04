@@ -16,8 +16,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
-  this.title = 'SELL.LINKED_ACCOUNTS';
+function CoinifySellBankLinkController (Alerts) {
   if (!this.accounts.length) this.hideWhenNoAccounts = true;
   this.selecting = true;
   this.bankLinkEdit = () => this.selecting = !this.selecting;
@@ -42,6 +41,10 @@ function CoinifySellBankLinkController (buySell, Alerts, $scope, $q) {
       });
   };
 
-  this.$onChanges = (changes) => this.selectedBankAccount = changes.selectedBankAccount.currentValue;
+  this.$onChanges = (changes) => {
+    if (changes.selectedBankAccount) {
+      this.selectedBankAccount = changes.selectedBankAccount.currentValue;
+    }
+  };
   this.isDisabled = () => !this.selectedBankAccount || !this.accounts.length || !this.selecting;
 }

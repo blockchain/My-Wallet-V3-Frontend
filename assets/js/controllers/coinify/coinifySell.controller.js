@@ -21,6 +21,20 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.sepaCountries = country.sepaCountryCodes;
   this.payment = payment;
   if (bankMedium) this.paymentAccount = bankMedium;
+  this.message = 'SELL.QUOTE_EXPIRES';
+  this.now = () => new Date().getTime();
+  this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
+  this.refreshQuote = () => {
+    return $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
+  };
+
+  const onRefreshQuote = (quote) => {
+    this.quote = quote;
+    this.transaction.fiat = quote.quoteAmount / 100;
+    if (this.selectedBankAccount) {
+      this.selectedBankAccount.updateQuote(quote);
+    }
+  };
 
   this.steps = {
     'email': 0,
@@ -32,7 +46,31 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     'isx': 6
   };
   this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
-  this.goTo = (step) => this.step = this.steps[step];
+  this.goTo = (step) => {
+    this.step = this.steps[step];
+    this.setTitle(step);
+  };
+  this.setTitle = (step) => {
+    switch (step) {
+      case 'account':
+        this.title = 'SELL.ADD_BANK_ACCOUNT';
+        break;
+      case 'bank-link':
+        this.title = 'SELL.LINKED_ACCOUNTS';
+        break;
+      case 'summary':
+        this.title = 'SELL.CONFIRM_SELL_ORDER';
+        break;
+      case 'trade-complete':
+        this.title = 'SELL.SELL_BITCOIN';
+        this.hide = true;
+        break;
+      default:
+        this.title = 'SELL.SELL_BITCOIN';
+        break;
+    }
+  };
+
   this.nextStep = () => {
     if (this.isKYC) {
       this.goTo('isx');
@@ -55,6 +93,11 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
         this.goTo('summary');
       }
     }
+  };
+
+  this.getQuoteHelper = () => {
+    if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
+    else return 'SELL.QUOTE_WILL_EXPIRE';
   };
 
   if (!this.trade.btc && !this.trade.fiat) {
@@ -155,9 +198,10 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   this.onSignupComplete = () => {
+    this.refreshQuote();
     this.quote.getPayoutMediums().then(mediums => {
       this.paymentAccount = mediums.bank;
-      mediums.bank.getAccounts().then(bankAccounts => {
+      mediums.bank.getBankAccounts().then(bankAccounts => {
         this.accounts = bankAccounts;
         this.goTo('account');
       });

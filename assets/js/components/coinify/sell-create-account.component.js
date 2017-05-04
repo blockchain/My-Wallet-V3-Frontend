@@ -15,8 +15,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function CoinifySellCreateAccountController ($q, buySell, Alerts, $scope) {
-  this.title = 'SELL.ADD_BANK_ACCOUNT';
+function CoinifySellCreateAccountController ($q, Alerts, $scope) {
   this.bankAccount = {
     account: { currency: this.transaction.currency.code },
     bank: {
