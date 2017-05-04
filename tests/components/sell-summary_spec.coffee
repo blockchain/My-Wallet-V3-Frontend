@@ -39,14 +39,14 @@ describe "sell-summary.component", ->
     }
   }
 
-  paymentAccount = {
+  bankAccount = {
     sell: (bankId) -> $q.resolve(sellTrade)
   }
 
   handlers =
     transaction: transaction
     sellTrade: sellTrade
-    paymentAccount: paymentAccount
+    bankAccount: bankAccount
     sellRateForm: true
     fields: true
 
@@ -111,8 +111,8 @@ describe "sell-summary.component", ->
       ctrl.sell()
       expect(ctrl.waiting).toEqual(true)
 
-    it "should call paymentAccount.sell(bankId)", ->
+    it "should call bankAccount.sell(bankId)", ->
       ctrl = getController(handlers)
-      spyOn(ctrl.paymentAccount, 'sell')
+      spyOn(ctrl.bankAccount, 'sell')
       ctrl.sell()
-      expect(ctrl.paymentAccount.sell).toHaveBeenCalled()
+      expect(ctrl.bankAccount.sell).toHaveBeenCalled()

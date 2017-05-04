@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount, payment) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, bankMedium, payment) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
@@ -11,7 +11,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.alerts = [];
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
   $scope.sepaCountries = country.sepaCountryCodes;
-  $scope.bankAccounts = accounts;
 
   this.user = Wallet.user;
   this.trade = trade;
@@ -21,7 +20,21 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.accounts = accounts;
   this.sepaCountries = country.sepaCountryCodes;
   this.payment = payment;
-  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
+  if (bankMedium) this.paymentAccount = bankMedium;
+  this.message = 'SELL.QUOTE_EXPIRES';
+  this.now = () => new Date().getTime();
+  this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
+  this.refreshQuote = () => {
+    return $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
+  };
+
+  const onRefreshQuote = (quote) => {
+    this.quote = quote;
+    this.transaction.fiat = quote.quoteAmount / 100;
+    if (this.selectedBankAccount) {
+      this.selectedBankAccount.updateQuote(quote);
+    }
+  };
 
   this.steps = {
     'email': 0,
@@ -33,7 +46,31 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     'isx': 6
   };
   this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
-  this.goTo = (step) => this.step = this.steps[step];
+  this.goTo = (step) => {
+    this.step = this.steps[step];
+    this.setTitle(step);
+  };
+  this.setTitle = (step) => {
+    switch (step) {
+      case 'account':
+        this.title = 'SELL.ADD_BANK_ACCOUNT';
+        break;
+      case 'bank-link':
+        this.title = 'SELL.LINKED_ACCOUNTS';
+        break;
+      case 'summary':
+        this.title = 'SELL.CONFIRM_SELL_ORDER';
+        break;
+      case 'trade-complete':
+        this.title = 'SELL.SELL_BITCOIN';
+        this.hide = true;
+        break;
+      default:
+        this.title = 'SELL.SELL_BITCOIN';
+        break;
+    }
+  };
+
   this.nextStep = () => {
     if (this.isKYC) {
       this.goTo('isx');
@@ -56,6 +93,11 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
         this.goTo('summary');
       }
     }
+  };
+
+  this.getQuoteHelper = () => {
+    if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
+    else return 'SELL.QUOTE_WILL_EXPIRE';
   };
 
   if (!this.trade.btc && !this.trade.fiat) {
@@ -137,13 +179,14 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.nextStep();
   }
 
-  this.selectAccount = (account) => {
-    this.selectedBankAccount = account;
-    this.bankId = account.id;
+  this.selectAccount = (bank) => {
+    this.selectedBankAccount = bank;
+    this.bankId = bank.id;
   };
 
-  this.onCreateBankSuccess = (bankId) => {
-    this.bankId = bankId.bankId;
+  this.onCreateBankSuccess = (bank) => {
+    this.selectedBankAccount = bank.bank;
+    this.bankId = bank.bank._id;
   };
   this.onSellSuccess = (trade) => this.sellTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
@@ -155,17 +198,12 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   this.onSignupComplete = () => {
+    this.refreshQuote();
     this.quote.getPayoutMediums().then(mediums => {
-      mediums.bank.getAccounts().then(accounts => {
-        this.paymentAccount = accounts[0];
-        return accounts[0];
-      })
-      .then(account => {
-        account.getAll()
-          .then(banks => {
-            this.accounts = banks;
-            this.goTo('account');
-          });
+      this.paymentAccount = mediums.bank;
+      mediums.bank.getBankAccounts().then(bankAccounts => {
+        this.accounts = bankAccounts;
+        this.goTo('account');
       });
     });
   };

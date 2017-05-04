@@ -68,8 +68,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     tradeStateIn,
     cancelTrade,
     states,
-    getPayoutAccounts,
-    getSellBankAccounts,
     isPendingSellTrade
   };
 
@@ -258,17 +256,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function getPayoutAccounts (mediums) {
-    return mediums.bank.getAccounts()
-      .then(accounts => accounts[0]);
-  }
-
-  function getSellBankAccounts (account) {
-    return account.getAll()
-      .then(banks => banks);
-  }
-
-  function openSellView (trade, mediums, payment, buySellOptions = { sell: true }) {
+  function openSellView (trade, bankMedium, payment, buySellOptions = { sell: true }) {
     let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
@@ -279,13 +267,13 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       keyboard: false,
       resolve: {
         trade: () => trade,
-        masterPaymentAccount: () => {
-          if (exchange.profile && !trade.state) return service.getPayoutAccounts(mediums);
+        bankMedium: () => {
+          if (exchange.profile && !trade.state) return bankMedium;
         },
         accounts: () => {
           if (exchange.profile && !trade.state) {
-            return mediums.bank.getAccounts().then(accounts => {
-              return service.getSellBankAccounts(accounts[0]);
+            return bankMedium.getBankAccounts().then(bankAccounts => {
+              return bankAccounts;
             });
           }
         },
