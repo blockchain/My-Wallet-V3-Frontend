@@ -64,14 +64,14 @@
                   span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
                   span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
           //- Amount
-          .item.mt-20(ng-class="{'has-error': hasAmountError($index)}")
+          .item.mt-20
             label.colon(translate="AMOUNT")
             .flex-center
               .flex-1.flex-center.border
                 input.form-control.no-border(
                   type="number"
-                  ng-model="transaction.amounts[$index]"
-                  name="{{'amounts' + $index}}"
+                  ng-model="transaction.amount"
+                  name="amount"
                   tabindex="1"
                   transform-currency="btcCurrency"
                   placeholder="0"
@@ -85,8 +85,8 @@
               .flex-1.flex-center.border
                 input.form-control.no-border(
                   type="number"
-                  ng-model="transaction.amounts[$index]"
-                  name="{{'amountsFiat' + $index}}"
+                  ng-model="transaction.amount"
+                  name="fiatAmount"
                   tabindex="1"
                   transform-currency="fiatCurrency"
                   placeholder="0"
@@ -96,16 +96,16 @@
                   required
                 )
                 span.mhm {{ fiatCurrency.code }}
-              .has-error.mbm
-                span.help-block(
-                  ng-click="useAll()"
-                  ng-class="{'pointer': transaction.destinations.length === 1}"
-                  ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
-                  span.type-sm(translate="USE_TOTAL")
-                  | :&nbsp;
-                  span.type-sm {{ transaction.maxAvailable | convert:'btc' }}
-                span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
-                  span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
+            .has-error
+              span.help-block(
+                ng-click="useAll()"
+                ng-class="{'pointer': transaction.destinations.length === 1}"
+                ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
+                span.type-sm(translate="USE_TOTAL")
+                | :&nbsp;
+                span.type-sm {{ transaction.maxAvailable | convert:'btc' }}
+              span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
+                span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
           //- Description
           .item.mt-20
             label
@@ -113,8 +113,16 @@
               helper-button(content="SEND_BITOIN_STEP2B")
             .flex-1
               textarea.pas(rows="4" ng-model="transaction.note" name="note" maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
-          //- Fee
-          .item.mt-20(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}")
+        //- Fee
+        .group.inline.flex-center.mt-20
+          .item.inline.width-50(ng-hide="advanced")
+            label.colon(translate="TX_FEE")
+            select(ng-model="transaction.fee" name="fee" ng-change="setPaymentFee()" ng-options="feeType | translate for (feeType, fee) in transaction.fees" tabindex="" required)
+          .item.right-align.width-50(ng-show="transaction.size > 0")
+            span.f-14 {{ transaction.finalFee }} BTC
+            a(ng-click="advancedSend()")
+        //- Custom Fee
+          //- .item.mt-20(ng-show="advanced" ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}")
             label.mbn
               span.colon(translate="TX_FEE")
               helper-button(content="TX_FEE_HELP")
@@ -134,7 +142,7 @@
                       required
                       transform-currency="settings.btcCurrency"
                       placeholder="Enter your fee here")
-            span.type-sm.help-block.state-danger-text(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
+            span.type-sm.help-block.state-danger-text(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty")
             span.type-sm.help-block.blue(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
               span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
                 span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
@@ -159,18 +167,18 @@
             .width-50.width-50-mobile.flex-between
               span(ng-class="{success: address.type !== 'External'}")
                 span(ng-class="{fade: address.type === 'External'}") +&nbsp;
-                span {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
+                span {{transaction.amount | toBitCurrency:btcCurrency:false}}
               span(ng-class="{success: address.type !== 'External'}")
                 span(ng-show="address.type !== 'External'") +&nbsp;
-                fiat.mrml(btc="transaction.amounts[$index]")
+                fiat.mrml(btc="transaction.amount")
           .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
             span.mid-grey.account.width-50-mobile.width-60.f-12(translate="{{AB_TEST_FEE ? 'TX_FEE' : 'TX_FEE_REQUIRED'}}")
             .width-50.width-50-mobile.flex-between
               span.mid-grey.center
                 span.fade +&nbsp;
-                span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
+                span {{ transaction.finalFee | toBitCurrency:btcCurrency:false}}
               span.mid-grey.center
-                fiat.mrml(btc="transaction.fee")
+                fiat.mrml(btc="transaction.finalFee")
             helper-button(content="{{AB_TEST_FEE ? 'TX_FEE_CONFIRM_EXPLAIN' : 'DYK_TX_FEES'}}")
         .mvm.flex-justify.flex-1.flex-center.split-rule
         span.type-lbl.mbs.underline(translate="FROM")
