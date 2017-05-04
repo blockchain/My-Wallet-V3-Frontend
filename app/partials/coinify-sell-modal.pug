@@ -1,9 +1,14 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="SellModal")
-  //- .modal-header.bc-modal-header.flex-between.flex-center()
+  .modal-header.bc-modal-header.flex-between.flex-center
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3(ng-if="vm.onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
-        h3(ng-if="vm.onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
+        h3(translate="{{vm.title}}")
+        .flex-column.flex-align-end(uib-tooltip="{{ vm.getQuoteHelper() | translate}}"
+                                    tooltip-append-to-body="true"
+                                    tooltip-placement="top")
+          .flex-row.type-h5.em-500(ng-hide="vm.onStep('trade-complete')")
+            span {{vm.transaction.btc }} BTC ({{vm.transaction.currency.symbol}}{{vm.transaction.fiat}})
+          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="true")
   coinify-email(
       ng-if="vm.onStep('email')"
       on-complete="vm.goTo('accept-terms')"
@@ -22,14 +27,12 @@
       valid-email="vm.state.email.valid"
       on-email-change="vm.onEmailChange(false)"
       fiat-currency="vm.fiat()")
-  sell-create-account(
+  coinify-create-account(
       ng-if="vm.onStep('account')"
-      sepa-countries="vm.sepaCountries"
-      country="vm.exchangeCountry"
-      transaction="vm.transaction"
-      payment-account="vm.paymentAccount"
+      country="vm.exchange.profile.country"
       on-complete="vm.goTo('summary')"
-      on-success="vm.onCreateBankSuccess({bankId})"
+      view-info="true"
+      on-submit="vm.addBankAccount(bank, profile)"
       close="vm.close()")
   sell-bank-link(
       ng-if="vm.onStep('bank-link')" 
@@ -48,11 +51,11 @@
       total-balance="vm.totalBalance"
       close="vm.close()"
       dismiss="vm.dismiss()"
-      payment-account="vm.paymentAccount"
+      bank-account="vm.selectedBankAccount"
       payment="vm.finalPayment"
-      bank-id="vm.bankId"
       on-success="vm.onSellSuccess(trade)"
-      on-complete="vm.goTo('trade-complete')")
+      on-complete="vm.goTo('trade-complete')"
+      quote="vm.quote")
   sell-trade-finished(
       ng-if="vm.onStep('trade-complete')"
       sell-trade="vm.sellTrade"

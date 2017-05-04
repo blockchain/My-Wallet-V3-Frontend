@@ -1,4 +1,4 @@
-describe "sell-create-account.component", ->
+describe "coinify-create-account.component", ->
   $q = undefined
   scope = undefined
   Wallet = undefined
@@ -41,7 +41,7 @@ describe "sell-create-account.component", ->
   onSuccess = (bankId) -> $q.resolve()
 
   paymentAccount = {
-    add: (bankAccount) -> $q.resolve('12345').then(ctrl.onSuccess({bankId: '12345'}))
+    addBankAccount: (bankAccount) -> $q.resolve('12345').then(ctrl.onSuccess({bankId: '12345'}))
   }
 
   sepaCountries = [
@@ -84,8 +84,8 @@ describe "sell-create-account.component", ->
 
   getController = (bindings) ->
     scope = $rootScope.$new()
-    ctrl = $componentController("sellCreateAccount", $scope: scope, bindings)
-    template = $templateCache.get('partials/coinify/sell-create-account.pug')
+    ctrl = $componentController("coinifyCreateAccount", $scope: scope, bindings)
+    template = $templateCache.get('partials/coinify/coinify-create-account.pug')
     $compile(template)(scope)
     ctrl
 
@@ -130,17 +130,17 @@ describe "sell-create-account.component", ->
       ctrl = getController(handlers)
       ctrl.bankAccount.holder.name = 'Snoop Dog'
       ctrl.bankAccount.bank.address.country = undefined
-      spyOn(ctrl.paymentAccount, 'add')
+      spyOn(ctrl.paymentAccount, 'addBankAccount')
       ctrl.createBankAccount()
       $rootScope.$digest()
-      expect(ctrl.paymentAccount.add).not.toHaveBeenCalled()
+      expect(ctrl.paymentAccount.addBankAccount).not.toHaveBeenCalled()
 
-    it "should call paymentAccount.add()", ->
+    it "should call paymentAccount.addBankAccount()", ->
       ctrl = getController(handlers)
       ctrl.bankAccount.holder.name = 'Snoop Dog'
-      spyOn(ctrl.paymentAccount, 'add')
+      spyOn(ctrl.paymentAccount, 'addBankAccount')
       ctrl.createBankAccount()
-      expect(ctrl.paymentAccount.add).toHaveBeenCalled()
+      expect(ctrl.paymentAccount.addBankAccount).toHaveBeenCalled()
 
   describe ".formatIban()", ->
     beforeEach ->

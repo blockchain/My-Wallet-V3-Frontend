@@ -27,7 +27,6 @@ function CoinifySellTradeFinishedController (currency) {
     } else {
       this.tradeCompleted = false;
     }
-    this.title = 'SELL.SELL_BITCOIN';
     this.id = this.sellTrade.id;
     this.btcSold = currency.convertFromSatoshi(this.sellTrade.sendAmount, currency.bitCurrencies[0]);
     this.bank = this.sellTrade._bankAccountNumber;

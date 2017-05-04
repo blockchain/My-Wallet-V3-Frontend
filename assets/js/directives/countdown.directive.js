@@ -11,7 +11,8 @@ function countdown ($interval) {
     scope: {
       timeToExpiration: '=',
       onExpiration: '&',
-      debug: '='
+      debug: '=',
+      message: '='
     },
     templateUrl: 'templates/countdown.pug',
     link: link

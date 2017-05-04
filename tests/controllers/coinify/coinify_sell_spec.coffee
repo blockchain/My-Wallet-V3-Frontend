@@ -6,7 +6,7 @@ describe "CoinifySellController", ->
   buySellOptions = undefined
   $scope = undefined
   accounts = undefined
-  masterPaymentAccount = undefined
+  bankMedium = undefined
   payment = undefined
   trade = undefined
   exchange = undefined
@@ -95,7 +95,7 @@ describe "CoinifySellController", ->
       options: options || {}
       buySellOptions: buySellOptions || {}
       accounts: accounts || []
-      masterPaymentAccount: masterPaymentAccount || {}
+      bankMedium: bankMedium || {}
       payment: payment || {}
       exchange: exchange
       $uibModalInstance: { close: (->), dismiss: (->) }
@@ -134,7 +134,7 @@ describe "CoinifySellController", ->
 
     it "should set the bankId", ->
       ctrl = getController(quote, trade)
-      ctrl.onCreateBankSuccess({bankId: 123456})
+      ctrl.onCreateBankSuccess({bank: {_id: 123456}})
       expect(ctrl.bankId).toEqual(123456)
 
   describe ".onSellSuccess()", ->
