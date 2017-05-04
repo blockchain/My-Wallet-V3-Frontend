@@ -144,3 +144,49 @@ describe "buySell service", () ->
       buySell.cancelTrade(trade)
       $rootScope.$digest()
       expect(Alerts.displayError).toHaveBeenCalledWith("ERROR_TRADE_CANCEL")
+
+  describe "openSellView", ->
+    trade = undefined
+    bankMedium = undefined
+    payment = undefined
+    beforeEach ->
+      trade = { btc: 1, fiat: 100 }
+      bankMedium = {
+        getBankAccounts: () -> $q.resolve('something')
+      }
+      payment = { fee: 1 }
+      exchange = buySell.getExchange()
+      exchange.profile = { user: 1 }
+
+    it "should call getExchange", ->
+      result = buySell.openSellView(trade, bankMedium, payment)
+      # expect(result).toEqual
+
+  describe "isPendingSellTrade()", ->
+    pendingTrade = undefined
+    exchange = undefined
+    beforeEach ->
+      exchange = buySell.getExchange()
+      pendingTrade = {
+        state: 'awaiting_transfer_in'
+        medium: 'blockchain'
+      }
+
+    it "should return true", ->
+      result = buySell.isPendingSellTrade(pendingTrade)
+      expect(result).toEqual(true)
+
+  describe "getCurrency", ->
+    trade = undefined
+    sellCheck = undefined
+    exchange = undefined
+    beforeEach ->
+      exchange = buySell.getExchange()
+      trade = makeTrade('processing')
+      trade.inCurrency = 'EUR'
+      trade = null
+      sellCheck = true
+
+    it "should return EUR", ->
+      result = buySell.getCurrency(trade, sellCheck)
+      expect(result).toEqual({code: 'EUR'})

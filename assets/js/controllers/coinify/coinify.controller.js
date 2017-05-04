@@ -14,6 +14,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.user = Wallet.user;
   this.now = () => new Date().getTime();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  this.message = 'RATE_GUARANTEED';
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
   this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
   this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;

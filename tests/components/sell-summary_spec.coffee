@@ -39,14 +39,23 @@ describe "sell-summary.component", ->
     }
   }
 
-  paymentAccount = {
+  bankAccount = {
     sell: (bankId) -> $q.resolve(sellTrade)
+    updateQuote: (quote) -> $q.resolve('something')
+    _quote: {
+      _expiresAt: 1493928203205
+    }
+  }
+
+  quote = {
+    expiresAt: 1494028203205
   }
 
   handlers =
     transaction: transaction
     sellTrade: sellTrade
-    paymentAccount: paymentAccount
+    bankAccount: bankAccount
+    quote: quote
     sellRateForm: true
     fields: true
 
@@ -111,8 +120,18 @@ describe "sell-summary.component", ->
       ctrl.sell()
       expect(ctrl.waiting).toEqual(true)
 
-    it "should call paymentAccount.sell(bankId)", ->
+    it "should call bankAccount.sell(bankId)", ->
       ctrl = getController(handlers)
-      spyOn(ctrl.paymentAccount, 'sell')
+      spyOn(ctrl.bankAccount, 'sell')
       ctrl.sell()
-      expect(ctrl.paymentAccount.sell).toHaveBeenCalled()
+      expect(ctrl.bankAccount.sell).toHaveBeenCalled()
+
+  describe ".checkForUpdatedQuote()", ->
+    beforeEach ->
+      ctrl = undefined
+
+    it "should update the quote if there is a newer one", ->
+      ctrl = getController(handlers)
+      spyOn(ctrl.bankAccount, 'updateQuote')
+      ctrl.checkForUpdatedQuote()
+      expect(ctrl.bankAccount.updateQuote).toHaveBeenCalled()
