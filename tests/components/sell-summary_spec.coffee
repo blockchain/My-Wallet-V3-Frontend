@@ -41,12 +41,20 @@ describe "sell-summary.component", ->
 
   bankAccount = {
     sell: (bankId) -> $q.resolve(sellTrade)
+    _quote: {
+      _expiresAt: 12345
+    }
+  }
+
+  quote = {
+    expiresAt: 12345
   }
 
   handlers =
     transaction: transaction
     sellTrade: sellTrade
     bankAccount: bankAccount
+    quote: quote
     sellRateForm: true
     fields: true
 
