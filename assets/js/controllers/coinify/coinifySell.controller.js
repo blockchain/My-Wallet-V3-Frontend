@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, bankMedium, payment) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, accounts, $state, options, $stateParams, bankMedium, payment) {
   $scope.fields = {};
   $scope.settings = Wallet.settings;
   $scope.currencies = currency.coinifySellCurrencies;
@@ -10,7 +10,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.trades = buySell.trades;
   $scope.alerts = [];
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
-  $scope.sepaCountries = country.sepaCountryCodes;
 
   this.user = Wallet.user;
   this.trade = trade;
@@ -18,7 +17,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
   this.accounts = accounts;
-  this.sepaCountries = country.sepaCountryCodes;
   this.payment = payment;
   if (bankMedium) this.paymentAccount = bankMedium;
   this.message = 'SELL.QUOTE_EXPIRES';
@@ -206,6 +204,22 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
         this.goTo('account');
       });
     });
+  };
+
+  const handleError = (e) => {
+    let accountError = JSON.parse(e);
+    Alerts.displayError(accountError.error_description);
+    if (accountError.error === 'invalid_iban') {
+      this.ibanError = true;
+      this.switchView();
+    }
+  };
+
+  this.addBankAccount = () => {
+    $q.resolve(this.paymentAccount.addBankAccount(this.bankAccount))
+      .then(createdBankAccount => this.onSuccess({bank: createdBankAccount}))
+      .then(this.onComplete)
+      .catch(handleError);
   };
 
   this.reset = () => {

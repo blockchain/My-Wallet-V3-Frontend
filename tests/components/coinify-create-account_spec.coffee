@@ -1,4 +1,4 @@
-describe "sell-create-account.component", ->
+describe "coinify-create-account.component", ->
   $q = undefined
   scope = undefined
   Wallet = undefined
@@ -84,8 +84,8 @@ describe "sell-create-account.component", ->
 
   getController = (bindings) ->
     scope = $rootScope.$new()
-    ctrl = $componentController("sellCreateAccount", $scope: scope, bindings)
-    template = $templateCache.get('partials/coinify/sell-create-account.pug')
+    ctrl = $componentController("coinifyCreateAccount", $scope: scope, bindings)
+    template = $templateCache.get('partials/coinify/coinify-create-account.pug')
     $compile(template)(scope)
     ctrl
 

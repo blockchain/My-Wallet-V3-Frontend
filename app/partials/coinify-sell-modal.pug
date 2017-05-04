@@ -27,14 +27,12 @@
       valid-email="vm.state.email.valid"
       on-email-change="vm.onEmailChange(false)"
       fiat-currency="vm.fiat()")
-  sell-create-account(
+  coinify-create-account(
       ng-if="vm.onStep('account')"
-      sepa-countries="vm.sepaCountries"
-      country="vm.exchangeCountry"
-      transaction="vm.transaction"
-      payment-account="vm.paymentAccount"
+      country="vm.exchange.profile.country"
       on-complete="vm.goTo('summary')"
-      on-success="vm.onCreateBankSuccess({bank})"
+      view-info="true"
+      on-submit="vm.addBankAccount(bank, profile)"
       close="vm.close()")
   sell-bank-link(
       ng-if="vm.onStep('bank-link')" 
