@@ -61,6 +61,7 @@ function TransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wal
   $scope.exportHistory = () => $uibModal.open({
     templateUrl: 'partials/export-history.pug',
     controller: 'ExportHistoryController',
+    controllerAs: 'vm',
     windowClass: 'bc-modal',
     resolve: {
       activeIndex: () => {
