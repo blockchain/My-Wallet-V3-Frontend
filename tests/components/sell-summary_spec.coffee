@@ -41,13 +41,14 @@ describe "sell-summary.component", ->
 
   bankAccount = {
     sell: (bankId) -> $q.resolve(sellTrade)
+    updateQuote: (quote) -> $q.resolve('something')
     _quote: {
-      _expiresAt: 12345
+      _expiresAt: 1493928203205
     }
   }
 
   quote = {
-    expiresAt: 12345
+    expiresAt: 1494028203205
   }
 
   handlers =
@@ -124,3 +125,13 @@ describe "sell-summary.component", ->
       spyOn(ctrl.bankAccount, 'sell')
       ctrl.sell()
       expect(ctrl.bankAccount.sell).toHaveBeenCalled()
+
+  describe ".checkForUpdatedQuote()", ->
+    beforeEach ->
+      ctrl = undefined
+
+    it "should update the quote if there is a newer one", ->
+      ctrl = getController(handlers)
+      spyOn(ctrl.bankAccount, 'updateQuote')
+      ctrl.checkForUpdatedQuote()
+      expect(ctrl.bankAccount.updateQuote).toHaveBeenCalled()

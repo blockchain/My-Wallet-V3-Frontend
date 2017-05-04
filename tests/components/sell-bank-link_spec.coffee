@@ -33,8 +33,11 @@ describe "sell-bank-link.component", ->
     }
   ]
 
+  selectedBankAccount = 'Bank 1'
+
   handlers =
-    accounts: accounts,
+    accounts: accounts
+    selectedBankAccount: selectedBankAccount
 
   getController = (bindings) ->
     scope = $rootScope.$new()
@@ -84,3 +87,12 @@ describe "sell-bank-link.component", ->
       ctrl = getController(handlers)
       ctrl.accounts = []
       expect(ctrl.hideWhenNoAccounts).toEqual(true)
+
+  describe "$onChanges", ->
+    beforeEach ->
+      ctrl = undefined
+
+    it "should reassign selectedBankAccount", ->
+      ctrl = getController(handlers)
+      ctrl.$onChanges(selectedBankAccount: currentValue: 'Bank 2')
+      expect(ctrl.selectedBankAccount).toEqual('Bank 2')

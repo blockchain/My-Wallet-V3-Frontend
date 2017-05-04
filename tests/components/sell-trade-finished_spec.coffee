@@ -30,6 +30,8 @@ describe "sell-trade-finished.component", ->
 
   handlers =
     sellTrade: sellTrade
+    completedState: false
+
 
 
   getController = (bindings) ->
@@ -74,3 +76,13 @@ describe "sell-trade-finished.component", ->
     it "should be true if the state is 'completed'", ->
       ctrl = getController(handlers)
       expect(ctrl.tradeCompleted).toEqual(true)
+
+  describe "if completed state", ->
+    beforeEach ->
+      ctrl = undefined
+      handlers.completedState = 'completed'
+
+    it "should set properties if in completed state", ->
+      ctrl = getController(handlers)
+      expect(ctrl.isx).toEqual(true)
+      expect(ctrl.completedState = 'SELL.ISX.COMPLETED')
