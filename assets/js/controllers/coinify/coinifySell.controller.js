@@ -4,11 +4,7 @@ angular
 
 function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, accounts, $state, options, $stateParams, bankMedium, payment) {
   $scope.fields = {};
-  $scope.settings = Wallet.settings;
-  $scope.currencies = currency.coinifySellCurrencies;
   $scope.user = Wallet.user;
-  $scope.trades = buySell.trades;
-  $scope.alerts = [];
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
 
   this.user = Wallet.user;
@@ -214,6 +210,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   this.addBankAccount = (bankObj, userObj) => {
+    this.ibanError = false;
     let holder = { holder: {} };
     Object.assign(holder.holder, userObj);
     let obj = Object.assign(bankObj, holder);
