@@ -16,6 +16,7 @@ angular
 function CoinifyCreateAccount ($q, Alerts, $scope, country) {
   this.bank = {
     name: null,
+    account: {},
     address: { country: this.country, street: null, city: null, zipcode: null }
   };
 
@@ -25,7 +26,7 @@ function CoinifyCreateAccount ($q, Alerts, $scope, country) {
   };
 
   this.sepaCountryCodes = country.sepaCountryCodes;
-  if (this.country === 'DK' && this.currency === 'DKK') this.showDanish = true;
+  if (this.country === 'DK') this.showDanish = true;
 
   const insertSpaces = (str) => {
     let s = str.replace(/[^\dA-Z]/g, ''); // sanitize
@@ -33,8 +34,8 @@ function CoinifyCreateAccount ($q, Alerts, $scope, country) {
   };
 
   this.formatIban = () => {
-    let num = this.bankAccount.account.number;
-    this.bankAccount.account.number = insertSpaces(num);
+    let num = this.bank.account.number;
+    this.bank.account.number = insertSpaces(num);
   };
 
   this.turnOffIbanError = () => this.ibanError = false;

@@ -40,6 +40,11 @@ describe "CoinifySummaryController", ->
       Alerts = $injector.get("Alerts")
       buySell = $injector.get("buySell")
       
+      MyWallet.wallet =
+        hdwallet:
+          defaultAccount: {index: 0}
+          accounts: [{label: 'Phil'}]
+      
       buySell.limits =
         bank:
           min:

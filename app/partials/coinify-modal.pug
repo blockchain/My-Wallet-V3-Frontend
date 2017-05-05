@@ -19,6 +19,5 @@
   coinify-signup(ng-if="vm.onStep('signup')" on-complete="vm.onSignupComplete()" on-error="vm.goTo('email')" on-close="vm.close(0)" email="vm.user.email" valid-email="vm.state.email.valid" on-email-change="vm.onEmailChange(false)" fiat-currency="vm.fiatCurrency()")
   div(ng-if="vm.onStep('select-payment-medium')" ng-controller="CoinifyMediumController" ng-include="'partials/coinify/medium.pug'")
   div(ng-if="vm.onStep('summary')" ng-controller="CoinifySummaryController" ng-include="'partials/coinify/summary.pug'")
-  coinify-create-account(ng-if="vm.onStep('account')" country="vm.exchange.profile.country" on-submit="vm.createAccount(bank, profile)" close="vm.close()")
   div(ng-if="vm.onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")
   div(ng-if="vm.onStep('trade-complete')" ng-controller="CoinifyTradeSummaryController" ng-include="'partials/trade-summary.pug'")

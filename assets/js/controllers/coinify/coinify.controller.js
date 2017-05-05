@@ -60,10 +60,6 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
              .then(() => this.goTo('select-payment-medium'));
   };
 
-  this.createAccount = (bank, profile) => {
-    console.log(profile);
-  };
-
   $scope.exitToNativeTx = () => {
     buyMobile.callMobileInterface(buyMobile.SHOW_TX, $scope.trade.txHash);
   };
@@ -85,7 +81,6 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     'signup': 1,
     'select-payment-medium': 2,
     'summary': 3,
-    'account': 4,
     'isx': 5,
     'trade-complete': 6
   };
@@ -94,17 +89,15 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
 
-  this.goTo('account');
-
-  // if (!this.user.isEmailVerified) {
-  //   this.goTo('email');
-  // } else if (!this.exchange.user) {
-  //   this.goTo('signup');
-  // } else if (!this.trade) {
-  //   this.goTo('select-payment-medium');
-  // } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
-  //   this.goTo('isx');
-  // } else {
-  //   this.goTo('trade-complete');
-  // }
+  if (!this.user.isEmailVerified) {
+    this.goTo('email');
+  } else if (!this.exchange.user) {
+    this.goTo('signup');
+  } else if (!this.trade) {
+    this.goTo('select-payment-medium');
+  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
+    this.goTo('isx');
+  } else {
+    this.goTo('trade-complete');
+  }
 }
