@@ -14,7 +14,7 @@ describe "coinify-create-account.component", ->
     onSubmit: onSubmit
     onSuccess: onSuccess
     country: 'DK',
-    
+
   onSuccess = () -> $q.resolve()
   onSubmit = () -> $q.resolve()
 
@@ -32,7 +32,7 @@ describe "coinify-create-account.component", ->
       $compile = _$compile_
       $templateCache = _$templateCache_
       $componentController = _$componentController_
-      
+
       Wallet = $injector.get("Wallet")
       buySell = $injector.get("buySell")
 
@@ -53,20 +53,20 @@ describe "coinify-create-account.component", ->
       ctrl.bank.account.number = 'ABCD EFGH 1234 56'
       ctrl.formatIban()
       expect(ctrl.bank.account.number).toEqual('ABCD EFGH 1234 56')
-  
+
   describe ".turnOffIbanError()", ->
     beforeEach ->
       ctrl = undefined
-    
+
     it "should set ibanError to false", ->
       ctrl = getController(handlers)
       ctrl.turnOffIbanError()
       expect(ctrl.ibanError).toBe(false)
-  
+
   describe ".switchView()", ->
     beforeEach ->
       ctrl = undefined
-    
+
     it "should switch viewInfo", ->
       ctrl = getController(handlers)
       ctrl.viewInfo = true

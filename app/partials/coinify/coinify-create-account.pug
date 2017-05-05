@@ -20,7 +20,7 @@
                   input.form-control(
                     type="text"
                     ng-model="$ctrl.bank.account.number"
-                    ng-change="setParentError(); $ctrl.turnOffIbanError(); $ctrl.bank.account.number && $ctrl.formatIban()"
+                    ng-change="$ctrl.turnOffIbanError(); $ctrl.bank.account.number && $ctrl.formatIban()"
                     name="bankIban"
                     tabindex="1"
                     ng-class="{'input-error': $ctrl.ibanError}"
@@ -97,7 +97,7 @@
             div.width-45.width-45-mobile.width-45-tablet
               label.control-label(translate="Country")
               div
-                ui-select.mtm(ng-model="$ctrl.selectedBankCountry")
+                ui-select.mtm(ng-model="$ctrl.selectedUserCountry" ng-change="$ctrl.setUserCountry($select.selected)")
                   ui-select-match
                     span {{ $select.selected.name }}
                   ui-select-choices(repeat="c in $ctrl.sepaCountryCodes | filter:$select.search track by c.name")

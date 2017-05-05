@@ -4,6 +4,7 @@ angular
     bindings: {
       country: '<',
       viewInfo: '<',
+      error: '<',
       close: '&',
       onSubmit: '&',
       onSuccess: '&'
@@ -14,10 +15,13 @@ angular
   });
 
 function CoinifyCreateAccount ($q, Alerts, $scope, country) {
+  this.sepaCountryCodes = country.sepaCountryCodes;
+  if (this.country === 'DK') this.showDanish = true;
+  this.selectedUserCountry = this.sepaCountryCodes.find(c => c.code === this.country);
+
   this.bank = {
-    name: null,
-    account: {},
-    address: { country: this.country, street: null, city: null, zipcode: null }
+    account: { number: null, bic: null, currency: null },
+    bank: { address: { country: this.country, street: null, city: null, zipcode: null } }
   };
 
   this.profile = {
@@ -25,11 +29,8 @@ function CoinifyCreateAccount ($q, Alerts, $scope, country) {
     address: { country: this.country, street: null, city: null, zipcode: null, state: null }
   };
 
-  this.sepaCountryCodes = country.sepaCountryCodes;
-  if (this.country === 'DK') this.showDanish = true;
-
   const insertSpaces = (str) => {
-    let s = str.replace(/[^\dA-Z]/g, ''); // sanitize
+    let s = str.replace(/[^\dA-Z]/g, '');
     return s.replace(/.{4}/g, (a) => a + ' ');
   };
 
@@ -38,7 +39,14 @@ function CoinifyCreateAccount ($q, Alerts, $scope, country) {
     this.bank.account.number = insertSpaces(num);
   };
 
+  this.$onChanges = (changes) => {
+    if (changes.error.currentValue === true) {
+      this.ibanError = true;
+      this.switchView();
+    }
+  };
+
   this.turnOffIbanError = () => this.ibanError = false;
   this.switchView = () => this.viewInfo = !this.viewInfo;
-  this.selectedBankCountry = this.sepaCountryCodes.find(c => c.code === this.country);
+  this.setUserCountry = (country) => this.profile.address.country = country.code;
 }

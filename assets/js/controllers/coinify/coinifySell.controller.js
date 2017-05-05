@@ -173,9 +173,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   let startedPayment = $scope.startPayment();
   if (startedPayment) this.transaction = Object.assign(this.transaction, startedPayment.transaction);
 
-  if (!this.step) {
-    this.nextStep();
-  }
+  if (!this.step) this.nextStep();
 
   this.selectAccount = (bank) => {
     this.selectedBankAccount = bank;
@@ -183,8 +181,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   this.onCreateBankSuccess = (bank) => {
-    this.selectedBankAccount = bank.bank;
-    this.bankId = bank.bank._id;
+    this.selectedBankAccount = bank;
+    this.bankId = bank._id;
+    this.goTo('summary');
   };
   this.onSellSuccess = (trade) => this.sellTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
@@ -211,14 +210,16 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     Alerts.displayError(accountError.error_description);
     if (accountError.error === 'invalid_iban') {
       this.ibanError = true;
-      this.switchView();
     }
   };
 
-  this.addBankAccount = () => {
-    $q.resolve(this.paymentAccount.addBankAccount(this.bankAccount))
-      .then(createdBankAccount => this.onSuccess({bank: createdBankAccount}))
-      .then(this.onComplete)
+  this.addBankAccount = (bankObj, userObj) => {
+    let holder = { holder: {} };
+    Object.assign(holder.holder, userObj);
+    let obj = Object.assign(bankObj, holder);
+    obj.account.currency = this.transaction.currency.code;
+    $q.resolve(this.paymentAccount.addBankAccount(obj))
+      .then(this.onCreateBankSuccess)
       .catch(handleError);
   };
 

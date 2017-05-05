@@ -143,7 +143,7 @@ describe "CoinifySellController", ->
 
     it "should set the bankId", ->
       ctrl = getController(quote, trade)
-      ctrl.onCreateBankSuccess({bank: {_id: 123456}})
+      ctrl.onCreateBankSuccess({_id: 123456})
       expect(ctrl.bankId).toEqual(123456)
 
   describe ".onSellSuccess()", ->
