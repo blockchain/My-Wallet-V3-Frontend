@@ -29,7 +29,7 @@
       fiat-currency="vm.fiat()")
   coinify-create-account(
       ng-if="vm.onStep('account')"
-      country="vm.exchange.profile.country"
+      country="vm.country"
       on-complete="vm.goTo('summary')"
       error="vm.ibanError"
       view-info="true"
