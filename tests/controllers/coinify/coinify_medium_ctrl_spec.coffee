@@ -21,6 +21,7 @@ describe "CoinifyMediumController", ->
   
   kyc = {
     id: 111,
+    state: 'pending'
     createdAt: new Date()
   }
 
@@ -34,6 +35,8 @@ describe "CoinifyMediumController", ->
 
       Wallet = $injector.get("Wallet")
       buySell = $injector.get("buySell")
+      
+      buySell.kycs = [kyc]
       
       buySell.limits =
         bank:
@@ -78,18 +81,24 @@ describe "CoinifyMediumController", ->
   
   # describe ".needsKYC()", ->
   #   
-  #   it "should return true if amount is greater than yearlMax", ->
+  #   it "should return true if amount is greater than yearlyMax", ->
   #     expect(scope.needsKYC('bank')).toBe(true)
   # 
-  # describe ".openKYC()", ->
-  #   
-  #   it "should get open KYC and go to isx step", ->
-  #     spyOn(buySell, 'getOpenKYC')
-  #     spyOn(scope.vm, 'goTo')
-  #     scope.openKYC()
-  #     scope.$digest()
-  #     expect(buySell.getOpenKYC).toHaveBeenCalled()
-  #     expect(scope.vm.goTo).toHaveBeenCalledWith('isx')
+  
+  describe ".pendingKYC()", ->
+    
+    it "should return true if the user has a kyc pending", ->
+      expect(scope.pendingKYC()).toBe(true)
+  
+  describe ".openKYC()", ->
+    
+    it "should get open KYC and go to isx step", ->
+      spyOn(buySell, 'getOpenKYC')
+      spyOn(scope.vm, 'goTo')
+      scope.openKYC()
+      scope.$digest()
+      expect(buySell.getOpenKYC).toHaveBeenCalled()
+      expect(scope.vm.goTo).toHaveBeenCalledWith('isx')
       
   describe ".submit()", ->
 

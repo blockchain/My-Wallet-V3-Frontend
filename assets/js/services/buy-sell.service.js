@@ -6,7 +6,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
-    pending: ['awaiting_transfer_in', 'reviewing', 'processing', 'pending'],
+    pending: ['awaiting_transfer_in', 'reviewing', 'processing', 'pending', 'updateRequested'],
     completed: ['expired', 'rejected', 'cancelled', 'completed', 'completed_test']
   };
   let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;

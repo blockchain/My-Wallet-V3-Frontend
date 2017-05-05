@@ -1,7 +1,7 @@
 form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethodForm" role="form" ng-submit="submit()" novalidate)
   span.type-h5.em-500.flex-start.pts(translate="PAYMENT_METHOD")
   .radio-group.group.inline.flex-column-mobile.flex-between.mv-20
-    .radio-label-alt.width-45(ng-show="aboveBankMin && !needsKYC('bank')")
+    .radio-label-alt.width-45(ng-show="aboveBankMin && !pendingKYC()")
       input(type="radio" name="inMedium" id="bank" ng-model="vm.medium" value="bank" required)
       label.flex-column.height-100(for="bank")
         .flex-row.flex-center
@@ -10,9 +10,10 @@ form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethod
         ul
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY1")
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY2")
-    .width-45.flex-justify.flex-column(ng-show="!aboveBankMin")
-      div.mb-20(translate="BANK_TRANSFER.RECOMMENDATION" translate-values="{min: limits.bank.min[vm.fiatCurrency()], code: vm.fiatCurrency()}")
-      label.pointer.em-300.primary(for="bank" ng-click="$timeout(submit, 1)" translate="I want to pay via bank transfer")
+    .width-45.flex-justify.flex-column(ng-show="!aboveBankMin || pendingKYC()")
+      div.mb-20(ng-hide="pendingKYC()" translate="BANK_TRANSFER.RECOMMENDATION" translate-values="{min: limits.bank.min[vm.fiatCurrency()], code: vm.fiatCurrency()}")
+      label.pointer.em-300.primary(ng-hide="pendingKYC()" for="bank" ng-click="$timeout(submit, 1)" translate="I want to pay via bank transfer")
+      label.pointer.em-300.primary(ng-show="pendingKYC()" for="bank" ng-click="openKYC()" translate="Bank transfers are disabled while identity verification is pending. Click here to check the status of your identity verification.")
       //- hide above when kyc check is at medium level
       //- label.pointer.em-300.primary(ng-show="needsKYC('bank')" for="bank" ng-click="openKYC()" translate="Currently you can buy at most {{limits.bank.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via bank transfer. Click here to increase your limit.")
     .mv-15.visible-xs
