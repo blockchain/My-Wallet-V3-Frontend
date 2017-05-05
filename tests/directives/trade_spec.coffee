@@ -5,6 +5,8 @@ describe "Trade Directive", ->
   Alerts = undefined
   $q = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject(($compile, $rootScope, $injector, _$q_) ->

@@ -1,6 +1,8 @@
 describe "VerifyMessageController", ->
   scope = undefined
   MyWalletHelpers = undefined
+  
+  beforeEach angular.mock.module('walletDirectives')
 
   beforeEach angular.mock.module("walletApp")
 

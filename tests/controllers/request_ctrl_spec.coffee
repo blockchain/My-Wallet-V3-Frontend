@@ -5,6 +5,8 @@ describe "RequestCtrl", ->
     close: ->
     dismiss: ->
 
+  beforeEach angular.mock.module('walletDirectives')
+  
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->
@@ -120,9 +122,9 @@ describe "RequestCtrl", ->
       scope.state.amountType = 'amount_local'
       scope.state.baseCurr = scope.settings.currency
       scope.state.amount = 10000000
-      
+
       expect(scope.paymentRequestURL()).toContain("USD")
-    
+
     it "should show a payment URL when legacy address is selected", ->
       scope.state.to = scope.legacyAddresses()[0]
       scope.$digest()
@@ -169,7 +171,7 @@ describe "RequestCtrl", ->
       scope.$digest()
 
       expect(scope.paymentRequestURL()).toContain('amount_local=')
-    
+
     it "should generate a bitcoin url with a message param instead of a label", ->
       scope.state.to = scope.legacyAddresses()[0]
       scope.state.label = "This is a message, though we save it as a label"
@@ -177,9 +179,9 @@ describe "RequestCtrl", ->
 
       expect(scope.paymentRequestURL()).toContain('message')
       expect(scope.paymentRequestURL()).not.toContain('label=')
-      
+
   describe "isToImportedAddress", ->
-    
+
     it "should be true if destination is imported address", ->
       scope.state.to = scope.destinations[2];
       expect(scope.isToImportedAddress()).toBe(true)

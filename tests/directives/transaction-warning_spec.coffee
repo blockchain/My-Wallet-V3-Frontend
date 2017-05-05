@@ -1,4 +1,4 @@
-describe "Transaction Warning Directive", ->  
+describe "Transaction Warning Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
@@ -6,6 +6,8 @@ describe "Transaction Warning Directive", ->
   Wallet = undefined
   html = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->

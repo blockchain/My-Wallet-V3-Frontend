@@ -4,9 +4,11 @@ describe "Transaction Status Directive", ->
   element = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives')
+  
   # Load the myApp module, which contains the directive
   beforeEach module("walletApp")
-  
+
   beforeEach inject((_$compile_, _$rootScope_) ->
 
     $compile = _$compile_

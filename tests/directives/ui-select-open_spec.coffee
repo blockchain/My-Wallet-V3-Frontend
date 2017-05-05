@@ -3,6 +3,8 @@ describe "ui-select helper directive", ->
   element = undefined
   $timeout = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject(($compile, $rootScope, _$timeout_) ->

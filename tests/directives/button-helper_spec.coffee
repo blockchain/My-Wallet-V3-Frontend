@@ -4,8 +4,10 @@ describe "Helper Text Directive", ->
   element = undefined
   isoScope = undefined
 
-  beforeEach module("walletApp")
+  beforeEach module('walletDirectives')
   
+  beforeEach module("walletApp")
+
   beforeEach inject((_$compile_, _$rootScope_) ->
 
     $compile = _$compile_

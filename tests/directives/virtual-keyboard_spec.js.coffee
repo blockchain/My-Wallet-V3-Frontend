@@ -5,6 +5,8 @@ describe "VirtualKeyboard", ->
   isoScope = undefined
   mockKeyPress = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach ->

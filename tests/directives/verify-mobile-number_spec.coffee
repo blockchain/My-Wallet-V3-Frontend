@@ -5,6 +5,8 @@ describe "Verify Mobile Number Directive", ->
   isoScope = undefined
   Wallet = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->

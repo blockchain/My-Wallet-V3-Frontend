@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('configureMobileNumber', configureMobileNumber);
 
 configureMobileNumber.$inject = ['Wallet', 'bcPhoneNumber'];

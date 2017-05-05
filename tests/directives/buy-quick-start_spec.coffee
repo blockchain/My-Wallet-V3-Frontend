@@ -7,6 +7,8 @@ describe "buyQuickStart", ->
   MyWallet = undefined
   buySell = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject(($compile, $rootScope, $injector, _$q_) ->
@@ -24,7 +26,7 @@ describe "buyQuickStart", ->
       external:
         coinify:
           getBuyQuote: -> $q.resolve([])
-    
+
     limits =
       bank:
         min:
@@ -44,17 +46,17 @@ describe "buyQuickStart", ->
       profile: {}
       user: {}
       getBuyQuote: -> $q.resolve([])
-    
+
     buySell.getMinLimits = () -> $q.resolve(limits)
     buySell.cancelTrade = () -> $q.resolve(trade)
     buySell.getQuote = () -> $q.resolve(quote)
-    
+
     mediums =
       'card':
         getAccounts: () -> $q.resolve([])
       'bank':
         getAccounts: () -> $q.resolve([])
-    
+
     quote =
       quoteAmount: 1
       baseAmount: -100
@@ -67,9 +69,9 @@ describe "buyQuickStart", ->
     isoScope = element.isolateScope()
     isoScope.$digest()
   )
-  
+
   describe ".updateLastInput()", ->
-    
+
     it "should update last input field", ->
       isoScope.updateLastInput('btc')
       expect(isoScope.lastInput).toBe('btc')
@@ -77,7 +79,7 @@ describe "buyQuickStart", ->
       expect(isoScope.lastInput).toBe('fiat')
 
   describe ".getQuote()", ->
-    
+
     it "should get a quote based on last input", ->
       spyOn(buySell, 'getQuote')
       isoScope.transaction.fiat = 1
@@ -89,9 +91,9 @@ describe "buyQuickStart", ->
       isoScope.updateLastInput('btc')
       isoScope.getQuote()
       expect(buySell.getQuote).toHaveBeenCalledWith(-1, 'BTC', 'USD')
-    
+
   describe ".cancelTrade()", ->
-    
+
     it "should cancel a trade", ->
       spyOn(buySell, 'cancelTrade')
       isoScope.cancelTrade()

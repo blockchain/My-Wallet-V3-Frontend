@@ -5,6 +5,8 @@ describe "Video Container Directive", ->
   element = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
   # beforeEach module("shared")
 

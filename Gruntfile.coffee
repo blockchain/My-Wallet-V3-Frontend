@@ -76,6 +76,7 @@ module.exports = (grunt) ->
           'bower_components/ng-file-upload/ng-file-upload.min.js'
           'bower_components/angular-local-storage/dist/angular-local-storage.js'
           "build/js/shared.module.js"
+          "build/js/walletDirectives.js"
           "build/js/sharedDirectives/*.js"
           "build/js/sharedServices/*.js"
           "build/js/wallet-translations.module.js"

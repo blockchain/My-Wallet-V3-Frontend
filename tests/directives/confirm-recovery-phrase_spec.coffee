@@ -5,6 +5,8 @@ describe "Confirm Recovery Phrase", ->
   Wallet = undefined
   Alerts = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject(($injector, $compile, $rootScope) ->

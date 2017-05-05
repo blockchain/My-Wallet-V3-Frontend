@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('asyncSelect', asyncSelect);
 
 function asyncSelect ($translate, Alerts) {

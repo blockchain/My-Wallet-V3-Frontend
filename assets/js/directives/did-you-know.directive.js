@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('didYouKnow', didYouKnow);
 
 didYouKnow.$inject = ['DidYouKnow'];

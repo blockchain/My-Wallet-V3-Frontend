@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('countdown', countdown);
 
 countdown.$inject = ['$interval'];

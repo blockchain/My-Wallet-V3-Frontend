@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('qrScan', qrScan);
 
 function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Alerts) {

@@ -4,6 +4,8 @@ describe "Activity Feed directive", ->
   element = undefined
   scope = undefined
 
+  beforeEach module('walletDirectives')
+
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->

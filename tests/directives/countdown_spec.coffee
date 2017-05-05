@@ -3,11 +3,13 @@ describe "Countdown Directive", ->
   isoScope = undefined
   $interval = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject(($compile, $rootScope, $injector, _$q_) ->
     $q = _$q_
-    
+
     scope = $rootScope.$new()
     $interval = $injector.get('$interval')
     scope.timeToExpiration = () -> 0
@@ -23,14 +25,13 @@ describe "Countdown Directive", ->
     it "should set a count", ->
       $interval.flush(1000)
       expect(isoScope.count).toBe('0:00')
-    
+
     it "should call onExpiration", ->
       isoScope.timeToExpiration = () -> 0
       $interval.flush(1000);
-  
+
   describe "expireCounter", ->
     it "should set timeToExpiration to 3 seconds", ->
       isoScope.expireCounter()
       $interval.flush(1000)
       expect(isoScope.count).toBe('0:03')
-      

@@ -4,6 +4,8 @@ describe "IP Whitelist Restrict", ->
   element = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, Wallet) ->

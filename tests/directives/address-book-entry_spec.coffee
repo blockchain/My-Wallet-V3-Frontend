@@ -5,6 +5,8 @@ describe "Address Book Entry Directive", ->
   isoScope = undefined
   Wallet = undefined
   MyWallet = undefined
+  
+  beforeEach module('walletDirectives')
 
   beforeEach module("walletApp")
 

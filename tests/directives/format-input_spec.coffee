@@ -2,6 +2,8 @@ describe "format-input directive", ->
   $rootScope = undefined
   $compile = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach ->

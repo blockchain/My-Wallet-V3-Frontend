@@ -2,6 +2,8 @@ describe "ChangePasswordHintCtrl", ->
   scope = undefined
   Wallet = undefined
 
+  beforeEach angular.mock.module('walletDirectives')
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->

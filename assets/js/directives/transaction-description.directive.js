@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('transactionDescription', transactionDescription);
 
 function transactionDescription ($translate, Wallet, buySell) {

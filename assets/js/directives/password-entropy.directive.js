@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('passwordEntropy', passwordEntropy);
 
 function passwordEntropy (MyWalletHelpers) {

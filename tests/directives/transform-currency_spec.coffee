@@ -4,6 +4,8 @@ describe "Transform-Currency Directive", ->
   isoScope = undefined
   element = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach ->

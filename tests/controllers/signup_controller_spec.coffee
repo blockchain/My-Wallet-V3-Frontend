@@ -5,6 +5,8 @@ describe "SignupCtrl", ->
     dismiss: ->
   $httpBackend = undefined
 
+  beforeEach angular.mock.module('walletDirectives')
+
   beforeEach angular.mock.module("walletApp")
 
   beforeEach ->

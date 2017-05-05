@@ -5,6 +5,8 @@ describe "Transaction Note Directive", ->
   isoScope = undefined
   Wallet = undefined
 
+  beforeEach module('walletDirectives')
+  
   # Load the myApp module, which contains the directive
   beforeEach module("walletApp")
 

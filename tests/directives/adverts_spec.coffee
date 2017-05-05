@@ -1,7 +1,8 @@
 describe "Adverts Directive", ->
   element = undefined
   isoScope = undefined
-
+  
+  beforeEach module('walletDirectives')
 
   beforeEach ->
     module "shared", ($provide) ->

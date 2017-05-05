@@ -4,6 +4,8 @@ describe "Public Header directive", ->
   element = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
   # beforeEach module("shared")
 

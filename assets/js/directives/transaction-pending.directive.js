@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('transactionPending', transactionPending);
 
 function transactionPending ($rootScope, Wallet, $translate) {

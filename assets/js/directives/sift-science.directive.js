@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('siftScience', siftScience);
 
 function siftScience ($sce, Env, AngularHelper, Options, $window) {

@@ -1,9 +1,11 @@
-describe "Transaction Pending Directive", ->  
+describe "Transaction Pending Directive", ->
   $compile = undefined
   $rootScope = undefined
   element = undefined
   isoScope = undefined
 
+  beforeEach module('walletDirectives')
+  
   beforeEach module("walletApp")
 
   beforeEach inject((_$compile_, _$rootScope_, $injector) ->
