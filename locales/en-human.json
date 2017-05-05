@@ -138,7 +138,7 @@
   "CAMERA_PERMISSION_DENIED" : "Permission to use camera denied",
   "QR_CODE_NOT_BITCOIN" : "Not a bitcoin QR code.",
   "SCAN_SUCCESS": "Scan Successful",
-  "SCAN_FAILED": "Scan Failed",
+  "SCAN_FAILED": "Invalid Code",
   "WALLET_NOT_FOUND" : "Wallet not found",
   "YOU" : "You",
   "RECEIVED_BITCOIN_FROM" : "Received",
