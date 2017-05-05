@@ -10,10 +10,11 @@ form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethod
         ul
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY1")
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY2")
-    .width-45.flex-justify.flex-column(ng-show="!aboveBankMin || needsKYC('bank')")
-      div.mb-20(ng-hide="needsKYC('bank')" translate="BANK_TRANSFER.RECOMMENDATION" translate-values="{min: limits.bank.min[vm.fiatCurrency()], code: vm.fiatCurrency()}")
-      label.pointer.em-300.primary(ng-hide="needsKYC('bank')" for="bank" ng-click="$timeout(submit, 1)" translate="I want to pay via bank transfer")
-      label.pointer.em-300.primary(ng-show="needsKYC('bank')" for="bank" ng-click="openKYC()" translate="Currently you can buy at most {{limits.bank.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via bank transfer. Click here to increase your limit.")
+    .width-45.flex-justify.flex-column(ng-show="!aboveBankMin")
+      div.mb-20(translate="BANK_TRANSFER.RECOMMENDATION" translate-values="{min: limits.bank.min[vm.fiatCurrency()], code: vm.fiatCurrency()}")
+      label.pointer.em-300.primary(for="bank" ng-click="$timeout(submit, 1)" translate="I want to pay via bank transfer")
+      //- hide above when kyc check is at medium level
+      //- label.pointer.em-300.primary(ng-show="needsKYC('bank')" for="bank" ng-click="openKYC()" translate="Currently you can buy at most {{limits.bank.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via bank transfer. Click here to increase your limit.")
     .mv-15.visible-xs
       span.or-horizontal.flex-justify(translate="OR")
     .radio-label-alt.width-45(ng-show="belowCardMax")
@@ -29,9 +30,10 @@ form.bc-form.modal-body.fade.clearfix(name="paymentMethodForm" id="paymentMethod
             helper-button(content="CARD_TRANSFER.HELPER")
           li.ml-30.em-300.f-12(translate="CARD_TRANSFER.COPY3")
     .width-45.flex-justify.flex-column(ng-show="!belowCardMax")
-      div.mb-20(ng-hide="needsKYC('card')" translate="CARD_TRANSFER.RECOMMENDATION" translate-values="{max: limits.card.max[vm.fiatCurrency()], code: vm.fiatCurrency()}")
-      label.pointer.em-300.primary(ng-hide="needsKYC('card')" for="card" ng-click="$timeout(submit, 1)" translate="I want to pay via credit/debit card")
-      label.pointer.em-300.primary(ng-show="needsKYC('card')" for="card" ng-click="openKYC()" translate="Currently you can buy at most {{limits.card.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via credit/debit card. Click here to increase your limit.")
+      div.mb-20(translate="CARD_TRANSFER.RECOMMENDATION" translate-values="{max: limits.card.max[vm.fiatCurrency()], code: vm.fiatCurrency()}")
+      label.pointer.em-300.primary(for="card" ng-click="$timeout(submit, 1)" translate="I want to pay via credit/debit card")
+      //- hide above when kyc check is at medium level
+      //- label.pointer.em-300.primary(ng-show="needsKYC('card')" for="card" ng-click="openKYC()" translate="Currently you can buy at most {{limits.card.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via credit/debit card. Click here to increase your limit.")
 .modal-footer.flex-end.flex-row
   button.button-muted.mrm(ng-show="belowCardMax && !aboveBankMin" ng-click="vm.close(1)" translate="CANCEL_ORDER")
   button.button-muted.mrm(ng-show="belowCardMax && aboveBankMin" ng-click="vm.close(2)" translate="CANCEL_ORDER")

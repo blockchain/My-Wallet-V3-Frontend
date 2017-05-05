@@ -15,7 +15,7 @@ function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, b
   $scope.aboveBankMin = fiatAmount >= parseFloat($scope.limits.bank.min[fiatCurrency()]);
   // i.e bank min is 50 and buy amount is 30
   // $scope.aboveBankMin = false;
-  $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
+  // $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
   // i.e bank max is 0 and buy amount is 100
   // $scope.needsKYC () => true;
 
@@ -33,12 +33,12 @@ function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, b
       .then($scope.free).catch((err) => console.log(err));
   };
 
-  $scope.openKYC = () => {
-    $q.resolve(buySell.getOpenKYC())
-      .then((kyc) => $scope.vm.trade = kyc)
-      .then(() => $scope.vm.quote = null)
-      .then(() => $scope.vm.goTo('isx'));
-  };
+  // $scope.openKYC = () => {
+  //   $q.resolve(buySell.getOpenKYC())
+  //     .then((kyc) => $scope.vm.trade = kyc)
+  //     .then(() => $scope.vm.quote = null)
+  //     .then(() => $scope.vm.goTo('isx'));
+  // };
 
   $scope.lock();
 
