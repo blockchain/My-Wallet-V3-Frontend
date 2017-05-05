@@ -76,20 +76,20 @@ describe "CoinifyMediumController", ->
     it "should be true if amount is greater than or equal to bank min", ->
       expect(scope.aboveBankMin).toBe(true)
   
-  describe ".needsKYC()", ->
-    
-    it "should return true if amount is greater than yearlMax", ->
-      expect(scope.needsKYC('bank')).toBe(true)
-  
-  describe ".openKYC()", ->
-    
-    it "should get open KYC and go to isx step", ->
-      spyOn(buySell, 'getOpenKYC')
-      spyOn(scope.vm, 'goTo')
-      scope.openKYC()
-      scope.$digest()
-      expect(buySell.getOpenKYC).toHaveBeenCalled()
-      expect(scope.vm.goTo).toHaveBeenCalledWith('isx')
+  # describe ".needsKYC()", ->
+  #   
+  #   it "should return true if amount is greater than yearlMax", ->
+  #     expect(scope.needsKYC('bank')).toBe(true)
+  # 
+  # describe ".openKYC()", ->
+  #   
+  #   it "should get open KYC and go to isx step", ->
+  #     spyOn(buySell, 'getOpenKYC')
+  #     spyOn(scope.vm, 'goTo')
+  #     scope.openKYC()
+  #     scope.$digest()
+  #     expect(buySell.getOpenKYC).toHaveBeenCalled()
+  #     expect(scope.vm.goTo).toHaveBeenCalledWith('isx')
       
   describe ".submit()", ->
 
