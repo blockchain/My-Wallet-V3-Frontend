@@ -16,7 +16,6 @@ function CoinifySellTradeFinishedController (currency) {
 
   if (this.completedState) {
     this.isx = true;
-    this.title = 'SELL.IDENTITY_VERIFICATION';
     this.completedState = `SELL.ISX.${this.completedState.toUpperCase()}`;
   } else {
     if (this.sellTrade.state === 'completed' ||
