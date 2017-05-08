@@ -97,7 +97,6 @@
       "tests/controllers",
       "tests/directives",
       "tests/services",
-      "tests/components",
       "helperApp/"
     ],
     "globals": [

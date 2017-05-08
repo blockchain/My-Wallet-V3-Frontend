@@ -1,9 +1,7 @@
 describe('sell-summary.component', () => {
   let $q;
   let scope;
-  let Wallet;
   let $rootScope;
-  let buySell;
   $rootScope = undefined;
   let $compile;
   let $templateCache;
@@ -11,7 +9,7 @@ describe('sell-summary.component', () => {
 
   let transaction = {
     currency: {
-      code: "DKK"
+      code: 'DKK'
     },
     btc: 0.01,
     fiat: 100,
@@ -40,8 +38,8 @@ describe('sell-summary.component', () => {
   };
 
   let bankAccount = {
-    sell(bankId) { return $q.resolve(sellTrade); },
-    updateQuote(quote) { return $q.resolve('something'); },
+    sell (bankId) { return $q.resolve(sellTrade); },
+    updateQuote (quote) { return $q.resolve('something'); },
     _quote: {
       _expiresAt: 1493928203205
     }
@@ -60,10 +58,9 @@ describe('sell-summary.component', () => {
     fields: true
   };
 
-
   let getController = function (bindings) {
     scope = $rootScope.$new();
-    let ctrl = $componentController("sellSummary", {$scope: scope}, bindings);
+    let ctrl = $componentController('sellSummary', {$scope: scope}, bindings);
     let template = $templateCache.get('partials/coinify/sell-summary.pug');
     $compile(template)(scope);
     return ctrl;
@@ -77,17 +74,10 @@ describe('sell-summary.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
       $q = $injector.get('$q');
-      Wallet = $injector.get('Wallet');
-      return buySell = $injector.get('buySell');
     })
   );
 
   describe('.insufficientFunds()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should be true if the wallet does not have enough funds', () => {
       let ctrl = getController(handlers);
       ctrl.totalBalance = 0.001;
@@ -97,11 +87,6 @@ describe('sell-summary.component', () => {
   });
 
   describe('.isDisabled()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should be disabled if insufficient funds', () => {
       let ctrl = getController(handlers);
       ctrl.totalBalance = 0.001;
@@ -126,11 +111,6 @@ describe('sell-summary.component', () => {
   });
 
   describe('.sell()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should set waiting to true', () => {
       let ctrl = getController(handlers);
       ctrl.sell();
@@ -146,11 +126,6 @@ describe('sell-summary.component', () => {
   });
 
   describe('.checkForUpdatedQuote()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should update the quote if there is a newer one', () => {
       let ctrl = getController(handlers);
       spyOn(ctrl.bankAccount, 'updateQuote');

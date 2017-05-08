@@ -22,7 +22,7 @@ describe('label-origin.component', () => {
     expect(element.innerHTML).toContain('1abcd');
   });
 
-  it("should display a balance", inject(function (Wallet, currency) {
+  it('should display a balance', inject(function (Wallet, currency) {
     Wallet.settings.displayCurrency = currency.bitCurrencies[0];
     let element = compileElement({ balance: 10000 });
     expect(element.innerHTML).toContain('(0.0001 BTC)');
