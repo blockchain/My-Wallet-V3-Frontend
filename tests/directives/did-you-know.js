@@ -71,6 +71,6 @@ describe('Did You Know directive', () => {
       return scope.$apply();
     });
 
-    it("should render a link", () => expect(element.html()).toContain("<a"));
+    it('should render a link', () => expect(element.html()).toContain("<a"));
   });
 });

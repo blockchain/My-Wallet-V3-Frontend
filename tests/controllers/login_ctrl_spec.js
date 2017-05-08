@@ -36,7 +36,7 @@ describe('LoginCtrl', () => {
 
      scope = $rootScope.$new();
 
-     return $controller("LoginCtrl", {
+     return $controller('LoginCtrl', {
        $scope: scope,
        $stateParams: {},
        $uibModal: modal
@@ -45,7 +45,7 @@ describe('LoginCtrl', () => {
    })
   );
 
-  it("should login",  inject(function (Wallet) {
+  it('should login',  inject(function (Wallet) {
     scope.uid = "user";
     scope.password = "pass";
 
@@ -55,7 +55,7 @@ describe('LoginCtrl', () => {
   })
   );
 
-  it("should resend two factor sms", inject(function (Wallet, WalletNetwork, localStorageService) {
+  it('should resend two factor sms', inject(function (Wallet, WalletNetwork, localStorageService) {
     spyOn(localStorageService, 'get').and.callFake(function (name) {
       if (name === "session") {
         return "token";

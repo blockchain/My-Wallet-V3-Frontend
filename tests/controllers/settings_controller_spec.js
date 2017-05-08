@@ -3,14 +3,14 @@ describe('SettingsCtrl', () => {
   
   beforeEach(angular.mock.module('walletApp'));
   
-  return beforeEach(function () {
+  beforeEach(function () {
     angular.mock.inject(function ($injector, $rootScope, $controller) {
       let Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
             
       scope = $rootScope.$new();
             
-      $controller("SettingsCtrl", {
+      $controller('SettingsCtrl', {
         $scope: scope,
         $stateParams: {}
       });

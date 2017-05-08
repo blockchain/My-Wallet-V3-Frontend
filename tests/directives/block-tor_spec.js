@@ -30,9 +30,9 @@ describe('TOR Directive', () => {
   it('should have text', () => {
     expect(element.html()).toContain("BLOCK_TOR");
 
-    it("has an initial status", () => expect(isoScope.settings.blockTOR).toBe(false));
+    it('has an initial status', () => expect(isoScope.settings.blockTOR).toBe(false));
 
-    it("can be enabled", inject(function (Wallet) {
+    it('can be enabled', inject(function (Wallet) {
       spyOn(Wallet, 'enableBlockTOR').and.callThrough();
       isoScope.enableBlockTOR();
       expect(Wallet.enableBlockTOR).toHaveBeenCalled();
@@ -40,7 +40,7 @@ describe('TOR Directive', () => {
     })
     );
 
-    it("can be disabled", inject(function (Wallet) {
+    it('can be disabled', inject(function (Wallet) {
       spyOn(Wallet, 'disableBlockTOR');
       isoScope.disableBlockTOR();
       expect(Wallet.disableBlockTOR).toHaveBeenCalled();

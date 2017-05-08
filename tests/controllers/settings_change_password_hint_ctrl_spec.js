@@ -10,7 +10,7 @@ describe('ChangePasswordHintCtrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/change-password-hint.pug');
 
-      $controller("ChangePasswordHintCtrl",
+      $controller('ChangePasswordHintCtrl',
         {$scope: scope});
 
       scope.model = {};
@@ -24,9 +24,9 @@ describe('ChangePasswordHintCtrl', () => {
 
   });
 
-  it("should have a password hint field", () => expect(scope.fields.passwordHint).toBe(''));
+  it('should have a password hint field', () => expect(scope.fields.passwordHint).toBe(''));
 
-  it("should change the password hint", inject(function (Wallet) {
+  it('should change the password hint', inject(function (Wallet) {
     spyOn(Wallet, 'changePasswordHint');
     scope.fields.passwordHint = "passwordhint";
     scope.changePasswordHint();

@@ -23,9 +23,9 @@ describe('Transaction Status Directive', () => {
     return isoScope = element.isolateScope();
   });
 
-  it("should say 'Pending' if there are < 3 confirmations", () => expect(element.html()).toContain("translate=\"PENDING"));
+  it('should say \'Pending\' if there are < 3 confirmations', () => expect(element.html()).toContain("translate=\"PENDING"));
 
-  it("should show minutes remaining if there are < 3 confirmations", () => expect(element.html()).toContain("TRANSACTION_WILL_COMPLETE_IN"));
+  it('should show minutes remaining if there are < 3 confirmations', () => expect(element.html()).toContain("TRANSACTION_WILL_COMPLETE_IN"));
 
   it('should show there\'s 30 minutes remaining if there are 0 confirmations', () => {
     isoScope.transaction.confirmations = 0;

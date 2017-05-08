@@ -8,7 +8,6 @@ describe('Verify Mobile Number Directive', () => {
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
-
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     Wallet = $injector.get('Wallet');
@@ -28,26 +27,26 @@ describe('Verify Mobile Number Directive', () => {
         return error('error');
       }
     };
-
   })
   );
 
   beforeEach(function () {
-    element = $compile("<verify-mobile-number button-lg full-width></verify-mobile-number>")($rootScope);
+    element = $compile('<verify-mobile-number button-lg full-width></verify-mobile-number>')($rootScope);
     $rootScope.$digest();
     isoScope = element.isolateScope();
     isoScope.$digest();
 
-    return isoScope.onSuccess = () => true;
+    isoScope.onSuccess = () => true;
   });
 
-  it("should have text", () => expect(element.html()).toContain("VERIFY"));
+  it('should have text', () => {
+    expect(element.html()).toContain('VERIFY');
+  });
 
   describe('verifyMobile', () => {
-
     it('can be verified', () => {
       spyOn(isoScope, 'onSuccess');
-      isoScope.verifyMobile("31 1 2345");
+      isoScope.verifyMobile('31 1 2345');
       expect(isoScope.onSuccess).toHaveBeenCalled();
     });
 
@@ -58,14 +57,12 @@ describe('Verify Mobile Number Directive', () => {
   });
 
   describe('retrySendCode', () => {
-
     it('should get an error if retry fails', () => {
       isoScope.retrySendCode();
       expect(isoScope.errors.retryFail).toBeDefined();
     });
 
     it('should call successful retry to send', () => {
-      let error = function () {};
       Wallet.user.mobileNumber = '639';
       spyOn(isoScope, 'onSuccess');
       isoScope.retrySendCode();

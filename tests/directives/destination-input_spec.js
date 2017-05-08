@@ -38,7 +38,7 @@ describe('Destination Input directive', () => {
     return isoScope.$digest();
   });
 
-  it("should call change on addressScan", inject(function ($timeout) {
+  it('should call change on addressScan', inject(function ($timeout) {
     spyOn(isoScope, 'change');
     let result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX';
     isoScope.onAddressScan(result);
@@ -47,7 +47,7 @@ describe('Destination Input directive', () => {
   })
   );
 
-  it("should trigger onPaymentRequest", inject(function ($timeout) {
+  it('should trigger onPaymentRequest', inject(function ($timeout) {
     spyOn(isoScope, 'onPaymentRequest');
     let result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX';
     isoScope.onAddressScan(result);
@@ -56,7 +56,7 @@ describe('Destination Input directive', () => {
   })
   );
 
-  it("should hide the dropdown when there is one account and no active addresses", () => expect(isoScope.dropdownHidden).toEqual(true));
+  it('should hide the dropdown when there is one account and no active addresses', () => expect(isoScope.dropdownHidden).toEqual(true));
 
-  it("should have the correct number of destinations", () => expect(isoScope.destinations.length).toEqual(2));
+  it('should have the correct number of destinations', () => expect(isoScope.destinations.length).toEqual(2));
 });

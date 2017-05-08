@@ -36,9 +36,9 @@ describe('Trade Directive', () => {
   })
   );
 
-  it("should be passed a trade object", () => expect(isoScope.trade).toBeDefined());
+  it('should be passed a trade object', () => expect(isoScope.trade).toBeDefined());
 
-  it("should be passed a buy function", () => expect(isoScope.buy).toBeDefined());
+  it('should be passed a buy function', () => expect(isoScope.buy).toBeDefined());
 
   describe('update()', () => {
     it('should set the error state', () => {

@@ -96,9 +96,9 @@ describe('walletServices', () => {
 
   });
 
-  describe("transactions", () =>
+  describe('transactions', () =>
 
-    it("should beep on new transaction",  inject(function (Wallet, $timeout, ngAudio) {
+    it('should beep on new transaction',  inject(function (Wallet, $timeout, ngAudio) {
       spyOn(ngAudio, 'load').and.callThrough();
 
       Wallet.monitor("on_tx");
@@ -109,14 +109,14 @@ describe('walletServices', () => {
 
   describe('language', () => {
 
-    it("should be set after loading", inject(function (Wallet) {
+    it('should be set after loading', inject(function (Wallet) {
       Wallet.login();
       $rootScope.$digest();
       expect(Wallet.settings.language).toEqual({code: "en", name: "English"});
     })
     );
 
-    it("should switch language", inject(function (Wallet, languages) {
+    it('should switch language', inject(function (Wallet, languages) {
       Wallet.settings_api.changeLanguage = (language, success, error) => success();
 
       spyOn(Wallet.settings_api, "changeLanguage").and.callThrough();
@@ -134,21 +134,21 @@ describe('walletServices', () => {
 
   describe('currency', () => {
 
-    it("should be set after loading", inject(function (Wallet) {
+    it('should be set after loading', inject(function (Wallet) {
       Wallet.login();
       $rootScope.$digest();
       expect(Wallet.settings.currency.code).toEqual("USD");
     })
     );
 
-    it("conversion should be set on load", inject(function (Wallet, currency) {
+    it('conversion should be set on load', inject(function (Wallet, currency) {
       spyOn(currency, 'fetchExchangeRate');
       Wallet.login();
       expect(currency.fetchExchangeRate).toHaveBeenCalled();
     })
     );
 
-    it("can be switched", inject(function ($rootScope, Wallet, currency) {
+    it('can be switched', inject(function ($rootScope, Wallet, currency) {
       Wallet.settings_api.changeLocalCurrency = (newCurrency, f) => f();
 
       spyOn(Wallet.settings_api, "changeLocalCurrency").and.callThrough();
@@ -162,14 +162,14 @@ describe('walletServices', () => {
 
   describe('email', () => {
 
-    it("should be set after loading", inject(function (Wallet) {
+    it('should be set after loading', inject(function (Wallet) {
       Wallet.login();
       $rootScope.$digest();
       expect(Wallet.user.email).toEqual("steve@me.com");
     })
     );
 
-    it("can be changed", inject(function (Wallet) {
+    it('can be changed', inject(function (Wallet) {
       Wallet.settings_api.changeEmail = (newVal, success, error) => success();
 
       spyOn(Wallet.settings_api, "changeEmail").and.callThrough();
@@ -184,14 +184,14 @@ describe('walletServices', () => {
 
   describe('mobile', () => {
 
-    it("should be set after loading", inject(function (Wallet) {
+    it('should be set after loading', inject(function (Wallet) {
       Wallet.login();
       $rootScope.$digest();
       expect(Wallet.user.mobileNumber).toEqual("+1234");
     })
     );
 
-    it("should allow change", inject(function (Wallet) {
+    it('should allow change', inject(function (Wallet) {
       Wallet.settings_api.changeMobileNumber = (newVal, success, error) => success();
 
       spyOn(Wallet.settings_api, "changeMobileNumber").and.callThrough();
@@ -203,7 +203,7 @@ describe('walletServices', () => {
     })
     );
 
-    it("can be verified", inject(function (Wallet) {
+    it('can be verified', inject(function (Wallet) {
       Wallet.settings_api.verifyMobile = (code, success, error) => success();
 
       spyOn(Wallet.settings_api, "verifyMobile").and.callThrough();
@@ -221,7 +221,7 @@ describe('walletServices', () => {
 
   describe('password', () => {
 
-    it("can be changed", inject(function (Wallet, MyWalletStore) {
+    it('can be changed', inject(function (Wallet, MyWalletStore) {
       spyOn(MyWalletStore, 'changePassword').and.callThrough();
       Wallet.changePassword("newpassword");
       expect(MyWalletStore.changePassword).toHaveBeenCalled();
@@ -233,14 +233,14 @@ describe('walletServices', () => {
 
   describe('password hint', () => {
 
-    it("should be set after loading", inject(function (Wallet) {
+    it('should be set after loading', inject(function (Wallet) {
       Wallet.login();
       $rootScope.$digest();
       expect(Wallet.user.passwordHint).toEqual("Same as username");
     })
     );
 
-    it("can be changed", inject(function (Wallet) {
+    it('can be changed', inject(function (Wallet) {
       Wallet.settings_api.updatePasswordHint1 = function (hint, success, error) {
         if (hint.split('').some(c => c.charCodeAt(0) > 255)) {
           return error(101);
@@ -268,7 +268,7 @@ describe('walletServices', () => {
 
     describe('for an account', () => {
 
-      it("should return the balance", inject(function (Wallet) {
+      it('should return the balance', inject(function (Wallet) {
         Wallet.accounts = () => [{balance: 1}, {balance: 2}];
 
         expect(Wallet.total(0)).toBeGreaterThan(0);
@@ -278,7 +278,7 @@ describe('walletServices', () => {
       })
       );
 
-      it("should return null if balance unknown", inject(function (Wallet) {
+      it('should return null if balance unknown', inject(function (Wallet) {
         Wallet.accounts = () => [{balance: null}];
 
         expect(Wallet.total(0)).toEqual(null);
@@ -287,7 +287,7 @@ describe('walletServices', () => {
     });
 
     describe('for all', () => {
-      it("should return the sum of all accounts and addresses", inject(function (Wallet) {
+      it('should return the sum of all accounts and addresses', inject(function (Wallet) {
 
         Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3;
         Wallet.my.wallet.balanceActiveLegacy = 1;
@@ -299,7 +299,7 @@ describe('walletServices', () => {
       );
 
       // This ensures a spinner shows during load
-      it("should return null if either accounts or addresses are unknown", inject(function (Wallet) {
+      it('should return null if either accounts or addresses are unknown', inject(function (Wallet) {
 
         Wallet.my.wallet.hdwallet.balanceActiveAccounts = null;
         Wallet.my.wallet.balanceSpendableActiveLegacy = 1;
@@ -315,8 +315,8 @@ describe('walletServices', () => {
       );
     });
 
-    describe("for imported addresses", () =>
-      it("should return the sum of all legacy addresses", inject(function (Wallet, MyWalletStore) {
+    describe('for imported addresses', () =>
+      it('should return the sum of all legacy addresses', inject(function (Wallet, MyWalletStore) {
         Wallet.my.wallet.balanceActiveLegacy = 1;
 
         expect(Wallet.total("imported")).toBeGreaterThan(0);
@@ -416,7 +416,7 @@ describe('walletServices', () => {
       return Wallet.addAddressOrPrivateKey("invalid address", null, success, error);
     });
 
-    it("should ask for BIP 38 password if needed", inject(function ($rootScope) {
+    it('should ask for BIP 38 password if needed', inject(function ($rootScope) {
       let callbacks = {
         success () {},
         error () {},
@@ -435,7 +435,7 @@ describe('walletServices', () => {
     );
   });
 
-  describe("notifications", () =>
+  describe('notifications', () =>
     describe('on_tx', () => {
       beforeEach(() => spyOn(Alerts, 'displayReceivedBitcoin'));
 
@@ -464,14 +464,14 @@ describe('walletServices', () => {
 
   describe('toggleDisplayCurrency()', () => {
 
-    it("should toggle from btc to fiat", inject(function (Wallet) {
+    it('should toggle from btc to fiat', inject(function (Wallet) {
       Wallet.settings.displayCurrency = Wallet.settings.btcCurrency;
       Wallet.toggleDisplayCurrency();
       expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency);
     })
     );
 
-    it("should toggle from fiat to btc", inject(function (Wallet) {
+    it('should toggle from fiat to btc', inject(function (Wallet) {
       Wallet.settings.displayCurrency = Wallet.settings.currency;
       Wallet.toggleDisplayCurrency();
       expect(Wallet.settings.displayCurrency).toBe(Wallet.settings.currency);
@@ -481,7 +481,7 @@ describe('walletServices', () => {
 
   describe('Two factor settings', () => {
 
-    it("should disable 2FA", inject(function (Wallet) {
+    it('should disable 2FA', inject(function (Wallet) {
       Wallet.settings.needs2FA = true;
       Wallet.disableSecondFactor();
       expect(Wallet.settings.needs2FA).toEqual(false);
@@ -489,7 +489,7 @@ describe('walletServices', () => {
     })
     );
 
-    it("should set two factor as SMS", inject(function (Wallet) {
+    it('should set two factor as SMS', inject(function (Wallet) {
       Wallet.settings.needs2FA = false;
       Wallet.setTwoFactorSMS();
       expect(Wallet.settings.needs2FA).toEqual(true);
@@ -497,7 +497,7 @@ describe('walletServices', () => {
     })
     );
 
-    it("should set two factor as Email", inject(function (Wallet) {
+    it('should set two factor as Email', inject(function (Wallet) {
       Wallet.settings.needs2FA = false;
       Wallet.setTwoFactorEmail();
       expect(Wallet.settings.needs2FA).toEqual(true);
@@ -505,7 +505,7 @@ describe('walletServices', () => {
     })
     );
 
-    it("should set two factor as Yubikey", inject(function (Wallet) {
+    it('should set two factor as Yubikey', inject(function (Wallet) {
       Wallet.settings.needs2FA = false;
       Wallet.setTwoFactorYubiKey('yubikey_code', (function () { }));
       expect(Wallet.settings.needs2FA).toEqual(true);
@@ -513,13 +513,13 @@ describe('walletServices', () => {
     })
     );
 
-    it("should set Google Authenticator secret", inject(function (Wallet) {
+    it('should set Google Authenticator secret', inject(function (Wallet) {
       Wallet.setTwoFactorGoogleAuthenticator();
       expect(Wallet.settings.googleAuthenticatorSecret).toEqual('secret_sauce');
     })
     );
 
-    it("should confirm two factor as Google Authenticator with correct code", inject(function (Wallet) {
+    it('should confirm two factor as Google Authenticator with correct code', inject(function (Wallet) {
       Wallet.settings.needs2FA = false;
       Wallet.confirmTwoFactorGoogleAuthenticator('secret_sauce', (function () { }));
       expect(Wallet.settings.needs2FA).toEqual(true);
@@ -528,7 +528,7 @@ describe('walletServices', () => {
     })
     );
 
-    it("should not confirm two factor as Google Authenticator with incorrect code", inject(function (Wallet) {
+    it('should not confirm two factor as Google Authenticator with incorrect code', inject(function (Wallet) {
       Wallet.settings.needs2FA = false;
       Wallet.confirmTwoFactorGoogleAuthenticator('wrong', null, (function () { }));
       expect(Wallet.settings.needs2FA).toEqual(false);
@@ -536,14 +536,14 @@ describe('walletServices', () => {
     })
     );
 
-    it("should enable rememberTwoFactor", inject(function (Wallet) {
+    it('should enable rememberTwoFactor', inject(function (Wallet) {
       Wallet.settings.rememberTwoFactor = false;
       Wallet.enableRememberTwoFactor((function () { }));
       expect(Wallet.settings.rememberTwoFactor).toEqual(true);
     })
     );
 
-    it("should disable rememberTwoFactor", inject(function (Wallet) {
+    it('should disable rememberTwoFactor', inject(function (Wallet) {
       Wallet.settings.rememberTwoFactor = true;
       Wallet.disableRememberTwoFactor((function () { }));
       expect(Wallet.settings.rememberTwoFactor).toEqual(false);
@@ -554,7 +554,7 @@ describe('walletServices', () => {
   describe('legacyAddresses()', () => {
     beforeEach(() => Wallet.status.isLoggedIn = true);
 
-    it("should return an array of legacy addresses", () => expect(Wallet.legacyAddresses()).toEqual([]));
+    it('should return an array of legacy addresses', () => expect(Wallet.legacyAddresses()).toEqual([]));
 
     it('should be an empty array if not logged in', () => {
       Wallet.status.isLoggedIn = false;
@@ -567,7 +567,7 @@ describe('walletServices', () => {
   describe('accounts()', () => {
     beforeEach(() => Wallet.status.isLoggedIn = true);
 
-    it("should return an array of accounts", () => expect(Wallet.accounts()).toEqual([]));
+    it('should return an array of accounts', () => expect(Wallet.accounts()).toEqual([]));
 
     it('should be null if not logged in', () => {
       Wallet.status.isLoggedIn = false;

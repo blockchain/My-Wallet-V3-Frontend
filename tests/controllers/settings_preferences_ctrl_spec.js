@@ -45,7 +45,7 @@ describe('SettingsPreferencesCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("SettingsPreferencesCtrl", {
+      $controller('SettingsPreferencesCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModal: modal
@@ -59,10 +59,10 @@ describe('SettingsPreferencesCtrl', () => {
   });
 
   describe('email', () => {
-    it("should be set on load", inject(Wallet => expect(scope.user.email).toEqual("steve@me.com"))
+    it('should be set on load', inject(Wallet => expect(scope.user.email).toEqual("steve@me.com"))
     );
 
-    it("should not spontaniously save", inject(function (Wallet) {
+    it('should not spontaniously save', inject(function (Wallet) {
       spyOn(Wallet, 'changeEmail');
       expect(Wallet.changeEmail).not.toHaveBeenCalled();
 
@@ -74,19 +74,19 @@ describe('SettingsPreferencesCtrl', () => {
   describe('language', () => {
     beforeEach(() => scope.$digest());
 
-    it("should be set on load", inject(function () {
+    it('should be set on load', inject(function () {
       expect(Wallet.status.isLoggedIn).toBe(true);
       expect(scope.settings.language).toEqual({code: "en", name: "English"});
     })
     );
 
-    it("should not spontaniously save", inject(function (Wallet) {
+    it('should not spontaniously save', inject(function (Wallet) {
       scope.$digest();
       expect(Wallet.changeLanguage).not.toHaveBeenCalled();
     })
     );
 
-    it("should switch to another language", inject(function (Wallet) {
+    it('should switch to another language', inject(function (Wallet) {
       expect(scope.languages.length).toBeGreaterThan(1);
       expect(scope.settings.language).not.toBeNull();
       expect(scope.settings.language).not.toEqual(scope.languages[0]); // English is not the first one in the list
@@ -102,13 +102,13 @@ describe('SettingsPreferencesCtrl', () => {
   describe('currency', () => {
     beforeEach(() => scope.$digest());
 
-    it("should not spontaniously save", inject(function (Wallet) {
+    it('should not spontaniously save', inject(function (Wallet) {
       scope.$digest();
       expect(Wallet.changeCurrency).not.toHaveBeenCalled();
     })
     );
 
-    it("can be changed", inject(function (Wallet) {
+    it('can be changed', inject(function (Wallet) {
       expect(scope.currencies.length).toBeGreaterThan(1);
       scope.settings.currency = scope.currencies[0];
       expect(scope.settings.currency).not.toBeNull();
@@ -121,8 +121,8 @@ describe('SettingsPreferencesCtrl', () => {
     );
   });
 
-  describe("handling of bitcoin links", () =>
-    it("can be enabled", inject(function (Wallet) {
+  describe('handling of bitcoin links', () =>
+    it('can be enabled', inject(function (Wallet) {
       spyOn(Wallet, 'handleBitcoinLinks');
       scope.setHandleBitcoinLinks();
       expect(Wallet.handleBitcoinLinks).toHaveBeenCalled();
@@ -130,4 +130,3 @@ describe('SettingsPreferencesCtrl', () => {
     )
   );
 });
-

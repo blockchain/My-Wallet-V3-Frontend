@@ -21,14 +21,14 @@ describe('Amount', () => {
     return isoScope.$digest();
   });
 
-  it("should not show Fiat if BTC is set as display currency", inject(function (Wallet) {
+  it('should not show Fiat if BTC is set as display currency', inject(function (Wallet) {
     Wallet.settings.displayCurrency = {code: "BTC"};
     isoScope.updateDisplay();
     expect(isoScope.isBitCurrency(isoScope.currency)).toBe(true);
   })
   );
 
-  it("should show Fiat if BTC is not set as display currency", inject(function (Wallet) {
+  it('should show Fiat if BTC is not set as display currency', inject(function (Wallet) {
     Wallet.settings.displayCurrency = {code: "USD"};
     isoScope.updateDisplay();
     expect(isoScope.isBitCurrency(isoScope.currency)).toBe(false);

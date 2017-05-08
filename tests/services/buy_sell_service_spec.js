@@ -106,7 +106,7 @@ describe('buySell service', () => {
       expect(trades.pending.watchAddress).toHaveBeenCalled();
     });
 
-    it("should open the buy modal when bitcoin is received", inject(function (modals) {
+    it('should open the buy modal when bitcoin is received', inject(function (modals) {
       spyOn(modals, 'openBuyView');
       buySell.watchAddress(trades.pending);
       $rootScope.$digest();
@@ -168,7 +168,7 @@ describe('buySell service', () => {
       spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
       buySell.cancelTrade(trade);
       $rootScope.$digest();
-      expect(Alerts.displayError).toHaveBeenCalledWith("ERROR_TRADE_CANCEL");
+      expect(Alerts.displayError).toHaveBeenCalledWith('ERROR_TRADE_CANCEL');
     });
   });
 

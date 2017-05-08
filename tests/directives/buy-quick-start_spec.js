@@ -86,7 +86,7 @@ describe('buyQuickStart', () => {
   })
   );
   
-  describe(".updateLastInput()", () =>
+  describe('.updateLastInput()', () =>
     
     it('should update last input field', () => {
       isoScope.updateLastInput('btc');
@@ -96,7 +96,7 @@ describe('buyQuickStart', () => {
     })
   );
 
-  describe(".getQuote()", () =>
+  describe('.getQuote()', () =>
     
     it('should get a quote based on last input', () => {
       spyOn(buySell, 'getQuote');
@@ -112,7 +112,7 @@ describe('buyQuickStart', () => {
     })
   );
     
-  describe(".cancelTrade()", () =>
+  describe('.cancelTrade()', () =>
     
     it('should cancel a trade', () => {
       spyOn(buySell, 'cancelTrade');

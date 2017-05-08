@@ -44,7 +44,7 @@ describe('BuySellSelectPartnerController', () => {
       }
     };
 
-    $controller("BuySellSelectPartnerController", {
+    $controller('BuySellSelectPartnerController', {
       $scope,
       options,
       buyStatus: {
@@ -76,7 +76,7 @@ describe('BuySellSelectPartnerController', () => {
     expect(scope.country.Name).toEqual("United Kingdom");
   });
 
-  it("should continue if the country can't be guessed", () => {
+  it('should continue if the country can\'t be guessed', () => {
     accountInfo.countryCodeGuess = null;
     scope = getControllerScope();
     scope.$digest();
@@ -103,11 +103,11 @@ describe('BuySellSelectPartnerController', () => {
   describe('.onWhitelist()', () => {
     beforeEach(() => scope = getControllerScope());
 
-    it("should know if a country is on the coinify whitelist", () => expect(scope.onWhitelist("GB")).toEqual("coinify"));
+    it('should know if a country is on the coinify whitelist', () => expect(scope.onWhitelist("GB")).toEqual("coinify"));
 
-    it("should know if a country is on the sfox whitelist", () => expect(scope.onWhitelist("US")).toEqual("sfox"));
+    it('should know if a country is on the sfox whitelist', () => expect(scope.onWhitelist("US")).toEqual("sfox"));
 
-    it("should know if a country is not on any whitelist", () => expect(scope.onWhitelist("CZ")).toEqual(false));
+    it('should know if a country is not on any whitelist', () => expect(scope.onWhitelist("CZ")).toEqual(false));
   });
 
   describe('partner guess', () => {

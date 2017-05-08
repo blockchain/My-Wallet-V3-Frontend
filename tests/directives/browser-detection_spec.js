@@ -29,7 +29,7 @@ describe('browserDetection', () => {
     return isoScope.$digest();
   });
 
-  it("should have text", () => expect(element.html()).toContain("text-warning"));
+  it('should have text', () => expect(element.html()).toContain("text-warning"));
 
   describe('performCheck()', () => {
 
@@ -93,9 +93,9 @@ describe('browserDetection', () => {
         return isoScope.$digest();
       });
 
-      it("should be rejected", () => expect(isoScope.result.disabled).toBe(true));
+      it('should be rejected', () => expect(isoScope.result.disabled).toBe(true));
 
-      it("should include Safari version in error message", () => expect(isoScope.result.msg).toEqual("MINIMUM_BROWSER|Safari|5.1|8.0.6"));
+      it('should include Safari version in error message', () => expect(isoScope.result.msg).toEqual("MINIMUM_BROWSER|Safari|5.1|8.0.6"));
     });
 
     it('should permit modern Safari', () => {

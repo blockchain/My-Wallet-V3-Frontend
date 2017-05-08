@@ -22,8 +22,8 @@ describe('Activity', () => {
         }
       };}));
 
-  describe("updateAllActivities", () =>
-    it("should update all activities", inject(function (Activity) {
+  describe('updateAllActivities', () =>
+    it('should update all activities', inject(function (Activity) {
       spyOn(Activity, 'updateTxActivities').and.callThrough();
       spyOn(Activity, 'updateLogActivities').and.callThrough();
       Activity.updateAllActivities();
@@ -33,7 +33,7 @@ describe('Activity', () => {
     )
   );
 
-  describe("capitalize", () =>
+  describe('capitalize', () =>
     it('should capitalize a string', () => {
       let str = 'capitalize me';
       str = Activity.capitalize(str);
@@ -41,7 +41,7 @@ describe('Activity', () => {
     })
   );
 
-  describe("time sort", () =>
+  describe('time sort', () =>
     it('should be able to sort time', () => {
       let x = {};
       let y = {};

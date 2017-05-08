@@ -13,7 +13,7 @@ describe('ModalNotificationCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("ModalNotificationCtrl", {
+      $controller('ModalNotificationCtrl', {
         $scope: scope,
         $uibModalInstance: modalInstance,
         notification: {

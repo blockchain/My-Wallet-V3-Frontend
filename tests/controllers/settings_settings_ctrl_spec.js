@@ -11,7 +11,7 @@ describe('SettingsCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("SettingsCtrl", {
+      $controller('SettingsCtrl', {
         $scope: scope,
         $stateParams: {}
       }
@@ -23,7 +23,7 @@ describe('SettingsCtrl', () => {
 
   });
 
-  it("should load", inject(function (Wallet, Alerts) {
+  it('should load', inject(function (Wallet, Alerts) {
     spyOn(Alerts, 'clear');
     scope.didLoad();
     expect(Alerts.clear).toHaveBeenCalled();

@@ -30,7 +30,7 @@ describe('Transaction Pending Directive', () => {
 
   describe('label for pending tx', function () {
 
-    it("should display if < 3 confirmations", () => expect(isoScope.complete).toBe(false));
+    it('should display if < 3 confirmations', () => expect(isoScope.complete).toBe(false));
 
     it('should assign the sent message to the tooltip', () => {
       isoScope.pendingMessage($rootScope.transaction);

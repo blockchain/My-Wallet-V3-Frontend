@@ -73,7 +73,7 @@ describe('cta', () => {
       return Wallet.user.isEmailVerified = false;
     });
 
-    it("should show when no conditions are met", () => expect(cta.shouldShowSecurityWarning()).toBe(true));
+    it('should show when no conditions are met', () => expect(cta.shouldShowSecurityWarning()).toBe(true));
 
     it('should not show when all conditions are met', () => {
       Wallet.status.didConfirmRecoveryPhrase = true;

@@ -12,7 +12,7 @@ describe('OpenLinkController', () => {
 
       scope = $rootScope.$new();
 
-      $controller("OpenLinkController", {
+      $controller('OpenLinkController', {
         $scope: scope,
         $stateParams: {}
       });
@@ -23,5 +23,5 @@ describe('OpenLinkController', () => {
 
   });
 
-  it("should have access to Wallet", () => expect(Wallet).toBeDefined());
+  it('should have access to Wallet', () => expect(Wallet).toBeDefined());
 });

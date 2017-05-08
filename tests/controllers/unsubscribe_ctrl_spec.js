@@ -26,21 +26,22 @@ describe('UnsubscribeController', () => {
 
         scope = $rootScope.$new();
 
-        return $controller("UnsubscribeCtrl", {
+        return $controller('UnsubscribeCtrl', {
           $scope: scope,
           $stateParams: {token: "token"}
         });}));
 
-    it("should show call WalletTokenEndpoints.unsubscribe()", inject(WalletTokenEndpoints => expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalled())
+    it('should show call WalletTokenEndpoints.unsubscribe()', inject(WalletTokenEndpoints => expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalled())
     );
 
-    it("should pass the token parameter along", inject(WalletTokenEndpoints => expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalledWith("token"))
+    it('should pass the token parameter along', inject(WalletTokenEndpoints => expect(WalletTokenEndpoints.unsubscribe).toHaveBeenCalledWith('token'))
     );
 
-    it("should redirect to the login page", inject($state=> expect($state.go).toHaveBeenCalledWith("public.login-uid", { uid : '1234' }))
-    );
+    it('should redirect to the login page', inject($state => {
+      expect($state.go).toHaveBeenCalledWith('public.login-uid', { uid: '1234' });
+    }));
 
-    it("should request a modal success message", inject(Alerts => expect(Alerts.displaySuccess).toHaveBeenCalled())
+    it('should request a modal success message', inject(Alerts => expect(Alerts.displaySuccess).toHaveBeenCalled())
     );
   });
 
@@ -50,15 +51,15 @@ describe('UnsubscribeController', () => {
 
         scope = $rootScope.$new();
 
-        return $controller("UnsubscribeCtrl", {
+        return $controller('UnsubscribeCtrl', {
           $scope: scope,
           $stateParams: {token: "wrong-token"}
         });}));
 
-    it("should display an error message", inject(Alerts=> expect(Alerts.displayError).toHaveBeenCalled())
+    it('should display an error message', inject(Alerts=> expect(Alerts.displayError).toHaveBeenCalled())
     );
 
-    it("should redirect to the login page", inject($state=> expect($state.go).toHaveBeenCalledWith("public.login-no-uid"))
+    it('should redirect to the login page', inject($state=> expect($state.go).toHaveBeenCalledWith("public.login-no-uid"))
     );
   });
 });

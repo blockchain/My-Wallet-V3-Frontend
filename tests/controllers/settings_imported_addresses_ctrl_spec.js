@@ -29,7 +29,7 @@ describe('SettingsImportedAddressesCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("SettingsImportedAddressesCtrl", {
+      $controller('SettingsImportedAddressesCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModal: modal,
@@ -49,7 +49,7 @@ describe('SettingsImportedAddressesCtrl', () => {
       expect(address.archived).toBe(false);
     });
 
-    it("can be deleted", inject(function (Wallet, $uibModal) {
+    it('can be deleted', inject(function (Wallet, $uibModal) {
       let address = scope.legacyAddresses()[1];
       let before = scope.legacyAddresses().length;
 
@@ -63,8 +63,8 @@ describe('SettingsImportedAddressesCtrl', () => {
     );
   });
 
-  describe("importAddress()", () =>
-    it("should open a modal",  inject(function ($uibModal) {
+  describe('importAddress()', () =>
+    it('should open a modal',  inject(function ($uibModal) {
       spyOn(modal, 'open');
       scope.importAddress();
       expect(modal.open).toHaveBeenCalled();
@@ -72,7 +72,7 @@ describe('SettingsImportedAddressesCtrl', () => {
     )
   );
 
-  describe("toggling archived addresses", () =>
+  describe('toggling archived addresses', () =>
     it('should toggle archived address', () => {
       spyOn(scope, 'toggleDisplayArchived').and.callThrough();
       scope.toggleDisplayArchived();

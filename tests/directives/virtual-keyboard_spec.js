@@ -74,7 +74,7 @@ describe('VirtualKeyboard', () => {
       expect(scope.input).toEqual("abcd");
     });
 
-    it("shold backspace all if there is a selection", inject(function ($window) {
+    it('shold backspace all if there is a selection', inject(function ($window) {
       spyOn($window, "getSelection").and.returnValue("cde");
       mockKeyPress(8);
       expect(scope.input).toEqual("");
@@ -87,9 +87,9 @@ describe('VirtualKeyboard', () => {
     });
   });
 
-  describe("on destroy scope", () =>
+  describe('on destroy scope', () =>
 
-    it("should unbind keydown keypress handler", inject(function ($document) {
+    it('should unbind keydown keypress handler', inject(function ($document) {
       spyOn($document, "unbind");
       isoScope.$destroy();
       expect($document.unbind).toHaveBeenCalledWith(

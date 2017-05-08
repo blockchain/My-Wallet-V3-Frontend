@@ -20,11 +20,11 @@ describe('ExportHistory service', () => {
         getHistory () { return $q.resolve(); }
       };
 
-      return MyBlockchainApi.exportHistory = function () {};
+      MyBlockchainApi.exportHistory = function () {};
     })
   );
 
-  describe("json2csv", () =>
+  describe('json2csv', () =>
     it('should convert json to csv', () => {
       let json = [{ a: 1, b: 'x' }, { a: 2, b: 'y' }, { a: 3, b: 'z' }];
       let csv = 'a,b\n1,"x"\n2,"y"\n3,"z"';
@@ -33,10 +33,12 @@ describe('ExportHistory service', () => {
   );
 
   describe('escapeCSV', () => {
-    it("should not escape a normal string", () => expect(ExportHistory.escapeCSV("abc")).toEqual("abc"));
+    it('should not escape a normal string', () => {
+      expect(ExportHistory.escapeCSV('abc')).toEqual('abc');
+    });
 
     it('should excape all blacklisted symbols', () => {
-      let blacklist = ["+", "=", "-"];
+      let blacklist = ['+', '=', '-'];
       return Array.from(blacklist).map((symbol) =>
         expect(ExportHistory.escapeCSV(`${symbol}abc`)).toEqual(`'${symbol}abc`));
     });
@@ -52,7 +54,7 @@ describe('ExportHistory service', () => {
 
     it('should escape the note if necessary', () => {
       let tx = { tx: 'asdf', note: null };
-      spyOn(Wallet, 'getNote').and.callFake(hash => (hash === 'asdf') && "=evil");
+      spyOn(Wallet, 'getNote').and.callFake(hash => (hash === 'asdf') && '=evil');
       ExportHistory.addNoteToTx(tx);
       expect(tx.note).toEqual("'=evil");
     });
@@ -69,7 +71,7 @@ describe('ExportHistory service', () => {
       expect(MyBlockchainApi.exportHistory).toHaveBeenCalledWith(['1asdf'], 'USD', { start: '01/01/2015', end: '01/01/2016' });
     });
 
-    it("should convert to csv with notes and broadcast broadcast download event", function (done) {
+    it('should convert to csv with notes and broadcast broadcast download event', function (done) {
       spyOn(Wallet, 'getNote').and.callFake(hash => (hash === 'asdf') && 'test_note');
       spyOn($rootScope, '$broadcast');
       ExportHistory.fetch().then(function (data) {
@@ -83,7 +85,7 @@ describe('ExportHistory service', () => {
   describe('with no transactions', () => {
     beforeEach(() => spyOn(MyBlockchainApi, 'exportHistory').and.returnValue([]));
 
-    it("should show an error", function (done) {
+    it('should show an error', function (done) {
       ExportHistory.fetch().catch(function (e) {
         expect(e).toEqual('NO_HISTORY');
         return done();

@@ -10,19 +10,16 @@ describe('AdvertsServices', () => {
 
   beforeEach(function () {
     angular.mock.inject(function ($injector, _$rootScope_) {
-
       $httpBackend = $injector.get('$httpBackend');
 
       Adverts = $injector.get('Adverts');
       rootScope = _$rootScope_;
-
     });
-
   });
 
   describe('fetch()', () => {
     beforeEach(function () {
-      rootScope.apiDomain = "https://api.blockchain.info/";
+      rootScope.apiDomain = 'https://api.blockchain.info/';
       $httpBackend.expectGET('https://api.blockchain.info/bci-ads/get?wallet=true&n=2').respond(sampleAds);
 
       Adverts.fetch();
@@ -30,20 +27,20 @@ describe('AdvertsServices', () => {
       return $httpBackend.flush();
     });
 
-    it("should download the most recent adverts feed", () => expect(Adverts.ads.length).toBe(1));
+    it('should download the most recent adverts feed', () => expect(Adverts.ads.length).toBe(1));
 
-    it("should get the ad title", () => expect(Adverts.ads[0].name).toBe("Kraken Deposit"));
+    it('should get the ad title', () => expect(Adverts.ads[0].name).toBe('Kraken Deposit'));
 
-    it("should get the ad URL", () => expect(Adverts.ads[0].url).toContain("http"));
+    it('should get the ad URL', () => expect(Adverts.ads[0].url).toContain('http'));
 
-    it("should get the image blob", () => expect(Adverts.ads[0].data).toContain("data:image"));
+    it('should get the image blob', () => expect(Adverts.ads[0].data).toContain('data:image'));
 
-    it("should get the ad id", () => expect(Adverts.ads[0].id).toBe(1));
+    it('should get the ad id', () => expect(Adverts.ads[0].id).toBe(1));
   });
 
   describe('bad ads fetch()', () => {
     beforeEach(function () {
-      rootScope.apiDomain = "https://api.blockchain.info/";
+      rootScope.apiDomain = 'https://api.blockchain.info/';
       $httpBackend.expectGET('https://api.blockchain.info/bci-ads/get?wallet=true&n=2').respond(sampleBadAds);
 
       Adverts.fetch();
@@ -51,20 +48,20 @@ describe('AdvertsServices', () => {
       return $httpBackend.flush();
     });
 
-    it("should not keep bad ads", () => expect(Adverts.ads.length).toBe(0));
+    it('should not keep bad ads', () => expect(Adverts.ads.length).toBe(0));
   });
 
   describe('bad api domain fetch()', () => {
     beforeEach(function () {
-      rootScope.apiDomain = "https://api.blockchain.info.attacker.com/";
+      rootScope.apiDomain = 'https://api.blockchain.info.attacker.com/';
 
       return Adverts.fetch();
     });
 
-    it("should not keep bad ads", () => expect(Adverts.ads.length).toBe(0));
+    it('should not keep bad ads', () => expect(Adverts.ads.length).toBe(0));
   });
 
-  describe("fetchOnce()", () =>
+  describe('fetchOnce()', () =>
     it('should call fetch() only once', () => {
       spyOn(Adverts, 'fetch');
       Adverts.fetchOnce();
@@ -74,7 +71,7 @@ describe('AdvertsServices', () => {
     })
   );
 
-  return afterEach(function () {
+  afterEach(function () {
     $httpBackend.verifyNoOutstandingExpectation();
     return $httpBackend.verifyNoOutstandingRequest();
   });

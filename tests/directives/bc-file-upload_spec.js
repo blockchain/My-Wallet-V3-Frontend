@@ -25,7 +25,7 @@ describe('BC File Upload Directive', () => {
     })
   );
 
-  describe("reset", () =>
+  describe('reset', () =>
     
     it('should reset file, invalidFile, and call disableWebcam', () => {
       spyOn(isoScope, 'disableWebcam');
@@ -36,7 +36,7 @@ describe('BC File Upload Directive', () => {
     })
   );
 
-  describe("enableWebcam()", () =>
+  describe('enableWebcam()', () =>
 
     it('should activate the webcam', () => {
       isoScope.enableWebcam();
@@ -44,7 +44,7 @@ describe('BC File Upload Directive', () => {
     })
   );
 
-  describe("disableWebcam()", () =>
+  describe('disableWebcam()', () =>
 
     it('should deactivate the webcam', () => {
       isoScope.disableWebcam();
@@ -67,7 +67,7 @@ describe('BC File Upload Directive', () => {
     });
   });
 
-  describe("webcamError()", () =>
+  describe('webcamError()', () =>
 
     it('should set the webcam error state', () => {
       isoScope.webcamError();
@@ -75,7 +75,7 @@ describe('BC File Upload Directive', () => {
     })
   );
   
-  describe("webcamStream()", () =>
+  describe('webcamStream()', () =>
 
     it('should set the webcam stream state', () => {
       isoScope.webcamStream();

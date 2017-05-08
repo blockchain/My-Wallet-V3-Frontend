@@ -32,7 +32,7 @@ describe('ManageSecondPasswordCtrl', () => {
       scope.settings = Wallet.settings;
       let template = $templateCache.get('partials/settings/manage-second-password.pug');
 
-      $controller("ManageSecondPasswordCtrl", {
+      $controller('ManageSecondPasswordCtrl', {
         $scope: scope,
         $uibModalInstance: modalInstance
       }
@@ -47,7 +47,7 @@ describe('ManageSecondPasswordCtrl', () => {
 
   describe('recovery phrase prompt modal', () => {
 
-    it("should open if called", inject(function ($uibModal) {
+    it('should open if called', inject(function ($uibModal) {
       spyOn($uibModal, "open").and.callThrough();
       Wallet.status.didConfirmRecoveryPhrase = false;
       Wallet.settings.secondPassword = false;
@@ -56,7 +56,7 @@ describe('ManageSecondPasswordCtrl', () => {
     })
     );
 
-    it("should close the modal on dismissal and open recovery", inject(function ($uibModal, $q) {
+    it('should close the modal on dismissal and open recovery', inject(function ($uibModal, $q) {
       spyOn($uibModal, "open").and.returnValue( {result: $q.resolve()} );
       spyOn(scope, 'openRecovery');
       scope.recoveryModal();
@@ -65,7 +65,7 @@ describe('ManageSecondPasswordCtrl', () => {
     })
     );
 
-    it("should not open if recovery phrase has been backed up", inject(function ($uibModal, $q) {
+    it('should not open if recovery phrase has been backed up', inject(function ($uibModal, $q) {
       spyOn($uibModal, "open");
       Wallet.status.didConfirmRecoveryPhrase = true;
       scope.recoveryModal();
@@ -74,7 +74,7 @@ describe('ManageSecondPasswordCtrl', () => {
     })
     );
 
-    it("should not open if second password has been set already", inject(function ($uibModal, $q) {
+    it('should not open if second password has been set already', inject(function ($uibModal, $q) {
       spyOn(modal, 'open');
       Wallet.settings.secondPassword = true;
       scope.recoveryModal();
@@ -82,7 +82,7 @@ describe('ManageSecondPasswordCtrl', () => {
     })
     );
 
-    it("should activate the form if user dismisses prompt", inject(function ($uibModal, $q) {
+    it('should activate the form if user dismisses prompt', inject(function ($uibModal, $q) {
       spyOn($uibModal, "open").and.returnValue( {result: $q.reject()} );
       scope.recoveryModal();
       modalInstance.dismiss();

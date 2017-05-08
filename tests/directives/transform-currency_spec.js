@@ -27,9 +27,9 @@ describe('Transform-Currency Directive', () => {
 
   describe('on initialization', () => {
 
-    it("should have a parser defined", () => expect(isoScope.parseToModel).toBeDefined());
+    it('should have a parser defined', () => expect(isoScope.parseToModel).toBeDefined());
 
-    it("should have a formatter defined", () => expect(isoScope.formatToView).toBeDefined());
+    it('should have a formatter defined', () => expect(isoScope.formatToView).toBeDefined());
   });
 
   describe('transformation magic', () => {

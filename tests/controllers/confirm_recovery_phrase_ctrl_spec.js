@@ -20,7 +20,7 @@ describe('ConfirmRecoveryPhraseCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("ConfirmRecoveryPhraseCtrl", {
+      $controller('ConfirmRecoveryPhraseCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance
@@ -31,13 +31,13 @@ describe('ConfirmRecoveryPhraseCtrl', () => {
 
   });
 
-  it("should get mnemonic at 2nd step", inject(function (Wallet) {
+  it('should get mnemonic at 2nd step', inject(function (Wallet) {
     scope.goToShow();
     expect(scope.recoveryPhrase).not.toBe(null);
   })
   );
 
-  it("should verify", inject(function (Wallet) {
+  it('should verify', inject(function (Wallet) {
     for (let word of Array.from(scope.words)) {
       word.value = (word.actual = 'word');
     }
@@ -55,8 +55,8 @@ describe('ConfirmRecoveryPhraseCtrl', () => {
   );
 
   describe('pure coverage', () => {
-    it("covers close", () => scope.close());
+    it('covers close', () => scope.close());
 
-    it("covers goToVerify", () => scope.goToVerify());
+    it('covers goToVerify', () => scope.goToVerify());
   });
 });

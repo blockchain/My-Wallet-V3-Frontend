@@ -54,7 +54,7 @@ describe('TransferControllerSpec', () => {
     })
   );
 
-  it("should select the default account", () => expect(scope.selectedAccount.label).toEqual('Default'));
+  it('should select the default account', () => expect(scope.selectedAccount.label).toEqual('Default'));
 
   it('should convert a single address to an array', () => {
     scope = getControllerScope({ label: 'single_address' });
@@ -62,5 +62,5 @@ describe('TransferControllerSpec', () => {
     expect(scope.addresses[0].label).toEqual('single_address');
   });
 
-  it("should combine the balances of addresses", () => expect(scope.combinedBalance).toEqual(30000));
+  it('should combine the balances of addresses', () => expect(scope.combinedBalance).toEqual(30000));
 });

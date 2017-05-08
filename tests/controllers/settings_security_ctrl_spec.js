@@ -22,7 +22,7 @@ describe('SettingsSecurityCtrl', () => {
       };
 
       scope = $rootScope.$new();
-      $controller("SettingsSecurityCtrl", {
+      $controller('SettingsSecurityCtrl', {
         $scope: scope,
         $stateParams: {}
       }
@@ -31,12 +31,12 @@ describe('SettingsSecurityCtrl', () => {
     })
   );
 
-  it("should have access to wallet settings", () => expect(scope.settings).toBe(Wallet.settings));
+  it('should have access to wallet settings', () => expect(scope.settings).toBe(Wallet.settings));
 
-  it("should have access to user object", () => expect(scope.user).toBe(Wallet.user));
+  it('should have access to user object', () => expect(scope.user).toBe(Wallet.user));
 
   describe('remember 2FA', () => {
-    it("has an initial status", () => expect(scope.settings.rememberTwoFactor).toBe(true));
+    it('has an initial status', () => expect(scope.settings.rememberTwoFactor).toBe(true));
 
     it('can be enabled', () => {
       spyOn(Wallet, 'enableRememberTwoFactor');

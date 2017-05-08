@@ -20,23 +20,23 @@ describe('AccountFormCtrl', () => {
 
       Wallet.askForSecondPasswordIfNeeded = () =>
         ({
-          then(fn) { fn(); return { catch () {} }; }
+          then (fn) { fn(); return { catch () {} }; }
         })
       ;
 
-      Wallet.my.fetchMoreTransactionsForAll = (success,error,allTransactionsLoaded) => success();
+      Wallet.my.fetchMoreTransactionsForAll = (success, error, allTransactionsLoaded) => success();
 
-      return MyWallet.wallet = {
+      MyWallet.wallet = {
         isDoubleEncrypted: false,
 
-        newAccount(label) {
+        newAccount (label) {
           accounts.push({ label });
         },
 
         getHistory () {
           return {
             then () {
-              return {then() {}};
+              return {then () {}};
             }
           };
         },
@@ -44,14 +44,15 @@ describe('AccountFormCtrl', () => {
         txList: {
           fetchTxs () {}
         }
-      };}));
+      };
+    }));
 
   beforeEach(() =>
     angular.mock.inject(function ($rootScope, $controller, $compile, $templateCache) {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/account-form.pug');
 
-      $controller("AccountFormCtrl", {
+      $controller('AccountFormCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance,
@@ -65,13 +66,15 @@ describe('AccountFormCtrl', () => {
     })
   );
 
-  beforeEach(function () { accounts.splice(2); return accounts[0].label = 'Savings'; });
+  beforeEach(function () {
+    accounts.splice(2);
+    accounts[0].label = 'Savings';
+  });
 
   describe('creation', () => {
-
     beforeEach(() => scope.name = 'New Account');
 
-    it("should be created", inject(function (Wallet) {
+    it('should be created', inject(function (Wallet) {
       let before = Wallet.accounts().length;
       scope.createAccount();
       scope.$digest();
@@ -79,28 +82,27 @@ describe('AccountFormCtrl', () => {
     })
     );
 
-    it("should have a name", inject(function (Wallet) {
-        scope.createAccount();
-        scope.$digest();
-        expect(Wallet.accounts()[Wallet.accounts().length - 1].label).toBe("New Account");
+    it('should have a name', inject(function (Wallet) {
+      scope.createAccount();
+      scope.$digest();
+      expect(Wallet.accounts()[Wallet.accounts().length - 1].label).toBe('New Account');
     })
     );
   });
 
   describe('rename', () => {
+    it('original name should be shown', () => {
+      expect(scope.name).toBe('Savings');
+    });
 
-    it("original name should be shown", () => expect(scope.name).toBe("Savings"));
-
-    it("should save the new name",  inject(function (Wallet) {
-      scope.name = "New Name";
+    it('should save the new name', inject(function (Wallet) {
+      scope.name = 'New Name';
       scope.updateAccount();
-      expect(Wallet.accounts()[0].label).toBe("New Name");
-    })
-    );
+      expect(Wallet.accounts()[0].label).toBe('New Name');
+    }));
   });
 
   describe('validate', () => {
-
     beforeEach(function () {
       scope.name = 'Valid Name';
       return scope.$apply();

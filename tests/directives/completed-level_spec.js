@@ -21,7 +21,7 @@ describe('Completed Level directive', () => {
     return isoScope.$digest();
   });
 
-  it("has a templateUrl", () => expect(isoScope.tooltip.templateUrl).toBeTruthy());
+  it('has a templateUrl', () => expect(isoScope.tooltip.templateUrl).toBeTruthy());
 
-  it("has a placement", () => expect(isoScope.tooltip.placement).toBeTruthy());
+  it('has a placement', () => expect(isoScope.tooltip.placement).toBeTruthy());
 });

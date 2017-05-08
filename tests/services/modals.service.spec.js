@@ -13,7 +13,7 @@ describe('modals', () => {
 
   let modalOpener = () => $uibModal.open({templateUrl: "<div>modal</div>"});
 
-  describe("openOnce", () =>
+  describe('openOnce', () =>
     it('should prevent a second modal from opening', () => {
       spyOn($uibModal, "open").and.callThrough();
       let open = modals.openOnce(modalOpener);
@@ -24,7 +24,7 @@ describe('modals', () => {
     })
   );
 
-  describe("dismissPrevious", () =>
+  describe('dismissPrevious', () =>
     it('should dismiss the first modal when opening a second one', () => {
       let instanceMock = {dismiss: jasmine.createSpy()};
       spyOn($uibModal, "open").and.returnValue(instanceMock);

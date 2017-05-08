@@ -34,9 +34,9 @@ describe('Fiat Directive', () => {
 
   describe('on load', () => {
 
-    it("should have access to wallet settings", () => expect(isoScope.settings).toEqual(Wallet.settings));
+    it('should have access to wallet settings', () => expect(isoScope.settings).toEqual(Wallet.settings));
 
-    it("should have access to currency conversions", inject(currency => expect(isoScope.conversions).toEqual(currency.conversions))
+    it('should have access to currency conversions', inject(currency => expect(isoScope.conversions).toEqual(currency.conversions))
     );
   });
 
@@ -52,13 +52,13 @@ describe('Fiat Directive', () => {
       expect(isoScope.updateFiat).toHaveBeenCalled();
     });
 
-    it("should watch the conversions collection", () => isoScope.conversions = 'changed_conversions');
+    it('should watch the conversions collection', () => isoScope.conversions = 'changed_conversions');
 
-    it("should watch the wallet settings currency", () => isoScope.settings.currency.code = 'TEST');
+    it('should watch the wallet settings currency', () => isoScope.settings.currency.code = 'TEST');
 
-    it("should watch the btc amount", () => isoScope.btc = 20000);
+    it('should watch the btc amount', () => isoScope.btc = 20000);
 
-    it("should watch the currency", inject(currency => isoScope.currency = currency.currencies[1])
+    it('should watch the currency', inject(currency => isoScope.currency = currency.currencies[1])
     );
   });
 
@@ -77,13 +77,13 @@ describe('Fiat Directive', () => {
         expect(isoScope.fiat).toEqual({ currencySymbol: null, amount: null });
       });
 
-      it("should return if there is no btc value", () => isoScope.btc = undefined);
+      it('should return if there is no btc value', () => isoScope.btc = undefined);
 
-      it("should return if no fiat currency is available", () => isoScope.currency = (isoScope.settings.currency = undefined));
+      it('should return if no fiat currency is available', () => isoScope.currency = (isoScope.settings.currency = undefined));
 
-      it("should return if there is no conversion available", () => isoScope.conversions['USD'] = undefined);
+      it('should return if there is no conversion available', () => isoScope.conversions['USD'] = undefined);
 
-      it("should return if the conversion is not greater than 0", () => isoScope.conversions['USD'] = { conversion: -123 });
+      it('should return if the conversion is not greater than 0', () => isoScope.conversions['USD'] = { conversion: -123 });
   });
 
     describe('(success)', () => {
@@ -104,7 +104,7 @@ describe('Fiat Directive', () => {
         expect(isoScope.fiat.amount).toEqual('0.00');
       });
 
-      it("should get fiat at time if a date is present", inject(function (currency) {
+      it('should get fiat at time if a date is present', inject(function (currency) {
         spyOn(currency, 'getFiatAtTime').and.returnValue({ then(cb) { return cb(8); } });
         isoScope.date = true;
         isoScope.updateFiat();
@@ -112,7 +112,7 @@ describe('Fiat Directive', () => {
       })
       );
 
-      it("should not get fiat at time if a date is not present", inject(function (currency) {
+      it('should not get fiat at time if a date is not present', inject(function (currency) {
         spyOn(currency, 'convertFromSatoshi').and.returnValue(10);
         isoScope.updateFiat();
         expect(currency.convertFromSatoshi).toHaveBeenCalled();
@@ -125,7 +125,7 @@ describe('Fiat Directive', () => {
         expect(isoScope.fiat.amount).toEqual('-10.00');
       });
 
-      it("should set the absolute value if needed", inject(function ($compile) {
+      it('should set the absolute value if needed', inject(function ($compile) {
         isoScope = $compile('<fiat btc="btc" abs></fiat>')(scope).isolateScope();
         isoScope.btc = -10000;
         isoScope.updateFiat();

@@ -17,7 +17,7 @@ describe('ChangeEmailCtrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/change-email.pug');
 
-      $controller("ChangeEmailCtrl",
+      $controller('ChangeEmailCtrl',
         {$scope: scope});
 
       scope.model = {};
@@ -31,9 +31,9 @@ describe('ChangeEmailCtrl', () => {
 
   });
 
-  it("should have an email field", () => expect(scope.fields.email).toBe("a@b.com"));
+  it('should have an email field', () => expect(scope.fields.email).toBe("a@b.com"));
 
-  it("should change an email", inject(function (Wallet) {
+  it('should change an email', inject(function (Wallet) {
     spyOn(Wallet, 'changeEmail');
     scope.fields.email = "steve@jobs.com";
     scope.changeEmail();

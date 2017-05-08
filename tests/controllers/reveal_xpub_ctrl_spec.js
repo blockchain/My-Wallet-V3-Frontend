@@ -34,7 +34,7 @@ describe('RevealXpubCtrl', () => {
     angular.mock.inject(function ($rootScope, $controller, $compile) {
       scope = $rootScope.$new();
 
-      $controller("RevealXpubCtrl", {
+      $controller('RevealXpubCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance,
@@ -46,7 +46,7 @@ describe('RevealXpubCtrl', () => {
 
   beforeEach(function () { accounts.splice(2); return accounts[0].label = 'Savings'; });
 
-  it("should show initially hide the xpub and show a warning", () => expect(scope.showXpub).toBe(false));
+  it('should show initially hide the xpub and show a warning', () => expect(scope.showXpub).toBe(false));
 
   it('should allow user to continue to see xpub', () => {
     spyOn(scope, 'continue').and.callThrough();
@@ -54,5 +54,5 @@ describe('RevealXpubCtrl', () => {
     expect(scope.showXpub).toBe(true);
   });
 
-  it("should show xpub", () => expect(scope.xpub).toBe("xpub0"));
+  it('should show xpub', () => expect(scope.xpub).toBe("xpub0"));
 });

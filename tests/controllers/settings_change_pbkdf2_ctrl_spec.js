@@ -14,7 +14,7 @@ describe('ChangePbkdf2Ctrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/change-pbkdf2.pug');
 
-      $controller("ChangePbkdf2Ctrl",
+      $controller('ChangePbkdf2Ctrl',
         {$scope: scope});
 
       scope.model = {};
@@ -26,9 +26,9 @@ describe('ChangePbkdf2Ctrl', () => {
     })
   );
 
-  it("should have a pbkdf2 field", () => expect(scope.fields.pbkdf2).toBe(10));
+  it('should have a pbkdf2 field', () => expect(scope.fields.pbkdf2).toBe(10));
 
-  it("should change the pbkdf2 iterations", inject(function (Wallet) {
+  it('should change the pbkdf2 iterations', inject(function (Wallet) {
     spyOn(Wallet, 'setPbkdf2Iterations');
     scope.fields.pbkdf2 = 100;
     scope.setPbkdf2();
