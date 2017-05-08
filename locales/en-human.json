@@ -1385,8 +1385,9 @@
   "SHOW_MORE": "Show more",
   "RECEIVE_HELPER": "Copy a receive address to your clipboard.",
   "EMAIL_SENT": "Email Sent",
-  "lowerLimit": "Slow",
   "legacyCapped": "Regular",
   "priority": "Priority",
+  "legacyCapped_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
+  "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
   "": ""
 }

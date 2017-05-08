@@ -114,13 +114,17 @@
             .flex-1
               textarea.pas(rows="4" ng-model="transaction.note" name="note" maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
         //- Fee
-        .group.inline.flex-center.mt-20
-          .item.inline.width-50(ng-hide="advanced")
-            label.colon(translate="TX_FEE")
-            select(ng-model="transaction.fee" name="fee" ng-change="setPaymentFee()" ng-options="feeType | translate for (feeType, fee) in transaction.fees" tabindex="" required)
-          .item.right-align.width-50(ng-show="transaction.size > 0")
-            span.f-14 {{ transaction.finalFee }} BTC
-            a(ng-click="advancedSend()")
+        .group(ng-hide="advanced")
+          .group.inline.flex-center.mt-20
+            .item.inline.width-50
+              label.mbn.colon(translate="TX_FEE")
+              select(ng-model="transaction.feeType" name="fee" ng-change="payment.updateFeeType(transaction.feeType)" ng-options="feeType as feeType | translate for (feeType, fee) in transaction.fees | fees" tabindex="" required)
+            .item.right-align.width-50
+              span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+          .group.inline.mt-5
+            .item.inline.width-100.flex-between
+              span.f-12 {{ transaction.feeType + '_ESTIMATION_TIME' | translate }}
+              a.f-12(ng-click="advancedSend()" translate="Customize Fee")
         //- Custom Fee
           //- .item.mt-20(ng-show="advanced" ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}")
             label.mbn
@@ -176,9 +180,9 @@
             .width-50.width-50-mobile.flex-between
               span.mid-grey.center
                 span.fade +&nbsp;
-                span {{ transaction.finalFee | toBitCurrency:btcCurrency:false}}
+                span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
               span.mid-grey.center
-                fiat.mrml(btc="transaction.finalFee")
+                fiat.mrml(btc="transaction.fee")
             helper-button(content="{{AB_TEST_FEE ? 'TX_FEE_CONFIRM_EXPLAIN' : 'DYK_TX_FEES'}}")
         .mvm.flex-justify.flex-1.flex-center.split-rule
         span.type-lbl.mbs.underline(translate="FROM")
