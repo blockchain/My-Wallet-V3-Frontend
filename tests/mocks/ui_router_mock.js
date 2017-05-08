@@ -1,18 +1,18 @@
-angular.module("ui.router", ["ng"]).run([
-  "$state",
-  function($state) {
+angular.module('ui.router', ['ng']).run([
+  '$state',
+  function ($state) {
   }
 ]);
 
-angular.module("ui.router").provider("$state", () =>
+angular.module('ui.router').provider('$state', () =>
 
   ({
-    $get() {
-      let $state = {current: "somewhere"};
+    $get () {
+      let $state = {current: 'somewhere'};
 
       $state.go = destination =>
         ({
-          then(callback) {
+          then (callback) {
             callback();
             return {
             };
@@ -25,10 +25,10 @@ angular.module("ui.router").provider("$state", () =>
   })
 );
 
-angular.module("ui.router").provider("$stateParams", () =>
+angular.module('ui.router').provider('$stateParams', () =>
 
   ({
-    $get() {
+    $get () {
       let $stateParams = {};
 
       return $stateParams;

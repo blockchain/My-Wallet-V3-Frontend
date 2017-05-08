@@ -11,12 +11,11 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
   let isSynchronizedWithServer = true; // In the sense that the server is up to date
 
   let addressBook = { // The same for everyone
-      "17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq": "John",
-      "1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq": "Alice"
+    '17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq': 'John',
+    '1LJuG6yvRh8zL9DQ2PTYjdNydipbSUQeq': 'Alice'
   };
 
   let feePerKB = 10000;
-
 
   let legacyAddresses = () => [];
 
@@ -25,33 +24,33 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
       return isSynchronizedWithServer;
     },
 
-    setIsSynchronizedWithServer(setting) {
-      return isSynchronizedWithServer = setting;
+    setIsSynchronizedWithServer (setting) {
+      isSynchronizedWithServer = setting;
     },
 
-    sendEvent(event) {
-      return eventListener(event);
+    sendEvent (event) {
+      eventListener(event);
     },
 
     getFeePerKB () {
       return feePerKB;
     },
 
-    setFeePerKB(fee) {
+    setFeePerKB (fee) {
       feePerKB = fee;
     },
 
     getMultiAccountSetting () {
-        return true;
-      },
+      return true;
+    },
 
     getLogoutTime () {
-        return 10;
-      },
+      return 10;
+    },
 
-    addEventListener(func) {
-        return eventListener = func;
-      },
+    addEventListener (func) {
+      eventListener = func;
+    },
 
     getPbkdf2Iterations () {
       return 10;
@@ -61,11 +60,11 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
     },
 
     getLanguages () {
-      return {de: "Deutch", en: "English", nl: "Nederlands"};
+      return {de: 'Deutch', en: 'English', nl: 'Nederlands'};
     },
 
     getCurrencies () {
-      return {USD: "US Dollar", EUR: "Euro"};
+      return {USD: 'US Dollar', EUR: 'Euro'};
     },
 
     didUpgradeToHd () {
@@ -76,15 +75,15 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
       return false;
     },
 
-    isCorrectMainPassword(candidate) {
+    isCorrectMainPassword (candidate) {
       return candidate === password;
     },
 
-    changePassword(newPassword) {
-      return password = newPassword;
+    changePassword (newPassword) {
+      password = newPassword;
     },
 
-    getAllTransactions(idx) {
+    getAllTransactions (idx) {
       let res = [];
       for (let transaction of Array.from(transactions)) {
         res.push(transaction);
@@ -96,7 +95,7 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
     getAllLegacyAddresses () {
       let res = [];
       for (let key in legacyAddresses) {
-        let value = legacyAddresses[key];
+        // let value = legacyAddresses[key];
         res.push(key);
       }
       return res;
@@ -113,15 +112,15 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
       return activeAddresses;
     },
 
-    getLegacyAddressLabel(address) {
+    getLegacyAddressLabel (address) {
       return legacyAddresses[address].label;
     },
 
-    isWatchOnlyLegacyAddress(address) {
+    isWatchOnlyLegacyAddress (address) {
       return legacyAddresses[address].privateKey === null;
     },
 
-    legacyAddressExists(candidate) {
+    legacyAddressExists (candidate) {
       return (legacyAddresses[candidate] != null);
     },
 
@@ -129,11 +128,11 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
       return addressBook;
     },
 
-    getLegacyAddressBalance(address) {
+    getLegacyAddressBalance (address) {
       return legacyAddresses[address].balance;
     },
 
-    getPrivateKey(address) {
+    getPrivateKey (address) {
       if (Array.from(legacyAddresses).includes(address)) {
         return legacyAddresses[address].privateKey;
       } else {
@@ -141,27 +140,27 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
       }
     },
 
-    setLegacyAddressBalance(address, balance) {
+    setLegacyAddressBalance (address, balance) {
       legacyAddresses[address] = balance;
     },
 
-    setLegacyAddressLabel(label) {
+    setLegacyAddressLabel (label) {
     },
 
-    deleteLegacyAddress(address) {
+    deleteLegacyAddress (address) {
     },
 
-    archiveLegacyAddr(address) {
+    archiveLegacyAddr (address) {
     },
 
-    unArchiveLegacyAddr(address) {
+    unArchiveLegacyAddr (address) {
     },
 
     getDefaultAccountIndex () {
       return defaultAccountIndex;
     },
 
-    setDefaultAccountIndex(idx) {
+    setDefaultAccountIndex (idx) {
       defaultAccountIndex = idx;
     },
 
@@ -169,11 +168,11 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
       return false;
     },
 
-    getNote(hash) {
+    getNote (hash) {
       return notes[hash];
     },
 
-    setNote(hash, text) {
+    setNote (hash, text) {
       notes[hash] = text;
       // Circular reference:
       // MyWallet.sync()
@@ -181,31 +180,31 @@ angular.module('walletApp.core').factory('MyWalletStore', function () {
 
     // Mock only:
 
-    mockSetPassword(pwd) {
-      return password = pwd;
+    mockSetPassword (pwd) {
+      password = pwd;
     },
 
-    setNotes(theNotes) {
-      return notes = theNotes;
+    setNotes (theNotes) {
+      notes = theNotes;
     },
 
     getNotes () {
       return notes;
     },
 
-    setTransactions(theTransactions) {
-      return transactions = theTransactions;
+    setTransactions (theTransactions) {
+      transactions = theTransactions;
     },
 
-    appendTransaction(transaction) {
+    appendTransaction (transaction) {
       return transactions.push(transaction);
     },
 
-    addLegacyAddress(address, privateKey, balance, label, archived) {
+    addLegacyAddress (address, privateKey, balance, label, archived) {
       legacyAddresses[address] = {privateKey, balance, label, archived};
     },
 
-    setAPICode(api_code) {
+    setAPICode (api_code) {
     }
 
   };

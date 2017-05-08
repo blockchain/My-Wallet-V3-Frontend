@@ -1,14 +1,14 @@
 angular.module('walletApp').factory('Labels', () =>
   ({
     addLabel () { return Promise.resolve(); },
-    getLabel(accountIdx, receiveIdx) {
+    getLabel (accountIdx, receiveIdx) {
       if (receiveIdx === 1) {
         return 'Hello';
       } else {
         return null;
       }
     },
-    all(accountIdx) {
+    all (accountIdx) {
       return [
         null,
         { label: 'pending' },
@@ -16,12 +16,12 @@ angular.module('walletApp').factory('Labels', () =>
         {label: null, used: true}
       ];
     },
-    checkIfUsed(accountIdx) {
+    checkIfUsed (accountIdx) {
       return Promise.resolve();
     },
     removeLabel () {
       return Promise.resolve();
     },
-    fetchBalance(addresses) { return Promise.resolve(); }
+    fetchBalance (addresses) { return Promise.resolve(); }
   })
 );

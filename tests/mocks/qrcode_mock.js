@@ -1,1 +1,1 @@
-let qrcode = {};
+window.qrcode = {};

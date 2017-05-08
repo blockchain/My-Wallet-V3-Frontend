@@ -1,5 +1,4 @@
 describe('getByPropertyFilter', () => {
-
   let $filter = null;
 
   let btcCurrencies = [
