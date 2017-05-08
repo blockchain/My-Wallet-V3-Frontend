@@ -206,7 +206,6 @@ describe "SendCtrl", ->
         sweepAmount: 2.5
         fees: { estimate: [{ surge: true },{},{},{},{},{}] }
         confEstimation: 2
-        absoluteFeeBounds: [2,4,6,8,10,12]
 
       it "should set the surge warning", ->
         scope.defaultBlockInclusion = 0
@@ -216,10 +215,6 @@ describe "SendCtrl", ->
       it "should set the blockIdx to the confEstimation", ->
         scope.payment.triggerUpdate(data)
         expect(scope.transaction.blockIdx).toEqual(data.confEstimation)
-
-      it "should set the fee bounds", ->
-        scope.payment.triggerUpdate(data)
-        expect(scope.transaction.feeBounds).toEqual(data.absoluteFeeBounds)
 
       it "should set the sweep fees", ->
         scope.payment.triggerUpdate(data)

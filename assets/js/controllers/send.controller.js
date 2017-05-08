@@ -35,22 +35,20 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
+  $scope.fromSatoshi = currency.convertFromSatoshi;
+  $scope.format = currency.formatCurrencyForView;
   $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
-
-  $scope.defaultBlockInclusion = 1;
 
   $scope.transactionTemplate = {
     from: null,
     destinations: [null],
     amount: null,
     fee: 0,
-    fees: {},
     note: '',
     maxAvailable: null,
     surge: false,
-    blockIdx: null,
-    feeBounds: [0, 0, 0],
-    sweepFees: [0, 0, 0],
+    fees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0},
+    sweepFees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0},
     size: 0
   };
 
@@ -59,12 +57,10 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.paymentOnUpdate = (data) => {
     let tx = $scope.transaction;
     tx.fees = data.fees;
-    tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
-    if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
+    if (!tx.feeType) tx.feeType = 'legacyCapped';
+    tx.fee = data.sweepFees[tx.feeType];
     tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
-    tx.blockIdx = data.confEstimation;
-    tx.feeBounds = data.absoluteFeeBounds;
     tx.sweepFees = data.sweepFees;
     tx.size = data.txSize;
     AngularHelper.$safeApply($scope);
@@ -315,9 +311,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.setPaymentFee = (reset) => {
-    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
-    if ($scope.advanced && fee === undefined) return;
-    $scope.payment.fee(fee);
+    $scope.payment.fee($scope.transaction.fee);
   };
 
   $scope.backToForm = () => {
@@ -401,9 +395,9 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       return fees.showFeeWarning(tx.fee, suggestedFee, maximumFee, surge);
     };
 
-    let high = tx.feeBounds[0] || tx.sweepFees[0];
-    let mid = tx.feeBounds[$scope.defaultBlockInclusion] || tx.sweepFees[$scope.defaultBlockInclusion];
-    let low = tx.feeBounds[5] || tx.sweepFees[5];
+    let high = tx.sweepFees.priorityCap;
+    let mid = tx.sweepFees.legacyCapped;
+    let low = tx.sweepFees.lowerLimit;
     console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
 
     if ($scope.advanced) {
