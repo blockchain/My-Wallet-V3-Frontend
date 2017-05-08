@@ -26,7 +26,7 @@ describe('Adverts Directive', () => {
 
 
     return inject(function (_$compile_, $rootScope, Adverts) {
-        spyOn(Adverts, "fetchOnce");
+        spyOn(Adverts, 'fetchOnce');
 
         let $compile = _$compile_;
 

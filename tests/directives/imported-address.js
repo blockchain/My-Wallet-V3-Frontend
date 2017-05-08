@@ -107,7 +107,7 @@ describe('Imported Address Directive', () => {
 
     it("should open a modal", inject(function ($uibModal, modals) {
       let addr = "1asdf";
-      spyOn(modals, "openSend").and.callThrough();
+      spyOn(modals, 'openSend').and.callThrough();
       spyOn($uibModal, "open").and.callThrough();
       isoScope.address = addr;
       isoScope.spend();

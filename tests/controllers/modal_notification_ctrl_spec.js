@@ -35,7 +35,7 @@ describe('ModalNotificationCtrl', () => {
   });
     
   it('should be dismissed', () => {
-    spyOn(modalInstance, "close");
+    spyOn(modalInstance, 'close');
     scope.ok();
     expect(modalInstance.close).toHaveBeenCalled();
   });

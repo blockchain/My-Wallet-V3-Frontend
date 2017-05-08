@@ -53,7 +53,7 @@ describe('SettingsImportedAddressesCtrl', () => {
       let address = scope.legacyAddresses()[1];
       let before = scope.legacyAddresses().length;
 
-      spyOn(Wallet, "deleteLegacyAddress").and.callThrough();
+      spyOn(Wallet, 'deleteLegacyAddress').and.callThrough();
 
       scope.delete(address);
       expect(Wallet.deleteLegacyAddress).toHaveBeenCalled();
@@ -65,7 +65,7 @@ describe('SettingsImportedAddressesCtrl', () => {
 
   describe("importAddress()", () =>
     it("should open a modal",  inject(function ($uibModal) {
-      spyOn(modal, "open");
+      spyOn(modal, 'open');
       scope.importAddress();
       expect(modal.open).toHaveBeenCalled();
     })
@@ -74,7 +74,7 @@ describe('SettingsImportedAddressesCtrl', () => {
 
   describe("toggling archived addresses", () =>
     it('should toggle archived address', () => {
-      spyOn(scope, "toggleDisplayArchived").and.callThrough();
+      spyOn(scope, 'toggleDisplayArchived').and.callThrough();
       scope.toggleDisplayArchived();
       expect(scope.toggleDisplayArchived).toHaveBeenCalled();
       expect(scope.display.archived).toBe(true);

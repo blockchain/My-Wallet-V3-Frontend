@@ -50,7 +50,7 @@ describe('ui-select helper directive', () => {
   });
 
   it('should trigger the on close event', () => {
-    spyOn(scope, "onClose").and.callThrough();
+    spyOn(scope, 'onClose').and.callThrough();
     applyChange(() => scope.isOpen = false);
     expect(scope.onClose).toHaveBeenCalled();
   });

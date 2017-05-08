@@ -34,14 +34,14 @@ describe('Change Mobile Number Directive', () => {
   it("should have text", () => expect(element.html()).toContain("SAVE"));
 
   it("should not spontaniously save", inject(function (Wallet) {
-    spyOn(Wallet, "changeMobile");
+    spyOn(Wallet, 'changeMobile');
     expect(Wallet.changeMobile).not.toHaveBeenCalled();
 
   })
   );
 
   it("should not save if the user cancels", inject(function (Wallet) {
-    spyOn(Wallet, "changeMobile");
+    spyOn(Wallet, 'changeMobile');
     isoScope.cancel();
     expect(Wallet.changeMobile).not.toHaveBeenCalled();
 
@@ -49,7 +49,7 @@ describe('Change Mobile Number Directive', () => {
   );
 
   it("should let user change it", inject(function (Wallet) {
-    spyOn(Wallet, "changeMobile");
+    spyOn(Wallet, 'changeMobile');
     isoScope.changeMobile("+3100000000");
 
     expect(Wallet.changeMobile).toHaveBeenCalled();

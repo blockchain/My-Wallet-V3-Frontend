@@ -552,7 +552,7 @@ describe('SendCtrl', () => {
         );
 
         it("should show a confirmation alert", inject(function (Alerts) {
-          spyOn(Alerts, "displaySentBitcoin").and.callThrough();
+          spyOn(Alerts, 'displaySentBitcoin').and.callThrough();
           scope.send();
           digestAndFlush();
           expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT");
@@ -561,7 +561,7 @@ describe('SendCtrl', () => {
 
         it("should tell the user to refresh with TOR", inject(function (Alerts, MyWalletHelpers) {
           MyWalletHelpers.tor = () => true;
-          spyOn(Alerts, "displaySentBitcoin").and.callThrough();
+          spyOn(Alerts, 'displaySentBitcoin').and.callThrough();
           scope.send();
           digestAndFlush();
           expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT_TOR");
@@ -605,7 +605,7 @@ describe('SendCtrl', () => {
         );
 
         describe('address input metrics', () => {
-          beforeEach(() => spyOn(scope, "sendInputMetrics"));
+          beforeEach(() => spyOn(scope, 'sendInputMetrics'));
 
           it('should not send if inputMetric is null', () => {
             scope.send();

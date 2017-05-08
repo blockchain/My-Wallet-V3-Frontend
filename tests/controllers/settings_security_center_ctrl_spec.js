@@ -76,7 +76,7 @@ describe('SettingsSecurityCenterCtrl', () => {
   describe("changePasswordHint", () =>
 
     it('can change password hints', () => {
-      spyOn(Wallet, "changePasswordHint");
+      spyOn(Wallet, 'changePasswordHint');
       scope.changePasswordHint('phil', scope.success, scope.error);
       expect(Wallet.changePasswordHint).toHaveBeenCalled();
     })

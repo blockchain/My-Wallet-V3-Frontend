@@ -85,14 +85,14 @@ describe('WalletCtrl', () => {
 
   describe('auto logout', () => {
     it('should reset the inactivity time', () => {
-      spyOn(Date, "now").and.returnValue(100);
+      spyOn(Date, 'now').and.returnValue(100);
       scope.inactivityTimeSeconds = 1;
       scope.onAction();
       expect(scope.lastAction).toEqual(100);
     });
 
     it("should show the logout warning modal", inject(function (Wallet, Alerts) {
-      spyOn(Date, "now").and.returnValue(690000);
+      spyOn(Date, 'now').and.returnValue(690000);
       Wallet.status.isLoggedIn = true;
       Wallet.settings.logoutTimeMinutes = 10;
       scope.lastAction = 100000;

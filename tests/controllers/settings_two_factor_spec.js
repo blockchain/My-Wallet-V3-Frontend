@@ -117,7 +117,7 @@ describe('TwoFactorCtrl', () => {
         });
 
         it('should not pair if code is invalid', () => {
-          spyOn(scope, "setTwoFactorYubiKey");
+          spyOn(scope, 'setTwoFactorYubiKey');
           scope.pairWithApp('yubiKeyCode');
           expect(scope.setTwoFactorYubiKey).not.toHaveBeenCalled();
         });
@@ -141,7 +141,7 @@ describe('TwoFactorCtrl', () => {
         });
 
         it('should not pair if code is invalid', () => {
-          spyOn(scope, "confirmTwoFactorGoogleAuthenticator");
+          spyOn(scope, 'confirmTwoFactorGoogleAuthenticator');
           scope.fields.authenticatorCode = 'asdf';
           scope.pairWithApp('authenticator');
           expect(scope.confirmTwoFactorGoogleAuthenticator).not.toHaveBeenCalled();

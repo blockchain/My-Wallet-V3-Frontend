@@ -66,13 +66,13 @@ describe('buySell service', () => {
 
     let trades = ["processing", "completed", "completed_test", "cancelled"].map(makeTrade);
 
-    spyOn(exchange, "getBuyCurrencies").and.returnValue($q.resolve(["USD", "EUR"]));
-    spyOn(exchange, "getTrades").and.returnValue($q.resolve(trades));
-    return spyOn(exchange, "getKYCs").and.returnValue($q.resolve([]));
+    spyOn(exchange, 'getBuyCurrencies').and.returnValue($q.resolve(["USD", "EUR"]));
+    spyOn(exchange, 'getTrades').and.returnValue($q.resolve(trades));
+    return spyOn(exchange, 'getKYCs').and.returnValue($q.resolve([]));
   });
 
   describe('getTrades', () => {
-    beforeEach(() => spyOn(buySell, "watchAddress").and.returnValue($q.resolve()));
+    beforeEach(() => spyOn(buySell, 'watchAddress').and.returnValue($q.resolve()));
 
     it('should call exchange.getTrades', () => {
       buySell.getTrades();
@@ -121,10 +121,10 @@ describe('buySell service', () => {
 
     beforeEach(function () {
       exchange = buySell.getExchange();
-      spyOn(exchange, "fetchProfile").and.callFake(function () {
+      spyOn(exchange, 'fetchProfile').and.callFake(function () {
         if (fetchFailWith != null) { return $q.reject(fetchFailWith); } else { return $q.resolve(); }
       });
-      return spyOn(buySell, "getTrades").and.callThrough();
+      return spyOn(buySell, 'getTrades').and.callThrough();
     });
 
     it('should reject with the error if there is one', () => {
@@ -146,26 +146,26 @@ describe('buySell service', () => {
     let trade;
     beforeEach(function () {
       trade = { cancel () {} };
-      return spyOn(Alerts, "displayError");
+      return spyOn(Alerts, 'displayError');
     });
 
     it('should confirm before canceling', () => {
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve());
+      spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
       buySell.cancelTrade(trade);
       expect(Alerts.confirm).toHaveBeenCalled();
     });
 
     it('should not cancel if confirm was rejected', () => {
-      spyOn(trade, "cancel").and.returnValue($q.resolve());
-      spyOn(Alerts, "confirm").and.returnValue($q.reject());
+      spyOn(trade, 'cancel').and.returnValue($q.resolve());
+      spyOn(Alerts, 'confirm').and.returnValue($q.reject());
       buySell.cancelTrade(trade);
       $rootScope.$digest();
       expect(trade.cancel).not.toHaveBeenCalled();
     });
 
     it('should show an error if the cancel fails', () => {
-      spyOn(trade, "cancel").and.returnValue($q.reject("ERROR_TRADE_CANCEL"));
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve());
+      spyOn(trade, 'cancel').and.returnValue($q.reject("ERROR_TRADE_CANCEL"));
+      spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
       buySell.cancelTrade(trade);
       $rootScope.$digest();
       expect(Alerts.displayError).toHaveBeenCalledWith("ERROR_TRADE_CANCEL");

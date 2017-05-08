@@ -31,14 +31,14 @@ describe('SecondPasswordCtrl', () => {
       }
       );
 
-      spyOn(modalInstance, "close");
+      spyOn(modalInstance, 'close');
 
     });
 
   });
 
   it("should clear alerts", inject(function (Alerts) {
-    spyOn(Alerts, "clear");
+    spyOn(Alerts, 'clear');
     scope.cancel();
     expect(Alerts.clear).toHaveBeenCalled();
   })

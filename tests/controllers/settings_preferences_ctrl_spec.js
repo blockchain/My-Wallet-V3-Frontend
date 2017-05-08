@@ -39,9 +39,9 @@ describe('SettingsPreferencesCtrl', () => {
       Wallet.setLanguage(Wallet.settings.languages[0]);
       Wallet.changeCurrency(Wallet.settings.currencies[0]);
 
-      spyOn(Wallet, "setLanguage").and.callThrough();
-      spyOn(Wallet, "changeLanguage").and.callThrough();
-      spyOn(Wallet, "changeCurrency").and.callThrough();
+      spyOn(Wallet, 'setLanguage').and.callThrough();
+      spyOn(Wallet, 'changeLanguage').and.callThrough();
+      spyOn(Wallet, 'changeCurrency').and.callThrough();
 
       scope = $rootScope.$new();
 
@@ -63,7 +63,7 @@ describe('SettingsPreferencesCtrl', () => {
     );
 
     it("should not spontaniously save", inject(function (Wallet) {
-      spyOn(Wallet, "changeEmail");
+      spyOn(Wallet, 'changeEmail');
       expect(Wallet.changeEmail).not.toHaveBeenCalled();
 
     })
@@ -123,7 +123,7 @@ describe('SettingsPreferencesCtrl', () => {
 
   describe("handling of bitcoin links", () =>
     it("can be enabled", inject(function (Wallet) {
-      spyOn(Wallet, "handleBitcoinLinks");
+      spyOn(Wallet, 'handleBitcoinLinks');
       scope.setHandleBitcoinLinks();
       expect(Wallet.handleBitcoinLinks).toHaveBeenCalled();
     })

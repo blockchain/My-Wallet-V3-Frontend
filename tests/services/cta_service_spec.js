@@ -28,8 +28,8 @@ describe('cta', () => {
       console.log(v);
       localStorageService.set(k, v);
     }
-    spyOn(localStorageService, "set").and.callThrough();
-    spyOn(localStorageService, "get").and.callThrough();
+    spyOn(localStorageService, 'set').and.callThrough();
+    spyOn(localStorageService, 'get').and.callThrough();
     return $injector.get('cta');
   };
 
@@ -65,9 +65,9 @@ describe('cta', () => {
     let cta;
     beforeEach(function () {
       cta = getService({'contextual-message': { when: 1000 }});
-      spyOn(cta, "shouldShowBuyCta").and.returnValue(false);
-      spyOn(Date, "now").and.returnValue(1001);
-      spyOn(Wallet, "total").and.returnValue(1);
+      spyOn(cta, 'shouldShowBuyCta').and.returnValue(false);
+      spyOn(Date, 'now').and.returnValue(1001);
+      spyOn(Wallet, 'total').and.returnValue(1);
       Wallet.status.didConfirmRecoveryPhrase = false;
       Wallet.status.needs2FA = false;
       return Wallet.user.isEmailVerified = false;
@@ -112,7 +112,7 @@ describe('cta', () => {
   });
 
   describe('.setSecurityWarningDismissed()', () => {
-    beforeEach(() => spyOn(Date, "now").and.returnValue(1001));
+    beforeEach(() => spyOn(Date, 'now').and.returnValue(1001));
 
     it('should set the contextual-message cookie', () => {
       let cta = getService({'contextual-message': { when: 1000, index: 0 }});

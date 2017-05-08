@@ -61,13 +61,13 @@ describe('SettingsAddressesCtrl', () => {
   it("should calculate total number of past addresses", () => expect(scope.totalPast).toEqual(4));
 
   it('should open modal to edit an account', () => {
-    spyOn(modal, "open");
+    spyOn(modal, 'open');
     scope.editAccount(scope.account);
     expect(modal.open).toHaveBeenCalled();
   });
 
   it('should open modal to reveal the xpub', () => {
-    spyOn(modal, "open");
+    spyOn(modal, 'open');
     scope.revealXpub(scope.account);
     expect(modal.open).toHaveBeenCalled();
   });
@@ -83,13 +83,13 @@ describe('SettingsAddressesCtrl', () => {
 
   describe('removeAddressLabel', () => {
     it('should prompt the user before removing the label', () => {
-      spyOn(Alerts, "confirm").and.callThrough();
+      spyOn(Alerts, 'confirm').and.callThrough();
       scope.removeAddressLabel();
       expect(Alerts.confirm).toHaveBeenCalled();
     });
 
     it('should remove the address label', () => {
-      spyOn(Alerts, "confirm").and.returnValue($q.resolve());
+      spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
       spyOn(Labels, 'removeLabel').and.callThrough();
       scope.removeAddressLabel(2, 0);
       scope.$digest();

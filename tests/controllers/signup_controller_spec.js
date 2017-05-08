@@ -116,7 +116,7 @@ describe('SignupCtrl', () => {
     });
 
     it("should call createWallet()", inject(function ($timeout) {
-      spyOn(scope, "createWallet");
+      spyOn(scope, 'createWallet');
       scope.signup();
       scope.$digest();
       $timeout.flush();
@@ -126,7 +126,7 @@ describe('SignupCtrl', () => {
     );
 
     it('should not call createWallet() if validation failed', () => {
-      spyOn(scope, "createWallet");
+      spyOn(scope, 'createWallet');
 
       scope.signupForm.password.$setViewValue('weak');
       scope.$digest();

@@ -54,7 +54,7 @@ describe('SettingsInfoCtrl', () => {
     });
 
     it('should display an error when show failed', () => {
-      spyOn(Alerts, "displayError");
+      spyOn(Alerts, 'displayError');
       scope.pairingCode = "code";
       scope.showPairingCode();
       scope.$digest();

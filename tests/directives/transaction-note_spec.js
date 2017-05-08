@@ -58,7 +58,7 @@ describe('Transaction Note Directive', () => {
   });
 
   it("should show the label if it is associated with an address in the tx and there is no tx note", inject(function (Wallet) {
-    spyOn(Wallet, "deleteNote");
+    spyOn(Wallet, 'deleteNote');
     isoScope.deleteNote();
     isoScope.$digest();
 
@@ -69,7 +69,7 @@ describe('Transaction Note Directive', () => {
 
   it("should show a label when All wallets are filtered", inject(function (Wallet) {
     $rootScope.account = '';
-    spyOn(Wallet, "deleteNote");
+    spyOn(Wallet, 'deleteNote');
     isoScope.deleteNote();
     element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope);
     $rootScope.$digest();
@@ -80,7 +80,7 @@ describe('Transaction Note Directive', () => {
   );
 
   it("should save a modified note", inject(function (Wallet) {
-    spyOn(Wallet, "setNote");
+    spyOn(Wallet, 'setNote');
     isoScope.transaction.note = "Modified note";
     isoScope.$digest();
     expect(Wallet.setNote).toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe('Transaction Note Directive', () => {
   );
 
   it("should not save an unmodified note", inject(function (Wallet) {
-    spyOn(Wallet, "setNote");
+    spyOn(Wallet, 'setNote');
     isoScope.$digest();
     expect(Wallet.setNote).not.toHaveBeenCalled();
   })
@@ -97,7 +97,7 @@ describe('Transaction Note Directive', () => {
   it("should create a new note", inject(function (Wallet) {
     isoScope.transaction.note = null;
 
-    spyOn(Wallet, "setNote");
+    spyOn(Wallet, 'setNote');
 
     isoScope.transaction.note = "New note";
     isoScope.$digest();
@@ -109,7 +109,7 @@ describe('Transaction Note Directive', () => {
   it("should delete a note", inject(function (Wallet) {
     isoScope.transaction.note = null;
 
-    spyOn(Wallet, "deleteNote");
+    spyOn(Wallet, 'deleteNote');
 
     isoScope.$digest();
 
@@ -121,7 +121,7 @@ describe('Transaction Note Directive', () => {
   it("should delete a note if it's an empty string", inject(function (Wallet) {
     isoScope.transaction.note = "";
 
-    spyOn(Wallet, "deleteNote");
+    spyOn(Wallet, 'deleteNote');
 
     isoScope.$digest();
 

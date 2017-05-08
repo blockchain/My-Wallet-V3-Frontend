@@ -34,7 +34,7 @@ describe('ChangeEmailCtrl', () => {
   it("should have an email field", () => expect(scope.fields.email).toBe("a@b.com"));
 
   it("should change an email", inject(function (Wallet) {
-    spyOn(Wallet, "changeEmail");
+    spyOn(Wallet, 'changeEmail');
     scope.fields.email = "steve@jobs.com";
     scope.changeEmail();
     expect(Wallet.changeEmail).toHaveBeenCalled();

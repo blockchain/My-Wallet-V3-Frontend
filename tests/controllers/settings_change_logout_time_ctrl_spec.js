@@ -27,7 +27,7 @@ describe('ChangeLogoutTimeCtrl', () => {
   it("should have an ipWhitelist field", () => expect(scope.fields.logoutTime).toBe(10));
 
   it("should change the whitelist", inject(function (Wallet) {
-    spyOn(Wallet, "setLogoutTime");
+    spyOn(Wallet, 'setLogoutTime');
     scope.fields.logoutTime = 100;
     scope.setLogoutTime();
     expect(Wallet.setLogoutTime).toHaveBeenCalled();

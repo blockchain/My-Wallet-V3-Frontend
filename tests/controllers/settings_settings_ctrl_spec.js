@@ -24,7 +24,7 @@ describe('SettingsCtrl', () => {
   });
 
   it("should load", inject(function (Wallet, Alerts) {
-    spyOn(Alerts, "clear");
+    spyOn(Alerts, 'clear');
     scope.didLoad();
     expect(Alerts.clear).toHaveBeenCalled();
     expect(scope.status).toBe(Wallet.status);

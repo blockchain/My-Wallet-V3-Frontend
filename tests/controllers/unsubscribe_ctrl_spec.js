@@ -9,12 +9,12 @@ describe('UnsubscribeController', () => {
       let $state = $injector.get('$state'); // This is a mock
       let Alerts = $injector.get('Alerts');
 
-      spyOn(WalletTokenEndpoints, "unsubscribe").and.callThrough();
+      spyOn(WalletTokenEndpoints, 'unsubscribe').and.callThrough();
 
       spyOn($state, "go").and.callThrough();
 
-      spyOn(Alerts, "displayError").and.callFake(function () {});
-      spyOn(Alerts, "displaySuccess").and.callFake(function () {});
+      spyOn(Alerts, 'displayError').and.callFake(function () {});
+      spyOn(Alerts, 'displaySuccess').and.callFake(function () {});
 
     });
 

@@ -29,7 +29,7 @@ describe('ChangePbkdf2Ctrl', () => {
   it("should have a pbkdf2 field", () => expect(scope.fields.pbkdf2).toBe(10));
 
   it("should change the pbkdf2 iterations", inject(function (Wallet) {
-    spyOn(Wallet, "setPbkdf2Iterations");
+    spyOn(Wallet, 'setPbkdf2Iterations');
     scope.fields.pbkdf2 = 100;
     scope.setPbkdf2();
     expect(Wallet.setPbkdf2Iterations).toHaveBeenCalled();
@@ -37,7 +37,7 @@ describe('ChangePbkdf2Ctrl', () => {
   );
 
   it('should stop waiting if operation was cancelled', () => {
-    spyOn(Wallet, "setPbkdf2Iterations").and.callFake((n, s, e, cancel) => $timeout(() => cancel()));
+    spyOn(Wallet, 'setPbkdf2Iterations').and.callFake((n, s, e, cancel) => $timeout(() => cancel()));
     scope.setPbkdf2();
     expect(scope.status.waiting).toEqual(true);
     $timeout.flush();

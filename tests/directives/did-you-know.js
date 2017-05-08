@@ -20,7 +20,7 @@ describe('Did You Know directive', () => {
 
   //   beforeEach ->
 
-  //     spyOn(DidYouKnow, "getRandom").and.returnValue {
+  //     spyOn(DidYouKnow, 'getRandom').and.returnValue {
   //       id: 1,
   //       title: 'DYK_RECOVERY_TITLE',
   //       type: 'FEATURE',
@@ -46,7 +46,7 @@ describe('Did You Know directive', () => {
   describe('with link', () => {
     beforeEach(function () {
 
-      // spyOn(DidYouKnow, "getRandom").and.returnValue {
+      // spyOn(DidYouKnow, 'getRandom').and.returnValue {
       //   id: 1,
       //   title: 'DYK_RECOVERY_TITLE',
       //   type: 'FEATURE',
@@ -55,7 +55,7 @@ describe('Did You Know directive', () => {
       //   linkText: 'SECURITY',
       //   state: 'wallet.common.settings.security'
       // }
-      spyOn(DidYouKnow, "getRandom").and.returnValue({
+      spyOn(DidYouKnow, 'getRandom').and.returnValue({
         id: 5,
         title: 'SEND_FEEDBACK',
         type: 'SURVEY',

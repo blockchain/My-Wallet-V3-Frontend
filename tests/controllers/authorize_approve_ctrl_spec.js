@@ -9,12 +9,12 @@ describe('AuthorizeApproveController', () => {
       let $state = $injector.get('$state'); // This is a mock
       let Alerts = $injector.get('Alerts');
 
-      spyOn(WalletTokenEndpoints, "authorizeApprove").and.callThrough();
+      spyOn(WalletTokenEndpoints, 'authorizeApprove').and.callThrough();
 
       spyOn($state, "go").and.callThrough();
 
-      spyOn(Alerts, "displayError").and.callFake(function () {});
-      spyOn(Alerts, "displaySuccess").and.callFake(function () {});
+      spyOn(Alerts, 'displayError').and.callFake(function () {});
+      spyOn(Alerts, 'displaySuccess').and.callFake(function () {});
 
     });
 

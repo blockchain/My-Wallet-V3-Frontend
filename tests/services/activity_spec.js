@@ -24,8 +24,8 @@ describe('Activity', () => {
 
   describe("updateAllActivities", () =>
     it("should update all activities", inject(function (Activity) {
-      spyOn(Activity, "updateTxActivities").and.callThrough();
-      spyOn(Activity, "updateLogActivities").and.callThrough();
+      spyOn(Activity, 'updateTxActivities').and.callThrough();
+      spyOn(Activity, 'updateLogActivities').and.callThrough();
       Activity.updateAllActivities();
       expect(Activity.updateTxActivities).toHaveBeenCalled();
       expect(Activity.updateLogActivities).toHaveBeenCalled();

@@ -57,7 +57,7 @@ describe('ShowPrivateKeyCtrl', () => {
   });
 
   it('should be dismissed', () => {
-    spyOn(modalInstance, "dismiss");
+    spyOn(modalInstance, 'dismiss');
     scope.close();
     expect(modalInstance.dismiss).toHaveBeenCalled();
   });
