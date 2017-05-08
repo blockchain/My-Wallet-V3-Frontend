@@ -16,7 +16,6 @@ function CoinifySellTradeFinishedController (currency) {
 
   if (this.completedState) {
     this.isx = true;
-    this.title = 'SELL.IDENTITY_VERIFICATION';
     this.completedState = `SELL.ISX.${this.completedState.toUpperCase()}`;
   } else {
     if (this.sellTrade.state === 'completed' ||
@@ -27,7 +26,6 @@ function CoinifySellTradeFinishedController (currency) {
     } else {
       this.tradeCompleted = false;
     }
-    this.title = 'SELL.SELL_BITCOIN';
     this.id = this.sellTrade.id;
     this.btcSold = currency.convertFromSatoshi(this.sellTrade.sendAmount, currency.bitCurrencies[0]);
     this.bank = this.sellTrade._bankAccountNumber;

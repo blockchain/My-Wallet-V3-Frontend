@@ -14,6 +14,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.user = Wallet.user;
   this.now = () => new Date().getTime();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
+  this.message = 'RATE_GUARANTEED';
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
   this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
   this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
@@ -80,8 +81,8 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     'signup': 1,
     'select-payment-medium': 2,
     'summary': 3,
-    'isx': 4,
-    'trade-complete': 5
+    'isx': 5,
+    'trade-complete': 6
   };
 
   this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);

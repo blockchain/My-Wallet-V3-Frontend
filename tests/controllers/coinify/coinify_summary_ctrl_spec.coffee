@@ -35,9 +35,15 @@ describe "CoinifySummaryController", ->
       $controller = _$controller_
       $q = _$q_
 
+      MyWallet = $injector.get("MyWallet")
       Wallet = $injector.get("Wallet")
       Alerts = $injector.get("Alerts")
       buySell = $injector.get("buySell")
+      
+      MyWallet.wallet =
+        hdwallet:
+          defaultAccount: {index: 0}
+          accounts: [{label: 'Phil'}]
       
       buySell.limits =
         bank:
@@ -94,6 +100,16 @@ describe "CoinifySummaryController", ->
       scope.commitValues()
       scope.$digest()
       expect(scope.vm.quote).toBe(quote)
+  
+  describe ".openKYC()", ->
+    
+    it "should get open KYC and go to isx step", ->
+      spyOn(buySell, 'getOpenKYC')
+      spyOn(scope.vm, 'goTo')
+      scope.openKYC()
+      scope.$digest()
+      expect(buySell.getOpenKYC).toHaveBeenCalled()
+      expect(scope.vm.goTo).toHaveBeenCalledWith('isx')
 
   describe ".buy()", ->
     

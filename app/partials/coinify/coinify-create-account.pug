@@ -1,26 +1,26 @@
-sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
 .modal-body
   .flex-column
     .flex-column.flex-between.pam
       form.input-group.width-100.amount-input(
         role="form"
-        name="sellAccountForm"
-        ng-submit="commitValues()"
+        id="createAccountForm"
+        name="createAccountForm"
         autocomplete="off"
+        ng-submit="$ctrl.onSubmit({bank: $ctrl.bank, profile: $ctrl.profile})"
         novalidate)
         div(ng-if="$ctrl.viewInfo")
           .flex-column.flex-center.phm.mv-10.pb-15
             span.f-14.width-90(ng-hide="$ctrl.showDanish" translate="SELL.ENTER_BANK_INFO")
             span.f-14.width-90(ng-show="$ctrl.showDanish" translate="SELL.ENTER_DANISH_BANK")
           .flex-column.flex-center.phm.mbm
-            .input-group.width-90(ng-hide="$ctrl.showDanish")
+            .input-group.width-90(ng-if="!$ctrl.showDanish")
               .form-group.flex-column.width-100
                 label.control-label(translate="SELL.IBAN")
                 div
                   input.form-control(
                     type="text"
-                    ng-model="$ctrl.bankAccount.account.number"
-                    ng-change="setParentError(); $ctrl.turnOffIbanError(); $ctrl.bankAccount.account.number && $ctrl.formatIban()"
+                    ng-model="$ctrl.bank.account.number"
+                    ng-change="$ctrl.turnOffIbanError(); $ctrl.bank.account.number && $ctrl.formatIban()"
                     name="bankIban"
                     tabindex="1"
                     ng-class="{'input-error': $ctrl.ibanError}"
@@ -30,18 +30,18 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
                 div
                   input.form-control(
                     type="text"
-                    ng-model="$ctrl.bankAccount.account.bic"
+                    ng-model="$ctrl.bank.account.bic"
                     name="bankBic"
                     tabindex="1"
                     required)
             //- form for Danish accounts
-            .input-group.width-90(ng-show="$ctrl.showDanish")
+            .input-group.width-90(ng-if="$ctrl.showDanish")
               .form-group.flex-column.width-100
                 label.control-label(translate="SELL.BBAN")
                 div
                   input.form-control(
                     type="text"
-                    ng-model="$ctrl.bankAccount.account.number"
+                    ng-model="$ctrl.bank.account.number"
                     name="bankNumber"
                     tabindex="1"
                     required)
@@ -50,7 +50,7 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
                 div
                   input.form-control(
                     type="text"
-                    ng-model="$ctrl.bankAccount.account.bic"
+                    ng-model="$ctrl.bank.account.bic"
                     name="bankReg"
                     tabindex="1"
                     required)  
@@ -61,8 +61,8 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
             div
               input.form-control(
                 type="text"
-                ng-model="$ctrl.bankAccount.holder.name"
-                name="holderName"
+                ng-model="$ctrl.profile.name"
+                name="Name"
                 tabindex="1"
                 required)
           .form-group.flex-column.width-100
@@ -70,8 +70,8 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
             div
               input.form-control(
                 type="text"
-                ng-model="$ctrl.bankAccount.holder.address.street"
-                name="holderStreet"
+                ng-model="$ctrl.profile.address.street"
+                name="Street"
                 tabindex="1"
                 required)
           .form-group.flex-row.flex-between.width-100
@@ -80,8 +80,8 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
               div
                 input.form-control(
                   type="text"
-                  ng-model="$ctrl.bankAccount.holder.address.city"
-                  name="holderCity"
+                  ng-model="$ctrl.profile.address.city"
+                  name="City"
                   tabindex="1"
                   required)
             div.width-45
@@ -89,18 +89,18 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
               div
                 input.form-control(
                   type="text"
-                  ng-model="$ctrl.bankAccount.holder.address.zipcode"
-                  name="bankZip"
+                  ng-model="$ctrl.profile.address.zipcode"
+                  name="Zip"
                   tabindex="1"
                   required)
           .form-group.flex-row.flex-between.width-100.mbn
             div.width-45.width-45-mobile.width-45-tablet
               label.control-label(translate="Country")
               div
-                ui-select.mtm(ng-model="$ctrl.selectedBankCountry" on-select="$ctrl.changeCountry($item.code)")
+                ui-select.mtm(ng-model="$ctrl.selectedUserCountry" ng-change="$ctrl.setUserCountry($select.selected)")
                   ui-select-match
                     span {{ $select.selected.name }}
-                  ui-select-choices(repeat="c in $ctrl.sepaCountries | filter:$select.search track by c.name")
+                  ui-select-choices(repeat="c in $ctrl.sepaCountryCodes | filter:$select.search track by c.name")
                     span {{c.name}}
 .modal-footer.flex-end.flex-row
   button.button-muted.mrm(ng-click="$ctrl.switchView()" ng-show="!$ctrl.viewInfo" translate="BACK")
@@ -110,9 +110,10 @@ sell-modal-header(title="$ctrl.title" transaction="$ctrl.transaction")
       ng-show="$ctrl.viewInfo"
       translate="CONTINUE"
       ng-click="$ctrl.switchView()"
-      ng-disabled="$ctrl.isDisabled()")
+      ng-disabled="createAccountForm.$invalid")
     button.button-primary(
+      type="submit"
+      form="createAccountForm"
       ng-hide="$ctrl.viewInfo"
       translate="CONTINUE"
-      ng-click="$ctrl.createBankAccount();"
-      ng-disabled="$ctrl.isDisabled() || $ctrl.status.waiting")
+      ng-disabled="createAccountForm.$invalid")

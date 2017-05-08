@@ -9,15 +9,16 @@ function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, b
   let { quote, baseFiat, fiatCurrency } = $scope.vm;
 
   let fiatAmount = baseFiat() ? -quote.baseAmount / 100 : -quote.quoteAmount / 100;
-  $scope.belowCardMax = fiatAmount < parseFloat($scope.limits.card.max[fiatCurrency()]);
+  $scope.belowCardMax = fiatAmount <= parseFloat($scope.limits.card.max[fiatCurrency()]);
   // i.e card max is 300 and buy amount is 500
   // $scope.belowCardMax = false;
-  $scope.aboveBankMin = fiatAmount > parseFloat($scope.limits.bank.min[fiatCurrency()]);
+  $scope.aboveBankMin = fiatAmount >= parseFloat($scope.limits.bank.min[fiatCurrency()]);
   // i.e bank min is 50 and buy amount is 30
   // $scope.aboveBankMin = false;
-  $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
+  // $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
   // i.e bank max is 0 and buy amount is 100
   // $scope.needsKYC () => true;
+  $scope.pendingKYC = () => buySell.kycs[0] && buySell.tradeStateIn(buySell.states.pending)(buySell.kycs[0]);
 
   $scope.vm.medium = $scope.belowCardMax ? 'card' : 'bank';
 
