@@ -76,7 +76,7 @@ describe('NavigationCtrl', () => {
   );
 
   it("should logout",  inject(function (Wallet, $stateParams, $state, $uibModal) {
-    spyOn(Wallet, "logout").and.callThrough();
+    spyOn(Wallet, 'logout').and.callThrough();
     spyOn($state, "go");
 
     scope.logout();
@@ -88,7 +88,7 @@ describe('NavigationCtrl', () => {
   );
 
   it("should not logout if save is in progress",  inject(function (Wallet, MyWallet, $stateParams) {
-    spyOn(Wallet, "logout").and.callThrough();
+    spyOn(Wallet, 'logout').and.callThrough();
 
     MyWallet.sync();
     scope.logout();

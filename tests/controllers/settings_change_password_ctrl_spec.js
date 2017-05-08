@@ -15,7 +15,7 @@ describe('ChangePasswordCtrl', () => {
         email: "user@blockchain.com"
       };
 
-      spyOn(Wallet, "isCorrectMainPassword").and.callFake(pwd => pwd === "test");
+      spyOn(Wallet, 'isCorrectMainPassword').and.callFake(pwd => pwd === "test");
 
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/change-password.pug');
@@ -51,7 +51,7 @@ describe('ChangePasswordCtrl', () => {
   describe('change', () => {
 
     it("should be able to change password", inject(function (Wallet) {
-      spyOn(Wallet, "changePassword");
+      spyOn(Wallet, 'changePassword');
       scope.form.currentPassword.$setViewValue('test');
       scope.form.password.$setViewValue(strongPassword);
       scope.form.confirmation.$setViewValue(strongPassword);
@@ -61,7 +61,7 @@ describe('ChangePasswordCtrl', () => {
     );
 
     it("should not be able to change password if form is invalid", inject(function (Wallet) {
-      spyOn(Wallet, "changePassword");
+      spyOn(Wallet, 'changePassword');
       expect(scope.form.$invalid).toBe(true);
       scope.change();
       expect(Wallet.changePassword).not.toHaveBeenCalled();

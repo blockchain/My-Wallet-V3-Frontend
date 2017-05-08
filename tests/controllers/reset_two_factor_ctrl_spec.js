@@ -67,7 +67,7 @@ describe('ResetTwoFactorCtrl', () => {
 
   describe('resetTwoFactor()', () => {
     beforeEach(function () {
-      spyOn(WalletNetwork, "requestTwoFactorReset").and.callThrough();
+      spyOn(WalletNetwork, 'requestTwoFactorReset').and.callThrough();
       scope.form = {
         $setPristine() {},
         $setUntouched() {}
@@ -98,7 +98,7 @@ describe('ResetTwoFactorCtrl', () => {
     });
 
     it('on failure should not go to the next step and refresh captch', () => {
-      spyOn(scope, "refreshCaptcha");
+      spyOn(scope, 'refreshCaptcha');
       scope.fields.uid = "";
 
       scope.resetTwoFactor();

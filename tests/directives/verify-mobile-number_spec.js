@@ -46,7 +46,7 @@ describe('Verify Mobile Number Directive', () => {
   describe('verifyMobile', () => {
 
     it('can be verified', () => {
-      spyOn(isoScope, "onSuccess");
+      spyOn(isoScope, 'onSuccess');
       isoScope.verifyMobile("31 1 2345");
       expect(isoScope.onSuccess).toHaveBeenCalled();
     });
@@ -67,7 +67,7 @@ describe('Verify Mobile Number Directive', () => {
     it('should call successful retry to send', () => {
       let error = function () {};
       Wallet.user.mobileNumber = '639';
-      spyOn(isoScope, "onSuccess");
+      spyOn(isoScope, 'onSuccess');
       isoScope.retrySendCode();
       expect(isoScope.errors.retryFail).toBe(null);
     });

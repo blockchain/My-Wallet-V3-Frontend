@@ -27,7 +27,7 @@ describe('IP Whitelist Restrict', () => {
   );
 
   it("should enable ip whitelist restrictions", inject(function (Wallet) {
-    spyOn(Wallet, "enableRestrictToWhiteListedIPs");
+    spyOn(Wallet, 'enableRestrictToWhiteListedIPs');
     isoScope.enableIpWhitelistRestrict();
     expect(Wallet.enableRestrictToWhiteListedIPs).toHaveBeenCalled();
 
@@ -35,7 +35,7 @@ describe('IP Whitelist Restrict', () => {
   );
 
   it("should disable ip whitelist restrictions", inject(function (Wallet) {
-    spyOn(Wallet, "disableRestrictToWhiteListedIPs");
+    spyOn(Wallet, 'disableRestrictToWhiteListedIPs');
     isoScope.disableIpWhitelistRestrict();
     expect(Wallet.disableRestrictToWhiteListedIPs).toHaveBeenCalled();
 

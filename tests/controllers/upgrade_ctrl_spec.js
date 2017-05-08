@@ -33,7 +33,7 @@ describe('UpgradeCtrl', () => {
   );
 
   it('should proceed if user agrees', () => {
-    spyOn(Wallet, "upgrade");
+    spyOn(Wallet, 'upgrade');
 
     scope.upgrade();
     expect(Wallet.upgrade).toHaveBeenCalled();

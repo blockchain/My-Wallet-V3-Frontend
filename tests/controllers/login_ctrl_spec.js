@@ -21,7 +21,7 @@ describe('LoginCtrl', () => {
      let WalletNetwork = $injector.get('WalletNetwork');
      Alerts = $injector.get('Alerts');
 
-     spyOn(WalletNetwork, "resendTwoFactorSms").and.callThrough();
+     spyOn(WalletNetwork, 'resendTwoFactorSms').and.callThrough();
 
      let MyWallet = $injector.get('MyWallet');
 
@@ -49,14 +49,14 @@ describe('LoginCtrl', () => {
     scope.uid = "user";
     scope.password = "pass";
 
-    spyOn(Wallet, "login");
+    spyOn(Wallet, 'login');
 
     return scope.login();
   })
   );
 
   it("should resend two factor sms", inject(function (Wallet, WalletNetwork, localStorageService) {
-    spyOn(localStorageService, "get").and.callFake(function (name) {
+    spyOn(localStorageService, 'get').and.callFake(function (name) {
       if (name === "session") {
         return "token";
       }

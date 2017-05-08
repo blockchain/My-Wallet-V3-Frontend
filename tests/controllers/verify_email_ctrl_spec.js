@@ -12,7 +12,7 @@ describe('VerifyEmailController', () => {
 
       let WalletTokenEndpoints = $injector.get('WalletTokenEndpoints');
 
-      return spyOn(WalletTokenEndpoints, "verifyEmail").and.callFake(function (token) {
+      return spyOn(WalletTokenEndpoints, 'verifyEmail').and.callFake(function (token) {
         if (token === "token") { return $q.resolve(); } else { return $q.reject({ error: "error_msg" }); }
       });
     })

@@ -34,8 +34,8 @@ describe('browserDetection', () => {
   describe('performCheck()', () => {
 
     it('should not show an error when above minimum version', () => {
-      spyOn(window, "browserDetection").and.returnValue({version: 100, browser: "Chrome"});
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
+      spyOn(window, 'browserDetection').and.returnValue({version: 100, browser: "Chrome"});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -43,8 +43,8 @@ describe('browserDetection', () => {
     });
 
     it('should show an error when below minimum version', () => {
-      spyOn(window, "browserDetection").and.returnValue({version: 10, browser: "Chrome"});
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
+      spyOn(window, 'browserDetection').and.returnValue({version: 10, browser: "Chrome"});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -53,8 +53,8 @@ describe('browserDetection', () => {
     });
 
     it('should warn against an unknown but safe browser', () => {
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
-      spyOn(window, "browserDetection").and.returnValue({version: 1, browser: "Random"});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
+      spyOn(window, 'browserDetection').and.returnValue({version: 1, browser: "Random"});
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -63,8 +63,8 @@ describe('browserDetection', () => {
     });
 
     it('should reject an unknown unsafe browser', () => {
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(false);
-      spyOn(window, "browserDetection").and.returnValue({version: 1, browser: "Random"});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(false);
+      spyOn(window, 'browserDetection').and.returnValue({version: 1, browser: "Random"});
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -73,8 +73,8 @@ describe('browserDetection', () => {
     });
 
     it('should warn against IE, but allow it', () => {
-      spyOn(window, "browserDetection").and.returnValue({version: 11, browser: "ie"});
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
+      spyOn(window, 'browserDetection').and.returnValue({version: 11, browser: "ie"});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -85,9 +85,9 @@ describe('browserDetection', () => {
 
     describe('old Safari', () => {
       beforeEach(function () {
-        spyOn(window, "browserDetection").and.returnValue({version: 300, browser: "safari", webkit: {major: 200, minor: 0, patch: 0}});
-        spyOn(isoScope, "getUserAgent").and.returnValue("... Version/5.1.2 Safari/534.54");
-        spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
+        spyOn(window, 'browserDetection').and.returnValue({version: 300, browser: "safari", webkit: {major: 200, minor: 0, patch: 0}});
+        spyOn(isoScope, 'getUserAgent').and.returnValue("... Version/5.1.2 Safari/534.54");
+        spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
 
         isoScope.performCheck();
         return isoScope.$digest();
@@ -99,8 +99,8 @@ describe('browserDetection', () => {
     });
 
     it('should permit modern Safari', () => {
-      spyOn(window, "browserDetection").and.returnValue({version: 610, browser: "safari", webkit: {major: 610, minor: 0, patch: 0}});
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
+      spyOn(window, 'browserDetection').and.returnValue({version: 610, browser: "safari", webkit: {major: 610, minor: 0, patch: 0}});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -109,7 +109,7 @@ describe('browserDetection', () => {
     });
 
     it('should disallow old Webkit', () => {
-      spyOn(window, "browserDetection").and.returnValue({version: 2, browser: "obscure", webkit: {major: 200, minor: 0, patch: 0}});
+      spyOn(window, 'browserDetection').and.returnValue({version: 2, browser: "obscure", webkit: {major: 200, minor: 0, patch: 0}});
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -118,8 +118,8 @@ describe('browserDetection', () => {
     });
 
     it('should permit modern Webkit if safe', () => {
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(true);
-      spyOn(window, "browserDetection").and.returnValue({version: 2, browser: "obscure", webkit: {major: 610, minor: 0, patch: 0}});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(true);
+      spyOn(window, 'browserDetection').and.returnValue({version: 2, browser: "obscure", webkit: {major: 610, minor: 0, patch: 0}});
 
       isoScope.performCheck();
       isoScope.$digest();
@@ -128,8 +128,8 @@ describe('browserDetection', () => {
     });
 
     it('should reject modern non-Safari Webkit if unsafe', () => {
-      spyOn(MyWallet, "browserCheckFast").and.returnValue(false);
-      spyOn(window, "browserDetection").and.returnValue({version: 2, browser: "obscure", webkit: {major: 600, minor: 0, patch: 0}});
+      spyOn(MyWallet, 'browserCheckFast').and.returnValue(false);
+      spyOn(window, 'browserDetection').and.returnValue({version: 2, browser: "obscure", webkit: {major: 600, minor: 0, patch: 0}});
 
       isoScope.performCheck();
       isoScope.$digest();

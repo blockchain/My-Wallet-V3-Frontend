@@ -29,7 +29,7 @@ describe('ChangeIpWhitelistCtrl', () => {
   it("should have an ipWhitelist field", () => expect(scope.fields.ipWhitelist).toBe("1.2.3.4"));
 
   it('should change the whitelist', () => {
-    spyOn(Wallet, "setIPWhitelist").and.callThrough();
+    spyOn(Wallet, 'setIPWhitelist').and.callThrough();
     scope.fields.ipWhitelist = "10.0.0.85";
     scope.setIPWhitelist();
     scope.$digest();

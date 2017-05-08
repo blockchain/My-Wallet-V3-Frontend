@@ -79,7 +79,7 @@ describe('LostGuidCtrl', () => {
 
   describe('sendReminder()', () => {
     beforeEach(function () {
-      spyOn(WalletNetwork, "recoverGuid").and.callThrough();
+      spyOn(WalletNetwork, 'recoverGuid').and.callThrough();
       scope.form = {
         $setPristine() {},
         $setUntouched() {}
@@ -102,7 +102,7 @@ describe('LostGuidCtrl', () => {
     });
 
     it('on failure should not go to the next step and refresh captch', () => {
-      spyOn(scope, "refreshCaptcha");
+      spyOn(scope, 'refreshCaptcha');
       scope.fields.captcha = "";
 
       scope.sendReminder();

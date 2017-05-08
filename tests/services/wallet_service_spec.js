@@ -21,7 +21,7 @@ describe('walletServices', () => {
 
       Options.get = () => Promise.resolve({});
 
-      spyOn(localStorageService, "get").and.callFake(function (name) {
+      spyOn(localStorageService, 'get').and.callFake(function (name) {
         if (name === "session") {
           return "token";
         }
@@ -99,7 +99,7 @@ describe('walletServices', () => {
   describe("transactions", () =>
 
     it("should beep on new transaction",  inject(function (Wallet, $timeout, ngAudio) {
-      spyOn(ngAudio, "load").and.callThrough();
+      spyOn(ngAudio, 'load').and.callThrough();
 
       Wallet.monitor("on_tx");
       expect(ngAudio.load).toHaveBeenCalled();
@@ -222,7 +222,7 @@ describe('walletServices', () => {
   describe('password', () => {
 
     it("can be changed", inject(function (Wallet, MyWalletStore) {
-      spyOn(MyWalletStore, "changePassword").and.callThrough();
+      spyOn(MyWalletStore, 'changePassword').and.callThrough();
       Wallet.changePassword("newpassword");
       expect(MyWalletStore.changePassword).toHaveBeenCalled();
       expect(MyWalletStore.isCorrectMainPassword("newpassword")).toBe(true);
@@ -423,8 +423,8 @@ describe('walletServices', () => {
         needsBip38 () {}
       };
 
-      spyOn(callbacks, "error");
-      spyOn(callbacks, "needsBip38");
+      spyOn(callbacks, 'error');
+      spyOn(callbacks, 'needsBip38');
 
       Wallet.addAddressOrPrivateKey("BIP38 key", callbacks.needsBip38, callbacks.success, callbacks.error);
 
@@ -437,7 +437,7 @@ describe('walletServices', () => {
 
   describe("notifications", () =>
     describe('on_tx', () => {
-      beforeEach(() => spyOn(Alerts, "displayReceivedBitcoin"));
+      beforeEach(() => spyOn(Alerts, 'displayReceivedBitcoin'));
 
       it('should display a message if the user received bitcoin', () => {
         spyOn(Wallet.my.wallet.txList, 'transactions').and.callFake(() => [{ result: 1, txType: 'received' }]);

@@ -122,7 +122,7 @@ describe('AddressImportCtrl', () => {
       });
 
       it("should handle an error", inject(function ($timeout) {
-        spyOn(scope, "error");
+        spyOn(scope, 'error');
         scope.import();
         $timeout.flush();
         Wallet.addAddressOrPrivateKey('', false, scope.success, scope.error, scope.cancel, 'anyError');
@@ -169,7 +169,7 @@ describe('AddressImportCtrl', () => {
       });
 
       it('should fall back on an alert', () => {
-        spyOn(Alerts, "displayError");
+        spyOn(Alerts, 'displayError');
         scope.importError('unknownError');
         expect(Alerts.displayError).toHaveBeenCalled();
       });
@@ -190,7 +190,7 @@ describe('AddressImportCtrl', () => {
 
     it("should show a spinner during sweep",  inject(function (Wallet) {
       pending();
-      spyOn(Wallet, "transaction").and.callFake(function (success, error) {
+      spyOn(Wallet, 'transaction').and.callFake(function (success, error) {
         expect(scope.status.sweeping).toBe(true);
         return {
           sweep () {

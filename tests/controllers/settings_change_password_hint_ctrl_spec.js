@@ -27,7 +27,7 @@ describe('ChangePasswordHintCtrl', () => {
   it("should have a password hint field", () => expect(scope.fields.passwordHint).toBe(''));
 
   it("should change the password hint", inject(function (Wallet) {
-    spyOn(Wallet, "changePasswordHint");
+    spyOn(Wallet, 'changePasswordHint');
     scope.fields.passwordHint = "passwordhint";
     scope.changePasswordHint();
     expect(Wallet.changePasswordHint).toHaveBeenCalled();

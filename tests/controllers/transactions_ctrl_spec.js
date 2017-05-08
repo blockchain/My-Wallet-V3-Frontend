@@ -79,13 +79,13 @@ describe('TransactionsCtrl', () => {
     it("should have 4 transaction types", () => expect(scope.filterTypes.length).toEqual(4));
 
     it('can filter by transaction type', () => {
-      spyOn(scope, "setFilterType");
+      spyOn(scope, 'setFilterType');
       scope.setFilterType(3);
       expect(scope.setFilterType).toHaveBeenCalled();
     });
 
     it('can filter by search', () => {
-      spyOn(scope, "filterSearch");
+      spyOn(scope, 'filterSearch');
       scope.filterSearch(1, "test");
       expect(scope.filterSearch).toHaveBeenCalled();
     });

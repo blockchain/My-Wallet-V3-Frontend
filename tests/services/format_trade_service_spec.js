@@ -12,7 +12,7 @@ describe('formatTrade service', () => {
 
 			formatTrade = $injector.get('formatTrade');
 
-			return spyOn(formatTrade, "labelsForCurrency").and.callThrough();
+			return spyOn(formatTrade, 'labelsForCurrency').and.callThrough();
 		})
 	);
 
@@ -47,7 +47,7 @@ describe('formatTrade service', () => {
 	beforeEach(() => $rootScope.$digest());
 
 	describe('bank trade', () => {
-		beforeEach(() => spyOn(formatTrade, "awaiting_transfer_in").and.callThrough());
+		beforeEach(() => spyOn(formatTrade, 'awaiting_transfer_in').and.callThrough());
 
 		it('should return the correct labels', () => {
 			trade = trade("DKK");

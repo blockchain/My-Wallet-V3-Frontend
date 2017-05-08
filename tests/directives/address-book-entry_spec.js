@@ -43,7 +43,7 @@ describe('Address Book Entry Directive', () => {
   it("has an element that is defined", () => expect(element).toBeDefined());
 
   it('can delete an address book entry', () => {
-    spyOn(Wallet, "removeAddressBookEntry").and.callThrough();
+    spyOn(Wallet, 'removeAddressBookEntry').and.callThrough();
 
     isoScope.delete();
     expect(Wallet.removeAddressBookEntry).toHaveBeenCalled();

@@ -66,7 +66,7 @@ describe('AdvertsServices', () => {
 
   describe("fetchOnce()", () =>
     it('should call fetch() only once', () => {
-      spyOn(Adverts, "fetch");
+      spyOn(Adverts, 'fetch');
       Adverts.fetchOnce();
       expect(Adverts.fetch).toHaveBeenCalled();
       Adverts.fetchOnce();

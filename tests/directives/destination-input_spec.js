@@ -39,7 +39,7 @@ describe('Destination Input directive', () => {
   });
 
   it("should call change on addressScan", inject(function ($timeout) {
-    spyOn(isoScope, "change");
+    spyOn(isoScope, 'change');
     let result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX';
     isoScope.onAddressScan(result);
     $timeout.flush();
@@ -48,7 +48,7 @@ describe('Destination Input directive', () => {
   );
 
   it("should trigger onPaymentRequest", inject(function ($timeout) {
-    spyOn(isoScope, "onPaymentRequest");
+    spyOn(isoScope, 'onPaymentRequest');
     let result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX';
     isoScope.onAddressScan(result);
     $timeout.flush();

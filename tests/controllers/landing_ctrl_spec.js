@@ -40,7 +40,7 @@ describe('LandingCtrl', () => {
 
     it("should use the Chinese video for Chinese users", inject(function ($sce, languages){
       spyOn($sce, "trustAsResourceUrl");
-      spyOn(languages, "get").and.callFake(() => "zh-cn");
+      spyOn(languages, 'get').and.callFake(() => "zh-cn");
 
       scope.firstLoad();
       expect($sce.trustAsResourceUrl.calls.argsFor(0)[0]).toContain('zh-cn.mp4');

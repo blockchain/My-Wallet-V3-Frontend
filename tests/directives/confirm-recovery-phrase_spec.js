@@ -13,7 +13,7 @@ describe('Confirm Recovery Phrase', () => {
     Wallet = $injector.get('Wallet');
     Alerts = $injector.get('Alerts');
 
-    spyOn(Alerts, "prompt").and.returnValue($q.resolve('asdf'));
+    spyOn(Alerts, 'prompt').and.returnValue($q.resolve('asdf'));
     spyOn($uibModal, "open").and.callThrough();
 
     let element = $compile("<confirm-recovery-phrase></confirm-recovery-phrase>")($rootScope);

@@ -44,7 +44,7 @@ describe('ConfirmRecoveryPhraseCtrl', () => {
 
     scope.$apply();
 
-    spyOn(Wallet, "confirmRecoveryPhrase");
+    spyOn(Wallet, 'confirmRecoveryPhrase');
 
     scope.verify();
 

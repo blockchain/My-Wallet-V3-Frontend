@@ -58,7 +58,7 @@ describe('ManageSecondPasswordCtrl', () => {
 
     it("should close the modal on dismissal and open recovery", inject(function ($uibModal, $q) {
       spyOn($uibModal, "open").and.returnValue( {result: $q.resolve()} );
-      spyOn(scope, "openRecovery");
+      spyOn(scope, 'openRecovery');
       scope.recoveryModal();
       scope.$digest();
       expect(scope.openRecovery).toHaveBeenCalled();
@@ -75,7 +75,7 @@ describe('ManageSecondPasswordCtrl', () => {
     );
 
     it("should not open if second password has been set already", inject(function ($uibModal, $q) {
-      spyOn(modal, "open");
+      spyOn(modal, 'open');
       Wallet.settings.secondPassword = true;
       scope.recoveryModal();
       expect(modal.open).not.toHaveBeenCalled();

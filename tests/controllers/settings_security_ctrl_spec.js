@@ -39,13 +39,13 @@ describe('SettingsSecurityCtrl', () => {
     it("has an initial status", () => expect(scope.settings.rememberTwoFactor).toBe(true));
 
     it('can be enabled', () => {
-      spyOn(Wallet, "enableRememberTwoFactor");
+      spyOn(Wallet, 'enableRememberTwoFactor');
       scope.enableRememberTwoFactor();
       expect(Wallet.enableRememberTwoFactor).toHaveBeenCalled();
     });
 
     it('can be disabled', () => {
-      spyOn(Wallet, "disableRememberTwoFactor");
+      spyOn(Wallet, 'disableRememberTwoFactor');
       scope.disableRememberTwoFactor();
       expect(Wallet.disableRememberTwoFactor).toHaveBeenCalled();
     });

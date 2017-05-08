@@ -52,7 +52,7 @@ describe('RecoverFundsCtrl', () => {
     describe("performImport function", () =>
 
       it("should stop 'working' after callback", inject(function ($timeout) {
-        spyOn(Wallet, "login");
+        spyOn(Wallet, 'login');
         scope.performImport();
         $timeout.flush();
         $timeout.flush();

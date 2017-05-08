@@ -9,11 +9,11 @@ describe('ResetTwoFactorTokenController', () => {
       let $state = $injector.get('$state'); // This is a mock
       let Alerts = $injector.get('Alerts');
 
-      spyOn(WalletTokenEndpoints, "resetTwoFactor").and.callThrough();
+      spyOn(WalletTokenEndpoints, 'resetTwoFactor').and.callThrough();
       spyOn($state, "go").and.callThrough();
 
-      spyOn(Alerts, "displayError").and.callFake(function () {});
-      spyOn(Alerts, "displayResetTwoFactor").and.callFake(function () {});
+      spyOn(Alerts, 'displayError').and.callFake(function () {});
+      spyOn(Alerts, 'displayResetTwoFactor').and.callFake(function () {});
 
     });
 
