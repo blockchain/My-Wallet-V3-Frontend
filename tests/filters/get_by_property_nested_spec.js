@@ -1,5 +1,4 @@
 describe('getByPropertyNestedFilter', () => {
-
   let $filter = null;
 
   beforeEach(function () {

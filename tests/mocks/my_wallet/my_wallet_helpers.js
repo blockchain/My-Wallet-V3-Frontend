@@ -1,6 +1,6 @@
 angular
   .module('walletApp.core')
-  .factory('MyWalletHelpers', () =>
+  .factory('MyWalletHelpers', ($q) =>
     ({
       tor () {
         return false;
@@ -8,14 +8,14 @@ angular
       privateKeyCorrespondsToAddress () {
         return $q.resolve(true);
       },
-      scorePassword(pw) {
+      scorePassword (pw) {
         return ((pw && pw.length) || 0) * 25;
       },
-      memoize(f) { return f; },
+      memoize (f) { return f; },
       getMobileOperatingSystem () {
         return 'unknown';
       },
-      guidToGroup(uid) {
+      guidToGroup (uid) {
         if (uid[0] === 'a') { return 'a'; } else { return 'b'; }
       }
     })

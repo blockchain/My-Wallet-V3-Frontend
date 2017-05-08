@@ -1,18 +1,18 @@
 angular.module('walletApp.core').factory('WalletNetwork', () =>
   ({
-    resendTwoFactorSms(){
+    resendTwoFactorSms () {
       return {
-        then(callback) {
+        then (callback) {
           callback();
           return {
-            catch(callback) {
+            catch (callback) {
               if (false) {
                 callback();
                 return {
                 };
               }
             }
-        };
+          };
         }
       };
     }

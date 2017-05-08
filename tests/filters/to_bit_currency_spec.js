@@ -1,7 +1,5 @@
 describe('toBitCurrencyFilter', () => {
-
   let $filter = null;
-  let Wallet = null;
   let btcCurrencies = null;
 
   beforeEach(angular.mock.module('walletApp'));
@@ -14,7 +12,7 @@ describe('toBitCurrencyFilter', () => {
   beforeEach(() =>
     angular.mock.inject(function ($injector) {
       let currency = $injector.get('currency');
-      return btcCurrencies = currency.bitCurrencies;
+      btcCurrencies = currency.bitCurrencies;
     })
   );
 
