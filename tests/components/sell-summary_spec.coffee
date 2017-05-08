@@ -42,8 +42,8 @@ describe "sell-summary.component", ->
   bankAccount = {
     sell: (bankId) -> $q.resolve(sellTrade)
     updateQuote: (quote) -> $q.resolve('something')
-    _quote: {
-      _expiresAt: 1493928203205
+    quote: {
+      expiresAt: 1493928203205
     }
   }
 

@@ -70,8 +70,8 @@ describe "CoinifySellController", ->
           pending: {}
         }
         user: 1
-        _profile: {
-          _country: 'FR',
+        profile: {
+          country: 'FR',
           level: {
             limits: {
               'card': {
@@ -116,7 +116,7 @@ describe "CoinifySellController", ->
     it "should set the bank account", ->
       ctrl = getController(quote, trade)
       ctrl.selectAccount({id: 12345})
-      expect(ctrl.bankId).toEqual(12345)
+      expect(ctrl.selectedBankAccount).toEqual({id: 12345})
 
   describe ".goTo()", ->
     beforeEach ->
@@ -141,10 +141,10 @@ describe "CoinifySellController", ->
     beforeEach ->
       ctrl = undefined
 
-    it "should set the bankId", ->
+    it "should set the selectedBankAccount", ->
       ctrl = getController(quote, trade)
-      ctrl.onCreateBankSuccess({_id: 123456})
-      expect(ctrl.bankId).toEqual(123456)
+      ctrl.onCreateBankSuccess({id: 123456})
+      expect(ctrl.selectedBankAccount).toEqual({id: 123456})
 
   describe ".onSellSuccess()", ->
     beforeEach ->
@@ -221,15 +221,14 @@ describe "CoinifySellController", ->
 
     it "should go to trade-complete step", ->
       ctrl = getController(quote, trade)
-      ctrl.trade._state = 'awaiting_transfer_in'
-      ctrl.trade._iSignThisID = undefined
+      ctrl.trade.state = 'awaiting_transfer_in'
+      ctrl.trade.iSignThisID = undefined
       ctrl.nextStep()
       expect(ctrl.onStep('trade-complete')).toEqual(true)
 
     it "should go to email step", ->
       ctrl = getController(quote, trade)
-      ctrl.isKYC = false
-      ctrl.user.isEmailVerified = false
+      ctrl.exchange.user = undefined
       ctrl.nextStep()
       expect(ctrl.onStep('email')).toEqual(true)
 

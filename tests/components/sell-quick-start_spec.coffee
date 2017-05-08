@@ -86,8 +86,8 @@ describe "sell-quick-start.component", ->
           pending: {}
         }
         user: 1
-        _profile: {
-          _country: 'FR',
+        profile: {
+          country: 'FR',
           level: {
             limits: {
               'card': {
@@ -96,6 +96,11 @@ describe "sell-quick-start.component", ->
               'bank': {
                 in: 0
               }
+            }
+          }
+          currentLimits: {
+            bank: {
+              outRemaining: 1000
             }
           }
         }
