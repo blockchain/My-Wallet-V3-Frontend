@@ -22,7 +22,7 @@ describe('SecondPasswordCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("SecondPasswordCtrl", {
+      $controller('SecondPasswordCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance,
@@ -37,7 +37,7 @@ describe('SecondPasswordCtrl', () => {
 
   });
 
-  it("should clear alerts", inject(function (Alerts) {
+  it('should clear alerts', inject(function (Alerts) {
     spyOn(Alerts, 'clear');
     scope.cancel();
     expect(Alerts.clear).toHaveBeenCalled();

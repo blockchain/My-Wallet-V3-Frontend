@@ -41,7 +41,7 @@ describe('LostGuidCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("LostGuidCtrl", {
+      $controller('LostGuidCtrl', {
         $scope: scope,
         $stateParams: {}
       }
@@ -54,16 +54,16 @@ describe('LostGuidCtrl', () => {
   describe('on load', () => {
     beforeEach(() => scope.$digest());
 
-    it("should refresh the captcha", () => pending());
+    it('should refresh the captcha', () => pending());
       // This won't work:
       // expect(scope.refreshCaptcha).toHaveBeenCalled()
       // Possible workaround: http://stackoverflow.com/a/33605369
 
-    it("should prefill uid if known", () => pending());
+    it('should prefill uid if known', () => pending());
   });
 
   describe('refreshCaptcha()', () => {
-    it("should update captchaSrc", inject(function () {
+    it('should update captchaSrc', inject(function () {
       scope.captchaSrc = undefined;
       scope.refreshCaptcha();
       expect(scope.captchaSrc).not.toBeUndefined();

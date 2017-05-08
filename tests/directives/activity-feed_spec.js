@@ -39,7 +39,7 @@ describe('Activity Feed directive', () => {
     return scope.$apply();
   });
 
-  it("has an initial loading state of true", () => expect(scope.loading).toBe(true));
+  it('has an initial loading state of true', () => expect(scope.loading).toBe(true));
 
   it('has no loading state once transactions have loaded', () => {
     // need to stub out the Activity service

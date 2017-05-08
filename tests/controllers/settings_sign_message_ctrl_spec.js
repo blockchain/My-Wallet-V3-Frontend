@@ -12,11 +12,11 @@ describe('SignMessageController', () => {
 
       scope = $rootScope.$new();
       addressObj = { address: 'a', active: true, isWatchOnly: false, signMessage(msg) { return msg + '_signed'; } };
-      return $controller("SignMessageController", {$scope: scope, addressObj});
+      return $controller('SignMessageController', {$scope: scope, addressObj});
     })
   );
 
-  it("should use the injected address object", () => expect(scope.address.address).toEqual('a'));
+  it('should use the injected address object', () => expect(scope.address.address).toEqual('a'));
 
   it('should format the address without a label', () => {
     let formatted = scope.formatLabel({ address: 'addr', label: null });

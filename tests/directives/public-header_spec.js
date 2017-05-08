@@ -20,5 +20,5 @@ describe('Public Header directive', () => {
     return isoScope.$digest();
   });
 
-  it("should have access to the rootURL", () => expect(isoScope.rootURL).toBe('https://blockchain.info/'));
+  it('should have access to the rootURL', () => expect(isoScope.rootURL).toBe('https://blockchain.info/'));
 });

@@ -37,14 +37,14 @@ describe('WalletCtrl', () => {
 
       scope = $rootScope.$new();
 
-      return $controller("WalletCtrl", {
+      return $controller('WalletCtrl', {
         $scope: scope,
         $stateParams: {}
       });}));
 
 
 
-  it("should redirect to login if not logged in",  inject(function (Wallet, $state) {
+  it('should redirect to login if not logged in',  inject(function (Wallet, $state) {
     expect(scope.status.isLoggedIn).toBe(false);
     spyOn($state, "go");
     scope.$broadcast("$stateChangeSuccess", {name: "home"});
@@ -52,7 +52,7 @@ describe('WalletCtrl', () => {
   })
   );
 
-  it("should not redirect to login if logged in",  inject(function (Wallet, $state) {
+  it('should not redirect to login if logged in',  inject(function (Wallet, $state) {
     Wallet.status.isLoggedIn = true;
     expect(scope.status.isLoggedIn).toBe(true);
     spyOn($state, "go");
@@ -62,21 +62,21 @@ describe('WalletCtrl', () => {
   })
   );
 
-  it("should dismiss all modals on state change", inject(function ($state, $uibModalStack) {
+  it('should dismiss all modals on state change', inject(function ($state, $uibModalStack) {
     spyOn($uibModalStack, "dismissAll");
     scope.$broadcast("$stateChangeSuccess", {name: "home"});
     expect($uibModalStack.dismissAll).toHaveBeenCalled();
   })
   );
 
-  it("should open a popup to send",  inject(function ($uibModal) {
+  it('should open a popup to send',  inject(function ($uibModal) {
     spyOn($uibModal, "open").and.callThrough();
     scope.send();
     expect($uibModal.open).toHaveBeenCalled();
   })
   );
 
-  it("should open a popup to request",  inject(function ($uibModal) {
+  it('should open a popup to request',  inject(function ($uibModal) {
     spyOn($uibModal, "open").and.callThrough();
     scope.request();
     expect($uibModal.open).toHaveBeenCalled();
@@ -91,7 +91,7 @@ describe('WalletCtrl', () => {
       expect(scope.lastAction).toEqual(100);
     });
 
-    it("should show the logout warning modal", inject(function (Wallet, Alerts) {
+    it('should show the logout warning modal', inject(function (Wallet, Alerts) {
       spyOn(Date, 'now').and.returnValue(690000);
       Wallet.status.isLoggedIn = true;
       Wallet.settings.logoutTimeMinutes = 10;
@@ -102,7 +102,7 @@ describe('WalletCtrl', () => {
     })
     );
 
-    it("should clear the interval when the controller is destroyed", inject(function ($interval) {
+    it('should clear the interval when the controller is destroyed', inject(function ($interval) {
       spyOn($interval, "cancel");
       scope.$broadcast("$destroy");
       expect($interval.cancel).toHaveBeenCalledWith(scope.inactivityInterval);
@@ -110,8 +110,8 @@ describe('WalletCtrl', () => {
     );
   });
 
-  describe("HD upgrade", () =>
-    it("should show modal if HD upgrade is needed", inject(function (Wallet, $uibModal) {
+  describe('HD upgrade', () =>
+    it('should show modal if HD upgrade is needed', inject(function (Wallet, $uibModal) {
       Wallet.status.isLoggedIn = true;
       Wallet.goal.upgrade = true;
       spyOn($uibModal, "open").and.callThrough();
@@ -121,8 +121,8 @@ describe('WalletCtrl', () => {
     )
   );
 
-  describe("welcome modal", () =>
-    it("should open when firstTime goal is set", inject(function (Wallet, $rootScope, $timeout, $uibModal, buyStatus, $q) {
+  describe('welcome modal', () =>
+    it('should open when firstTime goal is set', inject(function (Wallet, $rootScope, $timeout, $uibModal, buyStatus, $q) {
       buyStatus.canBuy = () => $q.resolve().then($uibModal.open);
       spyOn($uibModal, 'open').and.returnValue(mockModalInstance);
       spyOn(buyStatus, 'canBuy').and.callThrough();

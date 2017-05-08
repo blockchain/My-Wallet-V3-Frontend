@@ -21,5 +21,5 @@ describe('Helper Text Directive', () => {
     return isoScope.$digest();
   });
 
-  it("has a templateUrl", () => expect(isoScope.helperText.templateUrl).toBeTruthy());
+  it('has a templateUrl', () => expect(isoScope.helperText.templateUrl).toBeTruthy());
 });

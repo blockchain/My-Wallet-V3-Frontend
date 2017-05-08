@@ -23,9 +23,9 @@ describe('Video Container Directive', () => {
     return isoScope.$digest();
   });
 
-  it("should have an image", () => expect(isoScope.img).toBeDefined());
+  it('should have an image', () => expect(isoScope.img).toBeDefined());
 
-  it("should have a video ng-src", () => expect(isoScope.ngSrc).toBeDefined());
+  it('should have a video ng-src', () => expect(isoScope.ngSrc).toBeDefined());
 
   it('should toggle play and pause', () => {
     isoScope.playing = false;

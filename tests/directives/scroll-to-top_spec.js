@@ -21,7 +21,7 @@ describe('Scroll To Top Directive', () => {
     return $scope.$apply();
   });
 
-  it("has an element that is defined", () =>
+  it('has an element that is defined', () =>
     // $apply runs the watch function, just making sure element exists
     expect(element).toBeDefined()
   );

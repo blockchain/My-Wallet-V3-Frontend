@@ -113,6 +113,7 @@
       "fit",
       "inject",
       "beforeEach",
+      "afterEach",
       "exec",
       "exit",
       "JasminePromiseMatchers",

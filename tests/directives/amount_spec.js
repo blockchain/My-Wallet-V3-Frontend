@@ -19,19 +19,19 @@ describe('Amount', () => {
     return isoScope.$digest();
   });
 
-  it("should not show Fiat if BTC is set as display currency", inject(function (Wallet) {
+  it('should not show Fiat if BTC is set as display currency', inject(function (Wallet) {
     Wallet.settings.displayCurrency = {code: "BTC"};
     expect(isoScope.isBitCurrency(Wallet.settings.displayCurrency)).toBe(true);
   })
   );
 
-  it("should show Fiat if BTC is not set as display currency", inject(function (Wallet) {
+  it('should show Fiat if BTC is not set as display currency', inject(function (Wallet) {
     Wallet.settings.displayCurrency = {code: "USD"};
     expect(isoScope.isBitCurrency(Wallet.settings.displayCurrency)).toBe(false);
   })
   );
 
-  it("should respond to toggle elsewhere", inject(function (currency) {
+  it('should respond to toggle elsewhere', inject(function (currency) {
     isoScope.settings.displayCurrency = currency.currencies[1];
     expect(isoScope.settings.displayCurrency.code).toBe("EUR");
   })

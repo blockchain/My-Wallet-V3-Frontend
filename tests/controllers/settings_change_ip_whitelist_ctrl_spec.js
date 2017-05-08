@@ -13,7 +13,7 @@ describe('ChangeIpWhitelistCtrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/change-ip-whitelist.pug');
 
-      $controller("ChangeIpWhitelistCtrl",
+      $controller('ChangeIpWhitelistCtrl',
         {$scope: scope});
 
       scope.model = {};
@@ -26,7 +26,7 @@ describe('ChangeIpWhitelistCtrl', () => {
     })
   );
 
-  it("should have an ipWhitelist field", () => expect(scope.fields.ipWhitelist).toBe("1.2.3.4"));
+  it('should have an ipWhitelist field', () => expect(scope.fields.ipWhitelist).toBe("1.2.3.4"));
 
   it('should change the whitelist', () => {
     spyOn(Wallet, 'setIPWhitelist').and.callThrough();

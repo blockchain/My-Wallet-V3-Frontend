@@ -62,7 +62,7 @@ describe('NavigationCtrl', () => {
 
       $rootScope.mock = true;
 
-      $controller("NavigationCtrl", {
+      $controller('NavigationCtrl', {
         $scope: scope,
         whatsNew
       }
@@ -72,10 +72,10 @@ describe('NavigationCtrl', () => {
 
   });
 
-  it("should have access to login status",  inject(() => expect(scope.status.isLoggedIn).toBe(true))
+  it('should have access to login status',  inject(() => expect(scope.status.isLoggedIn).toBe(true))
   );
 
-  it("should logout",  inject(function (Wallet, $stateParams, $state, $uibModal) {
+  it('should logout',  inject(function (Wallet, $stateParams, $state, $uibModal) {
     spyOn(Wallet, 'logout').and.callThrough();
     spyOn($state, "go");
 
@@ -87,7 +87,7 @@ describe('NavigationCtrl', () => {
   })
   );
 
-  it("should not logout if save is in progress",  inject(function (Wallet, MyWallet, $stateParams) {
+  it('should not logout if save is in progress',  inject(function (Wallet, MyWallet, $stateParams) {
     spyOn(Wallet, 'logout').and.callThrough();
 
     MyWallet.sync();
@@ -99,7 +99,7 @@ describe('NavigationCtrl', () => {
   );
 
   describe('whats new', () => {
-    it("should have the whats new template", () => expect(scope.whatsNewTemplate).toEqual('templates/whats-new.pug'));
+    it('should have the whats new template', () => expect(scope.whatsNewTemplate).toEqual('templates/whats-new.pug'));
 
     it('should have the feature array injected', () => {
       scope.$digest();
@@ -109,14 +109,14 @@ describe('NavigationCtrl', () => {
     describe('without 2nd password', () => {
       beforeEach(() => scope.$digest());
 
-      it("should get the last viewed time from metadata service", () => expect(scope.lastViewedWhatsNew).toEqual(3));
+      it('should get the last viewed time from metadata service', () => expect(scope.lastViewedWhatsNew).toEqual(3));
 
       it('should calculate the correct number of latest feats', () => {
         $timeout.flush();
         expect(scope.nLatestFeats).toEqual(1);
       });
 
-      it("should update metadata service when new is viewed", inject(function ($timeout) {
+      it('should update metadata service when new is viewed', inject(function ($timeout) {
         spyOn(scope.metaData, 'update');
         $timeout.flush();
         expect(scope.nLatestFeats).toEqual(1);
@@ -134,14 +134,14 @@ describe('NavigationCtrl', () => {
         return scope.$digest();
       });
 
-      it("should get the last viewed time from localstorage", () => expect(scope.lastViewedWhatsNew).toEqual(2));
+      it('should get the last viewed time from localstorage', () => expect(scope.lastViewedWhatsNew).toEqual(2));
 
       it('should calculate the correct number of latest feats', () => {
         $timeout.flush();
         expect(scope.nLatestFeats).toEqual(1);
       });
 
-      it("should store in localstorage when whats new is viewed", inject(function (localStorageService, $timeout) {
+      it('should store in localstorage when whats new is viewed', inject(function (localStorageService, $timeout) {
         spyOn(localStorageService, 'set');
         $timeout.flush();
         expect(scope.nLatestFeats).toEqual(1);
@@ -160,14 +160,14 @@ describe('NavigationCtrl', () => {
         return scope.$digest();
       });
 
-      it("should get the last viewed time from a cookie", () => expect(scope.lastViewedWhatsNew).toEqual(2));
+      it('should get the last viewed time from a cookie', () => expect(scope.lastViewedWhatsNew).toEqual(2));
 
       it('should calculate the correct number of latest feats', () => {
         $timeout.flush();
         expect(scope.nLatestFeats).toEqual(1);
       });
 
-      it("should store in localstorage when whats new is viewed", inject(function (localStorageService, $timeout) {
+      it('should store in localstorage when whats new is viewed', inject(function (localStorageService, $timeout) {
         spyOn(localStorageService, 'set');
         $timeout.flush();
         expect(scope.nLatestFeats).toEqual(1);
@@ -186,7 +186,7 @@ describe('NavigationCtrl', () => {
         return scope.$digest();
       });
 
-      it("should not fetch", () => expect(scope.lastViewedWhatsNew).toEqual(null));
+      it('should not fetch', () => expect(scope.lastViewedWhatsNew).toEqual(null));
 
       it('should fetch after upgrade', () => {
         scope.status.didUpgradeToHd = true;

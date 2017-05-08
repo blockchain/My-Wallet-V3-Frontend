@@ -47,7 +47,7 @@ describe('RequestCtrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/request.pug');
 
-      $controller("RequestCtrl", {
+      $controller('RequestCtrl', {
         $scope: scope,
         $rootScope,
         $stateParams: {},
@@ -71,12 +71,12 @@ describe('RequestCtrl', () => {
   });
 
   describe('destinations', () => {
-    it("should include accounts",  function () {
+    it('should include accounts',  function () {
       expect(scope.destinations.length).toBeGreaterThan(0);
       expect(scope.destinations[0].index).toBeDefined();
     });
 
-    it("should not include archived accounts",  inject(function (Wallet) {
+    it('should not include archived accounts',  inject(function (Wallet) {
       // Make sure there's an archived account in the mocks:
       let match = false;
       for (let account of Array.from(scope.accounts())) {
@@ -94,13 +94,13 @@ describe('RequestCtrl', () => {
 
   describe('when requesting for a legacy address', () => {
 
-    it("should select the users currency by default", inject(Wallet=> expect(scope.settings.currency.code).toBe("USD"))
+    it('should select the users currency by default', inject(Wallet=> expect(scope.settings.currency.code).toBe("USD"))
     );
 
-    it("should have a bit currency", inject(Wallet=> expect(scope.settings.btcCurrency).toBeDefined())
+    it('should have a bit currency', inject(Wallet=> expect(scope.settings.btcCurrency).toBeDefined())
     );
 
-    it("should have access to legacy addresses",  inject(function () {
+    it('should have access to legacy addresses',  inject(function () {
       expect(scope.legacyAddresses).toBeDefined();
       expect(scope.legacyAddresses().length).toBeGreaterThan(0);
     })
@@ -195,7 +195,7 @@ describe('RequestCtrl', () => {
     });
   });
 
-  describe("isToImportedAddress", () =>
+  describe('isToImportedAddress', () =>
 
     it('should be true if destination is imported address', () => {
       scope.state.to = scope.destinations[2];

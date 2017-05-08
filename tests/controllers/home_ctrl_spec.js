@@ -36,7 +36,7 @@ describe('HomeCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("HomeCtrl", {
+      $controller('HomeCtrl', {
         $scope: scope,
         $uibModal: modal
       }
@@ -47,10 +47,10 @@ describe('HomeCtrl', () => {
   });
 
   describe('activeAccounts()', () => {
-    it("should know the number", inject(Wallet => expect(scope.activeAccounts().length).toBeGreaterThan(0))
+    it('should know the number', inject(Wallet => expect(scope.activeAccounts().length).toBeGreaterThan(0))
     );
 
-    it("should be null when not logged in", inject((Wallet), function () {
+    it('should be null when not logged in', inject((Wallet), function () {
       Wallet.status.isLoggedIn = false;
       expect(scope.activeAccounts()).toBe(null);
     })
@@ -58,17 +58,17 @@ describe('HomeCtrl', () => {
   });
 
   describe('activeLegacyAddresses()', () => {
-    it("should know the number", inject(Wallet => expect(scope.activeLegacyAddresses().length).toBeGreaterThan(0))
+    it('should know the number', inject(Wallet => expect(scope.activeLegacyAddresses().length).toBeGreaterThan(0))
     );
 
-    it("should be null when not logged in", inject((Wallet), function () {
+    it('should be null when not logged in', inject((Wallet), function () {
       Wallet.status.isLoggedIn = false;
       expect(scope.activeLegacyAddresses()).toBe(null);
     })
     );
   });
 
-  describe("getTotal()", () =>
-    it("should return total", () => expect(scope.getTotal()).toEqual(1))
+  describe('getTotal()', () =>
+    it('should return total', () => expect(scope.getTotal()).toEqual(1))
   );
 });

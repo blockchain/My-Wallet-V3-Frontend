@@ -48,9 +48,9 @@ describe('Transaction Destinations Directive', () => {
 
   describe('txLabels for received txs', function () {
 
-    it("should have one primary label", () => expect(isoScope.txLabels.primary[0].label).toBe('1hEK8DyKGmfqe'));
+    it('should have one primary label', () => expect(isoScope.txLabels.primary[0].label).toBe('1hEK8DyKGmfqe'));
 
-    it("should display the account received to as the secondary label", () => expect(isoScope.txLabels.secondary[0].label).toBe('My Bitcoin Wallet'));
+    it('should display the account received to as the secondary label', () => expect(isoScope.txLabels.secondary[0].label).toBe('My Bitcoin Wallet'));
   });
 
   describe('txLabels for sent txs', function () {
@@ -75,7 +75,7 @@ describe('Transaction Destinations Directive', () => {
       return isoScope = element.isolateScope();
     });
 
-    it("should display a label preview", () => expect(isoScope.txLabels.preview).toContain('RECIPIENTS'));
+    it('should display a label preview', () => expect(isoScope.txLabels.preview).toContain('RECIPIENTS'));
 
     it('should hide the bucket of addresses when not toggled', () => {
       let recipients = element[0].querySelectorAll('span')[3];

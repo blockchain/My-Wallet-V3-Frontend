@@ -26,7 +26,7 @@ describe('securityCenterServices', () => {
 
   describe('level', () => {
 
-    it("should start at 0", () => expect(SecurityCenter.security.level).toBe(0));
+    it('should start at 0', () => expect(SecurityCenter.security.level).toBe(0));
 
     it('should increase if email has been verified', () => {
       Wallet.user.isEmailVerified = true;

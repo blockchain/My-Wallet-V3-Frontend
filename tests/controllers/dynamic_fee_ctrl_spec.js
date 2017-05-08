@@ -4,7 +4,7 @@ describe('DynamicFeeController', () => {
 
   let newControllerScope = function (feeValues, modalInstance) {
     let scope = $rootScope.$new();
-    $controller("DynamicFeeController", {
+    $controller('DynamicFeeController', {
       $scope: scope,
       $uibModalInstance: modalInstance,
       feeValues
@@ -53,7 +53,7 @@ describe('DynamicFeeController', () => {
 
     it('should cancel', () => {
       scope.cancel();
-      expect(modalInstance.dismiss).toHaveBeenCalledWith("cancelled");
+      expect(modalInstance.dismiss).toHaveBeenCalledWith('cancelled');
     });
 
     it('should keep the current fee by exiting with null', () => {

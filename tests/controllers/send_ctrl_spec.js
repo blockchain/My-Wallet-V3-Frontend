@@ -120,24 +120,24 @@ describe('SendCtrl', () => {
 
     describe('initialization', () => {
 
-      it("should load wallet status", () => expect(scope.status).toBeDefined());
+      it('should load wallet status', () => expect(scope.status).toBeDefined());
 
-      it("should load wallet settings", () => expect(scope.settings).toBeDefined());
+      it('should load wallet settings', () => expect(scope.settings).toBeDefined());
 
-      it("should know the users fiat currency", () => expect(scope.fiatCurrency.code).toEqual('USD'));
+      it('should know the users fiat currency', () => expect(scope.fiatCurrency.code).toEqual('USD'));
 
-      it("should know the users btc currency", () => expect(scope.btcCurrency.code).toEqual('BTC'));
+      it('should know the users btc currency', () => expect(scope.btcCurrency.code).toEqual('BTC'));
 
-      it("should not be sending", () => expect(scope.sending).toEqual(false));
+      it('should not be sending', () => expect(scope.sending).toEqual(false));
 
-      it("should not start on the confirmation step", () => expect(scope.confirmationStep).toEqual(false));
+      it('should not start on the confirmation step', () => expect(scope.confirmationStep).toEqual(false));
 
-      it("should not start in advanced send mode", () => expect(scope.advanced).toEqual(false));
+      it('should not start in advanced send mode', () => expect(scope.advanced).toEqual(false));
     });
 
     describe('transaction template', () => {
 
-      it("should have a null from field", () => expect(scope.transactionTemplate.from).toBeNull());
+      it('should have a null from field', () => expect(scope.transactionTemplate.from).toBeNull());
 
       it('should have a single, null destination field', () => {
         expect(scope.transactionTemplate.destinations.length).toEqual(1);
@@ -149,9 +149,9 @@ describe('SendCtrl', () => {
         expect(scope.transactionTemplate.amounts[0]).toEqual(null);
       });
 
-      it("should have an initial fee set to 0", () => expect(scope.transactionTemplate.fee).toEqual(0));
+      it('should have an initial fee set to 0', () => expect(scope.transactionTemplate.fee).toEqual(0));
 
-      it("should have an empty note field", () => expect(scope.transactionTemplate.note).toEqual(''));
+      it('should have an empty note field', () => expect(scope.transactionTemplate.note).toEqual(''));
     });
 
     describe('origins', () => {
@@ -277,7 +277,7 @@ describe('SendCtrl', () => {
       });
     });
 
-    describe("from", () =>
+    describe('from', () =>
       it('should be invalid if null', () => {
         scope.transaction.from = null;
         scope.$apply();
@@ -551,24 +551,24 @@ describe('SendCtrl', () => {
         })
         );
 
-        it("should show a confirmation alert", inject(function (Alerts) {
+        it('should show a confirmation alert', inject(function (Alerts) {
           spyOn(Alerts, 'displaySentBitcoin').and.callThrough();
           scope.send();
           digestAndFlush();
-          expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT");
+          expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith('BITCOIN_SENT');
         })
         );
 
-        it("should tell the user to refresh with TOR", inject(function (Alerts, MyWalletHelpers) {
+        it('should tell the user to refresh with TOR', inject(function (Alerts, MyWalletHelpers) {
           MyWalletHelpers.tor = () => true;
           spyOn(Alerts, 'displaySentBitcoin').and.callThrough();
           scope.send();
           digestAndFlush();
-          expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith("BITCOIN_SENT_TOR");
+          expect(Alerts.displaySentBitcoin).toHaveBeenCalledWith('BITCOIN_SENT_TOR');
         })
         );
 
-        it("should show account transactions", inject(function ($state) {
+        it('should show account transactions', inject(function ($state) {
           spyOn($state, 'go');
           scope.send();
           digestAndFlush();
@@ -576,7 +576,7 @@ describe('SendCtrl', () => {
         })
         );
 
-        it("should show imported address transactions", inject(function ($state) {
+        it('should show imported address transactions', inject(function ($state) {
           spyOn($state, 'go');
           scope.transaction.from = Wallet.legacyAddresses()[0];
           scope.send();
@@ -585,7 +585,7 @@ describe('SendCtrl', () => {
         })
         );
 
-        it("should set a note if there is one", inject(function (Wallet, MyWallet) {
+        it('should set a note if there is one', inject(function (Wallet, MyWallet) {
           spyOn(Wallet, 'setNote').and.callThrough();
           spyOn(MyWallet.wallet, 'setNote');
           scope.transaction.note = 'this_is_a_note';
@@ -596,7 +596,7 @@ describe('SendCtrl', () => {
         })
         );
 
-        it("should not set a note if there is not one", inject(function (Wallet) {
+        it('should not set a note if there is not one', inject(function (Wallet) {
           spyOn(Wallet, 'setNote');
           scope.send();
           digestAndFlush();
@@ -624,7 +624,7 @@ describe('SendCtrl', () => {
             scope.inputMetric = "paste";
             scope.send();
             digestAndFlush();
-            expect(scope.sendInputMetrics).toHaveBeenCalledWith("paste");
+            expect(scope.sendInputMetrics).toHaveBeenCalledWith('paste');
           });
         });
       });
@@ -661,7 +661,7 @@ describe('SendCtrl', () => {
       //   expect(scope.transaction.from).toEqual(MyWallet.wallet.hdwallet.defaultAccount)
       // )
 
-    describe("numberOfActiveAccountsAndLegacyAddresses", () =>
+    describe('numberOfActiveAccountsAndLegacyAddresses', () =>
 
       it('should return the correct amount', () => {
         let amount = scope.numberOfActiveAccountsAndLegacyAddresses();
@@ -669,14 +669,14 @@ describe('SendCtrl', () => {
       })
     );
 
-    describe("hasZeroBalance", () =>
+    describe('hasZeroBalance', () =>
 
-      it("should determine if balance is zero", () => expect(scope.hasZeroBalance({balance: 0})).toBe(true))
+      it('should determine if balance is zero', () => expect(scope.hasZeroBalance({balance: 0})).toBe(true))
     );
 
-    describe("applyPaymentRequest", () =>
+    describe('applyPaymentRequest', () =>
 
-      it("should succesfully apply a payment request", inject(function (Wallet) {
+      it('should succesfully apply a payment request', inject(function (Wallet) {
         scope.result = Wallet.parsePaymentRequest('bitcoin://abcdefgh?amount=0.001');
         scope.applyPaymentRequest(scope.result, 0);
         expect(scope.transaction.amounts[0]).toBe(100000);
@@ -685,7 +685,7 @@ describe('SendCtrl', () => {
       )
     );
 
-    describe("getToLabels", () =>
+    describe('getToLabels', () =>
 
       it('should return an array of addresses', () => {
         scope.transaction.destinations[0] = Wallet.legacyAddresses()[0];
@@ -718,7 +718,7 @@ describe('SendCtrl', () => {
         return scope.transaction.maxAvailable = 40;
       });
 
-      it("should be true when all conditions are met", () => expect(scope.amountsAreValid()).toEqual(true));
+      it('should be true when all conditions are met', () => expect(scope.amountsAreValid()).toEqual(true));
 
       it('should be false when any amounts are null', () => {
         scope.transaction.amounts[0] = null;
@@ -750,7 +750,7 @@ describe('SendCtrl', () => {
       });
     });
 
-    describe("hasAmountError", () =>
+    describe('hasAmountError', () =>
 
       it('should be true when all conditions are met', () => {
         let field = scope.sendForm.amounts0;
@@ -786,7 +786,7 @@ describe('SendCtrl', () => {
 
     describe('modal navigation', () => {
 
-      it("should build the payment before going to confirmation step", inject(function ($q) {
+      it('should build the payment before going to confirmation step', inject(function ($q) {
         spyOn(scope, 'checkFee').and.callFake(() => $q.resolve());
         spyOn(scope, 'finalBuild').and.callFake(() => $q.resolve());
         scope.goToConfirmation();
@@ -843,9 +843,9 @@ describe('SendCtrl', () => {
       });
     });
 
-    describe("finalBuild", () =>
+    describe('finalBuild', () =>
 
-      it("should resolve with the payment transaction", function (done) {
+      it('should resolve with the payment transaction', function (done) {
         scope.finalBuild().then(function (tx) {
           expect(tx).toEqual('tx');
           return done();
@@ -883,7 +883,7 @@ describe('SendCtrl', () => {
         expect(scope.payment.from).toHaveBeenCalledWith('decrypted_priv', undefined);
       });
 
-      it("should reject if the priv and address do not match", function (done) {
+      it('should reject if the priv and address do not match', function (done) {
         let s = pkctaSpy(null);
         scope.checkPriv().then(done).catch(function (e) {
           expect(s).toHaveBeenCalledWith('addr', 'priv_key', undefined);
@@ -893,7 +893,7 @@ describe('SendCtrl', () => {
         return scope.$digest();
       });
 
-      it("should reject if the bip38 password is wrong", function (done) {
+      it('should reject if the bip38 password is wrong', function (done) {
         let s = pkctaSpy('wrongBipPass', true);
         scope.checkPriv('wrong').catch(function (e) {
           expect(s).toHaveBeenCalledWith('addr', 'priv_key', 'wrong');
@@ -912,9 +912,9 @@ describe('SendCtrl', () => {
       });
     });
 
-    describe("with a pasted custom bitcoin url", () =>
+    describe('with a pasted custom bitcoin url', () =>
 
-      it("should parse the url and update scope", inject((function ($timeout) {
+      it('should parse the url and update scope', inject((function ($timeout) {
         let pasteEvent = { target: { value:  'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'} };
         scope.transaction.destinations = [{address: 'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'}];
         scope.handlePaste(pasteEvent, 0);
@@ -930,7 +930,7 @@ describe('SendCtrl', () => {
   describe('with a payment request', () => {
     beforeEach(() =>
       angular.mock.inject(function ($injector, $rootScope, $controller, $compile) {
-        $controller("SendCtrl", {
+        $controller('SendCtrl', {
           $scope: scope,
           $stateParams: {},
           $uibModalInstance: modalInstance,
@@ -954,6 +954,6 @@ describe('SendCtrl', () => {
       })
     );
 
-    it("should check that the destination has a valid address", () => expect(hasErr('destinations0', 'isValidAddress')).not.toBeDefined());
+    it('should check that the destination has a valid address', () => expect(hasErr('destinations0', 'isValidAddress')).not.toBeDefined());
   });
 });

@@ -25,7 +25,7 @@ describe('SettingsSecurityCenterCtrl', () => {
       scope.success = () => true;
       scope.error = () => true;
 
-      $controller("SettingsSecurityCenterCtrl", {
+      $controller('SettingsSecurityCenterCtrl', {
         $scope: scope,
         $stateParams: {}
       }
@@ -37,13 +37,13 @@ describe('SettingsSecurityCenterCtrl', () => {
 
   });
 
-  it("should have wallet settings", inject(Wallet => expect(scope.settings).toBe(Wallet.settings))
+  it('should have wallet settings', inject(Wallet => expect(scope.settings).toBe(Wallet.settings))
   );
 
-  it("should have wallet user", inject(Wallet => expect(scope.user).toBe(Wallet.user))
+  it('should have wallet user', inject(Wallet => expect(scope.user).toBe(Wallet.user))
   );
 
-  it("should have wallet status", inject(Wallet => expect(scope.status).toBe(Wallet.status))
+  it('should have wallet status', inject(Wallet => expect(scope.status).toBe(Wallet.status))
   );
 
   it('should toggle the current display', () => {
@@ -68,12 +68,12 @@ describe('SettingsSecurityCenterCtrl', () => {
     expect(scope.display.action).toBe(null);
   });
 
-  describe("changeEmail", () =>
+  describe('changeEmail', () =>
 
-    it("can change an email", () => scope.changeEmail('phil@blockchain.com', scope.success, scope.error))
+    it('can change an email', () => scope.changeEmail('phil@blockchain.com', scope.success, scope.error))
   );
 
-  describe("changePasswordHint", () =>
+  describe('changePasswordHint', () =>
 
     it('can change password hints', () => {
       spyOn(Wallet, 'changePasswordHint');
@@ -82,14 +82,14 @@ describe('SettingsSecurityCenterCtrl', () => {
     })
   );
 
-  it("should toggle state to securityphrase", inject(function ($timeout) {
+  it('should toggle state to securityphrase', inject(function ($timeout) {
     scope.promptBackup = true;
     $timeout.flush();
     expect(scope.display.action).toBe('securityphrase');
   })
   );
 
-  describe("nextAction", () =>
+  describe('nextAction', () =>
 
     it('should toggle actions', () => {
       scope.user.isEmailVerified = true;

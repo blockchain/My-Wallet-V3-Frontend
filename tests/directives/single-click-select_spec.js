@@ -23,7 +23,7 @@ describe('Click to highlight directive', () => {
     $scope.$apply();
     return $scope.browser = {canExecCommand: false};});
 
-  it("will check a browser version", () => expect($scope.browser.canExecCommand).toBeDefined());
+  it('will check a browser version', () => expect($scope.browser.canExecCommand).toBeDefined());
 
   it('can fire the select function', () => {
     spyOn($scope, "select").and.callThrough();
@@ -31,7 +31,7 @@ describe('Click to highlight directive', () => {
     expect($scope.select).toHaveBeenCalled();
   });
 
-  return beforeEach(function () {
+  beforeEach(function () {
     $scope.browser = {canExecCommand: true};
 
     it('has a browser that can copy to clipboard', () => {

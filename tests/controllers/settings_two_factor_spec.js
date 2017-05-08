@@ -50,7 +50,7 @@ describe('TwoFactorCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("TwoFactorCtrl", {
+      $controller('TwoFactorCtrl', {
         $scope: scope,
         $uibModalInstance: modalInstance
       }
@@ -62,7 +62,7 @@ describe('TwoFactorCtrl', () => {
 
   });
 
-  it("should exist",  () => expect(scope.close).toBeDefined());
+  it('should exist',  () => expect(scope.close).toBeDefined());
 
   it('should go to step', () => {
     scope.goToStep('success');
@@ -75,11 +75,11 @@ describe('TwoFactorCtrl', () => {
     expect(scope.step).toBe(initialStep);
   });
 
-  it("should know the current step", () => expect(scope.isStep(scope.step)).toBe(true));
+  it('should know the current step', () => expect(scope.isStep(scope.step)).toBe(true));
 
   describe('enable', () => {
 
-    it("should start at step 'enable'", () => expect(scope.step).toBe('enable'));
+    it('should start at step enable', () => expect(scope.step).toBe('enable'));
 
     describe('with SMS', () => {
 
@@ -88,7 +88,7 @@ describe('TwoFactorCtrl', () => {
         expect(scope.step).toBe('configure_mobile');
       });
 
-      it("should skip phone number input if phone number is saved", () => expect(scope.mobileNumber.step).toBe(2));
+      it('should skip phone number input if phone number is saved', () => expect(scope.mobileNumber.step).toBe(2));
 
       it('should set 2FA to SMS if mobile is verified', () => {
         scope.user.isMobileVerified = true;
@@ -99,15 +99,13 @@ describe('TwoFactorCtrl', () => {
     });
 
     describe('with app', () => {
-
       beforeEach(() => scope.authWithApp());
 
-      it("should be on step 'pair'", () => expect(scope.step).toBe('pair'));
+      it('should be on step pair', () => expect(scope.step).toBe('pair'));
 
-      it("should have google authenticator secret", () => expect(scope.settings.googleAuthenticatorSecret).toBeDefined());
+      it('should have google authenticator secret', () => expect(scope.settings.googleAuthenticatorSecret).toBeDefined());
 
       describe('YubiKey', () => {
-
         it('should pair correctly', () => {
           scope.fields.yubiKeyCode = '123456';
           scope.pairWithApp('yubiKey');

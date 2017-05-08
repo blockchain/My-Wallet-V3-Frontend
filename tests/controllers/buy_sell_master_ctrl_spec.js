@@ -31,7 +31,7 @@ describe('BuySellMasterController', () => {
   let getController = function (profile, accounts, quote) {
     let $scope = $rootScope.$new();
 
-    return $controller("BuySellMasterController", {
+    return $controller('BuySellMasterController', {
       cta,
       $scope,
       $uibModalInstance: { close: (function () {})({dismiss() {}}) },

@@ -31,16 +31,16 @@ describe('Change Mobile Number Directive', () => {
     return isoScope.fields.newMobile = "+31 12345678";
   });
 
-  it("should have text", () => expect(element.html()).toContain("SAVE"));
+  it('should have text', () => expect(element.html()).toContain("SAVE"));
 
-  it("should not spontaniously save", inject(function (Wallet) {
+  it('should not spontaniously save', inject(function (Wallet) {
     spyOn(Wallet, 'changeMobile');
     expect(Wallet.changeMobile).not.toHaveBeenCalled();
 
   })
   );
 
-  it("should not save if the user cancels", inject(function (Wallet) {
+  it('should not save if the user cancels', inject(function (Wallet) {
     spyOn(Wallet, 'changeMobile');
     isoScope.cancel();
     expect(Wallet.changeMobile).not.toHaveBeenCalled();
@@ -48,7 +48,7 @@ describe('Change Mobile Number Directive', () => {
   })
   );
 
-  it("should let user change it", inject(function (Wallet) {
+  it('should let user change it', inject(function (Wallet) {
     spyOn(Wallet, 'changeMobile');
     isoScope.changeMobile("+3100000000");
 
@@ -62,7 +62,7 @@ describe('Change Mobile Number Directive', () => {
     expect(isoScope.numberChanged()).toBe(false);
   });
 
-  it("should allow change", inject(Wallet => expect(isoScope.status.disableChangeBecause2FA()).toBeFalsy())
+  it('should allow change', inject(Wallet => expect(isoScope.status.disableChangeBecause2FA()).toBeFalsy())
   );
 
 
@@ -70,7 +70,7 @@ describe('Change Mobile Number Directive', () => {
     beforeEach(inject(Wallet => Wallet.settings.twoFactorMethod = 5)
     );
 
-    it("should not allow change", inject(Wallet => expect(isoScope.status.disableChangeBecause2FA()).toBeTruthy())
+    it('should not allow change', inject(Wallet => expect(isoScope.status.disableChangeBecause2FA()).toBeTruthy())
     );
   });
 

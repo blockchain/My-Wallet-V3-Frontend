@@ -115,7 +115,7 @@ describe('SignupCtrl', () => {
       return scope.$digest();
     });
 
-    it("should call createWallet()", inject(function ($timeout) {
+    it('should call createWallet()', inject(function ($timeout) {
       spyOn(scope, 'createWallet');
       scope.signup();
       scope.$digest();
@@ -135,14 +135,14 @@ describe('SignupCtrl', () => {
       expect(scope.createWallet).not.toHaveBeenCalled();
     });
 
-    it("should create a new wallet", inject(function (Wallet) {
+    it('should create a new wallet', inject(function (Wallet) {
       spyOn(Wallet, 'create');
       scope.createWallet((function () { }));
       expect(Wallet.create).toHaveBeenCalled();
     })
     );
 
-    it("should add password to local storage in dev mode", inject(function (localStorageService) {
+    it('should add password to local storage in dev mode', inject(function (localStorageService) {
       spyOn(localStorageService, 'set');
       scope.autoReload = true;
       scope.fields.password = "testing";
@@ -153,7 +153,7 @@ describe('SignupCtrl', () => {
     })
     );
 
-    it("should not add password to local storage in production mode", inject(function (localStorageService) {
+    it('should not add password to local storage in production mode', inject(function (localStorageService) {
       spyOn(localStorageService, 'set');
       scope.autoReload = false;
       scope.fields.password = "testing";
@@ -165,9 +165,9 @@ describe('SignupCtrl', () => {
   });
 
   describe('language', () => {
-    it("should guess the correct language", () => expect(scope.language_guess.code).toBe("en"));
+    it('should guess the correct language', () => expect(scope.language_guess.code).toBe("en"));
 
-    it("should switch interface language to guessed language", inject(function ($translate, languages) {
+    it('should switch interface language to guessed language', inject(function ($translate, languages) {
       spyOn($translate, "use");
       expect(scope.language_guess.code).not.toBe(languages.languages[0].code);
       scope.language_guess = languages.languages[0];
@@ -177,7 +177,7 @@ describe('SignupCtrl', () => {
     );
   });
 
-  describe("currency", () =>
+  describe('currency', () =>
     it('should guess the correct currency', () => {
       $httpBackend.flush();
       expect(scope.currency_guess.code).toBe("EUR");

@@ -6,14 +6,14 @@ describe('faqCtrl', () => {
   beforeEach(() =>
     angular.mock.inject(function ($injector, $rootScope, $controller) {
       scope = $rootScope.$new();
-      return $controller("faqCtrl",
+      return $controller('faqCtrl',
         {$scope: scope});
     })
   );
 
-  it("should have an array of questions", () => expect(scope.questions.length).toBeGreaterThan(0));
+  it('should have an array of questions', () => expect(scope.questions.length).toBeGreaterThan(0));
 
-  it("should set question displayed to false by default", () => expect(scope.questions[0].displayed).toEqual(false));
+  it('should set question displayed to false by default', () => expect(scope.questions[0].displayed).toEqual(false));
 
   describe('toggle', () => {
     it('should toggle question display to true', () => {

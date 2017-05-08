@@ -20,7 +20,7 @@ describe('ChangePasswordCtrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/change-password.pug');
 
-      $controller("ChangePasswordCtrl", {
+      $controller('ChangePasswordCtrl', {
         $scope: scope,
         $stateParams: {}
       });
@@ -36,7 +36,7 @@ describe('ChangePasswordCtrl', () => {
 
   });
 
-  it("should get model values from the form", (function () {
+  it('should get model values from the form', (function () {
     scope.form.currentPassword.$setViewValue('test');
     expect(scope.fields.currentPassword).toBe('test');
 
@@ -50,7 +50,7 @@ describe('ChangePasswordCtrl', () => {
 
   describe('change', () => {
 
-    it("should be able to change password", inject(function (Wallet) {
+    it('should be able to change password', inject(function (Wallet) {
       spyOn(Wallet, 'changePassword');
       scope.form.currentPassword.$setViewValue('test');
       scope.form.password.$setViewValue(strongPassword);
@@ -60,7 +60,7 @@ describe('ChangePasswordCtrl', () => {
     })
     );
 
-    it("should not be able to change password if form is invalid", inject(function (Wallet) {
+    it('should not be able to change password if form is invalid', inject(function (Wallet) {
       spyOn(Wallet, 'changePassword');
       expect(scope.form.$invalid).toBe(true);
       scope.change();

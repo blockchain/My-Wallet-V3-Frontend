@@ -27,7 +27,7 @@ describe('CoinifyISXController', () => {
       goTo(state) {}
     };
 
-    $controller("CoinifyISXController",
+    $controller('CoinifyISXController',
       {$scope: scope});
     return scope;
   };
@@ -37,12 +37,12 @@ describe('CoinifyISXController', () => {
     return $rootScope.$digest();
   });
 
-  describe("state", () =>
+  describe('state', () =>
 
-    it("should have a trade", () => expect(scope.vm.trade).toBeDefined())
+    it('should have a trade', () => expect(scope.vm.trade).toBeDefined())
   );
   
-  describe(".onComplete()", () =>
+  describe('.onComplete()', () =>
     
     it('should handle an onComplete event', () => {
       spyOn(scope.vm, 'goTo');

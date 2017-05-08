@@ -32,7 +32,7 @@ describe('ResetTwoFactorCtrl', () => {
 
       scope = $rootScope.$new();
 
-      return $controller("ResetTwoFactorCtrl", {
+      return $controller('ResetTwoFactorCtrl', {
         $scope: scope,
         $stateParams: {}
       });}));
@@ -43,13 +43,13 @@ describe('ResetTwoFactorCtrl', () => {
       return $httpBackend.flush();
     });
 
-    it("should refresh the captcha", () => pending());
+    it('should refresh the captcha', () => pending());
 
-    it("should prefill uid if known", () => pending());
+    it('should prefill uid if known', () => pending());
   });
 
   describe('refreshCaptcha()', () => {
-    it("should update captchaSrc", inject(function () {
+    it('should update captchaSrc', inject(function () {
       scope.captchaSrc = undefined;
       scope.refreshCaptcha();
       scope.$digest();

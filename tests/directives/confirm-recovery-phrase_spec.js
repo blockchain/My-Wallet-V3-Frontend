@@ -28,5 +28,5 @@ describe('Confirm Recovery Phrase', () => {
     expect($uibModal.open).toHaveBeenCalled();
   });
 
-  it("should not prompt backup recovery phrase modal if promptBackup is not set", () => expect($uibModal.open).not.toHaveBeenCalled());
+  it('should not prompt backup recovery phrase modal if promptBackup is not set', () => expect($uibModal.open).not.toHaveBeenCalled());
 });

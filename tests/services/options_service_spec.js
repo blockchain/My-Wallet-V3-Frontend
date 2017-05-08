@@ -51,7 +51,7 @@ describe('OptionsServices', () => {
     });
   });
 
-  return afterEach(function () {
+  afterEach(function () {
     $httpBackend.verifyNoOutstandingExpectation();
     return $httpBackend.verifyNoOutstandingRequest();
   });

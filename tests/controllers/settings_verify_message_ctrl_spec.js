@@ -20,7 +20,7 @@ describe('VerifyMessageController', () => {
       $compile(template)(scope);
       scope.$digest();
 
-      return $controller("VerifyMessageController", {$scope: scope});
+      return $controller('VerifyMessageController', {$scope: scope});
     })
   );
 

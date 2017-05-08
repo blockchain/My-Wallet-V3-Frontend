@@ -15,7 +15,7 @@ describe('UpgradeCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("UpgradeCtrl", {
+      $controller('UpgradeCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance
@@ -26,7 +26,7 @@ describe('UpgradeCtrl', () => {
 
   });
 
-  it("should set waiting to false after timeout", inject(function ($timeout) {
+  it('should set waiting to false after timeout', inject(function ($timeout) {
     $timeout.flush();
     expect(scope.waiting).toBeFalsy();
   })

@@ -35,11 +35,11 @@ describe('Transaction Note Directive', () => {
     return isoScope = element.isolateScope();
   });
 
-  it("should show the note", () => expect(element.html()).toContain("Hello World"));
+  it('should show the note', () => expect(element.html()).toContain("Hello World"));
 
-  it("should have the note in its scope", () => expect(isoScope.transaction.note).toBe("Hello World"));
+  it('should have the note in its scope', () => expect(isoScope.transaction.note).toBe("Hello World"));
 
-  it("should show only the note if no address labels match the tx", inject(function (Wallet) {
+  it('should show only the note if no address labels match the tx', inject(function (Wallet) {
     Wallet.getLabelledHdAddresses = () => [{'address': '123123123nomatch', 'label': 'label label label fun'}];
     element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope);
     $rootScope.$digest();
@@ -57,7 +57,7 @@ describe('Transaction Note Directive', () => {
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(true);
   });
 
-  it("should show the label if it is associated with an address in the tx and there is no tx note", inject(function (Wallet) {
+  it('should show the label if it is associated with an address in the tx and there is no tx note', inject(function (Wallet) {
     spyOn(Wallet, 'deleteNote');
     isoScope.deleteNote();
     isoScope.$digest();
@@ -67,7 +67,7 @@ describe('Transaction Note Directive', () => {
   })
   );
 
-  it("should show a label when All wallets are filtered", inject(function (Wallet) {
+  it('should show a label when All wallets are filtered', inject(function (Wallet) {
     $rootScope.account = '';
     spyOn(Wallet, 'deleteNote');
     isoScope.deleteNote();
@@ -79,7 +79,7 @@ describe('Transaction Note Directive', () => {
   })
   );
 
-  it("should save a modified note", inject(function (Wallet) {
+  it('should save a modified note', inject(function (Wallet) {
     spyOn(Wallet, 'setNote');
     isoScope.transaction.note = "Modified note";
     isoScope.$digest();
@@ -87,14 +87,14 @@ describe('Transaction Note Directive', () => {
   })
   );
 
-  it("should not save an unmodified note", inject(function (Wallet) {
+  it('should not save an unmodified note', inject(function (Wallet) {
     spyOn(Wallet, 'setNote');
     isoScope.$digest();
     expect(Wallet.setNote).not.toHaveBeenCalled();
   })
   );
 
-  it("should create a new note", inject(function (Wallet) {
+  it('should create a new note', inject(function (Wallet) {
     isoScope.transaction.note = null;
 
     spyOn(Wallet, 'setNote');
@@ -106,7 +106,7 @@ describe('Transaction Note Directive', () => {
   })
   );
 
-  it("should delete a note", inject(function (Wallet) {
+  it('should delete a note', inject(function (Wallet) {
     isoScope.transaction.note = null;
 
     spyOn(Wallet, 'deleteNote');
@@ -118,7 +118,7 @@ describe('Transaction Note Directive', () => {
   );
 
 
-  it("should delete a note if it's an empty string", inject(function (Wallet) {
+  it('should delete a note if it\'s an empty string', inject(function (Wallet) {
     isoScope.transaction.note = "";
 
     spyOn(Wallet, 'deleteNote');

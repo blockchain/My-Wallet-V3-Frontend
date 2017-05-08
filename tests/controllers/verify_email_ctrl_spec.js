@@ -20,7 +20,7 @@ describe('VerifyEmailController', () => {
 
   let getControllerScope = function (token) {
     scope = $rootScope.$new();
-    $controller("VerifyEmailCtrl", {
+    $controller('VerifyEmailCtrl', {
       $scope: scope,
       $stateParams: {token}
     });
@@ -30,7 +30,7 @@ describe('VerifyEmailController', () => {
   describe('with token', () => {
     beforeEach(() => scope = getControllerScope("token"));
 
-    it("should call WalletTokenEndpoints.verifyEmail()", inject(WalletTokenEndpoints => expect(WalletTokenEndpoints.verifyEmail).toHaveBeenCalledWith("token"))
+    it('should call WalletTokenEndpoints.verifyEmail()', inject(WalletTokenEndpoints => expect(WalletTokenEndpoints.verifyEmail).toHaveBeenCalledWith('token'))
     );
 
     it('should set the state to success', () => {

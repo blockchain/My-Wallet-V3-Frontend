@@ -19,7 +19,7 @@ describe('Blocket loading directive', () => {
     return isoScope.$digest();
   });
 
-  it("should engage liftoff", inject(function ($timeout) {
+  it('should engage liftoff', inject(function ($timeout) {
     isoScope.launch();
     $timeout.flush();
     expect(isoScope.liftoff).toBe(true);

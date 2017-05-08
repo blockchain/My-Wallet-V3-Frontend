@@ -42,19 +42,19 @@ describe('Adverts Directive', () => {
       });
   });
 
-  it("should have text", inject(() => expect(element.html()).toContain("<button"))
+  it('should have text', inject(() => expect(element.html()).toContain("<button"))
   );
 
-  it("should set baseUrl", inject(Env => expect(isoScope.baseUrl).toEqual("https://api.blockchain.info/ads/out?id="))
+  it('should set baseUrl', inject(Env => expect(isoScope.baseUrl).toEqual("https://api.blockchain.info/ads/out?id="))
   );
 
-  it("should show fetch the ads",  inject(function (Adverts) {
+  it('should show fetch the ads',  inject(function (Adverts) {
     expect(Adverts.fetchOnce).toHaveBeenCalled();
     expect(isoScope.ads.length).toBe(1);
   })
   );
 
-  it("should redirect to the advertisers page, in a new tab", inject(function (Adverts) {
+  it('should redirect to the advertisers page, in a new tab', inject(function (Adverts) {
     Adverts.fetchOnce();
     expect(element.html()).toContain("https://api.blockchain.info/ads/out?id=1337\" target=\"_blank\" rel=\"noopener noreferrer\"");
   })

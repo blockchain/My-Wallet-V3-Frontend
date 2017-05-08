@@ -44,7 +44,7 @@ describe('SettingsAddressesCtrl', () => {
 
       scope = $rootScope.$new();
 
-      return $controller("SettingsAddressesCtrl", {
+      return $controller('SettingsAddressesCtrl', {
         $scope: scope,
         $state,
         $stateParams: { account: 0 },
@@ -56,9 +56,9 @@ describe('SettingsAddressesCtrl', () => {
     })
   );
 
-  it("should have payment requests", () => expect(scope.addresses.length).toEqual(4));
+  it('should have payment requests', () => expect(scope.addresses.length).toEqual(4));
 
-  it("should calculate total number of past addresses", () => expect(scope.totalPast).toEqual(4));
+  it('should calculate total number of past addresses', () => expect(scope.totalPast).toEqual(4));
 
   it('should open modal to edit an account', () => {
     spyOn(modal, 'open');
@@ -72,7 +72,7 @@ describe('SettingsAddressesCtrl', () => {
     expect(modal.open).toHaveBeenCalled();
   });
 
-  describe("createAddress", () =>
+  describe('createAddress', () =>
     it('should label the next receive address', () => {
       spyOn(Labels, 'addLabel').and.callThrough();
       scope.createAddress();
@@ -126,7 +126,7 @@ describe('SettingsAddressesCtrl', () => {
     });
   });
 
-  it("should redirect to accounts page if account is archived", inject(function ($state) {
+  it('should redirect to accounts page if account is archived', inject(function ($state) {
     spyOn($state, "go").and.callThrough();
     scope.account.archived = true;
     scope.$digest();

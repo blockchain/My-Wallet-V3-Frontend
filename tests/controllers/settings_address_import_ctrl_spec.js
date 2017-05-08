@@ -48,7 +48,7 @@ describe('AddressImportCtrl', () => {
       scope = $rootScope.$new();
       let template = $templateCache.get('partials/settings/import-address.pug');
 
-      $controller("AddressImportCtrl", {
+      $controller('AddressImportCtrl', {
         $scope: scope,
         $stateParams: {},
         $uibModalInstance: modalInstance,
@@ -65,14 +65,14 @@ describe('AddressImportCtrl', () => {
 
   });
 
-  it("should exist", () => expect(scope.close).toBeDefined());
+  it('should exist', () => expect(scope.close).toBeDefined());
 
-  it("should have access to wallet accounts", inject(Wallet => expect(scope.accounts()).toEqual(Wallet.accounts()))
+  it('should have access to wallet accounts', inject(Wallet => expect(scope.accounts()).toEqual(Wallet.accounts()))
   );
 
-  describe("enter address or private key", () =>
+  describe('enter address or private key', () =>
 
-    it("should go to step 2 when user clicks validate", inject(function ($timeout) {
+    it('should go to step 2 when user clicks validate', inject(function ($timeout) {
       scope.fields.addressOrPrivateKey = "valid_import_address";
       expect(scope.step).toBe(1);
       scope.import();
@@ -86,7 +86,7 @@ describe('AddressImportCtrl', () => {
 
     beforeEach(() => scope.fields.addressOrPrivateKey = "watch_only");
 
-    it("should not go to step 2 when the user does not confirm", inject(function ($timeout, $q) {
+    it('should not go to step 2 when the user does not confirm', inject(function ($timeout, $q) {
       spyOn(Alerts, 'confirm').and.returnValue($q.reject('cancelled'));
       expect(scope.step).toBe(1);
       scope.import();
@@ -98,7 +98,7 @@ describe('AddressImportCtrl', () => {
   });
 
   describe('validate and add', () => {
-    it("should add the address if no errors are present", inject(function ($timeout) {
+    it('should add the address if no errors are present', inject(function ($timeout) {
       scope.fields.addressOrPrivateKey = "valid_import_address";
       scope.import();
       $timeout.flush();
@@ -106,7 +106,7 @@ describe('AddressImportCtrl', () => {
     })
     );
 
-    it("should show the balance", inject(function ($timeout) {
+    it('should show the balance', inject(function ($timeout) {
       scope.fields.addressOrPrivateKey = "valid_import_address";
       scope.import();
       $timeout.flush();
@@ -121,7 +121,7 @@ describe('AddressImportCtrl', () => {
         return scope.error = function () {};
       });
 
-      it("should handle an error", inject(function ($timeout) {
+      it('should handle an error', inject(function ($timeout) {
         spyOn(scope, 'error');
         scope.import();
         $timeout.flush();
@@ -131,7 +131,7 @@ describe('AddressImportCtrl', () => {
       );
     });
 
-    it("should open the transfer window when the user clicks transfer", inject(function ($uibModal) {
+    it('should open the transfer window when the user clicks transfer', inject(function ($uibModal) {
       spyOn($uibModal, 'open');
       scope.goToTransfer();
       expect($uibModal.open).toHaveBeenCalled();
@@ -140,7 +140,7 @@ describe('AddressImportCtrl', () => {
   });
 
   describe('import', () => {
-    describe("success", () =>
+    describe('success', () =>
       it('should set address and go to next step', () => {
         let address = { address: '1asdf' };
         scope.importSuccess(address);
@@ -175,7 +175,7 @@ describe('AddressImportCtrl', () => {
       });
     });
 
-    describe("cancel", () =>
+    describe('cancel', () =>
       it('should set busy to false', () => {
         scope.importCancel();
         expect(scope.status.busy).toEqual(false);
@@ -186,9 +186,9 @@ describe('AddressImportCtrl', () => {
   describe('transfer', () => {
     beforeEach(() => scope.address = Wallet.legacyAddresses()[0]);
 
-    it("should have access to accounts", () => expect(scope.accounts()).toBeDefined());
+    it('should have access to accounts', () => expect(scope.accounts()).toBeDefined());
 
-    it("should show a spinner during sweep",  inject(function (Wallet) {
+    it('should show a spinner during sweep',  inject(function (Wallet) {
       pending();
       spyOn(Wallet, 'transaction').and.callFake(function (success, error) {
         expect(scope.status.sweeping).toBe(true);
@@ -211,10 +211,10 @@ describe('AddressImportCtrl', () => {
   });
 
   describe('parseBitcoinUrl()', () => {
-    it("should work with prefix", () => expect(scope.parseBitcoinUrl("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd"));
+    it('should work with prefix', () => expect(scope.parseBitcoinUrl("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd"));
 
-    it("should work without slashes", () => expect(scope.parseBitcoinUrl("bitcoin:1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd"));
+    it('should work without slashes', () => expect(scope.parseBitcoinUrl("bitcoin:1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd"));
 
-    it("should work with slashes", () => expect(scope.parseBitcoinUrl("bitcoin://1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd"));
+    it('should work with slashes', () => expect(scope.parseBitcoinUrl("bitcoin://1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd")).toBe("1GjW7vwRUcz5YAtF625TGg2PsCAM8fRPEd"));
   });
 });

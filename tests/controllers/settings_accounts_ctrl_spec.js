@@ -18,22 +18,22 @@ describe('SettingsAccountsController', () => {
 
       scope = $rootScope.$new();
 
-      return $controller("SettingsAccountsController", {
+      return $controller('SettingsAccountsController', {
         $scope: scope,
         $stateParams: {}
       });}));
 
-  it("should open modal to create a new account",  inject(function () {
+  it('should open modal to create a new account',  inject(function () {
     spyOn($uibModal, "open").and.callThrough();
     scope.newAccount();
     expect($uibModal.open).toHaveBeenCalled();
   })
   );
 
-  it("should list accounts",  inject(() => expect(scope.accounts().length).toBeGreaterThan(1))
+  it('should list accounts',  inject(() => expect(scope.accounts().length).toBeGreaterThan(1))
   );
 
-  it("should open modal to transfer funds",  inject(function () {
+  it('should open modal to transfer funds',  inject(function () {
     spyOn($uibModal, "open").and.callThrough();
     scope.transfer();
     expect($uibModal.open).toHaveBeenCalled();

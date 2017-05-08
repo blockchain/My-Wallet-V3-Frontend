@@ -16,7 +16,7 @@ describe('SubscribeCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("SubscribeCtrl", {
+      $controller('SubscribeCtrl', {
         $scope: scope,
         country
       }

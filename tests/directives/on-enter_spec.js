@@ -19,5 +19,5 @@ describe('Watch Only Address Directive', () => {
     return $rootScope.$digest();
   });
 
-  it("should be defined with an element", () => expect(element).toBeDefined());
+  it('should be defined with an element', () => expect(element).toBeDefined());
 });

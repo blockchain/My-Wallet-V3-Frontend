@@ -48,7 +48,7 @@ describe('TransactionsCtrl', () => {
         }
       };
 
-      $controller("TransactionsCtrl",
+      $controller('TransactionsCtrl',
         {$scope: scope});
 
       scope.selectedAcountIndex = 1;
@@ -59,14 +59,14 @@ describe('TransactionsCtrl', () => {
 
   describe('the transctions controller', () => {
 
-    it("should have access to address book",  inject(function () {
+    it('should have access to address book',  inject(function () {
       pending();
       expect(scope.addressBook).toBeDefined();
       expect(scope.addressBook["17gJCBiPBwY5x43DZMH3UJ7btHZs6oPAGq"]).toBe("John");
     })
     );
 
-    it("should be able to fetch more transactions", inject(function (Wallet, $timeout) {
+    it('should be able to fetch more transactions', inject(function (Wallet, $timeout) {
       spyOn(Wallet.my.wallet, "fetchTransactions").and.callThrough();
       scope.nextPage();
       $timeout.flush();
@@ -74,9 +74,9 @@ describe('TransactionsCtrl', () => {
     })
     );
 
-    it("should receive a new transaction from mock after 3 seconds on account 1",  () => pending()); // Not sure how to test this with stateParams
+    it('should receive a new transaction from mock after 3 seconds on account 1',  () => pending()); // Not sure how to test this with stateParams
 
-    it("should have 4 transaction types", () => expect(scope.filterTypes.length).toEqual(4));
+    it('should have 4 transaction types', () => expect(scope.filterTypes.length).toEqual(4));
 
     it('can filter by transaction type', () => {
       spyOn(scope, 'setFilterType');
@@ -137,7 +137,7 @@ describe('TransactionsCtrl', () => {
       });
     });
 
-    describe("filterByAddress", () =>
+    describe('filterByAddress', () =>
 
       it('should return all transactions associated with an address', () => {
         let txs = scope.filterByAddress({address:'123'});
@@ -145,9 +145,9 @@ describe('TransactionsCtrl', () => {
       })
     );
 
-    describe("filter options", () =>
+    describe('filter options', () =>
 
-      it("should read all transactions on mobile", () => expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS'))
+      it('should read all transactions on mobile', () => expect(scope.filterTypes[0]).toEqual('ALL_TRANSACTIONS'))
     );
   });
 });

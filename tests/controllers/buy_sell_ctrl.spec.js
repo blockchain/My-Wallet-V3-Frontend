@@ -95,7 +95,7 @@ describe('SfoxCheckoutController', () => {
     };
 
     let template = $templateCache.get('partials/buy-sell.pug');
-    $controller("BuySellCtrl", {
+    $controller('BuySellCtrl', {
       $scope: scope,
       options
     }
@@ -112,10 +112,10 @@ describe('SfoxCheckoutController', () => {
   describe('onCloseModal', () => {
     beforeEach(() => scope.onCloseModal());
 
-    it("should set modalOpen to false", () => expect(scope.status.modalOpen).toBe(false));
+    it('should set modalOpen to false', () => expect(scope.status.modalOpen).toBe(false));
   });
 
-  describe("getDays()", () =>
+  describe('getDays()', () =>
     it('should calculate the correct number of days', () => {
       scope = getControllerScope();
       spyOn(Date, 'now').and.returnValue(new Date('12/20/2016'));

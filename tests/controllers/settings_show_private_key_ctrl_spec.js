@@ -35,7 +35,7 @@ describe('ShowPrivateKeyCtrl', () => {
         label: 'Old'
       };
 
-      $controller("ShowPrivateKeyCtrl", {
+      $controller('ShowPrivateKeyCtrl', {
         $scope: scope,
         $uibModalInstance: modalInstance,
         addressObj
@@ -82,7 +82,7 @@ describe('ShowPrivateKeyCtrl', () => {
       expect(scope.accessAllowed).toBe(true);
     });
 
-    it("should not continue if second password is incorrect", inject(function (Wallet) {
+    it('should not continue if second password is incorrect', inject(function (Wallet) {
       expect(scope.accessAllowed).toBe(false);
       scope.tryContinue();
       expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('ShowPrivateKeyCtrl', () => {
     })
     );
 
-    it("should continue if second password is correct", inject(function (Wallet) {
+    it('should continue if second password is correct', inject(function (Wallet) {
       expect(scope.accessAllowed).toBe(false);
       scope.tryContinue();
       expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled();

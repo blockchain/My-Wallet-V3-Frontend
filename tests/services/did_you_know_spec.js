@@ -24,11 +24,11 @@ describe('didYouKnowServices', () => {
       expect(DIY.getAll()[0].title).toEqual("DYK_CUSTOM_FEES_TITLE");
     });
 
-    it("should have an id attached to it", () => expect(DIY.getAll()[3].id).toBeDefined());
+    it('should have an id attached to it', () => expect(DIY.getAll()[3].id).toBeDefined());
   });
 
-  describe("state", () =>
-    it("should link to a state route, with text, or not", () =>
+  describe('state', () =>
+    it('should link to a state route, with text, or not', () =>
       Array.from(DIY.getAll()).map((diy) =>
         (diy.state != null) ?
           expect(diy.state).not.toEqual("")

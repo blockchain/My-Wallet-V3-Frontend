@@ -32,7 +32,7 @@ describe('Countdown Directive', () => {
     });
   });
   
-  describe("expireCounter", () =>
+  describe('expireCounter', () =>
     it('should set timeToExpiration to 3 seconds', () => {
       isoScope.expireCounter();
       $interval.flush(1000);

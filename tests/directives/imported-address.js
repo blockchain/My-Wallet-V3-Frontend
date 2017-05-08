@@ -43,9 +43,9 @@ describe('Imported Address Directive', () => {
     return isoScope.error = () => true;
   });
 
-  it("should show the address label", () => expect(element.html()).toContain("address.label"));
+  it('should show the address label', () => expect(element.html()).toContain("address.label"));
 
-  it("should know the address label", () => expect(isoScope.address.label).toEqual("Hello"));
+  it('should know the address label', () => expect(isoScope.address.label).toEqual("Hello"));
 
   it('can be archived', () => {
     let address = Wallet.legacyAddresses()[0];
@@ -73,9 +73,9 @@ describe('Imported Address Directive', () => {
     expect(isoScope.status.edit).toBe(false);
   });
 
-  describe("showAddress", () =>
+  describe('showAddress', () =>
 
-    it("should open a modal", inject(function ($uibModal) {
+    it('should open a modal', inject(function ($uibModal) {
       spyOn($uibModal, 'open');
       isoScope.showAddress();
       expect($uibModal.open).toHaveBeenCalled();
@@ -83,9 +83,9 @@ describe('Imported Address Directive', () => {
     )
   );
 
-  describe("transfer", () =>
+  describe('transfer', () =>
 
-    it("should open a modal", inject(function ($uibModal) {
+    it('should open a modal', inject(function ($uibModal) {
       spyOn($uibModal, 'open');
       isoScope.transfer();
       expect($uibModal.open).toHaveBeenCalled();
@@ -93,9 +93,9 @@ describe('Imported Address Directive', () => {
     )
   );
 
-  describe("showPrivKey", () =>
+  describe('showPrivKey', () =>
 
-    it("should open a modal", inject(function ($uibModal) {
+    it('should open a modal', inject(function ($uibModal) {
       spyOn($uibModal, 'open');
       isoScope.showPrivKey();
       expect($uibModal.open).toHaveBeenCalled();
@@ -103,9 +103,9 @@ describe('Imported Address Directive', () => {
     )
   );
 
-  describe("spend", () =>
+  describe('spend', () =>
 
-    it("should open a modal", inject(function ($uibModal, modals) {
+    it('should open a modal', inject(function ($uibModal, modals) {
       let addr = "1asdf";
       spyOn(modals, 'openSend').and.callThrough();
       spyOn($uibModal, "open").and.callThrough();

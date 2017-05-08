@@ -21,7 +21,7 @@ describe('SettingsInfoCtrl', () => {
 
       scope = $rootScope.$new();
 
-      $controller("SettingsInfoCtrl",
+      $controller('SettingsInfoCtrl',
         {$scope: scope});
 
       return scope.$digest();

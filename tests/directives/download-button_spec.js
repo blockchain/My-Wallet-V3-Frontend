@@ -37,7 +37,7 @@ describe('downloadButton', () => {
       return isoScope.$digest();
     });
 
-    it("should create an initial data ref", () => expect(isoScope.dataRef).toEqual('data:asdf'));
+    it('should create an initial data ref', () => expect(isoScope.dataRef).toEqual('data:asdf'));
 
     it('should create a data ref when updated', () => {
       isoScope.content = 'abc';
