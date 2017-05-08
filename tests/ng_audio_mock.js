@@ -1,64 +1,64 @@
 angular.module('ngAudio', [])
-.factory("ngAudioObject", [function() {
-    return function(id) {
+.factory("ngAudioObject", [function () {
+    return function (id) {
 
         this.id = id;
 
-        this.play = function() {
+        this.play = function () {
             return;
         };
 
-        this.pause = function() {
+        this.pause = function () {
             return;
         };
 
-        this.restart = function() {
+        this.restart = function () {
             return;
         };
 
-        this.stop = function() {
+        this.stop = function () {
             return;
         };
 
-        this.setVolume = function(volume) {
+        this.setVolume = function (volume) {
             return;
         };
 
-        this.setMuting = function(muting) {
+        this.setMuting = function (muting) {
             return;
         };
 
-        this.setProgress = function(progress) {
+        this.setProgress = function (progress) {
             return;
         };
 
-        this.setCurrentTime = function(currentTime) {
+        this.setCurrentTime = function (currentTime) {
             return;
         };
 
     }
 }])
 
-.service('ngAudio', ['ngAudioObject',function(ngAudioObject) {
-    this.play = function(id) {
+.service('ngAudio', ['ngAudioObject',function (ngAudioObject) {
+    this.play = function (id) {
         var audio = new ngAudioObject(id);
         audio.play();
         return audio;
     };
 
-    this.load = function(id) {
+    this.load = function (id) {
         return new ngAudioObject(id);
     };
 
-    this.mute = function() {
+    this.mute = function () {
         return;
     };
 
-    this.unmute = function() {
+    this.unmute = function () {
         return;
     };
 
-    this.toggleMute = function() {
+    this.toggleMute = function () {
         return;
     };
 
