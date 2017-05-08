@@ -3,24 +3,14 @@ describe('sell-quick-start.component', () => {
   let $compile;
   let $templateCache;
   let $componentController;
-  let $timeout;
   let $q;
   let scope;
   let Wallet;
-  let exchange;
   let buySell = {};
-
-  let mockQuote = fail =>
-    ({
-      quoteAmount: 150,
-      rate: 867,
-      getPaymentMediums () { if (fail) { return $q.reject(fail); } else { return $q.resolve(mockMediums()); } }
-    })
-  ;
 
   let transaction = {
     currency: {
-      code: "EUR"
+      code: 'EUR'
     },
     btc: 0.01,
     fiat: 100,
@@ -36,13 +26,11 @@ describe('sell-quick-start.component', () => {
     getPaymentMediums () { return $q.resolve(); }
   };
 
-  let handlers =
-    {transaction};
-
+  let handlers = {transaction};
 
   let getController = function (bindings) {
     scope = $rootScope.$new(true);
-    let ctrl = $componentController("sellQuickStart", {$scope: scope}, bindings);
+    let ctrl = $componentController('sellQuickStart', {$scope: scope}, bindings);
     let template = $templateCache.get('templates/sell-quick-start.pug');
     $compile(template)(scope);
     return ctrl;
@@ -57,7 +45,6 @@ describe('sell-quick-start.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
 
-      $timeout = $injector.get('$timeout');
       $q = $injector.get('$q');
       Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
@@ -76,10 +63,10 @@ describe('sell-quick-start.component', () => {
       };
 
       MyWallet.wallet = {
-        createPayment(p, shouldFail, failWith) { return new MyWalletPayment(MyWallet.wallet, p, shouldFail, failWith); }
+        createPayment (p, shouldFail, failWith) { return new MyWalletPayment(MyWallet.wallet, p, shouldFail, failWith); }
       };
 
-      currency.conversions["EUR"] = { conversion: 1 };
+      currency.conversions['EUR'] = { conversion: 1 };
 
       buySell.getQuote = () => $q.resolve(quote);
 
@@ -107,8 +94,8 @@ describe('sell-quick-start.component', () => {
         },
         kycs: [],
         mediums
-      }) ;
-      return mediums = {
+      });
+      mediums = {
         'card': {
           getAccounts () { return $q.resolve([]); }
         },
@@ -119,16 +106,9 @@ describe('sell-quick-start.component', () => {
     })
   );
 
-
-
   describe('checkForNoFee()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should call getDefaultAccountIndex', () => {
-      let ctrl = getController(handlers);
+      getController(handlers);
       spyOn(Wallet, 'getDefaultAccountIndex');
       scope.checkForNoFee();
       expect(Wallet.getDefaultAccountIndex).toHaveBeenCalled();
@@ -136,16 +116,11 @@ describe('sell-quick-start.component', () => {
   });
 
   describe('offerUseAll()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should set maxSpendableAmount to the first number in the array', () => {
-      let ctrl = getController(handlers);
+      getController(handlers);
       let paymentInfo = {
-        maxSpendableAmounts: [1,2,3,4,5],
-        sweepFees: [5,4,3,2,1]
+        maxSpendableAmounts: [1, 2, 3, 4, 5],
+        sweepFees: [5, 4, 3, 2, 1]
       };
       let payment = {};
       scope.offerUseAll(payment, paymentInfo);
@@ -153,27 +128,11 @@ describe('sell-quick-start.component', () => {
     });
 
     describe('useAll()', () => {
-      beforeEach(function () {
-        let ctrl;
-        return ctrl = undefined;
-      });
-
       it('should set sweepTransaction to true', () => {
-        let ctrl = getController(handlers);
+        getController(handlers);
         scope.useAll();
         expect(scope.isSweepTransaction).toEqual(true);
       });
     });
   });
 });
-
-    // describe "getQuote()", ->
-    //   beforeEach ->
-    //     ctrl = undefined
-    //
-    //   it "should get a quote", ->
-    //     ctrl = getController(handlers)
-    //     scope.lastInput = 'btc'
-    //     spyOn(buySell, 'getSellQuote')
-    //     scope.getQuote()
-    //     expect(buySell.getSellQuote).toHaveBeenCalled()

@@ -1,7 +1,6 @@
 describe('sell-trade-finished.component', () => {
   let scope;
   let $rootScope;
-  let Wallet;
   let $compile;
   let $templateCache;
   let $componentController;
@@ -46,7 +45,6 @@ describe('sell-trade-finished.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
 
-      Wallet = $injector.get('Wallet');
       $injector.get('buySell');
     })
   );

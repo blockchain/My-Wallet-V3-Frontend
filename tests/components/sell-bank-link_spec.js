@@ -1,9 +1,6 @@
 describe('sell-bank-link.component', () => {
-  let $q;
   let scope;
-  let Wallet;
   let $rootScope;
-  let buySell;
   $rootScope = undefined;
   let $compile;
   let $templateCache;
@@ -11,7 +8,7 @@ describe('sell-bank-link.component', () => {
 
   let accounts = [
     {
-      _account : {
+      _account: {
         id: 12345,
         type: 'sepa',
         account: {
@@ -42,7 +39,7 @@ describe('sell-bank-link.component', () => {
 
   let getController = function (bindings) {
     scope = $rootScope.$new();
-    let ctrl = $componentController("sellBankLink", {$scope: scope}, bindings);
+    let ctrl = $componentController('sellBankLink', {$scope: scope}, bindings);
     let template = $templateCache.get('partials/coinify/bank-link.pug');
     $compile(template)(scope);
     return ctrl;
@@ -55,19 +52,10 @@ describe('sell-bank-link.component', () => {
       $compile = _$compile_;
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
-
-      Wallet = $injector.get('Wallet');
-      return buySell = $injector.get('buySell');
     })
   );
 
   describe('.selecting', () => {
-
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('change if selecting', () => {
       let ctrl = getController(handlers);
       ctrl.bankLinkEdit();
@@ -77,11 +65,6 @@ describe('sell-bank-link.component', () => {
   });
 
   describe('.handleAccountDelete', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should remove the account from the accounts array', () => {
       let ctrl = getController(handlers);
       let account = ctrl.accounts[0]['_account'];
@@ -92,11 +75,6 @@ describe('sell-bank-link.component', () => {
   });
 
   describe('.hideWhenNoAccounts', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should be true when there are no accounts', () => {
       let ctrl = getController(handlers);
       ctrl.accounts = [];
@@ -105,11 +83,6 @@ describe('sell-bank-link.component', () => {
   });
 
   describe('$onChanges', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should reassign selectedBankAccount', () => {
       let ctrl = getController(handlers);
       ctrl.$onChanges({selectedBankAccount: {currentValue: 'Bank 2'}});

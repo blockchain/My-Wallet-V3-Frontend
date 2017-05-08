@@ -1,9 +1,7 @@
 describe('coinify-create-account.component', () => {
   let $q;
   let scope;
-  let Wallet;
   let $rootScope;
-  let buySell;
   $rootScope = undefined;
   let $compile;
   let $templateCache;
@@ -13,7 +11,7 @@ describe('coinify-create-account.component', () => {
     viewInfo: false,
     onSubmit,
     onSuccess,
-    country: 'DK',
+    country: 'DK'
   };
 
   var onSuccess = () => $q.resolve();
@@ -21,7 +19,7 @@ describe('coinify-create-account.component', () => {
 
   let getController = function (bindings) {
     scope = $rootScope.$new();
-    let ctrl = $componentController("coinifyCreateAccount", {$scope: scope}, bindings);
+    let ctrl = $componentController('coinifyCreateAccount', {$scope: scope}, bindings);
     let template = $templateCache.get('partials/coinify/coinify-create-account.pug');
     $compile(template)(scope);
     return ctrl;
@@ -35,17 +33,12 @@ describe('coinify-create-account.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
 
-      Wallet = $injector.get('Wallet');
-      return buySell = $injector.get('buySell');
+      // Wallet = $injector.get('Wallet');
+      // buySell = $injector.get('buySell');
     })
   );
 
   describe('showDanish', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should show Danish inputs if country and currency are DK and DKK', () => {
       let ctrl = getController(handlers);
       expect(ctrl.showDanish).toEqual(true);
@@ -53,11 +46,6 @@ describe('coinify-create-account.component', () => {
   });
 
   describe('.formatIban()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should format the iban', () => {
       let ctrl = getController(handlers);
       ctrl.bank.account.number = 'ABCD EFGH 1234 56';
@@ -67,11 +55,6 @@ describe('coinify-create-account.component', () => {
   });
 
   describe('.turnOffIbanError()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should set ibanError to false', () => {
       let ctrl = getController(handlers);
       ctrl.turnOffIbanError();
@@ -80,11 +63,6 @@ describe('coinify-create-account.component', () => {
   });
 
   describe('.switchView()', () => {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should switch viewInfo', () => {
       let ctrl = getController(handlers);
       ctrl.viewInfo = true;
