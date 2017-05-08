@@ -2,24 +2,24 @@
 
 describe('ExportHistoryController2', () => {
 
-    let $rootScope = undefined;
-    let $controller = undefined;
-    let $q = undefined;
-    let $timeout = undefined;
-    let $translate = undefined;
-    let browser = undefined;
-    let DateHelper = undefined;
-    let Wallet = undefined;
-    let Alerts = undefined;
-    let ExportHistory = undefined;
+    let $rootScope;
+    let $controller;
+    let $q;
+    let $timeout;
+    let $translate;
+    let browser;
+    let DateHelper;
+    let Wallet;
+    let Alerts;
+    let ExportHistory;
 
     beforeEach(angular.mock.module('walletApp'));
 
-    beforeEach(inject(function(_$rootScope_, $injector) {
+    beforeEach(inject(function (_$rootScope_, $injector) {
 
         $rootScope = _$rootScope_;
         // We get an instance of each dependency
-        $q = $injector.get("$q");
+        $q = $injector.get('$q');
         $timeout = $injector.get('$timeout');
         $translate = $injector.get('$translate');
         format = $injector.get('format');
