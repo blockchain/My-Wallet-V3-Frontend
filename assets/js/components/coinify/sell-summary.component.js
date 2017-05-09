@@ -39,7 +39,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
 
   this.checkForUpdatedQuote = () => {
     let updated = new Date(this.quote.expiresAt).getTime();
-    let original = new Date(this.bankAccount._quote._expiresAt).getTime();
+    let original = new Date(this.bankAccount.quote.expiresAt).getTime();
     if ((updated && original) && (updated > original)) {
       this.bankAccount.updateQuote(this.quote);
     }
@@ -84,8 +84,8 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   };
 
   const assignAndBuildPayment = (sellResult) => {
-    let amount = currency.convertToSatoshi(sellResult._transferIn.sendAmount, currency.bitCurrencies[0]);
-    this.payment.to(sellResult._transferIn.details.account);
+    let amount = currency.convertToSatoshi(sellResult.transferIn.sendAmount, currency.bitCurrencies[0]);
+    this.payment.to(sellResult.transferIn.details.account);
     this.payment.amount(amount);
     this.payment.build();
   };
@@ -98,7 +98,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   };
 
   const handleSellResult = (sellResult) => {
-    if (!sellResult._transferIn) {
+    if (!sellResult.transferIn) {
       this.error = sellResult;
       this.error = JSON.parse(this.error);
     } else {

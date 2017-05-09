@@ -4,6 +4,6 @@
       i.type-h4(ng-class="$ctrl.getState().i")
   .flex-column.flex-center.flex-justify.ph-25
     span.type-h5.mbs.mts(translate="{{$ctrl.getState().ns}}.TITLE")
-    span.center.type-sm(translate="{{$ctrl.getState().ns}}.BODY" translate-values="{ccmax: $ctrl.getCardMax()}")
+    span.center.type-sm(ng-show="$ctrl.currency" translate="{{$ctrl.getState().ns}}.BODY" translate-values="{ccmax: $ctrl.getCardMax()}")
   .flex-center
     a.underline.type-sm.ptm(translate="{{$ctrl.getState().ns}}.LINK" ng-click="$ctrl.onTrigger()")

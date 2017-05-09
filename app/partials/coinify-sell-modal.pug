@@ -6,7 +6,7 @@
         .flex-column.flex-align-end(uib-tooltip="{{ vm.getQuoteHelper() | translate}}"
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top")
-          .flex-row.type-h5.em-500(ng-hide="vm.onStep('trade-complete')")
+          .flex-row.type-h5.em-500(ng-hide="vm.onStep('trade-complete') || vm.onStep('isx')")
             span {{vm.transaction.btc }} BTC ({{vm.transaction.currency.symbol}}{{vm.transaction.fiat}})
           countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="false")
   coinify-email(

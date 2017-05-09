@@ -70,7 +70,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
       this.goTo('isx');
       return;
     }
-    if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
+    if ((this.trade.state && !this.trade.iSignThisID) && this.exchange.profile) {
       this.sellTrade = this.trade;
       this.goTo('trade-complete');
       return;
@@ -107,7 +107,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   $scope.assignFiatCurrency = () => {
-    if (this.trade._state) return;
+    if (this.trade.state) return;
     if (this.trade.quote.quoteCurrency === 'BTC') {
       $scope.assignFiatHelper('baseCurrency');
     } else {
@@ -137,7 +137,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   $scope.startPayment = () => {
-    if (this.trade._state) return;
+    if (this.trade.state) return;
     let firstBlockFee = this.payment.absoluteFeeBounds[0];
     if ($scope.isSweepTransaction) firstBlockFee = this.payment.sweepFees[0];
     this.finalPayment = Wallet.my.wallet.createPayment(this.payment);
@@ -173,14 +173,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   this.selectAccount = (bank) => {
     this.selectedBankAccount = bank;
-    this.bankId = bank.id;
   };
 
-  this.onCreateBankSuccess = (bank) => {
-    this.selectedBankAccount = bank;
-    this.bankId = bank._id;
-    this.goTo('summary');
-  };
   this.onSellSuccess = (trade) => this.sellTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
 
@@ -207,6 +201,11 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     if (accountError.error === 'invalid_iban') {
       this.ibanError = true;
     }
+  };
+
+  this.onCreateBankSuccess = (bank) => {
+    this.selectedBankAccount = bank;
+    this.goTo('summary');
   };
 
   this.addBankAccount = (bankObj, userObj) => {
