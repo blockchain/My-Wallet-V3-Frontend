@@ -611,7 +611,6 @@
   "2FA_ERROR" : "An error occurred while enabling 2FA. Please try again later.",
   "2FA_INVALID" : "The two factor authentication code could not be verified. Please try again.",
   "SEND_STEP_1" : "Instantly send bitcoin to any bitcoin address.",
-  "SEND_STEP_1_ADVANCED" : "Send bitcoin to one or more addresses and define your own miners fee",
   "SEND_STEP_2" : "Please review your transaction",
   "STEP" : "Step ",
   "OF_2" : " of 2",
@@ -1063,14 +1062,6 @@
     "TITLE": "Transaction expired.",
     "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
   },
-  "TX_KYC_REVIEWING": {
-    "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
-  },
-  "TX_KYC_REJECTED": {
-    "TITLE": "@:KYC_DENIED.TITLE",
-    "BODY": "There was an issue verifying your identity. Please try again. Bank transfers are unavailable until we can successfully verify your identity."
-  },
   "TX_CARD_REJECTED": {
     "TITLE": "Transaction {{::state}}",
     "BODY": "Your purchase was rejected and unfortunately the reason cannot be disclosed. A refund has been issued and should appear in your card statement within a few days. We apologize for the inconvenience."
@@ -1092,22 +1083,35 @@
   "CARD": "Credit/Debit Card",
   "BANK": "Bank Transfer",
   "CARD_TRANSFER": {
-    "TITLE": "Instant transaction | 3% payment fee",
-    "COPY": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed."
+    "COPY1": "Receive bitcoin instantly",
+    "COPY2": "3% convenience fee",
+    "COPY3": "Visa or Mastercard",
+    "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
+    "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
   },
   "BANK_TRANSFER": {
-    "TITLE": "2-3 days | No payment fees",
-    "COPY": "Depending on your bank, Coinify will send you the bitcoin within 24 hours after they receive your payment. The final exchange rate will be determined once your bank transfer arrives."
+    "COPY1": "Receive bitcoin in 2-3 days",
+    "COPY2": "No payment fees",
+    "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card."
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
     "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to {{ccmax}} per day.",
     "LINK": "Review status"
   },
-  "KYC_DENIED": {
+  "KYC_FLAGGED": {
+    "TITLE": "@:KYC_IN_REVIEW.TITLE",
+    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
+  },
+  "KYC_REJECTED": {
     "TITLE": "Identity Verification Denied",
     "BODY": "There was an issue verifying your identity with the documents provided. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
     "LINK": "Try again"
+  },
+  "KYC_UPDATES_REQUESTED": {
+    "TITLE": "Identity Verification Updates Requested",
+    "BODY": "There was an issue verifying your identity with the documents provided. More information is needed.",
+    "LINK": "Finish verification"
   },
   "KYC_PENDING": {
     "TITLE": "Complete Identity Verification",
@@ -1119,21 +1123,9 @@
     "BODY": "Completing verification will raise your daily sell amount limit.",
     "LINK": "Finish verification"
   },
-  "KYC_EXPIRED": {
-    "TITLE": "Identity Verification Expired",
-    "BODY": "Your identity verification expired. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
-    "LINK": "Try again"
-  },
-  "KYC_IN_HOLD": {
-    "TITLE": "Identity Verification Put on Hold",
-    "BODY": "Your identity verification was put on hold. Bank transfers are unavailable until we can successfully verify your identity. We apologize for any inconvenience",
-    "LINK": "Review status"
-  },
+  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
-  "VERIFY_CARD_NOTE": "For secure card transactions, you will need to verify ownership of the card. You will only have to do this once per card added.",
-  "VERIFY_ID_NOTE": "Please note that in order to buy bitcoin via bank transfer, you will need to verify your identity. You will only have to do this once.",
-  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
   "DATE_INITIALIZED": "Date Ordered",
   "TOTAL_COST": "Total Cost",
   "BTC_PURCHASED": "BTC Purchased",
@@ -1157,12 +1149,12 @@
   "ORDER_DETAILS": "Order Details:",
   "BANK_ORDER_DETAILS": "Send your funds to the following bank account:",
   "ORDER_ID_REFERENCE": "*Must be included in your transfer*",
-  "MAX_LIMIT_EXCEEDED": "Exceeds your remaining daily buy amount of {{::max}} {{::code}}.",
-  "BELOW_MIN_LIMIT": "Below your minimum buy amount of {{::min}} {{::code}}.",
-  "MAX_MIN_HELPER": "Minimum buy amount is {{::symbol}}{{::min}}. Maximum daily amounts are {{::symbol}}{{::cardMax}} for credit card payments and {{::symbol}}{{::bankMax}} for bank transfers.",
+  "MAX_LIMIT_EXCEEDED": "To pay via {{::medium}}, please decrease your amount below {{::max}} {{::code}}.",
+  "BELOW_MIN_LIMIT": "To pay via {{::medium }}, please increase your amount to {{::min}} {{::code}} or more.",
+  "MAX_MIN_HELPER": "Minimum buy amount is {{::min}} {{::code}}. Maximum buy amount is {{::max}} {{::code}}.",
   "BUY_AMT_LOW": "Buy amount too low.",
   "BUY_AMT_HIGH": "Buy amount too high.",
-  "BUY_AMT_IS": "Your limit is set to {{::symbol}}{{::amount}}.",
+  "BUY_AMT_IS": "Your limit is set to {{::amount}} {{::code}}.",
   "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
   "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
@@ -1198,7 +1190,6 @@
   "VERIFY_EMAIL": "Verify email:",
   "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your purchase.",
   "ACCEPT_TERMS": "Coinify account terms:",
-  "SELECT_PAYMENT_MEDIUM": "Select your preferred payment method:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",
@@ -1367,10 +1358,28 @@
     "ENTER_DANISH_BANK": "Please enter your information for your Danish bank account.",
     "ENTER_BANK_INFO": "Please enter your bank information below.",
     "TRADE_COMPLETE": "Trade Complete",
-    "SOLD": "SOLD",
+    "SOLD": "Sold",
     "FIRST_CONFIRMATION": "The rate will be set after the first confirmation",
     "WAIT_FOR_TRADE_COMPLETE": "Trading is disabled until your pending trade is complete.",
-    "QUOTE_EXPIRED_ERROR": "{{::error}} Please re-start your trade to complete the sale. If you continue to experience this issue, contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>."
+    "QUOTE_EXPIRED_ERROR": "{{::error}} Please re-start your trade to complete the sale. If you continue to experience this issue, contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
+    "IBAN": "International Bank Account Number (IBAN)",
+    "BIC": "Bank Identifier Code (SWIFT/BIC)",
+    "BBAN": "Basic Bank Account Number (BBAN)",
+    "REG": "Bank REG Number",
+    "HOLDER_NAME": "Account Holder's Full Name",
+    "HOLDER_STREET": "Street and Number",
+    "HOLDER_CITY": "City",
+    "HOLDER_POSTAL": "Postal Code",
+    "SELL_BITCOIN": "Sell bitcoin",
+    "IDENTITY_VERIFICATION": "Identity Verification",
+    "ISX": {
+      "REVIEWING": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!",
+      "REJECTED": "There was an issue verifying your identity. Please try again. Increasing your limit is unavailable until we can successfully verify your identity.",
+      "PROCESSING": "Your request for authentication is processing. Please check back soon for an update.",
+      "CANCELLED": "Your request for authentication has been cancelled.",
+      "COMPLETED": "Your request for authentication has been completed, and your bitcoin sell limit has been increased.",
+      "EXPIRED": "Your request for authentication has expired."
+    }
   },
   "COPY_LINK": "Copy Link",
   "LINK_COPIED": "Link Copied To Clipboard!",
@@ -1378,5 +1387,9 @@
   "SHOW_MORE": "Show more",
   "RECEIVE_HELPER": "Copy a receive address to your clipboard.",
   "EMAIL_SENT": "Email Sent",
+  "legacyCapped": "Regular",
+  "priority": "Priority",
+  "legacyCapped_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
+  "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
   "": ""
 }

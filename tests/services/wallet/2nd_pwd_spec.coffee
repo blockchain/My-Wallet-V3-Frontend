@@ -37,13 +37,13 @@ describe "walletServices 2nd pwd", () ->
       expect(Wallet.my.wallet.encrypt).toHaveBeenCalled()
     )
 
-    it "should make a cookie for whatsnew", inject(($rootScope, $cookies) ->
-      spyOn($cookies, "put")
+    it "should store whatsnew in localstorage", inject(($rootScope, localStorageService) ->
+      spyOn(localStorageService, "set")
 
       Wallet.setSecondPassword()
       $rootScope.$digest()
 
-      expect($cookies.put).toHaveBeenCalled()
+      expect(localStorageService.set).toHaveBeenCalled()
     )
 
 
@@ -62,27 +62,27 @@ describe "walletServices 2nd pwd", () ->
       expect(Wallet.my.wallet.decrypt).toHaveBeenCalled()
     )
 
-    # Delete this test after removing the cookie fallback
-    it "should use - but not delete - the cookie for whatsnew", inject(($rootScope, $cookies) ->
-      spyOn($cookies, "get").and.returnValue(2)
-      spyOn($cookies, "remove")
+    # Delete this test after removing the localstorage fallback
+    it "should use - but not delete - the localstorage entry for whatsnew", inject(($rootScope, localStorageService) ->
+      spyOn(localStorageService, "get").and.returnValue(2)
+      spyOn(localStorageService, "remove")
 
       Wallet.removeSecondPassword(callbacks.success, callbacks.error)
       $rootScope.$digest()
 
-      expect($cookies.get).toHaveBeenCalled()
-      expect($cookies.remove).not.toHaveBeenCalled()
+      expect(localStorageService.get).toHaveBeenCalled()
+      expect(localStorageService.remove).not.toHaveBeenCalled()
     )
 
-    # Uncomment the test below after removing the cookie fallback
+    # Uncomment the test below after removing the local storage fallback
 
-    # it "should use and delete the cookie for whatsnew", inject(($rootScope, $cookies) ->
-    #   spyOn($cookies, "get").and.returnValue(2)
-    #   spyOn($cookies, "remove")
+    # it "should use and delete the local storage entry for whatsnew", inject(($rootScope, localStorageService) ->
+    #   spyOn(localStorageService, "get").and.returnValue(2)
+    #   spyOn(localStorageService, "remove")
     #
     #   Wallet.removeSecondPassword(callbacks.success, callbacks.error)
     #   $rootScope.$digest()
     #
-    #   expect($cookies.get).toHaveBeenCalled()
-    #   expect($cookies.remove).toHaveBeenCalled()
+    #   expect(localStorageService.get).toHaveBeenCalled()
+    #   expect(localStorageService.remove).toHaveBeenCalled()
     # )

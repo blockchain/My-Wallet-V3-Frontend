@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellMasterController', BuySellMasterController);
 
-function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies, cta) {
+function BuySellMasterController ($scope, $timeout, $state, MyWallet, cta) {
   cta.setBuyCtaDismissed();
 
   this.base = 'wallet.common.buy-sell';

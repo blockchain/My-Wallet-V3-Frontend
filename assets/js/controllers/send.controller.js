@@ -25,7 +25,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.increaseLimit = () => $scope.originLimit += 50;
 
   $scope.sending = false;
-  $scope.confirmationStep = false;
+  $scope.confirm = false;
   $scope.advanced = false;
   $scope.building = false;
 
@@ -35,37 +35,39 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
+  $scope.fromSatoshi = currency.convertFromSatoshi;
+  $scope.format = currency.formatCurrencyForView;
   $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
-
-  $scope.defaultBlockInclusion = 1;
+  $scope.satoshi = currency.bitCurrencies.filter((c) => c.code === 'satoshi')[0];
 
   $scope.transactionTemplate = {
-    from: null,
-    destinations: [null],
-    amounts: [null],
     fee: 0,
+    size: 0,
     note: '',
-    maxAvailable: null,
+    from: null,
     surge: false,
-    blockIdx: null,
-    feeBounds: [0, 0, 0, 0, 0, 0],
-    sweepFees: [0, 0, 0, 0, 0, 0],
-    size: 0
+    amount: null,
+    maxAvailable: null,
+    destinations: [null],
+    satoshiPerByte: null,
+    feeType: 'legacyCapped',
+    fees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0},
+    sweepFees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0}
   };
 
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
   $scope.paymentOnUpdate = (data) => {
     let tx = $scope.transaction;
-    tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
-    if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
-    tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
-    if (tx.maxAvailable < 0) tx.maxAvailable = 0;
-    tx.surge = data.fees.estimate[$scope.defaultBlockInclusion].surge;
-    tx.blockIdx = data.confEstimation;
-    tx.feeBounds = data.absoluteFeeBounds;
-    tx.sweepFees = data.sweepFees;
+
+    tx.fees = data.fees;
     tx.size = data.txSize;
+    tx.sweepFees = data.sweepFees;
+    tx.fee = $scope.advanced ? data.finalFee : tx.size * tx.fees[tx.feeType];
+    tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
+    tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
+    if (tx.maxAvailable < 0) tx.maxAvailable = 0;
+
     AngularHelper.$safeApply($scope);
   };
 
@@ -107,22 +109,11 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       type: 'External'
     };
     $scope.transaction.destinations[i] = destination;
-    if (paymentRequest.amount) $scope.transaction.amounts[i] = paymentRequest.amount;
+    if (paymentRequest.amount) $scope.transaction.amount = paymentRequest.amount;
     if (paymentRequest.message) $scope.transaction.note = decodeURI(paymentRequest.message);
 
     $scope.setPaymentTo();
     $scope.setPaymentAmount();
-  };
-
-  $scope.resetSendForm = () => {
-    $scope.transaction = angular.copy($scope.transactionTemplate);
-    $scope.transaction.from = smartAccount.getDefault();
-    console.log($scope.transaction.from);
-    $scope.setPaymentFee();
-
-    // Remove error messages:
-    $scope.sendForm.$setPristine();
-    $scope.sendForm.$setUntouched();
   };
 
   $scope.reopenModal = () => {
@@ -133,20 +124,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       resolve: {paymentRequest}
     }), 500);
     $uibModalInstance.dismiss();
-  };
-
-  $scope.addDestination = () => {
-    $scope.transaction.amounts.push(null);
-    $scope.transaction.destinations.push(null);
-    $scope.setPaymentAmount();
-    $scope.setPaymentTo();
-  };
-
-  $scope.removeDestination = (index) => {
-    $scope.transaction.amounts.splice(index, 1);
-    $scope.transaction.destinations.splice(index, 1);
-    $scope.setPaymentAmount();
-    $scope.setPaymentTo();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -236,16 +213,14 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.getTransactionTotal = (includeFee) => {
     let tx = $scope.transaction;
     let fee = includeFee ? tx.fee : 0;
-    return tx.amounts.reduce((previous, current) => {
-      return (parseInt(previous, 10) + parseInt(current, 10)) || 0;
-    }, parseInt(fee, 10));
+    return parseInt(tx.amount, 10) + parseInt(fee, 10);
   };
 
-  $scope.amountsAreValid = () => (
-    $scope.transaction.from == null ||
-    ($scope.transaction.amounts.every(amt => !isNaN(amt) && amt > 0) &&
-    $scope.transaction.maxAvailable - $scope.getTransactionTotal() >= 0)
-  );
+  $scope.amountsAreValid = () => {
+    return $scope.transaction.from == null ||
+    !isNaN($scope.transaction.amount) && $scope.transaction.amt > 0 ||
+    $scope.transaction.maxAvailable - $scope.getTransactionTotal() >= 0;
+  };
 
   $scope.checkForSameDestination = () => {
     if ($scope.sendForm == null) return;
@@ -261,11 +236,11 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     });
   };
 
-  $scope.hasAmountError = (index) => {
-    let field = $scope.sendForm['amounts' + index];
-    let fiatField = $scope.sendForm['amountsFiat' + index];
+  $scope.hasAmountError = () => {
+    let field = $scope.sendForm.amount;
+    let fiatField = $scope.sendForm.fiatAmount;
     let fieldError = (fiatField.$touched || field.$touched) && (fiatField.$invalid || field.$invalid);
-    let notEnoughFunds = !$scope.amountsAreValid() && !$scope.transaction.amounts.some(a => !a);
+    let notEnoughFunds = !$scope.amountsAreValid();
     return fieldError || notEnoughFunds;
   };
 
@@ -302,8 +277,8 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
   $scope.useAll = () => {
     let tx = $scope.transaction;
-    if (tx.maxAvailable == null || tx.amounts.length !== 1) return;
-    $scope.transaction.amounts[0] = $scope.transaction.maxAvailable;
+    if (tx.maxAvailable == null) return;
+    $scope.transaction.amount = $scope.transaction.maxAvailable;
     $scope.setPaymentAmount();
   };
 
@@ -333,21 +308,21 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.setPaymentAmount = (reset) => {
-    let amounts = $scope.transaction.amounts;
-    if (amounts.some(a => isNaN(a) || a <= 0)) return;
+    let amount = $scope.transaction.amount;
+    if (isNaN(amount) || amount <= 0) return;
     let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
     let options = FEE_ENABLED && !$scope.advanced && !reset ? FEE_OPTIONS : null;
-    $scope.payment.amount($scope.transaction.amounts, fee, options);
+    $scope.payment.amount($scope.transaction.amount, fee, options);
   };
 
   $scope.setPaymentFee = (reset) => {
-    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
-    if ($scope.advanced && fee === undefined) return;
+    let { fee, size, satoshiPerByte } = $scope.transaction;
+    fee = $scope.advanced ? satoshiPerByte * size : fee;
     $scope.payment.fee(fee);
   };
 
   $scope.backToForm = () => {
-    $scope.confirmationStep = false;
+    $scope.confirm = false;
   };
 
   $scope.advancedSend = () => {
@@ -358,7 +333,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
   $scope.regularSend = () => {
     $scope.transaction.destinations.splice(1);
-    $scope.transaction.amounts.splice(1);
     $scope.advanced = false;
     $scope.setPaymentAmount();
   };
@@ -380,7 +354,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       .then($scope.checkFee)
       .then($scope.finalBuild)
       .then(() => {
-        $scope.confirmationStep = true;
+        $scope.confirm = true;
         if ($scope.AB_TEST_FEE) {
           Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
         }
@@ -416,7 +390,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       if (fee) {
         if (fee > maximumFee) {
           let feeDiff = fee - tx.fee;
-          tx.amounts[0] -= feeDiff;
+          tx.amount -= feeDiff;
           $scope.setPaymentAmount();
         }
         tx.fee = fee;
@@ -428,9 +402,9 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       return fees.showFeeWarning(tx.fee, suggestedFee, maximumFee, surge);
     };
 
-    let high = tx.feeBounds[0] || tx.sweepFees[0];
-    let mid = tx.feeBounds[$scope.defaultBlockInclusion] || tx.sweepFees[$scope.defaultBlockInclusion];
-    let low = tx.feeBounds[5] || tx.sweepFees[5];
+    let high = tx.sweepFees.priorityCap;
+    let mid = tx.sweepFees.legacyCapped;
+    let low = tx.sweepFees.lowerLimit;
     console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
 
     if ($scope.advanced) {
@@ -441,7 +415,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       }
     } else {
       let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
-      let feeRatio = tx.fee / tx.amounts.reduce((a, b) => a + b);
+      let feeRatio = tx.fee / tx.amount;
       if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
         return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
       } else if (surge) {
@@ -459,7 +433,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
         : destinations = $scope.transaction.destinations;
       const result = Wallet.parseBitcoinURL(destinations, index);
       $scope.transaction.destinations[index].address = result.address;
-      $scope.transaction.amounts[index] = result.amount;
+      $scope.transaction.amount = result.amount;
       index === 0 ? $scope.transaction.note = result.note : '';
       $scope.setPaymentAmount(); // keep
     }, 250);

@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('SignupCtrl', SignupCtrl);
 
-SignupCtrl.$inject = ['$scope', '$state', '$cookies', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet', '$http', 'Env'];
+SignupCtrl.$inject = ['$scope', '$state', 'localStorageService', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet', '$http', 'Env'];
 
-function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet, $http, Env) {
+function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet, $http, Env) {
   $scope.working = false;
   $scope.browser = {disabled: true};
 
@@ -161,7 +161,7 @@ function SignupCtrl ($scope, $state, $cookies, $filter, $timeout, $translate, Wa
     $scope.working = true;
 
     if ($scope.autoReload) {
-      $cookies.put('password', $scope.fields.password);
+      localStorageService.set('password', $scope.fields.password);
     }
 
     $timeout(() => {

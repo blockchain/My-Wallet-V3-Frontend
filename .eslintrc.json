@@ -8,7 +8,8 @@
       2,
       {
         "typeSeparator": "dot",
-        "nameStyle": "dash"
+        "nameStyle": "dash",
+        "ignoreTypeSuffix" : true
       }
     ],
     "angular/function-type": [2, "named"]

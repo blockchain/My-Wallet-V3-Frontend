@@ -1,8 +1,23 @@
-describe "CoinifyEmailController", ->
+describe "CoinifyMediumController", ->
+  $q = undefined
   scope = undefined
   Wallet = undefined
   $rootScope = undefined
   $controller = undefined
+  buySell = undefined
+
+  mediums =
+    'card':
+      getAccounts: () -> $q.resolve([])
+    'bank':
+      getAccounts: () -> $q.resolve([])
+  
+  quote = {
+    quoteAmount: 1
+    baseAmount: -100
+    baseCurrency: 'USD'
+    getPaymentMediums: () -> $q.resolve(mediums)
+  }
 
   beforeEach angular.mock.module("walletApp")
 
@@ -13,13 +28,28 @@ describe "CoinifyEmailController", ->
       $q = _$q_
 
       Wallet = $injector.get("Wallet")
+      buySell = $injector.get("buySell")
+      
+      buySell.limits =
+        bank:
+          min:
+            'EUR': 10
+          max:
+            'EUR': 1000
+        card:
+          min:
+            'EUR': 10
+          max:
+            'EUR': 1000
 
   getControllerScope = (params = {}) ->
     scope = $rootScope.$new()
-
-    scope.$parent.exchange = {
-      trades: []
-    }
+    scope.vm =
+      quote: quote
+      medium: 'card'
+      baseFiat: () -> true
+      fiatCurrency: () -> 'USD',
+      goTo: (state) ->
 
     $controller "CoinifyMediumController",
       $scope: scope,
@@ -27,12 +57,22 @@ describe "CoinifyEmailController", ->
 
   beforeEach ->
     scope = getControllerScope()
-    scope.exchange = {}
     $rootScope.$digest()
 
-  describe "showNote()", ->
+  describe ".submit()", ->
 
-    it "should show card notes if no card trades exist", ->
-      scope.$parent.medium = 'card';
-
-      expect(scope.showNote('card')).toBe(true);
+    it "should disable the form", ->
+      spyOn(scope, 'lock')
+      scope.submit()
+      expect(scope.lock).toHaveBeenCalled()
+    
+    it "should getPaymentMediums", ->
+      spyOn(quote, 'getPaymentMediums')
+      scope.submit()
+      expect(quote.getPaymentMediums).toHaveBeenCalled()
+    
+    it "should go to summary", ->
+      spyOn(scope.vm, 'goTo')
+      scope.submit()
+      scope.$digest()
+      expect(scope.vm.goTo).toHaveBeenCalledWith('summary')

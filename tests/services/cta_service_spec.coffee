@@ -1,7 +1,7 @@
 describe "cta", () ->
   Wallet = undefined
   $injector = undefined
-  $cookies = undefined
+  localStorageService = undefined
 
   beforeEach angular.mock.module("walletApp")
 
@@ -10,7 +10,7 @@ describe "cta", () ->
       $injector = _$injector_
       Wallet = $injector.get("Wallet")
       MyWallet = $injector.get("MyWallet")
-      $cookies = $injector.get("$cookies")
+      localStorageService = $injector.get("localStorageService")
 
       Wallet.total = () -> 0
       Wallet.status = {}
@@ -21,38 +21,40 @@ describe "cta", () ->
         external: {}
 
   getService = (cookies = {}) ->
-    spyOn($cookies, "put").and.callThrough()
-    spyOn($cookies, "get").and.returnValue(cookies.buyCta)
-    spyOn($cookies, "putObject").and.callThrough()
-    spyOn($cookies, "getObject").and.returnValue(cookies.securityWarning)
+    for k, v of cookies
+      console.log(k)
+      console.log(v)
+      localStorageService.set(k, v)
+    spyOn(localStorageService, "set").and.callThrough()
+    spyOn(localStorageService, "get").and.callThrough()
     return $injector.get("cta")
 
   describe ".shouldShowBuyCta()", ->
     it "should not show if the user has seen it", ->
-      cta = getService(buyCta: "true")
+      cta = getService('buy-alert-seen': true)
       expect(cta.shouldShowBuyCta()).toEqual(false)
 
     it "should show if the user has not seen it", ->
-      cta = getService(buyCta: "false")
+      cta = getService('buy-alert-seen': false)
       expect(cta.shouldShowBuyCta()).toEqual(true)
 
   describe ".setBuyCtaDismissed()", ->
     it "should set the buy-alert-seen cookie", ->
-      cta = getService(buyCta: "")
+      cta = getService('buy-alert-seen': undefined)
       cta.setBuyCtaDismissed()
-      expect($cookies.put).toHaveBeenCalledWith("buy-alert-seen", true)
+      expect(localStorageService.set).toHaveBeenCalledWith("buy-alert-seen", true)
 
     it "should reset the cookie jar", ->
-      cta = getService(buyCta: "")
+      cta = getService('buy-alert-seen': undefined)
       expect(cta.shouldShowBuyCta()).toEqual(true)
-      $cookies.get.and.returnValue("true")
+      localStorageService.get.and.returnValue(true)
       cta.setBuyCtaDismissed()
       expect(cta.shouldShowBuyCta()).toEqual(false)
 
   describe ".shouldShowSecurityWarning()", ->
     cta = undefined
     beforeEach ->
-      cta = getService(securityWarning: { when: 1000 })
+      cta = getService('contextual-message': { when: 1000 })
       spyOn(cta, "shouldShowBuyCta").and.returnValue(false)
       spyOn(Date, "now").and.returnValue(1001)
       spyOn(Wallet, "total").and.returnValue(1)
@@ -97,17 +99,17 @@ describe "cta", () ->
       spyOn(Date, "now").and.returnValue(1001)
 
     it "should set the contextual-message cookie", ->
-      cta = getService(securityWarning: { when: 1000, index: 0 })
+      cta = getService('contextual-message': { when: 1000, index: 0 })
       cta.setSecurityWarningDismissed()
-      expect($cookies.putObject).toHaveBeenCalledWith("contextual-message", { index: 1, when: 604801001 })
+      expect(localStorageService.set).toHaveBeenCalledWith("contextual-message", { index: 1, when: 604801001 })
 
   describe ".getSecurityWarningMessage()", ->
     it "should get the correct message for message index 0", ->
-      cta = getService(securityWarning: { when: 1000, index: 0 })
+      cta = getService('contextual-message': { when: 1000, index: 0 })
       message = cta.getSecurityWarningMessage()
       expect(message).toEqual("SECURE_WALLET_MSG_1")
 
     it "should get the correct message for message index 1", ->
-      cta = getService(securityWarning: { when: 1000, index: 1 })
+      cta = getService('contextual-message': { when: 1000, index: 1 })
       message = cta.getSecurityWarningMessage()
       expect(message).toEqual("SECURE_WALLET_MSG_2")

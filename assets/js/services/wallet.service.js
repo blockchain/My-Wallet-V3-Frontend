@@ -4,9 +4,10 @@ angular
   .module('walletApp')
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', '$cookies', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', 'localStorageService', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env', 'BrowserHelper'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, $cookies, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, localStorageService, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env, BrowserHelper) {
+  BrowserHelper.migrateCookiesToLocalStorage();
   const wallet = {
     goal: {
       auth: false,
@@ -68,8 +69,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     if ($window.location.hostname === 'localhost' || !env.isProduction) {
       const KEY = 'qa-tools-enabled';
-      env.buySellDebug = $cookies.get(KEY) === 'true';
-      let reloadWithDebug = (debug) => { $cookies.put(KEY, debug); $window.location.reload(); };
+      env.buySellDebug = localStorageService.get(KEY);
+      let reloadWithDebug = (debug) => { localStorageService.set(KEY, debug); $window.location.reload(); };
       $window.enableQA = () => reloadWithDebug(true);
       $window.disableQA = () => reloadWithDebug(false);
     }
@@ -160,8 +161,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       // Immedidately store the new guid and session token, in case the user needs
       // to refresh their browser:
       const newSessionToken = (token) => {
-        $cookies.put('session', token);
-        $cookies.put('uid', uid);
+        localStorageService.set('session', token);
+        localStorageService.set('guid', uid);
       };
 
       wallet.my.login(
@@ -185,8 +186,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     };
 
     // Check if we already have a session token:
-    let sessionToken = $cookies.get('session');
-    let sessionGuid = $cookies.get('uid');
+    let sessionToken = localStorageService.get('session');
+    let sessionGuid = localStorageService.get('guid');
 
     doLogin(uid, sessionGuid, sessionToken);
   };
@@ -234,7 +235,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.setLanguage($filter('getByProperty')('code', result.language, languages.languages));
       wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
-      wallet.settings.theme = $filter('getByProperty')('name', $cookies.get('theme'), theme.themes) || theme.themes[0];
+      wallet.settings.theme = $filter('getByProperty')('name', localStorageService.get('theme'), theme.themes) || theme.themes[0];
       wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
       wallet.settings.blockTOR = !!result.block_tor_ips;
       wallet.status.didLoadSettings = true;
@@ -307,8 +308,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
-      $cookies.put('session', sessionToken);
-      $cookies.put('uid', uid);
+      localStorageService.set('session', sessionToken);
+      localStorageService.set('guid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid);
       wallet.goal.firstTime = true;
 
@@ -408,7 +409,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let { auto = false } = options;
     wallet.autoLogout = auto;
     $window.name = wallet.askForDeauth() ? 'blockchain-logout' : 'blockchain';
-    $cookies.remove('password');
+    localStorageService.remove('password');
     wallet.my.logout(true);
   };
 
@@ -694,7 +695,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
     // TODO: fix autoreload dev feature
     // if ($rootScope.autoReload) {
-    //   $cookies.put('reload.url', $location.url())
+    //   localStorageService.set('reload.url', $location.url())
     // }
   };
 
@@ -793,7 +794,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     } else if (event === 'logging_out') {
       if (wallet.autoLogout) {
         $translate('LOGGED_OUT_AUTOMATICALLY').then((translation) => {
-          $cookies.put('alert-warning', translation);
+          localStorageService.set('alert-warning', translation);
         });
       }
       wallet.status.isLoggedIn = false;
@@ -832,15 +833,15 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.monitor(event, data);
   });
 
-  let message = $cookies.get('alert-warning');
+  let message = localStorageService.get('alert-warning');
   if (message !== void 0 && message !== null) {
     Alerts.displayWarning(message, true);
-    $cookies.remove('alert-warning');
+    localStorageService.remove('alert-warning');
   }
-  message = $cookies.get('alert-success');
+  message = localStorageService.get('alert-success');
   if (message !== void 0 && message !== null) {
     Alerts.displaySuccess(message);
-    $cookies.remove('alert-success');
+    localStorageService.remove('alert-success');
   }
 
   wallet.setNote = (tx, text) => {
@@ -877,7 +878,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   });
 
   wallet.changeTheme = (theme) => $q((resolve, reject) => {
-    $cookies.put('theme', theme.name);
+    localStorageService.set('theme', theme.name);
     resolve(true);
   });
 
@@ -1063,7 +1064,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       wallet.settings.rememberTwoFactor = false;
       // This takes effect immedidately:
-      $cookies.remove('session');
+      localStorageService.remove('session');
       successCallback();
       AngularHelper.$safeApply();
     };
@@ -1161,7 +1162,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       // Check which metadata service features we use:
 
       // This falls back to cookies if 2nd password is enabled:
-      let lastViewed = $cookies.get('whatsNewViewed');
+      let lastViewed = localStorageService.get('whatsNewViewed');
 
       if (lastViewed) {
         let whatsNew = wallet.my.wallet.metadata(2);
@@ -1205,7 +1206,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let whatsNew = wallet.my.wallet.metadata(2);
     whatsNew.fetch().then((res) => {
       if (res !== null) {
-        $cookies.put('whatsNewViewed', res.lastViewed);
+        localStorageService.set('whatsNewViewed', res.lastViewed);
       }
     }).catch(() => {
       throw new Error("saving your What's New view status failed");
