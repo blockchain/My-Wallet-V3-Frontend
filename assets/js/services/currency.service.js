@@ -63,6 +63,10 @@ function currency ($q, MyBlockchainApi) {
       code: 'bits',
       conversion: 100,
       btcValue: '0.000001 BTC'
+    }, {
+      code: 'satoshi',
+      conversion: 1,
+      btcValue: '0.00000001 BTC'
     }
   ];
 
