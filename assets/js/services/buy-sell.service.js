@@ -260,7 +260,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
-      windowClass: 'bc-modal auto buy',
+      windowClass: 'bc-modal buy',
       controller: 'CoinifySellController',
       controllerAs: 'vm',
       backdrop: 'static',
