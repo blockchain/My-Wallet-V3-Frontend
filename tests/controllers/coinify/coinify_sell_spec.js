@@ -70,8 +70,8 @@ describe('CoinifySellController', () => {
           pending: {}
         },
         user: 1,
-        _profile: {
-          _country: 'FR',
+        profile: {
+          country: 'FR',
           level: {
             limits: {
               'card': {
@@ -122,7 +122,7 @@ describe('CoinifySellController', () => {
     it('should set the bank account', () => {
       let ctrl = getController(quote, trade);
       ctrl.selectAccount({id: 12345});
-      return expect(ctrl.bankId).toEqual(12345);
+      return expect(ctrl.selectedBankAccount).toEqual({id: 12345});
     });
   });
 
@@ -161,8 +161,8 @@ describe('CoinifySellController', () => {
 
     it('should set the bankId', () => {
       let ctrl = getController(quote, trade);
-      ctrl.onCreateBankSuccess({_id: 123456});
-      return expect(ctrl.bankId).toEqual(123456);
+      ctrl.onCreateBankSuccess({id: 123456});
+      return expect(ctrl.selectedBankAccount).toEqual({id: 123456});
     });
   });
 
@@ -268,16 +268,15 @@ describe('CoinifySellController', () => {
 
     it('should go to trade-complete step', () => {
       let ctrl = getController(quote, trade);
-      ctrl.trade._state = 'awaiting_transfer_in';
-      ctrl.trade._iSignThisID = undefined;
+      ctrl.trade.state = 'awaiting_transfer_in';
+      ctrl.trade.iSignThisID = undefined;
       ctrl.nextStep();
       return expect(ctrl.onStep('trade-complete')).toEqual(true);
     });
 
     it('should go to email step', () => {
       let ctrl = getController(quote, trade);
-      ctrl.isKYC = false;
-      ctrl.user.isEmailVerified = false;
+      ctrl.exchange.user = undefined;
       ctrl.nextStep();
       return expect(ctrl.onStep('email')).toEqual(true);
     });

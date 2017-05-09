@@ -40,8 +40,8 @@ describe('sell-summary.component', () => {
   let bankAccount = {
     sell (bankId) { return $q.resolve(sellTrade); },
     updateQuote (quote) { return $q.resolve('something'); },
-    _quote: {
-      _expiresAt: 1493928203205
+    quote: {
+      expiresAt: 1493928203205
     }
   };
 
