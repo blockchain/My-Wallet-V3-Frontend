@@ -34,7 +34,8 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
-      let address = Wallet.parsePaymentRequest(result);
+      let isValidPrivateKey = Wallet.isValidPrivateKey(result);
+      let address = isValidPrivateKey ? Wallet.parsePaymentRequest(isValidPrivateKey) : Wallet.parsePaymentRequest(result);
       scope.model = format.destination(address, 'External');
       scope.onPaymentRequest({request: address});
       scope.setInputMetric({metric: 'qr'});
