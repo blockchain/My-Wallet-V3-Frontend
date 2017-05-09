@@ -65,7 +65,6 @@ ul.aside {
     }
   }
   ul.aside-list{
-    background: white;
     list-style: none;
     font-size: 1em;
     text-transform: none;
@@ -128,7 +127,10 @@ ul.aside {
     max-height: 150px;
     overflow-x: auto;
   }
-  .scroll-settings{ max-height: 190px; }
+  .scroll-settings{
+    max-height: 190px;
+    padding-left: 38px;
+  }
 }
 
 @media (max-width: 620px) {
