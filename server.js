@@ -1,5 +1,6 @@
 'use strict';
 
+var parts = require('./partsApp/parts');
 var express = require('express');
 var ejs = require('ejs');
 var path = require('path');
@@ -24,9 +25,20 @@ var testnet = process.env.NETWORK === 'testnet';
 // App configuration
 var rootApp = express();
 var app = express();
+var partsApp = parts.app(rootURL, webSocketURL, apiDomain);
 var helperApp = runWalletHelper ? express() : null;
 
 app.use(compression());
+
+rootApp.get('/parts', (req, res, next) => {
+  if (req.url === '/parts') {
+    res.redirect('/parts/');
+  } else {
+    next();
+  }
+});
+
+rootApp.use('/parts', partsApp);
 
 if (runWalletHelper) {
   helperApp.use(compression());

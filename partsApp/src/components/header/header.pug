@@ -1,0 +1,9 @@
+.header
+  nav.navbar.navbar-default.navbar-fixed-top
+    .container-fluid
+      .navbar-header
+        a.navbar-brand(ui-sref="home")
+          img(alt="Blockchain" src="https://blockchain.info/Resources/white-blockchain.svg")
+      ul.nav.navbar-nav
+        li(ng-repeat="item in navigationItems")
+          a(ui-sref="{{item.href}}") {{item.title}}

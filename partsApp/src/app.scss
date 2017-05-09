@@ -1,0 +1,18 @@
+
+// Import shared
+@import 'assets/sass/common/typography';
+@import 'assets/sass/elements/section';
+
+// Import components
+@import 'components/gridNavigation/style';
+@import 'components/header/style';
+
+// Import pages
+@import 'pages/components/style';
+@import 'pages/directives/style';
+@import 'pages/home/style';
+
+
+body {
+  background-color: #CDCDCD;
+}

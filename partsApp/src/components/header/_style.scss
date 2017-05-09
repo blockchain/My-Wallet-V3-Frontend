@@ -1,0 +1,43 @@
+
+.header {
+
+  .navbar {
+    background-color: #BCBCBC;
+
+    &.navbar-default {
+      border: none;
+    }
+
+    & .navbar-header {
+
+      & .navbar-brand {
+
+        & img {
+          width: 150px;
+        }
+      }
+    }
+
+    & .navbar-nav {
+
+      li {
+
+        & a {
+            cursor: pointer;
+            color: #FFFFFF;
+
+            &:hover {
+              color: #000000;
+            }
+        }
+
+        &:hover {
+          & a {
+            background-color: #EFEFEF;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+}
