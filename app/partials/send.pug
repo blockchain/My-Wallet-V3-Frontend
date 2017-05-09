@@ -140,8 +140,10 @@
                     ng-change="setPaymentFee()"
                     transform-currency="satoshi"
                     ng-model="transaction.satoshiPerByte"
+                    ng-max="{{}}"
                     required)
                   span.mhm sat/b
+              span.f-12.state-danger-text(ng-show="sendForm.fee.$error.max" translate="Not enough funds")
             .item.right-align.width-50
               label.fade(translate="FEE")
               span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})

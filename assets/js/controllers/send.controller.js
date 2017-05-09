@@ -394,7 +394,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
           $scope.setPaymentAmount();
         }
         tx.fee = fee;
-        $scope.setPaymentFee();
+        $scope.payment.fee(fee);
       }
     };
 
@@ -410,7 +410,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     if ($scope.advanced) {
       if (tx.fee > high) {
         return showFeeWarning(high).then(commitFee);
-      } else if (tx.fee < low && $scope.advanced) {
+      } else if (tx.fee < low) {
         return showFeeWarning(low).then(commitFee);
       }
     } else {
