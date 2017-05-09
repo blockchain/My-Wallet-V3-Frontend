@@ -4,8 +4,9 @@
   .filter-buttons.pvl.hidden-xs
     a.black.em-400.upper.f-16(
       ng-repeat="tab in $ctrl.tabOptions"
-      ng-class="{active: $ctrl.tab === tab, mrn: $last, spaced: !$last}"
+      ng-class="{active: $ctrl.tab === tab && !$ctrl.disabled, mrn: $last, spaced: !$last}"
       ng-click="$ctrl.selectTab(tab)"
+      ng-disabled="$ctrl.disabled"
       translate="{{tab}}")
     span.badge.mbs(ng-if="$ctrl.badge > 0") {{$ctrl.badge}}
 
@@ -15,7 +16,8 @@
       ng-click="$ctrl.selectTab(tab)"
       ng-show="$ctrl.tab === tab || $ctrl.state.expanded")
       a.black.em-400.upper.f-16(
-        ng-class="{active: $ctrl.tab === tab}"
+        ng-class="{active: $ctrl.tab === tab && !$ctrl.disabled}"
+        ng-disabled="$ctrl.disabled"
         translate="{{tab}}")
       span.badge.mbs(ng-if="$last && $ctrl.badge > 0") {{$ctrl.badge}}
 
