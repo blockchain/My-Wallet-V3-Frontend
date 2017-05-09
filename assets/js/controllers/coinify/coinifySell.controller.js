@@ -123,7 +123,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.country = exchange._profile._country || $stateParams.countryCode;
+  this.country = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
   this.fiat = () => this.transaction.currency.code;
 
   $scope.fields = { email: $scope.user.email };

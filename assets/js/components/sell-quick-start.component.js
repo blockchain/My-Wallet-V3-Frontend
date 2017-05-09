@@ -34,10 +34,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
-  if (this.exchange._profile) {
-    $scope.sellLimit = this.exchange._profile._currentLimits._bank._outRemaining.toString();
-    $scope.hideIncreaseLimit = this.exchange._profile._level._name > 1;
+  this.exchangeCountry = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
+  if (this.exchange.profile.currentLimits) {
+    $scope.sellLimit = this.exchange.profile.currentLimits.bank.outRemaining.toString();
+    $scope.hideIncreaseLimit = this.exchange.profile.level.name > 1;
   }
 
   $scope.isPendingTradeState = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium !== 'blockchain';
