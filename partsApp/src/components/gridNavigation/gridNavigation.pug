@@ -1,5 +1,3 @@
 
-.container.grid-navigation
-  .row(ng-repeat="gridItem in gridItems")
-    .col-md-12
-      a.grid-navigation-item(ui-sref="{{gridItem.href}}") {{gridItem.title}}
+.grid-navigation
+  a(ng-repeat="gridItem in $ctrl.gridItems" ui-sref="{{gridItem.href}}") {{gridItem.title}}

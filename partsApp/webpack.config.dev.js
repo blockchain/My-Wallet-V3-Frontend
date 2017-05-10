@@ -19,7 +19,8 @@ module.exports = {
     alias: {
       'npm': `${__dirname}/../node_modules`,
       'bower': `${__dirname}/../bower_components`,
-      'components': `${__dirname}/src/components`
+      'components': `${__dirname}/src/components`,
+      'walletJs': `${__dirname}/../assets/js`
     }
   },
   module: {

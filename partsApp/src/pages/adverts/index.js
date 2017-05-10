@@ -4,7 +4,6 @@ import ngResource from 'npm/angular-resource';
 
 import routes from './adverts.routes.js';
 import AdvertsController from './adverts.controller.js';
-
 import headerDirective from 'components/header';
 
 const modules = [
@@ -12,8 +11,6 @@ const modules = [
   ngResource,
   headerDirective
 ];
-
-console.log(routes);
 
 export default angular
   .module('app.pages.adverts', modules)

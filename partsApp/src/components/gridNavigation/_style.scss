@@ -1,5 +1,23 @@
 
 .grid-navigation {
-  background-color: red;
-  height: 50px;
+  padding: 10px;
+
+  & a {
+    display: block;
+    height: 50px;
+    width: 200px;
+    margin: 5px;
+    padding-top: 10px;
+    border: 2px solid black;
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    color: #004a7c;
+
+    &:hover {
+        background-color: #004a7c;
+        color: white;
+    }
+  }
 }
