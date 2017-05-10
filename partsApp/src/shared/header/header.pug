@@ -5,5 +5,6 @@
         a.navbar-brand(ui-sref="home")
           img(alt="Blockchain" src="https://blockchain.info/Resources/white-blockchain.svg")
       ul.nav.navbar-nav
-        li(ng-repeat="item in navigationItems")
-          a(ui-sref="{{item.href}}") {{item.title}}
+        li(ng-repeat="link in $ctrl.links")
+          a(ui-sref="{{link.href}}") {{link.title}}
+        

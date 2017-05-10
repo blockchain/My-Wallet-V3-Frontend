@@ -1,13 +1,19 @@
 import HomeTemplate from './home.pug';
+import nav from './home.nav.js';
 
 function routes ($stateProvider) {
   'ngInject';
   $stateProvider
-    .state('home',
-    {
+    .state('home', {
       url: '/',
+      resolve: {
+        links: () => nav.headerLinks
+      },
       views: {
-        'main': {
+        'top': {
+          component: 'header'
+        },
+        'content': {
           template: HomeTemplate,
           controller: 'HomeController',
           controllerAs: '$ctrl'

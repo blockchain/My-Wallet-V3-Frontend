@@ -1,15 +1,19 @@
+// Packages
 import angular from 'npm/angular';
 import uiRouter from 'npm/angular-ui-router';
 import ngResource from 'npm/angular-resource';
-
+// Internal resources
 import routes from './home.routes.js';
 import HomeController from './home.controller.js';
-import headerDirective from 'components/header';
+// External resources
+import header from 'shared/header';
+import leftNavbar from 'shared/leftNavbar';
 
 const modules = [
   uiRouter,
   ngResource,
-  headerDirective
+  header,
+  leftNavbar
 ];
 
 export default angular

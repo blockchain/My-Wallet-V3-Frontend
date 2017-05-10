@@ -5,13 +5,13 @@
 @import 'assets/sass/elements/section';
 
 // Import components
-@import 'components/gridNavigation/style';
-@import 'components/header/style';
+@import 'shared/header/style';
+@import 'shared/leftNavbar/style';
 
 // Import pages
-@import 'pages/components/style';
-@import 'pages/directives/style';
-@import 'pages/home/style';
+@import 'components/components/style';
+@import 'components/directives/style';
+@import 'components/home/style';
 
 
 body {

@@ -1,0 +1,38 @@
+
+.left-navbar {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  width: 200px;
+  background-color: rgb(51, 51, 51);
+  -webkit-transition-duration: 0.8s;
+
+  & .arrow {
+    position: absolute;
+    right: -50px;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background-color: lighten(rgb(51, 51, 51), 10%);
+    cursor: pointer;
+  }
+
+  &.closed {
+    left: -200px;
+  }
+
+  & a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 15px;
+    width: 100%;
+    text-decoration: none;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+
+    &:hover {
+        background-color: #004a7c;
+        color: white;
+    }
+  }
+}

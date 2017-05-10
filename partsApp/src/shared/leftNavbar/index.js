@@ -1,8 +1,9 @@
+// Packages
 import angular from 'npm/angular';
 import uiRouter from 'npm/angular-ui-router';
 import ngResource from 'npm/angular-resource';
-
-import HeaderDirective from './header.directive.js';
+// Internal resources
+import LeftNavbar from './leftNavbar.component.js';
 
 const modules = [
   uiRouter,
@@ -10,6 +11,6 @@ const modules = [
 ];
 
 export default angular
-  .module('app.components.header', modules)
-  .directive('headerDirective', () => new HeaderDirective())
+  .module('app.components.leftNavbar', modules)
+  .component('leftNavbar', LeftNavbar)
   .name;

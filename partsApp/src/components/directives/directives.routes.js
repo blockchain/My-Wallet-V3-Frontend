@@ -1,13 +1,23 @@
 import DirectivesTemplate from './directives.pug';
+import nav from './directives.nav.js';
 
 function routes ($stateProvider) {
   'ngInject';
   $stateProvider
-    .state('directives',
-    {
+    .state('directives', {
       url: '/directives',
+      resolve: {
+        links: () => nav.headerLinks,
+        menuLinks: () => nav.menuLinks
+      },
       views: {
-        'main': {
+        'top': {
+          component: 'header'
+        },
+        'left': {
+          component: 'leftNavbar'
+        },
+        'content': {
           template: DirectivesTemplate,
           controller: 'DirectivesController',
           controllerAs: '$ctrl'

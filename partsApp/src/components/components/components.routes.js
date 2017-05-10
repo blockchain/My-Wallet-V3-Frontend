@@ -1,13 +1,23 @@
 import ComponentsTemplate from './components.pug';
+import nav from './components.nav.js';
 
 function routes ($stateProvider) {
   'ngInject';
   $stateProvider
-    .state('components',
-    {
+    .state('components', {
       url: '/components',
+      resolve: {
+        links: () => nav.headerLinks,
+        menuLinks: () => nav.menuLinks
+      },
       views: {
-        'main': {
+        'top': {
+          component: 'header'
+        },
+        'left': {
+          component: 'leftNavbar'
+        },
+        'content': {
           template: ComponentsTemplate,
           controller: 'ComponentsController',
           controllerAs: '$ctrl'

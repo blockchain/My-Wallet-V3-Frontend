@@ -9,6 +9,9 @@ var entryFile = entryRoot + '/app.js';
 var outputRoot = DIST ? __dirname + './partsApp/dist' : __dirname + './partsApp/build';
 var outputFilename = DIST ? '[name]-[hash].js' : '[name].js';
 
+// TODO : Clean production related variables
+// TODO : Add minification and hash for production script
+
 module.exports = {
   entry: entryFile,
   output: {
@@ -20,6 +23,7 @@ module.exports = {
       'npm': `${__dirname}/../node_modules`,
       'bower': `${__dirname}/../bower_components`,
       'components': `${__dirname}/src/components`,
+      'shared': `${__dirname}/src/shared`,
       'walletJs': `${__dirname}/../assets/js`
     }
   },
