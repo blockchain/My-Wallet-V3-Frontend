@@ -1,0 +1,9 @@
+.unocoin-signup
+  .signup-steps.border-bottom-light
+    div(ng-include="'partials/unocoin/signup-steps.pug'")
+  div.pl-40.pr-40.pt-40.pb-25
+    div(ng-if="vm.onStep('create')" ng-include="'partials/unocoin/create.pug'" ng-controller="UnocoinCreateAccountController")
+    div(ng-if="vm.onStep('verify')" ng-include="'partials/unocoin/verify.pug'" ng-controller="UnocoinVerifyController")
+    div(ng-if="vm.onStep('link')" ng-include="'partials/unocoin/link.pug'" ng-controller="UnocoinLinkController")
+    div(ng-if="vm.onStep('buy')" ng-include="'partials/unocoin/buy.pug'" ng-controller="UnocoinBuyController")
+  contact-support-footer.abs(ng-hide="inMobileBuy")
