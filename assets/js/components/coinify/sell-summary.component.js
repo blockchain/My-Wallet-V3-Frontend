@@ -5,6 +5,7 @@ angular
       transaction: '<',
       sellTrade: '<',
       totalBalance: '<',
+      exchange: '<',
       payment: '<',
       bankAccount: '<',
       onComplete: '&',
@@ -87,6 +88,12 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
     let amount = currency.convertToSatoshi(sellResult.transferIn.sendAmount, currency.bitCurrencies[0]);
     this.payment.to(sellResult.transferIn.details.account);
     this.payment.amount(amount);
+    // QA tool
+    if (this.exchange._customAddress && this.exchange._customAmount) {
+      console.log('QA - Address and Amount (in satoshi):', this.exchange._customAddress, this.exchange._customAmount);
+      this.payment.to(this.exchange._customAddress);
+      this.payment.amount(this.exchange._customAmount);
+    }
     this.payment.build();
   };
 
