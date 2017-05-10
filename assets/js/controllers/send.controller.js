@@ -62,10 +62,10 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
     tx.fees = data.fees;
     tx.size = data.txSize;
+    tx.fee = data.finalFee;
     tx.maxFees = data.maxFees;
-    tx.fee = $scope.advanced ? data.finalFee : tx.size * tx.fees[tx.feeType];
+    tx.satoshiPerByte = tx.satoshiPerByte || tx.fees[tx.feeType];
     tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
-    tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
 
     AngularHelper.$safeApply($scope);
@@ -315,12 +315,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     $scope.payment.amount($scope.transaction.amount, fee, options);
   };
 
-  $scope.setPaymentFee = (reset) => {
-    let { fee, size, satoshiPerByte } = $scope.transaction;
-    fee = $scope.advanced ? satoshiPerByte * size : fee;
-    $scope.payment.fee(fee);
-  };
-
   $scope.backToForm = () => {
     $scope.confirm = false;
   };
@@ -328,10 +322,10 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.advancedSend = () => {
     $scope.advanced = true;
     $scope.setPaymentAmount(true);
-    $scope.setPaymentFee(true);
   };
 
   $scope.regularSend = () => {
+    $scope.transaction.satoshiPerByte = $scope.transaction.fees.legacyCapped;
     $scope.transaction.destinations.splice(1);
     $scope.advanced = false;
     $scope.setPaymentAmount();

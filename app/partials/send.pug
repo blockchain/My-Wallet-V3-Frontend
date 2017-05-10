@@ -118,7 +118,12 @@
           .group.inline.flex-center.mt-20
             .item.inline.width-60
               label.mbn.colon(translate="TX_FEE")
-              select(ng-model="transaction.feeType" name="fee" ng-change="payment.updateFeeType(transaction.feeType)" ng-options="feeType as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees" tabindex="" required)
+              select(name="fee"
+                     ng-model="transaction.satoshiPerByte"
+                     ng-change="payment.updateFeePerKb(transaction.satoshiPerByte)"
+                     ng-options="fee as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees"
+                     tabindex=""
+                     required)
             .item.right-align.width-40
               span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
           .group.inline.mt-5
@@ -137,7 +142,7 @@
                     type="number"
                     step="any"
                     focus-when="advanced"
-                    ng-change="setPaymentFee()"
+                    ng-change="payment.updateFeePerKb(transaction.satoshiPerByte)"
                     transform-currency="satoshi"
                     ng-model="transaction.satoshiPerByte"
                     ng-max="{{}}"
