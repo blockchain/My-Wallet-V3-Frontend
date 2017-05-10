@@ -330,6 +330,42 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'BuySellCtrl',
       params: { countryCode: null, selectedTab: 'BUY_BITCOIN' }
     })
+    .state('wallet.common.buy-sell.unocoin', {
+      templateUrl: 'partials/unocoin/checkout.pug',
+      controller: 'UnocoinCheckoutController',
+      params: { selectedTab: null },
+      resolve: {
+        // Using Options.get is a hack to prevent route error while waiting for unocoin api key
+        _loadExchangeData ($q, MyWallet, unocoin, Options) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return exchange.user && !exchange.profile
+            ? Options.get().then(() => unocoin.fetchExchangeData(exchange))
+            : $q.resolve();
+        },
+        accounts ($q, MyWallet, Options) {
+          // let exchange = MyWallet.wallet.external.unocoin;
+          return $q.resolve([]);
+          // return exchange.hasAccount
+          //   ? Options.get().then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
+          //   : $q.resolve([]);
+        },
+        options (Options) { return Options.get(); },
+        showCheckout (options, MyWallet) {
+          let email = MyWallet.wallet.accountInfo.email;
+          let fraction = options.partners.unocoin.showCheckoutFraction;
+
+          return Blockchain.Helpers.isEmailInvited(email, fraction);
+        }
+      },
+      onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {
+        let exchange = MyWallet.wallet.external.unocoin;
+
+        if (exchange.profile == null && !showCheckout) {
+          $state.transition = null; // hack to prevent transition
+          modals.openUnocoinSignup(exchange);
+        }
+      }
+    })
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.pug',
       controller: 'SfoxCheckoutController',

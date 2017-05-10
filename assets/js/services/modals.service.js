@@ -107,6 +107,29 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
+  service.openUnocoinSignup = (exchange, quote) => service.expandTray({
+    templateUrl: 'partials/unocoin/signup.pug',
+    controllerAs: 'vm',
+    controller: 'UnocoinSignupController',
+    resolve: {
+      exchange () { return exchange; },
+      quote () { return quote; },
+      options: () => Options.get(),
+      accounts: ($q) => {
+        return $q.resolve([]);
+        // return exchange.profile
+        //   ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+        //   : $q.resolve([]);
+      }
+    }
+  }).result.then(() => {
+    $state.go('wallet.common.buy-sell.sfox', { selectedTab: 'ORDER_HISTORY' });
+  }).catch(() => {
+    let base = 'wallet.common.buy-sell';
+    let goingToBuySellState = $state.current.name.indexOf(base) === 0;
+    if (goingToBuySellState) $state.go('wallet.common.buy-sell');
+  });
+
   service.openTradeSummary = service.dismissPrevious((trade, state) => {
     let accounts = ($q, MyWallet) => {
       let exchange = MyWallet.wallet.external.sfox;
