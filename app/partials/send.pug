@@ -116,10 +116,10 @@
         //- Fee
         .group(ng-if="!advanced")
           .group.inline.flex-center.mt-20
-            .item.inline.width-50
+            .item.inline.width-60
               label.mbn.colon(translate="TX_FEE")
-              select(ng-model="transaction.feeType" name="fee" ng-change="payment.updateFeeType(transaction.feeType)" ng-options="feeType as feeType | translate for (feeType, fee) in transaction.fees | fees" tabindex="" required)
-            .item.right-align.width-50
+              select(ng-model="transaction.feeType" name="fee" ng-change="payment.updateFeeType(transaction.feeType)" ng-options="feeType as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees" tabindex="" required)
+            .item.right-align.width-40
               span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
           .group.inline.mt-5
             .item.inline.width-100.flex-between

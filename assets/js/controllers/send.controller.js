@@ -52,7 +52,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     satoshiPerByte: null,
     feeType: 'legacyCapped',
     fees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0},
-    feesPerKb: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0}
+    maxFees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0}
   };
 
   $scope.transaction = angular.copy($scope.transactionTemplate);
@@ -62,7 +62,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
     tx.fees = data.fees;
     tx.size = data.txSize;
-    tx.feesPerKb = data.feesPerKb;
+    tx.maxFees = data.maxFees;
     tx.fee = $scope.advanced ? data.finalFee : tx.size * tx.fees[tx.feeType];
     tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
     tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
@@ -402,9 +402,9 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       return fees.showFeeWarning(tx.fee, suggestedFee, maximumFee, surge);
     };
 
-    let high = tx.feesPerKb.priorityCap;
-    let mid = tx.feesPerKb.legacyCapped;
-    let low = tx.feesPerKb.lowerLimit;
+    let high = tx.maxFees.priorityCap;
+    let mid = tx.maxFees.legacyCapped;
+    let low = tx.maxFees.lowerLimit;
     console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
 
     if ($scope.advanced) {
