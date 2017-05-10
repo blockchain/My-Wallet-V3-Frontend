@@ -7,7 +7,8 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
   const actions = {
     FRONTEND_INITIALIZED: 'frontendInitialized',
     BUY_COMPLETED: 'buyCompleted',
-    SHOW_TX: 'showTx'
+    SHOW_TX: 'showTx',
+    COMPLETED_TRADE: 'completedTrade'
   }
 
   const service = Object.assign({}, actions)
@@ -34,7 +35,7 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
     Wallet.goal.firstLogin = Boolean(firstLogin);
     prepMobileBuy()
     Options.get()
-      .then(() => { MyWallet.loginFromJSON(json, externalJson, magicHash, password) })
+      .then(() => MyWallet.loginFromJSON(json, externalJson, magicHash, password))
       .then(() => $q(resolve => { Wallet.didLogin(MyWallet.wallet.guid, resolve) }))
       .then(toBuySell)
   }
@@ -42,6 +43,12 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
   $window.teardown = () => {
     $state.go('intermediate')
     $timeout(() => MyWallet.logout(true))
+  }
+
+  $window.checkForCompletedTrades = (json, externalJson, magicHash, password) => {
+    MyWallet.checkForCompletedTrades(json, externalJson, magicHash, password, (trade) => {
+      service.callMobileInterface(actions.COMPLETED_TRADE, trade.txHash)
+    })
   }
 
   service.callMobileInterface = (handlerName, value) => {
@@ -52,7 +59,7 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
     }
     if ($window.android) {
       let handler = $window.android[handlerName]
-      if (handler) handler.call($window.android)
+      if (handler) value ? handler.call($window.android, value) : handler.call($window.android)
       else console.error('Unknown android handler: ' + handlerName)
     }
   }
