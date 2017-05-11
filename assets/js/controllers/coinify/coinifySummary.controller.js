@@ -47,6 +47,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
 
   $scope.commitValues = () => {
     $scope.lock();
+    $scope.vm.quote = null;
     getQuote().then((q) => $scope.vm.quote = q)
               .then((q) => q.getPaymentMediums())
               .then((mediums) => mediums[medium].getAccounts())
