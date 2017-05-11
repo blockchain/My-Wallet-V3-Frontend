@@ -4,7 +4,7 @@ import uiRouter from 'npm/angular-ui-router';
 import ngResource from 'npm/angular-resource';
 // Internal resources
 import routes from './components.routes.js';
-import ComponentsController from './components.controller.js';
+import Components from './components.component.js';
 
 const modules = [
   uiRouter,
@@ -12,7 +12,7 @@ const modules = [
 ];
 
 export default angular
-  .module('app.pages.components', modules)
+  .module('app.components', modules)
   .config(routes)
-  .controller('ComponentsController', ComponentsController)
+  .component('components', Components)
   .name;

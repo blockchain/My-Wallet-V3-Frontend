@@ -4,17 +4,17 @@ import angular from 'npm/angular';
 import uiRouter from 'npm/angular-ui-router';
 
 import routing from './app.routes.js';
-import Adverts from 'components/adverts';
+import Home from 'components/home';
 import Components from 'components/components';
 import Directives from 'components/directives';
-import Home from 'components/home';
+import Adverts from 'components/directives/adverts';
 
 const modules = [
   uiRouter,
-  Adverts,
   Home,
   Components,
-  Directives
+  Directives,
+  Adverts
 ];
 
 angular

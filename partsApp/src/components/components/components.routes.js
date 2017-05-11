@@ -1,4 +1,3 @@
-import ComponentsTemplate from './components.pug';
 import nav from './components.nav.js';
 
 function routes ($stateProvider) {
@@ -7,20 +6,19 @@ function routes ($stateProvider) {
     .state('components', {
       url: '/components',
       resolve: {
+        title: () => 'Components',
         links: () => nav.headerLinks,
         menuLinks: () => nav.menuLinks
       },
       views: {
-        'top': {
+        'header': {
           component: 'header'
         },
-        'left': {
+        'menu': {
           component: 'leftNavbar'
         },
-        'content': {
-          template: ComponentsTemplate,
-          controller: 'ComponentsController',
-          controllerAs: '$ctrl'
+        'body': {
+          component: 'components'
         }
       }
     });

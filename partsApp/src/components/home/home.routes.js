@@ -1,4 +1,3 @@
-import HomeTemplate from './home.pug';
 import nav from './home.nav.js';
 
 function routes ($stateProvider) {
@@ -7,16 +6,15 @@ function routes ($stateProvider) {
     .state('home', {
       url: '/',
       resolve: {
+        title: () => 'Home',
         links: () => nav.headerLinks
       },
       views: {
-        'top': {
+        'header': {
           component: 'header'
         },
-        'content': {
-          template: HomeTemplate,
-          controller: 'HomeController',
-          controllerAs: '$ctrl'
+        'body': {
+          component: 'home'
         }
       }
     });

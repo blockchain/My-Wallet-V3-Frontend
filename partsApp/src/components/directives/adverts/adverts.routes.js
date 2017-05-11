@@ -1,16 +1,16 @@
-import AdvertsTemplate from './adverts.pug';
-
 function routes ($stateProvider) {
   'ngInject';
   $stateProvider
     .state('adverts',
     {
       url: '/adverts',
+      parent: 'directives',
+      resolve: {
+        title: () => 'Adverts'
+      },
       views: {
-        'main': {
-          template: AdvertsTemplate,
-          controller: 'AdvertsController',
-          controllerAs: '$ctrl'
+        'content': {
+          component: 'adverts'
         }
       }
     });

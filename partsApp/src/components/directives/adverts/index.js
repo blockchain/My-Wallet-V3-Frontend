@@ -4,18 +4,16 @@ import uiRouter from 'npm/angular-ui-router';
 import ngResource from 'npm/angular-resource';
 // Internal resources
 import routes from './adverts.routes.js';
-import AdvertsController from './adverts.controller.js';
+import Adverts from './adverts.component.js';
 // External resources
-import headerDirective from 'shared/header';
 
 const modules = [
   uiRouter,
-  ngResource,
-  headerDirective
+  ngResource
 ];
 
 export default angular
-  .module('app.pages.adverts', modules)
+  .module('app.directives.adverts', modules)
   .config(routes)
-  .controller('AdvertsController', AdvertsController)
+  .component('adverts', Adverts)
   .name;

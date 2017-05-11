@@ -4,7 +4,7 @@ import uiRouter from 'npm/angular-ui-router';
 import ngResource from 'npm/angular-resource';
 // Internal resources
 import routes from './home.routes.js';
-import HomeController from './home.controller.js';
+import Home from './home.component.js';
 // External resources
 import header from 'shared/header';
 import leftNavbar from 'shared/leftNavbar';
@@ -17,7 +17,7 @@ const modules = [
 ];
 
 export default angular
-  .module('app.pages.home', modules)
+  .module('app.home', modules)
   .config(routes)
-  .controller('HomeController', HomeController)
+  .component('home', Home)
   .name;

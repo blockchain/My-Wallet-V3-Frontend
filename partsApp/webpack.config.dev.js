@@ -11,6 +11,7 @@ var outputFilename = DIST ? '[name]-[hash].js' : '[name].js';
 
 // TODO : Clean production related variables
 // TODO : Add minification and hash for production script
+// TODO : Add ES-Lint
 
 module.exports = {
   entry: entryFile,

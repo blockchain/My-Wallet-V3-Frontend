@@ -9,6 +9,10 @@ class Controller {
   click (element) {
     jQuery(element.currentTarget).closest('.left-navbar').toggleClass('closed');
   }
+
+  toggleCollapse (element) {
+    jQuery(element.currentTarget).closest('.left-navbar').addClass('closed');
+  }
 }
 
 export default {

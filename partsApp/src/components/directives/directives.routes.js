@@ -1,4 +1,3 @@
-import DirectivesTemplate from './directives.pug';
 import nav from './directives.nav.js';
 
 function routes ($stateProvider) {
@@ -7,20 +6,19 @@ function routes ($stateProvider) {
     .state('directives', {
       url: '/directives',
       resolve: {
+        title: () => 'Directives',
         links: () => nav.headerLinks,
         menuLinks: () => nav.menuLinks
       },
       views: {
-        'top': {
+        'header': {
           component: 'header'
         },
-        'left': {
+        'menu': {
           component: 'leftNavbar'
         },
-        'content': {
-          template: DirectivesTemplate,
-          controller: 'DirectivesController',
-          controllerAs: '$ctrl'
+        'body': {
+          component: 'directives'
         }
       }
     });

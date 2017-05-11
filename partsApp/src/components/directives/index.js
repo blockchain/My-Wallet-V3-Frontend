@@ -4,20 +4,22 @@ import uiRouter from 'npm/angular-ui-router';
 import ngResource from 'npm/angular-resource';
 // Internal resources
 import routes from './directives.routes.js';
-import DirectivesController from './directives.controller.js';
+import Directives from './directives.component.js';
 // External resources
 import header from 'shared/header';
 import leftNavbar from 'shared/leftNavbar';
+import adverts from './adverts';
 
 const modules = [
   uiRouter,
   ngResource,
   header,
-  leftNavbar
+  leftNavbar,
+  adverts
 ];
 
 export default angular
-  .module('app.pages.directives', modules)
+  .module('app.directives', modules)
   .config(routes)
-  .controller('DirectivesController', DirectivesController)
+  .component('directives', Directives)
   .name;

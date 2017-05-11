@@ -2,7 +2,7 @@
 .header {
 
   .navbar {
-    background-color: #BCBCBC;
+    background-color: $gray;
 
     &.navbar-default {
       border: none;
@@ -24,17 +24,12 @@
 
         & a {
             cursor: pointer;
-            color: #FFFFFF;
-
-            &:hover {
-              color: #000000;
-            }
+            color: $white;
         }
 
         &:hover {
           & a {
-            background-color: #EFEFEF;
-            color: #000000;
+            background-color: $blue;
           }
         }
       }
