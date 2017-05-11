@@ -157,10 +157,13 @@ describe('CoinifyController', () => {
     beforeEach(function () { let ctrl;
     return ctrl = undefined; });
 
-    it('should ask user to verify email', () => {
+    it('should ask user to verify email', inject(function (Wallet) {
+      Wallet.user.isEmailVerified = false;
+      buySell.getExchange = () => ({ profile: {} });
       let ctrl = getController();
       return expect(ctrl.currentStep()).toBe('email');
-    });
+    })
+  );
 
     it('should ask user to signup if email is verified',inject(function (Wallet) {
       Wallet.user.isEmailVerified = true;
