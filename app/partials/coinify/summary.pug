@@ -1,4 +1,4 @@
-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng-submit="state.editAmount ? commitValues() : submit();" novalidate)
+form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng-submit="state.editAmount ? commitValues() : buy();" novalidate)
   .flex-column.mbl(ng-show="error || $parent.error")
     p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
     span.mvm(translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")

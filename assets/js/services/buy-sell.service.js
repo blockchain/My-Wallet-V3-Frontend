@@ -211,7 +211,12 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getOpenKYC () {
-    return service.kycs.length ? $q.resolve(service.kycs[0]) : service.triggerKYC();
+    if (service.kycs.length) {
+      let kyc = service.kycs[0];
+      return ['declined', 'rejected', 'expired'].indexOf(kyc.state) > -1 ? service.triggerKYC() : kyc;
+    } else {
+      return service.triggerKYC();
+    }
   }
 
   function getTrades () {

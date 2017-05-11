@@ -73,7 +73,7 @@ describe('CoinifySummaryController', () => {
 
       buySell.getExchange = () => ({
         getBuyQuote() {}
-      }) ;
+      });
 
       buySell.getQuote = () => $q.resolve(quote);
 
@@ -121,18 +121,6 @@ describe('CoinifySummaryController', () => {
       return expect(scope.vm.quote).toBe(quote);
     });
   });
-
-  describe('.openKYC()', () =>
-
-    it('should get open KYC and go to isx step', () => {
-      spyOn(buySell, 'getOpenKYC');
-      spyOn(scope.vm, 'goTo');
-      scope.openKYC();
-      scope.$digest();
-      expect(buySell.getOpenKYC).toHaveBeenCalled();
-      return expect(scope.vm.goTo).toHaveBeenCalledWith('isx');
-    })
-  );
 
   describe('.buy()', function () {
 
