@@ -89,7 +89,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
 
-  if (!this.user.isEmailVerified) {
+  if (!this.user.isEmailVerified && !this.trade) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('signup');
