@@ -58,8 +58,8 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
         input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
       div
         label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
-.modal-footer.flex-between.flex-row
-  button.button-muted(ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
+.modal-footer.flex-between.flex-row(ng-class="{'flex-end': inMobileBuy}")
+  button.button-muted(ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
   div
     button.button-muted.mrm(ng-click="vm.close(3)" translate="CANCEL_ORDER")
     button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="CONFIRM")

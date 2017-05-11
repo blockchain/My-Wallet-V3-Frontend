@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyMediumController', CoinifyMediumController);
 
-function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, buySell) {
+function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelper, Alerts, buySell) {
   AngularHelper.installLock.call($scope);
   $scope.$timeout = $timeout;
   $scope.limits = buySell.limits;
@@ -20,7 +20,7 @@ function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, b
   // $scope.needsKYC () => true;
   $scope.pendingKYC = () => buySell.kycs[0] && buySell.tradeStateIn(buySell.states.pending)(buySell.kycs[0]);
 
-  $scope.vm.medium = $scope.belowCardMax ? 'card' : 'bank';
+  $scope.vm.medium = $scope.belowCardMax || $rootScope.inMobileBuy ? 'card' : 'bank';
 
   $scope.submit = () => {
     $scope.lock();
@@ -46,4 +46,6 @@ function CoinifyMediumController ($scope, $timeout, $q, AngularHelper, Alerts, b
   quote.getPaymentMediums()
        .then((mediums) => $scope.mediums = mediums)
        .then($scope.free).catch((err) => console.log(err));
+
+  if ($rootScope.inMobileBuy) $scope.submit();
 }
