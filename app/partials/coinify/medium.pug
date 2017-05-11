@@ -26,11 +26,11 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
           img.mrm(src="img/credit-card.png" height="15")
           span.type-h5.em-300(translate="CARD")
         ul
-          li.ml-30.em-300.f-12(translate="CARD_TRANSFER.COPY1")
-          li.ml-30.em-300.f-12
+          li.ml-35.em-300.f-12(translate="CARD_TRANSFER.COPY1")
+          li.ml-35.em-300.f-12
             span(translate="CARD_TRANSFER.COPY2")
             helper-button(content="CARD_TRANSFER.HELPER")
-          li.ml-30.em-300.f-12(translate="CARD_TRANSFER.COPY3")
+          li.ml-35.em-300.f-12(translate="CARD_TRANSFER.COPY3")
     .width-45.flex-justify.flex-column(ng-show="!belowCardMax")
       div.mb-20(translate="CARD_TRANSFER.RECOMMENDATION" translate-values="{max: limits.card.max[vm.fiatCurrency()], code: vm.fiatCurrency()}")
       label.pointer.em-300.primary(for="card" ng-click="$timeout(submit, 1)" translate="I want to pay via credit/debit card")
