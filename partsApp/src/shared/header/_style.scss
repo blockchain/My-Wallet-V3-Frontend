@@ -26,6 +26,11 @@
         & a {
             cursor: pointer;
             color: $white;
+
+            &.active {
+              font-weight: bold;
+              color: $gold;
+            }
         }
 
         &:hover {

@@ -30,6 +30,11 @@
     font-size: 18px;
     color: $white;
 
+    &.active {
+      font-weight: bold;
+      color: $gold;
+    }
+
     &:hover {
         background-color: $blue;
         color: white;

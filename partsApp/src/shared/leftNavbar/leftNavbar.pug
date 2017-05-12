@@ -1,3 +1,3 @@
 nav.left-navbar.closed
   .arrow(ng-click="$ctrl.click($event)")
-  a(ng-repeat="link in $ctrl.menuLinks" ui-sref="{{link.href}}" ng-click="$ctrl.toggleCollapse($event)") {{link.title}}
+  a(ng-repeat="link in $ctrl.menuLinks" ui-sref="{{link.href}}" ui-sref-active="active" ng-click="$ctrl.toggleCollapse($event)") {{link.title}}
