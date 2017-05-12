@@ -49,16 +49,8 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   this.checkForUpdatedQuote();
 
   const handleSecondPasswordError = (e) => {
-    if (e === 'Your second password is required to send bitcoin. Please try again') {
-      this.waiting = false;
-      Alerts.displayError(e);
-      return;
-    }
-    if (e instanceof SyntaxError) {
-      this.onComplete();
-    } else {
-      this.error = JSON.parse(e);
-    }
+    this.waiting = false;
+    Alerts.displayError(e);
   };
 
   const transactionFailed = (message) => {
