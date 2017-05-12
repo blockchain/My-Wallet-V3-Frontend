@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Options', Options);
 
-Options.$inject = ['$http', '$rootScope', 'BlockchainConstants'];
+Options.$inject = ['$http', 'BlockchainConstants'];
 
-function Options ($http, $rootScope, BlockchainConstants) {
+function Options ($http, BlockchainConstants) {
   let fetchedOptions = false;
 
   const service = {
@@ -16,8 +16,7 @@ function Options ($http, $rootScope, BlockchainConstants) {
   };
 
   function get () {
-    let file = $rootScope.isProduction ? 'wallet-options' : (BlockchainConstants.NETWORK === 'testnet' ? 'wallet-options-testnet' : 'wallet-options-debug');
-    let url = `/Resources/${file}.json`;
+    let url = `/Resources/wallet-options.json`;
     if (fetchedOptions) {
       return Promise.resolve(service.options);
     }
