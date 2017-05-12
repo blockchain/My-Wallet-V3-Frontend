@@ -33,13 +33,13 @@
       div
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-    .flex-2.flex-column.flex-align-end.f-12.mtvl
-      .flex-row(ng-class="{fade: tx.confirmations <= 5}")
+    .flex-2.flex-column.flex-align-end.f-12.mtvl(ng-if=":: tx.confirmations > 5")
+      .flex-row
         p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
         p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
         | :&nbsp;
         fiat.em-600(btc=":: tx.amount" date=":: tx.time" abs)
-      .flex-row.fee(ng-class="{hide: tx.txType === 'received', fade: tx.confirmations <= 5}")
+      .flex-row.fee(ng-if=":: tx.txType !== 'received'")
         helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
