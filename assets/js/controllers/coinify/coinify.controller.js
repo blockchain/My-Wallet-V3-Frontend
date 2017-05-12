@@ -61,7 +61,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   };
 
   $scope.exitToNativeTx = () => {
-    buyMobile.callMobileInterface(buyMobile.SHOW_TX, $scope.trade.txHash);
+    buyMobile.callMobileInterface(buyMobile.SHOW_TX, this.trade.txHash);
   };
 
   $scope.getQuoteHelper = () => {
