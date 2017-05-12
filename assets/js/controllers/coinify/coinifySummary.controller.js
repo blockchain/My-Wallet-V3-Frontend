@@ -17,7 +17,6 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.currencies = currency.coinifyCurrencies;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
-  $scope.needsKYC = () => $scope.isBank && +buySell.getExchange().profile.level.name < 2;
 
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }
@@ -48,6 +47,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
 
   $scope.commitValues = () => {
     $scope.lock();
+    $scope.vm.quote = null;
     getQuote().then((q) => $scope.vm.quote = q)
               .then((q) => q.getPaymentMediums())
               .then((mediums) => mediums[medium].getAccounts())
@@ -57,6 +57,8 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   };
 
   $scope.buy = () => {
+    $scope.lock();
+
     let success = (trade) => {
       $scope.vm.quote = null;
       $scope.vm.trade = trade;
@@ -72,25 +74,6 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
                                     err = tryParse(err);
                                     if (err.error_description) Alerts.displayError(err.error_description);
                                   });
-  };
-
-  $scope.openKYC = () => {
-    $q.resolve(buySell.getOpenKYC())
-      .then((kyc) => $scope.vm.trade = kyc)
-      .then(() => $scope.vm.quote = null)
-      .then(() => $scope.vm.goTo('isx'))
-      .catch((err) => {
-        $scope.free();
-        err = tryParse(err);
-        if (err.error_description) Alerts.displayError(err.error_description);
-      });
-  };
-
-  $scope.submit = () => {
-    $scope.lock();
-
-    $q.resolve(buySell.fetchProfile())
-      .then(() => $scope.needsKYC() ? $scope.openKYC() : $scope.buy());
   };
 
   $scope.$watch('rateForm', () => {

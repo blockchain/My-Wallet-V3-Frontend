@@ -1,17 +1,16 @@
 describe('CoinifyMediumController', () => {
   let $q;
   let scope;
-  let Wallet;
   let $rootScope;
   let $controller;
   let buySell;
 
   let mediums = {
     'card': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts () { return $q.resolve([]); }
     },
     'bank': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts () { return $q.resolve([]); }
     }
   };
 
@@ -19,13 +18,19 @@ describe('CoinifyMediumController', () => {
     quoteAmount: 1,
     baseAmount: -30000,
     baseCurrency: 'USD',
-    getPaymentMediums() { return $q.resolve(mediums); }
+    getPaymentMediums () { return $q.resolve(mediums); }
   };
 
   let kyc = {
     id: 111,
     state: 'pending',
     createdAt: new Date()
+  };
+
+  let profile = {
+    level: {
+      name: '2'
+    }
   };
 
   beforeEach(angular.mock.module('walletApp'));
@@ -36,12 +41,17 @@ describe('CoinifyMediumController', () => {
       $controller = _$controller_;
       $q = _$q_;
 
-      Wallet = $injector.get('Wallet');
       buySell = $injector.get('buySell');
 
       buySell.kycs = [kyc];
 
-      return buySell.limits = {
+      buySell.getExchange = () => ({
+        profile: profile,
+        getBuyQuote () {},
+        fetchProfile () { return $q.resolve(profile); }
+      });
+
+      buySell.limits = {
         bank: {
           min: {
             'EUR': 300
@@ -71,12 +81,12 @@ describe('CoinifyMediumController', () => {
     scope.vm = {
       quote,
       medium: 'card',
-      baseFiat() { return true; },
-      fiatCurrency() { return 'EUR'; },
-      goTo(state) {}
+      baseFiat () { return true; },
+      fiatCurrency () { return 'EUR'; },
+      goTo (state) {}
     };
 
-    $controller("CoinifyMediumController",
+    $controller('CoinifyMediumController',
       {$scope: scope});
     return scope;
   };
@@ -120,7 +130,6 @@ describe('CoinifyMediumController', () => {
   );
 
   describe('.submit()', function () {
-
     it('should disable the form', () => {
       spyOn(scope, 'lock');
       scope.submit();
