@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile, Env) {
+function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, buyMobile, Env) {
   Env.then(env => {
     this.buySellDebug = env.buySellDebug;
   });
@@ -34,8 +34,12 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.trade && this.trade.sendAmount && buySell.getTrades().then($scope.goToOrderHistory());
   };
 
+  let links;
+  Env.then(env => {
+    links = env.partners.coinify.surveyLinks;
+  });
+
   this.close = (idx) => {
-    let links = options.partners.coinify.surveyLinks;
     if (idx > links.length - 1) { this.cancel(); return; }
     Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
   };

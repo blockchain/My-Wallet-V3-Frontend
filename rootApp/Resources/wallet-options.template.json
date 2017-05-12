@@ -30,7 +30,6 @@
       "showSellFraction": 0
     },
     "sfox": {
-      "production": false,
       "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
       "inviteFormFraction": 0.1,
@@ -46,10 +45,8 @@
     }
   },
   "domains": {
-    "root": "REPLACED_BY_DEV_SERVER",
-    "webSocket": "REPLACED_BY_DEV_SERVER",
-    "api": "REPLACED_BY_DEV_SERVER",
-    "walletHelper": "REPLACED_BY_DEV_SERVER"
-  },
-  "network": "bitcoin"
+    "root": "https://blockchain.info",
+    "webSocket": "wss://ws.blockchain.info/inv",
+    "api": "https://api.blockchain.info"
+  }
 }

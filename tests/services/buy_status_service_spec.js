@@ -1,23 +1,32 @@
 describe('buyStatus service', () => {
-  let Wallet;
   let MyWallet;
   let MyWalletHelpers;
-  let Options;
   let accountInfo;
   let buyStatus;
-  let $rootScope;
   let sfoxOptions;
 
   beforeEach(angular.mock.module('walletApp'));
 
-  beforeEach(() =>
+  beforeEach(() => {
+    sfoxOptions = {
+      countries: ['US']
+    };
+
+    module(($provide) => {
+      $provide.value('Env', Promise.resolve({
+        showBuySellTab: ['US'],
+        partners: {
+          coinify: {
+            countries: ['NL']
+          },
+          sfox: sfoxOptions
+        }
+      }));
+    });
+
     angular.mock.inject(function ($injector, _$rootScope_, _$q_) {
-      $rootScope = _$rootScope_;
-      let $q = _$q_;
-      Wallet = $injector.get('Wallet');
       MyWallet = $injector.get('MyWallet');
       MyWalletHelpers = $injector.get('MyWalletHelpers');
-      Options = $injector.get('Options');
 
       accountInfo = {
         countryCodeGuess: 'US',
@@ -25,10 +34,6 @@ describe('buyStatus service', () => {
           coinify: false,
           sfox: false
         }
-      };
-
-      sfoxOptions = {
-        countries: ['US']
       };
 
       MyWalletHelpers.isEmailInvited = function (email, fraction) {
@@ -41,18 +46,6 @@ describe('buyStatus service', () => {
         }
       };
 
-      Options.get = () =>
-        Promise.resolve({
-          showBuySellTab: ["US"],
-          partners: {
-            coinify: {
-              countries: ["NL"]
-            },
-            sfox: sfoxOptions,
-          }
-        })
-      ;
-
       MyWallet.wallet = {
         accountInfo,
         hdwallet: {
@@ -62,9 +55,9 @@ describe('buyStatus service', () => {
       };
 
 
-      return buyStatus = $injector.get('buyStatus');
-    })
-  );
+      buyStatus = $injector.get('buyStatus');
+    });
+  });
 
   describe('canBuy', function () {
     it('should be false in a non-coinify country by default', done => expect(buyStatus.canBuy()).toBeResolvedWith(false, done));

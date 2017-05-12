@@ -11,7 +11,7 @@ describe('CoinifyEmailComponentController', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$componentController_, _$q_, _$timeout_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$componentController_, _$q_, _$timeout_, $httpBackend) {
       $rootScope = _$rootScope_;
       $componentController = _$componentController_;
       let $q = _$q_;
@@ -22,8 +22,11 @@ describe('CoinifyEmailComponentController', () => {
         validEmail: true,
         onComplete: jasmine.createSpy('onComplete')
       };
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
       Wallet = $injector.get('Wallet');
+
       Wallet.goal = {};
       Wallet.changeEmail = (email, succ, err) => succ();
       return Wallet.resendEmailConfirmation = () => $q.resolve();

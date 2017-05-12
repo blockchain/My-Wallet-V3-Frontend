@@ -9,6 +9,11 @@ describe('SettingsAddressesCtrl', () => {
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(inject(($httpBackend) => {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+  }));
+
   let modal =
     {open() {}};
 

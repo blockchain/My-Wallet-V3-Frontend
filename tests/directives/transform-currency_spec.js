@@ -1,5 +1,4 @@
 describe('Transform-Currency Directive', () => {
-
   let scope;
   let isoScope;
   let element;
@@ -8,7 +7,6 @@ describe('Transform-Currency Directive', () => {
 
   beforeEach(() =>
     inject(function ($rootScope, $compile, $injector) {
-
       let currency = $injector.get('currency');
       currency.conversions.USD = { conversion: 1000, symbol: '$' };
 
@@ -26,14 +24,12 @@ describe('Transform-Currency Directive', () => {
   );
 
   describe('on initialization', () => {
-
     it('should have a parser defined', () => expect(isoScope.parseToModel).toBeDefined());
 
     it('should have a formatter defined', () => expect(isoScope.formatToView).toBeDefined());
   });
 
   describe('transformation magic', () => {
-
     it('should parse the view (fiat) to the model (satoshi)', () => {
       pending();
       // TODO: Figure out how to test this
@@ -62,7 +58,7 @@ describe('Transform-Currency Directive', () => {
     });
 
     it('should leave empty alone', () => {
-      scope.amount = "";
+      scope.amount = '';
       scope.$digest();
       expect(element.val()).toEqual('');
     });

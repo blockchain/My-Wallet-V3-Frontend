@@ -544,67 +544,6 @@ module.exports = (grunt) => {
     },
 
     replace: {
-      root_url: {
-        src: ['build/js/sharedServices/env.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'customRootURL = $rootScope.rootURL',
-          to: () => {
-            if (this.rootDomain === null) {
-              return "customRootURL = '/'";
-            } else {
-              if (this.rootDomain.substr(0, 5) !== 'local') {
-                return `customRootURL = 'https://${this.rootDomain}/'`;
-              } else {
-                return `customRootURL = 'http://${this.rootDomain}/'`;
-              }
-            }
-          }
-        }]
-      },
-      web_socket_url: {
-        src: ['build/js/sharedServices/env.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'customWebSocketURL = $rootScope.webSocketURL',
-          to: () => {
-            return `customWebSocketURL = '${ this.webSocketURL }'`;
-          }
-        }]
-      },
-      wallet_helper_url: {
-        src: ['build/js/sharedServices/env.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'http://localhost:8081',
-          to: () => {
-            return this.walletHelperUrl;
-          }
-        }]
-      },
-
-      api_domain: {
-        src: ['build/js/sharedServices/env.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'apiDomain = $rootScope.apiDomain',
-          to: () => {
-            if (this.rootDomain && (this.rootDomain.substr(0, 5) === 'local')) {
-              return `apiDomain = 'http://${this.apiDomain}/'`;
-            } else {
-              return `apiDomain = 'https://${this.apiDomain}/'`;
-            }
-          }
-        }]
-      },
-      network: {
-        src: ['build/js/sharedServices/env.service.js'],
-        overwrite: true,
-        replacements: [{
-          from: 'network = $rootScope.network',
-          to: () => `network = '${this.network}'`
-        }]
-      },
       version_frontend: {
         src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
@@ -684,16 +623,6 @@ module.exports = (grunt) => {
   // Run clean, test and build first
   grunt.registerTask('dist', () => {
     let versionFrontend = grunt.option('versionFrontend');
-    let rootDomain = grunt.option('rootDomain');
-    let webSocketURL = grunt.option('webSocketURL');
-    let apiDomain = grunt.option('apiDomain');
-    let network = grunt.option('network');
-
-    this.walletHelperUrl = grunt.option('walletHelperUrl');
-    if (!this.walletHelperUrl) {
-      console.log('WALLET_HELPER_URL missing');
-      exit(1);
-    }
 
     if (!versionFrontend) {
       versionFrontend = 'intermediate';
@@ -704,43 +633,9 @@ module.exports = (grunt) => {
 
     this.versionFrontend = versionFrontend;
 
-    if (!network) {
-      network = 'bitcoin';
-    }
-
-    this.network = network;
-
-    if (!rootDomain) {
-      // Production will work with rootURL = 'https://blockchain.info/' and '/'
-      // Tor will only work with   rootURL = '/'
-      console.log('No root domain specified, assuming blockchain.info or tor');
-      this.rootDomain = null;
-    } else {
-      console.log(`Root domain: ${rootDomain}`);
-      this.rootDomain = rootDomain;
-    }
-
-    this.webSocketURL = webSocketURL;
-
-    grunt.task.run([
-      'replace:root_url',
-      'replace:web_socket_url',
-      'replace:wallet_helper_url'
-    ]);
-
-    if (apiDomain) {
-      this.apiDomain = apiDomain;
-      console.log(`Custom API domain: ${this.apiDomain}`);
-
-      grunt.task.run([
-        'replace:api_domain'
-      ]);
-    }
-
     return grunt.task.run([
       'replace:version_frontend',
       'replace:version_my_wallet',
-      'replace:network',
       'preprocess:js',
       'concat:landingNotMinifiedDependencies',
       'uglify:landingDependencies',

@@ -1,17 +1,19 @@
 describe('Trade Directive', () => {
   let element;
   let isoScope;
-  let Wallet;
-  let Alerts;
-  let $q;
 
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function ($compile, $rootScope, $injector, _$q_) {
-    $q = _$q_;
-    Wallet = $injector.get('Wallet');
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        rootURL: 'https://blockchain.info/'
+      }));
+    });
+  });
+
+  beforeEach(inject(function ($compile, $rootScope, $injector, $q) {
     let MyWallet = $injector.get('MyWallet');
-    Alerts = $injector.get('Alerts');
 
     MyWallet.wallet = {
       external: {
@@ -29,10 +31,10 @@ describe('Trade Directive', () => {
 
     parentScope.buy = function () {};
 
-    let html = "<trade trade='trade' buy='buy'></trade>";
+    let html = '<trade trade="trade" buy="buy"></trade>';
     element = $compile(html)(parentScope);
     parentScope.$digest();
-    return isoScope = element.isolateScope();
+    isoScope = element.isolateScope();
   })
   );
 
@@ -42,25 +44,25 @@ describe('Trade Directive', () => {
 
   describe('update()', () => {
     it('should set the error state', () => {
-      isoScope.trade.state = "cancelled";
+      isoScope.trade.state = 'cancelled';
       isoScope.$digest();
       expect(isoScope.error).toEqual(true);
     });
 
     it('should set the success state', () => {
-      isoScope.trade.state = "completed";
+      isoScope.trade.state = 'completed';
       isoScope.$digest();
       expect(isoScope.completed).toEqual(true);
     });
 
     it('should set the pending state', () => {
-      isoScope.trade.state = "awaiting_transfer_in";
+      isoScope.trade.state = 'awaiting_transfer_in';
       isoScope.$digest();
       expect(isoScope.pending).toEqual(true);
     });
 
     it('should set the completed state', () => {
-      isoScope.trade.state = "expired";
+      isoScope.trade.state = 'expired';
       isoScope.$digest();
       expect(isoScope.completed).toEqual(true);
     });

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buyStatus', buyStatus);
 
-function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, localStorageService, Alerts, $state, $q) {
+function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localStorageService, Alerts, $state, $q) {
   const service = {};
 
   let isCountryWhitelisted = null;
@@ -13,17 +13,17 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, loca
 
   let nextWeek = () => new Date(Date.now() + 604800000).getTime();
 
-  let processOptions = (options) => {
+  let processEnv = (env) => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
     // Coinify countries are no longer invite-only
-    isCoinifyCountry = accountInfo && options.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-    isSFOXCountry = accountInfo && options.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isSFOXCountry = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
-    let whitelist = options.showBuySellTab || [];
+    let whitelist = env.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
 
-    sfoxInviteFraction = (options.partners.sfox && options.partners.sfox.inviteFormFraction) || 0;
+    sfoxInviteFraction = (env.partners.sfox && env.partners.sfox.inviteFormFraction) || 0;
   };
 
   service.canBuy = () => {
@@ -36,13 +36,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Options, loca
     // * their IP is in a country supported by SFOX AND their email is invited
     let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
 
-    if (Options.didFetch) {
-      processOptions(Options.options);
-      return $q.resolve(canBuy());
-    } else {
-      return Options.get().then(processOptions)
-                          .then(canBuy);
-    }
+    return Env.then(processEnv).then(canBuy);
   };
 
   service.shouldShowInviteForm = () => {

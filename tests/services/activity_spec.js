@@ -1,19 +1,22 @@
 describe('Activity', () => {
   let Activity;
-  let Wallet;
   let MyWallet;
   let buySell;
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(inject(($httpBackend) => {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+  }));
+
   beforeEach(() =>
     angular.mock.inject(function ($injector) {
       Activity = $injector.get('Activity');
-      Wallet = $injector.get('Wallet');
       MyWallet = $injector.get('MyWallet');
       buySell = $injector.get('buySell');
 
-      return MyWallet.wallet = {
+      MyWallet.wallet = {
         txList: {
           subscribe () { return (function () { }); },
           transactions () {
