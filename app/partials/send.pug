@@ -119,9 +119,9 @@
             .item.inline.width-60
               label.mbn.colon(translate="TX_FEE")
               select(name="fee"
-                     ng-model="transaction.satoshiPerByte"
-                     ng-change="payment.updateFeePerKb(transaction.satoshiPerByte)"
-                     ng-options="fee as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees"
+                     ng-model="transaction.feeType"
+                     ng-change="payment.updateFeePerKb(transaction.fees[transaction.feeType])"
+                     ng-options="feeType as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees"
                      tabindex=""
                      required)
             .item.right-align.width-40

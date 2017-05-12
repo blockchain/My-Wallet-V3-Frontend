@@ -64,8 +64,8 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     tx.size = data.txSize;
     tx.fee = data.finalFee;
     tx.maxFees = data.maxFees;
-    tx.satoshiPerByte = tx.satoshiPerByte || tx.fees[tx.feeType];
     tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
+    tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
 
     AngularHelper.$safeApply($scope);
@@ -310,6 +310,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.setPaymentAmount = (reset) => {
     let amount = $scope.transaction.amount;
     if (isNaN(amount) || amount <= 0) return;
+    if ($scope.getTransactionTotal() > $scope.transaction.maxAvailable) return;
     let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
     let options = FEE_ENABLED && !$scope.advanced && !reset ? FEE_OPTIONS : null;
     $scope.payment.amount($scope.transaction.amount, fee, options);
@@ -325,9 +326,11 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.regularSend = () => {
-    $scope.transaction.satoshiPerByte = $scope.transaction.fees.legacyCapped;
-    $scope.transaction.destinations.splice(1);
+    let { fees, feeType, destinations } = $scope.transaction;
+    $scope.transaction.satoshiPerByte = fees[feeType];
     $scope.advanced = false;
+    destinations.splice(1);
+    $scope.payment.updateFeePerKb($scope.transaction.satoshiPerByte);
     $scope.setPaymentAmount();
   };
 
@@ -396,7 +399,8 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       return fees.showFeeWarning(tx.fee, suggestedFee, maximumFee, surge);
     };
 
-    let high = tx.maxFees.priorityCap;
+    // This needs to be tx.fees
+    let high = tx.maxFees.priority;
     let mid = tx.maxFees.legacyCapped;
     let low = tx.maxFees.lowerLimit;
     console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
@@ -412,8 +416,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       let feeRatio = tx.fee / tx.amount;
       if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
         return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
-      } else if (surge) {
-        return showFeeWarning(mid).then(commitFee);
       }
     }
     return $q.resolve();
