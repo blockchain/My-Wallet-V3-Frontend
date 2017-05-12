@@ -14,12 +14,12 @@
         span(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
     .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       transaction-destinations(transaction="tx" search="search")
-    .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300  
+    .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
       transaction-note(transaction="tx", account="account" search="search")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       transaction-pending(transaction="tx")
     .flex-1.width-20.amount.flex-end
-      span 
+      span
         amount(transaction="tx")
   //- toggled and mobile
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
@@ -34,7 +34,7 @@
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-2.flex-column.flex-align-end.f-12.mtvl
-      .flex-row(ng-class="{fade: tx.confirmations <= 5 || settings.currency.code !== 'USD'}")
+      .flex-row(ng-class="{fade: tx.confirmations <= 5}")
         p.mbn(translate="VALUE_AT_SEND" ng-show=":: tx.txType === 'sent' || tx.txType === 'transfer'")
         p.mbn(translate="VALUE_WHEN_RECEIVED" ng-show=":: tx.txType === 'received'")
         | :&nbsp;
