@@ -1,0 +1,16 @@
+
+.scenario-menu {
+  background-color: lighten($blue, 10%);
+  width: 100%;
+
+  & a {
+    display: inline-block;
+    color: $white;
+    text-decoration: none;
+    padding: 10px;
+
+    &:hover {
+      background-color: $blue;
+    }
+  }
+}

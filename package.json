@@ -24,6 +24,7 @@
     "css-loader": "~0.26.1",
     "ejs": "~0.8.4",
     "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
     "eslint-plugin-angular": "^2.3.0",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -91,8 +92,9 @@
     "test": "node_modules/karma/bin/karma start karma.conf.js",
     "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
     "build": "node_modules/grunt-cli/bin/grunt build",
+
     "build-parts": "webpack --config partsApp/webpack.config.dev.js",
-    "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors"
+    "start-parts": "node_modules/grunt-cli/bin/grunt html2js ; webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors"
   },
   "engines": {
     "node": "7.5.x"

@@ -12,6 +12,7 @@ var outputFilename = DIST ? '[name]-[hash].js' : '[name].js';
 // TODO : Clean production related variables
 // TODO : Add minification and hash for production script
 // TODO : Add ES-Lint
+// TODO : Exclude tests from production build
 
 module.exports = {
   entry: entryFile,
@@ -25,10 +26,24 @@ module.exports = {
       'bower': `${__dirname}/../bower_components`,
       'components': `${__dirname}/src/components`,
       'shared': `${__dirname}/src/shared`,
-      'walletJs': `${__dirname}/../assets/js`
+      'walletJs': `${__dirname}/../build/js`
     }
   },
   module: {
+    // rules: [
+    //   {
+    //     enforce: 'pre',
+    //     test: /\.js$/,
+    //     exclude: ['npm', 'bower'],
+    //     use: [{
+    //       loader: 'eslint-loader',
+    //       options: {
+    //         failOnWarning: false,
+    //         failOnError: true
+    //       }
+    //     }]
+    //   }
+    // ],
     loaders: [
       {
         test: /\.js$/,

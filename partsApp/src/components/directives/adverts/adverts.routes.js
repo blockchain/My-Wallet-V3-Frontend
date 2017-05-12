@@ -10,7 +10,27 @@ function routes ($stateProvider) {
       },
       views: {
         'content': {
-          component: 'adverts'
+          component: 'advertsPage'
+        }
+      }
+    })
+    .state('adverts-scenario1',
+    {
+      url: '/1',
+      parent: 'adverts',
+      views: {
+        'content': {
+          component: 'advertsScenario1'
+        }
+      }
+    })
+    .state('adverts-scenario2',
+    {
+      url: '/2',
+      parent: 'adverts',
+      views: {
+        'content': {
+          component: 'advertsScenario2'
         }
       }
     });

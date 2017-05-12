@@ -1,2 +1,7 @@
 section.adverts
   h3 {{$ctrl.title}}
+  .container
+    .row
+        scenario-menu(scenario-links="$ctrl.scenarios")
+    .row
+        div(ui-view="content")

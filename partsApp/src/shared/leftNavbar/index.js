@@ -11,6 +11,6 @@ const modules = [
 ];
 
 export default angular
-  .module('app.components.leftNavbar', modules)
+  .module('app.shared.leftNavbar', modules)
   .component('leftNavbar', LeftNavbar)
   .name;
