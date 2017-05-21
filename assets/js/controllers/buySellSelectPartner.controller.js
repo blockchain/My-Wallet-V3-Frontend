@@ -70,8 +70,8 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   };
 
   $scope.$watchGroup(['country', 'state'], (newValues) => {
-    country = newValues[0];
-    state = newValues[1];
+    let country = newValues[0];
+    let state = newValues[1];
 
     if (!country) { // This should normally not happen
       $scope.blacklisted = true;
