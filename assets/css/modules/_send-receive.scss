@@ -130,36 +130,6 @@
     }
   }
 
-  &.confirmation {
-    @media (min-width: 769px) {
-      min-width: 520px;
-      padding-left: 25px;
-      padding-right: 25px;
-    }
-    .btcaddr {
-      font-size: 0.7em;
-    }
-    .overview {
-      .flex-row {
-        > span.account {
-          text-align: left;
-          @media (max-width: 767px) {
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          &.aaa {
-            color: $border-grey !important;
-          }
-        }
-        .helper {
-          position: absolute;
-          right: -15px;
-          top: 2px;
-        }
-      }
-    }
-  }
-
   @media (max-width: 767px) {
     &.fade {
       opacity: 1 !important;

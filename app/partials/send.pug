@@ -1,10 +1,12 @@
 .modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
+  .close-modal
+    i.ti-close.pointer(ng-click="close()")
   .flex-center
     h3
       i.mr-10.icon-send
-      span(ng-show="!confirm", translate="SEND_BITCOIN")
+      span(ng-show="!confirm", translate="SEND")
       span(ng-show="confirm", translate="CONFIRM")
-#send.modal-body(ng-class="{'confirmation': confirm, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
+#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
   .alert-in-app
     alerts(context="alerts")
   div(ng-hide="confirm")
@@ -97,7 +99,7 @@
                 )
                 span.mhm {{ fiatCurrency.code }}
             .has-error
-              span.help-block(
+              span.state-danger-text(
                 ng-click="useAll()"
                 ng-class="{'pointer': transaction.destinations.length === 1}"
                 ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
@@ -116,7 +118,7 @@
         //- Fee
         .group(ng-if="!advanced")
           .group.inline.flex-center.mt-20
-            .item.inline.width-60
+            .item.inline.width-60.width-60-mobile
               label.mbn.colon(translate="TX_FEE")
               select(name="fee"
                      ng-model="transaction.feeType"
@@ -124,12 +126,13 @@
                      ng-options="feeType as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees"
                      tabindex=""
                      required)
-            .item.right-align.width-40
-              span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+            .item.right-align.width-40.width-40-mobile
+              span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
           .group.inline.mt-5
             .item.inline.width-100.flex-between
-              span.f-12 {{ transaction.feeType + '_ESTIMATION_TIME' | translate }}
-              a.f-12(ng-if="transaction.size > 0" ng-click="advancedSend()" translate="Customize Fee")
+              span.f-12(ng-if="transaction.maxAvailable > 0") {{ transaction.feeType + '_ESTIMATION_TIME' | translate }}
+              span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0") You do not have enough funds to use this fee
+              a.f-12(ng-click="advancedSend()" translate="Customize Fee")
         //- Custom Fee
         .group(ng-if="advanced")
           .group.inline.flex-center.mt-10
@@ -145,64 +148,54 @@
                     ng-change="payment.updateFeePerKb(transaction.satoshiPerByte)"
                     transform-currency="satoshi"
                     ng-model="transaction.satoshiPerByte"
-                    ng-max="{{}}"
                     required)
                   span.mhm sat/b
-              span.f-12.state-danger-text(ng-show="sendForm.fee.$error.max" translate="Not enough funds")
             .item.right-align.width-50
               label.fade(translate="FEE")
-              span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+              span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0") Fee is too high
+              span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
   div.overview(ng-show="confirm")
-    .flex-column
+    .flex-column.f-16
       .flex-row
-        span.mbl(ng-show="transaction.note.length")
-          span.type-h5.ti-notepad.mrs
-          span.type-lbl {{ transaction.note }}
-      .flex-column
-        .flex-column
-          span.type-lbl.mbs.underline(translate="TO")
-          .mls.mbs.flex-row.flex-center.center(ng-repeat="address in getToLabels() track by $index")
-            span.account.mvn.width-50-mobile.width-60.em-400(translate="no") {{ address.label || address.address }}
-            .width-50.width-50-mobile.flex-between
-              span(ng-class="{success: address.type !== 'External'}")
-                span(ng-class="{fade: address.type === 'External'}") +&nbsp;
-                span {{transaction.amount | toBitCurrency:btcCurrency:false}}
-              span(ng-class="{success: address.type !== 'External'}")
-                span(ng-show="address.type !== 'External'") +&nbsp;
-                fiat.mrml(btc="transaction.amount")
-          .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
-            span.mid-grey.account.width-50-mobile.width-60.f-12(translate="{{AB_TEST_FEE ? 'TX_FEE' : 'TX_FEE_REQUIRED'}}")
-            .width-50.width-50-mobile.flex-between
-              span.mid-grey.center
-                span.fade +&nbsp;
-                span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
-              span.mid-grey.center
-                fiat.mrml(btc="transaction.fee")
-            helper-button(content="{{AB_TEST_FEE ? 'TX_FEE_CONFIRM_EXPLAIN' : 'DYK_TX_FEES'}}")
-        .mvm.flex-justify.flex-1.flex-center.split-rule
-        span.type-lbl.mbs.underline(translate="FROM")
-        .mls.flex-row.flex-center.center.flex-between
-          span.account.width-50-mobile.width-60.mvn.em-400.long-input(translate="no") {{ transaction.from.label || transaction.from.address }}
-          .width-50.width-50-mobile.flex-between
-            span.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
-            span.security-red -&nbsp;
-              fiat.mrml(btc="getTransactionTotal(true)")
-.modal-footer.flex-end.flex-center.pal
-    button.button-muted.mrm(ng-click="close()" translate="CANCEL" ng-hide="confirm")
-    button.button-muted.mrm(ng-click="backToForm()" translate="BACK" ng-show="confirm")
-    button.button-primary(
-      ladda-translate="NEXT_STEP"
+        label.colon.width-30.width-30-mobile(translate="FROM")
+        .width-70.width-70-mobile {{ transaction.from.label || transaction.from.address }}
+      .flex-row.mt-25
+        label.colon.width-30.width-30-mobile(translate="TO")
+        .width-70.width-70-mobile(ng-repeat="address in getToLabels() track by $index")
+          span(translate="no") {{ address.label || address.address }}
+      .flex-row.mt-25(ng-show="transaction.note.length")
+        label.colon.width-30.width-30-mobile(translate="FOR")
+        .width-70.width-70-mobile {{ transaction.note }}
+      .flex-row.mt-25
+        label.colon.width-30.width-30-mobile(translate="PAYMENT")
+        .width-70.width-70-mobile
+          span.mr-10 {{transaction.amount | toBitCurrency:btcCurrency:false}}
+          fiat.parens(btc="transaction.amount")
+      .flex-row.mt-25
+        label.colon.width-30.width-30-mobile(translate="FEE")
+        .width-70.width-70-mobile
+          span.mr-10 {{ transaction.fee | toBitCurrency:btcCurrency:false}}
+          fiat.parens(btc="transaction.fee")
+      .bg-grey.pv-30.ph-60.flex-column.mt-25.center(ng-class="(getToLabels()[0].type != 'External') ? 'transfer' : 'sent'")
+        span.mb-10(translate="TOTAL")
+        span.f-28.mb-10.em-600 {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
+        span.f-20.em-300
+          fiat(btc="getTransactionTotal(true)")
+  .mt-20
+    button.full.button-primary.upper(
+      ladda-translate="CONTINUE"
       ui-ladda="building"
       ng-click="goToConfirmation()"
       tabindex="1"
       ng-disabled="sendForm.$invalid || failedToLoadUnspent || !amountsAreValid()"
       data-style="expand-left"
       ng-hide="confirm")
-    button.button-primary(
-      ladda-translate="SEND"
+    button.full.button-primary.upper(
+      ladda-translate="{{ getToLabels()[0].type != 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN' }}"
       ui-ladda="sending"
       ng-click="send()"
       data-style="expand-left"
       ng-show="confirm")
+    a.display-block.width-100.mt-10(ng-click="backToForm()" translate="GO_BACK" ng-show="confirm")

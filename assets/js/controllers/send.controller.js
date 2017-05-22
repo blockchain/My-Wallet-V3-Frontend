@@ -48,6 +48,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     surge: false,
     amount: null,
     maxAvailable: null,
+    maxSpendableAmount: null,
     destinations: [null],
     satoshiPerByte: null,
     feeType: 'legacyCapped',
@@ -62,9 +63,9 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
     tx.fees = data.fees;
     tx.size = data.txSize;
-    tx.fee = data.finalFee;
+    tx.fee = data.sweepFee;
     tx.maxFees = data.maxFees;
-    tx.maxAvailable = $scope.advanced ? data.balance - tx.fee : data.sweepAmount;
+    tx.maxAvailable = data.maxSpendableAmount;
     tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
 
@@ -279,6 +280,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     let tx = $scope.transaction;
     if (tx.maxAvailable == null) return;
     $scope.transaction.amount = $scope.transaction.maxAvailable;
+    $scope.payment.updateFeePerKb($scope.transaction.satoshiPerByte);
     $scope.setPaymentAmount();
   };
 
