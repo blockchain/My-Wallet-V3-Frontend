@@ -21,7 +21,7 @@ function EnvProvider () {
     buySellDebug = !!enabled;
   };
 
-  this.$get = ['$http', '$q', '$location', function envFactory ($http, $q, $location) {
+  this.$get = ['$http', '$location', function envFactory ($http, $location) {
     let absUrl = $location.absUrl();
     let path = $location.path();
 
@@ -30,7 +30,7 @@ function EnvProvider () {
 
     return $http.get(optionsUrl).then((response) => {
       let options = response.data;
-      return $q.resolve(new Env(rootPath, versionFrontend, versionMyWallet, buySellDebug, options));
+      return new Env(rootPath, versionFrontend, versionMyWallet, buySellDebug, options);
     });
   }];
 }
