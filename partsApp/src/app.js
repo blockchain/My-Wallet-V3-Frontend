@@ -1,4 +1,5 @@
 import './app.scss';
+import 'walletCss/wallet.css';
 
 import angular from 'npm/angular';
 import uiRouter from 'npm/angular-ui-router';

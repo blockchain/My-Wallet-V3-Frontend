@@ -6,13 +6,15 @@
   width: 200px;
   background-color: $gray;
   -webkit-transition-duration: 0.5s;
+  font-size: 14px;
+  z-index: 20;
 
   & .arrow {
     position: absolute;
-    right: -50px;
+    right: -25px;
     top: 0;
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
     background-color: $gray-s;
     cursor: pointer;
   }
@@ -27,7 +29,6 @@
     padding: 10px 15px;
     width: 100%;
     text-decoration: none;
-    font-size: 18px;
     color: $white;
 
     &.active {

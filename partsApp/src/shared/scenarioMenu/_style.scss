@@ -1,21 +1,48 @@
 
 .scenario-menu {
-  background-color: lighten($blue, 10%);
+  background-color: $blue;
+  display: inline-block;
+  height: 80px;
   width: 100%;
+  position: relative;
 
-  & a {
-    display: inline-block;
-    color: $white;
-    text-decoration: none;
-    padding: 10px;
+    & a {
+      display: inline-block;
+      color: $white;
+      text-decoration: none;
+      padding: 10px;
 
-    &.active {
-      font-weight: bold;
-      color: $gold;
-    }
+      &.active {
+        font-weight: bold;
+        color: $gold;
 
-    &:hover {
-      background-color: $blue;
+          & .scenario-description {
+            visibility: visible;
+            color: $white;
+        }
+      }
+
+      &:hover {
+        background-color: $blue;
+        color: $white;
+      }
+
+      & .scenario-title {
+        float: left;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      & .scenario-description {
+        position: absolute;
+        visibility: hidden;
+        display: block;
+        padding: 10px;
+        top: 40px;
+        left: 0px;
+        width: 100%;
+        font-size: 14px;
+        background-color: lighten($blue, 10%);
+      }
     }
   }
-}

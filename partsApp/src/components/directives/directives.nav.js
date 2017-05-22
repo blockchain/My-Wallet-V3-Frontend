@@ -11,14 +11,6 @@ let menuLinks =
     { title: 'address-book-entry', href: 'address-book-entry' },
     { title: 'adverts', href: 'adverts({scenarioId: 1})' },
     { title: 'alerts', href: 'alerts' },
-    { title: 'amount', href: 'amount' },
-    { title: 'async-select', href: 'async-select' },
-    { title: 'bc-async-input', href: 'bc-async-input' },
-    { title: 'bc-file-upload', href: 'bc-file-upload' },
-    { title: 'blocket-loading', href: 'blocket-loading' },
-    { title: 'browser-detection', href: 'browser-detection' },
-    { title: 'buy-quick-start', href: 'buy-quick-start' },
-    { title: 'capture-key', href: 'capture-key' },
     { title: 'etc...', href: 'etc...' }
   ];
 

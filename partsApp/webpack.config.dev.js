@@ -23,7 +23,11 @@ module.exports = {
       'bower': `${__dirname}/../bower_components`,
       'components': `${__dirname}/src/components`,
       'shared': `${__dirname}/src/shared`,
-      'walletJs': `${__dirname}/../build/js`
+      'walletJs': `${__dirname}/../build/js`,
+      'walletCss': `${__dirname}/../build/css`,
+      'walletFonts': `${__dirname}/../build/fonts`,
+      'walletImg': `${__dirname}/../build/img`,
+      'walletLocales': `${__dirname}/../build/locales`
     }
   },
   module: {
@@ -53,9 +57,36 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'sass-loader'],
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader'
+            }
+          ],
           fallback: 'style-loader'
         })
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          use: {
+            loader: 'css-loader'
+          }
+        })
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2|png|jpg)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]'
+          }
+        }
       },
       {
         test: /\.pug$/,
