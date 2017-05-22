@@ -10,10 +10,10 @@ describe('CoinifySummaryController', () => {
 
   let mediums = {
     'card': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts() { return $q.resolve(buySell.accounts); }
     },
     'bank': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts() { return $q.resolve(buySell.accounts); }
     }
   };
 
@@ -123,12 +123,6 @@ describe('CoinifySummaryController', () => {
   });
 
   describe('.buy()', function () {
-
-    it('should call buy', () => {
-      spyOn(buySell.accounts[0], 'buy');
-      scope.buy();
-      return expect(buySell.accounts[0].buy).toHaveBeenCalled();
-    });
 
     it('should reset the quote and set the trade', () => {
       scope.buy();
