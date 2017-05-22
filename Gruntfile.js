@@ -548,9 +548,9 @@ module.exports = (grunt) => {
         src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
-          from: 'versionFrontend = null',
+          from: 'VERSION_FRONTEND = null',
           to: () => {
-            return `versionFrontend = '${this.versionFrontend}'`;
+            return `VERSION_FRONTEND = '${this.versionFrontend}'`;
           }
         }]
       },
@@ -558,10 +558,10 @@ module.exports = (grunt) => {
         src: ['build/js/sharedServices/env.service.js'],
         overwrite: true,
         replacements: [{
-          from: 'versionMyWallet = null',
+          from: 'VERSION_MY_WALLET = null',
           to: () => {
             let version = exec('./my_wallet_bower_version.rb').output;
-            return `versionMyWallet = '${version.replace('\n', '')}'`;
+            return `VERSION_MY_WALLET = '${version.replace('\n', '')}'`;
           }
         }]
       }
