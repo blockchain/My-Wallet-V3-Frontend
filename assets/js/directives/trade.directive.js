@@ -42,6 +42,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.dateFormat = scope.$root.size.xs ? 'MMM d' : scope.dateFormat;
 
     scope.cancel = () => {
+      if (!scope.canCancel) return;
       scope.disabled = true;
       buySell.cancelTrade(scope.trade).finally(() => scope.disabled = false);
     };

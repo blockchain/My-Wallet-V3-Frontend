@@ -1,6 +1,6 @@
 {
   "name": "angular-blockchain-wallet",
-  "version": "1.15.16",
+  "version": "1.16.7",
   "description": "AngularJS front-end to My-Wallet-V3.",
   "dependencies": {
     "angular": "^1.6.4",
@@ -19,7 +19,6 @@
     "bower": "^1.3.1",
     "browserify": "^13.1.0",
     "browserify-istanbul": "^2.0.0",
-    "coffee-script": "^1.9.1",
     "compression": "^1.6.2",
     "css-loader": "~0.26.1",
     "ejs": "~0.8.4",
@@ -63,7 +62,6 @@
     "karma": "0.13.*",
     "karma-babel-preprocessor": "6.0.*",
     "karma-browserify": "^5.1.0",
-    "karma-coffee-preprocessor": "0.3.*",
     "karma-coverage": "0.5.*",
     "karma-jasmine": "0.3.*",
     "karma-ng-pug2js-preprocessor": "*",
@@ -109,7 +107,9 @@
   "license": "",
   "semistandard": {
     "ignore": [
-      "tests/",
+      "tests/controllers",
+      "tests/directives",
+      "tests/services",
       "helperApp/"
     ],
     "globals": [
@@ -125,7 +125,14 @@
       "it",
       "fit",
       "inject",
-      "beforeEach"
+      "beforeEach",
+      "afterEach",
+      "exec",
+      "exit",
+      "JasminePromiseMatchers",
+      "spyOn",
+      "pending",
+      "jasmine"
     ]
   }
 }

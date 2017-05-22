@@ -2,16 +2,10 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, country, accounts, $state, options, $stateParams, masterPaymentAccount, payment) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, accounts, $state, options, $stateParams, bankMedium, payment) {
   $scope.fields = {};
-  $scope.settings = Wallet.settings;
-  $scope.currencies = currency.coinifySellCurrencies;
   $scope.user = Wallet.user;
-  $scope.trades = buySell.trades;
-  $scope.alerts = [];
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
-  $scope.sepaCountries = country.sepaCountryCodes;
-  $scope.bankAccounts = accounts;
 
   this.user = Wallet.user;
   this.trade = trade;
@@ -19,9 +13,22 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
   this.accounts = accounts;
-  this.sepaCountries = country.sepaCountryCodes;
   this.payment = payment;
-  if (masterPaymentAccount) this.paymentAccount = masterPaymentAccount;
+  if (bankMedium) this.paymentAccount = bankMedium;
+  this.message = 'SELL.QUOTE_EXPIRES';
+  this.now = () => new Date().getTime();
+  this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
+  this.refreshQuote = () => {
+    return $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
+  };
+
+  const onRefreshQuote = (quote) => {
+    this.quote = quote;
+    this.transaction.fiat = quote.quoteAmount / 100;
+    if (this.selectedBankAccount) {
+      this.selectedBankAccount.updateQuote(quote);
+    }
+  };
 
   this.steps = {
     'email': 0,
@@ -33,13 +40,37 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     'isx': 6
   };
   this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
-  this.goTo = (step) => this.step = this.steps[step];
+  this.goTo = (step) => {
+    this.step = this.steps[step];
+    this.setTitle(step);
+  };
+  this.setTitle = (step) => {
+    switch (step) {
+      case 'account':
+        this.title = 'SELL.ADD_BANK_ACCOUNT';
+        break;
+      case 'bank-link':
+        this.title = 'SELL.LINKED_ACCOUNTS';
+        break;
+      case 'summary':
+        this.title = 'SELL.CONFIRM_SELL_ORDER';
+        break;
+      case 'trade-complete':
+        this.title = 'SELL.SELL_BITCOIN';
+        this.hide = true;
+        break;
+      default:
+        this.title = 'SELL.SELL_BITCOIN';
+        break;
+    }
+  };
+
   this.nextStep = () => {
     if (this.isKYC) {
       this.goTo('isx');
       return;
     }
-    if ((this.trade._state && !this.trade._iSignThisID) && this.exchange.profile) {
+    if ((this.trade.state && !this.trade.iSignThisID) && this.exchange.profile) {
       this.sellTrade = this.trade;
       this.goTo('trade-complete');
       return;
@@ -58,6 +89,11 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     }
   };
 
+  this.getQuoteHelper = () => {
+    if (this.quote && !this.quote.id) return 'EST_QUOTE_1';
+    else return 'SELL.QUOTE_WILL_EXPIRE';
+  };
+
   if (!this.trade.btc && !this.trade.fiat) {
     this.isKYC = this.trade && this.trade.constructor.name === 'CoinifyKYC';
     this.isKYC ? this.nextStep() : '';
@@ -71,7 +107,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   $scope.assignFiatCurrency = () => {
-    if (this.trade._state) return;
+    if (this.trade.state) return;
     if (this.trade.quote.quoteCurrency === 'BTC') {
       $scope.assignFiatHelper('baseCurrency');
     } else {
@@ -87,7 +123,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.exchangeCountry = exchange._profile._country || $stateParams.countryCode;
+  this.country = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
   this.fiat = () => this.transaction.currency.code;
 
   $scope.fields = { email: $scope.user.email };
@@ -101,7 +137,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   $scope.startPayment = () => {
-    if (this.trade._state) return;
+    if (this.trade.state) return;
     let firstBlockFee = this.payment.absoluteFeeBounds[0];
     if ($scope.isSweepTransaction) firstBlockFee = this.payment.sweepFees[0];
     this.finalPayment = Wallet.my.wallet.createPayment(this.payment);
@@ -133,18 +169,12 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   let startedPayment = $scope.startPayment();
   if (startedPayment) this.transaction = Object.assign(this.transaction, startedPayment.transaction);
 
-  if (!this.step) {
-    this.nextStep();
-  }
+  if (!this.step) this.nextStep();
 
-  this.selectAccount = (account) => {
-    this.selectedBankAccount = account;
-    this.bankId = account.id;
+  this.selectAccount = (bank) => {
+    this.selectedBankAccount = bank;
   };
 
-  this.onCreateBankSuccess = (bankId) => {
-    this.bankId = bankId.bankId;
-  };
   this.onSellSuccess = (trade) => this.sellTrade = trade;
   this.dismiss = () => $uibModalInstance.dismiss('');
 
@@ -155,19 +185,38 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   };
 
   this.onSignupComplete = () => {
+    this.refreshQuote();
     this.quote.getPayoutMediums().then(mediums => {
-      mediums.bank.getAccounts().then(accounts => {
-        this.paymentAccount = accounts[0];
-        return accounts[0];
-      })
-      .then(account => {
-        account.getAll()
-          .then(banks => {
-            this.accounts = banks;
-            this.goTo('account');
-          });
+      this.paymentAccount = mediums.bank;
+      mediums.bank.getBankAccounts().then(bankAccounts => {
+        this.accounts = bankAccounts;
+        this.goTo('account');
       });
     });
+  };
+
+  const handleError = (e) => {
+    let accountError = JSON.parse(e);
+    Alerts.displayError(accountError.error_description);
+    if (accountError.error === 'invalid_iban') {
+      this.ibanError = true;
+    }
+  };
+
+  this.onCreateBankSuccess = (bank) => {
+    this.selectedBankAccount = bank;
+    this.goTo('summary');
+  };
+
+  this.addBankAccount = (bankObj, userObj) => {
+    this.ibanError = false;
+    let holder = { holder: {} };
+    Object.assign(holder.holder, userObj);
+    let obj = Object.assign(bankObj, holder);
+    obj.account.currency = this.transaction.currency.code;
+    $q.resolve(this.paymentAccount.addBankAccount(obj))
+      .then(this.onCreateBankSuccess)
+      .catch(handleError);
   };
 
   this.reset = () => {

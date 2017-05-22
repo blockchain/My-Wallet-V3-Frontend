@@ -16,7 +16,6 @@ function CoinifySellTradeFinishedController (currency) {
 
   if (this.completedState) {
     this.isx = true;
-    this.title = 'SELL.IDENTITY_VERIFICATION';
     this.completedState = `SELL.ISX.${this.completedState.toUpperCase()}`;
   } else {
     if (this.sellTrade.state === 'completed' ||
@@ -27,10 +26,9 @@ function CoinifySellTradeFinishedController (currency) {
     } else {
       this.tradeCompleted = false;
     }
-    this.title = 'SELL.SELL_BITCOIN';
     this.id = this.sellTrade.id;
     this.btcSold = currency.convertFromSatoshi(this.sellTrade.sendAmount, currency.bitCurrencies[0]);
-    this.bank = this.sellTrade._bankAccountNumber;
+    this.bank = this.sellTrade.bankAccountNumber;
     this.creditIssued = `${this.sellTrade.outAmountExpected / 100} ${this.sellTrade.outCurrency}`;
     this.showNote = () => this.sellTrade.state === 'completed' || this.sellTrade.state === 'awaiting_transfer_in';
   }

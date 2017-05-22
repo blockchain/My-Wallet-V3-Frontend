@@ -5,6 +5,7 @@ angular
     bindings: {
       tab: '<',
       tabOptions: '<',
+      disabled: '<',
       badge: '<',
       onSelect: '&'
     },
@@ -25,5 +26,11 @@ function BcTabsController () {
   this.moveTab = (offset) => (event) => {
     let nextTab = this.tabOptions[this.tabOptions.indexOf(this.tab) + offset]
     if (nextTab) this.selectTab(nextTab)
+  }
+
+  this.$onChanges = ({ tab }) => {
+    if (tab && tab.currentValue == null) {
+      console.warn('bc-tabs component was passed undefined tab state')
+    }
   }
 }

@@ -7,7 +7,7 @@ module.exports = function (config) {
 
     client: { captureConsole: false },
 
-    exclude: ['assets/js/my_wallet/'],
+    exclude: [],
 
     files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
@@ -45,12 +45,12 @@ module.exports = function (config) {
       'assets/js/constants/**/*.constant.js',
       'assets/js/wallet-lazy-load.module.js',
       'assets/js/core/*.js',
-      'tests/filters/*.coffee',
-      'tests/controllers/**/*.coffee',
-      'tests/components/*.coffee',
-      'tests/services/**/*.coffee',
-      'tests/directives/*.coffee',
-      'tests/mocks/**/*.coffee',
+      'tests/filters/*.js',
+      'tests/controllers/**/*.js',
+      'tests/components/*.js',
+      'tests/services/**/*.js',
+      'tests/directives/*.js',
+      'tests/mocks/**/*.js',
       'tests/**/*.js',
       'app/templates/*.pug'
     ],
@@ -74,19 +74,7 @@ module.exports = function (config) {
       'assets/js/routes.js': ['babel', 'coverage'],
       'assets/js/wallet-app.module.js': ['babel'],
       'assets/js/landingCtrl.js': ['babel', 'coverage'],
-      'tests/**/*.coffee': ['coffee'],
       'tests/**/*.js': ['babel']
-    },
-    coffeePreprocessor: {
-      // options passed to the coffee compiler
-      options: {
-        bare: true,
-        sourceMap: true
-      },
-      // transforming the filenames
-      transformPath: function (path) {
-        return path.replace(/\.coffee$/, '.js');
-      }
     },
     babelPreprocessor: {
       options: {

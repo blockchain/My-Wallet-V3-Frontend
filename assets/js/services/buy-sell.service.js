@@ -6,7 +6,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
-    pending: ['awaiting_transfer_in', 'reviewing', 'processing', 'pending'],
+    pending: ['awaiting_transfer_in', 'reviewing', 'processing', 'pending', 'updateRequested'],
     completed: ['expired', 'rejected', 'cancelled', 'completed', 'completed_test']
   };
   let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;
@@ -68,8 +68,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     tradeStateIn,
     cancelTrade,
     states,
-    getPayoutAccounts,
-    getSellBankAccounts,
     isPendingSellTrade
   };
 
@@ -213,7 +211,12 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getOpenKYC () {
-    return service.kycs.length ? $q.resolve(service.kycs[0]) : service.triggerKYC();
+    if (service.kycs.length) {
+      let kyc = service.kycs[0];
+      return ['declined', 'rejected', 'expired'].indexOf(kyc.state) > -1 ? service.triggerKYC() : kyc;
+    } else {
+      return service.triggerKYC();
+    }
   }
 
   function getTrades () {
@@ -258,34 +261,24 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
   }
 
-  function getPayoutAccounts (mediums) {
-    return mediums.bank.getAccounts()
-      .then(accounts => accounts[0]);
-  }
-
-  function getSellBankAccounts (account) {
-    return account.getAll()
-      .then(banks => banks);
-  }
-
-  function openSellView (trade, mediums, payment, buySellOptions = { sell: true }) {
+  function openSellView (trade, bankMedium, payment, buySellOptions = { sell: true }) {
     let exchange = service.getExchange();
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
-      windowClass: 'bc-modal auto buy',
+      windowClass: 'bc-modal buy',
       controller: 'CoinifySellController',
       controllerAs: 'vm',
       backdrop: 'static',
       keyboard: false,
       resolve: {
         trade: () => trade,
-        masterPaymentAccount: () => {
-          if (exchange.profile && !trade.state) return service.getPayoutAccounts(mediums);
+        bankMedium: () => {
+          if (exchange.profile && !trade.state) return bankMedium;
         },
         accounts: () => {
           if (exchange.profile && !trade.state) {
-            return mediums.bank.getAccounts().then(accounts => {
-              return service.getSellBankAccounts(accounts[0]);
+            return bankMedium.getBankAccounts().then(bankAccounts => {
+              return bankAccounts;
             });
           }
         },

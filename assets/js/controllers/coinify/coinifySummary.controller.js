@@ -2,17 +2,21 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, buySell, currency, Alerts, buyMobile) {
+function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, buySell, currency, Alerts, buyMobile) {
   let medium = $scope.vm.medium;
   let fiatCurrency = $scope.vm.fiatCurrency;
   let limits = $scope.limits = buySell.limits;
   let max = parseFloat(limits[medium].max[fiatCurrency()], 0);
   let min = parseFloat(limits[medium].min[fiatCurrency()], 0);
+  let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
 
   $scope.state = {};
+  $scope.isBank = medium === 'bank';
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
+  $scope.currencies = currency.coinifyCurrencies;
+  $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }
@@ -43,6 +47,7 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
 
   $scope.commitValues = () => {
     $scope.lock();
+    $scope.vm.quote = null;
     getQuote().then((q) => $scope.vm.quote = q)
               .then((q) => q.getPaymentMediums())
               .then((mediums) => mediums[medium].getAccounts())
@@ -65,6 +70,7 @@ function CoinifySummaryController ($scope, $q, $timeout, AngularHelper, Wallet, 
                                   .then(() => $scope.vm.goTo('isx'))
                                   .then(() => $scope.vm.trade.watchAddress())
                                   .catch((err) => {
+                                    $scope.free();
                                     err = tryParse(err);
                                     if (err.error_description) Alerts.displayError(err.error_description);
                                   });

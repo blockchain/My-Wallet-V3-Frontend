@@ -5,22 +5,21 @@ angular
       transaction: '<',
       sellTrade: '<',
       totalBalance: '<',
+      exchange: '<',
       payment: '<',
-      paymentAccount: '<',
-      bankId: '<',
+      bankAccount: '<',
       onComplete: '&',
       close: '&',
       dismiss: '&',
-      onSuccess: '&'
+      onSuccess: '&',
+      quote: '<'
     },
     templateUrl: 'partials/coinify/sell-summary.pug',
     controller: CoinifySellSummaryController,
     controllerAs: '$ctrl'
   });
 
-function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Alerts, $timeout) {
-  this.title = 'SELL.CONFIRM_SELL_ORDER';
-
+function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   this.sellRateForm;
 
   this.insufficientFunds = () => {
@@ -39,14 +38,19 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
     }
   };
 
-  // ---- for making a sell trade ---- //
-
-  const handleBadRequest = (e) => {
-    if (e instanceof SyntaxError) {
-      this.onComplete();
-    } else {
-      this.error = JSON.parse(e);
+  this.checkForUpdatedQuote = () => {
+    let updated = new Date(this.quote.expiresAt).getTime();
+    let original = new Date(this.bankAccount.quote.expiresAt).getTime();
+    if ((updated && original) && (updated > original)) {
+      this.bankAccount.updateQuote(this.quote);
     }
+  };
+
+  this.checkForUpdatedQuote();
+
+  const handleSecondPasswordError = (e) => {
+    this.waiting = false;
+    Alerts.displayError(e);
   };
 
   const transactionFailed = (message) => {
@@ -76,13 +80,20 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
   };
 
   const assignAndBuildPayment = (sellResult) => {
-    let amount = currency.convertToSatoshi(sellResult._transferIn.sendAmount, currency.bitCurrencies[0]);
-    this.payment.to(sellResult._transferIn.details.account);
+    let amount = currency.convertToSatoshi(sellResult.transferIn.sendAmount, currency.bitCurrencies[0]);
+    this.payment.to(sellResult.transferIn.details.account);
     this.payment.amount(amount);
+    // QA tool
+    if (this.exchange._customAddress && this.exchange._customAmount) {
+      console.log('QA - Address and Amount (in satoshi):', this.exchange._customAddress, this.exchange._customAmount);
+      this.payment.to(this.exchange._customAddress);
+      this.payment.amount(this.exchange._customAmount);
+    }
     this.payment.build();
   };
 
   const handleError = (e) => {
+    console.error(e);
     console.error('error publishing', e.error);
     console.log(JSON.stringify(e.payment, null, 2));
     if (e.error.message) console.error(e.error.message);
@@ -90,7 +101,7 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
   };
 
   const handleSellResult = (sellResult) => {
-    if (!sellResult._transferIn) {
+    if (!sellResult.transferIn) {
       this.error = sellResult;
       this.error = JSON.parse(this.error);
     } else {
@@ -102,18 +113,14 @@ function CoinifySellSummaryController ($scope, $q, buySell, Wallet, currency, Al
   };
   this.sell = () => {
     this.waiting = true;
-    $q.resolve(this.paymentAccount.sell(this.bankId))
-      .then(handleSellResult)
-      .then(() => {
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
+    Wallet.askForSecondPasswordIfNeeded()
+      .then((pw) => {
+        $q.resolve(this.bankAccount.sell())
+          .then(handleSellResult)
+          .then(() => signAndPublish(pw))
           .then(transactionSucceeded)
           .catch(handleError);
-
-        // undo these comments when sending btc is disabled
-        // this.waiting = false;
-        // this.onComplete();
       })
-      .catch(handleBadRequest);
+      .catch(handleSecondPasswordError);
   };
 }
