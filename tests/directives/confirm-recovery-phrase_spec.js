@@ -5,6 +5,8 @@ describe('Confirm Recovery Phrase', () => {
   let Wallet;
   let Alerts;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($injector, $compile, $rootScope) {

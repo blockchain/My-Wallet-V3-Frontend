@@ -2,6 +2,7 @@ describe('Adverts Directive', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
 
   beforeEach(function () {
     module('walletApp', function ($provide) {

@@ -7,6 +7,8 @@ describe('buyQuickStart', () => {
   let MyWallet;
   let buySell;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($compile, $rootScope, $injector, _$q_) {
@@ -27,7 +29,7 @@ describe('buyQuickStart', () => {
         }
       }
     };
-    
+
     let limits = {
       bank: {
         min: {
@@ -57,11 +59,11 @@ describe('buyQuickStart', () => {
         getBuyQuote () { return $q.resolve([]); }
       })
     ;
-    
+
     buySell.getMinLimits = () => $q.resolve(limits);
     buySell.cancelTrade = () => $q.resolve(trade);
     buySell.getQuote = () => $q.resolve(quote);
-    
+
     let mediums = {
       'card': {
         getAccounts () { return $q.resolve([]); }
@@ -70,7 +72,7 @@ describe('buyQuickStart', () => {
         getAccounts () { return $q.resolve([]); }
       }
     };
-    
+
     var quote = {
       quoteAmount: 1,
       baseAmount: -100,
@@ -85,9 +87,9 @@ describe('buyQuickStart', () => {
     return isoScope.$digest();
   })
   );
-  
+
   describe('.updateLastInput()', () =>
-    
+
     it('should update last input field', () => {
       isoScope.updateLastInput('btc');
       expect(isoScope.lastInput).toBe('btc');
@@ -97,7 +99,7 @@ describe('buyQuickStart', () => {
   );
 
   describe('.getQuote()', () =>
-    
+
     it('should get a quote based on last input', () => {
       spyOn(buySell, 'getQuote');
       isoScope.transaction.fiat = 1;
@@ -111,9 +113,9 @@ describe('buyQuickStart', () => {
       expect(buySell.getQuote).toHaveBeenCalledWith(-1, 'BTC', 'USD');
     })
   );
-    
+
   describe('.cancelTrade()', () =>
-    
+
     it('should cancel a trade', () => {
       spyOn(buySell, 'cancelTrade');
       isoScope.cancelTrade();

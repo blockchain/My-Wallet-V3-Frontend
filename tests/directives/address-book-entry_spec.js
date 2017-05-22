@@ -5,6 +5,8 @@ describe('Address Book Entry Directive', () => {
   let isoScope;
   let Wallet;
   let MyWallet;
+  
+  beforeEach(module('walletDirectives'));
 
   beforeEach(module('walletApp'));
 

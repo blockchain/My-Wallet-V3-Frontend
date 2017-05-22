@@ -4,6 +4,8 @@ describe('Amount', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, Wallet) {

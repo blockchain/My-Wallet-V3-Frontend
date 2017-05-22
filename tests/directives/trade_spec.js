@@ -5,6 +5,8 @@ describe('Trade Directive', () => {
   let Alerts;
   let $q;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($compile, $rootScope, $injector, _$q_) {

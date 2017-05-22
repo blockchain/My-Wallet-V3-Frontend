@@ -6,6 +6,8 @@ describe('Imported Address Directive', () => {
   let Wallet;
 
 
+  beforeEach(module('walletDirectives'));
+  
   // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 

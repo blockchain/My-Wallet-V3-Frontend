@@ -1,9 +1,11 @@
-describe('Transaction Pending Directive', () => {  
+describe('Transaction Pending Directive', () => {
   let $compile;
   let $rootScope;
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {

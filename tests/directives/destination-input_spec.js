@@ -6,6 +6,8 @@ describe('Destination Input directive', () => {
   let Wallet;
   let ignore;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
