@@ -124,6 +124,13 @@ describe('CoinifySummaryController', () => {
 
   describe('.buy()', function () {
 
+    it('should call buy', () => {
+      spyOn(buySell.accounts[0], 'buy');
+      scope.buy();
+      scope.$digest();
+      return expect(buySell.accounts[0].buy).toHaveBeenCalled();
+    });
+
     it('should reset the quote and set the trade', () => {
       scope.buy();
       scope.$digest();
