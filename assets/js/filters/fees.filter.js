@@ -5,7 +5,7 @@ angular
 function feesFilter () {
   let obj = {};
   return function (fees) {
-    obj.legacyCapped = fees.legacyCapped;
+    obj.regular = fees.regular;
     obj.priority = fees.priority;
     return obj;
   };

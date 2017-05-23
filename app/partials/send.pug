@@ -136,11 +136,12 @@
         //- Custom Fee
         .group(ng-if="advanced")
           .group.inline.flex-center.mt-10
-            .item.width-50
+            .item.width-50.width-50-mobile
               label.colon(translate="TX_FEE")
               .flex-center
                 .flex-1.flex-center.border
                   input.form-control.no-border(
+                    min="0"
                     name="fee"
                     type="number"
                     step="any"
@@ -150,11 +151,14 @@
                     ng-model="transaction.satoshiPerByte"
                     required)
                   span.mhm sat/b
-            .item.right-align.width-50
+              .pos-rel
+                .pos-abs
+                  span.f-12.state-danger-text.pointer(ng-if="transaction.satoshiPerByte > transaction.fees.limits.max" ng-click="payment.updateFeePerKb(transaction.fees.limits.max) && (transaction.satoshiPerByte = transaction.fees.limits.max)") {{ transaction.fees.limits.max }} sat/b or less is recommended.
+                  span.f-12.state-danger-text.pointer(ng-if="transaction.satoshiPerByte < transaction.fees.limits.min" ng-click="payment.updateFeePerKb(transaction.fees.limits.min) && (transaction.satoshiPerByte = transaction.fees.limits.min)") {{ transaction.fees.limits.min }} sat/b or more is recommended.
+            .item.right-align.width-50.width-50-mobile
               label.fade(translate="FEE")
               span.f-14.state-danger-text(ng-if="transaction.maxAvailable <= 0") Fee is too high
-              span.f-14.state-danger-text(ng-if="transaction.satoshiPerByte <= 50") Fee is too low
-              span.f-14(ng-if="transaction.maxAvailable > 0 && transaction.satoshiPerByte > 50") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+              span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
   div.overview(ng-show="confirm")
@@ -181,7 +185,7 @@
         span.mb-10(translate="TOTAL")
         span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
         span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}
-  .mt-20
+  .mt-25
     button.full.button-primary.upper(
       ladda-translate="CONTINUE"
       ui-ladda="building"

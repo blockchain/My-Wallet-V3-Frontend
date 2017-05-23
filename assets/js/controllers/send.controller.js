@@ -51,9 +51,8 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     maxSpendableAmount: null,
     destinations: [null],
     satoshiPerByte: null,
-    feeType: 'legacyCapped',
-    fees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0},
-    maxFees: {lowerLimit: 0, legacyCapped: 0, priority: 0, priorityCap: 0}
+    feeType: 'regular',
+    fees: {limits: { 'min': 0, 'max': 0 }, regular: 0, priority: 0}
   };
 
   $scope.transaction = angular.copy($scope.transactionTemplate);
@@ -63,11 +62,12 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
     tx.fees = data.fees;
     tx.size = data.txSize;
-    tx.fee = data.sweepFee;
-    tx.maxFees = data.maxFees;
-    tx.maxAvailable = data.maxSpendableAmount;
+    tx.fee = data.finalFee;
+    tx.maxAvailable = data.sweepAmount;
     tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
+
+    console.log(data.finalFee);
 
     AngularHelper.$safeApply($scope);
   };
@@ -316,6 +316,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
     let options = FEE_ENABLED && !$scope.advanced && !reset ? FEE_OPTIONS : null;
     $scope.payment.amount($scope.transaction.amount, fee, options);
+    $scope.payment.updateFeePerKb($scope.transaction.satoshiPerByte);
   };
 
   $scope.backToForm = () => {
@@ -382,7 +383,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
   $scope.checkFee = () => {
     let tx = $scope.transaction;
-    let surge = !$scope.advanced && tx.surge;
     let maximumFee = tx.maxAvailable + tx.fee - $scope.getTransactionTotal();
 
     const commitFee = (fee) => {
@@ -397,23 +397,12 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       }
     };
 
-    const showFeeWarning = (suggestedFee) => {
-      return fees.showFeeWarning(tx.fee, suggestedFee, maximumFee, surge);
-    };
-
     // This needs to be tx.fees
-    let high = tx.maxFees.priority;
-    let mid = tx.maxFees.legacyCapped;
-    let low = tx.maxFees.lowerLimit;
-    console.log(`Fees { high: ${high}, mid: ${mid}, low: ${low} }`);
+    let max = tx.fees.limits.max;
+    let min = tx.fees.limits.min;
+    console.log(`Fees { max: ${max}, min: ${min} }`);
 
-    if ($scope.advanced) {
-      if (tx.fee > high) {
-        return showFeeWarning(high).then(commitFee);
-      } else if (tx.fee < low) {
-        return showFeeWarning(low).then(commitFee);
-      }
-    } else {
+    if (!$scope.advanced) {
       let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
       let feeRatio = tx.fee / tx.amount;
       if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {

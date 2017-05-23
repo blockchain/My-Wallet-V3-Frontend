@@ -1388,9 +1388,9 @@
   "SHOW_MORE": "Show more",
   "RECEIVE_HELPER": "Copy a receive address to your clipboard.",
   "EMAIL_SENT": "Email Sent",
-  "legacyCapped": "Regular ({{::amount}} sat/b)",
+  "regular": "Regular ({{::amount}} sat/b)",
   "priority": "Priority ({{::amount}} sat/b)",
-  "legacyCapped_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
+  "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
   "": ""
 }
