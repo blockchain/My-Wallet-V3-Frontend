@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('UnocoinCreateAccountController', UnocoinCreateAccountController);
 
-function UnocoinCreateAccountController ($scope, AngularHelper, $timeout, $q, localStorageService, Wallet, Alerts, unocoin, bcPhoneNumber) {
+function UnocoinCreateAccountController ($scope, AngularHelper, $timeout, $q, localStorageService, Wallet, Alerts, unocoin) {
   const views = ['summary', 'email'];
   const cookieIds = { SENT_EMAIL: 'sentEmailCode' };
   let exchange = $scope.vm.exchange;
@@ -21,8 +21,6 @@ function UnocoinCreateAccountController ($scope, AngularHelper, $timeout, $q, lo
 
   $scope.view = (v) => { state.view = v; };
   $scope.viewing = (v) => v === state.view;
-
-  $scope.format = bcPhoneNumber.format;
 
   $scope.setState = () => {
     state.email = user.email;

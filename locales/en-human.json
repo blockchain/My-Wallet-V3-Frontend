@@ -1244,6 +1244,16 @@
     "UPLOAD_SELECT": "Select Upload Method",
     "HELP": "Make sure the snapshot clearly displays your address."
   },
+  "pancard_ID": {
+    "TITLE": "Upload Pancard",
+    "UPLOAD_TITLE": "Pancard",
+    "UPLOAD_SELECT": "Select Upload Method"
+  },
+  "photo_ID": {
+    "TITLE": "Upload Photo",
+    "UPLOAD_TITLE": "Photo",
+    "UPLOAD_SELECT": "Select Upload Method"
+  },
   "bank-check-helper": {
     "TITLE": "Routing and Account Number",
     "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."
