@@ -102,7 +102,7 @@
               span.state-danger-text(
                 ng-click="useAll()"
                 ng-class="{'pointer': transaction.destinations.length === 1}"
-                ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
+                ng-show="transaction.maxAvailable > 0 && transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
                 span.type-sm(translate="USE_TOTAL")
                 | :&nbsp;
                 span.type-sm {{ transaction.maxAvailable | convert:'btc' }}
@@ -131,7 +131,7 @@
           .group.inline.mt-5
             .item.inline.width-100.flex-between
               span.f-12(ng-if="transaction.maxAvailable > 0") {{ transaction.feeType + '_ESTIMATION_TIME' | translate }}
-              span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0") You do not have enough funds to use this fee
+              span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0") You do not have enough funds to use this fee.
               a.f-12(ng-click="advancedSend()" translate="Customize Fee")
         //- Custom Fee
         .group(ng-if="advanced")
@@ -152,8 +152,9 @@
                   span.mhm sat/b
             .item.right-align.width-50
               label.fade(translate="FEE")
-              span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0") Fee is too high
-              span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+              span.f-14.state-danger-text(ng-if="transaction.maxAvailable <= 0") Fee is too high
+              span.f-14.state-danger-text(ng-if="transaction.satoshiPerByte <= 50") Fee is too low
+              span.f-14(ng-if="transaction.maxAvailable > 0 && transaction.satoshiPerByte > 50") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
   div.overview(ng-show="confirm")
@@ -171,18 +172,15 @@
       .flex-row.mt-25
         label.colon.width-30.width-30-mobile(translate="PAYMENT")
         .width-70.width-70-mobile
-          span.mr-10 {{transaction.amount | toBitCurrency:btcCurrency:false}}
-          fiat.parens(btc="transaction.amount")
+          span.mr-10 {{transaction.amount | convert:'btc':true}} ({{transaction.amount | convert:'fiat':true}})
       .flex-row.mt-25
         label.colon.width-30.width-30-mobile(translate="FEE")
         .width-70.width-70-mobile
-          span.mr-10 {{ transaction.fee | toBitCurrency:btcCurrency:false}}
-          fiat.parens(btc="transaction.fee")
+          span.mr-10 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
       .bg-grey.pv-30.ph-60.flex-column.mt-25.center(ng-class="(getToLabels()[0].type != 'External') ? 'transfer' : 'sent'")
         span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
-        span.f-20.em-300
-          fiat(btc="getTransactionTotal(true)")
+        span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
+        span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}
   .mt-20
     button.full.button-primary.upper(
       ladda-translate="CONTINUE"
@@ -198,4 +196,5 @@
       ng-click="send()"
       data-style="expand-left"
       ng-show="confirm")
-    a.display-block.width-100.mt-10(ng-click="backToForm()" translate="GO_BACK" ng-show="confirm")
+    div.width-100.center.mt-10(ng-show="confirm")
+      a(ng-click="backToForm()" translate="GO_BACK")
