@@ -8,10 +8,13 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   });
 
   let exchange = $scope.vm.exchange;
+  let idTypes = ['address', 'id', 'pancard', 'photo'];
+  let getNextIdType = () => idTypes.shift();
 
   $scope.openHelper = modals.openHelper;
 
   $scope.state = {
+    idType: getNextIdType(),
     step: 'address'
   };
 
@@ -20,6 +23,7 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
 
   $scope.setState = () => {
     $scope.state.file = undefined;
+    $scope.state.idType = getNextIdType();
   };
 
   $scope.prepUpload = () => {
@@ -27,28 +31,11 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
     let fields = $scope.state;
     let profile = exchange.profile;
     let idType = fields.idType;
-    let filename = fields.file.name;
 
-    // QA Tool
-    fields.verifyDoc && (filename = 'testing-' + filename);
-
-    $q.resolve(profile.getSignedURL(idType, filename))
-      .then((res) => $scope.upload(res.signed_url))
-      .catch((err) => console.log(err));
-  };
-
-  $scope.upload = (url) => {
-    let { file } = $scope.state;
-
-    Upload.http({
-      method: 'PUT',
-      url: url,
-      data: file,
-      headers: { 'content-type': 'application/octet-stream' }
-    }).then(() => exchange.fetchProfile())
-      .then(() => $scope.setState())
-      .catch(unocoin.displayError)
-      .finally($scope.free);
+    $q.resolve(Upload.base64DataUrl(fields.file))
+      .then((url) => profile.addPhoto(idType, url))
+      .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify())
+      .then($scope.free);
   };
 
   $scope.setAddress = () => {
@@ -97,6 +84,6 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.$watch('state.step', (val) => console.log(val));
 
   // QA Tool
-  $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
-  $scope.SFOXAddressForm = () => angular.merge($scope.state, QA.SFOXAddressForm());
+  $scope.unocoinInfoForm = () => angular.merge($scope.state, QA.unocoinInfoForm());
+  $scope.unocoinAddressForm = () => angular.merge($scope.state, QA.unocoinAddressForm());
 }
