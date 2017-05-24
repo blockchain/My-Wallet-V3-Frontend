@@ -67,8 +67,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     tx.satoshiPerByte = $scope.advanced ? tx.satoshiPerByte : tx.fees[tx.feeType];
     if (tx.maxAvailable < 0) tx.maxAvailable = 0;
 
-    console.log(data.finalFee);
-
     AngularHelper.$safeApply($scope);
   };
 
