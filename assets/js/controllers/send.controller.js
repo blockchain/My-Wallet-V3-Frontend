@@ -383,7 +383,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       }
     };
 
-    // This needs to be tx.fees
     let max = tx.fees.limits.max;
     let min = tx.fees.limits.min;
     console.log(`Fees { max: ${max}, min: ${min} }`);
