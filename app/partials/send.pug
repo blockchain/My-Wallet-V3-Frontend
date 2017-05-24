@@ -123,7 +123,7 @@
               select(name="fee"
                      ng-model="transaction.feeType"
                      ng-change="payment.updateFeePerKb(transaction.fees[transaction.feeType])"
-                     ng-options="feeType as feeType | translate:{amount: fee} for (feeType, fee) in transaction.fees | fees"
+                     ng-options="feeType as feeType | translate for (feeType, fee) in transaction.fees | fees"
                      tabindex=""
                      required)
             .item.right-align.width-40.width-40-mobile
@@ -166,22 +166,22 @@
       .flex-row
         label.colon.width-30.width-30-mobile(translate="FROM")
         .width-70.width-70-mobile {{ transaction.from.label || transaction.from.address }}
-      .flex-row.mt-25
+      .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="TO")
         .width-70.width-70-mobile(ng-repeat="address in getToLabels() track by $index")
           span(translate="no") {{ address.label || address.address }}
-      .flex-row.mt-25(ng-show="transaction.note.length")
+      .flex-row.mt-10(ng-show="transaction.note.length")
         label.colon.width-30.width-30-mobile(translate="FOR")
         .width-70.width-70-mobile {{ transaction.note }}
-      .flex-row.mt-25
+      .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="PAYMENT")
         .width-70.width-70-mobile
           span.mr-10 {{transaction.amount | convert:'btc':true}} ({{transaction.amount | convert:'fiat':true}})
-      .flex-row.mt-25
+      .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="FEE")
         .width-70.width-70-mobile
           span.mr-10 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
-      .bg-grey.pv-30.ph-60.flex-column.mt-25.center(ng-class="(getToLabels()[0].type != 'External') ? 'transfer' : 'sent'")
+      .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="(getToLabels()[0].type != 'External') ? 'transfer' : 'sent'")
         span.mb-10(translate="TOTAL")
         span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
         span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}
