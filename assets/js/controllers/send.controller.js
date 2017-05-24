@@ -400,10 +400,10 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.handlePaste = (event, index) => {
     let destination = [];
     $timeout(() => {
-      event.target.value
-        ? destination.push({address: event.target.value})
-        : destination = $scope.transaction.destination;
-      const result = Wallet.parseBitcoinURL(destination, index);
+      let value = event.target.value;
+      if (Wallet.isValidAddress(value)) return;
+      value ? destination.push({address: value}) : destination = $scope.transaction.destination;
+      const result = Wallet.parseBitcoinURL(destination);
       $scope.transaction.destination.address = result.address;
       $scope.transaction.amount = result.amount;
       index === 0 ? $scope.transaction.note = result.note : '';
