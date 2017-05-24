@@ -61,7 +61,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   };
 
   $scope.exitToNativeTx = () => {
-    buyMobile.callMobileInterface(buyMobile.SHOW_TX, $scope.trade.txHash);
+    buyMobile.callMobileInterface(buyMobile.SHOW_TX, this.trade.txHash);
   };
 
   $scope.getQuoteHelper = () => {
@@ -89,7 +89,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
 
-  if (!this.user.isEmailVerified) {
+  if (!this.user.isEmailVerified && !this.exchange.user) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('signup');

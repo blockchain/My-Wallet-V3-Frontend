@@ -10,10 +10,10 @@ describe('CoinifySummaryController', () => {
 
   let mediums = {
     'card': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts() { return $q.resolve(buySell.accounts); }
     },
     'bank': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts() { return $q.resolve(buySell.accounts); }
     }
   };
 
@@ -73,7 +73,7 @@ describe('CoinifySummaryController', () => {
 
       buySell.getExchange = () => ({
         getBuyQuote() {}
-      }) ;
+      });
 
       buySell.getQuote = () => $q.resolve(quote);
 
@@ -122,23 +122,12 @@ describe('CoinifySummaryController', () => {
     });
   });
 
-  describe('.openKYC()', () =>
-
-    it('should get open KYC and go to isx step', () => {
-      spyOn(buySell, 'getOpenKYC');
-      spyOn(scope.vm, 'goTo');
-      scope.openKYC();
-      scope.$digest();
-      expect(buySell.getOpenKYC).toHaveBeenCalled();
-      return expect(scope.vm.goTo).toHaveBeenCalledWith('isx');
-    })
-  );
-
   describe('.buy()', function () {
 
     it('should call buy', () => {
       spyOn(buySell.accounts[0], 'buy');
       scope.buy();
+      scope.$digest();
       return expect(buySell.accounts[0].buy).toHaveBeenCalled();
     });
 

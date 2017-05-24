@@ -1091,8 +1091,9 @@
     "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
   },
   "BANK_TRANSFER": {
-    "COPY1": "Receive bitcoin in 2-3 days",
-    "COPY2": "No payment fees",
+    "COPY1": "One time ID Verification",
+    "COPY2": "Receive bitcoin in 2-3 days",
+    "COPY3": "No payment fees",
     "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card."
   },
   "KYC_IN_REVIEW": {

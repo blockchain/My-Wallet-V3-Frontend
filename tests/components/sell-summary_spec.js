@@ -1,5 +1,6 @@
 describe('sell-summary.component', () => {
   let $q;
+  let Wallet;
   let scope;
   let $rootScope;
   $rootScope = undefined;
@@ -74,6 +75,10 @@ describe('sell-summary.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
       $q = $injector.get('$q');
+      Wallet = $injector.get('Wallet');
+
+      let askForSecondPassword = $q.defer();
+      Wallet.askForSecondPasswordIfNeeded = () => askForSecondPassword.promise;
     })
   );
 
@@ -117,12 +122,13 @@ describe('sell-summary.component', () => {
       expect(ctrl.waiting).toEqual(true);
     });
 
-    it('should call bankAccount.sell(bankId)', () => {
+    it('should call Wallet.askForSecondPasswordIfNeeded()', inject(function (Wallet) {
       let ctrl = getController(handlers);
-      spyOn(ctrl.bankAccount, 'sell');
+      spyOn(Wallet, 'askForSecondPasswordIfNeeded').and.callThrough();
       ctrl.sell();
-      expect(ctrl.bankAccount.sell).toHaveBeenCalled();
-    });
+      expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled();
+    })
+  );
   });
 
   describe('.checkForUpdatedQuote()', () => {

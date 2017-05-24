@@ -48,14 +48,9 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
 
   this.checkForUpdatedQuote();
 
-  // ---- for making a sell trade ---- //
-
-  const handleBadRequest = (e) => {
-    if (e instanceof SyntaxError) {
-      this.onComplete();
-    } else {
-      this.error = JSON.parse(e);
-    }
+  const handleSecondPasswordError = (e) => {
+    this.waiting = false;
+    Alerts.displayError(e);
   };
 
   const transactionFailed = (message) => {
@@ -98,6 +93,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   };
 
   const handleError = (e) => {
+    console.error(e);
     console.error('error publishing', e.error);
     console.log(JSON.stringify(e.payment, null, 2));
     if (e.error.message) console.error(e.error.message);
@@ -117,18 +113,14 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   };
   this.sell = () => {
     this.waiting = true;
-    $q.resolve(this.bankAccount.sell())
-      .then(handleSellResult)
-      .then(() => {
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(signAndPublish)
+    Wallet.askForSecondPasswordIfNeeded()
+      .then((pw) => {
+        $q.resolve(this.bankAccount.sell())
+          .then(handleSellResult)
+          .then(() => signAndPublish(pw))
           .then(transactionSucceeded)
           .catch(handleError);
-
-        // undo these comments when sending btc is disabled
-        // this.waiting = false;
-        // this.onComplete();
       })
-      .catch(handleBadRequest);
+      .catch(handleSecondPasswordError);
   };
 }
