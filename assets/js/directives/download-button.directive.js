@@ -16,10 +16,16 @@ function downloadButton ($window, $timeout) {
   return directive;
 
   function link (scope, attr, elem) {
+    const BYTE_ORDER_MARKER_UTF8 = '\uFEFF';
+
+    scope.createDataUri = (data) => (
+      `data:text/plain;charset=utf-8,${encodeURIComponent(data)}`
+    );
+
     scope.$watch('content', (content) => {
-      let blob = new $window.Blob([content], {type: 'text/csv'});
-      scope.dataRef = $window.URL.createObjectURL(blob);
+      scope.dataRef = scope.createDataUri(BYTE_ORDER_MARKER_UTF8 + content);
     });
+
     scope.$on('download', (event) => {
       if (!scope.dataRef) return;
       $timeout(() => elem.$$element[0].click());

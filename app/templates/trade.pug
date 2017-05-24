@@ -11,8 +11,8 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
         li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
     span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
     span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
-    span.state.mrl.success(ng-show="completed && trade._state === 'completed' && trade._medium === 'blockchain'" translate="SELL.SOLD")
-    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived && trade._medium !== 'blockchain'") Pending
+    span.state.mrl.success(ng-show="completed && trade.state === 'completed' && trade.medium === 'blockchain'" translate="SELL.SOLD")
+    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived && trade.medium !== 'blockchain'") Pending
     span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
     span.hidden-xs
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
@@ -27,8 +27,7 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
   td.type-lbl.pvml.hidden-xs
     span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
       span.display-inline-block.left-align
-        quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
-      br
+        //- quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
       span(ng-if="buySellDebug")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now

@@ -101,6 +101,15 @@
       .tx-details {
         margin-left: 1em;
       }
+      date {
+        font-size: 12px;
+      }
+      .status {
+        display: block;
+        > div {
+          display: block;
+        }
+      }
     }
   }
   @media (max-width: 767px) {
@@ -126,7 +135,6 @@
 
   font-size: 16px;
   font-weight: 300;
-  @extend .alt-font;
 
   .rotated {
     transform: rotate(-90deg);
@@ -288,7 +296,7 @@ a.date,p.date { color: $black; }
   .amountTotal{float: right;}
 }
 
-@media(max-width: 991px) {
+@media (max-width: 991px) {
   .tx-bci-link {
     font-size: .8em;
   }
@@ -309,7 +317,7 @@ a.date,p.date { color: $black; }
   }
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .transaction-card {
     top: 0;
     margin: 10px;
@@ -337,5 +345,12 @@ a.date,p.date { color: $black; }
   .transaction-card {
     button.amount { font-size: .75em; }
     .helper { display: none; }
+  }
+}
+
+.input-group {
+  .ti-calendar {
+    z-index: 4;
+    position: relative;
   }
 }

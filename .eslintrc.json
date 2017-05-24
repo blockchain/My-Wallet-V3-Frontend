@@ -1,0 +1,17 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "extends": "plugin:angular/johnpapa",
+  "rules": {
+    "angular/file-name": [
+      2,
+      {
+        "typeSeparator": "dot",
+        "nameStyle": "dash",
+        "ignoreTypeSuffix" : true
+      }
+    ],
+    "angular/function-type": [2, "named"]
+  }
+}

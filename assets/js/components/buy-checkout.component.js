@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
+function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -27,6 +27,10 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
+
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+  });
 
   let state = $scope.state = {
     btc: null,
@@ -69,8 +73,7 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
-      let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
@@ -118,7 +121,7 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       sfox.buy(this.buyAccount, quote)
         .then(trade => {
           // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-          if ($rootScope.buySellDebug) {
+          if ($scope.buySellDebug) {
             console.info('Load Sift Science iframe');
           }
           $scope.tradeId = trade.id;
@@ -143,6 +146,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
-  $scope.$root.installLock.call($scope);
+  AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }

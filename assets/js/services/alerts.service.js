@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal', '$uibModalStack', '$cookies'];
+Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', 'localStorageService'];
 
-function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack, $cookies) {
+function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, localStorageService) {
   const service = {
     alerts: [],
     close,
@@ -55,18 +55,25 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack
 
   function displayResetTwoFactor (message) {
     $translate(['SUCCESS']).then(translations => {
-      $rootScope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: message
+      $uibModal.open({
+        templateUrl: 'partials/modal-notification.pug',
+        controller: 'ModalNotificationCtrl',
+        windowClass: 'notification-modal',
+        resolve: {
+          notification: () => ({
+            type: 'verified-email',
+            icon: 'ti-email',
+            heading: translations.SUCCESS,
+            msg: message
+          })
+        }
       });
     });
   }
 
   function surveyCloseConfirm (survey, links, index, sell) {
     let link = links[index];
-    let surveyOpened = $cookies.getObject(survey);
+    let surveyOpened = localStorageService.get(survey);
 
     let hasSeenPrompt = !links.length ||
                         index >= links.length ||
@@ -78,8 +85,8 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal, $uibModalStack
       }
       return service.confirm('CONFIRM_CLOSE_BUY', {action: 'IM_DONE'});
     } else {
-      $cookies.putObject(survey, {index: index});
-      let openSurvey = () => $rootScope.safeWindowOpen(link);
+      localStorageService.set(survey, {index: index});
+      let openSurvey = () => BrowserHelper.safeWindowOpen(link);
       return service.confirm('SURVEY_PROMPT', {action: 'TAKE_SURVEY', friendly: true, cancel: 'NO_THANKS'})
                     .then(openSurvey)
                     .catch(() => $uibModalStack.dismissAll());

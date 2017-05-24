@@ -102,7 +102,24 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('public', {
       views: {
         body: {
-          templateUrl: 'partials/public.pug'
+          templateUrl: 'partials/public.pug',
+          controller: function ($scope, $state, languages, Env) {
+            Env.then(env => {
+              $scope.rootURL = env.rootURL;
+              $scope.versionMyWallet = env.versionMyWallet;
+              $scope.versionFrontend = env.versionFrontend;
+            });
+            let overflows = ['/reset-2fa'];
+            $scope.state = $state;
+            $scope.path = $state.current.url;
+            $scope.languages = languages.languages;
+            $scope.$watch(languages.get, (code) => {
+              $scope.language = languages.mapCodeToName(code);
+            });
+            $scope.$watch('state.current.url', (newVal) => {
+              $scope.isUIOverflow = overflows.indexOf(newVal) > -1;
+            });
+          }
         }
       },
       resolve: {

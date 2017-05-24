@@ -1,100 +1,66 @@
 #buy(ng-class="{rendered:rendered}" data-preflight-tag="SellModal")
-  .modal-header.bc-modal-header.flex-between.flex-center()
+  .modal-header.bc-modal-header.flex-between.flex-center
     .flex-column.flex-1
       .flex-row.flex-between.flex-center
-        h3.mlm(ng-if="onStep('accept-terms')" translate="SELL.COINIFY_ACCOUNT")
-        h3.mlm(ng-if="onStep('account-info')" translate="SELL.ADD_BANK_ACCOUNT")
-        h3.mlm(ng-if="onStep('account-holder')" translate="SELL.ACCOUNT_HOLDER")
-        h3.mlm(ng-if="onStep('summary')" translate="SELL.CONFIRM_SELL_ORDER")
-        h3.mlm(ng-if="onStep('review') && !KYCState" ng-hide="onStep('review') && trade._state === 'completed'" translate="SELL.ORDER_PLACED")
-        h3.mlm(ng-if="onStep('review') && trade._state === 'completed'" translate="SELL.TRADE_COMPLETE")
-        h3.mlm(ng-if="onStep('bank-link')" translate="SELL.LINKED_ACCOUNTS")
-        h3.mlm(ng-if="onStep('isx')" translate="SELL.INCREASE_SELL_LIMIT")
-        h3.mlm(ng-if="onStep('review') && KYCState" translate="SELL.ID_REVIEW_STATUS")
-        .flex-column.flex-align-end(ng-show="status.gettingQuote")
-          img(src="img/spinner.gif")
-        .flex-row-reverse.flex-align-end(ng-hide="status.gettingQuote"
-                                    uib-tooltip="{{getQuoteHelper() | translate}}"
+        h3(translate="{{vm.title}}")
+        .flex-column.flex-align-end(uib-tooltip="{{ vm.getQuoteHelper() | translate}}"
                                     tooltip-append-to-body="true"
-                                    tooltip-placement="top"
-                                    tooltip-enable="!hideQuote()")
-          .flex-row.type-h5.em-500(ng-hide="onStep('review') || onStep('isx')")
-            span {{transaction.btc }} BTC ({{currencySymbol}}{{transaction.fiat}})
-  .modal-body.fade.flex-center.flex-justify(class="{{isxStep}}" ng-class="{'summary': onStep('summary'), 'isx': onStep('isx')}")
-    .alert-in-app
-      alerts(context="alerts")
-    div.iframe(ng-if="onStep('isx')")
-      isignthis(transaction-id='trade.iSignThisID' on-load="loadPayment()" on-complete="finishISX" payment-info="paymentInfo" on-resize="onResize(step)")
-    div.width-90(ng-show="onStep('email')" ng-controller="CoinifyEmailController")
-      include ./coinify/email
-    div.width-90(ng-show="onStep('accept-terms')" ng-controller="CoinifyTermsController")
-      include ./coinify/signup
-    div.width-90(ng-show="onStep('account-info')" ng-controller="CoinifyBankAccountController")
-      include ./coinify/account-info
-    div.width-90(ng-show="onStep('account-holder')" ng-controller="CoinifyBankAccountController")
-      include ./coinify/account-holder
-    div.width-90(ng-if="onStep('bank-link')" ng-controller="CoinifyBankLinkController")
-      include ./coinify/bank-link
-    div.width-90(ng-if="onStep('summary')" ng-controller="CoinifySummaryController")
-      include ./coinify/summary
-    div.width-95(ng-if="onStep('review')")
-      include ./coinify/review
-    .flex-end.flex-center.mtl.coinify-logo(ng-hide="afterStep('summary')")
-      span.pos-rel
-        span.mrs.type-sm(translate="POWERED_BY")
-        a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
-          img(src="img/coinify-logo.svg")
-          span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-  .modal-footer.flex-end.flex-row
-    button.button-muted(ng-show="onStep('account-holder')" ng-click="goTo('account-info')" translate="GO_BACK")
-
-    .flex-1.flex-end(ng-hide="status.loading")
-      button.button-muted.mrm(ng-click="$close()" translate="CANCEL" ng-show="onStep('accept-terms') || onStep('email')")
-      button.button-muted.mrm(ng-click="close()" translate="CANCEL_ORDER" ng-show="onStep('summary') && !error")
-      button.button-muted.mrm(ng-click="close()" translate="FINISH_LATER" ng-show="onStep('isx')")
-      button.button-muted.mrm(ng-click="close()" translate="CLOSE" ng-show="onStep('bank-link') || onStep('account-info') || onStep('account-holder')")
-      div(ng-hide="afterStep('summary')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="goTo('account-holder')"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('account-info')")
-        button.button-primary(
-          translate="CONTINUE"
-          ng-click="goTo('accept-terms')"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('email')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="createBankAccount()"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('account-holder')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="acceptTerms()"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('accept-terms')")
-        button.button-primary(
-          ladda-translate="CONTINUE"
-          ng-click="goTo('summary')"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('bank-link')")
-        button.button-primary(
-          ladda-translate="SELL.PLACE_ORDER"
-          ng-click="sell()"
-          data-style="expand-left"
-          ui-ladda="status.waiting"
-          ng-disabled="isDisabled()"
-          ng-show="onStep('summary') && !error")
-      div(ng-show="onStep('review') || onStep('summary') && error")
-        button.button-primary(translate="CLOSE" ng-click="cancel()")
-      div(ng-show="onStep('trade-formatted') && bitcoinReceived")
-        button.button-success(translate="SEE_BITCOIN" ng-click="cancel()" ui-sref="wallet.common.transactions")
+                                    tooltip-placement="top")
+          .flex-row.type-h5.em-500(ng-hide="vm.onStep('trade-complete') || vm.onStep('isx')")
+            span {{vm.transaction.btc }} BTC ({{vm.transaction.currency.symbol}}{{vm.transaction.fiat}})
+          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="false")
+  coinify-email(
+      ng-if="vm.onStep('email')"
+      on-complete="vm.goTo('accept-terms')"
+      on-close="vm.close()"
+      email="vm.user.email"
+      valid-email="vm.state.email.valid"
+      verified="vm.user.isEmailVerified"
+      on-email-change="vm.onEmailChange(true)"
+      rejected-email="vm.rejectedEmail")
+  coinify-signup(
+      ng-if="vm.onStep('accept-terms')"
+      on-complete="vm.onSignupComplete()"
+      on-error="vm.goTo('email')"
+      on-close="vm.close()"
+      email="vm.user.email"
+      valid-email="vm.state.email.valid"
+      on-email-change="vm.onEmailChange(false)"
+      fiat-currency="vm.fiat()")
+  coinify-create-account(
+      ng-if="vm.onStep('account')"
+      country="vm.country"
+      on-complete="vm.goTo('summary')"
+      error="vm.ibanError"
+      view-info="true"
+      on-submit="vm.addBankAccount(bank, profile)"
+      close="vm.close()")
+  sell-bank-link(
+      ng-if="vm.onStep('bank-link')" 
+      on-complete="vm.goTo('summary')" 
+      accounts="vm.accounts"
+      transaction="vm.transaction"
+      payment-account="vm.paymentAccount"
+      selected-bank-account="vm.selectedBankAccount" 
+      select-account="vm.selectAccount(account)" 
+      new-account="vm.goTo('account')" 
+      close="vm.close()")
+  sell-summary(
+      ng-if="vm.onStep('summary')"
+      exchange="vm.exchange"
+      sell-trade="trade"
+      transaction="vm.transaction"
+      total-balance="vm.totalBalance"
+      close="vm.close()"
+      dismiss="vm.dismiss()"
+      bank-account="vm.selectedBankAccount"
+      payment="vm.finalPayment"
+      on-success="vm.onSellSuccess(trade)"
+      on-complete="vm.goTo('trade-complete')"
+      quote="vm.quote")
+  sell-trade-finished(
+      ng-if="vm.onStep('trade-complete')"
+      sell-trade="vm.sellTrade"
+      completed-state="vm.completedState"
+      dismiss="vm.cancel()")
+  div(ng-if="vm.onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")

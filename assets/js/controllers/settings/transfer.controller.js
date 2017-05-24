@@ -11,8 +11,11 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
   $scope.status = { loading: true };
   $scope.nfailed = 0;
   $scope.ncomplete = 0;
-  $scope.archivable = [];
   $scope.ntotal = $scope.addresses.length;
+  $scope.archivable = [];
+  $scope.unsweepable = [];
+
+  $scope.isUnsweepable = (a) => $scope.unsweepable.indexOf(a) > -1;
 
   $scope.wait = (t) => $q(r => $timeout(r, t));
 
@@ -30,6 +33,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
     paymentsDataP.then(paymentsData => {
       $scope.totalAmount = paymentsData.filter(p => p.amounts[0] > 0).reduce((t, p) => t + p.amounts[0], 0);
       $scope.totalFees = paymentsData.filter(p => p.finalFee > 0).reduce((t, p) => t + p.finalFee, 0);
+      $scope.unsweepable = paymentsData.filter(p => p.amounts[0] == null).map(p => p.from[0]);
       $scope.status.loading = false;
     });
   };
@@ -48,7 +52,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
         values: {
           archivable: $scope.archivable.length,
           account: $scope.selectedAccount.label,
-          total: $scope.ncomplete + $scope.nfailed
+          total: $scope.ncomplete
         },
         action: 'ARCHIVE',
         friendly: true
@@ -76,7 +80,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
 
       return $scope.wait(250).then(signAndPublish)
         .then(() => {
-          $scope.selectedAccount.incrementReceiveIndex();
+          $scope.selectedAccount.lastUsedReceiveIndex = $scope.selectedAccount.receiveIndex;
           $scope.archivable.push($scope.addresses[i]);
         })
         .catch(e => $scope.nfailed++)

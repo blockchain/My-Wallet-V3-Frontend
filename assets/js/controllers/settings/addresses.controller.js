@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAddressesCtrl', SettingsAddressesCtrl);
 
-function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, MyBlockchainApi, Alerts, $uibModal) {
+function SettingsAddressesCtrl ($scope, $translate, AngularHelper, $state, $stateParams, $q, $sce, Wallet, Labels, MyWalletHelpers, MyBlockchainApi, Alerts, $uibModal) {
   if (!Wallet.status.isLoggedIn) {
     console.error('Controller depends on being logged in');
     return;
@@ -25,7 +25,7 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
 
   Labels.checkIfUsed(accountIndex).then(() => {
     $scope.loading = false;
-    $rootScope.$safeApply();
+    AngularHelper.$safeApply();
   });
 
   $scope.account = Wallet.accounts()[$stateParams.account];
@@ -52,14 +52,14 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
   $scope.removeAddressLabel = (address) => {
     Alerts.confirm('CONFIRM_REMOVE_LABEL').then(() => {
       Labels.removeLabel(accountIndex, address).then().then(() => {
-        $rootScope.$safeApply();
+        AngularHelper.$safeApply();
       });
     });
   };
 
   $scope.changeLabel = (address, label) => {
     return Labels.setLabel(accountIndex, address, label).then().then(() => {
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -81,7 +81,7 @@ function SettingsAddressesCtrl ($scope, $translate, $rootScope, $state, $statePa
   $scope.setPastAddressesPage = (page) => {
     $scope.page = page;
     let addresses = $scope.pastAddressesPage(page, $scope.pageLength);
-    Labels.fetchBalance(addresses).then(() => { $rootScope.$safeApply(); });
+    Labels.fetchBalance(addresses).then(() => { AngularHelper.$safeApply(); });
   };
 
   $scope.newAccount = () => {

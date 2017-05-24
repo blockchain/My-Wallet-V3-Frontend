@@ -8,7 +8,7 @@ html(
     webSocketURL='${ process.env.WEB_SOCKET_URL }';\
     apiDomain='${ process.env.API_DOMAIN }/';\
     network='${ process.env.NETWORK || '' }';\
-    helperAppDomain='http://localhost:${ (process.env.PORT || 80) + 1 }';\
+    walletHelperUrl='${ process.env.WALLET_HELPER_URL || '' }';\
     sfoxUseStaging=${ process.env.SFOX_USE_STAGING || null };\
     sfoxApiKey='${ process.env.SFOX_API_KEY || ''}';\
     sfoxPlaidEnv='${ process.env.SFOX_PLAID_ENV || ''}';\
@@ -36,13 +36,18 @@ html(
       script(src='bower_components/angular-ui-select/dist/select.js', defer)
       script(src='bower_components/ng-file-upload/ng-file-upload-shim.min.js', defer)
       script(src='bower_components/ng-file-upload/ng-file-upload.min.js', defer)
+      script(src='bower_components/angular-local-storage/dist/angular-local-storage.min.js', defer)
 
-      // include: "type": "js", "files": "build/js/sharedDirectives.js"
+      // include: "type": "js", "files": "build/js/shared.module.js"
       // include: "type": "js", "files": "build/js/sharedDirectives/*.js"
-      // include: "type": "js", "files": "build/js/translations.js"
-      // include: "type": "js", "files": "build/js/app.js"
+      // include: "type": "js", "files": "build/js/sharedServices/*.js"
+      // include: "type": "js", "files": "build/js/wallet-app.module.js"
+      // include: "type": "js", "files": "build/js/wallet-translations.module.js"
+      // include: "type": "js", "files": "build/js/wallet-filters.module.js"
+      // include: "type": "js", "files": "build/js/filters/*.js"
+      // include: "type": "js", "files": "build/js/constants/*.js"
       // include: "type": "js", "files": "build/js/landingCtrl.js"
-      // include: "type": "js", "files": "build/js/services/bcTranslationLoader.service.js"
+      // include: "type": "js", "files": "build/js/services/bctranslate-static-files-loader.service.js"
       // include: "type": "js", "files": "build/js/services/languages.service.js"
       // include: "type": "js", "files": "build/js/routes.js"
 

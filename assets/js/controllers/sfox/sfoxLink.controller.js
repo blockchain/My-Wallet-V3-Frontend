@@ -2,12 +2,14 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, $rootScope) {
+function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Options, Env, $window) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
   let processOptions = (options) => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${$rootScope.sfoxPlaidEnv || options.partners.sfox.plaidEnv}`);
+    Env.then(env => {
+      $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperUrl}/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${env.sfoxPlaidEnv || options.partners.sfox.plaidEnv}`);
+    });
   };
 
   if (Options.didFetch) {
@@ -109,18 +111,20 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
   $scope.disablePlaid = () => $scope.state.plaid = {};
   $scope.plaidWhitelist = ['enablePlaid', 'disablePlaid', 'getBankAccounts'];
 
-  let receiveMessage = (e) => {
-    if (!e.data.command) return;
-    if (e.data.from !== 'plaid') return;
-    if (e.data.to !== 'exchange') return;
-    if (e.origin !== 'http://localhost:8081') return;
-    if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
+  Env.then(env => {
+    let receiveMessage = (e) => {
+      if (!e.data.command) return;
+      if (e.data.from !== 'plaid') return;
+      if (e.data.to !== 'exchange') return;
+      if (e.origin !== env.walletHelperUrl) return;
+      if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
-    e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
-    $scope.$safeApply();
-  };
+      e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
+      AngularHelper.$safeApply($scope);
+    };
 
-  window.addEventListener('message', receiveMessage, false);
+    $window.addEventListener('message', receiveMessage, false);
+  });
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

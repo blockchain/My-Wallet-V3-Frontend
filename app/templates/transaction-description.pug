@@ -16,7 +16,7 @@
       transaction-destinations(transaction="tx" search="search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300  
       transaction-note(transaction="tx", account="account" search="search")
-    .flex-1.width-20.mrl
+    .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       transaction-pending(transaction="tx")
     .flex-1.width-20.amount.flex-end
       span 
@@ -26,7 +26,7 @@
     transaction-note(transaction="tx" account="account")
   .hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
     transaction-destinations(transaction="tx" search="search")
-  .flex-start.flex-between.basic-grey(ng-if="tx.toggled")
+  .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
       transaction-status(transaction="tx")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")

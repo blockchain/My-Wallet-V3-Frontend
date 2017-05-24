@@ -65,6 +65,10 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
+  $scope.tabs = {
+    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
+  };
+
   $scope.$watchGroup(['country', 'state'], (newValues) => {
     country = newValues[0];
     state = newValues[1];

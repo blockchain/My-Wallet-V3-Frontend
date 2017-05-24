@@ -1,49 +1,51 @@
-form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" novalidate data-preflight-tag="ExportHistory")
+form(role="form" name="exportForm" ng-submit="vm.submit()" autocomplete="off" novalidate data-preflight-tag="ExportHistory")
   .modal-header
     .flex-center.pam
       h3.man.mrm(translate="EXPORT_HISTORY")
-      helper-button(content="EXPORT_HISTORY_EXPLAIN")
+      helper-button.show(content="EXPORT_HISTORY_EXPLAIN")
 
   .modal-body
     .ph-form.flex-row
       .flex-1.hidden-sm.hidden-xs
       .flex-4
-        .form-group.pal(ng-show="activeCount > 1")
+        .form-group.pal(ng-show="vm.activeCount > 1")
           ui-select.send-from-dropdown(
             name="active"
-            ng-model="$parent.active"
+            ng-model="vm.active"
             tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
               label-origin(origin="$select.selected")
-            ui-select-choices(repeat="t in targets | filter:{label:$select.search} | limitTo:limit")
-              label-origin(origin="::t" in-view="$last && isLast(t) && incLimit()" highlight="$select.search")
-        .flex-row.flex-center.flex-between.pal(ng-class="{'has-error':exportForm.$invalid || start.date > end.date}")
+            ui-select-choices(repeat="t in vm.targets | filter:{label:$select.search} | limitTo:vm.limit")
+              label-origin(origin="::t" in-view="$last && vm.isLast(t) && vm.incLimit()" highlight="$select.search")
+        .flex-row.flex-center.flex-between.pal(ng-class="{'has-error':exportForm.$invalid || vm.start.date > vm.end.date}")
           p.input-group.flex-center
             input.form-control(
+              id="start-search"
               type="text"
               name="start"
-              ng-model="start.date"
-              uib-datepicker-popup="{{format}}"
-              datepicker-options="options"
-              is-open="start.open"
+              ng-model="vm.start.date"
+              uib-datepicker-popup="{{vm.format}}"
+              datepicker-options="vm.options"
+              is-open="vm.start.open"
               placeholder="{{'START_DATE'|translate}}"
               popup-placement="auto"
               required)
-            span.pxs.ti-calendar.pointer(ng-click="start.open=true")
+            span.pxs.ti-calendar.pointer(ng-click="vm.start.open=true")
           i.ti-arrow-right.blue.pll.prl
           p.input-group.flex-center
             input.form-control(
+              id="end-search"
               type="text"
               name="end"
-              ng-model="end.date"
-              uib-datepicker-popup="{{format}}"
-              datepicker-options="options"
-              is-open="end.open"
+              ng-model="vm.end.date"
+              uib-datepicker-popup="{{vm.format}}"
+              datepicker-options="vm.options"
+              is-open="vm.end.open"
               placeholder="{{'END_DATE'|translate}}"
               popup-placement="auto"
               required)
-            span.pxs.ti-calendar.pointer(ng-click="end.open=true")
+            span.pxs.ti-calendar.pointer(ng-click="vm.end.open=true")
       .flex-1.hidden-sm.hidden-xs  
 
   .modal-footer
@@ -56,9 +58,9 @@ form(role="form" name="exportForm" ng-submit="submit()" autocomplete="off" noval
       ui-ladda="busy"
       ladda-translate="EXPORT"
       data-style="expand-left"
-      ng-show="history == null || canTriggerDownload"
-      ng-disabled="exportForm.$invalid || start.date > end.date")
+      ng-show="vm.history == null || vm.canTriggerDownload"
+      ng-disabled="exportForm.$invalid || vm.start.date > vm.end.date")
     download-button.btn.button-primary(
-      ng-hide="history == null || canTriggerDownload"
-      filename="{{formatFilename()}}"
-      content="history")
+      ng-hide="vm.history == null || vm.canTriggerDownload"
+      filename="{{vm.filename()}}"
+      content="vm.history")

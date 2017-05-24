@@ -129,9 +129,7 @@
           span(translate="DESCRIPTION:")
           helper-button(content="SEND_BITOIN_STEP2B")
         .flex-1
-          textarea.pas(rows="4" ng-model="transaction.note" name="note" ng-maxlength="255" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
-          .has-error
-            span.help-block.type-sm(translate="ERR_NOTE_LENGTH" ng-show="sendForm.note.$error.maxlength && sendForm.note.$touched")
+          textarea.pas(rows="4" ng-model="transaction.note" name="note" maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
       //- Fee
       .flex-row.flex-center.flex-justify.form-group.row.bc-modal-fade.mtl.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
         label.mbn
@@ -175,7 +173,7 @@
         .flex-column
           span.type-lbl.mbs.underline(translate="TO")
           .mls.mbs.flex-row.flex-center.center(ng-repeat="address in getToLabels() track by $index")
-            span.account.mvn.width-50-mobile.width-60.em-400 {{ address.label || address.address }}
+            span.account.mvn.width-50-mobile.width-60.em-400(translate="no") {{ address.label || address.address }}
             .width-50.width-50-mobile.flex-between
               span(ng-class="{success: address.type !== 'External'}")
                 span(ng-class="{fade: address.type === 'External'}") +&nbsp;
@@ -195,7 +193,7 @@
         .mvm.flex-justify.flex-1.flex-center.split-rule
         span.type-lbl.mbs.underline(translate="FROM")
         .mls.flex-row.flex-center.center.flex-between
-          span.account.width-50-mobile.width-60.mvn.em-400.long-input {{ transaction.from.label || transaction.from.address }}
+          span.account.width-50-mobile.width-60.mvn.em-400.long-input(translate="no") {{ transaction.from.label || transaction.from.address }}
           .width-50.width-50-mobile.flex-between
             span.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
             span.security-red -&nbsp;

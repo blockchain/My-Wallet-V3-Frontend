@@ -13,9 +13,6 @@
   .inprv {
     bottom: -12px;
   }
-  .divider {
-    margin: 0px auto;
-  }
   .open > .uib-dropdown-menu {
     overflow-y: auto;
     max-height: 160px;
@@ -274,10 +271,25 @@
   .ui-select-bootstrap > .ui-select-choices {
     max-height: 168px;
   }
+  // ff specific fix
+  @-moz-document url-prefix() {
+    .text-overflow-hidden {
+      max-width: 450px;
+      @media (max-width: 767px) {
+        max-width: 350px;
+      }
+    }
+  }
 }
 
 .popover {
   z-index: 1060;
+}
+
+.ui-select-container {
+  .divider {
+    margin: 0px auto;
+  }
 }
 
 #sign-msg {
