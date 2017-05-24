@@ -1,11 +1,11 @@
-'use strict';
-
 describe('currency', () => {
-
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(done => {
-    inject(($rootScope, currency) => {
+    inject(($rootScope, currency, $httpBackend) => {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       currency.fetchExchangeRate().then(done);
       $rootScope.$apply();
     });

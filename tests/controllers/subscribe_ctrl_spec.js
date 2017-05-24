@@ -6,7 +6,10 @@ describe('SubscribeCtrl', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, $rootScope, $controller) {
+    angular.mock.inject(function ($injector, $rootScope, $controller, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       MyWallet = $injector.get('MyWallet');
       country = $injector.get('country');
 

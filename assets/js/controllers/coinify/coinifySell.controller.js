@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, accounts, $state, options, $stateParams, bankMedium, payment) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, accounts, $state, $stateParams, bankMedium, payment, Env) {
   $scope.fields = {};
   $scope.user = Wallet.user;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
@@ -157,7 +157,12 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     });
   };
 
-  let links = options.partners.coinify.sellSurveyLinks;
+  let links;
+
+  Env.then(env => {
+    links = env.partners.coinify.sellSurveyLinks;
+  });
+
   this.close = () => {
     let index;
     if (!this.exchange.user) index = 0;

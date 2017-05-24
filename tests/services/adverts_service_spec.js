@@ -8,6 +8,14 @@ describe('AdvertsServices', () => {
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        apiDomain: 'https://api.blockchain.info/'
+      }));
+    });
+  });
+
   beforeEach(function () {
     angular.mock.inject(function ($injector, _$rootScope_) {
       $httpBackend = $injector.get('$httpBackend');
@@ -24,7 +32,7 @@ describe('AdvertsServices', () => {
 
       Adverts.fetch();
 
-      return $httpBackend.flush();
+      $httpBackend.flush();
     });
 
     it('should download the most recent adverts feed', () => expect(Adverts.ads.length).toBe(1));
@@ -40,22 +48,11 @@ describe('AdvertsServices', () => {
 
   describe('bad ads fetch()', () => {
     beforeEach(function () {
-      rootScope.apiDomain = 'https://api.blockchain.info/';
       $httpBackend.expectGET('https://api.blockchain.info/bci-ads/get?wallet=true&n=2').respond(sampleBadAds);
 
       Adverts.fetch();
 
-      return $httpBackend.flush();
-    });
-
-    it('should not keep bad ads', () => expect(Adverts.ads.length).toBe(0));
-  });
-
-  describe('bad api domain fetch()', () => {
-    beforeEach(function () {
-      rootScope.apiDomain = 'https://api.blockchain.info.attacker.com/';
-
-      return Adverts.fetch();
+      $httpBackend.flush();
     });
 
     it('should not keep bad ads', () => expect(Adverts.ads.length).toBe(0));
@@ -73,6 +70,6 @@ describe('AdvertsServices', () => {
 
   afterEach(function () {
     $httpBackend.verifyNoOutstandingExpectation();
-    return $httpBackend.verifyNoOutstandingRequest();
+    $httpBackend.verifyNoOutstandingRequest();
   });
 });

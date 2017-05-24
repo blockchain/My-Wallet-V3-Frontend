@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, options, buyMobile, Env) {
+function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, buyMobile, Env) {
   Env.then(env => {
     this.buySellDebug = env.buySellDebug;
   });
@@ -34,8 +34,12 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.trade && this.trade.sendAmount && buySell.getTrades().then($scope.goToOrderHistory());
   };
 
+  let links;
+  Env.then(env => {
+    links = env.partners.coinify.surveyLinks;
+  });
+
   this.close = (idx) => {
-    let links = options.partners.coinify.surveyLinks;
     if (idx > links.length - 1) { this.cancel(); return; }
     Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
   };
@@ -61,7 +65,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   };
 
   $scope.exitToNativeTx = () => {
-    buyMobile.callMobileInterface(buyMobile.SHOW_TX, $scope.trade.txHash);
+    buyMobile.callMobileInterface(buyMobile.SHOW_TX, this.trade.txHash);
   };
 
   $scope.getQuoteHelper = () => {
@@ -89,7 +93,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
 
-  if (!this.user.isEmailVerified) {
+  if (!this.user.isEmailVerified && !this.exchange.user) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('signup');

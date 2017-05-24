@@ -35,18 +35,6 @@ export VERSION:=vIntermediate
 endif
 endif
 
-ifndef API_DOMAIN
-export API_DOMAIN:=api.blockchain.info
-endif
-
-ifndef WEB_SOCKET_URL
-export WEB_SOCKET_URL:=wss://ws.blockchain.info/inv
-endif
-
-ifndef WALLET_HELPER_URL
-export WALLET_HELPER_URL:=http://localhost:8081
-endif
-
 helperApp/dist: bower_components
 	rm -rf helperApp/dist
 	DIST=1 ./node_modules/.bin/webpack --bail
@@ -54,11 +42,7 @@ helperApp/dist: bower_components
 dist: helperApp/dist bower_components
 	grunt build --skipWebpack=1
 
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=$(BACKEND_DOMAIN) --apiDomain=$(API_DOMAIN) --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=$(NETWORK)
-	cp -r helperApp/dist dist/wallet-helper
-
-dist_fixed_domain: helperApp/dist bower_components build
-	grunt dist --versionFrontend=$(VERSION) --rootDomain=blockchain.info --apiDomain=api.blockchain.info --webSocketURL=$(WEB_SOCKET_URL) --walletHelperUrl=$(WALLET_HELPER_URL) --network=$(NETWORK)
+	grunt dist --versionFrontend=$(VERSION)
 	cp -r helperApp/dist dist/wallet-helper
 
 changelog: node_modules
@@ -67,7 +51,7 @@ changelog: node_modules
 .env:
 	echo "DIST=1\nAUTO_RELOAD=0\nPORT=8080\nROOT_URL=https://blockchain.info\nWEB_SOCKET_URL=wss://ws.blockchain.info/inv\nAPI_DOMAIN=https://api.blockchain.info" >> .env
 
-server: .env dist_fixed_domain
+server: .env dist
 	npm start
 
 clean:

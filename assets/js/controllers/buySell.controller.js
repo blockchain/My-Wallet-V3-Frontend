@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellCtrl', BuySellCtrl);
 
-function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $q, options, $stateParams, modals) {
+function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wallet, currency, buySell, MyWallet, $q, $stateParams, modals) {
   $scope.buySellStatus = buySell.getStatus;
   $scope.trades = buySell.trades;
 
@@ -38,10 +38,10 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
       }
     };
 
-    $scope.sell = (trade, bankMedium, payment, options) => {
+    $scope.sell = (trade, bankMedium, payment) => {
       if (!$scope.status.modalOpen) {
         $scope.status.modalOpen = true;
-        buySell.openSellView(trade, bankMedium, payment, options).finally(() => {
+        buySell.openSellView(trade, bankMedium, payment).finally(() => {
           $scope.onCloseModal();
         });
       }
@@ -114,9 +114,8 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     }
 
     $scope.openKyc = () => {
-      ['declined', 'rejected', 'expired'].indexOf($scope.kyc.state) > -1
-        ? buySell.triggerKYC().then(kyc => $scope.buy(null, kyc))
-        : $scope.buy(null, $scope.kyc);
+      $q.resolve(buySell.getOpenKYC())
+        .then((kyc) => $scope.buy(null, kyc));
     };
 
     $scope.openSellKyc = () => {
@@ -156,16 +155,20 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
     });
   }
 
+  let disabled;
+
+  Env.then(env => {
+    disabled = env.partners.coinify.disabled;
+  });
+
   $scope.getIsTradingDisabled = () => {
     let profile = $scope.exchange && $scope.exchange.profile;
-    let disabled = options.partners.coinify.disabled;
     let canTrade = profile && profile.canTrade;
 
     return canTrade === false || disabled;
   };
 
   $scope.getIsTradingDisabledReason = () => {
-    let disabled = options.partners.coinify.disabled;
     let profile = $scope.exchange && $scope.exchange.profile;
     let cannotTradeReason = profile && profile.cannotTradeReason;
 
@@ -188,8 +191,10 @@ function BuySellCtrl ($rootScope, AngularHelper, $scope, $state, Alerts, Wallet,
   };
 
   let email = MyWallet.wallet.accountInfo.email;
-  let walletOptions = options;
-  $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, walletOptions, 'coinify');
+  Env.then(env => {
+    // TODO: don't pass all of 'env' into shouldDisplaySellTab()
+    $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
+  });
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',

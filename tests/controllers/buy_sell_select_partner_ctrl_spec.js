@@ -4,10 +4,25 @@ describe('BuySellSelectPartnerController', () => {
   let $state;
   let MyWallet;
   let scope;
-  let coinify;
   let accountInfo;
 
   beforeEach(angular.mock.module('walletApp'));
+
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        partners: {
+          coinify: {
+            countries: ['GB']
+          },
+          sfox: {
+            countries: ['US'],
+            states: ['AL', 'PA', 'CA', 'GA']
+          }
+        }
+      }));
+    });
+  });
 
   beforeEach(function () {
     accountInfo = {
@@ -66,6 +81,8 @@ describe('BuySellSelectPartnerController', () => {
       }
     });
 
+    $scope.$digest();
+
     return $scope;
   };
 
@@ -103,11 +120,17 @@ describe('BuySellSelectPartnerController', () => {
   describe('.onWhitelist()', () => {
     beforeEach(() => scope = getControllerScope());
 
-    it('should know if a country is on the coinify whitelist', () => expect(scope.onWhitelist("GB")).toEqual("coinify"));
+    it('should know if a country is on the coinify whitelist', () => {
+      expect(scope.onWhitelist("GB")).toEqual("coinify");
+    });
 
-    it('should know if a country is on the sfox whitelist', () => expect(scope.onWhitelist("US")).toEqual("sfox"));
+    it('should know if a country is on the sfox whitelist', () => {
+      expect(scope.onWhitelist("US")).toEqual("sfox");
+    });
 
-    it('should know if a country is not on any whitelist', () => expect(scope.onWhitelist("CZ")).toEqual(false));
+    it('should know if a country is not on any whitelist', () => {
+      expect(scope.onWhitelist("CZ")).toEqual(false)
+    });
   });
 
   describe('partner guess', () => {

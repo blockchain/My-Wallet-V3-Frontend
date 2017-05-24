@@ -8,7 +8,10 @@ describe('ConfirmRecoveryPhraseCtrl', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(function () {
-    angular.mock.inject(function ($injector, $rootScope, $controller) {
+    angular.mock.inject(function ($injector, $rootScope, $controller, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       let Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
 

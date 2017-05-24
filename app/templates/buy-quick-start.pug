@@ -4,7 +4,7 @@
       .flex-row.flex-between
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
-          helper-button.mbs(ng-disabled="false" ng-show="exchangeRate.fiat" content="MAX_MIN_HELPER" values="{max: limits.absoluteMax(transaction.currency.code), min: limits.absoluteMin(transaction.currency.code), code: transaction.currency.code}")
+          helper-button.mbs(ng-disabled="false" ng-show="limits.absoluteMax(transaction.currency.code) && limits.absoluteMax(transaction.currency.code)" content="MAX_MIN_HELPER" values="{max: limits.absoluteMax(transaction.currency.code), min: limits.absoluteMin(transaction.currency.code), code: transaction.currency.code}")
         .flex-center(ng-show="exchangeRate.fiat")
           span.type-sm.em-500 1 BTC = {{ exchangeRate.fiat }} {{transaction.currency.code}}
           helper-button(content="EXCHANGE_RATE_HELPER")

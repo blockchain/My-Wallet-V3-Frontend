@@ -4,7 +4,9 @@ describe("walletServices 2nd pwd", function() {
   beforeEach(angular.mock.module("walletApp"));
 
   beforeEach(function() {
-    angular.mock.inject(function($injector, $q) {
+    angular.mock.inject(function($injector, $q, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
       Wallet = $injector.get("Wallet");
 

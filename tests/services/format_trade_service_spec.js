@@ -5,7 +5,9 @@ describe('formatTrade service', () => {
 	beforeEach(angular.mock.module('walletApp'));
 
 	beforeEach(() =>
-		angular.mock.inject(function ($injector, _$rootScope_, _$q_) {
+		angular.mock.inject(function ($injector, _$rootScope_, _$q_, $httpBackend) {
+			// TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+	    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 			$rootScope = _$rootScope_;
 			let $q = _$q_;
 			let Wallet = $injector.get('Wallet');

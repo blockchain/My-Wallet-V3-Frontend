@@ -26,6 +26,8 @@ describe('SendCtrl', () => {
       $q = _$q_;
       $timeout = _$timeout_;
       $httpBackend = $injector.get('$httpBackend');
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
       MyWallet = $injector.get('MyWallet');
       Wallet = $injector.get('Wallet');
       let MyWalletPayment = $injector.get('MyWalletPayment');

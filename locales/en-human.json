@@ -1093,8 +1093,9 @@
     "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
   },
   "BANK_TRANSFER": {
-    "COPY1": "Receive bitcoin in 2-3 days",
-    "COPY2": "No payment fees",
+    "COPY1": "One time ID Verification",
+    "COPY2": "Receive bitcoin in 2-3 days",
+    "COPY3": "No payment fees",
     "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card."
   },
   "KYC_IN_REVIEW": {
@@ -1284,7 +1285,8 @@
   },
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
-  "BUY_BITCOIN_EXPLAIN": "You can now buy Bitcoin with your Blockchain wallet!",
+  "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
+  "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",

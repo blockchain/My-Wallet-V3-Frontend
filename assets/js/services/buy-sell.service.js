@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants, modals) {
+function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -74,9 +74,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   return service;
 
   function init (coinify) {
-    return Options.get().then(options => {
-      coinify.partnerId = options.partners.coinify.partnerId;
-      coinify.api.testnet = BlockchainConstants.NETWORK === 'testnet';
+    return Env.then(env => {
+      coinify.partnerId = env.partners.coinify.partnerId;
+      coinify.api.testnet = env.network === 'testnet';
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
@@ -211,7 +211,12 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getOpenKYC () {
-    return service.kycs.length ? $q.resolve(service.kycs[0]) : service.triggerKYC();
+    if (service.kycs.length) {
+      let kyc = service.kycs[0];
+      return ['declined', 'rejected', 'expired'].indexOf(kyc.state) > -1 ? service.triggerKYC() : kyc;
+    } else {
+      return service.triggerKYC();
+    }
   }
 
   function getTrades () {
@@ -278,7 +283,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
           }
         },
         buySellOptions: () => buySellOptions,
-        options: () => Options.get(),
         payment: () => payment || undefined
       }
     }).result;

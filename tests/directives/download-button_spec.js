@@ -14,9 +14,8 @@ describe('downloadButton', () => {
     scope.$digest();
 
     element = $compile("<download-button content='content' filename='test.txt'></download-button>")(scope);
-    return isoScope = element.isolateScope();
-  })
-  );
+    isoScope = element.isolateScope();
+  }));
 
   it('should use the correct filename', () => {
     isoScope.$digest();
@@ -26,7 +25,7 @@ describe('downloadButton', () => {
   it('should click the anchor tag to trigger download', () => {
     isoScope.$digest();
     spyOn(element[0], 'click');
-    scope.$broadcast("download");
+    scope.$broadcast('download');
     $timeout.flush();
     expect(element[0].click).toHaveBeenCalled();
   });
@@ -34,15 +33,17 @@ describe('downloadButton', () => {
   describe('content', () => {
     beforeEach(function () {
       spyOn(isoScope, 'createDataUri').and.callFake(x => `data:${x}`);
-      return isoScope.$digest();
+      isoScope.$digest();
     });
 
-    it('should create an initial data ref', () => expect(isoScope.dataRef).toEqual('data:asdf'));
+    it('should create an initial data ref', () =>
+      expect(isoScope.dataRef).toEqual('data:\uFEFFasdf')
+    );
 
     it('should create a data ref when updated', () => {
       isoScope.content = 'abc';
       isoScope.$digest();
-      expect(isoScope.dataRef).toEqual('data:abc');
+      expect(isoScope.dataRef).toEqual('data:\uFEFFabc');
     });
   });
 

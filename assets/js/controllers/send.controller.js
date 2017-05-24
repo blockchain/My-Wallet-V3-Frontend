@@ -2,18 +2,18 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, options, Env) {
+function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env) {
+  let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
+  const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
+
   Env.then(env => {
     $scope.rootURL = env.rootURL;
+    FEE_OPTIONS = (env.service_charge || {})[COUNTRY_CODE];
+    window.FEE = FEE_OPTIONS;
+    FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
+    FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
+    $scope.AB_TEST_FEE = FEE_OPTIONS != null;
   });
-
-  const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
-  const FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
-  const FEE_OPTIONS = (options.service_charge || {})[COUNTRY_CODE];
-  const FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
-  $scope.AB_TEST_FEE = FEE_OPTIONS != null;
-
-  window.FEE = FEE_OPTIONS;
 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -201,7 +201,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.sendInputMetrics = (metric) => {
-    let root = $scope.rootURL ? $scope.rootURL : '/';
+    let root = $scope.rootURL;
     $http.get(`${root}event?name=wallet_web_tx_from_${metric}`);
   };
 
