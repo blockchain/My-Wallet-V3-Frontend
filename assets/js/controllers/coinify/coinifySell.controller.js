@@ -157,11 +157,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     });
   };
 
-  let links;
-
-  Env.then(env => {
-    links = env.partners.coinify.sellSurveyLinks;
-  });
+  let links = Env.partners.coinify.sellSurveyLinks;
 
   this.close = () => {
     let index;

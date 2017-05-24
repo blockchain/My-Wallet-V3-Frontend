@@ -1,57 +1,62 @@
 angular
   .module('shared')
-  .factory('Env', Env);
+  .provider('Env', EnvProvider);
 
-Env.$inject = ['$rootScope', '$location', '$q', '$http'];
+function EnvProvider () {
+  let optionsUrl = null;
+  let versionFrontend = null;
+  let versionMyWallet = null;
+  let buySellDebug = false;
 
-function Env ($rootScope, $location, $q, $http) {
-  let env = {
+  this.setOptionsUrl = (url) => {
+    optionsUrl = url;
   };
 
-  // These are set by grunt dist:
-  env.versionFrontend = null;
-  env.versionMyWallet = null;
+  this.setVersion = (vFrontend, vMyWallet) => {
+    versionFrontend = vFrontend;
+    versionMyWallet = vMyWallet;
+  };
 
-  const absUrl = $location.absUrl();
-  const path = $location.path();
-  if (absUrl && path && path.length) {
+  this.setBuySellDebugEnabled = (enabled) => {
+    buySellDebug = !!enabled;
+  };
+
+  this.$get = ['$http', '$location', function envFactory ($http, $location) {
+    let absUrl = $location.absUrl();
+    let path = $location.path();
+
     // e.g. https://blockchain.info/wallet/#
-    env.rootPath = $location.absUrl().slice(0, -$location.path().length);
-  }
+    let rootPath = absUrl && path && path.length ? absUrl.slice(0, -path.length) : null;
 
-  let defer = $q.defer();
+    return $http.get(optionsUrl).then((response) => {
+      let options = response.data;
+      return new Env(rootPath, versionFrontend, versionMyWallet, buySellDebug, options);
+    });
+  }];
+}
 
-  let url = `/Resources/wallet-options.json`;
+function Env (rootPath, versionFrontend, versionMyWallet, buySellDebug, options) {
+  // Versioning
+  this.versionFrontend = versionFrontend;
+  this.versionMyWallet = versionMyWallet;
 
-  $http.get(url)
-    .success((res) => {
-      env.buySellDebug = $rootScope.buySellDebug;
+  // Buy/Sell
+  this.buySellDebug = buySellDebug || false;
+  this.partners = options.partners;
+  this.showBuySellTab = options.showBuySellTab;
+  this.service_charge = options.service_charge;
 
-      env.partners = res.partners;
-      env.showBuySellTab = res.showBuySellTab;
-      env.service_charge = res.service_charge;
+  // Route config
+  this.rootURL = options.domains.root + '/';
+  this.customWebSocketURL = options.domains.webSocket;
+  this.apiDomain = options.domains.api + '/';
+  this.walletHelperDomain = options.domains.walletHelper;
 
-      env.rootURL = res.domains.root + '/';
+  this.network = options.network;
+  this.isProduction = this.rootURL === 'https://blockchain.info/' || this.rootURL === '/';
 
-      env.isProduction = env.rootURL === 'https://blockchain.info/' || env.rootURL === '/';
-      env.buySellDebug = false;
-
-      console.info(
-        'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
-        env.versionFrontend, env.versionMyWallet, env.rootURL
-      );
-
-      env.customWebSocketURL = res.domains.webSocket;
-
-      env.network = res.network;
-
-      env.apiDomain = res.domains.api + '/';
-
-      env.walletHelperDomain = res.domains.walletHelper;
-
-      defer.resolve(env);
-    }
+  console.info(
+    'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
+    this.versionFrontend, this.versionMyWallet, this.rootURL
   );
-
-  return defer.promise;
 }

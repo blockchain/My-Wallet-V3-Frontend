@@ -26,9 +26,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, false);
-      Env.then(env => {
-        _buySellMyWallet.debug = env.buySellDebug;
-      });
+      _buySellMyWallet.debug = Env.buySellDebug;
     }
     return _buySellMyWallet;
   };
@@ -74,13 +72,11 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   return service;
 
   function init (coinify) {
-    return Env.then(env => {
-      coinify.partnerId = env.partners.coinify.partnerId;
-      coinify.api.testnet = env.network === 'testnet';
-      if (coinify.trades) setTrades(coinify.trades);
-      coinify.monitorPayments();
-      initialized.resolve();
-    });
+    coinify.partnerId = Env.partners.coinify.partnerId;
+    coinify.api.testnet = Env.network === 'testnet';
+    if (coinify.trades) setTrades(coinify.trades);
+    coinify.monitorPayments();
+    initialized.resolve();
   }
 
   function getQuote (amt, curr, quoteCurr) {

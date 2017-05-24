@@ -155,11 +155,7 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
     });
   }
 
-  let disabled;
-
-  Env.then(env => {
-    disabled = env.partners.coinify.disabled;
-  });
+  let disabled = Env.partners.coinify.disabled;
 
   $scope.getIsTradingDisabled = () => {
     let profile = $scope.exchange && $scope.exchange.profile;
@@ -191,10 +187,8 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
   };
 
   let email = MyWallet.wallet.accountInfo.email;
-  Env.then(env => {
-    // TODO: don't pass all of 'env' into shouldDisplaySellTab()
-    $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
-  });
+  // TODO: don't pass all of 'env' into shouldDisplaySellTab()
+  $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, Env, 'coinify');
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',

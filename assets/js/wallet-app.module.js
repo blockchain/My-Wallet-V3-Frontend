@@ -31,9 +31,16 @@ const modules = [
 ];
 
 angular.module('walletApp', modules)
-.config(($compileProvider, uiSelectConfig, $ocLazyLoadProvider) => {
+.config(($compileProvider, uiSelectConfig, $ocLazyLoadProvider, EnvProvider) => {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|data):/);
   uiSelectConfig.theme = 'bootstrap';
+
+  // These are set by grunt dist:
+  const VERSION_FRONTEND = null;
+  const VERSION_MY_WALLET = null;
+
+  EnvProvider.setOptionsUrl('/Resources/wallet-options.json');
+  EnvProvider.setVersion(VERSION_FRONTEND, VERSION_MY_WALLET);
 
   // @if !PRODUCTION
   const walletLazyLoadFiles = [

@@ -17,9 +17,7 @@ function transactionStatus (BrowserHelper, Env) {
 
   function link (scope, elem, attrs) {
     scope.verify = () => {
-      Env.then(env => {
-        BrowserHelper.safeWindowOpen(env.rootURL + 'tx/' + scope.transaction.hash);
-      });
+      BrowserHelper.safeWindowOpen(Env.rootURL + 'tx/' + scope.transaction.hash);
     };
 
     scope.$watch('transaction.confirmations', () => {

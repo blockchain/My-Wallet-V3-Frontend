@@ -23,9 +23,7 @@ function hdAddress ($rootScope, $sce, Alerts, Env) {
     scope.cancelEdit = () => scope.editing = false;
     scope.removeLabel = () => scope.onRemoveLabel(scope.address);
 
-    Env.then(env => {
-      scope.addressLink = (address) => $sce.trustAsResourceUrl(`${env.rootURL}address/${address}`);
-    });
+    scope.addressLink = (address) => $sce.trustAsResourceUrl(`${Env.rootURL}address/${address}`);
 
     scope.changeLabel = (label, successCallback, errorCallback) => {
       let success = () => {

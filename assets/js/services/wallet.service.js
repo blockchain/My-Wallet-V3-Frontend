@@ -57,24 +57,22 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
-  Env.then(env => {
-    wallet.api.ROOT_URL = env.rootURL; // Explorer endpoints
-    wallet.api.API_ROOT_URL = env.apiDomain; // API endpoints
+  wallet.api.ROOT_URL = Env.rootURL; // Explorer endpoints
+  wallet.api.API_ROOT_URL = Env.apiDomain; // API endpoints
 
-    if (env.customWebSocketURL) {
-      wallet.my.ws.wsUrl = env.customWebSocketURL;
-    }
+  if (Env.customWebSocketURL) {
+    wallet.my.ws.wsUrl = Env.customWebSocketURL;
+  }
 
-    BlockchainConstants.NETWORK = env.network;
+  BlockchainConstants.NETWORK = Env.network;
 
-    if ($window.location.hostname === 'localhost' || !env.isProduction) {
-      const KEY = 'qa-tools-enabled';
-      env.buySellDebug = localStorageService.get(KEY);
-      let reloadWithDebug = (debug) => { localStorageService.set(KEY, debug); $window.location.reload(); };
-      $window.enableQA = () => reloadWithDebug(true);
-      $window.disableQA = () => reloadWithDebug(false);
-    }
-  });
+  if ($window.location.hostname === 'localhost' || !Env.isProduction) {
+    const KEY = 'qa-tools-enabled';
+    Env.buySellDebug = localStorageService.get(KEY);
+    let reloadWithDebug = (debug) => { localStorageService.set(KEY, debug); $window.location.reload(); };
+    $window.enableQA = () => reloadWithDebug(true);
+    $window.disableQA = () => reloadWithDebug(false);
+  }
 
   wallet.api_code = '1770d5d9-bcea-4d28-ad21-6cbd5be018a8';
   MyBlockchainApi.API_CODE = wallet.api_code;
@@ -1077,7 +1075,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.handleBitcoinLinks = () => {
     wallet.saveActivity(2);
-    const uri = $rootScope.rootPath + '/open/%s';
+    const uri = Env.rootPath + '/open/%s';
     $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
   };
 

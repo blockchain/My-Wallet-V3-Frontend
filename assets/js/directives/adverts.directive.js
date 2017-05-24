@@ -16,9 +16,7 @@ function adverts (Adverts, Env) {
   return directive;
 
   function link (scope, elem, attrs) {
-    Env.then(env => {
-      scope.baseUrl = env.apiDomain + 'ads/out?id=';
-    });
+    scope.baseUrl = Env.apiDomain + 'ads/out?id=';
     scope.ads = Adverts.ads;
     Adverts.fetchOnce();
   }

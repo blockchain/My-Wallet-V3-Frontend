@@ -21,24 +21,22 @@ function Adverts ($http, Env) {
   }
 
   function fetch () {
-    return Env.then(env => {
-      if (!env.apiDomain.endsWith('.blockchain.info/')) {
-        return;
-      }
+    if (!Env.apiDomain.endsWith('.blockchain.info/')) {
+      return;
+    }
 
-      let advertsFeed = env.apiDomain + 'bci-ads/get?wallet=true&n=2';
-      $http.get(advertsFeed)
-        .success(function (data) {
-          data.forEach(function (ad) {
-            if (!/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) ||
-                !angular.isNumber(ad.id) ||
-                !/^[0-9a-zA-Z ]*$/.test(ad.name)) {
-              return;
-            }
+    let advertsFeed = Env.apiDomain + 'bci-ads/get?wallet=true&n=2';
+    return $http.get(advertsFeed)
+      .success(function (data) {
+        data.forEach(function (ad) {
+          if (!/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) ||
+              !angular.isNumber(ad.id) ||
+              !/^[0-9a-zA-Z ]*$/.test(ad.name)) {
+            return;
+          }
 
-            service.ads.push(ad);
-          });
+          service.ads.push(ad);
         });
-    });
+      });
   }
 }

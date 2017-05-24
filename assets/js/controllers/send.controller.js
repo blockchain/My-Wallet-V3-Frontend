@@ -6,14 +6,12 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
 
-  Env.then(env => {
-    $scope.rootURL = env.rootURL;
-    FEE_OPTIONS = (env.service_charge || {})[COUNTRY_CODE];
-    window.FEE = FEE_OPTIONS;
-    FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
-    FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
-    $scope.AB_TEST_FEE = FEE_OPTIONS != null;
-  });
+  $scope.rootURL = Env.rootURL;
+  FEE_OPTIONS = (Env.service_charge || {})[COUNTRY_CODE];
+  window.FEE = FEE_OPTIONS;
+  FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
+  FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
+  $scope.AB_TEST_FEE = FEE_OPTIONS != null;
 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;

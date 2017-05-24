@@ -3,9 +3,7 @@ angular
   .controller('CoinifyController', CoinifyController);
 
 function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, buyMobile, Env) {
-  Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
-  });
+  this.buySellDebug = Env.buySellDebug;
 
   let exchange = buySell.getExchange();
 
@@ -34,10 +32,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.trade && this.trade.sendAmount && buySell.getTrades().then($scope.goToOrderHistory());
   };
 
-  let links;
-  Env.then(env => {
-    links = env.partners.coinify.surveyLinks;
-  });
+  let links = Env.partners.coinify.surveyLinks;
 
   this.close = (idx) => {
     if (idx > links.length - 1) { this.cancel(); return; }

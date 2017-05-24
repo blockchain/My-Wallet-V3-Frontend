@@ -34,40 +34,34 @@ function siftScience ($sce, Env, AngularHelper, $window) {
       return;
     }
 
-    let processEnv = (env) => {
-      let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
-      scope.url = $sce.trustAsResourceUrl(url);
+    let url = `${Env.walletHelperDomain}/wallet-helper/sift-science/#/key/${Env.sfoxSiftScienceKey || Env.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
+    scope.url = $sce.trustAsResourceUrl(url);
 
-      if (env.buySellDebug) {
-        console.info(url);
+    if (Env.buySellDebug) {
+      console.info(url);
+    }
+
+    let receiveMessage = (e) => {
+      if (!e.data.command) return;
+      if (e.data.from !== 'sift-science') return;
+      if (e.data.to !== 'exchange') return;
+      if (e.origin !== Env.walletHelperDomain) return;
+      switch (e.data.command) {
+        case 'done':
+          // Remove Sift Science iframe:
+          if (Env.buySellDebug) {
+            console.info('Dismiss Sift Science iframe');
+          }
+          scope.enabled = false;
+          break;
+        default:
+          console.error('Unknown command');
+          return;
       }
+
+      AngularHelper.$safeApply();
     };
 
-    Env.then().then(processEnv);
-
-    Env.then(env => {
-      let receiveMessage = (e) => {
-        if (!e.data.command) return;
-        if (e.data.from !== 'sift-science') return;
-        if (e.data.to !== 'exchange') return;
-        if (e.origin !== env.walletHelperDomain) return;
-        switch (e.data.command) {
-          case 'done':
-            // Remove Sift Science iframe:
-            if (env.buySellDebug) {
-              console.info('Dismiss Sift Science iframe');
-            }
-            scope.enabled = false;
-            break;
-          default:
-            console.error('Unknown command');
-            return;
-        }
-
-        AngularHelper.$safeApply();
-      };
-
-      $window.addEventListener('message', receiveMessage, false);
-    });
+    $window.addEventListener('message', receiveMessage, false);
   }
 }

@@ -6,9 +6,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
-  Env.then(env => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
-  });
+  $scope.plaidUrl = $sce.trustAsResourceUrl(`${Env.walletHelperDomain}/wallet-helper/plaid/#/key/${Env.partners.sfox.plaid}/env/${ Env.partners.sfox.plaidEnv}`);
 
   $scope.types = ['checking', 'savings'];
   $scope.openHelper = modals.openHelper;
@@ -103,20 +101,18 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   $scope.disablePlaid = () => $scope.state.plaid = {};
   $scope.plaidWhitelist = ['enablePlaid', 'disablePlaid', 'getBankAccounts'];
 
-  Env.then(env => {
-    let receiveMessage = (e) => {
-      if (!e.data.command) return;
-      if (e.data.from !== 'plaid') return;
-      if (e.data.to !== 'exchange') return;
-      if (e.origin !== env.walletHelperDomain) return;
-      if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
+  let receiveMessage = (e) => {
+    if (!e.data.command) return;
+    if (e.data.from !== 'plaid') return;
+    if (e.data.to !== 'exchange') return;
+    if (e.origin !== Env.walletHelperDomain) return;
+    if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
-      e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
-      AngularHelper.$safeApply($scope);
-    };
+    e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
+    AngularHelper.$safeApply($scope);
+  };
 
-    $window.addEventListener('message', receiveMessage, false);
-  });
+  $window.addEventListener('message', receiveMessage, false);
 
   AngularHelper.installLock.call($scope);
 }

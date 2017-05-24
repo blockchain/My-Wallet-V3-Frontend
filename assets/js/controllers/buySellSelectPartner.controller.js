@@ -21,11 +21,9 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   $scope.countries = country.countryCodes;
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
 
-  Env.then(env => {
-    $scope.coinifyWhitelist = env.partners.coinify.countries;
-    $scope.sfoxWhitelist = env.partners.sfox.countries;
-    $scope.sfoxStateWhitelist = env.partners.sfox.states;
-  });
+  $scope.coinifyWhitelist = Env.partners.coinify.countries;
+  $scope.sfoxWhitelist = Env.partners.sfox.countries;
+  $scope.sfoxStateWhitelist = Env.partners.sfox.states;
 
   $scope.email = Wallet.user.email;
 

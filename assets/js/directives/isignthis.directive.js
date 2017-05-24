@@ -31,9 +31,7 @@ function isignthis ($sce, Env) {
 
     let iSignThisDomain;
 
-    Env.then(env => {
-      iSignThisDomain = env.partners.coinify.iSignThisDomain;
-    });
+    iSignThisDomain = Env.partners.coinify.iSignThisDomain;
 
     scope.iSignThisFrame = (iSignThisID) => {
       // TODO: use elem or avoid usage alltogether:
