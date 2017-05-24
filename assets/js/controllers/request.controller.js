@@ -3,10 +3,8 @@ angular
   .controller('RequestCtrl', RequestCtrl);
 
 function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env) {
-  Env.then(env => {
-    $scope.rootURL = env.rootURL;
-    $scope.isProduction = env.isProduction;
-  });
+  $scope.rootURL = Env.rootURL;
+  $scope.isProduction = Env.isProduction;
 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;

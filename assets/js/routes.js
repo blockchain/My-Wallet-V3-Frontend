@@ -104,11 +104,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         body: {
           templateUrl: 'partials/public.pug',
           controller: function ($scope, $state, languages, Env) {
-            Env.then(env => {
-              $scope.rootURL = env.rootURL;
-              $scope.versionMyWallet = env.versionMyWallet;
-              $scope.versionFrontend = env.versionFrontend;
-            });
+            $scope.rootURL = Env.rootURL;
+            $scope.versionMyWallet = Env.versionMyWallet;
+            $scope.versionFrontend = Env.versionFrontend;
             let overflows = ['/reset-2fa'];
             $scope.state = $state;
             $scope.path = $state.current.url;
@@ -351,12 +349,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             : $q.resolve([]);
         },
         showCheckout (Env, MyWallet) {
-          return Env.then(env => {
-            let email = MyWallet.wallet.accountInfo.email;
-            let fraction = env.partners.sfox.showCheckoutFraction;
+          let email = MyWallet.wallet.accountInfo.email;
+          let fraction = Env.partners.sfox.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
-          });
+          return Blockchain.Helpers.isEmailInvited(email, fraction);
         }
       },
       onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {

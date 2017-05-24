@@ -3,14 +3,12 @@ angular
   .factory('WalletTokenEndpoints', WalletTokenEndpoints);
 
 function WalletTokenEndpoints (Env) {
-  const processEnv = () => Env.then(env => {
-    Blockchain.API.ROOT_URL = env.rootURL;
-  });
+  Blockchain.API.ROOT_URL = Env.rootURL;
 
   return {
-    verifyEmail: (token) => processEnv().then(() => Blockchain.WalletTokenEndpoints.verifyEmail(token)),
-    authorizeApprove: (token, differentBrowser, confirm) => processEnv().then(() => Blockchain.WalletTokenEndpoints.authorizeApprove(token, differentBrowser, confirm)),
-    resetTwoFactor: (token) => processEnv().then(() => Blockchain.WalletTokenEndpoints.resetTwoFactor(token)),
-    unsubscribe: (token) => processEnv().then(() => Blockchain.WalletTokenEndpoints.unsubscribe(token))
+    verifyEmail: (token) => Blockchain.WalletTokenEndpoints.verifyEmail(token),
+    authorizeApprove: (token, differentBrowser, confirm) => Blockchain.WalletTokenEndpoints.authorizeApprove(token, differentBrowser, confirm),
+    resetTwoFactor: (token) => Blockchain.WalletTokenEndpoints.resetTwoFactor(token),
+    unsubscribe: (token) => Blockchain.WalletTokenEndpoints.unsubscribe(token)
   };
 }

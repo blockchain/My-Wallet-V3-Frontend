@@ -3,11 +3,9 @@ angular
   .controller('SfoxVerifyController', SfoxVerifyController);
 
 function SfoxVerifyController (AngularHelper, Env, $scope, $q, state, $http, sfox, modals, Upload, QA) {
-  Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
-    let states = env.partners.sfox.states;
-    $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
-  });
+  $scope.buySellDebug = Env.buySellDebug;
+  let states = Env.partners.sfox.states;
+  $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
 
   let exchange = $scope.vm.exchange;
 

@@ -545,7 +545,7 @@ module.exports = (grunt) => {
 
     replace: {
       version_frontend: {
-        src: ['build/js/sharedServices/env.service.js'],
+        src: ['build/js/sharedServices/env.service.js', 'build/js/wallet-app.module.js'],
         overwrite: true,
         replacements: [{
           from: 'VERSION_FRONTEND = null',
@@ -555,7 +555,7 @@ module.exports = (grunt) => {
         }]
       },
       version_my_wallet: {
-        src: ['build/js/sharedServices/env.service.js'],
+        src: ['build/js/sharedServices/env.service.js', 'build/js/wallet-app.module.js'],
         overwrite: true,
         replacements: [{
           from: 'VERSION_MY_WALLET = null',

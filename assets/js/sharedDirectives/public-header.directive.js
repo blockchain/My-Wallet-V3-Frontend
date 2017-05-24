@@ -51,10 +51,8 @@ function publicHeader ($location, Env) {
   return directive;
 
   function link (scope, elem, attrs) {
-    Env.then(env => {
-      scope.rootURL = env.rootURL;
-      scope.isTestnet = env.network === 'testnet';
-    });
+    scope.rootURL = Env.rootURL;
+    scope.isTestnet = Env.network === 'testnet';
     scope.path = () => $location.path();
   }
 }

@@ -25,11 +25,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     labelsForCurrency
   };
 
-  let buySellDebug;
-
-  Env.then(env => {
-    buySellDebug = env.buySellDebug;
-  });
+  let buySellDebug = Env.buySellDebug;
 
   let errorStates = {
     'cancelled': 'canceled',

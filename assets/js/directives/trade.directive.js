@@ -23,9 +23,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
   return directive;
 
   function link (scope, elem, attrs) {
-    Env.then(env => {
-      scope.buySellDebug = env.buySellDebug;
-    });
+    scope.buySellDebug = Env.buySellDebug;
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
 
     scope.update = () => angular.extend(scope, {

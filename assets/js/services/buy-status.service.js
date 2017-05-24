@@ -13,18 +13,16 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
 
   let nextWeek = () => new Date(Date.now() + 604800000).getTime();
 
-  let processEnv = (env) => {
-    let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
+  let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
-    // Coinify countries are no longer invite-only
-    isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-    isSFOXCountry = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+  // Coinify countries are no longer invite-only
+  isCoinifyCountry = accountInfo && Env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+  isSFOXCountry = accountInfo && Env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
-    let whitelist = env.showBuySellTab || [];
-    isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
+  let whitelist = Env.showBuySellTab || [];
+  isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
 
-    sfoxInviteFraction = (env.partners.sfox && env.partners.sfox.inviteFormFraction) || 0;
-  };
+  sfoxInviteFraction = (Env.partners.sfox && Env.partners.sfox.inviteFormFraction) || 0;
 
   service.canBuy = () => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
@@ -36,7 +34,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     // * their IP is in a country supported by SFOX AND their email is invited
     let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
 
-    return Env.then(processEnv).then(canBuy);
+    return $q.then(canBuy);
   };
 
   service.shouldShowInviteForm = () => {

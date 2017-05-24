@@ -34,6 +34,8 @@ angular.module('walletApp', modules).run(($rootScope) => {
   $rootScope.rootURL = 'https://blockchain.info/';
 
   $rootScope.size = { xs: false, sm: false, md: false, lg: true };
+}).config(EnvProvider => {
+  EnvProvider.setOptionsUrl('/Resources/wallet-options.json');
 });
 
 beforeEach(module('templates-main'));

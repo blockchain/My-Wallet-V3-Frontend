@@ -28,9 +28,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
 
-  Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
-  });
+  $scope.buySellDebug = Env.buySellDebug;
 
   let state = $scope.state = {
     btc: null,
