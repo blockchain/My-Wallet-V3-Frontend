@@ -48,23 +48,23 @@
           .item
             label.colon(translate="TO")
             div
-              .flex-column(ng-repeat="item in transaction.destinations track by $index")
+              .flex-column
                 p.form-control-static(ng-hide="originsLoaded")
                   img(src="img/spinner.gif")
-                div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''}")
+                div(ng-show="originsLoaded" ng-class="{'has-error': sendForm.destination.$invalid && sendForm.destination.$touched && transaction.destination.address !== ''}")
                   destination-input(
-                    name="{{ 'destinations' + $index }}"
-                    ng-model="transaction.destinations[$index]"
+                    name="destination"
+                    ng-model="transaction.destination"
                     ng-model-options="{ updateOn: 'blur' }"
                     ng-change="checkForSameDestination()"
-                    ng-paste="handlePaste($event, $index)"
-                    on-payment-request="applyPaymentRequest(request, $index)"
+                    ng-paste="handlePaste($event)"
+                    on-payment-request="applyPaymentRequest(request)"
                     set-input-metric="$parent.inputMetric = metric"
                     ignore="transaction.from"
                     required)
                 .has-error
-                  span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
-                  span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
+                  span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValidAddress && sendForm.destination.$touched && transaction.destination.address !== ''")
+                  span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm.destination.$error.isNotEqual")
           //- Amount
           .item.mt-20
             label.colon(translate="AMOUNT")
@@ -167,8 +167,8 @@
         .width-70.width-70-mobile {{ transaction.from.label || transaction.from.address }}
       .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="TO")
-        .width-70.width-70-mobile(ng-repeat="address in getToLabels() track by $index")
-          span(translate="no") {{ address.label || address.address }}
+        .width-70.width-70-mobile
+          span(translate="no") {{ transaction.destination.label || transaction.destination.address }}
       .flex-row.mt-10(ng-show="transaction.note.length")
         label.colon.width-30.width-30-mobile(translate="FOR")
         .width-70.width-70-mobile {{ transaction.note }}
@@ -180,7 +180,7 @@
         label.colon.width-30.width-30-mobile(translate="FEE")
         .width-70.width-70-mobile
           span.mr-10 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
-      .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="(getToLabels()[0].type != 'External') ? 'transfer' : 'sent'")
+      .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="(transaction.destination.type != 'External') ? 'transfer' : 'sent'")
         span.mb-10(translate="TOTAL")
         span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
         span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}

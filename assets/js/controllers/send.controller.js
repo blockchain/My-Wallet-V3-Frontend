@@ -44,9 +44,9 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     from: null,
     surge: false,
     amount: null,
+    destination: null,
     maxAvailable: null,
     maxSpendableAmount: null,
-    destinations: [null],
     satoshiPerByte: null,
     feeType: 'regular',
     fees: {limits: { 'min': 0, 'max': 0 }, regular: 0, priority: 0}
@@ -104,7 +104,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       label: paymentRequest.address || '',
       type: 'External'
     };
-    $scope.transaction.destinations[i] = destination;
+    $scope.transaction.destination = destination;
     if (paymentRequest.amount) $scope.transaction.amount = paymentRequest.amount;
     if (paymentRequest.message) $scope.transaction.note = decodeURI(paymentRequest.message);
 
@@ -202,10 +202,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     $http.get(`${root}event?name=wallet_web_tx_from_${metric}`);
   };
 
-  $scope.getToLabels = () => {
-    return $scope.transaction.destinations.filter(d => d != null);
-  };
-
   $scope.getTransactionTotal = (includeFee) => {
     let tx = $scope.transaction;
     let fee = includeFee ? tx.fee : 0;
@@ -221,15 +217,13 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.checkForSameDestination = () => {
     if ($scope.sendForm == null) return;
     const transaction = $scope.transaction;
-    transaction.destinations.forEach((dest, index) => {
-      let match = false;
-      if (dest != null) {
-        match = transaction.from.index != null
-          ? dest.index === transaction.from.index
-          : dest.address === transaction.from.address;
-      }
-      $scope.sendForm['destinations' + index].$setValidity('isNotEqual', !match);
-    });
+    let match = false;
+    if (transaction.destination != null) {
+      match = transaction.from.index != null
+      ? transaction.destination.index === transaction.from.index
+      : transaction.destination.address === transaction.from.address;
+    }
+    $scope.sendForm.destination.$setValidity('isNotEqual', !match);
   };
 
   $scope.hasAmountError = () => {
@@ -240,13 +234,11 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
     return fieldError || notEnoughFunds;
   };
 
-  $scope.$watch('transaction.destinations', (destinations) => {
-    destinations.forEach((dest, index) => {
-      if (dest == null) return;
-      let valid = dest.index == null ? Wallet.isValidAddress(dest.address) : true;
-      $scope.sendForm['destinations' + index].$setValidity('isValidAddress', valid);
-      $scope.setPaymentTo();
-    });
+  $scope.$watch('transaction.destination', (destination) => {
+    if (destination == null) return;
+    let valid = destination.index == null ? Wallet.isValidAddress(destination.address) : true;
+    $scope.sendForm.destination.$setValidity('isValidAddress', valid);
+    $scope.setPaymentTo();
   }, true);
 
   let unwatchDidLoad = $scope.$watch('status.didLoadBalances', (didLoad) => {
@@ -259,7 +251,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       $scope.inputMetric = 'uri';
       $scope.applyPaymentRequest(paymentRequest, 0);
     } else if (paymentRequest.toAccount != null) {
-      $scope.transaction.destinations[0] = format.origin(paymentRequest.toAccount);
+      $scope.transaction.destination = format.origin(paymentRequest.toAccount);
       $scope.transaction.from = paymentRequest.fromAddress;
     } else if (paymentRequest.fromAccount != null) {
       $scope.transaction.from = paymentRequest.fromAccount;
@@ -298,10 +290,10 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.setPaymentTo = () => {
-    let destinations = $scope.transaction.destinations;
-    if (destinations.some(d => d == null)) return;
-    destinations = destinations.map(d => d.type === 'Accounts' ? d.index : d.address);
-    $scope.payment.to(destinations);
+    let destination = $scope.transaction.destination;
+    if (destination == null) return;
+    let d = destination.type === 'Accounts' ? destination.index : destination.address;
+    $scope.payment.to([d]);
   };
 
   $scope.setPaymentAmount = (reset) => {
@@ -324,10 +316,9 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.regularSend = () => {
-    let { fees, feeType, destinations } = $scope.transaction;
+    let { fees, feeType } = $scope.transaction;
     $scope.transaction.satoshiPerByte = fees[feeType];
     $scope.advanced = false;
-    destinations.splice(1);
     $scope.payment.updateFeePerKb($scope.transaction.satoshiPerByte);
     $scope.setPaymentAmount();
   };
@@ -408,13 +399,13 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.handlePaste = (event, index) => {
-    let destinations = [];
+    let destination = [];
     $timeout(() => {
       event.target.value
-        ? destinations.push({address: event.target.value})
-        : destinations = $scope.transaction.destinations;
-      const result = Wallet.parseBitcoinURL(destinations, index);
-      $scope.transaction.destinations[index].address = result.address;
+        ? destination.push({address: event.target.value})
+        : destination = $scope.transaction.destination;
+      const result = Wallet.parseBitcoinURL(destination, index);
+      $scope.transaction.destination.address = result.address;
       $scope.transaction.amount = result.amount;
       index === 0 ? $scope.transaction.note = result.note : '';
       $scope.setPaymentAmount(); // keep
