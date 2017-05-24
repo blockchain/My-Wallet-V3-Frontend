@@ -1249,12 +1249,14 @@
   "pancard_ID": {
     "TITLE": "Upload Pancard",
     "UPLOAD_TITLE": "Pancard",
-    "UPLOAD_SELECT": "Select Upload Method"
+    "UPLOAD_SELECT": "Select Upload Method",
+    "HELP": "Make sure the snapshot clearly displays your pancard number."
   },
   "photo_ID": {
     "TITLE": "Upload Photo",
     "UPLOAD_TITLE": "Photo",
-    "UPLOAD_SELECT": "Select Upload Method"
+    "UPLOAD_SELECT": "Select Upload Method",
+    "HELP": "Make sure the snapshot clearly displays your face."
   },
   "bank-check-helper": {
     "TITLE": "Routing and Account Number",
