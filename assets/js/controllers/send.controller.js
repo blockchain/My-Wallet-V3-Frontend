@@ -35,10 +35,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
-  $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.format = currency.formatCurrencyForView;
   $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
-  $scope.satoshi = currency.bitCurrencies.filter((c) => c.code === 'satoshi')[0];
 
   $scope.transactionTemplate = {
     fee: 0,
