@@ -2,10 +2,7 @@ angular
   .module('walletApp')
   .directive('destinationInput', destinationInput);
 
-function destinationInput ($rootScope, $timeout, Wallet, format, $httpBackend) {
-  // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
-  $httpBackend.whenGET('/Resources/wallet-options.json').respond();
-
+function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
     restrict: 'E',
     require: '^ngModel',
