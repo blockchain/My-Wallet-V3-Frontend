@@ -105,7 +105,7 @@
                 ng-show="transaction.maxAvailable > 0 && transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
                 span.type-sm(translate="USE_TOTAL")
                 | :&nbsp;
-                span.type-sm {{ transaction.maxAvailable | convert:'btc' }}
+                span.type-sm.pointer {{ transaction.maxAvailable | convert:'btc' }}
               span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
                 span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
           //- Description
