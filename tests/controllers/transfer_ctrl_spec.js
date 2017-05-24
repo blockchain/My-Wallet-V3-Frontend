@@ -31,7 +31,10 @@ describe('TransferControllerSpec', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, $rootScope, $controller, $q) {
+    angular.mock.inject(function ($injector, $rootScope, $controller, $q, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       rootScope = $rootScope;
       controller = $controller;
 
@@ -50,7 +53,7 @@ describe('TransferControllerSpec', () => {
         }
       };
 
-      return scope = getControllerScope(spendableAddresses);
+      scope = getControllerScope(spendableAddresses);
     })
   );
 

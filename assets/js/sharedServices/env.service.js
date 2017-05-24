@@ -2,75 +2,56 @@ angular
   .module('shared')
   .factory('Env', Env);
 
-Env.$inject = ['$rootScope', '$location', '$q'];
+Env.$inject = ['$rootScope', '$location', '$q', '$http'];
 
-function Env ($rootScope, $location, $q) {
+function Env ($rootScope, $location, $q, $http) {
   let env = {
   };
 
+  // These are set by grunt dist:
+  env.versionFrontend = null;
+  env.versionMyWallet = null;
+
+  const absUrl = $location.absUrl();
+  const path = $location.path();
+  if (absUrl && path && path.length) {
+    // e.g. https://blockchain.info/wallet/#
+    env.rootPath = $location.absUrl().slice(0, -$location.path().length);
+  }
+
   let defer = $q.defer();
 
-  $rootScope.$watch('rootURL', () => {
-    // If a custom rootURL is set by index.pug:
-    //                    Grunt can replace this:
-    const customRootURL = $rootScope.rootURL;
-    env.rootURL = customRootURL;
+  let url = `/Resources/wallet-options.json`;
 
-    const absUrl = $location.absUrl();
-    const path = $location.path();
-    if (absUrl && path && path.length) {
-      // e.g. https://blockchain.info/wallet/#
-      env.rootPath = $location.absUrl().slice(0, -$location.path().length);
-    }
+  $http.get(url)
+    .success((res) => {
+      env.buySellDebug = $rootScope.buySellDebug;
 
-    // These are set by grunt dist:
-    env.versionFrontend = null;
-    env.versionMyWallet = null;
+      env.partners = res.partners;
+      env.showBuySellTab = res.showBuySellTab;
+      env.service_charge = res.service_charge;
 
-    // Not set by grunt dist:
-    env.isProduction = env.rootURL === 'https://blockchain.info/' || env.rootURL === '/';
-    env.buySellDebug = false;
+      env.rootURL = res.domains.root + '/';
 
-    console.info(
-      'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
-      env.versionFrontend, env.versionMyWallet, env.rootURL
-    );
-
-    env.sfoxUseStaging = $rootScope.sfoxUseStaging;
-
-    if (env.sfoxUseStaging === undefined) {
-      env.sfoxUseStaging = null;
-    }
-
-    if ($rootScope.sfoxUseStaging) {
-      env.sfoxUseStaging = true;
-      env.sfoxApiKey = $rootScope.sfoxApiKey;
-      env.sfoxPlaidEnv = $rootScope.sfoxPlaidEnv;
-      env.sfoxSiftScienceKey = $rootScope.sfoxSiftScienceKey;
+      env.isProduction = env.rootURL === 'https://blockchain.info/' || env.rootURL === '/';
+      env.buySellDebug = false;
 
       console.info(
-        'Using SFOX staging environment with API key %s, Plaid environment %s and Sift Science key %s.',
-        env.sfoxApiKey,
-        env.sfoxPlaidEnv,
-        env.sfoxSiftScienceKey
+        'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
+        env.versionFrontend, env.versionMyWallet, env.rootURL
       );
+
+      env.customWebSocketURL = res.domains.webSocket;
+
+      env.network = res.network;
+
+      env.apiDomain = res.domains.api + '/';
+
+      env.walletHelperDomain = res.domains.walletHelper;
+
+      defer.resolve(env);
     }
-
-    //                       Grunt can replace this:
-    env.customWebSocketURL = $rootScope.webSocketURL;
-
-    //            Grunt can replace this:
-    env.network = $rootScope.network || 'bitcoin';
-
-    //              Grunt can replace this:
-    env.apiDomain = $rootScope.apiDomain || 'https://api.blockchain.info/';
-
-    env.buySellDebug = $rootScope.buySellDebug;
-
-    env.walletHelperUrl = $rootScope.walletHelperUrl || 'http://localhost:8081';
-
-    defer.resolve(env);
-  });
+  );
 
   return defer.promise;
 }

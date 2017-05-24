@@ -26,7 +26,7 @@ const modules = [
   'oc.lazyLoad'
 ];
 
-angular.module('walletApp', modules).run(($rootScope, Env) => {
+angular.module('walletApp', modules).run(($rootScope) => {
   $rootScope.scheduleRefresh = () => {};
   $rootScope.cancelRefresh = () => {};
 

@@ -8,28 +8,25 @@ describe('SfoxVerifyController', () => {
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        partners: {
+          sfox: {
+            states: ['NY', 'PA', 'CA']
+          }
+        }
+      }));
+    });
+  });
+
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$q_, _$timeout_) {
       $rootScope = _$rootScope_;
       $controller = _$controller_;
       $q = _$q_;
 
-      Wallet = $injector.get('Wallet');
       let Upload = $injector.get('Upload');
-      Options = $injector.get('Options');
-
-      Options = {
-        options: {
-          partners: {
-            sfox: {
-              states: ['NY', 'PA', 'CA']
-            }
-          }
-        }
-      };
-
-      let $httpBackend = $injector.get("$httpBackend");
-      return $httpBackend.expectGET('/Resources/wallet-options.json').respond({partners: {sfox: {plaid: "1"}}});
     })
   );
 

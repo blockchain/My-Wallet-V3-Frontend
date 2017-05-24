@@ -323,18 +323,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     })
     .state('wallet.common.buy-sell.select', {
       templateUrl: 'partials/buy-sell-select-partner.pug',
-      controller: 'BuySellSelectPartnerController',
-      resolve: {
-        options (Options) { return Options.get(); }
-      }
+      controller: 'BuySellSelectPartnerController'
     })
     .state('wallet.common.buy-sell.coinify', {
       templateUrl: 'partials/buy-sell.pug',
       controller: 'BuySellCtrl',
-      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
-      resolve: {
-        options (Options) { return Options.get(); }
-      }
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' }
     })
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.pug',
@@ -344,25 +338,25 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        // Using Options.get is a hack to prevent route error while waiting for sfox api key
-        _loadExchangeData ($q, MyWallet, sfox, Options) {
+        _loadExchangeData ($q, MyWallet, sfox) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? Options.get().then(() => sfox.fetchExchangeData(exchange))
+            ? $q.resolve().then(() => sfox.fetchExchangeData(exchange))
             : $q.resolve();
         },
-        accounts ($q, MyWallet, Options) {
+        accounts ($q, MyWallet) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.hasAccount
-            ? Options.get().then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
+            ? $q.resolve([]).then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
             : $q.resolve([]);
         },
-        options (Options) { return Options.get(); },
-        showCheckout (options, MyWallet) {
-          let email = MyWallet.wallet.accountInfo.email;
-          let fraction = options.partners.sfox.showCheckoutFraction;
+        showCheckout (Env, MyWallet) {
+          return Env.then(env => {
+            let email = MyWallet.wallet.accountInfo.email;
+            let fraction = env.partners.sfox.showCheckoutFraction;
 
-          return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isEmailInvited(email, fraction);
+          });
         }
       },
       onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {

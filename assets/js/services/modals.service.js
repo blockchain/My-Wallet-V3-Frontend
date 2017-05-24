@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
+function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   const service = {};
 
-  let open = (defaults, options = {}) => (
-    $uibModal.open(angular.merge(options, defaults))
-  );
+  let open = (defaults, options = {}) => {
+    return $uibModal.open(angular.merge(options, defaults));
+  };
 
   let openMobileCompatible = (config) => (
     ($rootScope.inMobileBuy ? service.expandTray : open)(config)
@@ -39,8 +39,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
       controller: 'SendCtrl',
       resolve: {
         paymentRequest: () => paymentRequest,
-        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
-        options: () => Options.get()
+        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
       }
     }, options)
   );
@@ -94,7 +93,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
     resolve: {
       exchange () { return exchange; },
       quote () { return quote; },
-      options: () => Options.get(),
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
@@ -138,7 +136,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, Options) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        options: () => Options.get(),
         quote () { return quote; },
         trade () { return trade; },
         paymentMediums () { return quote && quote.getPaymentMediums(); }
