@@ -7,7 +7,7 @@ let headerLinks =
 
 let menuLinks =
   [
-    { title: 'activity-feed', href: 'activity-feed' },
+    { title: 'activity-feed', href: 'activity-feed({scenarioId:1})' },
     { title: 'address-book-entry', href: 'address-book-entry' },
     { title: 'adverts', href: 'adverts({scenarioId: 1})' },
     { title: 'alerts', href: 'alerts' },

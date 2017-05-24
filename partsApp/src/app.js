@@ -9,13 +9,15 @@ import Home from 'components/home';
 import Components from 'components/components';
 import Directives from 'components/directives';
 import Adverts from 'components/directives/adverts';
+import ActivityFeed from 'components/directives/activity-feed';
 
 const modules = [
   uiRouter,
   Home,
   Components,
   Directives,
-  Adverts
+  Adverts,
+  ActivityFeed
 ];
 
 angular
