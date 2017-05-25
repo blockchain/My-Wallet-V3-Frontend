@@ -1,0 +1,18 @@
+.mobile-login {
+  $size: 200px;
+
+  .scanner-container {
+    height: $size;
+    width: $size;
+    background: $grey;
+  }
+
+  .scanner {
+    overflow: hidden;
+    video {
+      height: $size;
+      width: $size;
+      object-fit: cover;
+    }
+  }
+}

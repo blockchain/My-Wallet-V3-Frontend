@@ -1,19 +1,36 @@
-div
-  header
-    hgroup
-      .flex-between.flex-center.flex-wrap.mb-10
-        span.f-24.lh1(translate="Mobile Login")
-.mt-30.mobile-login
-  .flex-center.flex-column.flex-justify(ng-hide="scanComplete")
-    bc-qr-reader(
-      on-error="onScanError"
-      on-result="onScanResult"
-      active="scannerOn"
-      camera-status="scannerOn")
-    .mt-30
-      span.f-20.center-align Show the code on your mobile phone to log in
-  .flex-center.flex-column.flex-justify(ng-show="scanComplete")
-    .level-complete.flex-center.flex-justify.mtl
-      i.ti-check.bright-green
-    h4.em-300.mtl(translate="Scan Successful")
-    p.em-300(translate="Logging into your wallet now...")
+header
+  hgroup
+    .flex-between.flex-center.flex-wrap.mb-10
+      span.f-24.lh1(translate="Log in via Mobile")
+      span
+        a(ui-sref="public.login-no-uid" translate="CANCEL")
+    p.alt-font.f-16(translate="Follow these steps to log into your web wallet using your mobile device")
+.mobile-login.mv-60.flex-between
+  .flex-1
+    .scanner-container.flex(box-corners="{{scanComplete ? success : scanFailed ? error : ''}}")
+      div(ng-hide="scanComplete || scanFailed")
+        bc-qr-reader.scanner(
+          on-error="onScanError"
+          on-result="onScanResult"
+          active="scannerOn"
+          camera-status="scannerOn")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="scanComplete")
+        span.f-18(translate="SCAN_SUCCESS")
+        p.f-12(translate="Logging you in now")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="scanFailed")
+        span.f-18(translate="SCAN_FAILED")
+        a.f-12(translate="Retry" ng-click="retryScan()")
+  .flex-1
+    span.f-18.em-500.blue Logging in with Mobile
+    ol.pl-15
+      li.pt-10 Open your Blockchain App on your mobile device and go to Settings.
+      li.pt-10 Tap&nbsp;
+        i Log in to Web Wallet.
+      li.pt-10 Using your computer's camera, scan the QR code that appears on your device.
+footer.flex-between.flex-center.pt-25
+  p.alt-font.f-16.mbn Missing the App?
+  div
+    button.btn.button-default.button-short-wide.type-h5
+      span.em-300 App Store
+    button.btn.button-default.button-short-wide.type-h5.ml-10
+      span.em-300 Google Play
