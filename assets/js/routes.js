@@ -231,7 +231,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/mobile-login',
       views: {
         contents: {
-          templateUrl: 'partials/mobile-login.jade',
+          templateUrl: 'partials/mobile-login.pug',
           controller: 'MobileLoginController'
         }
       },
