@@ -2,21 +2,13 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Options, Env, $window) {
+function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Env, $window) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
-  let processOptions = (options) => {
-    Env.then(env => {
-      $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperUrl}/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${env.sfoxPlaidEnv || options.partners.sfox.plaidEnv}`);
-    });
-  };
-
-  if (Options.didFetch) {
-    processOptions(Options.options);
-  } else {
-    Options.get().then(processOptions);
-  }
+  Env.then(env => {
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
+  });
 
   $scope.types = ['checking', 'savings'];
   $scope.openHelper = modals.openHelper;
@@ -116,7 +108,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
       if (!e.data.command) return;
       if (e.data.from !== 'plaid') return;
       if (e.data.to !== 'exchange') return;
-      if (e.origin !== env.walletHelperUrl) return;
+      if (e.origin !== env.walletHelperDomain) return;
       if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
       e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();

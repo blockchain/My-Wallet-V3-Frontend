@@ -6,8 +6,12 @@ describe('cta', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function (_$injector_) {
+    angular.mock.inject(function (_$injector_, $httpBackend) {
       $injector = _$injector_;
+
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
       localStorageService = $injector.get('localStorageService');

@@ -15,16 +15,43 @@ describe('CoinifyController', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, $q, _$rootScope_, _$controller_) {
+    angular.mock.inject(function ($injector, $q, _$rootScope_, _$controller_, $httpBackend) {
       $rootScope = _$rootScope_;
       $controller = _$controller_;
+
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      const options = {
+        partners: {
+          coinify: {
+            surveyLinks: ['www.blockchain.com/survey']
+          }
+        }
+      };
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond(options);
+
+      let MyWallet = $injector.get('MyWallet');
       buySell = $injector.get('buySell');
+
+      MyWallet.wallet = {
+        hdwallet: {
+          defaultAccount: {
+            index: 0
+          },
+          accounts: [{label: ''}]
+        }
+      };
+      return {
+        buySell: {
+          getQuote (quote) { return $q.resolve(quote); }
+        }
+      };
     }));
 
   let getController = function (quote, trade, options) {
     let scope = $rootScope.$new();
 
     let ctrl = $controller('CoinifyController', {
+
       $scope: scope,
       trade: trade || null,
       quote: quote || null,

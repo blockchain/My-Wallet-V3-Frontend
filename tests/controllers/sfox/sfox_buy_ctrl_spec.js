@@ -1,14 +1,19 @@
 describe('SfoxBuyController', () => {
   let scope;
   let MyWallet;
-  let Wallet;
   let $rootScope;
   let $controller;
-  let Alerts;
   let sfox;
   let $q;
 
   beforeEach(angular.mock.module('walletApp'));
+
+  beforeEach(() => {
+    angular.mock.inject(($httpBackend) => {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+    });
+  });
 
   let mockTrade = () =>
     ({

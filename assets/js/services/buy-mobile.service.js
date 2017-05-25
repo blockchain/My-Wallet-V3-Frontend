@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .factory('buyMobile', buyMobile)
 
-function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet, Options) {
+function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet, Env) {
   const actions = {
     FRONTEND_INITIALIZED: 'frontendInitialized',
     BUY_COMPLETED: 'buyCompleted',
@@ -25,7 +25,7 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
   $window.activateMobileBuy = (guid, sharedKey, password) => {
     if (Wallet.status.isLoggedIn) return false
     prepMobileBuy()
-    Options.get()
+    Env
       .then(() => $q(resolve => Wallet.login(guid, password, null, null, resolve, null, sharedKey)))
       .then(toBuySell)
   }
@@ -34,7 +34,7 @@ function buyMobile ($rootScope, $window, $state, $timeout, $q, Wallet, MyWallet,
     if (Wallet.status.isLoggedIn) return false
     Wallet.goal.firstLogin = Boolean(firstLogin);
     prepMobileBuy()
-    Options.get()
+    Env
       .then(() => MyWallet.loginFromJSON(json, externalJson, magicHash, password))
       .then(() => $q(resolve => { Wallet.didLogin(MyWallet.wallet.guid, resolve) }))
       .then(toBuySell)
