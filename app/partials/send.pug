@@ -194,7 +194,7 @@
       data-style="expand-left"
       ng-hide="confirm")
     button.full.button-primary.upper(
-      ladda-translate="{{ getToLabels()[0].type != 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN' }}"
+      ladda-translate="{{ transaction.destination.type != 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN' }}"
       ui-ladda="sending"
       ng-click="send()"
       data-style="expand-left"
