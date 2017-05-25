@@ -136,8 +136,12 @@
         //- Custom Fee
         .group(ng-if="advanced")
           .group.inline.flex-center.mt-10
-            .item.width-50.width-50-mobile
-              label.colon(translate="TX_FEE")
+            .item.width-55.width-55-mobile.width-55-tablet
+              .flex-between.flex-baseline
+                label.colon(translate="TX_FEE")
+                span.pointer.f-12
+                  span.primary(ng-click="payment.updateFeePerKb(transaction.fees.regular) && (transaction.satoshiPerByte = transaction.fees.regular)") Reg: {{ transaction.fees.regular }},&nbsp;
+                  span.primary(ng-click="payment.updateFeePerKb(transaction.fees.priority) && (transaction.satoshiPerByte = transaction.fees.priority)") Priority: {{ transaction.fees.priority }}
               .flex-center
                 .flex-1.flex-center.border
                   input.form-control.no-border(
@@ -154,7 +158,7 @@
                 .pos-abs
                   span.f-12.state-danger-text.pointer(ng-if="transaction.satoshiPerByte > transaction.fees.limits.max" ng-click="payment.updateFeePerKb(transaction.fees.limits.max) && (transaction.satoshiPerByte = transaction.fees.limits.max)") {{ transaction.fees.limits.max }} sat/b or less is recommended.
                   span.f-12.state-danger-text.pointer(ng-if="transaction.satoshiPerByte < transaction.fees.limits.min" ng-click="payment.updateFeePerKb(transaction.fees.limits.min) && (transaction.satoshiPerByte = transaction.fees.limits.min)") {{ transaction.fees.limits.min }} sat/b or more is recommended.
-            .item.right-align.width-50.width-50-mobile
+            .item.right-align.width-45.width-45-mobile.width-45-tablet
               label.fade(translate="FEE")
               span.f-14.state-danger-text(ng-if="transaction.maxAvailable <= 0") Fee is too high
               span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
