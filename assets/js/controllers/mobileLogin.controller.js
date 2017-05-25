@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('MobileLoginController', MobileLoginController);
 
-function MobileLoginController ($scope, $state, Wallet, Alerts) {
+function MobileLoginController ($scope, $state, Wallet, MyWallet, Alerts) {
   $scope.scannerOn = true;
 
   $scope.onScanError = (error) => {
@@ -13,11 +13,17 @@ function MobileLoginController ($scope, $state, Wallet, Alerts) {
     $scope.scannerOn = false;
     $scope.scanComplete = true;
 
-    let [uid, password, sharedKey] = result.split('|');
-
     let success = () => { $state.go('wallet.common.home'); };
     let error = (e) => { Alerts.displayError(e); };
 
-    Wallet.login(uid, password, null, null, success, error, sharedKey);
+    MyWallet.parsePairingCode(result)
+      .then((data) => {
+        let { guid, password, sharedKey } = data;
+        Wallet.login(guid, password, null, null, success, error, sharedKey);
+      })
+      .catch((error) => {
+        console.log(error);
+        Alerts.displayError('Error reading pairing code');
+      });
   };
 }
