@@ -59,6 +59,8 @@ describe('CoinifyController', () => {
       $uibModalInstance: { close () {}, dismiss () {} }
     });
 
+    ctrl.now = () => 1495742841561;
+
     ctrl.$scope = scope;
     return ctrl;
   };
@@ -110,7 +112,7 @@ describe('CoinifyController', () => {
     let ctrl;
     beforeEach(() => ctrl = getController(quote));
 
-    it('should return expiration time of quote', () => expect(ctrl.timeToExpiration()).toBe(100000000 - ctrl.now()));
+    it('should return expiration time of quote', () => expect(ctrl.timeToExpiration()).toBe(100000000 - 1495742841561));
   });
 
   describe('.refreshQuote()', function () {
