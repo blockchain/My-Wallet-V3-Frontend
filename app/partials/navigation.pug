@@ -16,7 +16,7 @@
         li.item.hidden-xs(ng-hide="true")
           button.button-transparent.button-border.button(translate="SUBSCRIBE" ng-click="subscribe()")
         li.item(ng-show="settings.btcCurrency")
-          a.flex-important.flex-column(href="https://markets.blockchain.info/" target="_blank" rel="noopener noreferrer")
+          a.flex-important.flex-column(href="/markets" target="_blank" rel="noopener noreferrer")
             span
               | 1 {{ settings.btcCurrency.code }} =&nbsp;
               fiat(btc="settings.btcCurrency.conversion")
@@ -28,23 +28,23 @@
             li
               a(href="{{rootURL}}", translate="HOME" target="_blank" rel="noopener noreferrer")
             li
-              a(href="{{rootURL}}charts", translate="CHARTS" target="_blank" rel="noopener noreferrer")
+              a(href="/charts", translate="CHARTS" target="_blank" rel="noopener noreferrer")
             li
-              a(href="{{rootURL}}stats", translate="STATS" target="_blank" rel="noopener noreferrer")
+              a(href="/stats", translate="STATS" target="_blank" rel="noopener noreferrer")
             li
-              a(href="{{rootURL}}markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
+              a(href="/markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
             li
-              a(href="{{rootURL}}api", translate="API" target="_blank" rel="noopener noreferrer")
+              a(href="/api", translate="API" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
           a(href="{{rootURL}}", translate="HOME" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
-          a(href="{{rootURL}}charts", translate="CHARTS" target="_blank" rel="noopener noreferrer")
+          a(href="/charts", translate="CHARTS" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
-          a(href="{{rootURL}}stats", translate="STATS" target="_blank" rel="noopener noreferrer")
+          a(href="/stats", translate="STATS" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
-          a(href="{{rootURL}}api", translate="API" target="_blank" rel="noopener noreferrer")
+          a(href="/api", translate="API" target="_blank" rel="noopener noreferrer")
         li.item.visible-xs
-          a(href="{{rootURL}}markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
+          a(href="/markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
         li.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
           a(uib-popover-template="::whatsNewTemplate"
             popover-class="whats-new-popover"
