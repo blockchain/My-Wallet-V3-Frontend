@@ -194,18 +194,17 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
   Env.then(env => {
     // TODO: don't pass all of 'env' into shouldDisplaySellTab()
     $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
-  });
-
-  $scope.tabs = {
-    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
+    $scope.tabs = {
+      selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
+      options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
       ? ['BUY_BITCOIN', 'ORDER_HISTORY']
       : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
-    select (tab) {
-      this.selectedTab = this.selectedTab ? tab : null;
-      $state.params.selectedTab = this.selectedTab;
-    }
-  };
+      select (tab) {
+        this.selectedTab = this.selectedTab ? tab : null;
+        $state.params.selectedTab = this.selectedTab;
+      }
+    };
+  });
 
   $rootScope.$on('fetchExchangeProfile', () => {
     $scope.status.disabled = true;

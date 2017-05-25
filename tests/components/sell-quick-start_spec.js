@@ -127,8 +127,8 @@ describe('sell-quick-start.component', () => {
     it('should set maxSpendableAmount to the first number in the array', () => {
       getController(handlers);
       let paymentInfo = {
-        maxSpendableAmounts: [1, 2, 3, 4, 5],
-        sweepFees: [5, 4, 3, 2, 1]
+        sweepAmount: 1,
+        sweepFee: 1
       };
       let payment = {};
       scope.offerUseAll(payment, paymentInfo);
