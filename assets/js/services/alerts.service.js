@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal'];
+Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', 'localStorageService'];
 
-function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
+function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, localStorageService) {
   const service = {
     alerts: [],
     close,
@@ -14,6 +14,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
     prompt,
     saving,
     isDuplicate,
+    surveyCloseConfirm,
     displayInfo: display.bind(null, 'info'),
     displaySuccess: display.bind(null, 'success'),
     displayWarning: display.bind(null, ''),
@@ -54,19 +55,48 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function displayResetTwoFactor (message) {
     $translate(['SUCCESS']).then(translations => {
-      $rootScope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: message
+      $uibModal.open({
+        templateUrl: 'partials/modal-notification.pug',
+        controller: 'ModalNotificationCtrl',
+        windowClass: 'notification-modal',
+        resolve: {
+          notification: () => ({
+            type: 'verified-email',
+            icon: 'ti-email',
+            heading: translations.SUCCESS,
+            msg: message
+          })
+        }
       });
     });
+  }
+
+  function surveyCloseConfirm (survey, links, index, sell) {
+    let link = links[index];
+    let surveyOpened = localStorageService.get(survey);
+
+    let hasSeenPrompt = !links.length ||
+                        index >= links.length ||
+                        surveyOpened && surveyOpened.index >= index;
+
+    if (hasSeenPrompt) {
+      if (sell === true) {
+        return service.confirm('CONFIRM_CLOSE_SELL', {action: 'IM_DONE'});
+      }
+      return service.confirm('CONFIRM_CLOSE_BUY', {action: 'IM_DONE'});
+    } else {
+      localStorageService.set(survey, {index: index});
+      let openSurvey = () => BrowserHelper.safeWindowOpen(link);
+      return service.confirm('SURVEY_PROMPT', {action: 'TAKE_SURVEY', friendly: true, cancel: 'NO_THANKS'})
+                    .then(openSurvey)
+                    .catch(() => $uibModalStack.dismissAll());
+    }
   }
 
   // options = { values, props, friendly, success, action, modalClass, iconClass }
   function confirm (namespace, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/modal-confirm.jade',
+      templateUrl: 'partials/modal-confirm.pug',
       windowClass: `bc-modal confirm ${options.modalClass || ''}`,
       controller: ($scope) => angular.extend($scope, options, { namespace })
     }).result;
@@ -74,7 +104,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function prompt (message, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/modal-prompt.jade',
+      templateUrl: 'partials/modal-prompt.pug',
       windowClass: 'bc-modal medium',
       controller: ($scope) => angular.extend($scope, options, { message })
     }).result;
@@ -82,7 +112,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function saving () {
     return $uibModal.open({
-      templateUrl: 'partials/modal-saving.jade',
+      templateUrl: 'partials/modal-saving.pug',
       windowClass: 'bc-modal confirm top',
       backdrop: 'static',
       keyboard: false,

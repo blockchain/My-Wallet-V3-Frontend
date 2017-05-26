@@ -1,0 +1,19 @@
+.modal-body.fade.clearfix
+  div(data-preflight-tag="TradeSummary")
+    .mbl(ng-hide="hideHeader")
+      span.type-h5.em-500.flex-start.pts.capitalize(class="{{formattedTrade.class}}" translate="{{formattedTrade.namespace}}.TITLE" translate-values="formattedTrade.values")
+      p.ptm(translate="{{formattedTrade.namespace}}.BODY" translate-values="formattedTrade.values")
+    div(ng-if="formattedTrade.tx")
+      label.em-500.flex-start.mb-15(ng-hide="isPendingBankTransfer && isPendingBankTransfer()" translate="{{isKYC || needsKyc() ? 'DETAILS' : 'ORDER_DETAILS'}}")
+      ul.em-300.bg-grey.border-top.pan.mb-15(ng-class="{'bank-transfer': isPendingBankTransfer && isPendingBankTransfer()}")
+        li.pam.border-right.border-left.border-bottom-light.flex-between(ng-repeat="(prop, val) in formattedTrade.tx track by $index" ng-if="val")
+          span.em-300.colon(translate="{{prop}}" ng-class="{'em-500': prop === 'TOTAL_COST'}")
+          span.em-300.right-align.capitalize(ng-bind="val" ng-class="{'em-500': prop === 'TOTAL_COST', 'capitalize' : prop !== 'RECEIVING_ADDRESS'}")
+          span.security-red.plm(ng-if="$last && isPendingBankTransfer && isPendingBankTransfer()" translate="ORDER_ID_REFERENCE")
+  p.security-red.pointer.ng-hide(ng-show="vm.buySellDebug && vm.trade.bankAccount && vm.trade.state === 'awaiting_transfer_in'")
+    i.ti-search.mrm
+    span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
+.modal-footer.flex-end.flex-row
+  button(translate="CLOSE" ng-click="vm.cancel()" ng-class="vm.trade.bitcoinReceived ? 'button-muted' : 'button-primary'")
+  button.button-primary.mll(translate="SEE_BITCOIN" ng-show="!inMobileBuy && vm.trade.bitcoinReceived" ng-click="$close()" ui-sref="wallet.common.transactions")
+  button.button-primary.mll(translate="SEE_BITCOIN" ng-show="inMobileBuy && vm.trade.bitcoinReceived" ng-click="exitToNativeTx()")

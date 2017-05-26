@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ManageSecondPasswordCtrl', ManageSecondPasswordCtrl);
 
-function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWallet, $uibModal, Alerts) {
+function ManageSecondPasswordCtrl ($rootScope, AngularHelper, $scope, Wallet, $timeout, MyWallet, $uibModal, Alerts) {
   $scope.form = {};
   $scope.fields = {
     password: '',
@@ -15,10 +15,14 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
 
   $scope.walletStatus = Wallet.status;
   $scope.isMainPassword = Wallet.isCorrectMainPassword;
-  $scope.validateSecondPassword = Wallet.validateSecondPassword;
+  $scope.isSecondPassword = Wallet.validateSecondPassword;
 
-  $scope.userHasExchangeAcct = MyWallet.wallet.external &&
-                               MyWallet.wallet.external.hasExchangeAccount;
+  $scope.validateSecondPassword = (pw) => (
+    $scope.settings.secondPassword
+      ? Wallet.validateSecondPassword(pw)
+      : !$scope.isPasswordHint(pw) && !$scope.isMainPassword(pw)
+  );
+
   $scope.reset = () => {
     $scope.fields = {
       password: '',
@@ -29,7 +33,7 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   $scope.removeSecondPassword = () => {
     if ($scope.status.waiting) return;
     $scope.status.waiting = true;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
 
     let success = () => {
       Alerts.displaySuccess('SECOND_PASSWORD_REMOVE_SUCCESS', true);
@@ -53,7 +57,7 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
 
   $scope.setPassword = () => {
     if ($scope.status.waiting || $scope.form.$invalid) return;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
 
     const success = () => {
       $scope.deactivate();
@@ -64,14 +68,14 @@ function ManageSecondPasswordCtrl ($rootScope, $scope, Wallet, $timeout, MyWalle
   };
 
   $scope.openRecovery = () => $uibModal.open({
-    templateUrl: 'partials/confirm-recovery-phrase-modal.jade',
+    templateUrl: 'partials/confirm-recovery-phrase-modal.pug',
     controller: 'ConfirmRecoveryPhraseCtrl',
     windowClass: 'bc-modal'
   });
 
   $scope.recoveryModal = () => {
     const openModal = () => $uibModal.open({
-      templateUrl: 'partials/recovery-before-second-password.jade',
+      templateUrl: 'partials/recovery-before-second-password.pug',
       controller: 'ManageSecondPasswordCtrl',
       windowClass: 'bc-modal'
     });

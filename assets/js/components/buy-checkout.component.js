@@ -13,12 +13,12 @@ angular
       buySuccess: '&',
       buyError: '&'
     },
-    templateUrl: 'templates/buy-checkout.jade',
+    templateUrl: 'templates/buy-checkout.pug',
     controller: BuyCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox) {
+function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -27,6 +27,10 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
+
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+  });
 
   let state = $scope.state = {
     btc: null,
@@ -45,9 +49,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
     state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / 100 : null;
     state.btc = !state.baseFiat ? quote.baseAmount : null;
   }
-
-  $scope.enableBuy = () => $scope.enabled = true;
-  $scope.disableBuy = () => $scope.enabled = false;
 
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
@@ -72,8 +73,7 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
-      let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
@@ -83,7 +83,6 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500, () => {
     $scope.quote = null;
-    $scope.disableBuy();
   });
 
   $scope.getInitialQuote = () => {
@@ -101,6 +100,20 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
     }
   };
 
+  $scope.enableBuy = () => {
+    let obj = {
+      'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
+      'Payment Method': this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')',
+      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
+    };
+
+    $uibModal.open({
+      controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
+      templateUrl: 'partials/confirm-trade-modal.pug',
+      windowClass: 'bc-modal trade-summary'
+    }).result.then($scope.buy);
+  };
+
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
@@ -108,7 +121,7 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
       sfox.buy(this.buyAccount, quote)
         .then(trade => {
           // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-          if ($rootScope.buySellDebug) {
+          if ($scope.buySellDebug) {
             console.info('Load Sift Science iframe');
           }
           $scope.tradeId = trade.id;
@@ -129,11 +142,10 @@ function BuyCheckoutController ($rootScope, $scope, $timeout, $q, currency, Wall
     $scope.max = $scope.toSatoshi(limit, $scope.dollars);
   };
 
-  $scope.$watchGroup(['state.fiat', 'state.btc'], () => this.buyAccount ? $scope.disableBuy() : $scope.enableBuy());
   $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
-  $scope.$root.installLock.call($scope);
+  AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }

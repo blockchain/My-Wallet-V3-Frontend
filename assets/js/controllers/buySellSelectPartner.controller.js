@@ -2,11 +2,13 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySell, country, state, options, buyStatus) {
+function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, buySell, country, state, buyStatus, modals, Env) {
   buyStatus.canBuy().then((canBuy) => {
     if (!canBuy) {
       $state.go('wallet.common.home');
-      return;
+      if ($scope.inMobileBuy) {
+        $timeout(() => modals.openFullScreen('partials/buy-subscribe-modal.pug', 'SubscribeCtrl'));
+      }
     }
   });
 
@@ -19,9 +21,11 @@ function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySe
   $scope.countries = country.countryCodes;
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
 
-  $scope.coinifyWhitelist = options.partners.coinify.countries;
-  $scope.sfoxWhitelist = options.partners.sfox.countries;
-  $scope.sfoxStateWhitelist = options.partners.sfox.states;
+  Env.then(env => {
+    $scope.coinifyWhitelist = env.partners.coinify.countries;
+    $scope.sfoxWhitelist = env.partners.sfox.countries;
+    $scope.sfoxStateWhitelist = env.partners.sfox.states;
+  });
 
   $scope.email = Wallet.user.email;
 
@@ -63,9 +67,13 @@ function BuySellSelectPartnerController ($scope, $state, Wallet, MyWallet, buySe
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
+  $scope.tabs = {
+    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
+  };
+
   $scope.$watchGroup(['country', 'state'], (newValues) => {
-    country = newValues[0];
-    state = newValues[1];
+    let country = newValues[0];
+    let state = newValues[1];
 
     if (!country) { // This should normally not happen
       $scope.blacklisted = true;

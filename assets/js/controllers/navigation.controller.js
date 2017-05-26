@@ -2,15 +2,16 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeout, $cookies, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
+  const whatsNewDateCutoff = 7.884e+9; // ~3 months
   const lastViewedDefaultTime = 1231469665000;
-  $scope.whatsNewTemplate = 'templates/whats-new.jade';
+  $scope.whatsNewTemplate = 'templates/whats-new.pug';
   $scope.lastViewedWhatsNew = null;
 
-  $rootScope.isSubscribed = $cookies.get('subscribed');
+  $rootScope.isSubscribed = localStorageService.get('subscribed');
 
   $scope.getTheme = () => $scope.settings.theme;
 
@@ -23,14 +24,14 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
           .then(asyncAssert)
           .then(res => res.lastViewed)
       )
-      .catch(() => $cookies.get('whatsNewViewed'))
+      .catch(() => localStorageService.get('whatsNewViewed'))
       .then(value => value || lastViewedDefaultTime);
 
   $scope.viewedWhatsNew = () => {
     let lastViewed = $scope.lastViewedWhatsNew = Date.now();
     asyncAssert($scope.metaData && !Wallet.settings.secondPassword)
       .then(() => $scope.metaData.update({ lastViewed }))
-      .finally(() => $cookies.put('whatsNewViewed', lastViewed));
+      .finally(() => localStorageService.set('whatsNewViewed', lastViewed));
   };
 
   $scope.getNLatestFeats = (feats = [], lastViewed) => (
@@ -39,7 +40,7 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
 
   $scope.subscribe = () => {
     $uibModal.open({
-      templateUrl: 'partials/subscribe-modal.jade',
+      templateUrl: 'partials/subscribe-modal.pug',
       windowClass: 'bc-modal initial',
       controller: 'SubscribeCtrl'
     });
@@ -51,11 +52,11 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
 
     let options = (ops) => angular.merge({ friendly: true, modalClass: 'top' }, ops);
     let saidNoThanks = (e) => e === 'cancelled' ? $q.resolve() : $q.reject();
-    let hasNotSeen = (id) => !$cookies.get(id);
-    let rememberChoice = (id) => () => $cookies.put(id, true);
+    let hasNotSeen = (id) => !localStorageService.get(id);
+    let rememberChoice = (id) => () => localStorageService.set(id, true);
 
     let goToBackup = () => $q.all([$state.go('wallet.common.security-center', {promptBackup: true}), $q.reject('backing_up')]);
-    let openSurvey = () => { $rootScope.safeWindowOpen('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
+    let openSurvey = () => { BrowserHelper.safeWindowOpen('https://blockchain.co1.qualtrics.com/SE/?SID=SV_7PupfD2KjBeazC5'); };
 
     let remindBackup = () =>
       Alerts.confirm('BACKUP_REMINDER', options({ cancel: 'CONTINUE_LOGOUT', action: 'VERIFY_RECOVERY_PHRASE' }))
@@ -91,8 +92,12 @@ function NavigationCtrl ($scope, $window, $rootScope, $state, $interval, $timeou
   }
 
   buyStatus.canBuy().then(canBuy => {
-    let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
-    $scope.feats = whatsNew.filter(filterBuy);
+    let now = Date.now();
+    let filterBuySell = (feat) => {
+      let isBuySell = feat.title === 'BUY_BITCOIN' || feat.title === 'SELL_BITCOIN';
+      return !(isBuySell && !canBuy);
+    };
+    $scope.feats = whatsNew.filter(filterBuySell).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {

@@ -1,0 +1,79 @@
+.left-navigation.flex-column.flex-between(ng-if="status.isLoggedIn")
+  ul.aside.flex-1-0
+    li.header(ui-sref-active="current", ng-click="hideMenu()")
+      a(ui-sref="wallet.common.home")
+        i.icon-home
+        span(translate="HOME")
+    li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
+      a(ui-sref="wallet.common.transactions")
+        i.icon-tx
+        span(translate="MY_TRANSACTIONS")
+    // Don't forget to update controllers/buySell.controller.js
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
+      pulse-cta(
+        active-when="shouldShowBuyCta() && !shouldShowInviteForm"
+        on-dismiss="setBuyCtaDismissed()"
+        message-text="BUY_BITCOIN_ALERT"
+        button-text="BUY_BITCOIN"
+        route="wallet.common.buy-sell"
+        color="green")
+      a(ng-hide="shouldShowInviteForm"
+        ui-sref="wallet.common.buy-sell"
+        ng-click="dismissBuyCta()")
+        i.icon-bitcoin
+        span(translate="BUY_SELL_BITCOIN")
+      a(ng-show="shouldShowInviteForm"
+        ng-click="showInviteForm()")
+        i.icon-bitcoin
+        span(translate="BUY_SELL_BITCOIN")
+
+    li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
+      pulse-cta(
+        active-when="shouldShowSecurityWarning()"
+        on-dismiss="setSecurityWarningDismissed()"
+        message-text="{{getSecurityWarningMessage()}}"
+        button-text="SECURE_WALLET"
+        route="wallet.common.security-center"
+        color="red")
+      a(ui-sref="wallet.common.security-center")
+        i.icon-lock
+        span(translate="SECURITY_CENTER")
+        .progress-bar-wrapper.mlm.flex-1(ng-hide="security.level == 6")
+          .bar(ng-class="'level-' + security.level")
+    li.scroll-parent.header.mbm(ui-sref-active="current")
+      a(ui-sref="wallet.common.settings")
+        i.icon-settings
+        span(translate="SETTINGS")
+      ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
+        li.mts.mbm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.info")
+            span(translate="WALLET_INFO")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.preferences")
+            span(translate="PREFERENCES")
+        li.mvm(ui-sref-active="active")
+          a.pas(ui-sref="wallet.common.settings.security")
+            span(translate="SECURITY")
+        li.mvm(ng-class="{active: accountsRoute()}")
+          a.pas(ui-sref="wallet.common.settings.accounts_index")
+            span(translate="MENU_ACCOUNTS_AND_ADDRESSES")
+    li.header(ui-sref-active="current", ng-click="hideMenu()")
+      a(ui-sref="wallet.common.faq")
+        i.icon-help
+        span(translate="FAQ")
+  ul.aside.wallet-footer
+    li.header.mbm
+      span(translate="SPONSORS")
+      adverts
+    li.terms-policy
+      ul.flex-center.flex-wrap.aside.em-300.type-sm
+        li.pointer.mrm
+          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank" rel="noopener noreferrer")
+        li.mrm.type-xs
+          i.ti-control-record
+        li.pointer.mrm
+          a.text-color(href="https://www.blockchain.com/assets/pdf/Blockchain_PrivacyPolicy.pdf", translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+        li.mrm.type-xs
+          i.ti-control-record
+        li.pointer
+          a.text-color(href="https://www.blockchain.com/about", translate="ABOUT" target="_blank" rel="noopener noreferrer")

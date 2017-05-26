@@ -14,7 +14,7 @@ function asyncSelect ($translate, Alerts) {
       displayOptional: '@',
       onChange: '='
     },
-    templateUrl: 'templates/async-select.jade',
+    templateUrl: 'templates/async-select.pug',
     link: link
   };
   return directive;

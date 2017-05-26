@@ -5,9 +5,9 @@ module.exports = function (config) {
 
     logLevel: config.LOG_WARN,
 
-    client: { captureConsole: true },
+    client: { captureConsole: false },
 
-    exclude: ['assets/js/my_wallet/'],
+    exclude: [],
 
     files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
@@ -27,58 +27,52 @@ module.exports = function (config) {
       'bower_components/browserdetection/src/browser-detection.js',
       'bower_components/compare-versions/index.js',
       'bower_components/ng-file-upload/ng-file-upload.min.js',
-      'tests/app.module.spec.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.min.js',
+      'assets/js/shared.module.js',
+      'assets/js/sharedServices/*.service.js',
+      'assets/js/sharedDirectives/*.directive.js',
+      'tests/wallet-app.module.spec.js',
       'assets/js/landingCtrl.js',
-      'assets/js/core/core.module.js',
+      'assets/js/core/wallet-app.core.module.js',
       'build/js/templates.js',
       'assets/js/controllers/**/*.controller.js',
       'assets/js/components/**/*.component.js',
-      'assets/js/filters.js',
+      'assets/js/wallet-filters.module.js',
+      'assets/js/filters/*.js',
       'assets/js/services/**/*.service.js',
       'assets/js/directives/*.directive.js',
-      'assets/js/sharedDirectives.js',
-      'assets/js/sharedDirectives/*.directive.js',
-      'assets/js/translations.js',
-      'assets/js/walletLazyLoad.js',
+      'assets/js/constants/**/*.constant.js',
+      'assets/js/wallet-lazy-load.module.js',
       'assets/js/core/*.js',
-      'tests/filters/*.coffee',
-      'tests/controllers/**/*.coffee',
-      'tests/components/*.coffee',
-      'tests/services/**/*.coffee',
-      'tests/directives/*.coffee',
-      'tests/mocks/**/*.coffee',
+      'tests/filters/*.js',
+      'tests/controllers/**/*.js',
+      'tests/components/*.js',
+      'tests/services/**/*.js',
+      'tests/directives/*.js',
+      'tests/mocks/**/*.js',
       'tests/**/*.js',
-      'app/templates/*.jade'
+      'app/templates/*.pug'
     ],
 
     autoWatch: true,
 
     preprocessors: {
-      '**/*.jade': ['ng-jade2js'],
-      'assets/js/core/core.module.js': ['babel'],
+      '**/*.pug': ['ng-pug2js'],
+      'assets/js/core/wallet-app.core.module.js': ['babel'],
       'assets/js/controllers/**/*.js': ['coverage', 'babel'],
       'assets/js/components/**/*.js': ['coverage', 'babel'],
-      'assets/js/filters.js': ['babel', 'coverage'],
+      'assets/js/wallet-filters.module.js': ['babel', 'coverage'],
+      'assets/js/filters/*.filter.js': ['babel', 'coverage'],
       'assets/js/services/*.service.js': ['babel', 'coverage'],
       'assets/js/directives/*.directive.js': ['babel', 'coverage'],
+      'assets/js/shared.module.js': ['babel'],
+      'assets/js/sharedServices/*.service.js': ['babel', 'coverage'],
       'assets/js/sharedDirectives/*.directive.js': ['babel', 'coverage'],
       'assets/js/core/*.service.js': ['babel'],
       'assets/js/routes.js': ['babel', 'coverage'],
-      'assets/js/app.js': ['babel'],
+      'assets/js/wallet-app.module.js': ['babel'],
       'assets/js/landingCtrl.js': ['babel', 'coverage'],
-      'tests/**/*.coffee': ['coffee'],
       'tests/**/*.js': ['babel']
-    },
-    coffeePreprocessor: {
-      // options passed to the coffee compiler
-      options: {
-        bare: true,
-        sourceMap: true
-      },
-      // transforming the filenames
-      transformPath: function (path) {
-        return path.replace(/\.coffee$/, '.js');
-      }
     },
     babelPreprocessor: {
       options: {
@@ -92,7 +86,7 @@ module.exports = function (config) {
         return file.originalPath;
       }
     },
-    ngJade2JsPreprocessor: {
+    ngPug2JsPreprocessor: {
       stripPrefix: 'app/',
       prependPrefix: '',
 
@@ -102,7 +96,7 @@ module.exports = function (config) {
       //   return null;
       // },
 
-      // Support for jade locals to render at compile time
+      // Support for pug locals to render at compile time
       // locals: {
       //   foo: 'bar'
       // },
@@ -113,8 +107,8 @@ module.exports = function (config) {
       // from all the files, so you can load them all with module('foo')
       // moduleName: 'foo',
 
-      // Jade compiler options. For a list of possible options, consult Jade documentation.
-      jadeOptions: {
+      // Pug compiler options. For a list of possible options, consult Pug documentation.
+      pugOptions: {
         doctype: 'xml'
       }
     },

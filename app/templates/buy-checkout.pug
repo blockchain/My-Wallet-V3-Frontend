@@ -1,0 +1,78 @@
+form.bc-form(
+  name="checkoutForm"
+  ng-submit="$ctrl.buyAccount ? enableBuy(): buy();"
+  novalidate
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .group
+      .item
+        .flex-between.flex-baseline.mbs
+          span.f-16.em-500.colon Enter Amount
+          span
+            div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed")
+              span 1 {{ bitcoin.code }} = ${{ format(state.rate, dollars, false) }}
+              helper-button(content="EXCHANGE_RATE_HELPER")
+            .state-danger-text(ng-show="state.loadFailed")
+              i.ti-alert
+              span.mls Failed to load exchange data
+        .flex-center
+          .flex-1.flex-center.border
+            input.form-control.no-border(
+              type="number"
+              name="fiat"
+              ng-model="state.fiat"
+              ng-max="max"
+              ng-min="min"
+              ng-change="state.baseCurr = dollars"
+              step="1"
+              prevent-event="mousewheel"
+              transform-currency="dollars"
+              focus-when="true"
+              required)
+            span.mhm {{dollars.code}}
+          i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+          .flex-1.flex-center.border
+            input.form-control.no-border(
+              type="number"
+              name="btc"
+              ng-model="state.btc"
+              ng-max="max"
+              ng-min="min"
+              ng-change="state.baseCurr = bitcoin"
+              step="0.01"
+              prevent-event="mousewheel"
+              transform-currency="bitcoin"
+              required)
+            span.mhm {{bitcoin.code}}
+        .f-12.mts
+          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+            | Your remaining daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
+            | &nbsp;
+          span.primary.pointer(popup
+                               popup-name="sfox-identity"
+                               ng-if="$ctrl.buyLevel === 'pending'"
+                               translate="WHY")
+    .group.mtl(ng-show="$ctrl.collapseSummary && $ctrl.buyAccount")
+      .item
+        .mbm
+          span.f-16.em-500.colon Order Summary
+        .border.flex-column.bg-grey
+          div(ng-show="hasMultipleAccounts")
+            .flex-between.flex-center.form-control.bg-grey.no-border
+              span.colon Send To
+              span {{ btcAccount.label }}
+            .border-bottom.mhm
+          .flex-between.flex-center.form-control.bg-grey.no-border
+            span.colon BTC Order
+            span {{ format(fromSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
+          .border-bottom.mhm
+          .flex-between.flex-center.form-control.bg-grey.no-border
+            span.colon Payment Method
+            span.capitalize {{ $ctrl.buyAccount.accountType }} ({{ $ctrl.buyAccount.accountNumber }})
+          .border-bottom.mhm
+          .flex-between.flex-center.form-control.bg-grey.no-border.em-500
+            span.colon Total Cost
+            span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
+    .group.mtl(ng-show="$ctrl.collapseSummary")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
+    sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')

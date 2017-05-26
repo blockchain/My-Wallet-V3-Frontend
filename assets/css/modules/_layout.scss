@@ -1,14 +1,16 @@
+
 .wallet-container {
+  width: 100%;
   height: 100%;
-  position: relative;
+  flex-grow: 1;
+  display: flex;
+  min-height: 0;
 }
 
 .left-nav {
-  position: absolute;
-  width: 270px;
+  flex: 0 0 270px;
   padding: 15px;
   background: $grey;
-  height: calc(100% - 60px);
   border-right: 1px solid $border-grey;
   @media (max-height: 550px) {
     overflow: auto;
@@ -27,37 +29,40 @@
     border: 1px solid $border-grey;
   }
 }
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .top-view {
-  position: absolute;
-  width: calc(100% - 270px);
-  z-index: 1;
   background: white;
-  margin-left: 270px;
   border-bottom: 1px solid $border-grey;
   padding: 0 30px;
   height: 115px;
   .heavy {
-    h1 { font-size: 2.3em; }
     img.spinner {
       height: 11px;
     }
   }
   .reg {
-    top: -0.75em;
     font-size: 0.5em;
     font-weight: 300;
   }
+  @media (max-width: 991px) {
+    padding: 0 15px;
+  }
 }
 
-.main-container {
+.right-container {
   background: white;
-  position: relative;
-  left: 270px;
-  top: 115px;
+  flex-grow: 1;
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
-  width: calc(100% - 270px);
-  height: calc(100% - 175px); // make viewport smaller for overflow-y to work
   -webkit-overflow-scrolling: touch; // smooth scrolling on ios
 }
 
@@ -66,26 +71,26 @@
   height: 100%;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 @media (max-width: 767px) {
   .left-nav {
+    position: absolute;
     left: -270px;
+    width: 270px;
     z-index: 11; //just enough to be visible
     transition: all .3s ease-in-out;
-    height: calc(100% - 50px);
-    top: 0px;
+    &.toggled { left: 0; }
   }
-  .left-nav.toggled { left: 0; }
   .top-view {
     width: 100%;
     position: relative;
     margin-left: 0;
     height: 150px;
-    top: 0px;
   }
-  .transactions { top: 0; }
-  .main-container {
-    left: 0;
-    top: 0;
+  .right-container {
     width: 100%;
   }
 }
@@ -93,51 +98,19 @@
 .hide { display: none; }
 .invisible { visibility: hidden; opacity: 0; }
 
-.height-100 { height: 100%; }
-
-@for $i from 1 through 20 {
-  .width-#{$i*5} {
-    width: percentage($i*5/100);
-    @media (max-width: 991px) {
-      width: auto;
-    }
-  }
-}
-
-@for $i from 1 through 20 {
-  .width-#{$i*5}-tablet {
-    @media (min-width: 768px) and (max-width: 991px) {
-      width: percentage($i*5/100);
-    }
-  }
-}
-
-@for $i from 1 through 20 {
-  .width-#{$i*5}-mobile {
-    @media (max-width: 767px) {
-      width: percentage($i*5/100);
-    }
-  }
-}
-
-.width-33 { width: 33.333%; }
-
-.z-10 { z-index: 10; }
-
-.brdrn { border-radius: 0px !important; }
-
 @media (max-width: 991px) {
-  .top-view .heavy h1 { font-size: 1.75em; }
+  .top-view .heavy p,
+  .top-view .heavy h1 { font-size: 24px; }
 }
 
 @media (max-width: 767px) {
-  .top-view .heavy p { font-size: 1.2em; }
+  .top-view .heavy p { font-size: 20px; }
+  .top-view .heavy p.f-28 { font-size: 24px; }
 }
 
 @media (max-width:480px) {
-  .main-container {
+  .right-container {
     background: transparent;
-    height: calc(100% - 145px);
   }
 }
 
@@ -170,13 +143,18 @@
 .vat { vertical-align: top; }
 
 .bottom-right-footer {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  left: 270px;
   padding: 15px 30px;
   background-color: $grey-transparent;
   @media (max-width: 767px) {
     left: 0px;
+  }
+}
+
+.abs {
+  .bottom-right-footer {
+    @extend .pos-abs;
+    width: 100%;
+    bottom: 0;
+    left: 0;
   }
 }

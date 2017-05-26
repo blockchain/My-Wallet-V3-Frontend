@@ -2,7 +2,19 @@ angular
   .module('walletApp')
   .controller('SendCtrl', SendCtrl);
 
-function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount) {
+function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env) {
+  let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
+  const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
+
+  Env.then(env => {
+    $scope.rootURL = env.rootURL;
+    FEE_OPTIONS = (env.service_charge || {})[COUNTRY_CODE];
+    window.FEE = FEE_OPTIONS;
+    FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
+    FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
+    $scope.AB_TEST_FEE = FEE_OPTIONS != null;
+  });
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.alerts = [];
@@ -41,10 +53,9 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     size: 0
   };
 
-  $scope.payment = new Wallet.Payment();
   $scope.transaction = angular.copy($scope.transactionTemplate);
 
-  $scope.payment.on('update', data => {
+  $scope.paymentOnUpdate = (data) => {
     let tx = $scope.transaction;
     tx.fee = $scope.advanced && $scope.sendForm.fee.$dirty ? tx.fee : data.finalFee;
     if (tx.fee === 0) tx.fee = data.sweepFees[$scope.defaultBlockInclusion];
@@ -55,21 +66,36 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     tx.feeBounds = data.absoluteFeeBounds;
     tx.sweepFees = data.sweepFees;
     tx.size = data.txSize;
-    $scope.$safeApply();
-  });
+    AngularHelper.$safeApply($scope);
+  };
 
-  $scope.payment.on('error', error => {
+  $scope.paymentOnError = (error) => {
     if (error.error === 'ERR_FETCH_UNSPENT') {
       Alerts.displayError(error.error, true, $scope.alerts);
       $scope.failedToLoadUnspent = true;
     }
-  });
+  };
 
-  $scope.payment.on('message', message => {
+  $scope.paymentOnMessage = (message) => {
     if (message && message.text) {
       Alerts.displayWarning(message.text, true, $scope.alerts);
     }
-  });
+  };
+
+  $scope.setPaymentHandlers = (payment) => {
+    payment.on('update', $scope.paymentOnUpdate);
+    payment.on('error', $scope.paymentOnError);
+    payment.on('message', $scope.paymentOnMessage);
+  };
+
+  $scope.unsetPaymentHandlers = (payment) => {
+    payment.removeListener('update', $scope.paymentOnUpdate);
+    payment.removeListener('error', $scope.paymentOnError);
+    payment.removeListener('message', $scope.paymentOnMessage);
+  };
+
+  $scope.payment = Wallet.my.wallet.createPayment();
+  $scope.setPaymentHandlers($scope.payment);
 
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   $scope.close = () => $uibModalInstance.dismiss('');
@@ -91,7 +117,6 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   $scope.resetSendForm = () => {
     $scope.transaction = angular.copy($scope.transactionTemplate);
     $scope.transaction.from = smartAccount.getDefault();
-    console.log($scope.transaction.from);
     $scope.setPaymentFee();
 
     // Remove error messages:
@@ -101,7 +126,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.reopenModal = () => {
     $timeout(() => $uibModal.open({
-      templateUrl: 'partials/send.jade',
+      templateUrl: 'partials/send.pug',
       windowClass: 'bc-modal initial',
       controller: 'SendCtrl',
       resolve: {paymentRequest}
@@ -146,35 +171,47 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       $scope.sending = false;
 
       if (paymentCheckpoint) {
-        $scope.payment = new Wallet.Payment(paymentCheckpoint).build();
+        $scope.unsetPaymentHandlers($scope.payment);
+        $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint);
+        $scope.setPaymentHandlers($scope.payment);
+        $scope.payment.build(FEE_TO_MINERS);
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
-      Alerts.displayError(msgText, false, $scope.alerts);
+      if (msgText.indexOf('Transaction Already Exists') > -1) {
+        $uibModalInstance.close();
+      } else {
+        Alerts.displayError(msgText, false, $scope.alerts);
+      }
     };
 
     const transactionSucceeded = (tx) => {
-      $scope.$root.scheduleRefresh();
-      $scope.sending = false;
       $uibModalInstance.close('');
-      Wallet.beep();
+      $timeout(() => {
+        $scope.$root.scheduleRefresh();
+        $scope.sending = false;
+        Wallet.beep();
 
-      if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
-        $scope.sendInputMetrics($scope.inputMetric);
-      }
+        if ($scope.inputMetricTypes.indexOf($scope.inputMetric) > -1) {
+          $scope.sendInputMetrics($scope.inputMetric);
+        }
 
-      let note = $scope.transaction.note;
-      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+        let note = $scope.transaction.note;
+        if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-      if ($state.current.name !== 'wallet.common.transactions') {
-        $state.go('wallet.common.transactions');
-      }
+        if ($state.current.name !== 'wallet.common.transactions') {
+          $state.go('wallet.common.transactions');
+        }
 
-      let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
-      Alerts.displaySentBitcoin(message);
-      $scope.$safeApply();
+        let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
+        Alerts.displaySentBitcoin(message);
+
+        if ($scope.AB_TEST_FEE) {
+          Wallet.api.pushTxStats(Wallet.my.wallet.guid, $scope.advanced);
+        }
+      });
     };
 
     const signAndPublish = (passphrase) => {
@@ -187,7 +224,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.sendInputMetrics = (metric) => {
-    let root = $rootScope.rootURL ? $rootScope.rootURL : '/';
+    let root = $scope.rootURL;
     $http.get(`${root}event?name=wallet_web_tx_from_${metric}`);
   };
 
@@ -270,7 +307,8 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.setPrivateKey = (priv) => {
-    $scope.sendForm.priv.$setTouched();
+    let field = $scope.sendForm.priv;
+    priv ? field.$setTouched() : field.$setUntouched();
     $scope.transaction.priv = priv;
   };
 
@@ -282,6 +320,7 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     let fee = $scope.advanced ? tx.fee : undefined;
     if (origin === lastOrigin) return;
     lastOrigin = origin;
+    $scope.setPrivateKey();
     $scope.payment.from(origin, fee);
   };
 
@@ -292,15 +331,16 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
     $scope.payment.to(destinations);
   };
 
-  $scope.setPaymentAmount = () => {
+  $scope.setPaymentAmount = (reset) => {
     let amounts = $scope.transaction.amounts;
     if (amounts.some(a => isNaN(a) || a <= 0)) return;
-    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
-    $scope.payment.amount($scope.transaction.amounts, fee);
+    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
+    let options = FEE_ENABLED && !$scope.advanced && !reset ? FEE_OPTIONS : null;
+    $scope.payment.amount($scope.transaction.amounts, fee, options);
   };
 
-  $scope.setPaymentFee = () => {
-    let fee = $scope.advanced ? $scope.transaction.fee : undefined;
+  $scope.setPaymentFee = (reset) => {
+    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
     if ($scope.advanced && fee === undefined) return;
     $scope.payment.fee(fee);
   };
@@ -311,7 +351,8 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
 
   $scope.advancedSend = () => {
     $scope.advanced = true;
-    $scope.setPaymentFee();
+    $scope.setPaymentAmount(true);
+    $scope.setPaymentFee(true);
   };
 
   $scope.regularSend = () => {
@@ -331,13 +372,18 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
       if (modalErrors.indexOf(errorMsg) === -1) Alerts.displayError(errorMsg, false, $scope.alerts);
       if (error === 'cancelled') $scope.advancedSend();
       $scope.backToForm();
-      $scope.$safeApply();
+      AngularHelper.$safeApply($scope);
     };
 
     $scope.checkPriv()
       .then($scope.checkFee)
       .then($scope.finalBuild)
-      .then(() => $scope.confirmationStep = true)
+      .then(() => {
+        $scope.confirmationStep = true;
+        if ($scope.AB_TEST_FEE) {
+          Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
+        }
+      })
       .catch(handleNextStepError)
       .finally(() => $scope.building = false);
   };
@@ -419,7 +465,8 @@ function SendCtrl ($scope, $rootScope, $log, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.finalBuild = () => $q((resolve, reject) => {
-    $scope.payment.build().then(p => {
+    $scope.payment.build(FEE_TO_MINERS).then(p => {
+      p.blockchainFee = 0; // reset fee for next build
       resolve(p.transaction);
       return p;
     }).catch(r => {

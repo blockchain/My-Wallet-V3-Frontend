@@ -3,14 +3,14 @@ angular
   .module('walletApp')
   .directive('transactionPending', transactionPending);
 
-function transactionPending ($rootScope, Wallet, $translate) {
+function transactionPending ($rootScope, $translate) {
   const directive = {
     restrict: 'E',
     replace: true,
     scope: {
       transaction: '='
     },
-    templateUrl: 'templates/transaction-pending.jade',
+    templateUrl: 'templates/transaction-pending.pug',
     link: link
   };
   return directive;

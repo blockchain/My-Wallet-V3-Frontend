@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .directive('hdAddress', hdAddress);
 
-function hdAddress ($rootScope, $sce, Wallet, Alerts) {
+function hdAddress ($rootScope, $sce, Alerts, Env) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -10,19 +10,22 @@ function hdAddress ($rootScope, $sce, Wallet, Alerts) {
       account: '=',
       address: '=hdAddress',
       searchText: '=',
-      remove: '&',
-      pastAddress: '='
+      onRemoveLabel: '=',
+      pastAddress: '=',
+      onChangeLabel: '='
     },
-    templateUrl: 'templates/hd-address.jade',
+    templateUrl: 'templates/hd-address.pug',
     link
   };
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
     scope.cancelEdit = () => scope.editing = false;
-    scope.removeLabel = () => scope.remove();
+    scope.removeLabel = () => scope.onRemoveLabel(scope.address);
 
-    scope.addressLink = (address) => $sce.trustAsResourceUrl(`${$rootScope.rootURL}address/${address}`);
+    Env.then(env => {
+      scope.addressLink = (address) => $sce.trustAsResourceUrl(`${env.rootURL}address/${address}`);
+    });
 
     scope.changeLabel = (label, successCallback, errorCallback) => {
       let success = () => {
@@ -32,9 +35,10 @@ function hdAddress ($rootScope, $sce, Wallet, Alerts) {
       let error = (error) => {
         if (error === 'NOT_ALPHANUMERIC') Alerts.displayError('INVALID_CHARACTERS_FOR_LABEL');
         else if (error === 'GAP') Alerts.displayError('GAP');
-        error();
+        errorCallback();
       };
-      Wallet.changeHDAddressLabel(scope.account.index, scope.address.index, label, success, error);
+
+      scope.onChangeLabel(scope.address, label).then(success).catch(error);
     };
   }
 }

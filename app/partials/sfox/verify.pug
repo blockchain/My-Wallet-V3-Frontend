@@ -1,0 +1,108 @@
+.flex-row.flex-column-tablet(ng-show="state.idType === 'ssn'")
+  .width-40
+    .width-80
+      h4.f-20.em-500.mvn.mb-10(translate="Verify Identity")
+      .mbl.hidden-xs
+        span.f-16(translate="As part of your registration, SFOX will need to collect some personal information to verify your identify. Strong verification procedures are required by federal law to reduce fraud and money laundering activities.")
+      .mbl
+        span.f-16(translate="This information will only be sent to SFOX and will not be directly linked to your Blockchain wallet.")
+      .mbl(ng-show="buySellDebug")
+        div.type-h4.mbs.underline
+          i.mrs.ti-search
+          span QA
+        ul.pll
+          li.type-lbl.mbm.pointer.blue(ng-click="SFOXAddressForm()") Autofill Address Form
+          li.mbm
+            ui-select(ng-model="state.addr2" name="doc" required)
+              ui-select-match(placeholder="Test Document Uploads") {{$select.selected}}
+              ui-select-choices(repeat="doc in SFOXDebugDocs") {{doc}}
+  .width-60
+    form.bc-form(name="verifyForm" ng-submit="verify()" novalidate autocomplete="off")
+      fieldset(ng-disabled="locked")
+        .row
+          .col-md-4.col-xs-12
+            .mb-20.pos-rel
+              label First Name
+              input(ng-model="state.first" name="first" required)
+              span.error(translate="Required field")
+          .col-md-4.col-xs-12
+            .mb-20
+              label Middle Name
+              input(ng-model="state.middle" name="middle")
+          .col-md-4.col-xs-12
+            .mb-20.pos-rel
+              label Last Name
+              input(ng-model="state.last" name="last" required)
+              span.error(translate="Required field")
+        .row.flex-align-end
+          .col-md-4.col-xs-12
+            .mb-20.pos-rel
+              label.hidden-xs Social Security Number
+              label.visible-xs SSN
+              input(ng-model="state.ssn" name="ssn" placeholder="___-___-____" format-input="xxx-xx-xxxx" required)
+              span.error(translate="Required field")
+          .col-md-4.col-xs-12
+            .mb-20.pos-rel
+              label Date of Birth
+              input(ng-model="state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow(state.dob)" required)
+              span.error(translate="Required field")
+        .row
+          .col-md-12
+            .mb-20.pos-rel
+              label Address Line 1
+              input(ng-model="state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+              span.error(translate="Required field")
+        .row
+          .col-md-12
+            .mb-20
+              label Address Line 2
+              input(ng-model="state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
+        .row
+          .col-md-4.col-xs-12
+            .mb-20.pos-rel
+              label City
+              input(ng-model="state.city" name="city" required)
+              span.error(translate="Required field")
+          .col-md-4.col-xs-6
+            .mb-20.pos-rel
+              label State
+              select(ng-model="state.state" name="state" ng-options="s as s['Name'] for s in states" tabindex="" required)
+              span.error(translate="Required field")
+          .col-md-4.col-xs-6
+            .mb-20.pos-rel
+              label Zipcode
+              input(ng-model="state.zipcode" name="zipcode" format-input="xxxxx" required)
+              span.error(translate="Required field")
+        .row
+          .col-md-12
+            button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
+.flex-row.flex-start.flex-column-tablet(ng-if="state.idType === 'id' || state.idType === 'address'")
+  .width-40
+    .width-80
+      .flex-row.flex-center.mb-10
+        h4.f-20.em-500.mvn(translate="{{state.idType + '_ID'}}.TITLE")
+        button.helper(ng-click="openHelper(state.idType + '-id-helper')" type="button" tabindex="-1")
+          span ?
+      .mbl
+        span.f-16(translate="{{state.idType + '_ID'}}.COPY")
+      ul.mbl.pln.pl-20.f-16
+        li.pb-5
+          span(translate="{{state.idType + '_ID'}}.OPTION1")
+        li.pb-5
+          span(translate="{{state.idType + '_ID'}}.OPTION2")
+        li.pb-5
+          span(translate="{{state.idType + '_ID'}}.OPTION3")
+        li.pb-5
+          span(translate="{{state.idType + '_ID'}}.OPTION4")
+      .mbl
+        span.f-16(translate="{{state.idType + '_ID'}}.COPY_2" ng-show="state.idType === 'id'")
+      .mbl(ng-show="buySellDebug")
+        div.type-h4.mbs.underline
+          i.mrs.ti-search
+          span QA
+        .flex-row.flex-center.lh1
+          input.mrs(type="checkbox" id="verify-doc" ng-model="state.verifyDoc")
+          label.em-400.type-lbl.mls(for="verify-doc") Check this box if you want this doc to be approved right away.
+
+  .width-60
+    bc-file-upload(file="state.file" id-type="state.idType" on-upload="prepUpload" locked="locked")

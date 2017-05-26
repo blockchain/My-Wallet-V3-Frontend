@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .directive('destinationInput', destinationInput);
 
-destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet', 'format'];
+function destinationInput ($rootScope, $timeout, Wallet, format, $httpBackend) {
+  // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+  $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
-function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
     restrict: 'E',
     require: '^ngModel',
@@ -15,7 +16,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       ignore: '=',
       setInputMetric: '&'
     },
-    templateUrl: 'templates/destination-input.jade',
+    templateUrl: 'templates/destination-input.pug',
     link: link
   };
   return directive;

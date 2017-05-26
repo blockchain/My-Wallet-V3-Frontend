@@ -1,0 +1,92 @@
+.quick-start.col-md-6.col-sm-12.col-xs-12.pln.prn
+  .pt-30.pb-30.border-desktop(ng-class="{'ph-15': !inMobileBuy}")
+    form(name="fiatForm" ng-submit="!status.busy && fiatForm.$valid && buy({quote: quote})" novalidate)
+      .flex-row.flex-between
+        .flex-center
+          label.em-500(translate="ENTER_AMOUNT:")
+          helper-button.mbs(ng-disabled="false" ng-show="limits.absoluteMax(transaction.currency.code) && limits.absoluteMax(transaction.currency.code)" content="MAX_MIN_HELPER" values="{max: limits.absoluteMax(transaction.currency.code), min: limits.absoluteMin(transaction.currency.code), code: transaction.currency.code}")
+        .flex-center(ng-show="exchangeRate.fiat")
+          span.type-sm.em-500 1 BTC = {{ exchangeRate.fiat }} {{transaction.currency.code}}
+          helper-button(content="EXCHANGE_RATE_HELPER")
+      fieldset(ng-disabled="tradingDisabled")
+        .flex-row.flex-between.flex-center.flex-column-tablet
+          section.input-group.width-45
+            input.form-control.brdrn(
+              type="number"
+              ng-model="transaction.fiat"
+              name="fiat"
+              tabindex="1"
+              focus-when="status.ready"
+              ng-change="updateLastInput('fiat'); transaction.fiat && getQuote();"
+              ng-model-options="{debounce: 100}"
+              placeholder="{{placeholder}}"
+              min="{{limits.absoluteMin(transaction.currency.code)}}"
+              max="{{limits.absoluteMax(transaction.currency.code)}}"
+              step="any"
+              prevent-event="mousewheel"
+              required)
+            div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+              button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true")
+                span {{ transaction.currency.code }}
+                span.caret
+              ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+                li(ng-repeat="currency in currencies"
+                   role="menuitem"
+                   ng-click="changeCurrency({currency: currency}); transaction.fiat && getQuote();"
+                   ng-class="{active: isCurrencySelected(currency)}")
+                  a(ng-click="$event.preventDefault()") {{ currency.code }}
+          i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
+          i.ti-arrows-vertical.mvs.type-h4.visible-sm.visible-xs
+          section.input-group.width-45
+            input.form-control.brdrn(
+              type="number"
+              ng-model="transaction.btc"
+              name="btc"
+              step="any"
+              prevent-event="mousewheel"
+              tabindex="1"
+              min="0.00000001"
+              ng-change="updateLastInput('btc'); transaction.btc && getQuote();"
+              ng-model-options="{debounce: 100}"
+              placeholder="{{placeholder}}"
+              required)
+            div.input-group-btn
+              button.btn.btn-default.brdrn
+                span.btc BTC
+        .mts.pos-rel(ng-hide="tradingDisabled")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH")
+        .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
+          span.pos-abs.type-sm
+            span.state-danger-text(translate="TRADING_IS_DISABLED")
+        .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'after_first_trade'")
+          span.pos-abs.type-sm
+            span.state-danger-text(translate="BUY_AMT_IS" translate-values="{code: transaction.currency.code, amount: 0}")
+            span &nbsp;
+            a(popup
+              popup-days="{{getDays()}}"
+              popup-name="coinify-verification"
+              translate="WHY")
+        .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'awaiting_first_trade_completion'")
+          span.pos-abs.type-sm(ng-show="isPendingSellTrade()")
+            span.state-danger-text(translate="SELL.WAIT_FOR_TRADE_COMPLETE")
+          span.pos-abs.type-sm(ng-hide="isPendingSellTrade() || isPendingTradeState('reviewing')")
+            a(ng-click="openPendingTrade()" translate="FINISH")
+            | &nbsp;
+            span(translate="OR")
+            | &nbsp;
+            a(ng-click="cancelTrade()" translate="CANCEL")
+            | &nbsp;
+            span(translate="PURCHASE_PENDING")
+            | &nbsp;
+            span {{ format(pendingTrade.sendAmount / 100, {code: pendingTrade.inCurrency}, true) }}
+            | .
+          span.pos-abs.type-sm(ng-show="isPendingTradeState('reviewing')")
+            span.blue.pointer(ng-click="openPendingTrade()" translate="PURCHASE_PENDING_CANT_CANCEL")
+      .flex-end.mtvl.pos-rel
+        span.coinify-logo.coinify-logo-left
+          span.mrs.type-sm(translate="POWERED_BY")
+          a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
+            img(src="img/coinify-logo.svg")
+            span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
+        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled")

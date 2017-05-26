@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TransactionsCtrl', TransactionsCtrl);
 
-function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
+function TransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -22,7 +22,7 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
 
-  let all = { label: $translate.instant('ALL'), index: '', type: 'Accounts' };
+  let all = { label: $translate.instant('ALL_ACCOUNTS'), index: '', type: 'Accounts' };
   $scope.accounts = smartAccount.getOptions();
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
@@ -55,12 +55,13 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
       : $scope.filterByAddress($scope.filterBy.account);
     if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
     $scope.transactions = newTxs;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
   };
 
   $scope.exportHistory = () => $uibModal.open({
-    templateUrl: 'partials/export-history.jade',
+    templateUrl: 'partials/export-history.pug',
     controller: 'ExportHistoryController',
+    controllerAs: 'vm',
     windowClass: 'bc-modal',
     resolve: {
       activeIndex: () => {
@@ -74,7 +75,11 @@ function TransactionsCtrl ($scope, $q, $translate, $uibModal, Wallet, MyWallet, 
   $scope.$on('$destroy', unsub);
 
   // Searching and filtering
-  $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  if ($scope.$root.size.sm || $scope.$root.size.xs) {
+    $scope.filterTypes = ['ALL_TRANSACTIONS', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  } else {
+    $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+  }
   $scope.setFilterType = (type) => $scope.filterBy.type = $scope.filterTypes[type];
   $scope.isFilterType = (type) => $scope.filterBy.type === $scope.filterTypes[type];
   $scope.setFilterType(0);

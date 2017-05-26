@@ -1,0 +1,70 @@
+.modal-header(data-preflight-tag="Transfer")
+  h3(translate="TRANSFER" ng-show="addresses.length === 1")
+  h3(translate="TRANSFER_ALL" ng-show="addresses.length > 1")
+
+uib-progressbar.modal-progress(
+  value="ncomplete" max="ntotal" ng-show="addresses.length > 1" animate="true")
+
+#transfer-all.modal-body.fade(ng-class="{expanded : expand}")
+  form.form-horizontal(role="form" name="transferForm" novalidate)
+
+    .form-group
+      span.type-lbl.col-sm-3.control-label.colon
+        span.security-red.mrs.ti-alert(
+          ng-show="combinedBalance > totalAmount + totalFees && !status.loading"
+          uib-tooltip="{{::'SWEEP_LOW_BALANCE_WARN'|translate}}"
+          tooltip-append-to-body="true"
+          tooltip-placement="left")
+        span(translate="FROM")
+      .col-sm-5(ng-show="addresses.length === 1")
+        p.form-control-static.type-lbl(translate="no") {{ addresses[0].address }}
+      .col-sm-7(ng-show="addresses.length > 1")
+        .flex-row.flex-between.flex-center.pointer(ng-click="expand=!expand")
+          span.form-control-static.type-lbl
+            span {{ addresses.length }}&nbsp;
+            span(translate="IMPORTED_ADDRESSES")
+          a(ng-class="'ti-angle-double-' + (expand ? 'up' : 'down')")
+        .flex-column.flex-align-end(ng-show="expand")
+          ul.address-container
+            li(ng-repeat="address in addresses track by $index" ng-class="{'security-red': isUnsweepable(address.address)}")
+              span(translate="no") {{ address.address }} ({{ address.balance | convert }})
+
+    .form-group
+      span.type-lbl.col-sm-3.control-label.colon(translate="TO")
+      .col-sm-7
+        ui-select(ng-model="$parent.selectedAccount")
+          ui-select-match
+            label-origin(origin="$select.selected")
+          ui-select-choices(repeat="account in accounts() | filter:{archived: false, label: $select.search}")
+            label-origin(origin='account' highlight="$select.search")
+
+    .form-group
+      span.type-lbl.col-sm-3.control-label.colon(translate="AMOUNT")
+      .col-sm-5
+        p.form-control-static.type-lbl
+          img(ng-show="status.loading" src="img/spinner.gif")
+          span(ng-hide="status.loading")
+            span.em-500 {{ totalAmount | convert }}
+            | &emsp;
+            span.em-300 ({{ totalAmount | convert:'secondary' }})
+
+    .form-group
+      span.type-lbl.col-sm-3.control-label.colon(translate="FEES")
+      .col-sm-5
+        p.form-control-static.type-lbl
+          img(ng-show="status.loading" src="img/spinner.gif")
+          span(ng-hide="status.loading")
+            span.em-500 {{ totalFees | convert }}
+            | &emsp;
+            span.em-300 ({{ totalFees | convert:'secondary' }})
+
+.modal-footer.pal.flex-end
+  button.button-muted.mrm(
+    translate="CANCEL"
+    ng-click="status.sweeping ? status.cancelled = true : $dismiss()")
+  button.btn.button-primary(
+    ladda-translate="TRANSFER"
+    ng-click="transfer()"
+    ui-ladda="status.sweeping"
+    ng-disabled="status.loading || totalAmount === 0"
+    data-style="expand-left")

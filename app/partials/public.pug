@@ -1,0 +1,8 @@
+.login-pg.overflow-scroll.flex-justify.flex-center(ng-class="{'display-block': isUIOverflow}")
+  include ./bc-logo-header
+  .flex-center.flex-justify.flex-column
+    .flex.flex-justify
+      .alert-in-app
+        alerts
+    .login-box.mhs(ui-view="contents")
+  include ./bc-logo-footer

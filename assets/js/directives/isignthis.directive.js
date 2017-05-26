@@ -2,20 +2,18 @@ angular
   .module('walletApp')
   .directive('isignthis', isignthis);
 
-function isignthis ($sce, Options) {
+function isignthis ($sce, Env) {
   const directive = {
     restrict: 'E',
     scope: {
-      onResize: '&',
       onComplete: '=',
-      paymentInfo: '=',
       transactionId: '='
     },
     template: `
       <iframe
         ng-src='{{ url }}'
         sandbox='allow-same-origin allow-scripts allow-forms'
-        scrolling = 'no'
+        scrolling = 'yes'
         id='isx-iframe'
         ng-if='showFrame'
       ></iframe>
@@ -33,15 +31,9 @@ function isignthis ($sce, Options) {
 
     let iSignThisDomain;
 
-    let processOptions = (options) => {
-      iSignThisDomain = options.partners.coinify.iSignThisDomain;
-    };
-
-    if (Options.didFetch) {
-      processOptions(Options.options);
-    } else {
-      Options.get().then(processOptions);
-    }
+    Env.then(env => {
+      iSignThisDomain = env.partners.coinify.iSignThisDomain;
+    });
 
     scope.iSignThisFrame = (iSignThisID) => {
       // TODO: use elem or avoid usage alltogether:
@@ -155,34 +147,27 @@ function isignthis ($sce, Options) {
       // Inline Javascript from demo:
       var widget = {
         transaction_id: iSignThisID,
-        container_id: 'isx-iframe',
-        minimum_height: 400
+        container_id: 'isx-iframe'
       };
 
       var setState = (state) => {
+        console.log('setState', state);
         switch (state) {
-          case 'SUCCESS.MANUAL_ACCEPTED':
-          case 'SUCCESS.COMPLETE':
+          case 'SUCCESS':
             scope.onComplete('processing');
             break;
-          case 'CANCELLED.CANCELLED':
+          case 'CANCELLED':
             scope.onComplete('cancelled');
             break;
-          case 'EXPIRED.EXPIRED':
+          case 'EXPIRED':
             scope.onComplete('expired');
             break;
-          case 'DECLINED.CARD_ISSUER_COUNTRY':
-          case 'DECLINED.SPLIT_TOKEN_DENIED':
-          case 'DECLINED.TOO_MANY_ATTEMPTS':
-          case 'DECLINED.OTP_TOKEN_DENIED':
-          case 'DECLINED.UNKNOWN_ERROR':
-          case 'FAILED.UNEXPECTED_ERROR':
-          case 'REJECTED.UPSTREAM_REJECTED':
+          case 'DECLINED':
+          case 'FAILED':
+          case 'REJECTED':
             scope.onComplete('rejected');
             break;
-          case 'PENDING.PROCESSING_DOCUMENT':
-          case 'PROCESSING_DOCUMENT.PENDING':
-          case 'PENDING.MANUAL_REVIEW':
+          case 'PENDING':
             scope.onComplete('reviewing');
             break;
         }
@@ -195,7 +180,7 @@ function isignthis ($sce, Options) {
         .done(function (e) {
           console.log('completed. e=', JSON.stringify(e));
 
-          setState(e.compound_state);
+          setState(e.state);
         })
         .fail(function (e) {
           console.log('error. e=' + JSON.stringify(e));
@@ -205,11 +190,6 @@ function isignthis ($sce, Options) {
         })
         .route(function (e) {
           console.log('route. e=' + JSON.stringify(e));
-
-          scope.paymentInfo = e.route.match('/otp|/verify-pin|/kyc');
-          scope.onResize({step: e.route.match(/\/(.*)\//)[1]});
-
-          setState(e.compound_state);
         })
         .publish();
     };

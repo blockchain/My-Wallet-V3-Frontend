@@ -1,0 +1,229 @@
+.modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
+  .flex-center
+    h3
+      i.mr-10.icon-send
+      span(ng-show="!confirmationStep && !advanced", translate="SEND_BITCOIN")
+      span(ng-show="advanced && !confirmationStep", translate="ADVANCED_SEND")
+      span(ng-show="confirmationStep", translate="CONFIRM")
+  h5(ng-show="!confirmationStep && !advanced", translate="SEND_STEP_1")
+  h5(ng-show="confirmationStep", translate="SEND_STEP_2")
+  h5(ng-show="advanced && !confirmationStep", translate="SEND_STEP_1_ADVANCED")
+  p.step
+    span(translate="STEP")
+    | &nbsp;
+    span {{ confirmationStep ? 2 : 1 }}
+    | &nbsp;
+    span(translate="OF_2")
+#send.modal-body.fade(ng-class="{ 'advanced-container': advanced && !confirmationStep, 'confirmation': confirmationStep, 'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1 }")
+  .alert-in-app
+    alerts(context="alerts")
+  div(ng-hide="confirmationStep" ng-class="{ 'advanced': advanced }")
+    form.pos-rel.ph-form(role="form",name="sendForm" autocomplete="off" novalidate)
+      //- From
+      .form-group.row.flex-justify(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
+        label.ptm
+          span(translate="FROM")
+          |:
+        .flex-1(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (sendForm.priv.$invalid && sendForm.priv.$touched) }")
+          p.form-control-static(ng-hide="originsLoaded")
+            img(src="img/spinner.gif")
+          ui-select.send-from-dropdown(
+            ng-model="transaction.from"
+            name="from"
+            ng-show="originsLoaded"
+            ng-change="checkForSameDestination(); setPaymentFrom()"
+            tagging
+            required)
+            ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+              label-origin(origin="$select.selected" ng-class="{'state-danger-text': $select.selected.balance === 0}")
+            ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
+              span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
+                label-origin(origin="::origin" highlight="$select.search")
+
+          //- Private Key for Watch Only
+          .input-group.pbm(ng-show="transaction.from.isWatchOnly")
+            input.form-control(
+              name="priv"
+              placeholder="{{ 'ENTER_PRIV' | translate }}..."
+              ng-model="transaction.priv"
+              ng-required="transaction.from.isWatchOnly"
+              is-valid="!transaction.from.isWatchOnly || isValidPrivateKey(transaction.priv)")
+            .input-group-btn
+              qr-scan.form-control(on-scan="setPrivateKey")
+          span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN")
+          span.help-block.inprv(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
+
+      //- Advanced Send
+      .form-group.flex-justify.bc-modal-fade.mvl.advanced-recipient.row
+        //- To
+        label.ptm
+          span(translate="TO")
+          |:
+        div(ng-class="{rel: advanced, mbl: advanced}")
+          .flex-column(ng-class="{'advanced-recipient-row': advanced}" ng-repeat="item in transaction.destinations track by $index")
+            p.form-control-static(ng-hide="originsLoaded")
+              img(src="img/spinner.gif")
+            div(ng-show="originsLoaded" ng-class="{'has-error': sendForm['destinations' + $index].$invalid && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''}")
+              destination-input(
+                name="{{ 'destinations' + $index }}"
+                ng-model="transaction.destinations[$index]"
+                ng-model-options="{ updateOn: 'blur' }"
+                ng-change="checkForSameDestination()"
+                ng-paste="handlePaste($event, $index)"
+                on-payment-request="applyPaymentRequest(request, $index)"
+                set-input-metric="$parent.inputMetric = metric"
+                ignore="transaction.from"
+                required)
+            .has-error
+              span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm['destinations' + $index].$error.isValidAddress && sendForm['destinations' + $index].$touched && transaction.destinations[$index].address !== ''")
+              span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm['destinations' + $index].$error.isNotEqual")
+            //- Amount
+            div.flex-center.recipient-currency.mtl(ng-class="{'has-error': hasAmountError($index)}")
+              .mrl.flex-1
+                .flex-center.border-bottom
+                  span.mrm {{ btcCurrency.code }}:
+                  input.form-control.no-border(
+                    type="number"
+                    ng-model="transaction.amounts[$index]"
+                    name="{{'amounts' + $index}}"
+                    tabindex="1"
+                    transform-currency="btcCurrency"
+                    placeholder="0"
+                    min="1"
+                    max="2100000000000000"
+                    ng-change="setPaymentAmount()"
+                    required
+                  )
+              i.ti-arrows-horizontal.h4.border-grey.prm
+              .flex-1
+                .flex-center.border-bottom
+                  span.mrm {{ fiatCurrency.code }}:
+                  input.form-control.no-border(
+                    type="number"
+                    ng-model="transaction.amounts[$index]"
+                    name="{{'amountsFiat' + $index}}"
+                    tabindex="1"
+                    transform-currency="fiatCurrency"
+                    placeholder="0"
+                    min="1"
+                    max="2100000000000000"
+                    ng-change="setPaymentAmount()"
+                    required
+                  )
+            a.mlm.button-danger.type-sm.button-sm.remove(ng-click="removeDestination($index)" ng-hide="$first && $last")
+              i.ti-close.type-xs
+          .has-error.mbm
+            span.help-block(
+              ng-click="useAll()"
+              ng-class="{'pointer': transaction.destinations.length === 1}"
+              ng-show="transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
+              span.type-sm(translate="USE_TOTAL")
+              | :&nbsp;
+              span.type-sm {{ transaction.maxAvailable | convert:'btc' }}
+            span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
+              span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
+          a.flex-center.flex-justify.add(ng-click="addDestination()" ng-show="advanced")
+            i.ti-plus.white
+      .flex-row.flex-justify.form-group.note.mvl.row
+        label.mbn
+          span(translate="DESCRIPTION:")
+          helper-button(content="SEND_BITOIN_STEP2B")
+        .flex-1
+          textarea.pas(rows="4" ng-model="transaction.note" name="note" maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
+      //- Fee
+      .flex-row.flex-center.flex-justify.form-group.row.bc-modal-fade.mtl.fee(ng-class="{'has-error': transaction.blockIdx > 6 || (sendForm.fee.$invalid && sendForm.fee.$dirty)}" ng-show="advanced")
+        label.mbn
+          span(translate="TX_FEE")
+          |:
+          helper-button(content="TX_FEE_HELP")
+        .miners-fee-selection
+          .fee-custom
+            .flex-1
+              .flex-center.border-bottom
+                span.mrm {{ btcCurrency.code }}:
+                input.form-control.no-border(
+                  type="number"
+                  name="fee"
+                  tabindex="1"
+                  ng-model="transaction.fee"
+                  min="546"
+                  step="any"
+                  ng-change="setPaymentFee()"
+                  required
+                  transform-currency="settings.btcCurrency"
+                  placeholder="Enter your fee here")
+      span.type-sm.help-block.state-danger-text(translate="ENTER_VALID_AMOUNT" ng-show="sendForm.fee.$invalid && sendForm.fee.$dirty && advanced")
+      span.type-sm.help-block.blue(ng-show="!sendForm.$invalid && amountsAreValid() && advanced")
+        span(ng-show="transaction.blockIdx <= 6 && transaction.blockIdx >= 1")
+          span(translate="ESTIMATED_TX_TIME" translate-values="{ confirmationTime: transaction.blockIdx*10, blockQueue: transaction.blockIdx }")
+          | &nbsp;
+          ng-pluralize(count="transaction.blockIdx"
+                       ng-init="block='BLOCK'; blocks='BLOCKS'"
+                       when="{'1': '{{block | translate}}', 'other': '{{blocks | translate}}' }")
+          span ).
+        span.has-error(ng-show="transaction.blockIdx > 6" translate="SMALL_FEE_WARNING")
+  //- Step 2 (confirmation)
+  div.overview(ng-show="confirmationStep")
+    .flex-column
+      .flex-row
+        span.mbl(ng-show="transaction.note.length")
+          span.type-h5.ti-notepad.mrs
+          span.type-lbl {{ transaction.note }}
+      .flex-column
+        .flex-column
+          span.type-lbl.mbs.underline(translate="TO")
+          .mls.mbs.flex-row.flex-center.center(ng-repeat="address in getToLabels() track by $index")
+            span.account.mvn.width-50-mobile.width-60.em-400(translate="no") {{ address.label || address.address }}
+            .width-50.width-50-mobile.flex-between
+              span(ng-class="{success: address.type !== 'External'}")
+                span(ng-class="{fade: address.type === 'External'}") +&nbsp;
+                span {{transaction.amounts[$index] | toBitCurrency:btcCurrency:false}}
+              span(ng-class="{success: address.type !== 'External'}")
+                span(ng-show="address.type !== 'External'") +&nbsp;
+                fiat.mrml(btc="transaction.amounts[$index]")
+          .mls.mbs.flex-row.flex-center.center.flex-between.pos-rel
+            span.mid-grey.account.width-50-mobile.width-60.f-12(translate="{{AB_TEST_FEE ? 'TX_FEE' : 'TX_FEE_REQUIRED'}}")
+            .width-50.width-50-mobile.flex-between
+              span.mid-grey.center
+                span.fade +&nbsp;
+                span {{ transaction.fee | toBitCurrency:btcCurrency:false}}
+              span.mid-grey.center
+                fiat.mrml(btc="transaction.fee")
+            helper-button(content="{{AB_TEST_FEE ? 'TX_FEE_CONFIRM_EXPLAIN' : 'DYK_TX_FEES'}}")
+        .mvm.flex-justify.flex-1.flex-center.split-rule
+        span.type-lbl.mbs.underline(translate="FROM")
+        .mls.flex-row.flex-center.center.flex-between
+          span.account.width-50-mobile.width-60.mvn.em-400.long-input(translate="no") {{ transaction.from.label || transaction.from.address }}
+          .width-50.width-50-mobile.flex-between
+            span.flex-start.security-red - {{getTransactionTotal(true) | toBitCurrency:btcCurrency:false}}
+            span.security-red -&nbsp;
+              fiat.mrml(btc="getTransactionTotal(true)")
+.modal-footer.flex-between.flex-center.pal
+  .flex-center
+    a.basic-grey(ng-hide="advanced || confirmationStep", ng-click="advancedSend()", translate="ADVANCED_SEND")
+    a.basic-grey(ng-show="advanced && !confirmationStep", ng-click="regularSend()", translate="REGULAR_SEND")
+  .flex-center.flex-end.send-actions
+    button.button-muted.mrm(
+      ng-click="close()" translate="CANCEL" ng-hide="confirmationStep")
+
+    button.button-muted.mrm(
+      ng-click="backToForm()" translate="BACK" ng-show="confirmationStep")
+
+    button.button-muted.bc-modal-fade.mrm(
+      ng-show="advanced && !confirmationStep" translate="RESET_FORM" ng-click="resetSendForm()")
+
+    button.button-primary(
+      ladda-translate="NEXT_STEP"
+      ui-ladda="building"
+      ng-click="goToConfirmation()"
+      tabindex="1"
+      ng-disabled="sendForm.$invalid || failedToLoadUnspent || !amountsAreValid()"
+      data-style="expand-left"
+      ng-hide="confirmationStep")
+
+    button.button-primary(
+      ladda-translate="SEND"
+      ui-ladda="sending"
+      ng-click="send()"
+      data-style="expand-left"
+      ng-show="confirmationStep")

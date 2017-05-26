@@ -5,24 +5,13 @@
       display: block;
       overflow: hidden;
       height: 1.428571429em;
-      > span:first-child {
-        float: left;
-        overflow: auto;
-        max-width: 135px;
-        margin-bottom: -30px;
-        padding-bottom: 30px;
-        display: inline-block;
-      }
     }
   }
 }
 
-#send, #receive, #sign-msg {
+#send, #sign-msg {
   .inprv {
     bottom: -12px;
-  }
-  .divider {
-    margin: 0px auto;
   }
   .open > .uib-dropdown-menu {
     overflow-y: auto;
@@ -213,7 +202,7 @@
         .helper {
           position: absolute;
           right: -15px;
-          top: 10px;
+          top: 2px;
         }
       }
     }
@@ -278,125 +267,16 @@
   }
 }
 
-// RECEIVE
-
 #receive {
-  @media (max-width: 767px) {
-    opacity: 1 !important;
-  }
-  @media (min-width: 769px) {
-    opacity: 1;
-    overflow: hidden;
-    @include bc-ng-animate('advanced', 'height', '225px', '375px');
-    &.sm {
-      @include bc-ng-animate('advanced', 'height', '205px', '325px');
-    }
-  }
-
   .ui-select-bootstrap > .ui-select-choices {
     max-height: 168px;
   }
-
-  .row {
-    @extend .flex-row;
-  }
-
-  .ti-arrow-down {
-    font-weight: bold;
-    font-size: 18px;
-    color: $blue;
-  }
-
-  .column {
-    @extend .flex-column;
-    h4 {
-      margin-top: 0px;
-    }
-  }
-
-  .amount .form-control {
-    min-width: 0;
-  }
-}
-
-.receive-code {
-  canvas {
-    display: block;
-  }
-}
-
-.split-rule {
-  width: 100%;
-  display: block;
-  text-align: center;
-  position: relative;
-  &:before {
-    content: '';
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    background-color: $border-grey;
-  }
-}
-
-.payment-url {
-  @extend .flex;
-  > div {
-    @media (min-width: 769px) {
-      min-width: 320px;
-      &.receive-address {
-        &.max-width {
-          max-width: 320px;
-        }
-      }
-    }
-  }
-  .or {
-    position: relative;
-    text-transform: uppercase;
-    &:before, &:after {
-      left: 50%;
-      width: 1px;
-      content: '';
-      height: 40%;
-      position: absolute;
-      background-color: $border-grey;
-    }
-    &:before {
-      top: 0;
-    }
-    &:after {
-      bottom: 0;
-    }
-  }
-  @media (max-width: 767px) {
-    display: block;
-    > div {
-      width: 100%;
-      &.receive-address {
-        min-width: initial !important;
-        max-width: initial !important;
-      }
-    }
-    .or {
-      width: 100%;
-      display: block;
-      text-align: center;
-      margin: 1.25em auto;
-      &:before, &:after {
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        left: initial;
-        right: initial;
-      }
-      &:before {
-        left: 0;
-      }
-      &:after {
-        right: 0;
+  // ff specific fix
+  @-moz-document url-prefix() {
+    .text-overflow-hidden {
+      max-width: 450px;
+      @media (max-width: 767px) {
+        max-width: 350px;
       }
     }
   }
@@ -404,6 +284,12 @@
 
 .popover {
   z-index: 1060;
+}
+
+.ui-select-container {
+  .divider {
+    margin: 0px auto;
+  }
 }
 
 #sign-msg {

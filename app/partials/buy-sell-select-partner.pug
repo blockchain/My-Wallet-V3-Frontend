@@ -1,0 +1,38 @@
+div
+  bc-tabs(tab="tabs.options[0]" tab-options="tabs.options" disabled="true")
+.buy-sell.mh-15
+  .flex-row.flex-column-tablet
+    .find-partner.width-50.mrl.flex-column
+      .pt-20.pb-20.pl-25.pr-25.phm.border-desktop
+        form.bc-form
+          .f-20.blue.lh1.center(translate="SIMPLE_SECURE_SEAMLESS")
+          .f-14.mt-10(translate="BUY_SIMPLE_STEPS")
+          .mt-20(ng-class="{'ui-select-border-red': !onWhitelist(country.Code)}")
+            span.f-14.em-500.colon(translate="SELECT_YOUR_COUNTRY")
+            ui-select.mtm.hidden-xs(ng-model="$parent.country" tagging)
+              ui-select-match(placeholder="Select country") {{$select.selected.Name}}
+              ui-select-choices(repeat="c in countries | filter:$select.search track by c.Name") {{c.Name}}
+            select.mtm.visible-xs(
+              ng-model="country"
+              ng-options="c.Name for c in countries track by c.Name")
+          .mt-10(ng-show="country.Code === 'US'" ng-class="{'ui-select-border-red': !onStateWhitelist(state.Code)}")
+            span.f-14.em-500.colon(translate="SELECT_YOUR_STATE")
+            ui-select.mtm.hidden-xs(ng-model="$parent.state" tagging)
+              ui-select-match(placeholder="Select state") {{$select.selected.Name}}
+              ui-select-choices(repeat="s in states | filter:$select.search track by s.Name") {{s.Name}}
+            select.mtm.visible-xs(
+              ng-model="state"
+              ng-options="s.Name for s in states track by s.Name")
+          .mt-15(ng-if="partner")
+            a(ng-href="{{partner.href}}" target="_blank" rel="noopener noreferrer")
+              img.partner-logo.mbm(ng-src="{{partner.logo}}")
+            p.f-14(translate="{{partner.subtext}}")
+            button.btn.button-primary.full-width.mt-15(translate="CONTINUE" ng-click="selectPartner(partner, country.Code)")
+        form.bc-form.mt-20(ng-show="blacklisted" ng-submit="signupForAccess()")
+          span.f-14.state-danger-text(ng-show="blacklisted && country.Code !== 'US'" translate="BUY_BTC_UNAVAIL_COUNTRY")
+          span.f-14.state-danger-text(ng-show="blacklisted && country.Code === 'US'" translate="BUY_BTC_UNAVAIL_STATE")
+          .mt-10
+            .group
+              .item
+                input(type="email" ng-model="email" required)
+            button.btn.button-primary.full-width.mt-20(translate="Notify Me" type="submit")

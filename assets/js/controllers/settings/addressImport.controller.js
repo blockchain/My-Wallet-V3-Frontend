@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AddressImportCtrl', AddressImportCtrl);
 
-function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout) {
+function AddressImportCtrl ($scope, AngularHelper, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = [];
@@ -24,7 +24,7 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
   $scope.goToTransfer = () => {
     $uibModalInstance.close();
     $uibModal.open({
-      templateUrl: 'partials/settings/transfer.jade',
+      templateUrl: 'partials/settings/transfer.pug',
       controller: 'TransferController',
       windowClass: 'bc-modal',
       resolve: { address: () => $scope.address }
@@ -39,39 +39,47 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
     $scope.importForm.privateKey.$setValidity('isValid', valid);
   };
 
+  $scope.importSuccess = (address) => {
+    $scope.status.busy = false;
+    $scope.address = address;
+    $scope.step = 2;
+    AngularHelper.$safeApply($scope);
+  };
+
+  $scope.importError = (err) => {
+    $scope.status.busy = false;
+    AngularHelper.$safeApply($scope);
+
+    switch (err instanceof Error ? err.message : err) {
+      case 'presentInWallet':
+        $scope.importForm.privateKey.$setValidity('present', false);
+        $scope.BIP38 = false;
+        break;
+      case 'wrongBipPass':
+        $scope.importForm.bipPassphrase.$setValidity('wrong', false);
+        break;
+      case 'importError':
+        $scope.importForm.privateKey.$setValidity('check', false);
+        $scope.step = 1;
+        $scope.BIP38 = false;
+        $scope.proceedWithBip38 = undefined;
+        break;
+      default: {
+        Alerts.displayError('UNKNOWN_ERROR');
+      }
+    }
+  };
+
+  $scope.importCancel = () => {
+    $scope.status.busy = false;
+    AngularHelper.$safeApply($scope);
+  };
+
   $scope.import = () => {
     $scope.status.busy = true;
-    $scope.$safeApply();
+    AngularHelper.$safeApply($scope);
     let addressOrPrivateKey = $scope.fields.addressOrPrivateKey.trim();
     let bip38passphrase = $scope.fields.bip38passphrase.trim();
-
-    const success = (address) => {
-      $scope.status.busy = false;
-      $scope.address = address;
-      $scope.step = 2;
-      $scope.$safeApply();
-    };
-
-    const error = (err) => {
-      $scope.status.busy = false;
-      $scope.$safeApply();
-
-      switch (err.message) {
-        case 'presentInWallet':
-          $scope.importForm.privateKey.$setValidity('present', false);
-          $scope.BIP38 = false;
-          break;
-        case 'wrongBipPass':
-          $scope.importForm.bipPassphrase.$setValidity('wrong', false);
-          break;
-        case 'importError':
-          $scope.importForm.privateKey.$setValidity('check', false);
-          $scope.step = 1;
-          $scope.BIP38 = false;
-          $scope.proceedWithBip38 = undefined;
-          break;
-      }
-    };
 
     const needsBipPassphrase = (proceed) => {
       $scope.status.busy = false;
@@ -79,13 +87,14 @@ function AddressImportCtrl ($scope, $uibModal, Wallet, Alerts, $uibModalInstance
       $timeout(() => { $scope.BIP38 = true; });
     };
 
-    const cancel = () => {
-      $scope.status.busy = false;
-      $scope.$safeApply();
-    };
-
-    const attemptImport = Wallet.addAddressOrPrivateKey.bind(null,
-      addressOrPrivateKey, needsBipPassphrase, success, error, cancel);
+    const attemptImport = Wallet.addAddressOrPrivateKey.bind(
+      null,
+      addressOrPrivateKey,
+      needsBipPassphrase,
+      $scope.importSuccess,
+      $scope.importError,
+      $scope.importCancel
+    );
 
     $timeout(() => {
       if (!$scope.BIP38) {

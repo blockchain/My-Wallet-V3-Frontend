@@ -1,0 +1,12 @@
+tr
+  td.shrink
+    span(translate="no" ng-bind-html="address.address | escapeHtml | highlight:searchText")
+  td.expand
+    span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit").prm
+    .form-group(ng-class="{'has-error': errors.label}", ng-show="status.edit")
+      .col-sm-12
+        bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" is-required editing)
+          span.help-block(ng-show="errors.label") {{::errors.label}}
+  td.shrink
+    a(ng-click="delete()")
+      i.ti-trash.prm

@@ -1,0 +1,45 @@
+bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
+  .sfox-logo
+    span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
+    a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
+      img.mbs(src="img/sfox-logo-trans.png")
+.buy-sell.overflow-scroll.flex-1
+  .flex-row.flex-column-tablet(ng-show="!showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
+    .width-50.border.mrl.pal.flex-column.flex-between.flex-center
+      span.type-h4.width-100 Just a few steps away!
+      .mvl.flex-column.flex-center.primary.type-h4
+        i.type-lrg(ng-class="stepDescription().i")
+        span(translate="{{stepDescription().text}}")
+      form.width-100(ng-submit="openSfoxSignup()")
+        button.btn.button-primary.full(type="submit" focus-when="!tabs.selectedTab" ng-disabled="modalOpen") Continue
+  .flex-column.pbvl(ng-show="showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
+    buy-checkout.width-50.border-desktop.pt-30.pb-30.ph-15.no-padding-mobile(
+      user-id="userId"
+      buy-limit="state.buyLimit"
+      buy-level="state.buyLevel"
+      buy-account="state.account"
+      collapse-summary="signupCompleted"
+      handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
+      buy-success="userId ? buySuccess(trade) : openSfoxSignup(quote)"
+      buy-error="buyError()")
+  .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
+    table.width-100(ng-show="state.trades.length")
+      tr.border.bg-grey
+        th.pvs.width-5-mobile.visible-xs
+        th.phml.pvs.width-30.width-40-mobile(translate="STATUS")
+        th.pvs.width-30(translate="DATE")
+        th.pvs.width-25.hidden-xs BTC
+        th.pvs.width-15(translate="TOTAL")
+        th.pvs.width-5-mobile.visible-xs
+      tr(
+        ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
+        trade="trade"
+        buy="inspectTrade"
+        usa="true")
+contact-support-footer(ng-hide="inMobileBuy")

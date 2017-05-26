@@ -2,6 +2,11 @@
   display: flex !important;
   justify-content: center;
   align-items: center;
+  @media(max-width: 768px) {
+    .modal-dialog {
+      width: 80vw;
+    }
+  }
   .modal-dialog {
     width: 40vw;
     margin-top: 0 !important;
@@ -57,7 +62,7 @@
   border-radius: 100%;
   animation: pulse-alert 3s linear infinite;
   &.green {
-    background: $received;
+    background: $jade;
     animation: pulse-success 3s linear infinite;
   }
 }

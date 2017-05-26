@@ -2,25 +2,31 @@ angular
   .module('walletApp')
   .directive('trade', trade);
 
-trade.$inject = ['$rootScope', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];
+trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];
 
-function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
+function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
   const directive = {
     restrict: 'A',
     replace: true,
     scope: {
+      tradingDisabledReason: '=',
+      tradingDisabled: '=',
       disabled: '=',
       trade: '=',
       buy: '=',
+      sell: '=',
       usa: '='
     },
-    templateUrl: 'templates/trade.jade',
+    templateUrl: 'templates/trade.pug',
     link: link
   };
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.buySellDebug = $rootScope.buySellDebug;
+    Env.then(env => {
+      scope.buySellDebug = env.buySellDebug;
+    });
+    scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
 
     scope.update = () => angular.extend(scope, {
       error: buySell.tradeStateIn(buySell.states.error)(scope.trade),
@@ -33,15 +39,21 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.status = {};
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
+    scope.dateFormat = scope.$root.size.xs ? 'MMM d' : scope.dateFormat;
 
     scope.cancel = () => {
+      if (!scope.canCancel) return;
       scope.disabled = true;
       buySell.cancelTrade(scope.trade).finally(() => scope.disabled = false);
     };
 
     scope.triggerBuy = () => {
+      scope.buy(null, scope.trade);
+    };
+
+    scope.triggerSell = () => {
       let t = scope.trade;
-      scope.buy(t);
+      scope.sell(t);
     };
 
     scope.updateBTCExpected = () => {
@@ -52,7 +64,11 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
         scope.btcExpected = quote;
       };
 
-      scope.trade.btcExpected().then(success);
+      const error = (e) => {
+        scope.status.gettingQuote = false;
+      };
+
+      scope.trade.btcExpected().then(success).catch(error);
     };
 
     scope.logDetails = (trade) => {
@@ -71,6 +87,7 @@ function trade ($rootScope, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.$watchGroup(['disabled', 'trade.state'], () => {
       scope.canCancel =
         !scope.disabled &&
+        !scope.isTradingDisabled &&
         scope.trade.state === 'awaiting_transfer_in' &&
         angular.isFunction(scope.trade.cancel);
     });

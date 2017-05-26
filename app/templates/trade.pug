@@ -1,0 +1,46 @@
+tr.border(ng-click="$root.size.xs && triggerBuy()")
+  td.width-5-mobile.right-align.visible-xs(ng-click="cancel(trade); $event.stopPropagation();")
+    i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
+    i.ti-trash.fade(ng-hide="canCancel")
+  td.type-lbl.paml
+    span.mrm(ng-if="buySellDebug" uib-dropdown)
+      i.ti-search.pointer.blue(uib-dropdown-toggle)
+      ul.dropdown-menu(uib-dropdown-menu)
+        li.pointer.pas(ng-click="logDetails(trade)") Log Trade Details
+        li.pointer.pas(ng-click="trade.fakeAchSuccess()" ng-show="pending") Fake ACH Success
+        li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
+    span.state.mrl.state-danger-text(ng-show="completed && error") {{ trade.state | translate }}
+    span.state.mrl.success(ng-show="completed && success && trade.bitcoinReceived") Purchased
+    span.state.mrl.success(ng-show="completed && trade.state === 'completed' && trade.medium === 'blockchain'" translate="SELL.SOLD")
+    span.state.italic.mrl(ng-show="completed && success && !trade.bitcoinReceived && trade.medium !== 'blockchain'") Pending
+    span.state.italic.mrl.capitalize(ng-show="pending") {{ trade.state | translate }}
+    span.hidden-xs
+      span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
+        ng-class="{disabled: isTradingDisabled}"
+        ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
+        ng-show="trade.state === 'awaiting_transfer_in' && trade.medium !== 'blockchain'") Finish payment
+      span.type-sm.blue.underline.pointer.text-nowrap(
+        ng-click="trade.medium === 'blockchain' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
+        ng-show="trade.state !== 'awaiting_transfer_in' || trade.medium === 'blockchain'") View details
+  td.type-lbl.pvml
+    span {{ trade.createdAt | date:dateFormat }}
+  td.type-lbl.pvml.hidden-xs
+    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
+      span.display-inline-block.left-align
+        //- quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
+      span(ng-if="buySellDebug")
+        span.display-inline-block
+          i.ti-search(ng-click="trade.expireQuote()") QA: Now
+        br
+    span.display-inline-block(ng-show="trade.medium === 'blockchain'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
+    span.display-inline-block(ng-hide="trade.medium === 'blockchain'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
+  td.type-lbl
+    span(ng-hide="status.gettingQuote")
+      span.em-600(ng-hide="trade.medium === 'blockchain'") {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
+      span.em-600(ng-show="trade.medium === 'blockchain'") {{ trade.outAmountExpected / 100 }} {{ trade.outCurrency }}
+      span.hidden-xs
+        i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel && trade.medium !== 'blockchain'" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
+        i.ti-trash.fade(ng-hide="canCancel")
+    img(ng-show="status.gettingQuote" src="img/spinner.gif")
+  td.type-lbl.width-5-mobile.visible-xs
+    i.ti-angle-right

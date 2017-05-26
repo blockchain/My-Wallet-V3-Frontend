@@ -1,0 +1,65 @@
+form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng-submit="state.editAmount ? commitValues() : buy();" novalidate)
+  .flex-column.mbl(ng-show="error || $parent.error")
+    p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
+    span.mvm(translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")
+  .flex-column.mbl(ng-hide="error || status.creatingSellTrade")
+    span.type-h5.em-500.flex-start.pts(translate="CONFIRM_YOUR_ORDER")
+    p.mvm
+      span(translate="{{isBank ? 'ORDER_CONFIRMATION_BANK_COPY' : 'ORDER_CONFIRMATION_COPY'}}" ng-if="!summaryForm.fiat.$error.max && !summaryForm.fiat.$error.min")
+      span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempTrade.fiatCurrency, max: limits[vm.medium].max[tempTrade.fiatCurrency], medium: vm.medium}")
+      span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempTrade.fiatCurrency, min: limits[vm.medium].min[tempTrade.fiatCurrency], medium: vm.medium}")
+    .flex-center.flex-between.flex-row-reverse
+      .mam
+        span.type-sm.blue.underline.pointer(ng-click="state.editAmount = true" ng-hide="state.editAmount" translate="EDIT_ORDER")
+        span.type-sm.blue.underline.pointer(ng-click="state.editAmount = false" ng-show="state.editAmount" translate="CANCEL")
+    .border.pam(ng-class="{'bg-grey': state.editAmount}")
+      .flex-row.flex-between.pam.border-bottom-light
+        span(translate="{{isBank ? 'BTC_APPROX_RATE' : 'BTC:'}}")
+        span.success(ng-class="{tilda: isBank}" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
+      .flex-row.flex-between.pam.pos-rel
+        span.colon(ng-hide="state.editAmount" translate="AMOUNT")
+        span(ng-hide="state.editAmount") {{ format(trade.fiatAmount, dollars, true) }}
+        span.type-sm.blue.underline.pointer(
+          ng-show="state.editAmount"
+          ng-class="{'o-3': summaryForm.fiat.$invalid || locked}"
+          ng-click="!locked && summaryForm.fiat.$valid && commitValues()"
+          translate="UPDATE")
+        div.input-group.width-50.flex-row.flex-center.amount-input(ng-if="state.editAmount")
+          div.flex-row.flex-center.width-100
+            input.form-control(
+              name="fiat"
+              type="number"
+              ng-model="tempTrade.fiatAmount"
+              tabindex="1"
+              focus-when="state.editAmount"
+              min="{{limits[vm.medium].min[tempTrade.fiatCurrency]}}"
+              max="{{limits[vm.medium].max[tempTrade.fiatCurrency]}}"
+              step="0.01"
+              required)
+            div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
+              button.btn.btn-default.dropdown-toggle(type="button" uib-dropdown-toggle aria-haspopup="true")
+                span {{ tempTrade.fiatCurrency }}
+                span.caret
+              ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
+                li(role="menuitem"
+                   ng-repeat="currency in currencies"
+                   ng-click="tempTrade.fiatCurrency = currency.code;")
+                  a {{ currency.code }}
+      //- Transaction Fees
+      .flex-row.flex-between.pam.border-bottom-light
+        span(translate="PAYMENT_FEE" )
+        span() {{ trade.fee | format }} {{ dollars.code }}
+      //- Transaction Totals
+      .flex-row.flex-between.pam
+        span.em-500(translate="TOTAL_COST:")
+        span {{ currencySymbol.symbol }}{{ trade.total }} {{ dollars.code }}
+    .flex-row.flex-start.mtl(ng-if="isBank")
+      div
+        input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
+      div
+        label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
+.modal-footer.flex-between.flex-row(ng-class="{'flex-end': inMobileBuy}")
+  button.button-muted(ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
+  div
+    button.button-muted.mrm(ng-click="vm.close(3)" translate="CANCEL_ORDER")
+    button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="CONFIRM")
