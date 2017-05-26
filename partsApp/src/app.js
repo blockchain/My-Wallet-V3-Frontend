@@ -2,7 +2,7 @@ import './app.scss';
 import 'walletCss/wallet.css';
 
 import angular from 'npm/angular';
-import uiRouter from 'npm/angular-ui-router';
+import uiRouter from 'npm/@uirouter/angularjs';
 
 import routing from './app.routes.js';
 import Home from 'components/home';

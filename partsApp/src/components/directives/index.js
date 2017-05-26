@@ -1,6 +1,6 @@
 // Packages
 import angular from 'npm/angular';
-import uiRouter from 'npm/angular-ui-router';
+import uiRouter from 'npm/@uirouter/angularjs';
 import ngResource from 'npm/angular-resource';
 // Internal resources
 import routes from './directives.routes.js';
