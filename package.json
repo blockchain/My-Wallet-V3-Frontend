@@ -93,7 +93,9 @@
     "build": "node_modules/grunt-cli/bin/grunt build",
 
     "build-parts": "webpack --config partsApp/webpack.config.dev.js",
-    "start-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors"
+    "start-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
+    "heroku-postbuild": "make build && npm run build-parts"
+
   },
   "engines": {
     "node": "7.5.x"
