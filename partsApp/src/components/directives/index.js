@@ -8,14 +8,12 @@ import Directives from './directives.component.js';
 // External resources
 import header from 'shared/header';
 import leftNavbar from 'shared/leftNavbar';
-import adverts from './adverts';
 
 const modules = [
   uiRouter,
   ngResource,
   header,
-  leftNavbar,
-  adverts
+  leftNavbar
 ];
 
 export default angular

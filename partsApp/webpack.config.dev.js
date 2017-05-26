@@ -80,11 +80,20 @@ module.exports = {
         })
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/,
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]'
+          }
+        }
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'img/[name].[ext]'
           }
         }
       },

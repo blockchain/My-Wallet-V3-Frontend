@@ -8,16 +8,19 @@ import routing from './app.routes.js';
 import Home from 'components/home';
 import Components from 'components/components';
 import Directives from 'components/directives';
-import Adverts from 'components/directives/adverts';
+
+import AddressBookEntry from 'components/directives/address-book-entry';
 import ActivityFeed from 'components/directives/activity-feed';
+import Adverts from 'components/directives/adverts';
 
 const modules = [
   uiRouter,
   Home,
   Components,
   Directives,
-  Adverts,
-  ActivityFeed
+  AddressBookEntry,
+  ActivityFeed,
+  Adverts
 ];
 
 angular

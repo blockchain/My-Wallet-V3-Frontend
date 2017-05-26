@@ -4,14 +4,16 @@ import jQuery from 'jquery';
 import Template from './leftNavbar.pug';
 
 class Controller {
-  constructor () {}
-
-  click (element) {
-    jQuery(element.currentTarget).closest('.left-navbar').toggleClass('closed');
+  constructor () {
+    this.closed = true;
   }
 
-  toggleCollapse (element) {
-    jQuery(element.currentTarget).closest('.left-navbar').addClass('closed');
+  click () {
+    this.closed = !this.closed;
+  }
+
+  toggleCollapse () {
+    this.closed = true;
   }
 }
 

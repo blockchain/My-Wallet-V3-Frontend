@@ -22,7 +22,6 @@ const modules = [
   'shared',
   'walletTranslations',
   'walletFilters',
-  'walletDirectives',
   'oc.lazyLoad',
   'LocalStorageModule',
   // Not needed for landing page, but loading it now for the config step below:
