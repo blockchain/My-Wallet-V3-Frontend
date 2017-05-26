@@ -10,12 +10,20 @@ describe('SignupCtrl', () => {
   
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        rootURL: 'https://blockchain.info/'
+      }));
+    });
+  });
+
   beforeEach(function () {
     angular.mock.inject(function ($injector, $rootScope, $controller, $compile, $templateCache) {
-      let Wallet = $injector.get('Wallet');
-
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.expectGET('https://blockchain.info/wallet/browser-info').respond({country_code: 'NL'});
+
+      let Wallet = $injector.get('Wallet');
 
       Wallet.my.browserCheck = () => true;
       Wallet.my.browserCheckFast = () => true;

@@ -34,6 +34,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
       scope.fiat = { currencySymbol: null, amount: null };
 
       let curr = scope.currency || scope.settings.currency || null;
+
       if (!curr || !curr.code) return;
 
       let conversion = scope.conversions[curr.code] || null;

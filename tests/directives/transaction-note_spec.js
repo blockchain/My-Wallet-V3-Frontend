@@ -12,7 +12,10 @@ describe('Transaction Note Directive', () => {
 
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function (_$compile_, _$rootScope_, Wallet) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, Wallet, $httpBackend) {
+
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;

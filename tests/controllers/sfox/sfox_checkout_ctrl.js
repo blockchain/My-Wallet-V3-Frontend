@@ -39,7 +39,10 @@ describe('SfoxCheckoutController', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$compile_, _$templateCache_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$compile_, _$templateCache_, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       $rootScope = _$rootScope_;
       $controller = _$controller_;
       $compile = _$compile_;

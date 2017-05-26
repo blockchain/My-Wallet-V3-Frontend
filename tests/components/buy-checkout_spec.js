@@ -50,7 +50,10 @@ describe('buy-checkout.component', () => {
 
   beforeEach(module('walletApp'));
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       $rootScope = _$rootScope_;
       $compile = _$compile_;
       $templateCache = _$templateCache_;

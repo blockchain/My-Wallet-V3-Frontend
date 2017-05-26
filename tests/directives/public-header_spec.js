@@ -7,11 +7,18 @@ describe('Public Header directive', () => {
   beforeEach(module('walletDirectives'));
   
   beforeEach(module('walletApp'));
-  // beforeEach module('walletApp')
+
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        rootURL: 'https://blockchain.info/'
+      }));
+    });
+  });
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {
     $compile = _$compile_;
-    return $rootScope = _$rootScope_;
+    $rootScope = _$rootScope_;
   })
   );
 
@@ -19,8 +26,10 @@ describe('Public Header directive', () => {
     element = ($compile)('<public-header></public-header>')($rootScope);
     $rootScope.$digest();
     isoScope = element.isolateScope();
-    return isoScope.$digest();
+    isoScope.$digest();
   });
 
-  it('should have access to the rootURL', () => expect(isoScope.rootURL).toBe('https://blockchain.info/'));
+  it('should have access to the rootURL', () => {
+    expect(isoScope.rootURL).toBe('https://blockchain.info/');
+  });
 });

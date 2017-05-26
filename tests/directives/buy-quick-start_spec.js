@@ -11,7 +11,10 @@ describe('buyQuickStart', () => {
   
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function ($compile, $rootScope, $injector, _$q_) {
+  beforeEach(inject(function ($compile, $rootScope, $injector, _$q_, $httpBackend) {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
     $q = _$q_;
     scope = $rootScope.$new();
     scope.transaction = {

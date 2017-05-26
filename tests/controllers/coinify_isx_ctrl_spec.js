@@ -2,7 +2,7 @@ describe('CoinifyISXController', () => {
   let scope;
   let $rootScope;
   let $controller;
-  
+
   let trade = {
     medium: 'bank',
     inCurrency: 'USD',
@@ -11,6 +11,13 @@ describe('CoinifyISXController', () => {
   };
 
   beforeEach(angular.mock.module('walletApp'));
+
+  beforeEach(() => {
+    angular.mock.inject(($httpBackend) => {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+    });
+  });
 
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$q_, _$timeout_) {
@@ -41,9 +48,9 @@ describe('CoinifyISXController', () => {
 
     it('should have a trade', () => expect(scope.vm.trade).toBeDefined())
   );
-  
+
   describe('.onComplete()', () =>
-    
+
     it('should handle an onComplete event', () => {
       spyOn(scope.vm, 'goTo');
       scope.onComplete('processing');

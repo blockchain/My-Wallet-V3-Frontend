@@ -11,15 +11,16 @@ describe('walletServices', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(function () {
-    angular.mock.inject(function ($injector, _$rootScope_, $q, localStorageService) {
+    angular.mock.inject(function ($injector, _$rootScope_, $q, localStorageService, $httpBackend) {
       $rootScope = _$rootScope_;
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
       Wallet = $injector.get('Wallet');
       MyBlockchainSettings = $injector.get('MyBlockchainSettings');
       MyBlockchainApi = $injector.get('MyBlockchainApi');
       Alerts = $injector.get('Alerts');
-      Options = $injector.get('Options');
 
-      Options.get = () => Promise.resolve({});
+      Env = Promise.resolve({});
 
       spyOn(localStorageService, 'get').and.callFake(function (name) {
         if (name === "session") {

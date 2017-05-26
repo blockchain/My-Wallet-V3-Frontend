@@ -9,9 +9,11 @@ describe('Watch Only Address Directive', () => {
   
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $httpBackend) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
   }));
 
   beforeEach(function () {

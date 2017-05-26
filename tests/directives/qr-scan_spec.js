@@ -1,17 +1,29 @@
 describe('qr-scan directive', function () {
   let isoScope;
+  let isValidAddress;
+  let isValidPrivateKey;
 
   beforeEach(module('walletDirectives'));
   
   beforeEach(module('walletApp'));
 
+  beforeEach(() => {
+    isValidAddress = true;
+
+    module(($provide) => {
+      $provide.value('Wallet', {
+        isValidAddress: () => isValidAddress,
+        isValidPrivateKey: () => isValidPrivateKey,
+        parsePaymentRequest: () => ({
+          address: 'hello'
+        })
+      });
+    });
+  });
+
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
     let $compile = _$compile_;
     let $rootScope = _$rootScope_;
-    let Wallet = $injector.get('Wallet');
-
-    Wallet.isValidAddress = () => true;
-    Wallet.isValidPrivateKey = () => true;
 
     $rootScope.onScan = jasmine.createSpy();
 
@@ -41,9 +53,9 @@ describe('qr-scan directive', function () {
     expect(isoScope.scanSuccess).toEqual(true);
   });
 
-  it('should not call onScan when there is a scan error', inject(function (Wallet) {
-    Wallet.isValidAddress = () => false;
-    Wallet.isValidPrivateKey = () => false;
+  it('should not call onScan when there is a scan error', inject(() => {
+    isValidAddress = false;
+    isValidPrivateKey = false;
     isoScope.onCameraResult('notbitcoin:asdfasdfasdf');
     expect(isoScope.onScan).not.toHaveBeenCalled();
     expect(isoScope.scanComplete).toEqual(true);

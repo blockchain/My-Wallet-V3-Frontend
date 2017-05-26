@@ -8,7 +8,9 @@ describe('TOR Directive', () => {
   
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, Wallet) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, Wallet, $httpBackend) {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     $compile = _$compile_;
     $rootScope = _$rootScope_;

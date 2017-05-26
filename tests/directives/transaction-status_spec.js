@@ -9,7 +9,9 @@ describe('Transaction Status Directive', () => {
   // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $httpBackend) {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     $compile = _$compile_;
     $rootScope = _$rootScope_;

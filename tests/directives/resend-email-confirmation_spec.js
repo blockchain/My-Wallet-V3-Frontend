@@ -8,23 +8,31 @@ describe('Resend Email Confirmation', () => {
   
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, Wallet) {
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.value('Wallet', {
+        resendEmailConfirmation: () => {}
+      });
+    });
+  });
+
+  beforeEach(inject(function (_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
   }));
 
-  beforeEach(function () {
+  beforeEach(() => {
     element = $compile('<resend-email-confirmation></resend-email-confirmation>')($rootScope);
     $rootScope.$digest();
     isoScope = element.isolateScope();
-    return isoScope.$digest();
+    isoScope.$digest();
   });
 
-  it('should have wallet user', inject(function (Wallet) {
+  it('should have wallet user', inject(Wallet => {
     expect(isoScope.user).toBe(Wallet.user);
   }));
 
-  it('should resend email confirmation', inject(function (Wallet) {
+  it('should resend email confirmation', inject(Wallet => {
     spyOn(Wallet, 'resendEmailConfirmation');
     isoScope.resendEmailConfirmation();
     expect(Wallet.resendEmailConfirmation).toHaveBeenCalled();

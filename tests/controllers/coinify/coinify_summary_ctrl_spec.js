@@ -10,10 +10,10 @@ describe('CoinifySummaryController', () => {
 
   let mediums = {
     'card': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts() { return $q.resolve(buySell.accounts); }
     },
     'bank': {
-      getAccounts() { return $q.resolve([]); }
+      getAccounts() { return $q.resolve(buySell.accounts); }
     }
   };
 
@@ -33,6 +33,13 @@ describe('CoinifySummaryController', () => {
   };
 
   beforeEach(angular.mock.module('walletApp'));
+
+  beforeEach(() => {
+    angular.mock.inject(($httpBackend) => {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+    });
+  });
 
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$q_, _$timeout_) {
@@ -127,6 +134,7 @@ describe('CoinifySummaryController', () => {
     it('should call buy', () => {
       spyOn(buySell.accounts[0], 'buy');
       scope.buy();
+      scope.$digest();
       return expect(buySell.accounts[0].buy).toHaveBeenCalled();
     });
 

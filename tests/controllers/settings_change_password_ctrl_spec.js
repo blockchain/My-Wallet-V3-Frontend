@@ -8,6 +8,16 @@ describe('ChangePasswordCtrl', () => {
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(inject(($httpBackend) => {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+  }));
+
+  beforeEach(inject(($httpBackend) => {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+  }));
+
   beforeEach(function () {
     angular.mock.inject(function ($injector, $rootScope, $controller, $compile, $templateCache) {
       Wallet = $injector.get('Wallet');

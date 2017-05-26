@@ -10,10 +10,13 @@ describe('Transaction Description Directive', () => {
   
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     Wallet = $injector.get('Wallet');
     let MyWallet = $injector.get('MyWallet');
