@@ -1,0 +1,25 @@
+{
+  "name": "Blockchain-Web-Wallet-Parts",
+  "scripts": {},
+  "env": {
+    "API_DOMAIN": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "ROOT_URL": {
+      "required": true
+    },
+    "WEB_SOCKET_URL": {
+      "required": true
+    }
+  },
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
