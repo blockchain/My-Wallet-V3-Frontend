@@ -166,7 +166,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.payment = Wallet.my.wallet.createPayment();
     $scope.payment.from(index).amount(tradeInSatoshi);
     $scope.payment.sideEffect(r => {
-      if (r.absoluteFeeBounds[0] === 0) {
+      if (r.finalFee === 0) {
         $scope.offerUseAll($scope.payment, r);
       } else {
         this.status = {};
@@ -183,8 +183,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     this.error['moreThanInWallet'] = true;
     this.status.busy = true;
     $scope.payment = Wallet.my.wallet.createPayment(payment);
-    $scope.maxSpendableAmount = paymentInfo.maxSpendableAmounts[0];
-    let maxSweepFee = paymentInfo.sweepFees[0];
+    $scope.maxSpendableAmount = paymentInfo.sweepAmount;
+    let maxSweepFee = paymentInfo.sweepFee;
     $scope.payment.amount($scope.maxSpendableAmount).fee(maxSweepFee);
   };
 

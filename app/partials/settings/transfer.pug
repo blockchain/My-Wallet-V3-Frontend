@@ -27,7 +27,8 @@ uib-progressbar.modal-progress(
         .flex-column.flex-align-end(ng-show="expand")
           ul.address-container
             li(ng-repeat="address in addresses track by $index" ng-class="{'security-red': isUnsweepable(address.address)}")
-              span(translate="no") {{ address.address }} ({{ address.balance | convert }})
+              span(translate="no") {{ address.address }}
+              span &nbsp;({{ address.balance | convert }})
 
     .form-group
       span.type-lbl.col-sm-3.control-label.colon(translate="TO")

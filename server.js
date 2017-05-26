@@ -60,6 +60,8 @@ app.use(function (req, res, next) {
         (webSocketURL || 'wss://ws.blockchain.info'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
+        'https://charts.prod.blockchain.info/fees',
+        'https://charts.dev.blockchain.info/fees',
         `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
