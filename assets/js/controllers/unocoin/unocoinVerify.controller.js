@@ -33,7 +33,7 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
     let idType = fields.idType;
 
     $q.resolve(Upload.base64DataUrl(fields.file))
-      .then((url) => profile.addPhoto(idType, url))
+      .then((url) => profile.addPhoto(idType, url.split(',')[1]))
       .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify())
       .then($scope.free);
   };
@@ -70,7 +70,7 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
       let profile = exchange.profile;
 
       $q.resolve(profile.verify())
-        .then(() => $scope.setState())
+        .then(() => $scope.vm.goTo('buy'))
         .catch(unocoin.displayError)
         .finally($scope.free);
     } catch (error) {
