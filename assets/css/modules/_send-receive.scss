@@ -120,19 +120,6 @@
         margin-left: 0;
       }
     }
-    &.fee {
-      button {
-        z-index: 15;
-        bottom: 5px;
-        right: -10px;
-        position: absolute;
-      }
-      & ~ .help-block {
-        bottom: -30px;
-        margin-left: 95px;
-        position: absolute;
-      }
-    }
   }
 
   .has-error {
@@ -143,89 +130,9 @@
     }
   }
 
-  &.advanced-container {
-    max-height: 460px; // avoid overflow issues
-    .add {
-      background-color: $border-grey;
-      border-radius: 100%;
-      position: absolute;
-      bottom: 20px;
-      right: -15px;
-      padding: 0px;
-      height: 30px;
-      width: 30px;
-    }
-    .advanced-recipient-row {
-      margin-bottom: 20px;
-      position: relative;
-      border: 1px solid #eee;
-      padding: 1em;
-      .ui-select-container {
-        min-width: 225px;
-        margin-right: 10px;
-      }
-      > .remove {
-        border-radius: 100%;
-        position: absolute;
-        padding: 1px 5px;
-        right: -10px;
-        top: -10px;
-        z-index: 2;
-      }
-      & + .has-error {
-        top: -20px;
-      }
-    }
-  }
-
-  &.confirmation {
-    @media (min-width: 769px) {
-      min-width: 520px;
-      padding-left: 25px;
-      padding-right: 25px;
-    }
-    .btcaddr {
-      font-size: 0.7em;
-    }
-    .overview {
-      .flex-row {
-        > span.account {
-          text-align: left;
-          @media (max-width: 767px) {
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          &.aaa {
-            color: $border-grey !important;
-          }
-        }
-        .helper {
-          position: absolute;
-          right: -15px;
-          top: 2px;
-        }
-      }
-    }
-  }
-
   @media (max-width: 767px) {
     &.fade {
       opacity: 1 !important;
-    }
-  }
-  @media (min-width: 769px) {
-    &.fade {
-      opacity: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
-      @include bc-ng-animate('advanced-container', 'height', '265px', '365px');
-    }
-    &.sm.fade {
-      @include bc-ng-animate('advanced-container', 'height', '235px', '345px');
-    }
-    &.confirmation.fade {
-      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
     }
   }
 }
@@ -255,14 +162,6 @@
       margin-bottom: 10px;
       margin-right: 0;
       border-right: none;
-    }
-  }
-}
-
-@media (max-width: 668px) {
-  .send-actions {
-    .button-lg {
-      font-size: 1em;
     }
   }
 }
