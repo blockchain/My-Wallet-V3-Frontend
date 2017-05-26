@@ -3,6 +3,8 @@ describe('bcAsyncInput Directive', function () {
   let scope;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   let compileElement = function (attrs) {
     if (attrs != null) { attrs = attrs.join(' '); }
 

@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('bcAsyncInput', bcAsyncInput);
 
 bcAsyncInput.$inject = ['$timeout', 'Wallet'];

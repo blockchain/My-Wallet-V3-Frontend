@@ -2,6 +2,8 @@ describe('Fiat Directive', () => {
   let scope;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   let currencies;

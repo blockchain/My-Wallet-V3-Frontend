@@ -4,6 +4,8 @@ describe('Public Header directive', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() => {

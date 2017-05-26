@@ -1,0 +1,16 @@
+section.adverts
+  h3 {{$ctrl.title}}
+  .container
+    .row
+        scenario-menu(scenario-links="$ctrl.scenarioLinks")
+    .row
+      .settings-category
+        h2(translate="ADDRESS_BOOK")
+        .row
+          .col-xs-12
+            table.responsive.width-100.account-container
+              tr
+                th(translate="ADDRESS")
+                th(translate="LABEL")
+                th
+              tr(address-book-entry,ng-repeat="address in addressBook()")

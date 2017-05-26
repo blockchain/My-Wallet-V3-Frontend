@@ -2,6 +2,8 @@ describe('Trade Directive', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() => {

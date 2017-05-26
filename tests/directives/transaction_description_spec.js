@@ -6,6 +6,8 @@ describe('Transaction Description Directive', () => {
   let Wallet;
   let html;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {

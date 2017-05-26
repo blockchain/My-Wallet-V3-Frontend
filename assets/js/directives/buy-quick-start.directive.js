@@ -1,4 +1,4 @@
-angular.module('walletApp')
+angular.module('walletDirectives')
   .directive('buyQuickStart', buyQuickStart);
 
 buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals'];

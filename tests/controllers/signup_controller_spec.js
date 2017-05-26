@@ -6,6 +6,8 @@ describe('SignupCtrl', () => {
   };
   let $httpBackend;
 
+  beforeEach(angular.mock.module('walletDirectives'));
+  
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() => {

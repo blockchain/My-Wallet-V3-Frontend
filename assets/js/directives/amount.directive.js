@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('amount', amount);
 
 amount.$inject = ['Wallet', 'currency'];

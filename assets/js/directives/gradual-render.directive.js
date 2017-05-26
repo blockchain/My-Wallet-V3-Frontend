@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('gradualRender', gradualRender);
 
 function gradualRender () {

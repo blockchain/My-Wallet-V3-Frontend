@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('destinationInput', destinationInput);
 
 function destinationInput ($rootScope, $timeout, Wallet, format, $httpBackend) {

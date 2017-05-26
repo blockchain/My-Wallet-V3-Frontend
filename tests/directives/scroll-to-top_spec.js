@@ -4,6 +4,8 @@ describe('Scroll To Top Directive', () => {
   let $scope;
   let element;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {

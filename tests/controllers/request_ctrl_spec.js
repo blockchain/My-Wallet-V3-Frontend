@@ -6,6 +6,8 @@ describe('RequestCtrl', () => {
     dismiss () {}
   };
 
+  beforeEach(angular.mock.module('walletDirectives'));
+
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() => {

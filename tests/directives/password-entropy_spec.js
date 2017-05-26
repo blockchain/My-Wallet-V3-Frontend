@@ -3,6 +3,8 @@ describe('passwordEntropy', () => {
   let isoScope;
   let MyWalletHelpers;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {

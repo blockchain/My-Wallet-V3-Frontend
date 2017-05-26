@@ -1,0 +1,4 @@
+.scenario-menu
+    a(ng-repeat="link in $ctrl.scenarioLinks" ui-sref="{{link.href}}" ui-sref-active="active") 
+      span.scenario-title {{link.title}}
+      span.scenario-description {{link.description}}

@@ -5,6 +5,8 @@ describe('Transaction Note Directive', () => {
   let isoScope;
   let Wallet;
 
+  beforeEach(module('walletDirectives'));
+  
   // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 

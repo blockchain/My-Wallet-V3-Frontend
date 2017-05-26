@@ -1,0 +1,44 @@
+
+.left-navbar {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  width: 200px;
+  background-color: $gray;
+  -webkit-transition-duration: 0.5s;
+  font-size: 14px;
+  z-index: 20;
+
+  & .arrow {
+    position: absolute;
+    right: -25px;
+    top: 0;
+    width: 25px;
+    height: 25px;
+    background-color: $gray-s;
+    cursor: pointer;
+  }
+
+  &.closed {
+    left: -200px;
+  }
+
+  & a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 15px;
+    width: 100%;
+    text-decoration: none;
+    color: $white;
+
+    &.active {
+      font-weight: bold;
+      color: $gold;
+    }
+
+    &:hover {
+        background-color: $blue;
+        color: white;
+    }
+  }
+}

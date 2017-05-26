@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('popup', popup);
 
 function popup (modals, $translate) {

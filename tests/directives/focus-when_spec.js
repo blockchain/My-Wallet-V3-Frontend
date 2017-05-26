@@ -4,6 +4,8 @@ describe('Focus when directive', () => {
   let element;
   let $scope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, _$window_) {
