@@ -49,6 +49,12 @@ API_DOMAIN=https://api.blockchain.info
 WALLET_HELPER_URL=http://localhost:8081
 ```
 
+To inspect individual directives, run:
+
+```sh
+npm run start-parts
+```
+
 ## Build
 
 Grunt watches and compiles the pug view templates and CSS. Keep it running:
