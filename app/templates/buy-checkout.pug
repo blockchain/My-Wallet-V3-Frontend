@@ -46,7 +46,7 @@ form.bc-form(
             span.mhm {{bitcoin.code}}
         .f-12.mts
           span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | Your remaining daily buy limit is ${{ format($ctrl.buyLimit, dollars, false) }}.
+            | Your remaining daily buy limit is {{ format($ctrl.buyLimit, dollars, false) }} {{ dollars.code }}.
             | &nbsp;
           span.primary.pointer(popup
                                popup-name="sfox-identity"
@@ -75,4 +75,3 @@ form.bc-form(
             span {{ format(fromSatoshi(state.total || 0, dollars), dollars, true) }}
     .group.mtl(ng-show="$ctrl.collapseSummary")
       button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") Buy Bitcoin
-    sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')

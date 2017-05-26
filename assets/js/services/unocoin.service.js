@@ -49,11 +49,8 @@ function unocoin ($q, Alerts, modals, Options, Env) {
     if (!profile) {
       return 'create';
     } else {
-      let hasAccount = accounts.length && accounts[0].status === 'active';
       if (!profile.complete) {
         return 'verify';
-      } else if (!hasAccount) {
-        return 'link';
       } else {
         return 'buy';
       }
@@ -67,7 +64,7 @@ function unocoin ($q, Alerts, modals, Options, Env) {
   }
 
   function fetchQuote (exchange, amount, baseCurr, quoteCurr) {
-    let quoteP = exchange.getBuyQuote(amount, baseCurr, quoteCurr);
+    let quoteP = exchange.getBuyQuote(-amount, baseCurr, quoteCurr);
     return $q.resolve(quoteP);
   }
 

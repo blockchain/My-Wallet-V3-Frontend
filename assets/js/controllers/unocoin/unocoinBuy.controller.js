@@ -2,23 +2,22 @@ angular
   .module('walletApp')
   .controller('UnocoinBuyController', UnocoinBuyController);
 
-function UnocoinBuyController ($scope, Wallet, Alerts, sfox, formatTrade, buyMobile) {
+function UnocoinBuyController ($scope, Wallet, Alerts, unocoin, formatTrade, buyMobile, currency) {
   let exchange = $scope.vm.exchange;
 
   $scope.user = Wallet.user;
   $scope.userId = exchange.user;
   $scope.summaryCollapsed = false;
   $scope.quote = $scope.vm.quote;
-  $scope.quoteHandler = (...args) => sfox.fetchQuote(exchange, ...args);
+  $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
+  $scope.quoteHandler = (...args) => unocoin.fetchQuote(exchange, ...args);
 
   $scope.state = {
-    buyLimit: exchange.profile.limits.buy,
-    buyLevel: exchange.profile.verificationStatus.level
+    buyLimit: 1000000 || exchange.profile.currentLimits.bank.inRemaining
   };
 
   $scope.setState = () => {
-    $scope.state.buyLimit = exchange.profile.limits.buy;
-    $scope.state.buyLevel = exchange.profile.verificationStatus.level;
+    $scope.state.buyLimit = 1000000 || exchange.profile.currentLimits.bank.inRemaining;
   };
 
   $scope.buySuccess = (trade) => {
@@ -30,8 +29,4 @@ function UnocoinBuyController ($scope, Wallet, Alerts, sfox, formatTrade, buyMob
   $scope.buyError = () => {
     Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
-
-  exchange.getBuyMethods()
-    .then(methods => methods.ach.getAccounts())
-    .then(accounts => { $scope.account = accounts[0]; });
 }

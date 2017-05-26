@@ -5,6 +5,8 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
 
+  $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
+
   $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
     return modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
@@ -51,10 +53,17 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {
+    sfox.watchTrade(trade);
     $scope.tabs.select('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
     buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
+    // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+    if ($scope.buySellDebug) {
+      console.info('Load Sift Science iframe');
+    }
+    $scope.tradeId = trade.id;
+    $scope.siftScienceEnabled = true;
   };
 
   $scope.buyError = () => {

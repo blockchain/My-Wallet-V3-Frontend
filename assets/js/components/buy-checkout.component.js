@@ -5,9 +5,11 @@ angular
     bindings: {
       quote: '<',
       userId: '<',
+      dollars: '<',
       buyLimit: '<',
       buyLevel: '<',
       buyAccount: '<',
+      conversion: '<',
       collapseSummary: '<',
       handleQuote: '&',
       buySuccess: '&',
@@ -22,7 +24,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
+  $scope.dollars = this.dollars;
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
@@ -46,7 +48,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   let quote = this.quote;
   if (quote) {
     state.baseCurr = quote.baseCurrency === 'BTC' ? $scope.bitcoin : $scope.dollars;
-    state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / 100 : null;
+    state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / this.conversion : null;
     state.btc = !state.baseFiat ? quote.baseAmount : null;
   }
 
@@ -56,7 +58,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * 100 | 0 : state.btc,
+    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * this.conversion | 0 : state.btc,
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });
@@ -76,7 +78,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
-      else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
+      else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / this.conversion;
     };
 
     this.handleQuote($scope.getQuoteArgs(state))
@@ -120,15 +122,8 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
     if (this.buyAccount) {
       sfox.buy(this.buyAccount, quote)
         .then(trade => {
-          // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-          if ($scope.buySellDebug) {
-            console.info('Load Sift Science iframe');
-          }
-          $scope.tradeId = trade.id;
-          sfox.watchTrade(trade);
           this.buySuccess({trade});
         })
-        .then(() => $scope.siftScienceEnabled = true)
         .catch(() => this.buyError())
         .finally($scope.resetFields).finally($scope.free);
     } else {
