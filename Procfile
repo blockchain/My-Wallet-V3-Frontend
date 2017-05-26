@@ -1,1 +1,1 @@
-web: npm run start-parts
+web: npm run heroku-start-parts

@@ -116,6 +116,7 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: outputRoot
+    contentBase: outputRoot,
+    disableHostCheck: true // Unsafe, but needed for Heroku
   }
 };

@@ -6,7 +6,7 @@
     "angular": "^1.6.4",
     "angular-resource": "^1.6.4",
     "angular-translate": "2.11.*",
-    "angular-ui-router": "^1.0.3",
+    "@uirouter/angularjs": "^1.0.3",
     "jquery": "^3.2.1"
   },
   "devDependencies": {
@@ -92,10 +92,10 @@
     "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
     "build": "node_modules/grunt-cli/bin/grunt build",
 
-    "build-parts": "webpack --config partsApp/webpack.config.dev.js",
-    "start-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
-    "heroku-postbuild": "make build && npm run build-parts"
-
+    "build-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack --config partsApp/webpack.config.dev.js",
+    "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
+    "heroku-postbuild": "make build ; webpack --config partsApp/webpack.config.dev.js",
+    "heroku-start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --progress --colors --port $PORT --host 0.0.0.0"
   },
   "engines": {
     "node": "7.5.x"
