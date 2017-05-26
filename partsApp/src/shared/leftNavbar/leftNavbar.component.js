@@ -1,5 +1,3 @@
-// Packages
-import jQuery from 'jquery';
 // Internal resources
 import Template from './leftNavbar.pug';
 

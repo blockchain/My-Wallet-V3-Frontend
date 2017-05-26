@@ -6,15 +6,14 @@ function Activity () {
 }
 
 function Wallet ($timeout) {
-
-  this.status =  {
+  this.status = {
     isLoggedIn: true,
     didLoadTransactions: false
-  }
+  };
 
   $timeout(() => {
     this.status.didLoadTransactions = true;
-  }, 1000)
+  }, 1000);
 
   return {
     status: this.status

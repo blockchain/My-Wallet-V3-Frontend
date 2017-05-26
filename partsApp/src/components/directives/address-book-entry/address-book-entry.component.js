@@ -6,7 +6,7 @@ class Controller {
     this.title = 'Activity Feed';
     this.scenarioLinks =
     [
-      { title: 'Scenario 1', description: 'This should display one address.', href: 'address-book-entry({scenarioId:1})' },
+      { title: 'Scenario 1', description: 'This should display one address.', href: 'address-book-entry({scenarioId:1})' }
     ];
   }
 }
