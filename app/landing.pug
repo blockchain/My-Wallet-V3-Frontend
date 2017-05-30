@@ -6,10 +6,10 @@
         h1.center.width-100(translate="MOST_POPULAR_WALLET")
       .flex-row.flex-around.width-100.flex-between-mobile.container.hidden-xs.stats
         .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="TRANSACTIONS_AMT")
+          span.type-med.em-400.white.lh1(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
           span.type-h5.white(translate="TRANSACTIONS")
         .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="WALLETS_AMT")
+          span.type-med.em-400.white.lh1(translate="WALLETS_AMT" translate-values="{count: walletCount}")
           span.type-h5.white(translate="WALLETS")
         .flex-column.center.width-30
           span.type-med.em-400.white.lh1(translate="COUNTRIES_SERVED_AMT")
