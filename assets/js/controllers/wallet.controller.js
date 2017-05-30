@@ -170,7 +170,10 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
-            windowClass: 'bc-modal rocket-modal initial'
+            windowClass: 'bc-modal rocket-modal initial',
+            controller ($scope, walletStats) {
+              $scope.walletCount = walletStats.walletCountMillions;
+            }
           });
         });
         Wallet.goal.firstLogin = true;
