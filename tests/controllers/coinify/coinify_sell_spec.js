@@ -86,8 +86,10 @@ describe('CoinifySellController', () => {
       }) ;
 
       payment = {
-        absoluteFeeBounds: [100,100,100,100,100,100],
-        sweepFees: [50,50,50,50,50,50]
+        fees: {
+          priority: 100
+        },
+        sweepFee: 50
       };
       return {
         buySell: {
