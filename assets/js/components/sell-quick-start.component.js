@@ -182,6 +182,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.offerUseAll = (payment, paymentInfo) => {
     this.error['moreThanInWallet'] = true;
     this.status.busy = true;
+    payment.updateFeePerKb(paymentInfo.fees.priority);
     $scope.payment = Wallet.my.wallet.createPayment(payment);
     $scope.maxSpendableAmount = paymentInfo.sweepAmount;
     let maxSweepFee = paymentInfo.sweepFee;
