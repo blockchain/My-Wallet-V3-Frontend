@@ -59,6 +59,7 @@ function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $s
 
     if (Wallet.settings.twoFactorMethod === 5) {
       $scope.status.resending = true;
+      // Safari Incognito returns nothing, but that's probably not an issue here:
       let sessionToken = localStorageService.get('session');
       $q.resolve(WalletNetwork.resendTwoFactorSms($scope.uid, sessionToken))
         .then(success, error).finally(() => $scope.status.resending = false);
