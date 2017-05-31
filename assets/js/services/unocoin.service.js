@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('unocoin', unocoin);
 
-function unocoin ($q, Alerts, modals, Options, Env) {
+function unocoin ($q, Alerts, modals, Env) {
   const watching = {};
 
   const service = {
@@ -20,12 +20,7 @@ function unocoin ($q, Alerts, modals, Options, Env) {
   return service;
 
   function init (unocoin) {
-    return Env.then((env) => {
-      return Options.get().then(options => {
-        if (unocoin.trades) service.watchTrades(unocoin.trades);
-        unocoin.monitorPayments();
-      });
-    });
+    if (unocoin.trades) service.watchTrades(unocoin.trades);
   }
 
   function interpretError (error) {
@@ -64,13 +59,15 @@ function unocoin ($q, Alerts, modals, Options, Env) {
   }
 
   function fetchQuote (exchange, amount, baseCurr, quoteCurr) {
-    let quoteP = exchange.getBuyQuote(-amount, baseCurr, quoteCurr);
+    let quoteP = exchange.getBuyQuote(amount, baseCurr, quoteCurr);
     return $q.resolve(quoteP);
   }
 
   function buy (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
-      .then(mediums => mediums.ach.buy(account));
+      .then(mediums => {
+        mediums.bank.buy();
+      });
   }
 
   function watchTrades (trades) {

@@ -65,8 +65,8 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon BTC Order
             span {{ format(fromSatoshi(state.btc || 0, bitcoin), bitcoin, true) }}
-          .border-bottom.mhm
-          .flex-between.flex-center.form-control.bg-grey.no-border
+          .border-bottom.mhm(ng-if="typeof($ctrl.buyAccount) === 'object'")
+          .flex-between.flex-center.form-control.bg-grey.no-border(ng-if="typeof($ctrl.buyAccount) === 'object'")
             span.colon Payment Method
             span.capitalize {{ $ctrl.buyAccount.accountType }} ({{ $ctrl.buyAccount.accountNumber }})
           .border-bottom.mhm

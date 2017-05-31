@@ -43,6 +43,10 @@
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_4HIEh5KIodM8UTP",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_51qOIk4EXHshNFX",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_78S6RzM5ipN66fb"]
+    },
+    "unocoin": {
+      "countries": ["IN"],
+      "showCheckoutFraction": 0
     }
   },
   "domains": {
