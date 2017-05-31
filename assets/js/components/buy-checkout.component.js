@@ -11,6 +11,7 @@ angular
       buyAccount: '<',
       conversion: '<',
       collapseSummary: '<',
+      handleBuy: '&',
       handleQuote: '&',
       buySuccess: '&',
       buyError: '&'
@@ -20,7 +21,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
+function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -58,7 +59,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * this.conversion | 0 : state.btc,
+    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * this.conversion | 0 : $scope.fromSatoshi(state.btc, $scope.bitcoin),
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });
@@ -75,8 +76,8 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       this.collapseSummary = true;
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       if (state.baseFiat) state.btc = quote.quoteAmount;
       else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / this.conversion;
     };
@@ -88,7 +89,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   });
 
   $scope.getInitialQuote = () => {
-    let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
+    let args = { amount: 1, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
     let quoteP = $q.resolve(this.handleQuote(args));
     quoteP.then(quote => { $scope.state.rate = quote.rate; });
   };
@@ -105,7 +106,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.enableBuy = () => {
     let obj = {
       'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
-      'Payment Method': this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')',
+      'Payment Method': typeof this.buyAccount === 'object' ? this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')' : null,
       'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
     };
 
@@ -120,7 +121,7 @@ function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, curren
     $scope.lock();
     let quote = $scope.quote;
     if (this.buyAccount) {
-      sfox.buy(this.buyAccount, quote)
+      this.handleBuy({account: this.buyAccount, quote: quote})
         .then(trade => {
           this.buySuccess({trade});
         })

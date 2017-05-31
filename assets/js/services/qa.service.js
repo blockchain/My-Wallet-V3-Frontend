@@ -11,6 +11,8 @@ function QA () {
   service.unocoinAddressForm = () => {
     let fields = {
       fullName: 'Satoshi' + unique + ' Nakamoto',
+      mobile: unique.slice(0, 10),
+      pancard: unique.slice(0, 10),
       street: 'Abc #1024 6th cross Bangalore',
       city: 'Bangalore',
       state: 'Karnataka',
@@ -22,8 +24,6 @@ function QA () {
 
   service.unocoinInfoForm = () => {
     let fields = {
-      mobile: unique.slice(0, 10),
-      pancard: unique.slice(0, 10),
       bankAccountNumber: unique.slice(0, 4),
       ifsc: 'VYSY0002270'
     };

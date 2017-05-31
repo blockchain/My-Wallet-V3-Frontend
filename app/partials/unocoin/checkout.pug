@@ -15,9 +15,12 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
   .flex-column.pbvl(ng-show="showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
     buy-checkout.width-50.border-desktop.pt-30.pb-30.ph-15.no-padding-mobile(
       user-id="userId"
+      dollars="rupees"
+      conversion="1"
       buy-limit="state.buyLimit"
-      buy-account="state.account"
+      buy-account="userId ? true : false"
       collapse-summary="signupCompleted"
+      handle-buy="buyHandler(account, quote)"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       buy-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)"
       buy-error="buyError()")

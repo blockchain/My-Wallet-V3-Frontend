@@ -10,6 +10,7 @@ function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade, buyMobile
   $scope.summaryCollapsed = false;
   $scope.quote = $scope.vm.quote;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
+  $scope.buyHandler = (...args) => sfox.buy(...args);
   $scope.quoteHandler = (...args) => sfox.fetchQuote(exchange, ...args);
 
   $scope.state = {

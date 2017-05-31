@@ -113,17 +113,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     controller: 'UnocoinSignupController',
     resolve: {
       exchange () { return exchange; },
-      quote () { return quote; },
-      options: () => Options.get(),
-      accounts: ($q) => {
-        return $q.resolve([]);
-        // return exchange.profile
-        //   ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
-        //   : $q.resolve([]);
-      }
+      quote () { return quote; }
     }
   }).result.then(() => {
-    $state.go('wallet.common.buy-sell.sfox', { selectedTab: 'ORDER_HISTORY' });
+    $state.go('wallet.common.buy-sell.unocoin', { selectedTab: 'ORDER_HISTORY' });
   }).catch(() => {
     let base = 'wallet.common.buy-sell';
     let goingToBuySellState = $state.current.name.indexOf(base) === 0;

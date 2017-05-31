@@ -1,6 +1,2 @@
-.modal-body.flex-center.flex-justify(data-preflight-tag="ConfirmTradeModal")
-  .width-100.pam
-    include ./trade-summary
-    .flex-1.flex-end.ptm
-      button.button-muted.mrm(ng-click="$dismiss()" translate="CANCEL")
-      button.btn.button-primary(ng-click="$close()" translate="CONFIRM")
+.width-100.pam(data-preflight-tag="ConfirmTradeModal")
+  include ./trade-summary

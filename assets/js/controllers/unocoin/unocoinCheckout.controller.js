@@ -2,8 +2,10 @@ angular
   .module('walletApp')
   .controller('UnocoinCheckoutController', UnocoinCheckoutController);
 
-function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, accounts, $rootScope, showCheckout, buyMobile) {
+function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, exchangeRate, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.unocoin;
+
+  $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
 
   $scope.openUnocoinSignup = (quote) => {
     $scope.modalOpen = true;
@@ -11,14 +13,13 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.state = {
-    account: accounts[0],
     trades: exchange.trades,
-    buyLimit: exchange.profile && exchange.profile.currentLimits.buy || 100
+    buyLimit: exchange.profile && exchange.profile.currentLimits.bank.inRemaining * -exchangeRate.quoteAmount
   };
 
   $scope.setState = () => {
     $scope.state.trades = exchange.trades;
-    $scope.state.buyLimit = exchange.profile && exchange.profile.currentLimits.buy;
+    $scope.state.buyLimit = exchange.profile && exchange.profile.currentLimits.bank.inRemaining * -exchangeRate.quoteAmount;
   };
 
   $scope.stepDescription = () => {
@@ -26,14 +27,14 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
       'link': { text: 'Link Payment', i: 'ti-credit-card bank bank-lrg' }
     };
-    let step = unocoin.determineStep(exchange, accounts);
+    let step = unocoin.determineStep(exchange);
     return stepDescriptions[step];
   };
 
   $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
 
-  $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
+  $scope.signupCompleted = exchange.profile.level > 1;
   $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
 
   $scope.inspectTrade = modals.openTradeSummary;
@@ -44,8 +45,8 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
-  $scope.account = accounts[0];
   $scope.trades = exchange.trades;
+  $scope.buyHandler = (...args) => unocoin.buy(...args);
   $scope.quoteHandler = unocoin.fetchQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {

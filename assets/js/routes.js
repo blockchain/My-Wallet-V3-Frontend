@@ -335,26 +335,26 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'UnocoinCheckoutController',
       params: { selectedTab: null },
       resolve: {
-        // Using Options.get is a hack to prevent route error while waiting for unocoin api key
-        _loadExchangeData ($q, MyWallet, unocoin, Options) {
+        _loadExchangeData ($q, MyWallet, unocoin) {
           let exchange = MyWallet.wallet.external.unocoin;
           return exchange.user && !exchange.profile
-            ? Options.get().then(() => unocoin.fetchExchangeData(exchange))
+            ? $q.resolve().then(() => unocoin.fetchExchangeData(exchange))
             : $q.resolve();
         },
-        accounts ($q, MyWallet, Options) {
-          // let exchange = MyWallet.wallet.external.unocoin;
+        accounts ($q, MyWallet) {
           return $q.resolve([]);
-          // return exchange.hasAccount
-          //   ? Options.get().then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
-          //   : $q.resolve([]);
         },
-        options (Options) { return Options.get(); },
-        showCheckout (options, MyWallet) {
-          let email = MyWallet.wallet.accountInfo.email;
-          let fraction = options.partners.unocoin.showCheckoutFraction;
+        exchangeRate ($q, MyWallet, unocoin) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return $q.resolve(unocoin.fetchQuote(exchange, 1, 'BTC', 'INR'));
+        },
+        showCheckout (Env, MyWallet) {
+          return Env.then(env => {
+            let email = MyWallet.wallet.accountInfo.email;
+            let fraction = env.partners.unocoin.showCheckoutFraction;
 
-          return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isEmailInvited(email, fraction);
+          });
         }
       },
       onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {

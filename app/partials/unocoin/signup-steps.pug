@@ -6,28 +6,28 @@
 
     .width-60.flex-row.flex-between-mobile.center(ng-class="inMobileBuy ? 'flex-column-mobile' : 'flex-baseline'")
       .width-25.flex-column.flex-center(ng-class="vm.onStep('create') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('create')")
-        i.f-36.ti-user
-        span.mt-10(translate="Create Account")
+        span.f-14 1
+        span.mt-5(translate="Phone & Email")
 
       .flex-justify.hidden-xs
         i.ti-arrow-right.f-16
 
       .width-25.flex-column.flex-center(ng-class="vm.onStep('verify') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('verify')")
-        i.f-36.ti-id-badge
-        span.mt-10(translate="Verify Identity")
+        span.f-14 2
+        span.mt-5(translate="Setup Profile")
 
       .flex-justify.hidden-xs
         i.ti-arrow-right.f-16
 
-      .width-25.flex-column.flex-center(ng-class="vm.onStep('link') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('link')")
-        i.f-36.ti-credit-card.bank
-        span.mt-10(translate="Link Payment")
+      .width-25.flex-column.flex-center(ng-class="vm.onStep('upload') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('link')")
+        span.f-14 3
+        span.mt-5(translate="Upload Documents")
 
       .flex-justify.hidden-xs
         i.ti-arrow-right.f-16
 
       .width-25.flex-column.flex-center(ng-class="vm.onStep('buy') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('buy')")
-        i.f-36.ti-shopping-cart.flip.mrs
-        span.mt-10(translate="Buy Bitcoin")
+        span.f-14 4
+        span.mt-5(translate="Buy Bitcoin")
   .close-modal
     i.ti-close.pointer(ng-click="vm.close()")

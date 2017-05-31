@@ -1045,7 +1045,7 @@
   },
   "TX_CONFIRM": {
     "TITLE": "Confirm Purchase",
-    "BODY": "You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete."
+    "BODY": "You are about to initiate a bank transfer."
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",

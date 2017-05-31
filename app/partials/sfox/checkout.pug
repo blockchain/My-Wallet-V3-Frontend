@@ -21,6 +21,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       buy-level="state.buyLevel"
       buy-account="state.account"
       collapse-summary="signupCompleted"
+      handle-buy="buyHandler(account, quote)"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       buy-success="userId ? buySuccess(trade) : openSfoxSignup(quote)"
       buy-error="buyError()")
