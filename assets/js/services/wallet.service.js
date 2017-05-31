@@ -752,7 +752,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let input = tx.processedInputs
       .filter(i => !i.change)[0] || tx.processedInputs[0];
     let outputs = tx.processedOutputs
-      .filter(o => !o.change && o.address !== input.address);
+      .filter(o => !o.change);
 
     let setLabel = (io) => (
       io.label = io.label || wallet.getAddressBookLabel(io.address) || io.address
