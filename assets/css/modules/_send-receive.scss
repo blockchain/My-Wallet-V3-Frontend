@@ -9,6 +9,19 @@
   }
 }
 
+#send,
+#receive,
+#sign-msg {
+  .dropdown-menu {
+    > li:first-child {
+      .dropdown-header {
+        // we need to remove this when we come up with what we want to call Accounts
+        display: none;
+      }
+    }
+  }
+}
+
 #send, #sign-msg {
   .inprv {
     bottom: -12px;
@@ -17,14 +30,6 @@
     overflow-y: auto;
     max-height: 160px;
     overflow-x: hidden;
-  }
-  .dropdown-menu {
-    > li:first-child {
-      .dropdown-header {
-        // we need to remove this when we come up with what we want to call Accounts
-        display: none;
-      }
-    }
   }
   .row {
     @extend .flex-row;

@@ -22,7 +22,7 @@ function TransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wal
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
 
-  let all = { label: $translate.instant('ALL_ACCOUNTS'), index: '', type: 'Accounts' };
+  let all = { label: $translate.instant('ALL_WALLETS'), index: '', type: 'Accounts' };
   $scope.accounts = smartAccount.getOptions();
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
