@@ -74,6 +74,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     const success = (quote) => {
       scope.status = {};
       scope.quote = quote;
+      scope.getMinLimits(quote);
       scope.exchangeRate.fiat = scope.getExchangeRate();
 
       if (quote.baseCurrency === 'BTC') {
@@ -97,7 +98,8 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     };
 
     scope.getMinLimits = (quote) => {
-      buySell.getMinLimits(quote).then(scope.limits = buySell.limits);
+      $q.resolve(buySell.getMinLimits(quote))
+        .then(scope.limits = buySell.limits);
     };
 
     scope.getInitialExchangeRate();
