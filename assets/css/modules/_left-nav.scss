@@ -160,13 +160,5 @@ li.action-bar{
 }
 
 @media (max-width: 480px) {
-  ul.aside  {
-    li.header, a.new-acct {
-      font-size: .75em;
-    }
-  }
   .wallet-footer { margin: 0; }
-  .terms-policy {
-    font-size: .75em;
-  }
 }
