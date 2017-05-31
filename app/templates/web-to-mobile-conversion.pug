@@ -1,0 +1,16 @@
+.dyk
+  .flex-between.flex-center.mbl
+    h5.mvn.type-h5.em-400(translate="DYK")
+  .widget.flex-row
+    .mrl.mbm
+      img(src="img/mobile.svg")
+    div
+      p.em-300.f-16(translate="GO_MOBILE")
+      span(translate="DOWNLOAD_OUR_APP")
+      .flex-row.mvl
+        div.mrl
+          button.button-primary-inverse(ng-click="$ctrl.openModal('sms')" translate="SEND_SMS_LINK")
+        div
+          button.button-primary-inverse(ng-click="$ctrl.openModal('email')" translate="SEND_EMAIL_LINK")
+    i.pointer.ti-close(ng-click="$ctrl.dismiss()")
+    //- span.pos-rel.pointer(ng-click="dismiss()")

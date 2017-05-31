@@ -1,0 +1,35 @@
+.modal-header(data-preflight-tag="MobileConversion")
+  .width-80.pl-25
+    h3(ng-show="medium === 'sms'" translate="LINK_MOBILE_PHONE")
+    h3(ng-show="medium === 'email'" translate="PAIR_YOUR_WALLET")
+.modal-body
+  .flex-justify.flex-center(ng-show="medium === 'email'")
+    div.f-14.width-90
+      span(translate="SENT_LINK_TO_EMAIL" translate-values="{email: user.email}")
+      | &nbsp;
+      a(translate="RESEND" ng-click="resendEmail()")
+  .flex-column.flex-center(ng-show="medium === 'sms'")
+    div.f-14.width-90.m0.pbl
+      span(ng-show="hasMobile || textSent" translate="SENT_LINK_TO_MOBILE")
+      span(ng-hide="hasMobile || textSent" translate="ADD_MOBILE_SEND_LINK")
+      | &nbsp;
+      a(ng-show="hasMobile || textSent" translate="RESEND" ng-click="resendText()")
+    form.bc-form.width-90.ptl(ng-hide="hasMobile || textSent" name="mobileForm" novalidate autocomplete="off")
+      label.colon(translate="ADD_PHONE_NUMBER")
+      bc-phone-number(
+        ng-model='mobilePhone' 
+        default-country='gb'
+        preferred-countries='us ca gb au'
+        name="mobile"
+        required
+      )
+  .flex-column.flex-center.mtl()
+    .flex-center.flex-column(ng-hide="pairingCode || (medium === 'sms' && !textSent)")
+      button.button-primary-inverse(translate="SHOW_QR_CODE" ng-click="makeQR()")
+      span.mvl.mid-grey(translate="HIDE_CODE")
+    .qr.ptl.mtl
+      span(ng-show="pairingCode")
+        qr(text="pairingCode" size="180" image="true")
+.modal-footer.pal.flex-end
+  button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss('cancelled') && done()")
+  button.btn.button-primary(ng-show="medium === 'sms' && !textSent" translate="SEND_LINK" ng-click="sendMobileLink()" ng-disabled="form.$invalid")

@@ -1394,5 +1394,18 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
+  "GO_MOBILE": "Go mobile with Blockchain",
+  "LINK_MOBILE_PHONE": "Link Mobile Phone",
+  "ADD_MOBILE_SEND_LINK": "Add your mobile phone number and we will send you a link for our mobile app.",
+  "SENT_LINK_TO_MOBILE": "We sent a link to your phone. Once you download the app, scan the QR code to sync your wallet. Didn't receive the link?",
+  "PAIR_YOUR_WALLET": "Pair Your Wallet",
+  "SENT_LINK_TO_EMAIL": "We sent a link to your email address <b>{{::email}}</b>. Once you download the app, scan the QR code to sync your wallet. Didn't receive the link?",
+  "SEND_LINK": "Send Link",
+  "SHOW_QR_CODE": "Show QR Code",
+  "HIDE_CODE": "Keep this code hidden until you're ready.",
+  "SEND_SMS_LINK": "Send SMS Link",
+  "SEND_EMAIL_LINK": "Send Email Link",
+  "DOWNLOAD_OUR_APP": "Download our mobile app on your Android or iOS device to use your wallet on the go.",
+  "ADD_PHONE_NUMBER": "Add Phone Number",
   "": ""
 }
