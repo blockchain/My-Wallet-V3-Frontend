@@ -234,7 +234,7 @@ describe('CoinifySellController', () => {
       return ctrl = undefined;
     });
 
-    it('should return expiration time of quote',function () {
+    xit('should return expiration time of quote',function () {
       let ctrl = getController(quote, trade);
       ctrl.timeToExpiration();
       return expect(ctrl.timeToExpiration()).toEqual(100000000 - ctrl.now());
