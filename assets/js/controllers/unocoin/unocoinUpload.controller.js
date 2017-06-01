@@ -33,7 +33,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
     let idType = fields.idType;
 
     $q.resolve(Upload.base64DataUrl(fields.file))
-      .then((url) => profile.addPhoto(idType, url.split(',')[1]))
+      .then((url) => profile.addPhoto(idType, url))
       .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify())
       .then($scope.free);
   };

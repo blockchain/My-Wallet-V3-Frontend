@@ -14,12 +14,12 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.state = {
     trades: exchange.trades,
-    buyLimit: exchange.profile && exchange.profile.currentLimits.bank.inRemaining * -exchangeRate.quoteAmount
+    buyLimit: exchange.profile && exchange.profile.currentLimits.bank.inRemaining * exchangeRate.quoteAmount
   };
 
   $scope.setState = () => {
     $scope.state.trades = exchange.trades;
-    $scope.state.buyLimit = exchange.profile && exchange.profile.currentLimits.bank.inRemaining * -exchangeRate.quoteAmount;
+    $scope.state.buyLimit = exchange.profile && exchange.profile.currentLimits.bank.inRemaining * exchangeRate.quoteAmount;
   };
 
   $scope.stepDescription = () => {
