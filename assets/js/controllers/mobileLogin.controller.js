@@ -2,38 +2,51 @@ angular
   .module('walletApp')
   .controller('MobileLoginController', MobileLoginController);
 
-function MobileLoginController ($scope, $state, Wallet, MyWallet, Alerts) {
-  $scope.scannerOn = true;
+function MobileLoginController ($scope, $state, $timeout, $q, Wallet, MyWallet, Alerts) {
+  const successColor = '#00A76F';
+  const errorColor = '#CA3A3C';
 
-  $scope.success = '#00A76F';
-  $scope.error = '#CA3A3C';
+  let state = $scope.state = {
+    scannerOn: true,
+    permissionDenied: false,
+    scanFailed: false,
+    scanComplete: false
+  };
+
+  $scope.getBoxColor = () => {
+    if (state.scanComplete) return successColor;
+    if (state.scanFailed || state.permissionDenied) return errorColor;
+    return '';
+  };
 
   $scope.onScanError = (error) => {
-    Alerts.displayError(error);
+    if (error && error.name === 'PermissionDeniedError') {
+      $timeout(() => { state.permissionDenied = true; });
+    }
+    state.scannerOn = false;
   };
 
   $scope.onScanResult = (result) => {
     let success = () => { $state.go('wallet.common.home'); };
     let error = (e) => { Alerts.displayError(e); };
 
-    MyWallet.parsePairingCode(result)
+    $q.resolve(MyWallet.parsePairingCode(result))
       .then((data) => {
-        $scope.scanComplete = true;
+        state.scanComplete = true;
         let { guid, password, sharedKey } = data;
         Wallet.login(guid, password, null, null, success, error, sharedKey);
       })
       .catch((error) => {
         console.log(error);
-        $scope.scanFailed = true;
-        Alerts.displayError('Error reading pairing code');
+        state.scanFailed = true;
       })
       .then(() => {
-        $scope.scannerOn = false;
+        state.scannerOn = false;
       });
   };
 
   $scope.retryScan = () => {
-    $scope.scannerOn = true;
-    $scope.scanFailed = false;
+    state.scannerOn = true;
+    state.scanFailed = false;
   };
 }

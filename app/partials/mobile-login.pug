@@ -7,17 +7,20 @@ header
     p.alt-font.f-16(translate="Follow these steps to log into your web wallet using your mobile device")
 .mobile-login.mv-60.flex-between
   .flex-1
-    .scanner-container.flex(box-corners="{{scanComplete ? success : scanFailed ? error : ''}}")
-      div(ng-hide="scanComplete || scanFailed")
+    .scanner-container.flex(box-corners="{{ getBoxColor() }}")
+      div(ng-show="state.scannerOn")
         bc-qr-reader.scanner(
           on-error="onScanError"
           on-result="onScanResult"
-          active="scannerOn"
-          camera-status="scannerOn")
-      .flex-column.flex-center.flex-justify.flex-1(ng-show="scanComplete")
+          active="state.scannerOn"
+          camera-status="state.scannerOn")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="state.permissionDenied")
+        span.f-18(translate="ERROR")
+        p.f-12.width-80.text-center(translate="CAMERA_PERMISSION_DENIED" ng-click="retryScan()")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="state.scanComplete")
         span.f-18(translate="SCAN_SUCCESS")
         p.f-12(translate="Logging you in now")
-      .flex-column.flex-center.flex-justify.flex-1(ng-show="scanFailed")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="state.scanFailed")
         span.f-18(translate="SCAN_FAILED")
         a.f-12(translate="Retry" ng-click="retryScan()")
   .flex-1
