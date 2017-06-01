@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('blocketLoading', blocketLoading);
 
 blocketLoading.$inject = ['$timeout', 'Wallet'];

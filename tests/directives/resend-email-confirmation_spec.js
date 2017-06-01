@@ -4,6 +4,8 @@ describe('Resend Email Confirmation', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() => {

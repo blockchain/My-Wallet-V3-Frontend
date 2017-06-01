@@ -9,6 +9,9 @@ describe('Imported Address Directive', () => {
     {archived: true, label: 'World'}
   ];
 
+  beforeEach(module('walletDirectives'));
+
+  // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 
   beforeEach(() => {

@@ -3,6 +3,8 @@ describe('qr-scan directive', function () {
   let isValidAddress;
   let isValidPrivateKey;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() => {

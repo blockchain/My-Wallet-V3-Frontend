@@ -2,6 +2,8 @@ describe('BC File Upload Directive', () => {
   let scope;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() =>
@@ -26,7 +28,7 @@ describe('BC File Upload Directive', () => {
   );
 
   describe('reset', () =>
-    
+
     it('should reset file, invalidFile, and call disableWebcam', () => {
       spyOn(isoScope, 'disableWebcam');
       isoScope.reset();
@@ -74,7 +76,7 @@ describe('BC File Upload Directive', () => {
       expect(isoScope.state.webcam.error).toBe(true);
     })
   );
-  
+
   describe('webcamStream()', () =>
 
     it('should set the webcam stream state', () => {

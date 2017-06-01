@@ -124,13 +124,18 @@ describe('sell-quick-start.component', () => {
   });
 
   describe('offerUseAll()', () => {
-    it('should set maxSpendableAmount to the first number in the array', () => {
+    it('should set maxSpendableAmount', () => {
       getController(handlers);
       let paymentInfo = {
-        maxSpendableAmounts: [1, 2, 3, 4, 5],
-        sweepFees: [5, 4, 3, 2, 1]
+        sweepAmount: 1,
+        sweepFee: 1,
+        fees: {
+          priority: 1
+        }
       };
-      let payment = {};
+      let payment = {
+        updateFeePerKb: () => {}
+      };
       scope.offerUseAll(payment, paymentInfo);
       expect(scope.maxSpendableAmount).toEqual(1);
     });

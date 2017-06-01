@@ -1,6 +1,8 @@
 describe('VerifyMessageController', () => {
   let scope;
   let MyWalletHelpers;
+  
+  beforeEach(angular.mock.module('walletDirectives'));
 
   beforeEach(angular.mock.module('walletApp'));
 

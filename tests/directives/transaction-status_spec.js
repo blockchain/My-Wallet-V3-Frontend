@@ -4,6 +4,8 @@ describe('Transaction Status Directive', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 

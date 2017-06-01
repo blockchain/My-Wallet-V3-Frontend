@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('trade', trade);
 
 trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];

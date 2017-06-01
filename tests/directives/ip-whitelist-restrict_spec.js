@@ -4,6 +4,8 @@ describe('IP Whitelist Restrict', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() => {

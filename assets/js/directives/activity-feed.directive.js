@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('activityFeed', activityFeed);
 
 activityFeed.$inject = ['$http', 'Wallet', 'MyWallet', 'Activity', 'buyStatus'];

@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('bcFileUpload', bcFileUpload);
 
 bcFileUpload.$inject = ['$rootScope', 'Alerts'];

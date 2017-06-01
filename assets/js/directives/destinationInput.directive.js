@@ -1,11 +1,8 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('destinationInput', destinationInput);
 
-function destinationInput ($rootScope, $timeout, Wallet, format, $httpBackend) {
-  // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
-  $httpBackend.whenGET('/Resources/wallet-options.json').respond();
-
+function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
     restrict: 'E',
     require: '^ngModel',
@@ -35,7 +32,8 @@ function destinationInput ($rootScope, $timeout, Wallet, format, $httpBackend) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
-      let address = Wallet.parsePaymentRequest(result);
+      let isValidPrivateKey = Wallet.isValidPrivateKey(result);
+      let address = isValidPrivateKey ? Wallet.parsePaymentRequest(isValidPrivateKey) : Wallet.parsePaymentRequest(result);
       scope.model = format.destination(address, 'External');
       scope.onPaymentRequest({request: address});
       scope.setInputMetric({metric: 'qr'});

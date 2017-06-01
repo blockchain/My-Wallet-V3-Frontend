@@ -5,6 +5,8 @@ describe('Watch Only Address Directive', () => {
   let isoScope;
   let Wallet;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $httpBackend) {

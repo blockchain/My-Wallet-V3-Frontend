@@ -138,11 +138,8 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.startPayment = () => {
     if (this.trade.state) return;
-    let firstBlockFee = this.payment.absoluteFeeBounds[0];
-    if ($scope.isSweepTransaction) firstBlockFee = this.payment.sweepFees[0];
     this.finalPayment = Wallet.my.wallet.createPayment(this.payment);
-    this.finalPayment.fee(firstBlockFee);
-    this.transaction.fee.btc = currency.convertFromSatoshi(firstBlockFee, currency.bitCurrencies[0]);
+    this.transaction.fee.btc = currency.convertFromSatoshi(this.payment.finalFee, currency.bitCurrencies[0]);
     this.transaction.btcAfterFee = parseFloat((this.transaction.btc + this.transaction.fee.btc).toFixed(8));
     return {transaction: this.transaction};
   };

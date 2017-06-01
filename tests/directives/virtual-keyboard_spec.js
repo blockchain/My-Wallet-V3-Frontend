@@ -4,6 +4,8 @@ describe('VirtualKeyboard', () => {
   let isoScope;
   let mockKeyPress;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() =>

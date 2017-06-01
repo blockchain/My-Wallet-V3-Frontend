@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('onClickCopy', onClickCopy);
 
 function onClickCopy ($window, $document, browser) {

@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('confirmRecoveryPhrase', confirmRecoveryPhrase);
 
 confirmRecoveryPhrase.$inject = ['$uibModal'];

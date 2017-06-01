@@ -7,6 +7,8 @@ describe('buyQuickStart', () => {
   let MyWallet;
   let buySell;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($compile, $rootScope, $injector, _$q_, $httpBackend) {

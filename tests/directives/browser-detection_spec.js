@@ -5,6 +5,8 @@ describe('browserDetection', () => {
   let isoScope;
   let MyWallet;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_) {

@@ -17,6 +17,7 @@ angular.module('walletApp.core').factory('MyWalletPayment', $q =>
     this.amount = function (amount) { return this; };
     this.fee = function (fee) { return this; };
     this.feePerKb = function (feePerKb) { return this; };
+    this.updateFeePerKb = function (feePerKb) { return this; };
     this.note = function (note) { return this; };
     this.useAll = function () { return this; };
     this.build = function () { return this; };

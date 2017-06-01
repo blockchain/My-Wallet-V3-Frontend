@@ -3,6 +3,8 @@ describe('Transform-Currency Directive', () => {
   let isoScope;
   let element;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() =>
