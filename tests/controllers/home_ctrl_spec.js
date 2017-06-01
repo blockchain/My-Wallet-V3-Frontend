@@ -41,9 +41,7 @@ describe('HomeCtrl', () => {
         $uibModal: modal
       }
       );
-
     });
-
   });
 
   describe('activeAccounts()', () => {
@@ -64,6 +62,16 @@ describe('HomeCtrl', () => {
     it('should be null when not logged in', inject((Wallet), function () {
       Wallet.status.isLoggedIn = false;
       expect(scope.activeLegacyAddresses()).toBe(null);
+    })
+    );
+  });
+
+  describe('showMobileConversion', () => {
+    it('should check localStorageService', inject(function (localStorageService) {
+      spyOn(localStorageService, 'get');
+
+      scope.showMobileConversion();
+      expect(localStorageService.get).toHaveBeenCalledWith('showMobileConversion');
     })
     );
   });
