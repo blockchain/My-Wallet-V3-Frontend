@@ -24,8 +24,8 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.stepDescription = () => {
     let stepDescriptions = {
-      'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
-      'link': { text: 'Link Payment', i: 'ti-credit-card bank bank-lrg' }
+      'verify': { text: 'Setup Profile', i: 'ti-id-badge' },
+      'pending': { text: 'Identity Verification Pending', i: 'ti-time' }
     };
     let step = unocoin.determineStep(exchange);
     return stepDescriptions[step];
@@ -34,7 +34,7 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
 
-  $scope.signupCompleted = exchange.profile.level > 1;
+  $scope.signupCompleted = exchange.profile.level > 2;
   $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
 
   $scope.inspectTrade = modals.openTradeSummary;

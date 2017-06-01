@@ -47,7 +47,7 @@ function unocoin ($q, Alerts, modals, Env) {
       if (!profile.complete) {
         return 'verify';
       } else {
-        return 'buy';
+        return 'pending';
       }
     }
   }

@@ -9,7 +9,9 @@ function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exch
   this.exchange = exchange;
   this.quote = quote;
 
-  this.steps = enumify('create', 'verify', 'upload', 'buy');
+  this.steps = enumify('create', 'verify', 'upload', 'pending');
+  this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
+  this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => { this.step = this.steps[s]; };
 
