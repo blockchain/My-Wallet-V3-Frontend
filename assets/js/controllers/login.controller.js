@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork) {
+function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork, Env) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -69,4 +69,8 @@ function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $s
   if ($scope.autoReload && $scope.uid && $scope.password) {
     $scope.login();
   }
+
+  Env.then((env) => {
+    $scope.showMobileLogin = env.showMobileLogin;
+  });
 }
