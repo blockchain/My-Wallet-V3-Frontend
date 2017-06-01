@@ -17,6 +17,17 @@
   }
 }
 
+img {
+  $size: 48px;
+  &.app-store-badge {
+    height: $size - $size / 3;
+  }
+  &.play-store-badge {
+    height: $size;
+    margin-right: -$size / 6;
+  }
+}
+
 .box-corner {
   $size: 40px;
 
