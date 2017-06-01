@@ -16,3 +16,37 @@
     }
   }
 }
+
+.box-corner {
+  $size: 40px;
+
+  position: absolute;
+  border-width: 2px;
+
+  width: $size;
+  height: $size;
+
+  &.success {
+    border-color: $success;
+  }
+  &.error {
+    border-color: $security-red;
+  }
+
+  &.top {
+    top: 0px;
+    border-top-style: solid;
+  }
+  &.bottom {
+    bottom: 0px;
+    border-bottom-style: solid;
+  }
+  &.left {
+    left: 0px;
+    border-left-style: solid;
+  }
+  &.right {
+    right: 0px;
+    border-right-style: solid;
+  }
+}

@@ -2,16 +2,10 @@ angular
   .module('walletApp')
   .directive('boxCorners', boxCorners);
 
-let cornerFactory = (size, stroke, color) => (v, h) => {
+let createCorner = (classes) => {
   let div = angular.element('<div></div>');
-  div.css('width', `${size}px`);
-  div.css('height', `${size}px`);
-  div.css('position', 'absolute');
-  div.css(v, '0px');
-  div.css(h, '0px');
-  div.css(`border-${v}`, `${stroke}px solid ${color}`);
-  div.css(`border-${h}`, `${stroke}px solid ${color}`);
   div.addClass('box-corner');
+  classes.forEach(c => div.addClass(c));
   return div;
 };
 
@@ -25,11 +19,11 @@ function boxCorners () {
     let appendCorners = () => {
       elem.querySelectorAll('.box-corner').remove();
       if (!attrs.boxCorners) return;
-      let createCorner = cornerFactory(40, 2, attrs.boxCorners);
-      elem.append(createCorner('top', 'left'));
-      elem.append(createCorner('top', 'right'));
-      elem.append(createCorner('bottom', 'right'));
-      elem.append(createCorner('bottom', 'left'));
+      let color = attrs.boxCorners;
+      elem.append(createCorner(['top', 'left', color]));
+      elem.append(createCorner(['top', 'right', color]));
+      elem.append(createCorner(['bottom', 'right', color]));
+      elem.append(createCorner(['bottom', 'left', color]));
     };
 
     elem.css('position', 'relative');

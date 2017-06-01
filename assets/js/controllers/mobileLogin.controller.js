@@ -3,9 +3,6 @@ angular
   .controller('MobileLoginController', MobileLoginController);
 
 function MobileLoginController ($scope, $state, $timeout, $q, Wallet, MyWallet, Alerts) {
-  const successColor = '#00A76F';
-  const errorColor = '#CA3A3C';
-
   let state = $scope.state = {
     scannerOn: true,
     permissionDenied: false,
@@ -14,8 +11,8 @@ function MobileLoginController ($scope, $state, $timeout, $q, Wallet, MyWallet, 
   };
 
   $scope.getBoxColor = () => {
-    if (state.scanComplete) return successColor;
-    if (state.scanFailed || state.permissionDenied) return errorColor;
+    if (state.scanComplete) return 'success';
+    if (state.scanFailed || state.permissionDenied) return 'error';
     return '';
   };
 
