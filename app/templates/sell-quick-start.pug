@@ -100,10 +100,9 @@
               translate="WHY")
       .flex-row.mt-5(ng-hide="$ctrl.tradingDisabled")
         div.pos-abs(ng-hide="!$ctrl.exchange.user || $ctrl.error.moreThanInWallet || $ctrl.tradingDisabled || fiatForm.fiat.$error.min || fiatForm.fiat.$error.max")
-          span(translate="SELL.MAX_DAILY")
+          span(ng-hide="hideIncreaseLimit" translate="SELL.LIMIT_REMAINING" translate-values="{symbol: limitsCurrencySymbol.symbol, remaining: remaining, limit: sellLimit}")
           | &nbsp;
-          span {{limitsCurrencySymbol.symbol}}{{sellLimit}}.
-          | &nbsp;
-          a(ng-click="$ctrl.onTrigger()" ng-hide="hideIncreaseLimit") Increase my limit
+          a(ng-click="$ctrl.onTrigger()" ng-hide="hideIncreaseLimit") here
+          span(ng-show="hideIncreaseLimit" translate="SELL.LEVEL_2_LIMIT_REMAINING" translate-values="{symbol: limitsCurrencySymbol.symbol, remaining: remaining, limit: sellLimit}")
       .flex-end.pos-rel.mt-30
         button.button-primary(ladda-translate="Sell Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || $ctrl.status.busy || $ctrl.tradingDisabled || $ctrl.error.moreThanInWallet" data-style="expand-left" ui-ladda="status.waiting")
