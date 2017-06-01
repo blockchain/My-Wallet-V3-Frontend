@@ -1,11 +1,11 @@
-header
+header(translate-namespace="MOBILE_LOGIN")
   hgroup
     .flex-between.flex-center.flex-wrap.mb-10
-      span.f-24.lh1(translate="Log in via Mobile")
+      span.f-24.lh1(translate=".TITLE")
       span
         a(ui-sref="public.login-no-uid" translate="CANCEL")
-    p.alt-font.f-16(translate="Follow these steps to log into your web wallet using your mobile device")
-.mobile-login.mv-60.flex-between
+    p.alt-font.f-16(translate=".SUB_TEXT")
+.mobile-login.mv-60.flex-between(translate-namespace="MOBILE_LOGIN")
   .flex-1
     .scanner-container.flex(box-corners="{{ getBoxColor() }}")
       div(ng-show="state.scannerOn")
@@ -19,19 +19,18 @@ header
         p.f-12.width-80.text-center(translate="CAMERA_PERMISSION_DENIED" ng-click="retryScan()")
       .flex-column.flex-center.flex-justify.flex-1(ng-show="state.scanComplete")
         span.f-18(translate="SCAN_SUCCESS")
-        p.f-12(translate="Logging you in now")
+        p.f-12(translate="LOGGING_IN_NOW")
       .flex-column.flex-center.flex-justify.flex-1(ng-show="state.scanFailed")
         span.f-18(translate="SCAN_FAILED")
-        a.f-12(translate="Retry" ng-click="retryScan()")
+        a.f-12(translate="RETRY" ng-click="retryScan()")
   .flex-1
-    span.f-18.em-500.blue Logging in with Mobile
+    span.f-18.em-500.blue(translate=".STEPS_TITLE")
     ol.pl-15
-      li.pt-10 Open your Blockchain App on your mobile device and go to Settings.
-      li.pt-10 Tap&nbsp;
-        i Log in to Web Wallet.
-      li.pt-10 Using your computer's camera, scan the QR code that appears on your device.
+      li.pt-10(translate=".STEP_1")
+      li.pt-10(translate=".STEP_2")
+      li.pt-10(translate=".STEP_3")
 footer.flex-between.flex-center.pt-25
-  p.alt-font.f-16.mbn Missing the App?
+  p.alt-font.f-16.mbn(translate="APP_CTA")
   div
     button.btn.button-default.button-short-wide.type-h5
       span.em-300 App Store

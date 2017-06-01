@@ -1396,5 +1396,16 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
+  "RETRY": "Retry",
+  "LOGGING_IN_NOW": "Logging you in now",
+  "APP_CTA": "Missing the App?",
+  "MOBILE_LOGIN": {
+    "TITLE": "Log in via Mobile",
+    "SUB_TEXT": "Follow these steps to log into your web wallet using your mobile device",
+    "STEPS_TITLE": "Logging in with Mobile",
+    "STEP_1": "Open your Blockchain App on your mobile device and go to Settings.",
+    "STEP_2": "Tap <i>Log in to Web Wallet</i>.",
+    "STEP_3": "Using your computer's camera, scan the QR code that appears on your device."
+  },
   "": ""
 }
