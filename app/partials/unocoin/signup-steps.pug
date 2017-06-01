@@ -27,4 +27,4 @@
           i.ti-check
         span.mt-5(ng-class="{primary: vm.onOrAfterStep('upload')}" translate="Upload Documents")
   .close-modal
-    i.ti-close.pointer(ng-click="vm.close()")
+    i.ti-close.pointer(ng-click="vm.onStep('pending') ? $close : vm.close()")

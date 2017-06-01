@@ -8,14 +8,15 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   });
 
   let exchange = $scope.vm.exchange;
-  let idTypes = ['address', 'id', 'pancard', 'photo'];
+  let idTypes = ['id', 'pancard', 'photo', 'address'];
   let getNextIdType = () => idTypes.shift();
 
   $scope.openHelper = modals.openHelper;
 
   $scope.state = {
     idType: getNextIdType(),
-    step: 'address'
+    step: 'address',
+    base: 'unocoin_'
   };
 
   $scope.onStep = (step) => step === $scope.state.step;
@@ -27,15 +28,13 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   };
 
   $scope.prepUpload = () => {
-    $scope.lock();
     let fields = $scope.state;
     let profile = exchange.profile;
     let idType = fields.idType;
 
     $q.resolve(Upload.base64DataUrl(fields.file))
       .then((url) => profile.addPhoto(idType, url))
-      .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify())
-      .then($scope.free);
+      .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify());
   };
 
   $scope.verify = () => {

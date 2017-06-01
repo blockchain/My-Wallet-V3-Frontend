@@ -1246,17 +1246,37 @@
     "UPLOAD_SELECT": "Select Upload Method",
     "HELP": "Make sure the snapshot clearly displays your address."
   },
-  "pancard_ID": {
-    "TITLE": "Upload Pancard",
-    "UPLOAD_TITLE": "Pancard",
-    "UPLOAD_SELECT": "Select Upload Method",
+  "unocoin_id_ID": {
+    "TITLE": "1. Upload ID",
+    "COPY": "As required by government law, you need to provide ID proof for verification.",
+    "UPLOAD_TITLE": "@:id_ID.UPLOAD_TITLE",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "@:id_ID.HELP"
+  },
+  "unocoin_pancard_ID": {
+    "TITLE": "2. PAN Card",
+    "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
+    "UPLOAD_TITLE": "PAN Card",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
     "HELP": "Make sure the snapshot clearly displays your pancard number."
   },
-  "photo_ID": {
-    "TITLE": "Upload Photo",
+  "unocoin_photo_ID": {
+    "TITLE": "3. Your Photo",
+    "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
     "UPLOAD_TITLE": "Photo",
-    "UPLOAD_SELECT": "Select Upload Method",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
     "HELP": "Make sure the snapshot clearly displays your face."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "4. Address Proof",
+    "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
+    "UPLOAD_TITLE": "Address Proof",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar Card (front and back)",
+    "OPTION2": "Driving License",
+    "OPTION3": "Passport (page showing address)",
+    "OPTION4": "Utility Bill",
+    "HELP": "Make sure the snapshot clearly displays your name and address."
   },
   "bank-check-helper": {
     "TITLE": "Routing and Account Number",
