@@ -20,7 +20,7 @@
               prevent-event="mousewheel"
               tabindex="1"
               min="0.00000001"
-              ng-change="updateLastInput('btc'); $ctrl.transaction.btc > 0 && getQuote();"
+              ng-change="updateLastInput('btc'); $ctrl.transaction.btc && getQuote();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
               ng-class="{'input-error': error.moreThanInWallet}"
@@ -36,7 +36,7 @@
               name="fiat"
               tabindex="1"
               focus-when="status.ready"
-              ng-change="updateLastInput('fiat'); $ctrl.transaction.fiat > 0 && getQuote();"
+              ng-change="updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
               min="{{limits.absoluteMin(transaction.currency.code)}}"
@@ -67,8 +67,8 @@
           a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
         .pos-rel.mt-10(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.bank.min[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max && !$ctrl.error.moreThanInWallet" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.max[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-        .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet && !fiatForm.fiat.$error.min")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.max[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
+        .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet && !fiatForm.fiat.$error.min && !fiatForm.fiat.$error.max")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS")
           br

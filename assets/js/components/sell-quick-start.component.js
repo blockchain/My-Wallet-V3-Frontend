@@ -97,12 +97,12 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getQuote = () => {
     this.status.fetching = true;
     this.status.busy = true;
-    if ($scope.lastInput === 'btc') {
+    if ($scope.lastInput === 'btc' && this.transaction.btc) {
       $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error));
-    } else if ($scope.lastInput === 'fiat') {
+    } else if ($scope.lastInput === 'fiat' && this.transaction.fiat) {
       $q.resolve(buySell.getSellQuote(this.transaction.fiat, this.transaction.currency.code, 'BTC').then(success, error));
     } else {
-      this.status = { busy: false };
+      this.status = { busy: false, fetching: false };
     }
   };
 
