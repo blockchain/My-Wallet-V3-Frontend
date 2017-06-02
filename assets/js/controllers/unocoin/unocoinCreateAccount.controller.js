@@ -34,7 +34,7 @@ function UnocoinCreateAccountController ($scope, AngularHelper, $timeout, $q, lo
   $scope.displayInlineError = (error) => {
     let { accountForm, emailForm } = $scope.$$childHead;
     switch (unocoin.interpretError(error)) {
-      case 'user is already registered':
+      case 'email_already_used':
         accountForm.email.$setValidity('registered', false);
         break;
       case 'Email Verification Code Incorrect':
