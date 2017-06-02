@@ -146,10 +146,11 @@
                 .flex-1.flex-center.border
                   input.form-control.no-border(
                     min="0"
+                    step="1"
                     name="fee"
                     type="number"
-                    step="any"
                     focus-when="advanced"
+                    transform-currency="{code: 'sat', conversion: 1}"
                     ng-change="payment.updateFeePerKb(transaction.satoshiPerByte)"
                     ng-model="transaction.satoshiPerByte"
                     required)
