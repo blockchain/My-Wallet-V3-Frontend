@@ -17,8 +17,7 @@ var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
-var sfoxUseStaging = process.env.SFOX_USE_STAGING === '1';
-var sfoxProduction = sfoxUseStaging ? false : production;
+var sfoxProduction = parseInt(process.env.SFOX_USE_PRODUCTION, 10) === 1;
 var testnet = process.env.NETWORK === 'testnet';
 
 // App configuration
@@ -33,6 +32,8 @@ if (runWalletHelper) {
 }
 
 rootApp.use('/:lang?/wallet', app);
+
+rootApp.set('json spaces', 2);
 
 rootApp.get('/:lang?/search', (req, res) => {
   res.redirect(`${rootURL}/search?search=${req.query.search}`);
@@ -138,6 +139,21 @@ rootApp.use(function (req, res, next) {
     res.redirect('wallet/');
   } else if (req.url === '/wallet') {
     res.redirect('wallet/');
+  } else if (req.url === '/Resources/wallet-options.json') {
+    var parsedJSON = require('./rootApp/Resources/wallet-options.json');
+    parsedJSON.domains = {
+      root: process.env.ROOT_URL,
+      webSocket: process.env.WEB_SOCKET_URL,
+      api: process.env.API_DOMAIN,
+      walletHelper: walletHelperFrameDomain
+    };
+    parsedJSON.network = process.env.NETWORK || 'bitcoin';
+    parsedJSON.partners.sfox.production = sfoxProduction;
+    parsedJSON.partners.sfox.apiKey = process.env.SFOX_API_KEY || parsedJSON.partners.sfox.apiKey;
+    parsedJSON.partners.sfox.plaidEnv = process.env.SFOX_PLAID_ENV || parsedJSON.partners.sfox.plaidEnv;
+    parsedJSON.partners.sfox.siftScience = process.env.SFOX_SIFT_SCIENCE_KEY || parsedJSON.partners.sfox.siftScience;
+
+    res.json(parsedJSON);
   } else {
     next();
   }

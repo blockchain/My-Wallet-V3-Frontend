@@ -7,7 +7,10 @@ describe('Confirm Recovery Phrase', () => {
 
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function ($injector, $compile, $rootScope) {
+  beforeEach(inject(function ($injector, $compile, $rootScope, $httpBackend) {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
     $q = $injector.get('$q');
     $uibModal = $injector.get('$uibModal');
     Wallet = $injector.get('Wallet');

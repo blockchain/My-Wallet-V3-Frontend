@@ -36,7 +36,7 @@
     "grunt-contrib-uglify": "2.3.*",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-html2js": "WeWriteCode/grunt-html2js#pug-support",
-    "grunt-include-source": "sjors/grunt-include-source#pug",
+    "grunt-include-source": "1.1.*",
     "grunt-karma-coveralls": "^2.5.4",
     "grunt-legacy-util": "^0.2.0",
     "grunt-merge-json": "^0.9.5",

@@ -25,6 +25,12 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     labelsForCurrency
   };
 
+  let buySellDebug;
+
+  Env.then(env => {
+    buySellDebug = env.buySellDebug;
+  });
+
   let errorStates = {
     'cancelled': 'canceled',
     'rejected': 'rejected',
@@ -57,9 +63,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(trade.sendAmount / 100, { code: trade.inCurrency })
     };
-    Env.then(env => {
-      if (env.buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
-    });
+    if (buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     return transaction;
   };
 

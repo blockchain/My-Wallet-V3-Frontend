@@ -2,60 +2,55 @@ describe('buySell service', () => {
   let Wallet;
   let MyWallet;
   let buySell;
-  let currency;
   let $rootScope;
   let $q;
-  let $uibModal;
   let exchange;
   let Alerts;
 
   beforeEach(angular.mock.module('walletApp'));
 
-  beforeEach(() =>
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.value('Env', Promise.resolve({
+        showBuySellTab: ['US'],
+        partners: {
+          coinify: {
+            countries: ['US']
+          }
+        }
+      }));
+    });
+
     angular.mock.inject(function ($injector, _$rootScope_, _$q_) {
       $rootScope = _$rootScope_;
       $q = _$q_;
-      $uibModal = $injector.get('$uibModal');
       Wallet = $injector.get('Wallet');
       MyWallet = $injector.get('MyWallet');
-      let Options = $injector.get('Options');
       Alerts = $injector.get('Alerts');
-
-      Options.get = () =>
-        Promise.resolve({
-          "showBuySellTab": ["US"],
-          "partners": {
-            "coinify": {
-              "countries": ["US"]
-            }
-          }
-        })
-      ;
 
       MyWallet.wallet = {
         accountInfo: {
           countryCodeGuess: {}
         },
         hdwallet: {
-          accounts: [{label: ""}, {label: "2nd account"}],
+          accounts: [{label: ''}, {label: '2nd account'}],
           defaultAccount: {index: 0}
         }
       };
 
       buySell = $injector.get('buySell');
-      currency = $injector.get('currency');
 
       Wallet.settings.currency = {code: 'EUR'};
-      return Wallet.status.isLoggedIn = true;
-    })
-  );
+      Wallet.status.isLoggedIn = true;
+    });
+  });
 
   let makeTrade = state =>
     ({
       state,
       accountIndex: 0,
       inCurrency: 'USD',
-      bitcoinReceived: state === "completed",
+      bitcoinReceived: state === 'completed',
       watchAddress () { return $q.resolve(); },
       refresh () { return $q.resolve(); }
     })
@@ -64,9 +59,9 @@ describe('buySell service', () => {
   beforeEach(function () {
     exchange = buySell.getExchange();
 
-    let trades = ["processing", "completed", "completed_test", "cancelled"].map(makeTrade);
+    let trades = ['processing', 'completed', 'completed_test', 'cancelled'].map(makeTrade);
 
-    spyOn(exchange, 'getBuyCurrencies').and.returnValue($q.resolve(["USD", "EUR"]));
+    spyOn(exchange, 'getBuyCurrencies').and.returnValue($q.resolve(['USD', 'EUR']));
     spyOn(exchange, 'getTrades').and.returnValue($q.resolve(trades));
     return spyOn(exchange, 'getKYCs').and.returnValue($q.resolve([]));
   });
@@ -97,7 +92,7 @@ describe('buySell service', () => {
     let trades = {};
 
     beforeEach(function () {
-      trades = {pending: makeTrade("processing"), completed: makeTrade("completed")};
+      trades = {pending: makeTrade('processing'), completed: makeTrade('completed')};
       return Object.keys(trades).forEach(t => spyOn(trades[t], 'watchAddress').and.callThrough());
     });
 
@@ -192,7 +187,7 @@ describe('buySell service', () => {
     });
 
     it('should show an error if the cancel fails', () => {
-      spyOn(trade, 'cancel').and.returnValue($q.reject("ERROR_TRADE_CANCEL"));
+      spyOn(trade, 'cancel').and.returnValue($q.reject('ERROR_TRADE_CANCEL'));
       spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
       buySell.cancelTrade(trade);
       $rootScope.$digest();
@@ -211,11 +206,11 @@ describe('buySell service', () => {
       };
       payment = { fee: 1 };
       exchange = buySell.getExchange();
-      return exchange.profile = { user: 1 };});
+      exchange.profile = { user: 1 };
+    });
 
     it('should call getExchange', () => {
-      let result;
-      return result = buySell.openSellView(trade, bankMedium, payment);
+      buySell.openSellView(trade, bankMedium, payment);
     });
   });
       // expect(result).toEqual
@@ -225,10 +220,11 @@ describe('buySell service', () => {
     exchange = undefined;
     beforeEach(function () {
       exchange = buySell.getExchange();
-      return pendingTrade = {
+      pendingTrade = {
         state: 'awaiting_transfer_in',
         medium: 'blockchain'
-      };});
+      };
+    });
 
     it('should return true', () => {
       let result = buySell.isPendingSellTrade(pendingTrade);
@@ -245,7 +241,7 @@ describe('buySell service', () => {
       trade = makeTrade('processing');
       trade.inCurrency = 'EUR';
       trade = null;
-      return sellCheck = true;
+      sellCheck = true;
     });
 
     it('should return EUR', () => {

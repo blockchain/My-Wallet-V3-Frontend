@@ -44,7 +44,8 @@ function currency ($q, MyBlockchainApi) {
     'SEK': 'Swedish Krona',
     'NZD': 'New Zealand Dollar',
     'BRL': 'Brazil Real',
-    'RUB': 'Russian Ruble'
+    'RUB': 'Russian Ruble',
+    'INR': 'Indian Rupee'
   };
 
   const bitCurrencies = [
