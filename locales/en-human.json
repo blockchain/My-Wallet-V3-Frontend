@@ -1346,7 +1346,7 @@
     "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "MORE_THAN_BALANCE": "Amount entered is more than your balance.",
-    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than your default wallet balance",
+    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than {{::account}} balance",
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",

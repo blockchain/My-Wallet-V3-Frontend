@@ -23,10 +23,10 @@
               ng-change="updateLastInput('btc'); $ctrl.transaction.btc && getQuote();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
-              ng-class="{'input-error': error.moreThanInWallet}"
+              ng-class="{'input-error': $ctrl.error.moreThanInWallet}"
               required)
             div.input-group-btn
-              button.btn.btn-default.brdrn(ng-click="$event.preventDefault()" ng-class="{'input-error': error.moreThanInWallet}") BTC
+              button.btn.btn-default.brdrn(ng-click="$event.preventDefault()" ng-class="{'input-error': $ctrl.error.moreThanInWallet}") BTC
           i.ti-arrows-horizontal.mhm.type-h4.hidden-sm.hidden-xs
           i.ti-arrows-vertical.mvs.type-h4.visible-sm.visible-xs
           section.input-group.width-45
@@ -43,10 +43,10 @@
               max="{{limits.absoluteMax(transaction.currency.code)}}"
               step="any"
               prevent-event="mousewheel"
-              ng-class="{'input-error': error.moreThanInWallet}"
+              ng-class="{'input-error': $ctrl.error.moreThanInWallet}"
               required)
             div.input-group-btn(uib-dropdown uib-keyboard-nav-style)
-              button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true" ng-class="{'input-error': error.moreThanInWallet}")
+              button.btn.btn-default.dropdown-toggle.brdrn(type="button" uib-dropdown-toggle aria-haspopup="true" ng-class="{'input-error': $ctrl.error.moreThanInWallet}")
                 span {{ $ctrl.transaction.currency.code }}
                 span.caret
               ul.uib-dropdown-menu.dropdown-menu.currency-dropdown(role="menu")
@@ -70,7 +70,7 @@
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.max[transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
         .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet && !fiatForm.fiat.$error.min && !fiatForm.fiat.$error.max")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
-          span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS")
+          span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS" translate-values="{account: defaultAccount()}")
           br
           a.pos-abs.type-sm(ng-show="$ctrl.error.moreThanInWallet" ng-click="useAll()" translate="SELL.SELL_ALL")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
