@@ -140,12 +140,12 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return (rate * limit).toFixed(2);
   }
 
-  function getMinLimits (quote, fiatCurrency) {
+  function getMinLimits (quote) {
     if (service.limits.bank.min && service.limits.card.min) return $q.resolve();
 
     const calculateMin = (mediums) => {
       service.limits.bank.min = mediums.bank.minimumInAmounts;
-      service.limits.card.min = mediums.bank.minimumInAmounts;
+      service.limits.card.min = mediums.card.minimumInAmounts;
       service.limits.absoluteMin = (curr) => {
         let cardMin = parseFloat(service.limits.card.min[curr], 0);
         let bankMin = parseFloat(service.limits.bank.min[curr], 0);
