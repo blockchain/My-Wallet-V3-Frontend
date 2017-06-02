@@ -24,7 +24,11 @@ function MobileLoginController ($scope, $state, $timeout, $q, Wallet, MyWallet, 
   };
 
   $scope.onScanResult = (result) => {
-    let success = () => { $state.go('wallet.common.home'); };
+    let success = () => {
+      $state.go('wallet.common.home');
+      Wallet.api.incrementLoginViaQrStats();
+    };
+
     let error = (e) => { Alerts.displayError(e); };
 
     $q.resolve(MyWallet.parsePairingCode(result))
