@@ -335,6 +335,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'UnocoinCheckoutController',
       params: { selectedTab: null },
       resolve: {
+        _loadBcPhoneNumber ($ocLazyLoad) {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        },
         _loadExchangeData ($q, MyWallet, unocoin) {
           let exchange = MyWallet.wallet.external.unocoin;
           return exchange.user && !exchange.profile
