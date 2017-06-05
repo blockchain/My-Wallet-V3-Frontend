@@ -113,6 +113,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   const success = (quote) => {
     this.status = {};
     $scope.quote = quote;
+    $scope.getMinLimits(quote);
     $scope.exchangeRate.fiat = $scope.getExchangeRate();
 
     if (quote.quoteCurrency === 'BTC') {
