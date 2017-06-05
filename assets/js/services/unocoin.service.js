@@ -44,7 +44,7 @@ function unocoin ($q, Alerts, modals, Env) {
     if (!profile) {
       return 'create';
     } else {
-      if (!profile.complete) {
+      if (profile.level < 2) {
         return 'verify';
       } else {
         return 'pending';

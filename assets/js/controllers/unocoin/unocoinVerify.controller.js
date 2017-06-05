@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('UnocoinVerifyController', UnocoinVerifyController);
 
-function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA) {
+function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
   });
@@ -14,6 +14,8 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.state = {
     step: 'address'
   };
+
+  $scope.format = bcPhoneNumber.format;
 
   $scope.onStep = (step) => step === $scope.state.step;
   $scope.goTo = (step) => $scope.state.step = step;

@@ -25,8 +25,8 @@
           .col-md-6
             .mb-20.pos-rel
               label Mobile
-              input(ng-model="state.mobile" name="mobile" required)
-              span.error(translate="Required field")
+              bc-phone-number(ng-model="state.mobile" name="mobile" preferred-countries="in" default-country="in" is-valid="isValidMobileNumber")
+              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && addressForm.mobile.$touched" translate="Required field")
           .col-md-6
             .mb-20.pos-rel
               label PAN Card

@@ -54,4 +54,10 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   };
 
   AngularHelper.installLock.call($scope);
+
+  // QA Tool
+  $scope.autoFillPhotos = () => {
+    ['id', 'pancard', 'photo', 'address'].forEach((idType) => exchange.profile.addPhoto(idType, QA.base64DataUrl()));
+    $scope.verify();
+  };
 }
