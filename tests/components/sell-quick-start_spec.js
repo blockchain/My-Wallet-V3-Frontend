@@ -90,7 +90,8 @@ describe('sell-quick-start.component', () => {
                 in: 300
               },
               'bank': {
-                in: 0
+                in: 0,
+                outDaily: 500
               }
             }
           },

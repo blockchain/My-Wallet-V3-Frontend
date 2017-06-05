@@ -1375,6 +1375,8 @@
     "IDENTITY_VERIFICATION": "Identity Verification",
     "QUOTE_WILL_EXPIRE": "When the quote expires it will refresh. The bitcoin amount you are selling will not change.",
     "QUOTE_EXPIRES": "Quote Expires: {{::count}}",
+    "LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} yearly limit. To increase your limit, click",
+    "LEVEL_2_LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} daily limit",
     "ISX": {
       "REVIEWING": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!",
       "REJECTED": "There was an issue verifying your identity. Please try again. Increasing your limit is unavailable until we can successfully verify your identity.",
