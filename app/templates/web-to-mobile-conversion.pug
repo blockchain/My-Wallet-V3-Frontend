@@ -2,12 +2,14 @@
   .flex-between.flex-center.mbl
     h5.mvn.type-h5.em-400(translate="DYK")
   .widget.flex-row
-    .mrl.mbm
-      img(src="assets/icons/mobile.svg")
-    div
-      p.em-300.f-16(translate="GO_MOBILE")
+    div.flex-column
+      //- img.mobile-conversion(src="assets/icons/mobile.svg")
+      i.f-60.primary.icon-mobile.lh1
+    div.flex-column.pl-10
+      span.em-300.f-16.mbs(translate="GO_MOBILE")
       span(translate="DOWNLOAD_OUR_APP")
-      .flex-row.flex-justify.mvl
-        div
-          button.button-primary.button-wide(ng-click="$ctrl.openModal()" translate="PAIR_DEVICE")
+      .flex-row.mtm
+        div.flex-row.flex-align-start
+          a.upper.em-500(ng-click="$ctrl.openModal()" translate="PAIR_DEVICE")
+          i.icon-right_arrow.ml-5.pointer.pts.primary.f-10(ng-click="$ctrl.openModal()")
     i.pointer.ti-close(ng-click="$ctrl.dismiss()")
