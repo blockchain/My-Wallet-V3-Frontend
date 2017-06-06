@@ -5,9 +5,6 @@ angular
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
 function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exchange, quote, Alerts) {
-  this.name = 'Unocoin';
-  this.mobileRequired = false;
-  this.views = ['summary', 'email'];
   this.exchange = exchange;
 
   let links = [];

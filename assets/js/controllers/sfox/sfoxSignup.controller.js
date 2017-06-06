@@ -13,9 +13,6 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
     };
   });
 
-  this.name = 'SFOX';
-  this.views = ['summary', 'email', 'mobile'];
-  this.mobileRequired = true;
   this.exchange = exchange;
   this.accounts = accounts;
   this.quote = quote;

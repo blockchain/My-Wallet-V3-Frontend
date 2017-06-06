@@ -118,5 +118,4 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
   };
 
   this.$onInit = () => this.setState();
-  console.log('ExchangeCreateController', this);
 }
