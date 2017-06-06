@@ -18,8 +18,5 @@ function ExchangeUploadController (Env, $scope) {
   });
 
   this.onUpload = () => this.handleUpload({file: this.file})
-                            .then(() => {
-                              console.log('reset file');
-                              this.file = undefined;
-                            });
+                            .then(() => this.file = undefined);
 }

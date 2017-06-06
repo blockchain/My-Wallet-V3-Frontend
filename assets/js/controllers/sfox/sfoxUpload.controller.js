@@ -38,13 +38,13 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
     // QA Tool
     fields.verifyDoc && (filename = 'testing-' + filename);
 
-    $q.resolve(profile.getSignedURL(idType, filename))
+    return $q.resolve(profile.getSignedURL(idType, filename))
       .then((res) => $scope.upload(res.signed_url, file))
       .catch((err) => console.log(err));
   };
 
   $scope.upload = (url, file) => {
-    Upload.http({
+    return Upload.http({
       method: 'PUT',
       url: url,
       data: file,
