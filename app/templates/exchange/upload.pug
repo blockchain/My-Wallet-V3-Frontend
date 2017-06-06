@@ -1,0 +1,27 @@
+.flex-row.flex-start.flex-column-tablet
+  .width-40
+    .width-80
+      .flex-row.flex-center.mb-10
+        h4.f-20.em-500.mvn(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.TITLE")
+        button.helper(ng-click="openHelper($ctrl.idType + '-id-helper')" type="button" tabindex="-1")
+          span ?
+      .mbl
+        span.f-16(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.COPY")
+      .mbl(ng-show="buySellDebug")
+        div.type-h4.mbs.underline
+          i.mrs.ti-search
+          span QA
+        ul.pll
+          li.type-lbl.mbm.pointer.blue(ng-click="autoFillPhotos()") Autofill Photos and Verify
+      ul.mbl.pln.pl-20.f-16(ng-show="$ctrl.idType === 'address'")
+        li.pb-5
+          span(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.OPTION1")
+        li.pb-5
+          span(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.OPTION2")
+        li.pb-5
+          span(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.OPTION3")
+        li.pb-5
+          span(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.OPTION4")
+
+  .width-60
+    bc-file-upload(file="$ctrl.file" id-type="$ctrl.idType" base="$ctrl.base" on-upload="$ctrl.onUpload" locked="locked")

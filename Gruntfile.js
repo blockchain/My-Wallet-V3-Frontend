@@ -223,7 +223,7 @@ module.exports = (grunt) => {
         singleModule: true
       },
       main: {
-        src: ['app/partials/notifications/*.pug', 'app/partials/**/*.pug', 'app/templates/*.pug', 'app/*.pug'],
+        src: ['app/partials/**/*.pug', 'app/templates/*.pug', 'app/templates/**/*.pug', 'app/*.pug'],
         dest: 'build/js/templates.js'
       }
     },

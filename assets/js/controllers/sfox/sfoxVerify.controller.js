@@ -13,56 +13,13 @@ function SfoxVerifyController (AngularHelper, Env, $scope, $q, state, $http, sfo
 
   $scope.openHelper = modals.openHelper;
 
-  let getNextIdType = () => {
-    if (!exchange.profile) return 'ssn';
-    let { required_docs = [] } = exchange.profile.verificationStatus;
-
-    return required_docs[0] ? required_docs[0] : 'ssn';
-  };
-
   $scope.state = {
-    idType: getNextIdType(),
-    signedURL: undefined
-  };
-
-  $scope.setState = () => {
-    $scope.state.verificationStatus = exchange.profile.verificationStatus;
-    $scope.state.idType = getNextIdType();
-    $scope.state.file = undefined;
+    idType: 'ssn'
   };
 
   $scope.isBeforeNow = (date) => {
     let then = new Date(date).getTime();
     return then < Date.now();
-  };
-
-  $scope.prepUpload = () => {
-    $scope.lock();
-    let fields = $scope.state;
-    let profile = exchange.profile;
-    let idType = fields.idType;
-    let filename = fields.file.name;
-
-    // QA Tool
-    fields.verifyDoc && (filename = 'testing-' + filename);
-
-    $q.resolve(profile.getSignedURL(idType, filename))
-      .then((res) => $scope.upload(res.signed_url))
-      .catch((err) => console.log(err));
-  };
-
-  $scope.upload = (url) => {
-    let { file } = $scope.state;
-
-    Upload.http({
-      method: 'PUT',
-      url: url,
-      data: file,
-      headers: { 'content-type': 'application/octet-stream' }
-    }).then(() => exchange.fetchProfile())
-      .then(() => $scope.setState())
-      .catch(sfox.displayError)
-      .finally($scope.free);
   };
 
   $scope.verify = () => {
@@ -87,7 +44,7 @@ function SfoxVerifyController (AngularHelper, Env, $scope, $q, state, $http, sfo
       );
 
       $q.resolve(profile.verify())
-        .then(() => $scope.setState())
+        .then(() => $scope.vm.goTo('upload'))
         .catch(sfox.displayError)
         .finally($scope.free);
     } catch (error) {
@@ -96,21 +53,9 @@ function SfoxVerifyController (AngularHelper, Env, $scope, $q, state, $http, sfo
     }
   };
 
-  let watchVerificationStatusLevel = (level) => {
-    let { required_docs = [] } = exchange.profile.verificationStatus;
-    let complete;
-
-    if (level === 'verified') complete = true;
-    if (level === 'pending' && !required_docs[0]) complete = true;
-
-    complete && $scope.vm.goTo('link');
-  };
-
   AngularHelper.installLock.call($scope);
-  $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
   // QA Tool
-  $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
   $scope.SFOXAddressForm = () => angular.merge($scope.state, QA.SFOXAddressForm());
 }

@@ -1,7 +1,7 @@
 
 angular
   .module('walletApp')
-  .component('buyCheckout', {
+  .component('exchangeCheckout', {
     bindings: {
       quote: '<',
       userId: '<',
@@ -16,12 +16,12 @@ angular
       buySuccess: '&',
       buyError: '&'
     },
-    templateUrl: 'templates/buy-checkout.pug',
-    controller: BuyCheckoutController,
+    templateUrl: 'templates/exchange/checkout.pug',
+    controller: ExchangeCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;

@@ -1,4 +1,4 @@
-.flex-row.flex-column-tablet(ng-show="state.idType === 'ssn'")
+.flex-row.flex-column-tablet
   .width-40
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Verify Identity")
@@ -76,33 +76,3 @@
         .row
           .col-md-12
             button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-.flex-row.flex-start.flex-column-tablet(ng-if="state.idType === 'id' || state.idType === 'address'")
-  .width-40
-    .width-80
-      .flex-row.flex-center.mb-10
-        h4.f-20.em-500.mvn(translate="{{state.idType + '_ID'}}.TITLE")
-        button.helper(ng-click="openHelper(state.idType + '-id-helper')" type="button" tabindex="-1")
-          span ?
-      .mbl
-        span.f-16(translate="{{state.idType + '_ID'}}.COPY")
-      ul.mbl.pln.pl-20.f-16
-        li.pb-5
-          span(translate="{{state.idType + '_ID'}}.OPTION1")
-        li.pb-5
-          span(translate="{{state.idType + '_ID'}}.OPTION2")
-        li.pb-5
-          span(translate="{{state.idType + '_ID'}}.OPTION3")
-        li.pb-5
-          span(translate="{{state.idType + '_ID'}}.OPTION4")
-      .mbl
-        span.f-16(translate="{{state.idType + '_ID'}}.COPY_2" ng-show="state.idType === 'id'")
-      .mbl(ng-show="buySellDebug")
-        div.type-h4.mbs.underline
-          i.mrs.ti-search
-          span QA
-        .flex-row.flex-center.lh1
-          input.mrs(type="checkbox" id="verify-doc" ng-model="state.verifyDoc")
-          label.em-400.type-lbl.mls(for="verify-doc") Check this box if you want this doc to be approved right away.
-
-  .width-60
-    bc-file-upload(file="state.file" id-type="state.idType" on-upload="prepUpload" locked="locked")
