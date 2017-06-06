@@ -147,7 +147,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       service.limits.absoluteMin = (curr) => {
         let cardMin = parseFloat(service.limits.card.min[curr], 0);
         let bankMin = parseFloat(service.limits.bank.min[curr], 0);
-        return bankMin > cardMin ? bankMin : cardMin;
+        return bankMin < cardMin ? bankMin : cardMin;
       };
     };
 
