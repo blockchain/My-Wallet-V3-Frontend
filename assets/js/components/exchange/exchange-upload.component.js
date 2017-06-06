@@ -3,6 +3,7 @@ angular
   .component('exchangeUpload', {
     bindings: {
       base: '@',
+      locked: '=',
       idType: '=',
       handleUpload: '&'
     },
@@ -16,6 +17,9 @@ function ExchangeUploadController (Env, $scope) {
     $scope.buySellDebug = env.buySellDebug;
   });
 
-  this.onUpload = () => this.handleUpload({file: this.file});
-  // Need to set this.file to undefined somewhere
+  this.onUpload = () => this.handleUpload({file: this.file})
+                            .then(() => {
+                              console.log('reset file');
+                              this.file = undefined;
+                            });
 }
