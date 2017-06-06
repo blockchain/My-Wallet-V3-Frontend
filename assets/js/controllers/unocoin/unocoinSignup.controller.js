@@ -5,15 +5,24 @@ angular
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
 function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exchange, quote, Alerts) {
-  let links = [];
+  this.name = 'Unocoin';
+  this.mobileRequired = false;
+  this.views = ['summary', 'email'];
   this.exchange = exchange;
+  this.termsOfService = 'https://www.unocoin.com';
+  this.privacyAgreement = 'https://www.unocoin.com';
+
+  let links = [];
   this.quote = quote;
 
   this.steps = enumify('create', 'verify', 'upload', 'pending');
   this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
   this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
-  this.goTo = (s) => { this.step = this.steps[s]; };
+  this.goTo = (s) => {
+    console.log('goTo', s);
+    this.step = this.steps[s];
+  };
 
   this.goTo(unocoin.determineStep(exchange));
 
