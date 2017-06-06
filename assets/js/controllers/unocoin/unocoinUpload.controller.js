@@ -28,7 +28,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
     let idType = fields.idType;
     let profile = exchange.profile;
 
-    $q.resolve(Upload.base64DataUrl(file))
+    return $q.resolve(Upload.base64DataUrl(file))
       .then((url) => profile.addPhoto(idType, url))
       .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify());
   };
@@ -36,17 +36,12 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.verify = () => {
     $scope.lock();
 
-    try {
-      let profile = exchange.profile;
-
-      $q.resolve(profile.verify())
-        .then(() => $scope.vm.goTo('pending'))
-        .catch(unocoin.displayError)
-        .finally($scope.free);
-    } catch (error) {
-      console.error(error);
-      $scope.free();
-    }
+    let profile = exchange.profile;
+    
+    return $q.resolve(profile.verify())
+             .then(() => $scope.vm.goTo('pending'))
+             .catch(unocoin.displayError)
+             .finally($scope.free);
   };
 
   AngularHelper.installLock.call($scope);
