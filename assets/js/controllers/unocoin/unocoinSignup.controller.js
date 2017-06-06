@@ -9,8 +9,6 @@ function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exch
   this.mobileRequired = false;
   this.views = ['summary', 'email'];
   this.exchange = exchange;
-  this.termsOfService = 'https://www.unocoin.com';
-  this.privacyAgreement = 'https://www.unocoin.com';
 
   let links = [];
   this.quote = quote;
@@ -19,10 +17,7 @@ function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exch
   this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
   this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
-  this.goTo = (s) => {
-    console.log('goTo', s);
-    this.step = this.steps[s];
-  };
+  this.goTo = (s) => this.step = this.steps[s];
 
   this.goTo(unocoin.determineStep(exchange));
 

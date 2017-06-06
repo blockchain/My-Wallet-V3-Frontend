@@ -6,9 +6,9 @@ angular
       mobileRequired: '<',
       views: '<',
       exchange: '<',
-      termsOfService: '<',
-      privacyAgreement: '<',
-      goTo: '&'
+      goTo: '&',
+      termsOfService: '@',
+      privacyAgreement: '@'
     },
     templateUrl: 'templates/exchange/create.pug',
     controller: ExchangeCreateController,
@@ -95,6 +95,18 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
 
   this.verifyEmail = () => {
     $q(Wallet.verifyEmail.bind(null, this.state.emailCode))
+      .then(this.setState, this.displayInlineError).finally($scope.free);
+  };
+
+  this.changeMobile = () => {
+    $q(Wallet.changeMobile.bind(null, this.state.mobile))
+      .then(this.mobileCodeSent).then(this.setState, unocoin.displayError).finally($scope.free);
+  };
+
+  this.sendMobileCode = () => this.changeMobile();
+
+  this.verifyMobile = () => {
+    $q(Wallet.verifyMobile.bind(null, this.state.mobileCode))
       .then(this.setState, this.displayInlineError).finally($scope.free);
   };
 

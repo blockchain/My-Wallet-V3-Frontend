@@ -80,30 +80,30 @@
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
 
-  //- .width-60.flex-justify(ng-show="viewing('mobile')")
-    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="mobileForm" ng-submit="state.sentMobileCode ? verifyMobile() : changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
+  .width-60.flex-justify(ng-show="$ctrl.viewing('mobile')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="mobileForm" ng-submit="$ctrl.state.sentMobileCode ? $ctrl.verifyMobile() : $ctrl.changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .group
           .item
             label Add phone number:
-            bc-phone-number(ng-model="state.mobile" ng-change="state.resentMobileCode = state.sentMobileCode = false" name="mobile" preferred-countries="us ca gb au" required)
-        div(ng-hide="state.sentMobileCode")
+            bc-phone-number(ng-model="$ctrl.state.mobile" ng-change="$ctrl.state.resentMobileCode = $ctrl.state.sentMobileCode = false" name="mobile" preferred-countries="us ca gb au" required)
+        div(ng-hide="$ctrl.state.sentMobileCode")
           .group.pt-25
-            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
-            a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
-        div(ng-show="state.sentMobileCode")
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || ($ctrl.state.verified && $ctrl.state.mobile === format(user.mobileNumber))") Text Verification Code
+            a.f-14.display-block.center.pt-15(ng-show="$ctrl.state.verified" ng-click="setState()") Go Back
+        div(ng-show="$ctrl.state.sentMobileCode")
           .group.pt-30
             .item
               label Enter verification code sent to your mobile phone:
-              input(ng-model="state.mobileCode" name="mobileCode" ng-change="clearInlineErrors()" focus-when="state.sentMobileCode || state.resentMobileCode" required)
+              input(ng-model="$ctrl.state.mobileCode" name="mobileCode" ng-change="$ctrl.clearInlineErrors()" focus-when="$ctrl.state.sentMobileCode || $ctrl.state.resentMobileCode" required)
             .item(ng-hide="mobileForm.mobileCode.$error.correct")
-              span.f-14.mt-5(ng-hide="state.resentMobileCode")
+              span.f-14.mt-5(ng-hide="$ctrl.state.resentMobileCode")
                 | Didn't receive the code? 
-                a(ng-click="sendMobileCode(); state.resentMobileCode = true;") Resend 
-              span.f-14.mt-5(ng-show="state.resentMobileCode") Another code has been sent!
+                a(ng-click="$ctrl.sendMobileCode(); $ctrl.state.resentMobileCode = true;") Resend 
+              span.f-14.mt-5(ng-show="$ctrl.state.resentMobileCode") Another code has been sent!
             .help(ng-show="mobileForm.mobileCode.$error.correct")
               span.state-danger-text
                 | Verification code incorrect. 
-                a(ng-click="sendMobileCode(); clearInlineErrors(); state.resentMobileCode = true;") Resend
+                a(ng-click="$ctrl.sendMobileCode(); $ctrl.clearInlineErrors(); $ctrl.state.resentMobileCode = true;") Resend
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue

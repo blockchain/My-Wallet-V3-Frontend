@@ -10,6 +10,8 @@
         views="vm.views"
         exchange="vm.exchange"
         go-to="vm.goTo(step)"
+        terms-of-service="https://www.unocoin.com"
+        privacy-agreement="https://www.unocoin.com/privacy"
         )
     div(ng-if="vm.onStep('verify')" ng-include="'partials/unocoin/verify.pug'" ng-controller="UnocoinVerifyController")
     div(ng-if="vm.onStep('upload')" ng-include="'partials/unocoin/upload.pug'" ng-controller="UnocoinUploadController")

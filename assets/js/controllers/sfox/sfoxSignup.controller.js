@@ -12,6 +12,10 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
       Alerts.surveyCloseConfirm('sfox-survey', links, this.step).then($uibModalInstance.dismiss);
     };
   });
+
+  this.name = 'SFOX';
+  this.views = ['summary', 'email', 'mobile'];
+  this.mobileRequired = true;
   this.exchange = exchange;
   this.accounts = accounts;
   this.quote = quote;

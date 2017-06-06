@@ -2,7 +2,16 @@
   .signup-steps.border-bottom-light
     div(ng-include="'partials/sfox/signup-steps.pug'")
   div.pl-40.pr-40.pt-40.pb-25
-    div(ng-if="vm.onStep('create')" ng-include="'partials/sfox/create.pug'" ng-controller="SfoxCreateAccountController")
+    div(ng-if="vm.onStep('create')")
+      exchange-create(
+        exchange-name="vm.name"
+        mobile-required="vm.mobileRequired"
+        views="vm.views"
+        exchange="vm.exchange"
+        go-to="vm.goTo(step)"
+        terms-of-service="https://www.sfox.com/terms.html"
+        privacy-agreement="https://www.sfox.com/privacy.html"
+        )
     div(ng-if="vm.onStep('verify')" ng-include="'partials/sfox/verify.pug'" ng-controller="SfoxVerifyController")
     div(ng-if="vm.onStep('upload')" ng-include="'partials/sfox/upload.pug'" ng-controller="SfoxUploadController")
     div(ng-if="vm.onStep('link')" ng-include="'partials/sfox/link.pug'" ng-controller="SfoxLinkController")
