@@ -1,6 +1,6 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
-function LandingCtrl ($scope, $state, $sce, languages, Env) {
+function LandingCtrl ($scope, $state, $sce, languages, Env, walletStats) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
   });
@@ -10,6 +10,9 @@ function LandingCtrl ($scope, $state, $sce, languages, Env) {
   };
 
   $scope.languages = languages.languages;
+
+  $scope.txsCount = walletStats.transactionsCountMillions;
+  $scope.walletCount = walletStats.walletCountMillions;
 
   $scope.firstLoad = () => {
     let language_code = languages.get();
@@ -37,6 +40,5 @@ function LandingCtrl ($scope, $state, $sce, languages, Env) {
 
   $scope.$watch(languages.get, (code) => {
     $scope.language = languages.mapCodeToName(code);
-    $scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
   });
 }

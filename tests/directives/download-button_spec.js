@@ -4,6 +4,8 @@ describe('downloadButton', () => {
   let isoScope;
   let $timeout;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($compile, $rootScope, $window, _$timeout_) {

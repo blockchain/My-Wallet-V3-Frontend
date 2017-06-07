@@ -4,10 +4,15 @@ describe('VirtualKeyboard', () => {
   let isoScope;
   let mockKeyPress;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() =>
-    inject(function ($rootScope, $compile, $injector) {
+    inject(function ($rootScope, $compile, $injector, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       Wallet = $injector.get('Wallet');
 
       scope = $rootScope.$new();

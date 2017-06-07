@@ -1,18 +1,21 @@
-describe('Transaction Destinations Directive', () => {  
+describe('Transaction Destinations Directive', () => {
   let $compile;
   let $rootScope;
   let element;
   let isoScope;
   let Wallet;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
-
+  beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
 
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
     Wallet = $injector.get('Wallet');
 
     Wallet.my = {
@@ -66,7 +69,7 @@ describe('Transaction Destinations Directive', () => {
           { coinType: 'external', change: false, address: '12LV2iRVZR', identity: undefined, label: '12LV2iRVZR' },
           { coinType: 'external', change: false, address: '1FYQe1ANT', identity: undefined, label: '1FYQe1ANT' },
           { coinType: 'external', change: false, address: '1PEAb1abhx6', identity: undefined, label: '1PEAb1abhx6' }
-        ]   
+        ]
       };
 
       let html = "<transaction-destinations transaction='transaction'></transaction-destinations>";

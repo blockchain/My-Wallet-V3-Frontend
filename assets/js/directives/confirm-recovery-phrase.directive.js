@@ -1,11 +1,11 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('confirmRecoveryPhrase', confirmRecoveryPhrase);
 
-confirmRecoveryPhrase.$inject = ['$uibModal', 'Wallet', 'Alerts'];
+confirmRecoveryPhrase.$inject = ['$uibModal'];
 
-function confirmRecoveryPhrase ($uibModal, Wallet, Alerts) {
+function confirmRecoveryPhrase ($uibModal) {
   const directive = {
     restrict: 'E',
     replace: true,

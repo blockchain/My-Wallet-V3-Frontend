@@ -93,8 +93,11 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   buyStatus.canBuy().then(canBuy => {
     let now = Date.now();
-    let filterBuy = (feat) => !(feat.title === 'BUY_BITCOIN' && !canBuy);
-    $scope.feats = whatsNew.filter(filterBuy).filter(f => (now - f.date) < whatsNewDateCutoff);
+    let filterBuySell = (feat) => {
+      let isBuySell = feat.title === 'BUY_BITCOIN' || feat.title === 'SELL_BITCOIN';
+      return !(isBuySell && !canBuy);
+    };
+    $scope.feats = whatsNew.filter(filterBuySell).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {

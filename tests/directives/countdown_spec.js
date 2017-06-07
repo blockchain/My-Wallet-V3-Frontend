@@ -3,11 +3,13 @@ describe('Countdown Directive', () => {
   let isoScope;
   let $interval;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($compile, $rootScope, $injector, _$q_) {
     let $q = _$q_;
-    
+
     let scope = $rootScope.$new();
     $interval = $injector.get('$interval');
     scope.timeToExpiration = () => 0;
@@ -25,13 +27,13 @@ describe('Countdown Directive', () => {
       $interval.flush(1000);
       expect(isoScope.count).toBe('0:00');
     });
-    
+
     it('should call onExpiration', () => {
       isoScope.timeToExpiration = () => 0;
       return $interval.flush(1000);
     });
   });
-  
+
   describe('expireCounter', () =>
     it('should set timeToExpiration to 3 seconds', () => {
       isoScope.expireCounter();
@@ -40,4 +42,3 @@ describe('Countdown Directive', () => {
     })
   );
 });
-      

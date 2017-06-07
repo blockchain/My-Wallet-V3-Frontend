@@ -2,9 +2,11 @@ describe('async select', function () {
   let $q;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, _$q_, Wallet) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, _$q_) {
     let $compile = _$compile_;
     let $rootScope = _$rootScope_;
     $q = _$q_;

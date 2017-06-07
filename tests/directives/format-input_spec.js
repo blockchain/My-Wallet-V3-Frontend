@@ -2,6 +2,8 @@ describe('format-input directive', () => {
   let $rootScope;
   let $compile;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
   beforeEach(() =>

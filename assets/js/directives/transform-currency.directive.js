@@ -1,9 +1,9 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('transformCurrency', transformCurrency);
 
-function transformCurrency (Wallet, currency) {
+function transformCurrency (currency) {
   const directive = {
     restrict: 'A',
     require: 'ngModel',

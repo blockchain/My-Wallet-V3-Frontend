@@ -4,9 +4,9 @@ angular
   .module('walletApp')
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', 'localStorageService', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Options', 'Env', 'BrowserHelper'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', 'localStorageService', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Env', 'BrowserHelper'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, localStorageService, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Options, Env, BrowserHelper) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, localStorageService, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Env, BrowserHelper) {
   BrowserHelper.migrateCookiesToLocalStorage();
   const wallet = {
     goal: {
@@ -160,7 +160,11 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
       // Immedidately store the new guid and session token, in case the user needs
       // to refresh their browser:
+      // Safari Incognito will set these values, but won't read them back. So we're
+      // also setting wallet.sessionToken and wallet.sessionGuid
       const newSessionToken = (token) => {
+        wallet.sessionToken = token;
+        wallet.sessionGuid = uid;
         localStorageService.set('session', token);
         localStorageService.set('guid', uid);
       };
@@ -186,8 +190,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     };
 
     // Check if we already have a session token:
-    let sessionToken = localStorageService.get('session');
-    let sessionGuid = localStorageService.get('guid');
+    // Safari Incognito will not return anything here.
+    let sessionToken = localStorageService.get('session') || wallet.sessionToken;
+    let sessionGuid = localStorageService.get('guid') || wallet.sessionGuid;
 
     doLogin(uid, sessionGuid, sessionToken);
   };
@@ -308,6 +313,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
   wallet.create = (password, email, currency, language, success_callback) => {
     let success = (uid, sharedKey, password, sessionToken) => {
+      wallet.sessionToken = sessionToken;
+      wallet.sessionGuid = uid;
       localStorageService.set('session', sessionToken);
       localStorageService.set('guid', uid);
       Alerts.displaySuccess('Wallet created with identifier: ' + uid);
@@ -752,7 +759,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let input = tx.processedInputs
       .filter(i => !i.change)[0] || tx.processedInputs[0];
     let outputs = tx.processedOutputs
-      .filter(o => !o.change && o.address !== input.address);
+      .filter(o => !o.change);
 
     let setLabel = (io) => (
       io.label = io.label || wallet.getAddressBookLabel(io.address) || io.address
@@ -1064,6 +1071,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let success = () => {
       wallet.settings.rememberTwoFactor = false;
       // This takes effect immedidately:
+      wallet.sessionToken = undefined;
       localStorageService.remove('session');
       successCallback();
       AngularHelper.$safeApply();

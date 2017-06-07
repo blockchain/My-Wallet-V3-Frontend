@@ -26,6 +26,8 @@ describe('SendCtrl', () => {
       $q = _$q_;
       $timeout = _$timeout_;
       $httpBackend = $injector.get('$httpBackend');
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
       MyWallet = $injector.get('MyWallet');
       Wallet = $injector.get('Wallet');
       let MyWalletPayment = $injector.get('MyWalletPayment');
@@ -95,13 +97,9 @@ describe('SendCtrl', () => {
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
           '<input type="text" name="priv" ng-model="transaction.priv" required />' +
-          '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
-          '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
-          '<input type="number" name="amountsFiat0" ng-model="transaction.amountsFiat[0]" ng-change="" min="1" required />' +
-          '<input type="text" name="destinations1" ng-model="transaction.destinations[1]" required />' +
-          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="" min="1" required />' +
-          '<input type="text" name="destinations2" ng-model="transaction.destinations[2]" required />' +
-          '<input type="number" name="amounts1" ng-model="transaction.amounts[1]" ng-change="" min="1" required />' +
+          '<input type="text" name="destination" ng-model="transaction.destination" required />' +
+          '<input type="number" name="amount" ng-model="transaction.amount" ng-change="" min="1" required />' +
+          '<input type="number" name="fiatAmount" ng-model="transaction.amount" ng-change="" min="1" required />' +
           '<input type="number" name="fee" ng-model="transaction.fee" ng-change="" min="1" required />' +
           '<textarea rows="4" name="note" ng-model="transaction.note" ng-maxlength="512"></textarea>' +
           '</form>'
@@ -130,7 +128,7 @@ describe('SendCtrl', () => {
 
       it('should not be sending', () => expect(scope.sending).toEqual(false));
 
-      it('should not start on the confirmation step', () => expect(scope.confirmationStep).toEqual(false));
+      it('should not start on the confirmation step', () => expect(scope.confirm).toEqual(false));
 
       it('should not start in advanced send mode', () => expect(scope.advanced).toEqual(false));
     });
@@ -140,13 +138,11 @@ describe('SendCtrl', () => {
       it('should have a null from field', () => expect(scope.transactionTemplate.from).toBeNull());
 
       it('should have a single, null destination field', () => {
-        expect(scope.transactionTemplate.destinations.length).toEqual(1);
-        expect(scope.transactionTemplate.destinations[0]).toBeNull();
+        expect(scope.transactionTemplate.destination).toBeNull();
       });
 
       it('should have a single, null amount field', () => {
-        expect(scope.transactionTemplate.amounts.length).toEqual(1);
-        expect(scope.transactionTemplate.amounts[0]).toEqual(null);
+        expect(scope.transactionTemplate.amount).toEqual(null);
       });
 
       it('should have an initial fee set to 0', () => expect(scope.transactionTemplate.fee).toEqual(0));
@@ -194,13 +190,13 @@ describe('SendCtrl', () => {
 
       it('should set the destination', () => {
         scope.applyPaymentRequest(scope.paymentRequest, 0);
-        expect(scope.transaction.destinations[0].address).toEqual('request_address');
-        expect(scope.transaction.destinations[0].type).toEqual('External');
+        expect(scope.transaction.destination.address).toEqual('request_address');
+        expect(scope.transaction.destination.type).toEqual('External');
       });
 
       it('should set the amount', () => {
         scope.applyPaymentRequest(scope.paymentRequest, 0);
-        expect(scope.transaction.amounts[0]).toEqual(1738);
+        expect(scope.transaction.amount).toEqual(1738);
       });
 
       it('should set the note from the message', () => {
@@ -212,33 +208,16 @@ describe('SendCtrl', () => {
     describe('on update', () => {
       let data = {
         finalFee: 2,
-        sweepFees: [1,2,3,4,5,6],
+        sweepFee: 3,
         balance: 5,
         sweepAmount: 2.5,
-        fees: { estimate: [{ surge: true },{},{},{},{},{}] },
         confEstimation: 2,
-        absoluteFeeBounds: [2,4,6,8,10,12]
+        fees: { limits: {max: 3000, min: 100}, regular: 300, priority: 500 }
       };
 
-      it('should set the surge warning', () => {
-        scope.defaultBlockInclusion = 0;
+      it('should set the fee', () => {
         scope.payment.triggerUpdate(data);
-        expect(scope.transaction.surge).toEqual(true);
-      });
-
-      it('should set the blockIdx to the confEstimation', () => {
-        scope.payment.triggerUpdate(data);
-        expect(scope.transaction.blockIdx).toEqual(data.confEstimation);
-      });
-
-      it('should set the fee bounds', () => {
-        scope.payment.triggerUpdate(data);
-        expect(scope.transaction.feeBounds).toEqual(data.absoluteFeeBounds);
-      });
-
-      it('should set the sweep fees', () => {
-        scope.payment.triggerUpdate(data);
-        expect(scope.transaction.sweepFees).toEqual(data.sweepFees);
+        expect(scope.transaction.fee).toEqual(data.finalFee);
       });
 
       describe('fee', () => {
@@ -253,26 +232,12 @@ describe('SendCtrl', () => {
           scope.payment.triggerUpdate(data);
           expect(scope.transaction.fee).toEqual(2);
         });
-
-        it('should not change if fee field was touched in advanced send', () => {
-          scope.advanced = true;
-          scope.transaction.fee = 3;
-          scope.sendForm.fee.$setDirty();
-          scope.payment.triggerUpdate(data);
-          expect(scope.transaction.fee).toEqual(3);
-        });
       });
 
       describe('maxAvailable', () => {
         it('should be set to the sweepAmount', () => {
           scope.payment.triggerUpdate(data);
           expect(scope.transaction.maxAvailable).toEqual(2.5);
-        });
-
-        it('should be set to the balance minus the fee in advanced send', () => {
-          scope.advanced = true;
-          scope.payment.triggerUpdate(data);
-          expect(scope.transaction.maxAvailable).toEqual(3);
         });
       });
     });
@@ -285,74 +250,66 @@ describe('SendCtrl', () => {
       })
     );
 
-    describe('destinations', () => {
+    describe('destination', () => {
       beforeEach(function () {
         scope.transaction.from = { label: 'Spending' };
-        scope.transaction.destinations = [null, null];
+        scope.transaction.destination = null;
       });
 
       it('should be invalid if null', () => {
         // check first destination
-        expect(scope.transaction.destinations[0]).toBeNull();
-        expect(hasErr('destinations0', 'required')).toBe(true);
-
-        // check second destination
-        expect(scope.transaction.destinations[1]).toBeNull();
-        expect(hasErr('destinations1', 'required')).toBe(true);
+        expect(scope.transaction.destination).toBeNull();
+        expect(hasErr('destination', 'required')).toBe(true);
       });
 
       it('should check that the destination has a valid address', () => {
         // check for invalid first
-        scope.transaction.destinations[0] = { address: 'invalid_address' };
+        scope.transaction.destination = { address: 'invalid_address' };
         scope.$apply();
-        expect(hasErr('destinations0', 'isValidAddress')).toBe(true);
+        expect(hasErr('destination', 'isValidAddress')).toBe(true);
 
         // check for valid address
-        scope.transaction.destinations[0] = { address: 'valid_address' };
+        scope.transaction.destination = { address: 'valid_address' };
         scope.$apply();
-        expect(hasErr('destinations0', 'isValidAddress')).not.toBeDefined();
+        expect(hasErr('destination', 'isValidAddress')).not.toBeDefined();
       });
     });
 
-    describe('amounts', () => {
+    describe('amount', () => {
       beforeEach(function () {
-        scope.transaction.amounts = [100, 5000];
+        scope.transaction.amount = 100;
         return scope.$apply();
       });
 
       it('should be valid', () => {
-        expect(scope.sendForm.amounts0.$valid).toBe(true);
-        expect(scope.sendForm.amounts1.$valid).toBe(true);
+        expect(scope.sendForm.amount.$valid).toBe(true);
       });
 
       it('should be invalid if null', () => {
-        scope.transaction.amounts = [null, null];
+        scope.transaction.amount = null;
         scope.$apply();
-        expect(hasErr('amounts0', 'required')).toBe(true);
-        expect(hasErr('amounts1', 'required')).toBe(true);
+        expect(hasErr('amount', 'required')).toBe(true);
       });
 
-      it('should be invalid if amounts are not numbers', () => {
+      it('should be invalid if amount are not numbers', () => {
         // TODO: $apply throws an error bc 'asdf' is NaN. Not sure how to test...
         pending();
-        scope.transaction.amounts = ['asdf', 'probably_not_a_number'];
+        scope.transaction.amount = ['asdf', 'probably_not_a_number'];
         scope.$apply();
-        expect(hasErr('amounts0', 'number')).toBe(true);
-        expect(hasErr('amounts1', 'number')).toBe(true);
+        expect(hasErr('amount', 'number')).toBe(true);
       });
 
       it('should be invalid if it is less than 1 satoshi', () => {
-        scope.transaction.amounts = [-17, 0.3];
+        scope.transaction.amount = -17;
         scope.$apply();
-        expect(hasErr('amounts0', 'min')).toBe(true);
-        expect(hasErr('amounts1', 'min')).toBe(true);
+        expect(hasErr('amount', 'min')).toBe(true);
       });
     });
 
     describe('miners fee', () => {
       beforeEach(function () {
-        scope.transaction.destinations = Wallet.legacyAddresses().slice(0, 2);
-        scope.transaction.amounts = [100, 5000];
+        scope.transaction.destination = Wallet.legacyAddresses().slice(0, 2);
+        scope.transaction.amount = 100;
       });
 
       it('should be valid', () => {
@@ -403,28 +360,6 @@ describe('SendCtrl', () => {
         scope.transaction.feeBounds = [30000, 25000, 20000, 15000, 10000, 5000];
       });
 
-      it('should warn when the tx fee is low', function (done) {
-        scope.advanced = true;
-        scope.transaction.fee = lowFee;
-        scope.transaction.size = avgSize;
-        scope.checkFee().then(function () {
-          expect(fees.showFeeWarning).toHaveBeenCalledWith(4999, 5000, 4999, false);
-          return done();
-        });
-        return scope.$digest();
-      });
-
-      it('should warn when the tx fee is high', function (done) {
-        scope.advanced = true;
-        scope.transaction.fee = highFee;
-        scope.transaction.size = avgSize;
-        scope.checkFee().then(function () {
-          expect(fees.showFeeWarning).toHaveBeenCalledWith(30001, 30000, 30001, false);
-          return done();
-        });
-        return scope.$digest();
-      });
-
       it('should not warn when the tx fee is normal', function (done) {
         scope.transaction.fee = midFee;
         scope.transaction.size = avgSize;
@@ -444,16 +379,6 @@ describe('SendCtrl', () => {
         });
         return scope.$digest();
       });
-
-      it('should warn when there is a surge', function (done) {
-        scope.transaction.fee = midFee;
-        scope.transaction.surge = true;
-        scope.checkFee().then(function () {
-          expect(fees.showFeeWarning).toHaveBeenCalledWith(25000, 25000, 25000, true);
-          return done();
-        });
-        return scope.$digest();
-      });
     });
 
     describe('note', () =>
@@ -468,9 +393,8 @@ describe('SendCtrl', () => {
       beforeEach(() =>
         scope.transaction = {
           from: Wallet.accounts()[0],
-          destinations: Wallet.legacyAddresses().slice(0, 2),
-          amounts: [100, 200],
-          amountsFiat: [100],
+          destination: Wallet.legacyAddresses().slice(0, 2),
+          amount: 100,
           fee: 50,
           note: 'this_is_a_note'
         }
@@ -480,8 +404,8 @@ describe('SendCtrl', () => {
     describe('after send', () => {
       beforeEach(function () {
         scope.transaction.from = Wallet.accounts()[1];
-        scope.transaction.destinations[0] = Wallet.accounts()[0];
-        scope.transaction.amounts[0] = 420;
+        scope.transaction.destination = Wallet.accounts()[0];
+        scope.transaction.amount = 420;
         scope.transaction.fee = 10;
       });
 
@@ -638,29 +562,6 @@ describe('SendCtrl', () => {
       })
     );
 
-    describe('resetSendForm', () => {
-
-      beforeEach(function () {
-        scope.transaction.from = Wallet.legacyAddresses()[1];
-        scope.transaction.destinations = [Wallet.accounts()[1]];
-        scope.transaction.amounts = [1111];
-        return scope.transaction.fee = 9000;
-      });
-
-      it('should set transaction to equal the template', () => {
-        scope.resetSendForm();
-        expect(scope.transaction.destinations).toEqual([null]);
-        expect(scope.transaction.amounts).toEqual([null]);
-        expect(scope.transaction.fee).toEqual(0);
-      });
-    });
-
-      // Not working for some reason
-      // it "should set transaction from field to default account", inject((MyWallet) ->
-      //   scope.resetSendForm()
-      //   expect(scope.transaction.from).toEqual(MyWallet.wallet.hdwallet.defaultAccount)
-      // )
-
     describe('numberOfActiveAccountsAndLegacyAddresses', () =>
 
       it('should return the correct amount', () => {
@@ -679,85 +580,56 @@ describe('SendCtrl', () => {
       it('should succesfully apply a payment request', inject(function (Wallet) {
         scope.result = Wallet.parsePaymentRequest('bitcoin://abcdefgh?amount=0.001');
         scope.applyPaymentRequest(scope.result, 0);
-        expect(scope.transaction.amounts[0]).toBe(100000);
-        expect(scope.transaction.destinations[0].address).toBe("abcdefgh");
+        expect(scope.transaction.amount).toBe(100000);
+        expect(scope.transaction.destination.address).toBe("abcdefgh");
       })
       )
-    );
-
-    describe('getToLabels', () =>
-
-      it('should return an array of addresses', () => {
-        scope.transaction.destinations[0] = Wallet.legacyAddresses()[0];
-        expect(scope.getToLabels()).toEqual([ { address : 'some_address', archived : false, isWatchOnly : false, label : 'some_label' } ]);
-      })
     );
 
     describe('getTransactionTotal', () => {
 
       beforeEach(function () {
-        scope.transaction.amounts = [100, 250, 350];
+        scope.transaction.amount = 100;
         return scope.transaction.fee = 50;
       });
 
       it('should add up the transaction without fee', () => {
         let total = scope.getTransactionTotal();
-        expect(total).toEqual(700);
+        expect(total).toEqual(100);
       });
 
       it('should add up the transaction with fee', () => {
         let total = scope.getTransactionTotal(true);
-        expect(total).toEqual(750);
+        expect(total).toEqual(150);
       });
     });
 
     describe('amountsAreValid', () => {
 
       beforeEach(function () {
-        scope.transaction.amounts = [10, 20];
+        scope.transaction.amount = [10, 20];
         return scope.transaction.maxAvailable = 40;
       });
 
       it('should be true when all conditions are met', () => expect(scope.amountsAreValid()).toEqual(true));
 
-      it('should be false when any amounts are null', () => {
-        scope.transaction.amounts[0] = null;
+      it('should be false when any amount are null', () => {
+        scope.transaction.amount = null;
         expect(scope.amountsAreValid()).toEqual(false);
       });
 
-      it('should be false when amounts exceed the available balance', () => {
-        scope.transaction.maxAvailable = 29;
+      it('should be false when amount exceed the available balance', () => {
+        scope.transaction.maxAvailable = 1;
         expect(scope.amountsAreValid()).toEqual(false);
-      });
-    });
-
-    describe('checkForSameDestination', () => {
-
-      beforeEach(() => scope.transaction.destinations = [Wallet.accounts()[0], Wallet.accounts()[1]]);
-
-      it('should recognize when all destinations are valid', () => {
-        scope.transaction.from = Wallet.legacyAddresses()[0];
-        scope.checkForSameDestination();
-        expect(hasErr('destinations0', 'isNotEqual')).toBeUndefined();
-        expect(hasErr('destinations1', 'isNotEqual')).toBeUndefined();
-      });
-
-      it('should recognize when two destinations match', () => {
-        scope.transaction.from = Wallet.accounts()[1];
-        scope.checkForSameDestination();
-        expect(hasErr('destinations0', 'isNotEqual')).toBeUndefined();
-        expect(hasErr('destinations1', 'isNotEqual')).toBe(true);
       });
     });
 
     describe('hasAmountError', () =>
 
       it('should be true when all conditions are met', () => {
-        let field = scope.sendForm.amounts0;
-        let fiatField = scope.sendForm.amountsFiat0;
+        let field = scope.sendForm.amount;
         expect(field.$invalid).toEqual(true);
         field.$setTouched();
-        fiatField.$setTouched();
         spyOn(scope, 'amountsAreValid').and.returnValue(false);
         expect(scope.hasAmountError(0)).toEqual(true);
       })
@@ -768,13 +640,7 @@ describe('SendCtrl', () => {
 
       it('should set the transaction amount', () => {
         scope.useAll();
-        expect(scope.transaction.amounts[0]).toEqual(100);
-      });
-
-      it('should not use all if there is more than 1 destination', () => {
-        scope.transaction.amounts = [1, 2];
-        scope.useAll();
-        expect(scope.transaction.amounts[0]).toEqual(1);
+        expect(scope.transaction.amount).toEqual(100);
       });
 
       it('should set payment.amount', () => {
@@ -792,14 +658,14 @@ describe('SendCtrl', () => {
         scope.goToConfirmation();
         scope.$digest();
         expect(scope.finalBuild).toHaveBeenCalled();
-        expect(scope.confirmationStep).toEqual(true);
+        expect(scope.confirm).toEqual(true);
       })
       );
 
       it('should be able to go back from confirmation step', () => {
-        scope.confirmationStep = true;
+        scope.confirm = true;
         scope.backToForm();
-        expect(scope.confirmationStep).toBeFalsy();
+        expect(scope.confirm).toBeFalsy();
       });
 
       it('should be able to switch to advanced send', () => {
@@ -812,34 +678,6 @@ describe('SendCtrl', () => {
         scope.advanced = true;
         scope.regularSend();
         expect(scope.advanced).toBeFalsy();
-      });
-
-      it('should trim destinations when switching back to regular', () => {
-        scope.transaction.destinations = [null, null];
-        scope.regularSend();
-        expect(scope.transaction.destinations.length).toEqual(1);
-      });
-
-      it('should trim amounts when switching back to regular', () => {
-        scope.transaction.amounts = [null, null];
-        scope.regularSend();
-        expect(scope.transaction.amounts.length).toEqual(1);
-      });
-
-      beforeEach(function () {
-        scope.transaction.destinations = [null, null];
-        return scope.transaction.amounts = [0.5, 1.2];});
-
-      it('should be able to add a destination', () => {
-        scope.addDestination();
-        expect(scope.transaction.destinations.length).toBe(3);
-        expect(scope.transaction.amounts.length).toBe(3);
-      });
-
-      it('should be able to remove a destination', () => {
-        scope.removeDestination(0);
-        expect(scope.transaction.destinations.length).toBe(1);
-        expect(scope.transaction.amounts.length).toBe(1);
       });
     });
 
@@ -916,11 +754,11 @@ describe('SendCtrl', () => {
 
       it('should parse the url and update scope', inject((function ($timeout) {
         let pasteEvent = { target: { value:  'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'} };
-        scope.transaction.destinations = [{address: 'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'}];
+        scope.transaction.destination = [{address: 'bitcoin:145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i?amount=0.00034961&message=this%20is%20not%20the%20bitcoin%20you\'re%20looking%20for'}];
         scope.handlePaste(pasteEvent, 0);
         $timeout.flush();
-        expect(scope.transaction.amounts[0]).toEqual(34961);
-        expect(scope.transaction.destinations[0].address).toEqual('145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i');
+        expect(scope.transaction.amount).toEqual(34961);
+        expect(scope.transaction.destination.address).toEqual('145JWCey6sK7B8XrY44Q3LeugeJT7M2N4i');
       })
       )
       )
@@ -942,8 +780,8 @@ describe('SendCtrl', () => {
           '<form role="form" name="sendForm" novalidate>' +
           '<input type="text" name="from" ng-model="transaction.from" required />' +
           '<input type="text" name="priv" ng-model="transaction.priv" required />' +
-          '<input type="text" name="destinations0" ng-model="transaction.destinations[0]" required />' +
-          '<input type="number" name="amounts0" ng-model="transaction.amounts[0]" ng-change="" min="1" required />' +
+          '<input type="text" name="destination" ng-model="transaction.destination" required />' +
+          '<input type="number" name="amount" ng-model="transaction.amount" ng-change="" min="1" required />' +
           '<input type="number" name="fee" ng-model="transaction.fee" ng-change="" min="0" required />' +
           '<textarea rows="4" name="note" ng-model="transaction.note" ng-maxlength="512"></textarea>' +
           '</form>'
@@ -954,6 +792,6 @@ describe('SendCtrl', () => {
       })
     );
 
-    it('should check that the destination has a valid address', () => expect(hasErr('destinations0', 'isValidAddress')).not.toBeDefined());
+    it('should check that the destination has a valid address', () => expect(hasErr('destination', 'isValidAddress')).not.toBeDefined());
   });
 });

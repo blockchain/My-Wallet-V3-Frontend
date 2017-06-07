@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, Options, BlockchainConstants, modals) {
+function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -74,9 +74,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   return service;
 
   function init (coinify) {
-    return Options.get().then(options => {
-      coinify.partnerId = options.partners.coinify.partnerId;
-      coinify.api.testnet = BlockchainConstants.NETWORK === 'testnet';
+    return Env.then(env => {
+      coinify.partnerId = env.partners.coinify.partnerId;
+      coinify.api.testnet = env.network === 'testnet';
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
@@ -141,15 +141,13 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getMinLimits (quote) {
-    if (service.limits.bank.min && service.limits.card.min) return $q.resolve();
-
     const calculateMin = (mediums) => {
-      service.limits.bank.min = mediums.bank.minimumInAmounts;
-      service.limits.card.min = mediums.card.minimumInAmounts;
+      service.limits.bank.min = mediums.bank ? mediums.bank.minimumInAmounts : {};
+      service.limits.card.min = mediums.card ? mediums.card.minimumInAmounts : {};
       service.limits.absoluteMin = (curr) => {
         let cardMin = parseFloat(service.limits.card.min[curr], 0);
         let bankMin = parseFloat(service.limits.bank.min[curr], 0);
-        return bankMin > cardMin ? bankMin : cardMin;
+        return bankMin < cardMin ? bankMin : cardMin;
       };
     };
 
@@ -283,7 +281,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
           }
         },
         buySellOptions: () => buySellOptions,
-        options: () => Options.get(),
         payment: () => payment || undefined
       }
     }).result;

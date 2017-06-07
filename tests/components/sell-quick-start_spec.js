@@ -38,8 +38,11 @@ describe('sell-quick-start.component', () => {
 
   beforeEach(module('walletApp'));
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend) {
       let mediums;
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
       $rootScope = _$rootScope_;
       $compile = _$compile_;
       $templateCache = _$templateCache_;
@@ -87,7 +90,8 @@ describe('sell-quick-start.component', () => {
                 in: 300
               },
               'bank': {
-                in: 0
+                in: 0,
+                outDaily: 500
               }
             }
           },
@@ -121,13 +125,18 @@ describe('sell-quick-start.component', () => {
   });
 
   describe('offerUseAll()', () => {
-    it('should set maxSpendableAmount to the first number in the array', () => {
+    it('should set maxSpendableAmount', () => {
       getController(handlers);
       let paymentInfo = {
-        maxSpendableAmounts: [1, 2, 3, 4, 5],
-        sweepFees: [5, 4, 3, 2, 1]
+        sweepAmount: 1,
+        sweepFee: 1,
+        fees: {
+          priority: 1
+        }
       };
-      let payment = {};
+      let payment = {
+        updateFeePerKb: () => {}
+      };
       scope.offerUseAll(payment, paymentInfo);
       expect(scope.maxSpendableAmount).toEqual(1);
     });

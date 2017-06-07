@@ -1,8 +1,8 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('isignthis', isignthis);
 
-function isignthis ($sce, Options) {
+function isignthis ($sce, Env) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -31,15 +31,9 @@ function isignthis ($sce, Options) {
 
     let iSignThisDomain;
 
-    let processOptions = (options) => {
-      iSignThisDomain = options.partners.coinify.iSignThisDomain;
-    };
-
-    if (Options.didFetch) {
-      processOptions(Options.options);
-    } else {
-      Options.get().then(processOptions);
-    }
+    Env.then(env => {
+      iSignThisDomain = env.partners.coinify.iSignThisDomain;
+    });
 
     scope.iSignThisFrame = (iSignThisID) => {
       // TODO: use elem or avoid usage alltogether:

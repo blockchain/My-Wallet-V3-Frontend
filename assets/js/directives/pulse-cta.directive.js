@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('pulseCta', pulseCta);
 
 pulseCta.$inject = [];

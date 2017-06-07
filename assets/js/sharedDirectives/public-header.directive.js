@@ -2,9 +2,9 @@ angular
   .module('shared')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope', '$location', 'Env'];
+publicHeader.$inject = ['$location', 'Env', 'languages'];
 
-function publicHeader ($rootScope, $location, Env) {
+function publicHeader ($location, Env, languages) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -53,10 +53,11 @@ function publicHeader ($rootScope, $location, Env) {
   function link (scope, elem, attrs) {
     Env.then(env => {
       scope.rootURL = env.rootURL;
+      scope.isTestnet = env.network === 'testnet';
     });
-    scope.path = () => $location.path();
-    // Grunt will replace this, since BlockchainConstants.NETWORK is not available on landing page:
-    const network = $rootScope.network || 'bitcoin';
-    scope.isTestnet = network === 'testnet';
+
+    scope.$watch(languages.get, (code) => {
+      scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
+    });
   }
 }

@@ -4,11 +4,15 @@ describe('Amount', () => {
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, Wallet) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $httpBackend) {
     $compile = _$compile_;
-    return $rootScope = _$rootScope_;
+    $rootScope = _$rootScope_;
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
   })
   );
 

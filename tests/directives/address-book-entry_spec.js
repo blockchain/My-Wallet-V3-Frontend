@@ -5,10 +5,14 @@ describe('Address Book Entry Directive', () => {
   let isoScope;
   let Wallet;
   let MyWallet;
+  
+  beforeEach(module('walletDirectives'));
 
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $httpBackend) {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     $compile = _$compile_;
     $rootScope = _$rootScope_;

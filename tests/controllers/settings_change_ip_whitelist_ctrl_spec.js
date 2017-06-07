@@ -4,6 +4,11 @@ describe('ChangeIpWhitelistCtrl', () => {
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(inject(($httpBackend) => {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+  }));
+
   beforeEach(() =>
     angular.mock.inject(function ($injector, $rootScope, $controller, $compile, $templateCache, $q) {
       Wallet = $injector.get('Wallet');

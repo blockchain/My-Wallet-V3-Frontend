@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('addressBookEntry', addressBookEntry);
 
 addressBookEntry.$inject = ['Wallet', '$translate', 'Alerts'];

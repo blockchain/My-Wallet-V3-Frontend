@@ -5,11 +5,17 @@ describe('Verify Mobile Number Directive', () => {
   let isoScope;
   let Wallet;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
     Wallet = $injector.get('Wallet');
 
     Wallet.verifyMobile = function (code, success, error) {

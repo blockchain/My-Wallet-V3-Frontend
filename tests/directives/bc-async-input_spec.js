@@ -3,6 +3,8 @@ describe('bcAsyncInput Directive', function () {
   let scope;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   let compileElement = function (attrs) {
     if (attrs != null) { attrs = attrs.join(' '); }
 
@@ -19,7 +21,9 @@ describe('bcAsyncInput Directive', function () {
 
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, $rootScope, Wallet) {
+  beforeEach(inject(function (_$compile_, $rootScope, $httpBackend) {
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     $compile = _$compile_;
 

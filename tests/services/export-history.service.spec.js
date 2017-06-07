@@ -7,7 +7,9 @@ describe('ExportHistory service', () => {
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, $q) {
+    angular.mock.inject(function ($injector, _$rootScope_, $q, $httpBackend) {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
       $rootScope = _$rootScope_;
       Wallet = $injector.get('Wallet');
       ExportHistory = $injector.get('ExportHistory');

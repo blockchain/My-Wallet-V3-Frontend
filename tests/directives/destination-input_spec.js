@@ -6,9 +6,11 @@ describe('Destination Input directive', () => {
   let Wallet;
   let ignore;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     let scope = $rootScope.$new();
@@ -16,7 +18,12 @@ describe('Destination Input directive', () => {
 
     Wallet.addressBook = () => [
       { address: '1abc', label: 'address_book_entry' }
-    ] ;
+    ];
+
+    Wallet.isValidPrivateKey = () => false;
+
+    // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
     Wallet.my.wallet = {
       hdwallet: {

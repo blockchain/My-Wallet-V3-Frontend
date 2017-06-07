@@ -3,6 +3,8 @@ describe('Activity Feed directive', () => {
   let $rootScope;
   let element;
   let scope;
+  
+  beforeEach(module('walletDirectives'));
 
   beforeEach(module('walletApp'));
 

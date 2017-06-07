@@ -1,17 +1,16 @@
 describe('Video Container Directive', () => {
   let $compile;
   let $rootScope;
-  let $sce;
   let element;
   let isoScope;
 
+  beforeEach(module('walletDirectives'));
+  
   beforeEach(module('walletApp'));
-  // beforeEach module('shared')
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, _$sce_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $sce = _$sce_;
   })
   );
 
