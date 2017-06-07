@@ -1,4 +1,4 @@
-describe('buy-checkout.component', () => {
+describe('exchange-checkout.component', () => {
   let $rootScope;
   let $compile;
   let $templateCache;
@@ -43,7 +43,7 @@ describe('buy-checkout.component', () => {
   let getControllerScope = function (bindings) {
     scope = $rootScope.$new(true);
     $componentController('buyCheckout', {$scope: scope}, bindings);
-    let template = $templateCache.get('templates/buy-checkout.pug');
+    let template = $templateCache.get('templates/exchange/checkout.pug');
     $compile(template)(scope);
     return scope;
   };

@@ -338,10 +338,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet, unocoin) {
+        _loadExchangeData ($q, MyWallet, Exchange) {
           let exchange = MyWallet.wallet.external.unocoin;
           return exchange.user && !exchange.profile
-            ? $q.resolve().then(() => unocoin.fetchExchangeData(exchange))
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
         accounts ($q, MyWallet) {
@@ -377,10 +377,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet, sfox) {
+        _loadExchangeData ($q, MyWallet, Exchange) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? $q.resolve().then(() => sfox.fetchExchangeData(exchange))
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
         accounts ($q, MyWallet) {

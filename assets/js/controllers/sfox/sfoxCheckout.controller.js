@@ -28,6 +28,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
+      'upload': { text: 'Verify Identity', i: 'ti-id-badge' },
       'link': { text: 'Link Payment', i: 'ti-credit-card bank bank-lrg' }
     };
     let step = sfox.determineStep(exchange, accounts);

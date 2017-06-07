@@ -8,31 +8,27 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   });
 
   let exchange = $scope.vm.exchange;
-  let idTypes = ['id', 'pancard', 'photo', 'address'];
   let getNextIdType = () => idTypes.shift();
+  let idTypes = ['id', 'pancard', 'photo', 'address'];
 
   $scope.openHelper = modals.openHelper;
-
-  $scope.state = {
-    idType: getNextIdType(),
-    step: 'address',
-    base: 'unocoin_'
-  };
-
-  $scope.onStep = (step) => step === $scope.state.step;
   $scope.goTo = (step) => $scope.state.step = step;
 
+  $scope.state = {
+    base: 'unocoin_',
+    idType: getNextIdType()
+  };
+
   $scope.setState = () => {
-    $scope.state.file = undefined;
     $scope.state.idType = getNextIdType();
   };
 
-  $scope.prepUpload = () => {
+  $scope.prepUpload = (file) => {
     let fields = $scope.state;
-    let profile = exchange.profile;
     let idType = fields.idType;
+    let profile = exchange.profile;
 
-    $q.resolve(Upload.base64DataUrl(fields.file))
+    return $q.resolve(Upload.base64DataUrl(file))
       .then((url) => profile.addPhoto(idType, url))
       .then(() => idTypes.length > 0 ? $scope.setState() : $scope.verify());
   };
@@ -40,17 +36,12 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.verify = () => {
     $scope.lock();
 
-    try {
-      let profile = exchange.profile;
-
-      $q.resolve(profile.verify())
-        .then(() => $scope.vm.goTo('pending'))
-        .catch(unocoin.displayError)
-        .finally($scope.free);
-    } catch (error) {
-      console.error(error);
-      $scope.free();
-    }
+    let profile = exchange.profile;
+    
+    return $q.resolve(profile.verify())
+             .then(() => $scope.vm.goTo('pending'))
+             .catch(unocoin.displayError)
+             .finally($scope.free);
   };
 
   AngularHelper.installLock.call($scope);
