@@ -14,10 +14,10 @@ function QA () {
 
   service.unocoinAddressForm = () => {
     let fields = {
+      mobile: '+91' + Math.floor(1496722750000 + 10000000 * Math.random(1)).toString().slice(0, 10),
       fullName: 'Satoshi' + unique + ' Nakamoto',
-      mobile: '+91' + unique.slice(0, 10),
-      pancard: unique.slice(0, 10),
       street: 'Abc #1024 6th cross Bangalore',
+      pancard: unique.slice(0, 10),
       city: 'Bangalore',
       state: 'Karnataka',
       zipcode: '560011'
@@ -37,10 +37,10 @@ function QA () {
 
   service.SFOXAddressForm = () => {
     let fields = {
-      first: 'Satoshi' + unique,
-      last: 'Nakamoto' + unique,
+      firstName: 'Satoshi' + unique,
+      lastName: 'Nakamoto' + unique,
       ssn: unique.slice(4, 13),
-      dob: new Date(1991, 4, 14),
+      dob: '04/14/1991',
       addr1: '123 Bitcoin Lane',
       addr2: '2',
       city: 'New York City',

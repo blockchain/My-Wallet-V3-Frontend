@@ -67,7 +67,7 @@
               label Enter verification code sent to your email:
               input(ng-model="$ctrl.state.emailCode" name="emailCode" ng-change="$ctrl.clearInlineErrors()" focus-when="$ctrl.state.sentEmailCode || $ctrl.state.resentEmailCode" required)
             .item(ng-hide="emailForm.emailCode.$error.correct")
-              span.f-14.mt-5(ng-hide="state.resentEmailCode")
+              span.f-14.mt-5(ng-hide="$ctrl.state.resentEmailCode")
                 | Didn't receive the email? 
                 a(ng-click="$ctrl.sendEmailCode(); $ctrl.state.resentEmailCode = true;") Resend 
                 | or 
