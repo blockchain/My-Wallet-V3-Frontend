@@ -14,10 +14,10 @@ function QA () {
 
   service.unocoinAddressForm = () => {
     let fields = {
+      mobile: '+91' + Math.floor(1496722750000 + 10000000 * Math.random(1)).toString().slice(0, 10),
       fullName: 'Satoshi' + unique + ' Nakamoto',
-      mobile: '+91' + unique.slice(0, 10),
-      pancard: unique.slice(0, 10),
       street: 'Abc #1024 6th cross Bangalore',
+      pancard: unique.slice(0, 10),
       city: 'Bangalore',
       state: 'Karnataka',
       zipcode: '560011'
