@@ -30,9 +30,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
 
   function buy (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
-      .then(mediums => {
-        mediums.bank.buy();
-      });
+             .then(mediums => mediums.bank.buy());
   }
 
   return service;

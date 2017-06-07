@@ -134,11 +134,25 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/trade-modal.pug',
       windowClass: 'bc-modal trade-summary',
       controller ($scope, trade, formatTrade, accounts) {
+        $scope.vm = { trade: trade };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
       },
       resolve: {
         trade: () => trade,
         accounts
+      }
+    });
+  });
+
+  service.openBankTransfer = service.dismissPrevious((trade) => {
+    return openMobileCompatible({
+      templateUrl: 'partials/unocoin/bank-transfer.pug',
+      windowClass: 'bc-modal trade-summary',
+      controller: 'UnocoinBankTransferController',
+      controllerAs: 'vm',
+      resolve: {
+        trade () { return trade; },
+        bankAccount () { return trade.getBankAccountDetails(); }
       }
     });
   });

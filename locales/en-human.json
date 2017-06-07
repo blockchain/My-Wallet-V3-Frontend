@@ -1073,6 +1073,10 @@
     "TITLE": "",
     "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to Coinify's bank account below within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
   },
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Bank Transfer",
+    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below. You will then need to provide the bank transfer reference number."
+  },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
     "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 days."
@@ -1278,6 +1282,11 @@
     "OPTION4": "Utility Bill",
     "HELP": "Make sure the snapshot clearly displays your name and address."
   },
+  "BANK_NAME": "Bank Name",
+  "ACCOUNT_HOLDER_NAME": "Account Holder Name",
+  "ACCOUNT_NUMBER": "Account Number",
+  "IFSC_CODE": "IFSC Code",
+  "ACCOUNT_TYPE": "Account Type",
   "bank-check-helper": {
     "TITLE": "Routing and Account Number",
     "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."

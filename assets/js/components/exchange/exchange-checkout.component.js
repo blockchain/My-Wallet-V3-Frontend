@@ -8,6 +8,7 @@ angular
       dollars: '<',
       buyLimit: '<',
       buyLevel: '<',
+      buyEnabled: '<',
       buyAccount: '<',
       conversion: '<',
       collapseSummary: '<',
@@ -120,7 +121,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
-    if (this.buyAccount) {
+    if (this.buyAccount || this.buyEnabled) {
       this.handleBuy({account: this.buyAccount, quote: quote})
         .then(trade => {
           this.buySuccess({trade});
