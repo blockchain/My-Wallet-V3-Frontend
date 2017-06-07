@@ -2,9 +2,9 @@ angular
   .module('shared')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$location', 'Env'];
+publicHeader.$inject = ['$location', 'Env', 'languages'];
 
-function publicHeader ($location, Env) {
+function publicHeader ($location, Env, languages) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -55,6 +55,9 @@ function publicHeader ($location, Env) {
       scope.rootURL = env.rootURL;
       scope.isTestnet = env.network === 'testnet';
     });
-    scope.path = () => $location.path();
+
+    scope.$watch(languages.get, (code) => {
+      scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
+    });
   }
 }

@@ -158,6 +158,20 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openBuyView = service.openOnce((quote, trade) => {
+    let exchange = ($q, MyWallet) => {
+      let coinify = MyWallet.wallet.external.coinify;
+      return coinify.hasAccount
+        ? coinify.fetchProfile()
+        : $q.resolve({profile: {}});
+    };
+
+    let trades = ($q, MyWallet) => {
+      let coinify = MyWallet.wallet.external.coinify;
+      return coinify.hasAccount
+        ? coinify.getTrades()
+        : $q.resolve([]);
+    };
+
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
       controller: 'CoinifyController',
@@ -166,6 +180,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
+        trades,
+        exchange,
         quote () { return quote; },
         trade () { return trade; },
         paymentMediums () { return quote && quote.getPaymentMediums(); }

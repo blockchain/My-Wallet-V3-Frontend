@@ -36,7 +36,8 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchangeCountry = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
   if (this.exchange.profile.currentLimits) {
-    $scope.sellLimit = this.exchange.profile.currentLimits.bank.outRemaining.toString();
+    $scope.sellLimit = this.exchange.profile.level.limits.bank.outDaily.toString();
+    $scope.remaining = this.exchange.profile.currentLimits.bank.outRemaining.toString();
     $scope.hideIncreaseLimit = this.exchange.profile.level.name > 1;
   }
 
@@ -73,14 +74,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.updateLastInput = (type) => $scope.lastInput = type;
 
   $scope.getInitialExchangeRate = () => {
-    this.status.fetching = true;
-
     buySell.getQuote(-1, 'BTC', this.transaction.currency.code)
       .then(quote => {
         $scope.getMinLimits(quote);
         $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
-        this.status = {};
-      }, error).finally($scope.getQuote);
+      }, error);
   };
 
   $scope.getExchangeRate = () => {
@@ -100,18 +98,18 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getQuote = () => {
     this.status.fetching = true;
     this.status.busy = true;
-    if ($scope.lastInput === 'btc') {
+    if ($scope.lastInput === 'btc' && this.transaction.btc) {
       $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error));
-    } else if ($scope.lastInput === 'fiat') {
+    } else if ($scope.lastInput === 'fiat' && this.transaction.fiat) {
       $q.resolve(buySell.getSellQuote(this.transaction.fiat, this.transaction.currency.code, 'BTC').then(success, error));
     } else {
-      this.status = { busy: false };
+      this.status = { busy: false, fetching: false };
     }
   };
 
   const success = (quote) => {
-    this.status = {};
     $scope.quote = quote;
+    $scope.getMinLimits(quote);
     $scope.exchangeRate.fiat = $scope.getExchangeRate();
 
     if (quote.quoteCurrency === 'BTC') {
@@ -121,6 +119,17 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
 
     Alerts.clear();
+    btcFeeCheck();
+  };
+
+  const btcFeeCheck = () => {
+    if (this.transaction.btc >= $scope.totalBalance) {
+      this.error['moreThanInWallet'] = true;
+      $scope.checkForNoFee();
+    } else {
+      $scope.checkForNoFee();
+      this.error['moreThanInWallet'] = false;
+    }
   };
 
   const error = () => {
@@ -181,7 +190,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   $scope.offerUseAll = (payment, paymentInfo) => {
     this.error['moreThanInWallet'] = true;
-    this.status.busy = true;
+    this.status = { busy: true, fetching: false };
     payment.updateFeePerKb(paymentInfo.fees.priority);
     $scope.payment = Wallet.my.wallet.createPayment(payment);
     $scope.maxSpendableAmount = paymentInfo.sweepAmount;
@@ -192,9 +201,11 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.handleCurrencyClick = (curr) => {
     this.changeCurrency(curr);
     $scope.changeSymbol(curr);
+    $scope.getInitialExchangeRate();
   };
 
   $scope.multipleAccounts = () => Wallet.accounts().length > 1;
+  $scope.defaultAccount = () => Wallet.getDefaultAccount().label;
 
   $scope.useAll = () => {
     this.transaction.btc = currency.convertFromSatoshi($scope.maxSpendableAmount, currency.bitCurrencies[0]);
@@ -203,23 +214,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code).then(success, error);
   };
 
-  $scope.$watch('$ctrl.transaction.btc', (newVal, oldVal) => {
-    if ($scope.totalBalance === 0) {
-      $scope.tradingDisabled = true;
-      $scope.showZeroBalance = true;
-      return;
-    }
-    if (newVal >= $scope.totalBalance) {
-      this.error['moreThanInWallet'] = true;
-      $scope.checkForNoFee();
-    } else if (newVal < $scope.totalBalance) {
-      $scope.checkForNoFee();
-      this.error['moreThanInWallet'] = false;
-    } else if (!newVal) {
-      $scope.checkForNoFee();
-      this.error['moreThanInWallet'] = false;
-    }
-  });
+  if ($scope.totalBalance === 0) {
+    $scope.tradingDisabled = true;
+    $scope.showZeroBalance = true;
+  }
 
   $scope.getMinLimits = (quote) => {
     buySell.getMinLimits(quote).then($scope.limits = buySell.limits);
