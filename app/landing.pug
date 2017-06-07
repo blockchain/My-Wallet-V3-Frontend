@@ -173,7 +173,7 @@
               i.icon-down_arrow.f-8.ml-5
             ul.languages_select(uib-dropdown-menu)
               li(ng-repeat="lang in languages")
-                a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
+                a(ng-href="/{{lang.code}}/wallet{{path()}}") {{lang.name}}
         .col-md-2
           p.primary.uppercase.ls-label Company
           p
@@ -199,7 +199,7 @@
               i.icon-down_arrow.f-8.ml-5
             ul.languages_select(uib-dropdown-menu)
               li(ng-repeat="lang in languages")
-                a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
+                a(ng-href="/{{lang.code}}/wallet{{path()}}") {{lang.name}}
     .container.type-sm.flex-column-reverse-mobile.flex-center
       .col-md-8.pln.pt-60
         span(class="medium-blue mbn upper f-10")

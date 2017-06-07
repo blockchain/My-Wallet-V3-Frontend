@@ -7,7 +7,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   let accounts = $scope.vm.accounts;
 
   Env.then(env => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
   });
 
   $scope.types = ['checking', 'savings'];

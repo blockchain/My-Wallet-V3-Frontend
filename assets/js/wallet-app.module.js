@@ -30,7 +30,9 @@ const modules = [
   'ngFileUpload'
 ];
 
-angular.module('walletApp', modules)
+angular.module('walletApp', modules).config(($locationProvider) => {
+  $locationProvider.html5Mode(true);
+})
 .config(($compileProvider, uiSelectConfig, $ocLazyLoadProvider) => {
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|data):/);
   uiSelectConfig.theme = 'bootstrap';

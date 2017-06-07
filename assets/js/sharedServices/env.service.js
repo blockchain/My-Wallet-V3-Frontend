@@ -15,7 +15,7 @@ function Env ($rootScope, $location, $q, $http) {
   const absUrl = $location.absUrl();
   const path = $location.path();
   if (absUrl && path && path.length) {
-    // e.g. https://blockchain.info/wallet/#
+    // e.g. https://blockchain.info/wallet
     env.rootPath = $location.absUrl().slice(0, -$location.path().length);
   }
 

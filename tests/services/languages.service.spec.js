@@ -31,8 +31,8 @@ describe('languages', () => {
   describe('parseFromPath', () => {
     let fixtures = {
       '/de/wallet': 'de',
-      '/nl/wallet/#/': 'nl',
-      '/en/wallet/#/login': 'en'
+      '/nl/wallet/': 'nl',
+      '/en/wallet/login': 'en'
     };
 
     Object.keys(fixtures).forEach(route => {

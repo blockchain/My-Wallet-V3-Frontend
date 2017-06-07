@@ -41,7 +41,7 @@ rootApp.get('/:lang?/search', (req, res) => {
 
 app.use(function (req, res, next) {
   var cspHeader;
-  if (req.url === '/') {
+  if (req.url.startsWith('/') && !req.url.includes('.')) {
     cspHeader = ([
       "img-src 'self' " + rootURL + ' data: blob: android-webview-video-poster:',
       // echo -n "outline: 0;" | openssl dgst -sha256 -binary | base64
@@ -88,7 +88,7 @@ app.use(function (req, res, next) {
 if (runWalletHelper) {
   helperApp.use(function (req, res, next) {
     var cspHeader;
-    if (req.url === '/wallet-helper/plaid/') {
+    if (req.url.startsWith('/wallet-helper/plaid/') && !req.url.includes('.')) {
       cspHeader = ([
         "img-src 'none'",
         "style-src 'self'",
@@ -106,7 +106,7 @@ if (runWalletHelper) {
       // res.setHeader('X-Frame-Options', 'ALLOW-FROM http://localhost:8080/');
       res.render('plaid/index.html');
       return;
-    } else if (req.url === '/wallet-helper/sift-science/') {
+    } else if (req.url.startsWith('/wallet-helper/sift-science/') && !req.url.includes('.')) {
       cspHeader = ([
         'img-src https://hexagon-analytics.com',
         "style-src 'none'",
