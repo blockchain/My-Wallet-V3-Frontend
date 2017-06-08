@@ -13,7 +13,7 @@
         privacy-agreement="https://www.unocoin.com/privacy")
     div(ng-if="vm.onStep('verify')" ng-controller="UnocoinVerifyController")
       exchange-verify(
-        fields="['fullName', 'mobile', 'pancard', 'address', 'pincode']"
+        fields="['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state']"
         mobile-preferences="['IN']"
         steps="['address', 'info']"
         exchange="exchange"

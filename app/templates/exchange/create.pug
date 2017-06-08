@@ -29,7 +29,7 @@
             input(ng-model="$ctrl.state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
             .help.mb-15
-              span(ng-click="$ctrl.view('email')")
+              span.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text Sorry, this email is already registered with {{$ctrl.exchangeName}}. 
                 a Change Email
         .group.pb-40(ng-if="$ctrl.mobileRequired")
