@@ -133,8 +133,11 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     return openMobileCompatible({
       templateUrl: 'partials/trade-modal.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, trade, formatTrade, accounts) {
-        $scope.vm = { trade: trade };
+      controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
+        $scope.vm = {
+          trade: trade,
+          cancel: $uibModalInstance.dismiss('')
+        };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
       },
       resolve: {
