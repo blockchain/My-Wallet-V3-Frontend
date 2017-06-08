@@ -137,8 +137,8 @@ function currency ($q, MyBlockchainApi) {
 
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2 })[currency.code];
-    return decimalPlaces || 2;
+    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0 })[currency.code];
+    return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
 
   function convertToSatoshi (amount, currency) {
@@ -147,6 +147,8 @@ function currency ($q, MyBlockchainApi) {
       return Math.round(amount * currency.conversion);
     } else if (conversions[currency.code] != null) {
       return Math.ceil(amount * conversions[currency.code].conversion);
+    } else if (currency.conversion) {
+      return Math.ceil(amount * currency.conversion);
     } else {
       return null;
     }
@@ -158,6 +160,8 @@ function currency ($q, MyBlockchainApi) {
       return amount / currency.conversion;
     } else if (conversions[currency.code] != null) {
       return amount / conversions[currency.code].conversion;
+    } else if (currency.conversion) {
+      return Math.ceil(amount * currency.conversion);
     } else {
       return null;
     }

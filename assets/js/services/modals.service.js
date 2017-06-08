@@ -133,7 +133,11 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     return openMobileCompatible({
       templateUrl: 'partials/trade-modal.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, trade, formatTrade, accounts) {
+      controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
+        $scope.vm = {
+          trade: trade,
+          cancel: $uibModalInstance.dismiss('')
+        };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
       },
       resolve: {
@@ -143,7 +147,34 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openBankTransfer = service.dismissPrevious((trade) => {
+    return openMobileCompatible({
+      templateUrl: 'partials/unocoin/bank-transfer.pug',
+      windowClass: 'bc-modal trade-summary',
+      controller: 'UnocoinBankTransferController',
+      controllerAs: 'vm',
+      resolve: {
+        trade () { return trade; },
+        bankAccount () { return trade.getBankAccountDetails(); }
+      }
+    });
+  });
+
   service.openBuyView = service.openOnce((quote, trade) => {
+    let exchange = ($q, MyWallet) => {
+      let coinify = MyWallet.wallet.external.coinify;
+      return coinify.hasAccount
+        ? coinify.fetchProfile()
+        : $q.resolve({profile: {}});
+    };
+
+    let trades = ($q, MyWallet) => {
+      let coinify = MyWallet.wallet.external.coinify;
+      return coinify.hasAccount
+        ? coinify.getTrades()
+        : $q.resolve([]);
+    };
+
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
       controller: 'CoinifyController',
@@ -152,6 +183,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
+        trades,
+        exchange,
         quote () { return quote; },
         trade () { return trade; },
         paymentMediums () { return quote && quote.getPaymentMediums(); }

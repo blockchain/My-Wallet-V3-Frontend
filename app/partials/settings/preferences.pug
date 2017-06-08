@@ -12,7 +12,7 @@
           p.alt-font.f-16.em-300.hidden-xs(translate="EMAIL_ADDRESS_EXPLAIN")
           p.alt-font.f-16.em-400.hidden-xs.security-red(translate="CHANGE_EMAIL_NOT_EXCHANGE" ng-show="userHasExchangeAcct && active")
         .col-sm-0.col-md-2
-        .col-sm-12.col-md-4.setting-result(ng-hide="active")
+        .col-sm-12.col-md-5.setting-result(ng-hide="active")
           p.em-400.type-h5.mbm {{ user.email }}
           a.button-primary.display-inline-block(ng-click="activate()", translate="CHANGE")
         .col-sm-12.col-md-4.flex-column(ng-show="active")

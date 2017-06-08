@@ -36,8 +36,7 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.signupCompleted = exchange.profile.level > 2;
   $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
-
-  $scope.inspectTrade = modals.openTradeSummary;
+  $scope.inspectTrade = (quote, trade) => trade.state === 'awaiting_reference_number' ? modals.openBankTransfer(trade) : modals.openTradeSummary(trade);
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
@@ -50,10 +49,9 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.quoteHandler = unocoin.fetchQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {
-    $scope.tabs.select('ORDER_HISTORY');
-    modals.openTradeSummary(trade, 'initiated');
-    exchange.fetchProfile().then($scope.setState);
-    buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
+    modals.openBankTransfer(trade);
+    // exchange.fetchProfile().then($scope.setState);
+    // buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
   };
 
   $scope.buyError = () => {

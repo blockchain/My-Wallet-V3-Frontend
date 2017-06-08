@@ -146,21 +146,23 @@
                 .flex-1.flex-center.border
                   input.form-control.no-border(
                     min="0"
+                    step="1"
                     name="fee"
                     type="number"
-                    step="any"
                     focus-when="advanced"
+                    transform-currency="{code: 'sat', conversion: 1}"
                     ng-change="payment.updateFeePerKb(transaction.satoshiPerByte)"
                     ng-model="transaction.satoshiPerByte"
                     required)
                   span.mhm sat/b
               .pos-rel
                 .pos-abs
-                  span.f-12.state-danger-text.pointer(ng-if="transaction.satoshiPerByte > transaction.fees.limits.max" ng-click="payment.updateFeePerKb(transaction.fees.limits.max) && (transaction.satoshiPerByte = transaction.fees.limits.max)") {{ transaction.fees.limits.max }} sat/b or less is recommended.
-                  span.f-12.state-danger-text.pointer(ng-if="transaction.satoshiPerByte < transaction.fees.limits.min" ng-click="payment.updateFeePerKb(transaction.fees.limits.min) && (transaction.satoshiPerByte = transaction.fees.limits.min)") {{ transaction.fees.limits.min }} sat/b or more is recommended.
+                  span.f-12.state-danger-text.pointer(ng-if="transaction.maxAvailable > 0 && transaction.satoshiPerByte > transaction.fees.limits.max" ng-click="payment.updateFeePerKb(transaction.fees.limits.max) && (transaction.satoshiPerByte = transaction.fees.limits.max)") {{ transaction.fees.limits.max }} sat/b or less is recommended.
+                  span.f-12.state-danger-text.pointer(ng-if="transaction.maxAvailable > 0 && transaction.satoshiPerByte < transaction.fees.limits.min" ng-click="payment.updateFeePerKb(transaction.fees.limits.min) && (transaction.satoshiPerByte = transaction.fees.limits.min)") {{ transaction.fees.limits.min }} sat/b or more is recommended.
+                  span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0 && sendForm.fee.$valid") You do not have enough funds to use this fee.
             .item.right-align.width-45.width-45-mobile.width-45-tablet
               label.fade(translate="FEE")
-              span.f-14.state-danger-text(ng-if="transaction.maxAvailable <= 0") Fee is too high
+              span.f-14(ng-if="transaction.maxAvailable <= 0") &nbsp;
               span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)

@@ -7,6 +7,7 @@ formatTrade.$inject = ['$rootScope', '$filter', 'Wallet', 'MyWallet', 'currency'
 function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   const service = {
     awaiting_transfer_in,
+    bankTransfer,
     confirm,
     reviewing,
     pending,
@@ -174,6 +175,23 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       return { accountNumber: 'Account Number', bankCode: 'Reg. Number' };
     }
     return { accountNumber: 'IBAN', bankCode: 'BIC' };
+  }
+
+  function bankTransfer (trade, bankAccount) {
+    return {
+      namespace: 'TX_AWAITING_REF_NUMBER',
+      tx: {
+        'AMOUNT': trade.sendAmount + ' ' + trade.inCurrency,
+        'BANK_NAME': bankAccount.bankName,
+        'ACCOUNT_HOLDER_NAME': bankAccount.holderName,
+        'ACCOUNT_NUMBER': bankAccount.number,
+        'IFSC_CODE': bankAccount.ifsc,
+        'ACCOUNT_TYPE': bankAccount.type
+      },
+      values: {
+        amount: trade.sendAmount + ' ' + trade.inCurrency
+      }
+    };
   }
 
   function awaiting_transfer_in (trade) {
