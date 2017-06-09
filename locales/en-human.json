@@ -1250,29 +1250,22 @@
     "UPLOAD_SELECT": "Select Upload Method",
     "HELP": "Make sure the snapshot clearly displays your address."
   },
-  "unocoin_id_ID": {
-    "TITLE": "1. Upload ID",
-    "COPY": "As required by government law, you need to provide ID proof for verification.",
-    "UPLOAD_TITLE": "@:id_ID.UPLOAD_TITLE",
-    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "HELP": "@:id_ID.HELP"
-  },
   "unocoin_pancard_ID": {
-    "TITLE": "2. PAN Card",
+    "TITLE": "1. PAN Card",
     "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
     "UPLOAD_TITLE": "PAN Card",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
     "HELP": "Make sure the snapshot clearly displays your pancard number."
   },
   "unocoin_photo_ID": {
-    "TITLE": "3. Your Photo",
+    "TITLE": "2. Your Photo",
     "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
     "UPLOAD_TITLE": "Photo",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
     "HELP": "Make sure the snapshot clearly displays your face."
   },
   "unocoin_address_ID": {
-    "TITLE": "4. Address Proof",
+    "TITLE": "3. Address Proof",
     "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
     "UPLOAD_TITLE": "Address Proof",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
