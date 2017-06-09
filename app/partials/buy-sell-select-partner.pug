@@ -27,7 +27,7 @@ div
             a(ng-href="{{partner.href}}" target="_blank" rel="noopener noreferrer")
               img.partner-logo.mbm(ng-src="{{partner.logo}}")
             p.f-14(translate="{{partner.subtext}}")
-            button.btn.button-primary.full-width.mt-15(translate="CONTINUE" ng-click="selectPartner(partner, country.Code)")
+            button.btn.button-primary.full-width.mt-15(translate="CONTINUE" ng-click="selectPartner(partner, country.Code)" ng-disabled="status.busy")
         form.bc-form.mt-20(ng-show="blacklisted" ng-submit="signupForAccess()")
           span.f-14.state-danger-text(ng-show="blacklisted && country.Code !== 'US'" translate="BUY_BTC_UNAVAIL_COUNTRY")
           span.f-14.state-danger-text(ng-show="blacklisted && country.Code === 'US'" translate="BUY_BTC_UNAVAIL_STATE")
