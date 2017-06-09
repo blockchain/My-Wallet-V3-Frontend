@@ -40,6 +40,5 @@ function LandingCtrl ($scope, $state, $sce, languages, Env, walletStats) {
 
   $scope.$watch(languages.get, (code) => {
     $scope.language = languages.mapCodeToName(code);
-    $scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
   });
 }

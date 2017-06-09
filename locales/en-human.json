@@ -996,7 +996,7 @@
   "BANK_TRANSFER_HEADING": "Bank Transfer",
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<a>Click here.</a>",
-  "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin purchase. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
+  "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin transaction. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept our <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
@@ -1346,7 +1346,7 @@
     "KYC_EXPIRED": "Your identity verification expired. Please try uploading different identification. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "KYC_REJECTED": "There was an issue verifying your identity. Please try again. Bank transfer limits cannot be increased until we can successfully verify your identity.",
     "MORE_THAN_BALANCE": "Amount entered is more than your balance.",
-    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than your default wallet balance",
+    "MORE_THAN_BALANCE_LABELS": "Amount entered is more than {{::account}} balance",
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
@@ -1375,6 +1375,8 @@
     "IDENTITY_VERIFICATION": "Identity Verification",
     "QUOTE_WILL_EXPIRE": "When the quote expires it will refresh. The bitcoin amount you are selling will not change.",
     "QUOTE_EXPIRES": "Quote Expires: {{::count}}",
+    "LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} yearly limit. To increase your limit, click",
+    "LEVEL_2_LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} daily limit",
     "ISX": {
       "REVIEWING": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!",
       "REJECTED": "There was an issue verifying your identity. Please try again. Increasing your limit is unavailable until we can successfully verify your identity.",
@@ -1401,5 +1403,17 @@
   "DOWNLOAD_OUR_APP": "Download our mobile app on your Android or iOS device to use your wallet on the go.",
   "PAIR_DEVICE": "Pair Your Device",
   "SYNC_WALLET": "Once you download the app on your device, tap 'Log In' and scan the QR code to sync your wallet.",
+  "RETRY": "Retry",
+  "LOGGING_IN_NOW": "Logging you in now",
+  "APP_CTA": "Don't have the App?",
+  "DOWNLOAD_HERE": "Download it here",
+  "MOBILE_LOGIN": {
+    "TITLE": "Log in via Mobile",
+    "SUB_TEXT": "Follow these steps to log into your web wallet using your mobile device",
+    "STEPS_TITLE": "Logging in with Mobile",
+    "STEP_1": "Open your Blockchain App on your mobile device and go to Settings.",
+    "STEP_2": "Tap <i>Log in to Web Wallet</i>.",
+    "STEP_3": "Using your computer's camera, scan the QR code that appears on your device."
+  },
   "": ""
 }
