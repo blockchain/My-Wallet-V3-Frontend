@@ -131,7 +131,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         : $q.resolve([]);
     };
     return openMobileCompatible({
-      templateUrl: 'partials/trade-modal.pug',
+      templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
       controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
         $scope.vm = {
