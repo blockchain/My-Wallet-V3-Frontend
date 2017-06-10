@@ -2,34 +2,28 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) {
+function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Env, $window) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
-  let processOptions = (options) => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${options.partners.sfox.plaidEnv}`);
-  };
-
-  if (Options.didFetch) {
-    processOptions(Options.options);
-  } else {
-    Options.get().then(processOptions);
-  }
+  Env.then(env => {
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
+  });
 
   $scope.types = ['checking', 'savings'];
-  $scope.openBankHelper = modals.openBankHelper;
-  $scope.openDepositHelper = modals.openDepositHelper;
+  $scope.openHelper = modals.openHelper;
 
   let state = $scope.state = {
     plaid: {},
     terms: false,
-    accounts: accounts
+    accounts: accounts,
+    enableBankAccountForm: !!$scope.$root.inMobileBuy
   };
 
   $scope.fields = {
     deposit1: undefined,
     deposit2: undefined,
-    nickname: '',
+    accountName: undefined,
     routingNumber: undefined,
     accountNumber: undefined,
     type: 'checking',
@@ -65,7 +59,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
     let addAccount = (methods) => methods.ach.addAccount(
       $scope.fields.routingNumber,
       $scope.fields.accountNumber,
-      'name1',
+      $scope.fields.accountName,
       $scope.fields.type
     );
 
@@ -95,9 +89,8 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
   $scope.setBankAccount = () => {
     let obj = {
       token: $scope.token,
-      id: $scope.fields.bankAccount._id,
-      lastName: exchange.profile.lastName || null,
-      firstName: exchange.profile.firstName || null
+      name: $scope.fields.accountName,
+      id: $scope.fields.bankAccount._id
     };
 
     $q.resolve(exchange.bankLink.setAccount(obj))
@@ -110,18 +103,20 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options) 
   $scope.disablePlaid = () => $scope.state.plaid = {};
   $scope.plaidWhitelist = ['enablePlaid', 'disablePlaid', 'getBankAccounts'];
 
-  let receiveMessage = (e) => {
-    if (!e.data.command) return;
-    if (e.data.from !== 'plaid') return;
-    if (e.data.to !== 'exchange') return;
-    if (e.origin !== 'http://localhost:8081') return;
-    if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
+  Env.then(env => {
+    let receiveMessage = (e) => {
+      if (!e.data.command) return;
+      if (e.data.from !== 'plaid') return;
+      if (e.data.to !== 'exchange') return;
+      if (e.origin !== env.walletHelperDomain) return;
+      if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
-    e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
-    $scope.$safeApply();
-  };
+      e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
+      AngularHelper.$safeApply($scope);
+    };
 
-  window.addEventListener('message', receiveMessage, false);
+    $window.addEventListener('message', receiveMessage, false);
+  });
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

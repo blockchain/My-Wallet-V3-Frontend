@@ -1,0 +1,10 @@
+div.amountTotal.em-400.amount.flex-center.flex-justify(
+  ng-class="{\
+    'button-transferred': tx.txType === 'transfer',\
+    'button-received'    : tx.txType === 'received',\
+    'button-sent'       : tx.txType === 'sent',\
+    'unconfirmed' : tx.confirmations < 3 \
+  }" ng-click="toggle()")
+  fiat(btc="tx.amount" ng-hide="isBitCurrency(settings.displayCurrency)" abs)
+  span(ng-show="isBitCurrency(settings.displayCurrency)")
+    | {{ absolute(tx.amount) | toBitCurrency:settings.btcCurrency }}

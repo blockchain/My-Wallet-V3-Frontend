@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, Alerts, modals) {
+function sfox ($q, Alerts, modals, Env) {
   const watching = {};
 
   const service = {
@@ -19,9 +19,20 @@ function sfox ($q, Alerts, modals) {
 
   return service;
 
-  function init (exchange) {
-    if (exchange.trades) service.watchTrades(exchange.trades);
-    exchange.monitorPayments();
+  function init (sfox) {
+    return Env.then((env) => {
+      console.info(
+        'Using SFOX %s environment with API key %s, Plaid environment %s and Sift Science key %s.',
+        env.partners.sfox.production ? 'production' : 'staging',
+        env.partners.sfox.apiKey,
+        env.partners.sfox.plaidEnv,
+        env.partners.sfox.siftScience
+      );
+      sfox.api.production = env.partners.sfox.production;
+      sfox.api.apiKey = env.partners.sfox.apiKey;
+      if (sfox.trades) service.watchTrades(sfox.trades);
+      sfox.monitorPayments();
+    });
   }
 
   function interpretError (error) {
@@ -80,11 +91,10 @@ function sfox ($q, Alerts, modals) {
       .forEach(service.watchTrade);
   }
 
-  function watchTrade (trade, completedCallback) {
+  function watchTrade (trade) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeSummary(trade, 'success'); })
-      .then(completedCallback);
+      .then(() => { modals.openTradeSummary(trade, 'success'); });
   }
 }

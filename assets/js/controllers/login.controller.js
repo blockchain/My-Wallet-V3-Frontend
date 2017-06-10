@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork) {
+function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -10,11 +10,11 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
   $scope.status = {};
   $scope.browser = { disabled: true };
 
-  $scope.uid = $stateParams.uid || Wallet.guid || $cookies.get('uid');
+  $scope.uid = $stateParams.uid || Wallet.guid || localStorageService.get('guid');
   $scope.uidAvailable = !!$scope.uid;
 
-  if ($cookies.get('password')) {
-    $scope.password = $cookies.get('password');
+  if (localStorageService.get('password')) {
+    $scope.password = localStorageService.get('password');
   }
 
   $scope.login = () => {
@@ -22,7 +22,7 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
     Alerts.clear();
 
     if ($scope.autoReload && $scope.password) {
-      $cookies.put('password', $scope.password);
+      localStorageService.set('password', $scope.password);
     }
 
     let success = () => {
@@ -59,7 +59,8 @@ function LoginCtrl ($scope, $rootScope, $window, $cookies, $state, $stateParams,
 
     if (Wallet.settings.twoFactorMethod === 5) {
       $scope.status.resending = true;
-      let sessionToken = $cookies.get('session');
+      // Safari Incognito returns nothing, but that's probably not an issue here:
+      let sessionToken = localStorageService.get('session');
       $q.resolve(WalletNetwork.resendTwoFactorSms($scope.uid, sessionToken))
         .then(success, error).finally(() => $scope.status.resending = false);
     }

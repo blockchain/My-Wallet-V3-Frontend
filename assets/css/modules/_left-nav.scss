@@ -47,14 +47,24 @@ ul.aside {
           color: $security-green;
         }
       }
-      i { margin-right: .55em; line-height: 0; font-size: 1.3em; }
+      i {
+        @extend .f-20;
+        margin-right: .55em;
+        text-align: center;
+        line-height: 0;
+        width: 20px;
+      }
     }
   }
   li.current {
-    background: #EBEBEB;
+    a {
+      i,
+      span {
+        color: $iris;
+      }
+    }
   }
   ul.aside-list{
-    background: white;
     list-style: none;
     font-size: 1em;
     text-transform: none;
@@ -67,7 +77,7 @@ ul.aside {
     li.active{
       a {
         span {
-          color: $blue;
+          color: $iris;
           font-weight: 500;
         }
         &:focus {
@@ -117,7 +127,10 @@ ul.aside {
     max-height: 150px;
     overflow-x: auto;
   }
-  .scroll-settings{ max-height: 190px; }
+  .scroll-settings{
+    max-height: 190px;
+    padding-left: 38px;
+  }
 }
 
 @media (max-width: 620px) {
@@ -143,17 +156,9 @@ li.action-bar{
 }
 .settings-nav { margin-top: 10px; }
 .settings-nav-header {
-  background: $light-grey;
+  background: $grey;
 }
 
 @media (max-width: 480px) {
-  ul.aside  {
-    li.header, a.new-acct {
-      font-size: .75em;
-    }
-  }
   .wallet-footer { margin: 0; }
-  .terms-policy {
-    font-size: .75em;
-  }
 }

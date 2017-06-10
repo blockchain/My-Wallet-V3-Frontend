@@ -20,20 +20,14 @@ div.login-form {
   }
 }
 
-.login-box-container {
-  margin-top: -100px;
-}
-
-@media (max-height: 700px) {
-  html, body {
+@mixin block-login {
+  height: 100%;
+  display: block !important;
+  .navbar {
     position: relative;
   }
-  .login-pg {
-    height: 100%;
-    display: block !important;
-    .navbar {
-      position: relative;
-    }
+  .bc-logo-footer {
+    position: relative;
   }
   .login-box-container {
     margin-top: 0px;
@@ -43,36 +37,38 @@ div.login-form {
   }
 }
 
+.login-pg {
+  &.display-block {
+    @include block-login;
+  }
+  @media (max-height: 700px) {
+    @include block-login;
+  }
+  @media (max-width: 767px) {
+    @include block-login;
+  }
+}
+
+@media (max-height: 700px) {
+  html, body {
+    position: relative;
+  }
+}
+
 .login-box {
   background-color: white;
-  padding: 10px 50px 25px;
+  padding: 35px 40px 30px 40px;
   width: 550px;
   box-shadow: 0px 0px 20px -8px black;
   max-height: 600px;
   overflow: auto;
   header {
-    padding: 15px 0 10px;
     border-bottom: 1px solid rgb(240, 236, 236);
   }
   .form-horizontal .form-group {
     margin-top: 15px;
     margin-left: auto;
     margin-right: auto;
-  }
-  .help-block .info {
-    color: $mid-grey;
-    &:hover {
-      color: $dark-grey;
-    }
-  }
-  .help-block {
-    margin-bottom: 0px;
-    p {
-      margin: 0;
-    }
-    & + .help-block {
-      margin-top: 5px;
-    }
   }
   input[type='checkbox'] { margin: 0; }
   .step { right: 20px; top: 10px; }
@@ -93,30 +89,28 @@ div.login-form {
 .versions {
   position: absolute;
   bottom: 10px;
-  opacity: 0.8;
   right: 15px;
-  &:hover {
-    opacity: 1;
-  }
   a {
+    opacity: 0.6;
     color: white !important;
     text-decoration: none !important;
+    &:hover {
+      opacity: 1;
+    }
   }
-  @media (max-width: 768px) and (max-height: 600px) {
+  @media screen and (max-width: 767px), screen and (max-height: 600px) {
     position: relative;
-    bottom: -10px;
-    right: -15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    bottom: initial;
+    right: initial;
   }
 }
 
 @media (max-width: 620px) {
   .login-box {
-    padding: 10px 25px 25px;
+    width: 100%;
     min-width: 0;
-    width: 95%;
-    header h2 { font-size: 18px; margin-top: 0; margin-bottom: 5px; }
-    .navbar { margin-bottom: 0; }
-    .form-group { margin-bottom: 0; }
   }
 }
 

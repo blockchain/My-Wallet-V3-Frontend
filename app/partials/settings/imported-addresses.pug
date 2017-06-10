@@ -1,0 +1,43 @@
+.row
+  .col-xs-12
+    table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl" gradual-render)
+      tr.width-100
+        td.col-md-3
+          i.ti-plus.blue.mrm.pointer(ng-click="importAddress()")
+          span.pointer(translate="IMPORT_ADDRESS" ng-click="importAddress()")
+        td.col-md-3
+        td.col-md-3
+      tr(
+        imported-address="address"
+        search-text="searchText"
+        ng-repeat="address in legacyAddresses() | filter:{archived: false} | addressOrNameMatch:searchText | limitTo:$render.limit track by $index"
+        in-view="$last && $render.next()")
+
+div.mtvl.ptl(ng-controller="SettingsImportedAddressesCtrl")
+  .flex-between.flex-center.mtl.pbvl
+    span.type-md.em-500(translate="ARCHIVED_ADDRESSES")
+    span.pointer.blue(translate="{{display.archived ? 'HIDE' : 'SHOW'}}" ng-click="toggleDisplayArchived()")
+
+  p.alt-font.f-16.mtl.hidden-xs(translate="ARCHIVED_ADDRESSES_EXPLAIN", ng-show="display.archived")
+
+  .row(ng-show="display.archived")
+    .col-xs-12.table-container
+      table.accounts-container.addresses.responsive.width-100(ng-controller="SettingsImportedAddressesCtrl")
+        tr.hidden
+          td.col-md-3
+          td.col-md-3
+          td.col-md-3
+        tr(ng-repeat="address in legacyAddresses() | filter:{archived: true} | addressOrNameMatch:searchText")
+          td.col-md-3
+            span(ng-bind-html="address.address | escapeHtml | highlight:searchText" translate="no")
+            span.label.label-default.btn-xs(translate="WATCH_ONLY" ng-show="address.isWatchOnly")
+            span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit || !address.label").prm.oflow
+          td.col-md-3
+          td.col-md-3.right-align
+            span(uib-dropdown on-toggle="toggled(open)")
+              a(href uib-dropdown-toggle id="more-dropdown" translate="More Options")
+              ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
+                li
+                  a(translate="UNARCHIVE", ng-click="unarchive(address)")
+                li
+                  a(translate="DELETE", ng-click="delete(address)")

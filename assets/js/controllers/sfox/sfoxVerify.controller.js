@@ -2,9 +2,16 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
-function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Upload, QA) {
-  $scope.states = state.stateCodes;
+function SfoxVerifyController (AngularHelper, Env, $scope, $q, state, $http, sfox, modals, Upload, QA) {
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+    let states = env.partners.sfox.states;
+    $scope.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
+  });
+
   let exchange = $scope.vm.exchange;
+
+  $scope.openHelper = modals.openHelper;
 
   let getNextIdType = () => {
     if (!exchange.profile) return 'ssn';
@@ -29,7 +36,7 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
     return then < Date.now();
   };
 
-  $scope.getSignedURL = () => {
+  $scope.prepUpload = () => {
     $scope.lock();
     let fields = $scope.state;
     let profile = exchange.profile;
@@ -40,23 +47,22 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
     fields.verifyDoc && (filename = 'testing-' + filename);
 
     $q.resolve(profile.getSignedURL(idType, filename))
-      .then((res) => $scope.state.signedURL = res.signed_url)
-      .catch((err) => console.log(err))
-      .finally($scope.free);
+      .then((res) => $scope.upload(res.signed_url))
+      .catch((err) => console.log(err));
   };
 
-  $scope.upload = () => {
-    $scope.lock();
-    let { signedURL, file } = $scope.state;
+  $scope.upload = (url) => {
+    let { file } = $scope.state;
 
     Upload.http({
       method: 'PUT',
-      url: signedURL,
+      url: url,
       data: file,
       headers: { 'content-type': 'application/octet-stream' }
     }).then(() => exchange.fetchProfile())
       .then(() => $scope.setState())
-      .catch(sfox.displayError);
+      .catch(sfox.displayError)
+      .finally($scope.free);
   };
 
   $scope.verify = () => {
@@ -66,18 +72,18 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
       let fields = $scope.state;
       let profile = exchange.profile;
 
-      profile.firstName = profile.firstName || fields.first;
-      profile.middleName = profile.middleName || fields.middle;
-      profile.lastName = profile.lastName || fields.last;
-      profile.dateOfBirth = profile.dateOfBirth || new Date(fields.dob);
-      profile.setSSN(profile.identity.number || fields.ssn);
+      profile.firstName = fields.first;
+      profile.middleName = fields.middle;
+      profile.lastName = fields.last;
+      profile.dateOfBirth = new Date(fields.dob);
+      profile.setSSN(fields.ssn);
 
       profile.setAddress(
-        profile.address.street.line1 || fields.addr1,
-        profile.address.street.line2 || fields.addr2,
-        profile.address.city || fields.city,
-        profile.address.state || fields.state.Code,
-        profile.address.zipcode || fields.zipcode
+        fields.addr1,
+        fields.addr2,
+        fields.city,
+        fields.state.Code,
+        fields.zipcode
       );
 
       $q.resolve(profile.verify())
@@ -100,10 +106,8 @@ function SfoxVerifyController ($rootScope, $scope, $q, state, $http, sfox, Uploa
     complete && $scope.vm.goTo('link');
   };
 
-  $scope.installLock();
-  $scope.$watch('state.file', (file) => file && $scope.getSignedURL());
+  AngularHelper.installLock.call($scope);
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
-  $scope.$watch('state.idType', (idType) => idType == null && $scope.vm.goTo('link'));
   $scope.$on('$destroy', () => { exchange.profile && exchange.profile.setSSN(null); });
 
   // QA Tool

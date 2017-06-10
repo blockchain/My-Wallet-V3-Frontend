@@ -8,6 +8,7 @@
 }
 
 .security-center-ui {
+  width: 100%;
   .edit-mobile {
     .btn-info{
       margin: 5px;
@@ -147,11 +148,11 @@
       &:active { border-bottom: 1px solid rgb(145, 208, 232); }
     }
     p {
-      font-size: 1.1em;
       font-weight: 300;
       color: rgb(117, 117, 117);
       line-height: 1.5em;
       margin: 0;
+      word-wrap: break-word;
     }
   }
   .block-tor-actions {
@@ -170,11 +171,6 @@
     bottom: 4px;
     left: -5px;
   }
-}
-
-.verify-email {
-  width: 100%;
-  p { width: 50%; }
 }
 
 .level-complete {
@@ -242,7 +238,7 @@
 
   //override tooltip
   .tooltip {
-    font-family: "Roboto", sans-serif;
+    font-family: "Montserrat", sans-serif;
     &.in {
       opacity: 1;
     }
@@ -265,7 +261,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .security-center-ui {
     ul {
       flex-direction: column;
@@ -281,14 +277,6 @@
     }
     .level-badge {
       width: 100%;
-    }
-    .badge-panel {
-      p {
-        font-size: .85em;
-      }
-      input {
-        font-size: .8em;
-      }
     }
     .button-lg {
       font-size: 1em;

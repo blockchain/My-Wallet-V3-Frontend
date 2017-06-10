@@ -9,7 +9,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.userHasAccount = buyStatus.userHasAccount();
 
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
-  $scope.setBuyCtaDismissed = cta.setBuyCtaDissmissed;
+  $scope.setBuyCtaDismissed = cta.setBuyCtaDismissed;
   $scope.shouldShowSecurityWarning = cta.shouldShowSecurityWarning;
   $scope.setSecurityWarningDismissed = cta.setSecurityWarningDismissed;
   $scope.getSecurityWarningMessage = cta.getSecurityWarningMessage;
@@ -23,7 +23,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
 
   $scope.showInviteForm = () => {
     $uibModal.open({
-      templateUrl: 'partials/buy-subscribe-modal.jade',
+      templateUrl: 'partials/buy-subscribe-modal.pug',
       windowClass: 'bc-modal xs',
       controller: 'SubscribeCtrl'
     });
@@ -52,7 +52,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
 
   $rootScope.supportModal = () => $uibModal.open({
-    templateUrl: 'partials/support.jade',
+    templateUrl: 'partials/support.pug',
     windowClass: 'bc-modal auto'
   });
 }

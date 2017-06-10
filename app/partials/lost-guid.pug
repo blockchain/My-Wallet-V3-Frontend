@@ -1,0 +1,52 @@
+.pos-rel(data-preflight-tag="RemindMe")
+  header.flex-center.flex-between
+    .flex-column
+      h2.em-300.mtn(translate="REMIND_ME")
+      p(translate="REMIND_ME_HELP")
+  form.ptl.form-horizontal(
+    name="form"
+    autocomplete="off"
+    ng-show="currentStep === 1"
+    ng-submit="sendReminder()"
+    novalidate)
+    .form-group(ng-class="{'has-error': form.email.$invalid && form.email.$touched}")
+      label(translate="EMAIL")
+      input.form-control(
+        type="email"
+        name="email"
+        ng-model="fields.email"
+        required)
+      span.help-block(ng-show="form.email.$touched")
+        span(ng-show="form.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
+        span(ng-show="form.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
+    .form-group(ng-class="{'has-error': form.captcha.$invalid && form.captcha.$touched}")
+      label(translate="CAPTCHA")
+      p(translate="CAPTCHA_EXPAIN")
+      img.mbl(ng-src="{{captchaSrc}}")
+      input.form-control(
+        type="text"
+        name="captcha"
+        ng-model="fields.captcha"
+        required)
+    .flex-center.flex-end.mvl
+      button.button-muted.mrm(
+        type="button"
+        ng-hide="working"
+        ui-sref="public.help"
+        translate="GO_BACK")
+      button.button-primary(
+        type="submit"
+        ui-ladda="working"
+        data-style="expand-left"
+        ng-disabled="form.$invalid"
+        ladda-translate="CONTINUE")
+  .flex-center.flex-justify.flex-column.mtl(ng-show="currentStep === 2")
+    .level-complete.flex-center.flex-justify
+      i.ti-check.bright-green
+    h4.em-300.mtl(translate="SUCCESS")
+    p.em-300(translate="REMIND_SUCCESS")
+    .flex-end
+      button.button-muted.mrm(
+        type="button"
+        ui-sref="public.login-no-uid"
+        translate="CONTINUE_TO_LOGIN")

@@ -1,0 +1,14 @@
+.mtm(ng-class="fullWidth ? 'width-100 flex-center' : 'flex-3'")
+  form(ng-class="{'flex width-100': fullWidth}" name="verifyMobileForm" role="form" ng-submit="verifyMobile(code)" novalidate)
+    .flex-1
+      p(ng-class="fullWidth ? 'prl pbl' : ''", translate="LINK_MOBILE_EXPLAIN")
+      .mvl(ng-class="{'has-error': errors.verify}")
+        input.form-control(type="text" ng-model="code" ng-disabled="status.busy")
+        span.help-block {{ errors.verify }}
+        span.help-block {{ errors.retryFail }}
+    .flex-1(ng-class="fullWidth ? 'mll pll' : ''")
+      span.mrm
+        a(ng-click="retrySendCode()" ui-ladda="status.retrying" ladda-translate="RESEND" ng-hide="status.retrying || status.retrySuccess")
+        span.label.label-success(translate="SENT" ng-show="status.retrySuccess")
+        img(src="img/spinner.gif" ng-show="status.retrying")
+      button.button-primary(type="submit" ui-ladda="status.busy" ng-disabled="!code || code.length < 3" ladda-translate="VERIFY" data-style="expand-left")

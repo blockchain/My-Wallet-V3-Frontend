@@ -1,8 +1,6 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('destinationInput', destinationInput);
-
-destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet', 'format'];
 
 function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
@@ -15,7 +13,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       ignore: '=',
       setInputMetric: '&'
     },
-    templateUrl: 'templates/destination-input.jade',
+    templateUrl: 'templates/destination-input.pug',
     link: link
   };
   return directive;
@@ -34,7 +32,8 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
-      let address = Wallet.parsePaymentRequest(result);
+      let isValidPrivateKey = Wallet.isValidPrivateKey(result);
+      let address = isValidPrivateKey ? Wallet.parsePaymentRequest(isValidPrivateKey) : Wallet.parsePaymentRequest(result);
       scope.model = format.destination(address, 'External');
       scope.onPaymentRequest({request: address});
       scope.setInputMetric({metric: 'qr'});

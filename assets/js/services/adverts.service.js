@@ -1,10 +1,10 @@
 angular
-  .module('adverts', [])
+  .module('walletApp')
   .factory('Adverts', Adverts);
 
-Adverts.$inject = ['$http', '$rootScope'];
+Adverts.$inject = ['$http', 'Env'];
 
-function Adverts ($http, $rootScope) {
+function Adverts ($http, Env) {
   const service = {
     ads: [],
     didFetch: false,
@@ -21,16 +21,24 @@ function Adverts ($http, $rootScope) {
   }
 
   function fetch () {
-    let advertsFeed = $rootScope.rootURL + 'adverts_feed?wallet_version=3';
-    $http.get(advertsFeed)
-      .success(data => {
-        let adverts = data.partners.home_buttons.splice(0);
-        service.ads.push(randFromArray(adverts));
-        service.ads.push(randFromArray(adverts));
-      });
-  }
+    return Env.then(env => {
+      if (!env.apiDomain.endsWith('.blockchain.info/')) {
+        return;
+      }
 
-  function randFromArray (array) {
-    return array.splice(Math.floor(Math.random() * array.length), 1)[0];
+      let advertsFeed = env.apiDomain + 'bci-ads/get?wallet=true&n=2';
+      $http.get(advertsFeed)
+        .success(function (data) {
+          data.forEach(function (ad) {
+            if (!/^data:image\/(png|jpg|jpeg|gif);base64,/.test(ad.data) ||
+                !angular.isNumber(ad.id) ||
+                !/^[0-9a-zA-Z ]*$/.test(ad.name)) {
+              return;
+            }
+
+            service.ads.push(ad);
+          });
+        });
+    });
   }
 }

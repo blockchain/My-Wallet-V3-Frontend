@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, $cookies, MyWallet, currency, $translate, $window, buyStatus, modals) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals) {
   $scope.goal = Wallet.goal;
 
   $scope.status = Wallet.status;
@@ -27,7 +27,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.getTheme = () => $scope.settings.theme && $scope.settings.theme.class;
 
   $scope.inactivityCheck = () => {
-    if (!Wallet.status.isLoggedIn) return;
+    if (!Wallet.status.isLoggedIn || $rootScope.inMobileBuy) return;
     let inactivityTimeSeconds = Math.round((Date.now() - $scope.lastAction) / 1000);
     let logoutTimeSeconds = Wallet.settings.logoutTimeMinutes * 60;
     if (inactivityTimeSeconds === logoutTimeSeconds - 10) {
@@ -46,8 +46,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.request = modals.openOnce(() => {
     Alerts.clear();
     return $uibModal.open({
-      templateUrl: 'partials/request.jade',
-      windowClass: 'bc-modal auto',
+      templateUrl: 'partials/request.pug',
+      windowClass: 'bc-modal initial',
       controller: 'RequestCtrl',
       resolve: {
         destination: () => null,
@@ -56,27 +56,14 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     });
   });
 
-  $scope.send = modals.openOnce(() => {
+  $scope.send = () => {
     Alerts.clear();
-    return $uibModal.open({
-      templateUrl: 'partials/send.jade',
-      windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
-      resolve: {
-        paymentRequest: () => ({
-          address: '',
-          amount: ''
-        }),
-        loadBcQrReader: () => {
-          return $ocLazyLoad.load('bcQrReader');
-        }
-      }
-    });
-  });
+    modals.openSend({ address: '', amount: '' });
+  };
 
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
-      templateUrl: 'partials/second-password.jade',
+      templateUrl: 'partials/second-password.pug',
       controller: 'SecondPasswordCtrl',
       backdrop: insist ? 'static' : null,
       keyboard: insist,
@@ -99,13 +86,26 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
       event.preventDefault();
     }
-    if (wallet && toState.name === 'wallet.common.buy-sell') {
+    if (wallet && [
+      'wallet.common.buy-sell'
+      // 'wallet.common.settings.accounts_addresses'
+    ].includes(toState.name)) {
       let error;
 
-      if (wallet.external && !wallet.external.loaded) error = 'POOR_CONNECTION';
-      else if (wallet.isDoubleEncrypted) error = 'MUST_DISABLE_2ND_PW';
-      else if ($rootScope.needsRefresh) error = 'NEEDS_REFRESH';
-
+      if (!wallet.isMetadataReady) {
+        Wallet.askForSecondPasswordIfNeeded().then(pw => {
+          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+            Alerts.displaySuccess('NEEDS_REFRESH');
+            $rootScope.needsRefresh = true;
+          });
+        });
+        event.preventDefault();
+      } else if ($rootScope.needsRefresh) {
+        error = 'NEEDS_REFRESH';
+      } else if (wallet.external === null) {
+        // Metadata service connection failed
+        error = 'POOR_CONNECTION';
+      }
       if (error) {
         event.preventDefault();
         Alerts.displayError(error);
@@ -115,7 +115,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
     if (!$scope.isPublicState(toState.name) && !$scope.status.isLoggedIn) {
-      let showLogout = $window.name === 'blockchain-logout' && $cookies.get('session');
+      let showLogout = $window.name === 'blockchain-logout' && localStorageService.get('session');
       $state.go(`public.${showLogout ? 'logout' : 'login-no-uid'}`);
     }
     $rootScope.outOfApp = toState.name === 'landing';
@@ -142,6 +142,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   };
 
   $scope.$on('$stateChangeError', (event, toState, toParams, fromState, fromParams, error) => {
+    console.log(error.message);
     let message = typeof error === 'string' ? error : 'ROUTE_ERROR';
     Alerts.displayError(message);
   });
@@ -152,7 +153,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     if ($scope.status.isLoggedIn) {
       if (Wallet.goal.upgrade) {
         $uibModal.open({
-          templateUrl: 'partials/upgrade.jade',
+          templateUrl: 'partials/upgrade.pug',
           controller: 'UpgradeCtrl',
           backdrop: 'static',
           windowClass: 'bc-modal',
@@ -164,12 +165,15 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Alerts.clear();
         Wallet.goal.auth = void 0;
       }
-      if (Wallet.goal.firstTime) {
+      if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         buyStatus.canBuy().then((canBuy) => {
-          let template = canBuy ? 'partials/buy-login-modal.jade' : 'partials/first-login-modal.jade';
+          let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
-            windowClass: 'bc-modal rocket-modal initial'
+            windowClass: 'bc-modal rocket-modal initial',
+            controller ($scope, walletStats) {
+              $scope.walletCount = walletStats.walletCountMillions;
+            }
           });
         });
         Wallet.goal.firstLogin = true;
@@ -184,15 +188,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {
-          $uibModal.open({
-            templateUrl: 'partials/send.jade',
-            controller: 'SendCtrl',
-            resolve: {
-              paymentRequest: () => Wallet.goal.send,
-              loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
-            },
-            windowClass: 'bc-modal initial'
-          });
+          modals.openSend(Wallet.goal.send);
           Wallet.goal.send = void 0;
         }
       } else {

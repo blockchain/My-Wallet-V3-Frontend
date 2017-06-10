@@ -3,30 +3,38 @@ angular
   .module('walletApp')
   .component('buyCheckout', {
     bindings: {
+      quote: '<',
+      userId: '<',
       buyLimit: '<',
+      buyLevel: '<',
       buyAccount: '<',
-      collapseSummary: '=',
+      collapseSummary: '<',
       handleQuote: '&',
-      handleBuy: '&'
+      buySuccess: '&',
+      buyError: '&'
     },
-    templateUrl: 'templates/buy-checkout.jade',
+    templateUrl: 'templates/buy-checkout.pug',
     controller: BuyCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWalletHelpers) {
+function BuyCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, sfox, $uibModal, formatTrade) {
   $scope.format = currency.formatCurrencyForView;
+  $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
-  $scope.max = currency.convertToSatoshi(this.buyLimit, $scope.dollars);
-  $scope.min = currency.convertToSatoshi(0.01, $scope.dollars);
+  $scope.siftScienceEnabled = false;
+
+  Env.then(env => {
+    $scope.buySellDebug = env.buySellDebug;
+  });
 
   let state = $scope.state = {
-    fiat: null,
     btc: null,
+    fiat: null,
     rate: null,
     baseCurr: $scope.dollars,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
@@ -34,8 +42,13 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
     get total () { return this.fiat; }
   };
 
-  $scope.enableBuy = () => $scope.enabled = true;
-  $scope.disableBuy = () => $scope.enabled = false;
+  // cached quote from checkout first
+  let quote = this.quote;
+  if (quote) {
+    state.baseCurr = quote.baseCurrency === 'BTC' ? $scope.bitcoin : $scope.dollars;
+    state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / 100 : null;
+    state.btc = !state.baseFiat ? quote.baseAmount : null;
+  }
 
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
@@ -43,7 +56,7 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? currency.convertFromSatoshi(state.fiat, $scope.dollars) * 100 | 0 : state.btc,
+    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * 100 | 0 : state.btc,
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });
@@ -60,18 +73,16 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
       $scope.quote = quote;
       state.rate = quote.rate;
       state.loadFailed = false;
-      let timeToExpiration = new Date(quote.expiresAt) - new Date() - 1000;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, timeToExpiration);
-      this.collapseSummary = false;
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
+      this.collapseSummary = true;
       if (state.baseFiat) state.btc = quote.quoteAmount;
-      else state.fiat = currency.convertToSatoshi(quote.quoteAmount, $scope.dollars) / 100;
+      else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / 100;
     };
 
     this.handleQuote($scope.getQuoteArgs(state))
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500, () => {
     $scope.quote = null;
-    $scope.disableBuy();
   });
 
   $scope.getInitialQuote = () => {
@@ -89,16 +100,52 @@ function BuyCheckoutController ($scope, $timeout, $q, currency, Wallet, MyWallet
     }
   };
 
+  $scope.enableBuy = () => {
+    let obj = {
+      'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
+      'Payment Method': this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')',
+      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
+    };
+
+    $uibModal.open({
+      controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
+      templateUrl: 'partials/confirm-trade-modal.pug',
+      windowClass: 'bc-modal trade-summary'
+    }).result.then($scope.buy);
+  };
+
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
-    this.handleBuy({ quote }).finally($scope.resetFields).finally($scope.free);
+    if (this.buyAccount) {
+      sfox.buy(this.buyAccount, quote)
+        .then(trade => {
+          // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+          if ($scope.buySellDebug) {
+            console.info('Load Sift Science iframe');
+          }
+          $scope.tradeId = trade.id;
+          sfox.watchTrade(trade);
+          this.buySuccess({trade});
+        })
+        .then(() => $scope.siftScienceEnabled = true)
+        .catch(() => this.buyError())
+        .finally($scope.resetFields).finally($scope.free);
+    } else {
+      this.buySuccess({quote});
+      $q.resolve().finally($scope.resetFields).finally($scope.free);
+    }
   };
 
+  $scope.setLimits = (limit) => {
+    $scope.min = $scope.toSatoshi(0.01, $scope.dollars);
+    $scope.max = $scope.toSatoshi(limit, $scope.dollars);
+  };
+
+  $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
-  $scope.$watchGroup(['state.fiat', 'state.btc'], () => $scope.disableBuy());
   $scope.$on('$destroy', $scope.cancelRefresh);
-  $scope.$root.installLock.call($scope);
+  AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }

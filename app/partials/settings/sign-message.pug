@@ -1,0 +1,28 @@
+.modal-header(data-preflight-tag="SignMessage")
+  .flex-center.pam
+    h3.man.mrm(translate="SIGN_MESSAGE")
+    helper-button(content="SIGN_MESSAGE_EXPLAIN")
+#sign-msg.modal-body.fade(ng-class="{signature: signature}")
+  form.ph-form(role="form" name="signMessageForm" autocomplete="off" novalidate)
+    .form-group.row.pbm.flex-justify.flex-center
+      label.control-label.mbn(translate="ADDRESS")
+      span.type-lbl :
+      .flex-1.type-lbl(translate="no") {{ address.address }}
+    .form-group.row.pbm.flex-row.flex-justify.note
+      label.control-label(translate="MESSAGE")
+      span.type-lbl :
+      textarea.form-control(rows="3" ng-model="message" ng-disabled="signature" required placeholder="{{ 'THANKS_FOR_ACCEPTING' | translate }}")
+    .form-group.flex-row.flex-justify(ng-show="signature")
+      label.control-label(translate="SIGNATURE")
+      span.type-lbl :
+      p.form-control-static.bitcoin-address(single-click-select copy-content="{{signature}}")
+        button.clipboard.btn.btn-default
+        span(translate="no") {{ signature }}
+
+.modal-footer
+  div(ng-hide="signature")
+    button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss()")
+    button.btn.button-primary(translate="SIGN" ng-click="sign()" ng-disabled="signMessageForm.$invalid")
+  div(ng-show="signature")
+    button.button-muted.mrm(translate="RESET_FORM" ng-click="reset()")
+    button.btn.button-primary(translate="DONE" ng-click="$close()")

@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('bcAsyncInput', bcAsyncInput);
 
 bcAsyncInput.$inject = ['$timeout', 'Wallet'];
@@ -27,7 +27,7 @@ function bcAsyncInput ($timeout, Wallet) {
     },
     transclude: true,
     templateUrl: (elem, attrs) => {
-      let templ = attrs.custom ? 'transclude.jade' : 'bc-async-input.jade';
+      let templ = attrs.custom ? 'transclude.pug' : 'bc-async-input.pug';
       return `templates/${templ}`;
     },
     link: link
@@ -40,7 +40,7 @@ function bcAsyncInput ($timeout, Wallet) {
     scope.button = attrs.button || 'SAVE';
 
     scope.type = scope._type || 'text';
-    scope.buttonClass = scope._buttonClass || 'button-primary btn-small';
+    scope.buttonClass = scope._buttonClass || 'button-primary button-sm';
 
     scope.user = Wallet.user;
     scope.status = {

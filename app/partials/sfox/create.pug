@@ -1,0 +1,109 @@
+.flex-row.flex-column-tablet
+  .width-40
+    .width-80
+      div.mbl(ng-show="viewing('summary')")
+        h4.f-20.em-500.mvn.mb-10(translate="Create SFOX Account")
+        span.f-16(translate="Please confirm your email and phone number to create your SFOX exchange account.")
+
+      div.mbl(ng-show="viewing('email')")
+        div(ng-show="state.sentEmailCode")
+          h4.f-20.em-500.mvn.mb-10(translate="Verify Email Address")
+          span.f-16(translate="We just sent a verification code to your email address. Please enter the verification code to create your SFOX exchange account.")
+        div(ng-hide="state.sentEmailCode")
+          h4.f-20.em-500.mvn.mb-10(translate="Change Your Email Address")
+          span.f-16(translate="Updating your email will also change the email address associated with your wallet.")
+
+      div.mbl(ng-show="viewing('mobile')")
+        h4.f-20.em-500.mvn.mb-10(translate="Verify Phone Number")
+        span.f-16(ng-hide="state.sentMobileCode" translate="Please add your phone number to create your SFOX exchange account.")
+        span.f-16(ng-show="state.sentMobileCode" translate="We just sent a verification code to your phone. Please enter the verification code to continue creating your SFOX exchange account.")
+
+  .width-60.flex-justify(ng-show="viewing('summary')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="accountForm" ng-submit="createAccount()" novalidate autocomplete="off")
+      fieldset(ng-disabled="locked")
+        .group.pb-40
+          .item
+            .flex-between
+              label Email Address
+              span.blue.pointer.hidden-sm.hidden-md.hidden-lg(ng-click="view('email')" ng-show="accountForm.email.$error.registered && inMobileBuy") Change Email
+            input(ng-model="state.email" name="email" disabled)
+          div(ng-show="accountForm.email.$error.registered")
+            .help
+              span(ng-click="view('email')")
+                a.state-danger-text Sorry, this email is already registered with SFOX. 
+                a Change Email
+        .group.pb-40
+          .item
+            label Phone Number
+            bc-phone-number(ng-model="state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")
+        .group.pb-30
+          .item.check
+            input#terms(type="checkbox" ng-model="state.terms" name="terms" required)
+            label(for="terms")
+              | I accept Blockchain's 
+              a.em-500(href="https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf" translate="Alpha Agreement" target="_blank" rel="noopener noreferrer")
+              | , SFOX’s 
+              a.em-500(href="https://www.sfox.com/terms.html" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
+              |  and SFOX's 
+              a.em-500(href="https://www.sfox.com/privacy.html" translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+              | .
+        .group
+          button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue
+
+  .width-60.flex-justify(ng-show="viewing('email')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="emailForm" ng-submit="state.sentEmailCode ? verifyEmail() : changeEmail(); emailForm.$setUntouched();" novalidate autocomplete="off")
+      fieldset(ng-disabled="locked")
+        div(ng-hide="state.sentEmailCode")
+          .group
+            .item
+              label Confirm email:
+              input(ng-model="state.email" ng-change="state.sentEmailCode = false" name="email" type="email" required)
+          .group.pt-25
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="emailForm.email.$invalid || (state.verified && state.email === user.email)") Send Verification Email
+            a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
+        div(ng-show="state.sentEmailCode")
+          .group
+            .item
+              label Enter verification code sent to your email:
+              input(ng-model="state.emailCode" name="emailCode" ng-change="clearInlineErrors()" focus-when="state.sentEmailCode || state.resentEmailCode" required)
+            .item(ng-hide="emailForm.emailCode.$error.correct")
+              span.f-14.mt-5(ng-hide="state.resentEmailCode")
+                | Didn't receive the email? 
+                a(ng-click="sendEmailCode(); state.resentEmailCode = true;") Resend 
+                | or 
+                a(ng-click="state.sentEmailCode = false") change email
+              span.f-14.mt-5(ng-show="state.resentEmailCode") Another code has been sent!
+            .help(ng-show="emailForm.emailCode.$error.correct")
+              span.state-danger-text 
+                | Verification code incorrect. 
+                a(ng-click="sendEmailCode(); clearInlineErrors(); state.resentEmailCode = true;") Resend
+          .group.pt-25
+            button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
+
+  .width-60.flex-justify(ng-show="viewing('mobile')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="mobileForm" ng-submit="state.sentMobileCode ? verifyMobile() : changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
+      fieldset(ng-disabled="locked")
+        .group
+          .item
+            label Add phone number:
+            bc-phone-number(ng-model="state.mobile" ng-change="state.resentMobileCode = state.sentMobileCode = false" name="mobile" preferred-countries="us ca gb au" required)
+        div(ng-hide="state.sentMobileCode")
+          .group.pt-25
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || (state.verified && state.mobile === format(user.mobileNumber))") Text Verification Code
+            a.f-14.display-block.center.pt-15(ng-show="state.verified" ng-click="setState()") Go Back
+        div(ng-show="state.sentMobileCode")
+          .group.pt-30
+            .item
+              label Enter verification code sent to your mobile phone:
+              input(ng-model="state.mobileCode" name="mobileCode" ng-change="clearInlineErrors()" focus-when="state.sentMobileCode || state.resentMobileCode" required)
+            .item(ng-hide="mobileForm.mobileCode.$error.correct")
+              span.f-14.mt-5(ng-hide="state.resentMobileCode")
+                | Didn't receive the code? 
+                a(ng-click="sendMobileCode(); state.resentMobileCode = true;") Resend 
+              span.f-14.mt-5(ng-show="state.resentMobileCode") Another code has been sent!
+            .help(ng-show="mobileForm.mobileCode.$error.correct")
+              span.state-danger-text
+                | Verification code incorrect. 
+                a(ng-click="sendMobileCode(); clearInlineErrors(); state.resentMobileCode = true;") Resend
+          .group.pt-25
+            button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue

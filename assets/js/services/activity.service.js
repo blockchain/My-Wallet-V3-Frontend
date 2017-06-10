@@ -1,10 +1,10 @@
 angular
-  .module('activity', [])
+  .module('walletApp')
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
+Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
 
-function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
+function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell) {
   var txSub;
 
   const activity = {
@@ -72,7 +72,7 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
       .filter(hasTime)
       .sort(timeSort)
       .slice(0, activity.limit);
-    $rootScope.$safeApply();
+    AngularHelper.$safeApply();
   }
 
   function factory (type, obj) {
@@ -80,7 +80,7 @@ function Activity ($rootScope, $timeout, Wallet, MyWallet, buySell) {
     switch (type) {
       case 0:
         a.title = 'TRANSACTION';
-        a.icon = 'ti-layout-list-post';
+        a.icon = 'icon-tx';
         a.time = obj.time * 1000;
         a.message = getTxMessage(obj);
         a.amount = Math.abs(obj.amount);

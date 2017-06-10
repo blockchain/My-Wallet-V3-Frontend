@@ -5,30 +5,13 @@
       display: block;
       overflow: hidden;
       height: 1.428571429em;
-      > span:first-child {
-        float: left;
-        overflow: auto;
-        max-width: 135px;
-        margin-bottom: -30px;
-        padding-bottom: 30px;
-        display: inline-block;
-      }
     }
   }
 }
 
-#send, #receive, #sign-msg {
-  .inprv {
-    bottom: -12px;
-  }
-  .divider {
-    margin: 0px auto;
-  }
-  .open > .uib-dropdown-menu {
-    overflow-y: auto;
-    max-height: 160px;
-    overflow-x: hidden;
-  }
+#send,
+#receive,
+#sign-msg {
   .dropdown-menu {
     > li:first-child {
       .dropdown-header {
@@ -36,6 +19,17 @@
         display: none;
       }
     }
+  }
+}
+
+#send, #sign-msg {
+  .inprv {
+    bottom: -12px;
+  }
+  .open > .uib-dropdown-menu {
+    overflow-y: auto;
+    max-height: 160px;
+    overflow-x: hidden;
   }
   .row {
     @extend .flex-row;
@@ -131,19 +125,6 @@
         margin-left: 0;
       }
     }
-    &.fee {
-      button {
-        z-index: 15;
-        bottom: 5px;
-        right: -10px;
-        position: absolute;
-      }
-      & ~ .help-block {
-        bottom: -30px;
-        margin-left: 95px;
-        position: absolute;
-      }
-    }
   }
 
   .has-error {
@@ -154,89 +135,9 @@
     }
   }
 
-  &.advanced-container {
-    max-height: 460px; // avoid overflow issues
-    .add {
-      background-color: $aaa;
-      border-radius: 100%;
-      position: absolute;
-      bottom: 20px;
-      right: -15px;
-      padding: 0px;
-      height: 30px;
-      width: 30px;
-    }
-    .advanced-recipient-row {
-      margin-bottom: 20px;
-      position: relative;
-      border: 1px solid #eee;
-      padding: 1em;
-      .ui-select-container {
-        min-width: 225px;
-        margin-right: 10px;
-      }
-      > .remove {
-        border-radius: 100%;
-        position: absolute;
-        padding: 1px 5px;
-        right: -10px;
-        top: -10px;
-        z-index: 2;
-      }
-      & + .has-error {
-        top: -20px;
-      }
-    }
-  }
-
-  &.confirmation {
-    @media (min-width: 769px) {
-      min-width: 520px;
-      padding-left: 25px;
-      padding-right: 25px;
-    }
-    .btcaddr {
-      font-size: 0.7em;
-    }
-    .overview {
-      .flex-row {
-        > span.account {
-          text-align: left;
-          @media (max-width: 767px) {
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-          &.aaa {
-            color: $aaa !important;
-          }
-        }
-        .helper {
-          position: absolute;
-          right: -25px;
-          top: -2px;
-        }
-      }
-    }
-  }
-
   @media (max-width: 767px) {
     &.fade {
       opacity: 1 !important;
-    }
-  }
-  @media (min-width: 769px) {
-    &.fade {
-      opacity: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
-      @include bc-ng-animate('advanced-container', 'height', '265px', '365px');
-    }
-    &.sm.fade {
-      @include bc-ng-animate('advanced-container', 'height', '235px', '345px');
-    }
-    &.confirmation.fade {
-      @include bc-ng-animate('confirmation', 'height', '265px', '200px');
     }
   }
 }
@@ -270,133 +171,16 @@
   }
 }
 
-@media (max-width: 668px) {
-  .send-actions {
-    .button-lg {
-      font-size: 1em;
-    }
-  }
-}
-
-// RECEIVE
-
 #receive {
-  @media (max-width: 767px) {
-    opacity: 1 !important;
-  }
-  @media (min-width: 769px) {
-    opacity: 1;
-    overflow: hidden;
-    @include bc-ng-animate('advanced', 'height', '225px', '375px');
-    &.sm {
-      @include bc-ng-animate('advanced', 'height', '205px', '325px');
-    }
-  }
-
   .ui-select-bootstrap > .ui-select-choices {
     max-height: 168px;
   }
-
-  .row {
-    @extend .flex-row;
-  }
-
-  .ti-arrow-down {
-    font-weight: bold;
-    font-size: 18px;
-    color: $blue;
-  }
-
-  .column {
-    @extend .flex-column;
-    h4 {
-      margin-top: 0px;
-    }
-  }
-
-  .amount .form-control {
-    min-width: 0;
-  }
-}
-
-.receive-code {
-  canvas {
-    display: block;
-  }
-}
-
-.split-rule {
-  width: 100%;
-  display: block;
-  text-align: center;
-  position: relative;
-  &:before {
-    content: '';
-    left: 0;
-    top: 50%;
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    background-color: $ccc;
-  }
-}
-
-.payment-url {
-  @extend .flex;
-  > div {
-    @media (min-width: 769px) {
-      min-width: 320px;
-      &.receive-address {
-        &.max-width {
-          max-width: 320px;
-        }
-      }
-    }
-  }
-  .or {
-    position: relative;
-    text-transform: uppercase;
-    &:before, &:after {
-      left: 50%;
-      width: 1px;
-      content: '';
-      height: 40%;
-      position: absolute;
-      background-color: $ccc;
-    }
-    &:before {
-      top: 0;
-    }
-    &:after {
-      bottom: 0;
-    }
-  }
-  @media (max-width: 767px) {
-    display: block;
-    > div {
-      width: 100%;
-      &.receive-address {
-        min-width: initial !important;
-        max-width: initial !important;
-      }
-    }
-    .or {
-      width: 100%;
-      display: block;
-      text-align: center;
-      margin: 1.25em auto;
-      &:before, &:after {
-        top: 50%;
-        width: 40%;
-        height: 1px;
-        left: initial;
-        right: initial;
-      }
-      &:before {
-        left: 0;
-      }
-      &:after {
-        right: 0;
+  // ff specific fix
+  @-moz-document url-prefix() {
+    .text-overflow-hidden {
+      max-width: 450px;
+      @media (max-width: 767px) {
+        max-width: 350px;
       }
     }
   }
@@ -404,6 +188,12 @@
 
 .popover {
   z-index: 1060;
+}
+
+.ui-select-container {
+  .divider {
+    margin: 0px auto;
+  }
 }
 
 #sign-msg {
@@ -416,6 +206,6 @@
     @include bc-ng-animate('signature', 'height', '147px', '227px');
   }
   input {
-    border-bottom-color: $eee;
+    border-bottom-color: $border-grey;
   }
 }

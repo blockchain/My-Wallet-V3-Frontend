@@ -1,15 +1,21 @@
 .filter-bar {
-  z-index: 1;
-  top: 175px;
-  left: 270px;
-  height: 60px;
-  position: fixed;
   padding: 0px 30px;
-  background: $light-blue;
-  width: calc(100% - 270px);
-  border-bottom: 1px solid #ddd;
+  background: $grey;
+  width: 100%;
+  border-bottom: 1px solid $border-grey;
+  height: 60px;
+  z-index: 10;
   @media (max-width: 767px) {
     padding: 0 10px;
+  }
+  &.auto {
+    height: auto;
+  }
+  &.backdrop {
+    position: fixed;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
   }
   .ui-select-container {
     width: 360px;
@@ -38,7 +44,7 @@
   }
   @media (max-width: 991px) {
     &.open {
-      height: 235px;
+      height: 255px;
       display: block;
       .pointer {
         padding-top: 4px;
@@ -63,7 +69,7 @@
     }
   }
   .active {
-    font-weight: 700;
+    font-weight: 500;
     opacity: 1;
     border-bottom: 1px solid $black;
   }
@@ -71,16 +77,16 @@
 .filter-search {
   position: relative;
   input {
-    min-width: 300px;
     border-radius: 5px;
     padding: 5px 10px;
-    border: 1px solid #ddd
+    border: 1px solid $border-grey;
   }
   .ti-search {
+    font-size: 16px;
     position: absolute;
     z-index: 3;
-    right: 8px;
-    top: 12px;
+    right: 10px;
+    top: 9px;
   }
 }
 
@@ -91,9 +97,9 @@
     height: 38px;
     padding: 6px 12px;
     font-size: 14px;
-    line-height: 1.42857;
-    border: 1px solid $ccc;
     border-radius: 4px;
+    line-height: 1.42857;
+    border: 1px solid $border-grey;
   }
   .ti-search {
     right: 10px;
@@ -111,14 +117,12 @@
 
 @media (min-width: 768px) and (max-width: 991px) {
   .filter-search input { min-width: 180px }
-  .filter-search .ti-search { display: none; }
 }
 
 @media (max-width: 767px) {
   .filter-bar {
-    border-top: 1px solid $eee;
+    border-top: 1px solid $border-grey;
     width: 100%;
-    top: 200px;
-    left: 0;
+    flex: 0 0 60px;
   }
 }

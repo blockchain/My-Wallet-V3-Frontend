@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, Alerts) => {
+angular.module('walletDirectives').directive('watchOnlyAddress', (Wallet, $translate, Alerts) => {
   return {
     restrict: 'A',
     replace: true,
@@ -6,7 +6,7 @@ angular.module('walletApp').directive('watchOnlyAddress', (Wallet, $translate, A
       address: '=watchOnlyAddress',
       searchText: '='
     },
-    templateUrl: (elem, attrs) => 'templates/watch-only-address.jade',
+    templateUrl: (elem, attrs) => 'templates/watch-only-address.pug',
     link: (scope, elem, attrs, ctrl) => {
       scope.errors = {label: null};
       scope.status = {edit: false};

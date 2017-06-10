@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('activityFeed', activityFeed);
 
 activityFeed.$inject = ['$http', 'Wallet', 'MyWallet', 'Activity', 'buyStatus'];
@@ -9,7 +9,7 @@ function activityFeed ($http, Wallet, MyWallet, Activity, buyStatus) {
   const directive = {
     restrict: 'E',
     replace: true,
-    templateUrl: 'templates/activity-feed.jade',
+    templateUrl: 'templates/activity-feed.pug',
     link: link
   };
   return directive;

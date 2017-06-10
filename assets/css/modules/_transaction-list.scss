@@ -1,13 +1,18 @@
 .transactions {
+  @extend .flex-column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
   .label-success,
   .label-primary,
   .label-default {
     @extend .btn-xs;
+    font-weight: normal;
     display: inline-block;
   }
   .transaction-feed {
     position: relative;
-    top: 60px;
     .loading .col-xs-2 {
       text-align: center;
       margin-bottom: 10px;
@@ -15,10 +20,10 @@
   }
   a.date { padding-top: 10px; }
   .transaction {
-    border-bottom: 1pt solid $eee;
+    border-bottom: 1pt solid $border-grey;
     padding: 15px 30px;
     position: relative;
-    &:hover { background: $hover-blue; }
+    &:hover { background: $grey; }
     .timestamp{
       font-style: italic;
     }
@@ -29,19 +34,20 @@
     .feed-info {
       width: 120px;
     }
-    .action.incoming_tx{
-      color: $receive-green;
+    .incoming_tx {
+      color: $received;
     }
-    .action.outgoing_tx{
-     color: $send-red;
+    .outgoing_tx {
+      color: $sent;
     }
-    .action.local_tx{
-     color: $transfer-blue;
+    .local_tx {
+     color: $transferred;
     }
     .tx-toggle {
       top: 25px;
       left: 10px;
       position: absolute;
+      font-size: 8px;
     }
     button.amount {
       padding: 10px;
@@ -63,7 +69,7 @@
       .progress-bar {
         background-color: $blue;
         &.progress-bar-success {
-          background-color: $success;
+          background-color: $jade;
         }
         &[aria-valuenow="0"] span {
           color: $basic-grey;
@@ -95,6 +101,15 @@
       .tx-details {
         margin-left: 1em;
       }
+      date {
+        font-size: 12px;
+      }
+      .status {
+        display: block;
+        > div {
+          display: block;
+        }
+      }
     }
   }
   @media (max-width: 767px) {
@@ -104,10 +119,10 @@
     }
   }
   .description {
-    color: $dark-grey;
+    color: $basic-grey;
   }
   .feed-details {
-    border-top: 1px solid $eee;
+    border-top: 1px solid $border-grey;
   }
   .tx-note {
     max-width: 100%;
@@ -117,11 +132,18 @@
     left: -37px;
     bottom: -2px;
   }
+
+  font-size: 16px;
+  font-weight: 300;
+
+  .rotated {
+    transform: rotate(-90deg);
+  }
 }
 
 .transaction-card {
-  background-color: $light-blue;
-  border: 1px solid $eee;
+  background-color: $grey;
+  border: 1px solid $border-grey;
   border-radius: 5px;
   min-width: 50vw;
   font-size: 1.1em;
@@ -166,7 +188,7 @@
       padding: 0px;
     }
     .border-left {
-      border-top: 1px solid $eee;
+      border-top: 1px solid $border-grey;
       -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
       margin-top: 0.625em;
@@ -210,17 +232,9 @@ button.amount {
 }
 
 button {
-  &.intra-wallet  { background: $transfer-blue; }
-  &.spent { background: $send-red; }
-  &.received {
-    background: $receive-green;
-    span.glyphicon {
-      padding-left: 10px;
-    }
-    &:hover {
-      color:white;
-    }
-  }
+  &.intra-wallet  { @extend .bg-transferred; }
+  &.received { @extend .bg-received; }
+  &.spent { @extend .bg-sent; }
 }
 .unconfirmed { opacity: 0.5; }
 
@@ -230,7 +244,7 @@ button {
   textarea {
     resize: none;
     height: 60px;
-    border-color: $eee;
+    border-color: $border-grey;
     padding: 10px 0px 0px 10px;
   }
   @media (min-width: 768px) {
@@ -251,9 +265,12 @@ button {
 a.date,p.date { color: $black; }
 
 .amountTotal {
+  font-family: Montserrat;
+  font-weight: 300;
   float: none;
   min-width: 130px;
   text-transform: none;
+  padding: 7px 8px 7px 8px;
 }
 
 .from, .to{
@@ -279,19 +296,28 @@ a.date,p.date { color: $black; }
   .amountTotal{float: right;}
 }
 
-@media(max-width: 991px) {
+@media (max-width: 991px) {
   .tx-bci-link {
     font-size: .8em;
   }
 }
 
 @media (min-width: 768px){
+  .destination {
+    margin-top: -4px;
+    & + .width-30 {
+      margin-top: -4px;
+      & + .width-20 {
+        margin-top: -4px;
+      }
+    }
+  }
   .transaction-details {
     .status{text-align: right;}
   }
 }
 
-@media(max-width: 767px) {
+@media (max-width: 767px) {
   .transaction-card {
     top: 0;
     margin: 10px;
@@ -319,5 +345,12 @@ a.date,p.date { color: $black; }
   .transaction-card {
     button.amount { font-size: .75em; }
     .helper { display: none; }
+  }
+}
+
+.input-group {
+  .ti-calendar {
+    z-index: 4;
+    position: relative;
   }
 }

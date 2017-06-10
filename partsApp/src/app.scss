@@ -1,0 +1,21 @@
+
+// Import shared
+@import 'assets/sass/common/colors';
+@import 'assets/sass/common/typography';
+@import 'assets/sass/common/mixins';
+@import 'assets/sass/elements/section';
+
+// Import components
+@import 'shared/header/style';
+@import 'shared/leftNavbar/style';
+@import 'shared/scenarioMenu/style';
+
+// Import pages
+@import 'components/components/style';
+@import 'components/directives/style';
+@import 'components/home/style';
+
+
+body {
+  background-color: #CDCDCD;
+}

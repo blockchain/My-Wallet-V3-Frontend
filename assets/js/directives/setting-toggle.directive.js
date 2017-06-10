@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('settingToggle', settingToggle);
 
 function settingToggle ($translate, Wallet) {
@@ -13,7 +13,7 @@ function settingToggle ($translate, Wallet) {
       enableTitle: '@',
       disableTitle: '@'
     },
-    templateUrl: 'templates/setting-toggle.jade',
+    templateUrl: 'templates/setting-toggle.pug',
     link: () => {}
   };
   return directive;

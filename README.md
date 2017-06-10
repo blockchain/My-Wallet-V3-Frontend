@@ -7,12 +7,12 @@ Be Your Own Bank at [blockchain.info/wallet](https://blockchain.info/wallet). Pl
 The normal and easiest way to use our wallet is to go to [blockchain.info/wallet](https://blockchain.info/wallet). However if you like more control over the exact code that runs in your browser, you can download the source code and run the wallet from a simple server on your own machine. Here's how:
 
  1. Install [Node.js](http://nodejs.org/)
- 2. `git clone git@github.com:blockchain/My-Wallet-V3-Frontend.git -b v1.7.32 --single-branch --depth 1`
+ 2. `git clone git@github.com:blockchain/My-Wallet-V3-Frontend.git -b v1.11.11 --single-branch --depth 1`
  3. `make server`
 
 Login to your existing wallet or create a new one at `http://localhost:8080/`.
 
-You can replace `v1.7.32` with any tagged version you like, but we recommend always using the latest [release](https://github.com/blockchain/My-Wallet-V3-Frontend/releases). The versions marked as pre-release have not gone through extensive internal testing yet.
+You can replace `v1.11.11` with any tagged version you like, but we recommend always using the latest [release](https://github.com/blockchain/My-Wallet-V3-Frontend/releases). The versions marked as pre-release have not gone through extensive internal testing yet.
 
 Note that the wallet itself is still stored on Blockchain.info servers. It is encrypted with your password. The wallet also uses the Blockchain.info servers to show you your balance, notify you of new payments, submit transactions, etc.
 
@@ -46,11 +46,18 @@ Optionally you can add:
 AUTO_RELOAD=1
 WEB_SOCKET_URL=wss://ws.blockchain.info/inv
 API_DOMAIN=https://api.blockchain.info
+WALLET_HELPER_URL=http://localhost:8081
+```
+
+To inspect individual directives, run:
+
+```sh
+npm run start-parts
 ```
 
 ## Build
 
-Grunt watches and compiles the Jade view templates and CSS. Keep it running:
+Grunt watches and compiles the pug view templates and CSS. Keep it running:
 ```sh
 grunt
 ```

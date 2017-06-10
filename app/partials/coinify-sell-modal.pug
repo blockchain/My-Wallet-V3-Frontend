@@ -1,0 +1,66 @@
+#buy(ng-class="{rendered:rendered}" data-preflight-tag="SellModal")
+  .modal-header.bc-modal-header.flex-between.flex-center
+    .flex-column.flex-1
+      .flex-row.flex-between.flex-center
+        h3(translate="{{vm.title}}")
+        .flex-column.flex-align-end(uib-tooltip="{{ vm.getQuoteHelper() | translate}}"
+                                    tooltip-append-to-body="true"
+                                    tooltip-placement="top")
+          .flex-row.type-h5.em-500(ng-hide="vm.onStep('trade-complete') || vm.onStep('isx')")
+            span {{vm.transaction.btc }} BTC ({{vm.transaction.currency.symbol}}{{vm.transaction.fiat}})
+          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="false")
+  coinify-email(
+      ng-if="vm.onStep('email')"
+      on-complete="vm.goTo('accept-terms')"
+      on-close="vm.close()"
+      email="vm.user.email"
+      valid-email="vm.state.email.valid"
+      verified="vm.user.isEmailVerified"
+      on-email-change="vm.onEmailChange(true)"
+      rejected-email="vm.rejectedEmail")
+  coinify-signup(
+      ng-if="vm.onStep('accept-terms')"
+      on-complete="vm.onSignupComplete()"
+      on-error="vm.goTo('email')"
+      on-close="vm.close()"
+      email="vm.user.email"
+      valid-email="vm.state.email.valid"
+      on-email-change="vm.onEmailChange(false)"
+      fiat-currency="vm.fiat()")
+  coinify-create-account(
+      ng-if="vm.onStep('account')"
+      country="vm.country"
+      on-complete="vm.goTo('summary')"
+      error="vm.ibanError"
+      view-info="true"
+      on-submit="vm.addBankAccount(bank, profile)"
+      close="vm.close()")
+  sell-bank-link(
+      ng-if="vm.onStep('bank-link')" 
+      on-complete="vm.goTo('summary')" 
+      accounts="vm.accounts"
+      transaction="vm.transaction"
+      payment-account="vm.paymentAccount"
+      selected-bank-account="vm.selectedBankAccount" 
+      select-account="vm.selectAccount(account)" 
+      new-account="vm.goTo('account')" 
+      close="vm.close()")
+  sell-summary(
+      ng-if="vm.onStep('summary')"
+      exchange="vm.exchange"
+      sell-trade="trade"
+      transaction="vm.transaction"
+      total-balance="vm.totalBalance"
+      close="vm.close()"
+      dismiss="vm.dismiss()"
+      bank-account="vm.selectedBankAccount"
+      payment="vm.finalPayment"
+      on-success="vm.onSellSuccess(trade)"
+      on-complete="vm.goTo('trade-complete')"
+      quote="vm.quote")
+  sell-trade-finished(
+      ng-if="vm.onStep('trade-complete')"
+      sell-trade="vm.sellTrade"
+      completed-state="vm.completedState"
+      dismiss="vm.cancel()")
+  div(ng-if="vm.onStep('isx')" ng-controller="CoinifyISXController" ng-include="'partials/coinify/isx.pug'")

@@ -4,45 +4,31 @@
 
 html,
 body {
-  font-size: small;
+  font-family: 'Montserrat', 'Helvetica', sans-serif !important;
   background-color: #fff;
-  color: $text;
-  font-family: 'Roboto', 'Helvetica', sans-serif !important;
   position: relative;
+  font-size: small;
+  font-weight: 300;
+  color: $text;
   height: 100%;
   width: 100%;
+  @extend .flex-column;
 }
 
-.wallet-top-navigation.navbar-inverse {
-  position: fixed;
-  width: 100%;
-  left: 0;
-  top: 0;
-}
-
-.wallet-container {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 60px;
-  @media (max-width: 767px) {
-    top: 50px;
+@media (min-width: 768px) {
+  html,
+  body {
+    overflow: hidden;
   }
 }
 
-.display-block { display: block; }
-.display-inline-block { display: inline-block; }
-
-.pointer { cursor: pointer; }
-.cursor-text { cursor: text; }
-.pos-rel { position: relative; }
-.pos-abs { position: absolute; }
-.row { vertical-align: bottom; }
-.row.spacing {
-  height: 20px;
-  background: transparent;
+.wallet-top-navigation.navbar-inverse {
+  flex: 0 0 60px;
+  width: 100%;
+  @media (max-width: 767px) {
+    flex: 0 0 50px;
+  }
 }
-.margin-0-auto { margin: 0 auto; }
 
 .line-split {
   position: relative;
@@ -52,7 +38,7 @@ body {
     content: '';
     height: 50%;
     position: absolute;
-    background-color: $ccc;
+    background-color: $border-grey;
   }
   &:before { top: 0; }
   &:after { bottom: 0; }
@@ -77,8 +63,6 @@ noscript {
   }
 }
 
-.lh1 { line-height: 1; }
-
 .ph-form {
   @media(max-width: 375px) {
     padding: 0 0;
@@ -87,9 +71,3 @@ noscript {
 }
 
 .mw { max-width: 100%; }
-
-.tilda-before {
-  &:before {
-    content: '~';
-  }
-}
