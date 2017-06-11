@@ -251,7 +251,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         },
         right: {
           templateUrl: 'partials/home.pug',
-          controller: 'HomeCtrl'
+          controller: 'HomeCtrl',
+          resolve: {
+            loadBcPhoneNumber: ($ocLazyLoad) => {
+              return $ocLazyLoad.load('bcPhoneNumber');
+            }
+          }
         }
       }
     })

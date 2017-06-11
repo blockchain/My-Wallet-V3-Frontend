@@ -1,0 +1,15 @@
+.modal-header(data-preflight-tag="MobileConversion")
+  .width-80.pl-25
+    h3(translate="PAIR_YOUR_WALLET")
+.modal-body
+  .flex-justify.flex-center
+    div.f-14.width-90
+      span(translate="SYNC_WALLET")
+  .flex-column.flex-center
+    .flex-center.flex-column.mt-35(ng-hide="pairingCode")
+      button.button-primary-inverse(translate="SHOW_QR_CODE" ng-click="makeQR()")
+      span.mvl.mid-grey(translate="HIDE_CODE")
+    .qr.ptl.mtl(ng-show="pairingCode")
+        qr(text="pairingCode" size="180" image="true")
+.modal-footer.pal.flex-end
+  button.button-muted.mrm(translate="CLOSE" ng-click="$dismiss('cancelled') && done()")
