@@ -38,9 +38,9 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     'expired': 'expired'
   };
 
-  let isKYC = (trade) => trade.constructor.name === 'CoinifyKYC';
-
   let getState = (state) => errorStates[state] || state;
+  let isKYC = (trade) => trade.constructor.name === 'CoinifyKYC';
+  let wholeNumber = (trade) => ['INR'].indexOf(trade.inCurrency) > -1;
 
   let getLabel = (trade) => {
     let accountIndex = trade.accountIndex;
@@ -62,7 +62,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
       'BTC_PURCHASED': currency.convertFromSatoshi(trade.outAmount || trade.outAmountExpected, currency.bitCurrencies[0]),
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
-      'TOTAL_COST': currency.formatCurrencyForView(trade.sendAmount / 100, { code: trade.inCurrency })
+      'TOTAL_COST': currency.formatCurrencyForView(wholeNumber(trade) ? trade.sendAmount : trade.sendAmount / 100, { code: trade.inCurrency })
     };
     if (buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     return transaction;
