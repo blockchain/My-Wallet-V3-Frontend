@@ -2,13 +2,13 @@ angular
   .module('walletApp')
   .component('exchangeVerify', {
     bindings: {
-      exchange: '<',
-      fields: '<',
       steps: '<',
+      fields: '<',
       nextStep: '<',
-      mobilePreferred: '@',
-      exchangeName: '@',
-      goTo: '&'
+      exchange: '<',
+      onVerify: '&',
+      onSetProfile: '&',
+      mobilePreferred: '@'
     },
     templateUrl: 'templates/exchange/verify.pug',
     controller: ExchangeVerifyController,
@@ -37,52 +37,11 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   };
 
   this.onStep = (step) => step === this.state.step;
-  this.nextComponentStep = (step) => this.state.step = step;
 
-  this.setAddress = () => {
+  this.setProfile = () => {
     let fields = this.state;
-    let profile = this.exchange.profile;
-
-    profile.fullName = fields.fullName;
-    profile.firstName = fields.firstName;
-    profile.middleName = fields.middleName;
-    profile.lastName = fields.lastName;
-    profile.mobile = fields.mobile;
-    profile.pancard = fields.pancard;
-    profile.address.street = fields.street;
-    profile.address.city = fields.city;
-    profile.address.state = fields.state;
-    profile.address.zipcode = fields.zipcode;
-    profile.dateOfBirth = new Date(fields.dob);
-
-    if (profile.setSSN) {
-      profile.setSSN(fields.ssn);
-      profile.setAddress(
-        fields.addr1,
-        fields.addr2,
-        fields.city,
-        fields.state.Code,
-        fields.zipcode
-      );
-    }
-
-    this.steps.length > 1 ? this.nextComponentStep(this.steps[1]) : this.verifyProfile(profile);
-  };
-
-  this.verifyProfile = (profile) => {
-    $q.resolve(profile.verify())
-    .then(() => this.goTo({step: this.nextStep}))
-    .catch(Exchange.displayError);
-  };
-
-  this.setInfo = () => {
-    let fields = this.state;
-    let profile = this.exchange.profile;
-
-    profile.bankAccountNumber = fields.bankAccountNumber;
-    profile.ifsc = fields.ifsc;
-
-    this.goTo({step: this.nextStep});
+    this.onSetProfile({fields: fields});
+    this.steps.length > 1 ? this.state.step = this.steps.shift() && this.steps[0] : this.onVerify();
   };
 
   this.$onInit = () => this.state.step = this.steps[0];
@@ -93,10 +52,10 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.SFOXAddressForm = () => angular.merge(this.state, QA.SFOXAddressForm());
 
   this.qa = () => {
-    if (this.exchangeName === 'Unocoin') {
+    let name = this.exchange.constructor.name;
+    if (name === 'Unocoin') {
       this.onStep('address') ? this.unocoinAddressForm() : this.unocoinInfoForm();
-    }
-    if (this.exchangeName === 'SFOX') {
+    } else if (name === 'SFOX') {
       this.SFOXAddressForm();
     }
   };
