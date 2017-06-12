@@ -43,7 +43,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     kycs: [],
     mediums: [],
     accounts: [],
-    limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {} } },
+    limits: { bank: { max: {}, maxOutRemaining: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
@@ -115,8 +115,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function getMaxLimits (defaultCurrency) {
     const setMax = (rate, curr) => {
-      service.limits.bank.max[curr] = calculateMax(rate, 'bank');
-      service.limits.card.max[curr] = calculateMax(rate, 'card');
+      service.limits.bank.max[curr] = calculateMax(rate, 'bank', 'inRemaining');
+      service.limits.bank.maxOutRemaining[curr] = calculateMax(rate, 'bank', 'outRemaining');
+      service.limits.card.max[curr] = calculateMax(rate, 'card', 'inRemaining');
       service.limits.bank.yearlyMax[curr] = calculateYearlyMax(rate, 'bank');
       service.limits.card.yearlyMax[curr] = calculateYearlyMax(rate, 'card');
       service.limits.absoluteMax = (curr) => {
@@ -130,8 +131,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.all(['DKK', 'EUR', 'USD', 'GBP'].map(getMax));
   }
 
-  function calculateMax (rate, medium) {
-    let limit = service.getExchange().profile.currentLimits[medium].inRemaining;
+  function calculateMax (rate, medium, typeRemaining) {
+    let limit = service.getExchange().profile.currentLimits[medium][typeRemaining];
     return (rate * limit).toFixed(2);
   }
 
