@@ -349,7 +349,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         },
         exchangeRate ($q, MyWallet, unocoin) {
           let exchange = MyWallet.wallet.external.unocoin;
-          return $q.resolve(unocoin.fetchQuote(exchange, 1, 'BTC', 'INR'));
+          return $q.resolve(unocoin.fetchQuote(exchange, 100000000, 'BTC', 'INR'));
         },
         showCheckout (Env, MyWallet) {
           return Env.then(env => {

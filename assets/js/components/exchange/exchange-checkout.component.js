@@ -60,7 +60,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * this.conversion | 0 : $scope.fromSatoshi(state.btc, $scope.bitcoin),
+    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * this.conversion | 0 : $scope.fromSatoshi(state.btc * 100000000, $scope.bitcoin),
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });
@@ -90,7 +90,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   });
 
   $scope.getInitialQuote = () => {
-    let args = { amount: 1, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
+    let args = { amount: 100000000, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
     let quoteP = $q.resolve(this.handleQuote(args));
     quoteP.then(quote => { $scope.state.rate = quote.rate; });
   };
