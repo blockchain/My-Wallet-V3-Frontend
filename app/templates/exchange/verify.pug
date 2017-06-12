@@ -13,7 +13,7 @@
         ul.pll
           li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa()") Autofill Form
   .width-60
-    form.bc-form(ng-if="$ctrl.onStep('address')" name="verifyForm" ng-submit="$ctrl.setAddress()" novalidate autocomplete="off")
+    form.bc-form(ng-if="$ctrl.onStep('address')" name="verifyForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row(ng-if="$ctrl.showField('fullName')")
           .col-md-12
@@ -104,7 +104,7 @@
         .row
           .col-md-12
             button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-    form.bc-form(ng-if="$ctrl.onStep('info')" name="infoForm" ng-submit="$ctrl.setInfo()" novalidate autocomplete="off")
+    form.bc-form(ng-if="$ctrl.onStep('info')" name="infoForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
           .col-md-6
