@@ -9,7 +9,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
 
   let exchange = $scope.vm.exchange;
   let getNextIdType = () => idTypes.shift();
-  let idTypes = ['id', 'pancard', 'photo', 'address'];
+  let idTypes = ['pancard', 'photo', 'address'];
 
   $scope.openHelper = modals.openHelper;
   $scope.goTo = (step) => $scope.state.step = step;
