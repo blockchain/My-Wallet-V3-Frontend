@@ -43,7 +43,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     kycs: [],
     mediums: [],
     accounts: [],
-    limits: { bank: { max: {}, yearlyMax: {} }, card: { max: {}, yearlyMax: {} } },
+    limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
@@ -142,7 +142,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function getMinLimits (quote) {
     const calculateMin = (mediums) => {
-      service.limits.bank.min = mediums.bank ? mediums.bank.minimumInAmounts : {};
+      service.limits.bank.min = mediums.bank ? Object.assign(service.limits.bank.min, mediums.bank.minimumInAmounts) : {};
       service.limits.card.min = mediums.card ? mediums.card.minimumInAmounts : {};
       service.limits.absoluteMin = (curr) => {
         let cardMin = parseFloat(service.limits.card.min[curr], 0);

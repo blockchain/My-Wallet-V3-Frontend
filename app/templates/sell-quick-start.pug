@@ -39,7 +39,7 @@
               ng-change="updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();"
               ng-model-options="{debounce: 250}"
               placeholder="{{placeholder}}"
-              min="{{limits.absoluteMin($ctrl.transaction.currency.code)}}"
+              min="{{limits.bank.min[$ctrl.transaction.currency.code]}}"
               max="{{limits.absoluteMax($ctrl.transaction.currency.code)}}"
               step="any"
               prevent-event="mousewheel"

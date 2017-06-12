@@ -93,11 +93,15 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   };
 
   const handleError = (e) => {
+    this.err = tryParse(e);
     console.error(e);
     console.error('error publishing', e.error);
     console.log(JSON.stringify(e.payment, null, 2));
-    if (e.error.message) console.error(e.error.message);
-    transactionFailed(e);
+    transactionFailed(this.err.error_description);
+  };
+
+  let tryParse = (json) => {
+    try { return JSON.parse(json); } catch (e) { return json; }
   };
 
   const handleSellResult = (sellResult) => {
