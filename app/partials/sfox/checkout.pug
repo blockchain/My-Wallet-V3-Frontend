@@ -42,8 +42,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         th.pvs.width-5-mobile.visible-xs
       tr(
         ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
-        trade="trade"
+        user-action-required="trade.state === 'awaiting_transfer_in'"
         buy="inspectTrade"
+        conversion="100"
+        trade="trade"
         usa="true")
 contact-support-footer(ng-hide="inMobileBuy")
 sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')

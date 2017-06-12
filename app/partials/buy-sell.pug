@@ -60,7 +60,9 @@
             th.pvs.width-5-mobile.visible-xs
           tr(
             ng-repeat="trade in trades.pending | orderBy:'createdAt':true"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
             disabled="status.disabled"
+            conversion="100"
             trade="trade"
             buy="buy"
             sell="sell")
@@ -82,6 +84,7 @@
           tr(
             ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:$render.limit"
             disabled="status.disabled"
+            conversion="100"
             trade="trade"
             buy="buy"
             sell="sell"
