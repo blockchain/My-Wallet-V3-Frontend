@@ -135,8 +135,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       windowClass: 'bc-modal trade-summary',
       controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
         $scope.vm = {
-          trade: trade,
-          cancel: $uibModalInstance.dismiss('')
+          trade: trade
         };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
       },

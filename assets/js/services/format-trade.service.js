@@ -195,6 +195,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   }
 
   function awaiting_transfer_in (trade) {
+    if (!trade.bankAccount) { return service.initiated(trade); }
     const labels = labelsForCurrency(trade.inCurrency);
     return {
       class: 'state-danger-text',
