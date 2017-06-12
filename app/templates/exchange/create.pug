@@ -29,7 +29,7 @@
             input(ng-model="$ctrl.state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
             .help.mb-15
-              span(ng-click="$ctrl.view('email')")
+              span.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text Sorry, this email is already registered with {{$ctrl.exchangeName}}. 
                 a Change Email
         .group.pb-40(ng-if="$ctrl.mobileRequired")
@@ -67,7 +67,7 @@
               label Enter verification code sent to your email:
               input(ng-model="$ctrl.state.emailCode" name="emailCode" ng-change="$ctrl.clearInlineErrors()" focus-when="$ctrl.state.sentEmailCode || $ctrl.state.resentEmailCode" required)
             .item(ng-hide="emailForm.emailCode.$error.correct")
-              span.f-14.mt-5(ng-hide="state.resentEmailCode")
+              span.f-14.mt-5(ng-hide="$ctrl.state.resentEmailCode")
                 | Didn't receive the email? 
                 a(ng-click="$ctrl.sendEmailCode(); $ctrl.state.resentEmailCode = true;") Resend 
                 | or 

@@ -7,22 +7,16 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
     $scope.buySellDebug = env.buySellDebug;
   });
 
-  let exchange = $scope.vm.exchange;
-
+  $scope.exchange = $scope.vm.exchange;
   $scope.openHelper = modals.openHelper;
 
-  $scope.state = {
-    step: 'address'
-  };
+  $scope.steps = ['address', 'info'];
+  $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
 
-  $scope.format = bcPhoneNumber.format;
+  $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
-  $scope.onStep = (step) => step === $scope.state.step;
-  $scope.goTo = (step) => $scope.state.step = step;
-
-  $scope.setAddress = () => {
-    let fields = $scope.state;
-    let profile = exchange.profile;
+  $scope.setProfile = (fields) => {
+    let profile = $scope.exchange.profile;
 
     profile.fullName = fields.fullName;
     profile.mobile = fields.mobile;
@@ -31,24 +25,10 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
     profile.address.city = fields.city;
     profile.address.state = fields.state;
     profile.address.zipcode = fields.zipcode;
-
-    $scope.goTo('info');
-  };
-
-  $scope.setInfo = () => {
-    let fields = $scope.state;
-    let profile = exchange.profile;
-
     profile.bankAccountNumber = fields.bankAccountNumber;
     profile.ifsc = fields.ifsc;
-
-    $scope.vm.goTo('upload');
   };
 
   AngularHelper.installLock.call($scope);
   $scope.$watch('state.step', (val) => console.log(val));
-
-  // QA Tool
-  $scope.unocoinInfoForm = () => angular.merge($scope.state, QA.unocoinInfoForm());
-  $scope.unocoinAddressForm = () => angular.merge($scope.state, QA.unocoinAddressForm());
 }

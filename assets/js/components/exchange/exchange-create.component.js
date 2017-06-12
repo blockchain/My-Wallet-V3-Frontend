@@ -15,7 +15,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, localStorageService, unocoin) {
+function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localStorageService, Exchange) {
   const cookieIds = { SENT_EMAIL: 'sentEmailCode', SENT_MOBILE: 'sentMobileCode' };
   this.user = Wallet.user;
 
@@ -55,7 +55,7 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
 
   this.displayInlineError = (error) => {
     let { accountForm, emailForm, mobileForm } = $scope.$$childHead;
-    switch (unocoin.interpretError(error)) {
+    switch (Exchange.interpretError(error)) {
       case 'user is already registered':
         accountForm.email.$setValidity('registered', false);
         break;
@@ -69,7 +69,7 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
         accountForm.email.$setValidity('registered', false);
         break;
       default:
-        unocoin.displayError(error);
+        Exchange.displayError(error);
     }
   };
 
@@ -86,11 +86,11 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
     this.clearInlineErrors();
     $q(Wallet.changeEmail.bind(null, this.state.email))
       .then(() => $q(Wallet.sendConfirmationCode))
-      .then(this.emailCodeSent).then($scope.setState, unocoin.displayError).finally($scope.free);
+      .then(this.emailCodeSent).then($scope.setState, Exchange.displayError).finally($scope.free);
   };
 
   this.sendEmailCode = () => {
-    $q(Wallet.sendConfirmationCode).then(this.emailCodeSent, unocoin.displayError);
+    $q(Wallet.sendConfirmationCode).then(this.emailCodeSent, Exchange.displayError);
   };
 
   this.verifyEmail = () => {
@@ -100,7 +100,7 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
 
   this.changeMobile = () => {
     $q(Wallet.changeMobile.bind(null, this.state.mobile))
-      .then(this.mobileCodeSent).then(this.setState, unocoin.displayError).finally($scope.free);
+      .then(this.mobileCodeSent).then(this.setState, Exchange.displayError).finally($scope.free);
   };
 
   this.sendMobileCode = () => this.changeMobile();
@@ -109,6 +109,20 @@ function ExchangeCreateController (Env, AngularHelper, $scope, $timeout, $q, cur
     $q(Wallet.verifyMobile.bind(null, this.state.mobileCode))
       .then(this.setState, this.displayInlineError).finally($scope.free);
   };
+
+  $scope.$watch('$ctrl.state.view', (view) => {
+    let shouldSendEmail =
+      !this.state.verifiedEmail &&
+      !localStorageService.get('sentEmailCode') &&
+      this.state.email &&
+      this.state.email.indexOf('@') > -1;
+
+    if (view === 'email' && shouldSendEmail) this.sendEmailCode();
+  });
+
+  // let syncCookie = (id) => localStorageService.set.bind(localStorageService, id);
+  // $scope.$watch('$ctrl.state.sentEmailCode', syncCookie(cookieIds.SENT_EMAIL));
+  // $scope.$watch('$ctrl.state.sentMobileCode', syncCookie(cookieIds.SENT_MOBILE));
 
   this.createAccount = () => {
     $q.resolve(this.exchange.signup())

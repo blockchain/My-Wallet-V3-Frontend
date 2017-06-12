@@ -37,10 +37,10 @@ function QA () {
 
   service.SFOXAddressForm = () => {
     let fields = {
-      first: 'Satoshi' + unique,
-      last: 'Nakamoto' + unique,
+      firstName: 'Satoshi' + unique,
+      lastName: 'Nakamoto' + unique,
       ssn: unique.slice(4, 13),
-      dob: new Date(1991, 4, 14),
+      dob: '04/14/1991',
       addr1: '123 Bitcoin Lane',
       addr2: '2',
       city: 'New York City',
