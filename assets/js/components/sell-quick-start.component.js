@@ -35,7 +35,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   let exchange = buySell.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchangeCountry = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
-  this.currency = exchange.profile.defaultCurrency;
+  this.currency = exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
   if (this.exchange.profile.currentLimits) {
     $scope.sellLimit = this.exchange.profile.level.limits.bank.outDaily.toString();
     $scope.remaining = this.exchange.profile.currentLimits.bank.outRemaining.toString();
