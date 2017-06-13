@@ -1,9 +1,9 @@
 .modal-body
-  .flex-column.mbl(ng-show="$ctrl.error")
+  .flex-column.mbl(ng-show="$ctrl.err")
     p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
-    span.mvm(ng-show="$ctrl.error.error !== 'price_quote_expired'" translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $ctrl.error.error_description}")
-    span.mvm(ng-show="$ctrl.error.error === 'price_quote_expired'" translate="SELL.QUOTE_EXPIRED_ERROR" translate-values="{error: $ctrl.error.error_description}")
-  .flex-column.mbl(ng-hide="$ctrl.error")
+    span.mvm(ng-show="$ctrl.err.error !== 'price_quote_expired'" translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $ctrl.err.error_description}")
+    span.mvm(ng-show="$ctrl.err.error === 'price_quote_expired'" translate="SELL.QUOTE_EXPIRED_ERROR" translate-values="{error: $ctrl.err.error_description}")
+  .flex-column.mbl(ng-hide="$ctrl.err")
     p.mvm.pb-10
       span.em-500.f-14 {{ $ctrl.transaction.btcAfterFee }} BTC
       | &nbsp;
@@ -28,12 +28,12 @@
             helper-button(content="SELL.FIRST_CONFIRMATION")
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end
-    button.button-primary(ng-show="$ctrl.error" translate="CLOSE" ng-click="$ctrl.dismiss()")
-    button.button-muted.mrm(ng-click="$ctrl.close()" translate="CANCEL_ORDER" ng-show="!$ctrl.error" ng-disabled="$ctrl.waiting")
+    button.button-primary(ng-show="$ctrl.err" translate="CLOSE" ng-click="$ctrl.dismiss()")
+    button.button-muted.mrm(ng-click="$ctrl.close()" translate="CANCEL_ORDER" ng-show="!$ctrl.err" ng-disabled="$ctrl.waiting")
     button.button-primary(
       ladda-translate="SELL.PLACE_ORDER"
       ng-click="$ctrl.sell()"
       data-style="expand-left"
       ui-ladda="$ctrl.waiting"
-      ng-hide="$ctrl.error"
+      ng-hide="$ctrl.err"
       ng-disabled="$ctrl.isDisabled()")
