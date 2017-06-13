@@ -116,7 +116,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       quote () { return quote; }
     }
   }).result.then(() => {
-    $state.go('wallet.common.buy-sell.unocoin', { selectedTab: 'ORDER_HISTORY' });
+    $state.go('wallet.common.buy-sell.unocoin');
   }).catch(() => {
     let base = 'wallet.common.buy-sell';
     let goingToBuySellState = $state.current.name.indexOf(base) === 0;
