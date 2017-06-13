@@ -13,10 +13,12 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeUploadController (Env, $scope) {
+function ExchangeUploadController (Env, $scope, modals) {
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
   });
+
+  this.openHelper = modals.openHelper;
 
   this.onUpload = () => this.handleUpload({file: this.file})
                             .then(() => this.file = undefined);

@@ -50,7 +50,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         'bank-deposit-helper': 'img/bank-deposit-helper.png',
         'bank-check-helper': 'img/bank-check-helper.png',
         'address-id-helper': 'img/address-id-helper.png',
-        'id-id-helper': 'img/id-id-helper.png'
+        'id-id-helper': 'img/id-id-helper.png',
+        'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
+        'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
+        'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png'
       };
 
       $scope.helper = helper;

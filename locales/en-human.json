@@ -1296,6 +1296,18 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Acceptable PAN Card",
+    "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Acceptable User Photograph",
+    "COPY": "Selfies with goggles or hats are <span class='state-danger-text'>not acceptable</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Acceptable Proof of Address",
+    "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+  },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
@@ -1431,5 +1443,9 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
+  "UNOCOIN": {
+    "PENDING": "Identity Verification Pending",
+    "PENDING_EXPLAIN": "Unocoin is currently verifying your identity. You will receive a phone call within 1 business day. The phone call will verify your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card Information</b>. You will be able to buy bitcoin once you are verified."
+  },
   "": ""
 }
