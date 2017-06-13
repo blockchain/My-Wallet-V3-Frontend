@@ -50,8 +50,6 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.buySuccess = (trade) => {
     modals.openBankTransfer(trade);
-    // exchange.fetchProfile().then($scope.setState);
-    // buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
   };
 
   $scope.buyError = () => {
