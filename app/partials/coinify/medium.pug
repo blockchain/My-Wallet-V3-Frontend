@@ -13,7 +13,7 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY3")
     .width-45.flex-justify.flex-column(ng-show="!aboveBankMin || pendingKYC()")
       div.mb-20(ng-hide="pendingKYC()" translate="BANK_TRANSFER.RECOMMENDATION" translate-values="{min: limits.bank.min[vm.fiatCurrency()], code: vm.fiatCurrency()}")
-      label.pointer.em-300.primary(ng-hide="pendingKYC()" for="bank" ng-click="$timeout(submit, 1)" translate="I want to pay via bank transfer")
+      label.pointer.em-300.primary(ng-hide="pendingKYC()" for="bank" ng-click="needsKYC() ? openKYC() : $timeout(submit, 1)" translate="{{needsKYC() ? 'BANK_TRANSFER.PAY_VIA_NEEDS_KYC' : 'BANK_TRANSFER.PAY_VIA'}}")
       label.pointer.em-300.primary(ng-show="pendingKYC()" for="bank" ng-click="openKYC()" translate="Bank transfers are disabled while identity verification is pending. Click here to check the status of your identity verification.")
       //- hide above when kyc check is at medium level
       //- label.pointer.em-300.primary(ng-show="needsKYC('bank')" for="bank" ng-click="openKYC()" translate="Currently you can buy at most {{limits.bank.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via bank transfer. Click here to increase your limit.")

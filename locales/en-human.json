@@ -1096,7 +1096,9 @@
     "COPY1": "One time ID Verification",
     "COPY2": "Receive bitcoin in 2-3 days",
     "COPY3": "No payment fees",
-    "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card."
+    "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card.",
+    "PAY_VIA": "I want to pay via bank transfer",
+    "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase."
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
