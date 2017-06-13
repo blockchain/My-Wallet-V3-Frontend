@@ -2,11 +2,9 @@ angular
   .module('walletApp')
   .component('exchangeCreate', {
     bindings: {
-      exchangeName: '<',
-      mobileRequired: '<',
       views: '<',
       exchange: '<',
-      goTo: '&',
+      onCreate: '&',
       termsOfService: '@',
       privacyAgreement: '@'
     },
@@ -15,27 +13,24 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localStorageService, Exchange) {
-  const cookieIds = { SENT_EMAIL: 'sentEmailCode', SENT_MOBILE: 'sentMobileCode' };
+function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localStorageService, Exchange, bcPhoneNumber, AngularHelper) {
   this.user = Wallet.user;
-
+  this.name = this.exchange.constructor.name;
   this.view = (v) => { this.state.view = v; };
   this.viewing = (v) => v === this.state.view;
 
   const resolveView = (state) => {
     let i;
-    if (this.mobileRequired) {
-      i = !state.verifiedEmail ? 1 : !state.verifiedMobile ? 2 : 0;
+    if (this.views.indexOf('mobile') > -1) {
+      i = !state.verifiedEmail ? 0 : !state.verifiedMobile ? 1 : 2;
     } else {
-      i = !state.verifiedEmail ? 1 : 0;
+      i = !state.verifiedEmail ? 0 : 1;
     }
     return this.views[i];
   };
 
   this.state = {
     terms: false,
-    sentEmailCode: localStorageService.get(cookieIds.SENT_EMAIL),
-    sentMobileCode: localStorageService.get(cookieIds.SENT_MOBILE),
     get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
 
@@ -83,10 +78,11 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
   };
 
   this.changeEmail = () => {
+    this.lock();
     this.clearInlineErrors();
     $q(Wallet.changeEmail.bind(null, this.state.email))
       .then(() => $q(Wallet.sendConfirmationCode))
-      .then(this.emailCodeSent).then($scope.setState, Exchange.displayError).finally($scope.free);
+      .then(this.emailCodeSent).then($scope.setState, Exchange.displayError).finally(this.free);
   };
 
   this.sendEmailCode = () => {
@@ -94,42 +90,48 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
   };
 
   this.verifyEmail = () => {
+    this.lock();
     $q(Wallet.verifyEmail.bind(null, this.state.emailCode))
-      .then(this.setState, this.displayInlineError).finally($scope.free);
+      .then(this.setState, this.displayInlineError).finally(this.free);
   };
 
   this.changeMobile = () => {
+    this.lock();
     $q(Wallet.changeMobile.bind(null, this.state.mobile))
-      .then(this.mobileCodeSent).then(this.setState, Exchange.displayError).finally($scope.free);
+      .then(this.mobileCodeSent).then(this.setState, Exchange.displayError).finally(this.free);
   };
 
   this.sendMobileCode = () => this.changeMobile();
 
   this.verifyMobile = () => {
+    this.lock();
     $q(Wallet.verifyMobile.bind(null, this.state.mobileCode))
-      .then(this.setState, this.displayInlineError).finally($scope.free);
+      .then(this.setState, this.displayInlineError).finally(this.free);
   };
 
   $scope.$watch('$ctrl.state.view', (view) => {
     let shouldSendEmail =
       !this.state.verifiedEmail &&
-      !localStorageService.get('sentEmailCode') &&
       this.state.email &&
       this.state.email.indexOf('@') > -1;
 
+    let shouldSendMobile =
+      !this.state.verifiedMobile &&
+      bcPhoneNumber.isValid(this.state.mobile);
+
     if (view === 'email' && shouldSendEmail) this.sendEmailCode();
+    if (view === 'mobile' && shouldSendMobile) this.sendMobileCode();
   });
 
-  // let syncCookie = (id) => localStorageService.set.bind(localStorageService, id);
-  // $scope.$watch('$ctrl.state.sentEmailCode', syncCookie(cookieIds.SENT_EMAIL));
-  // $scope.$watch('$ctrl.state.sentMobileCode', syncCookie(cookieIds.SENT_MOBILE));
-
   this.createAccount = () => {
+    this.lock();
     $q.resolve(this.exchange.signup())
       .then(() => this.exchange.fetchProfile())
-      .then(() => this.goTo({step: 'verify'}))
-      .catch(this.displayInlineError);
+      .then(() => this.onCreate())
+      .catch(this.displayInlineError)
+      .finally(this.free);
   };
 
   this.$onInit = () => this.setState();
+  AngularHelper.installLock.call(this);
 }

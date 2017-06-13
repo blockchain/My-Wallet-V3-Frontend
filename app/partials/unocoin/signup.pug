@@ -4,11 +4,9 @@
   div.pl-40.pr-40.pt-40.pb-25
     div(ng-if="vm.onStep('create')" ng-controller="UnocoinCreateAccountController")
       exchange-create(
-        exchange-name="name"
-        mobile-required="mobileRequired"
         views="views"
         exchange="exchange"
-        go-to="goTo(step)"
+        on-create="vm.goTo('verify')"
         terms-of-service="https://www.unocoin.com"
         privacy-agreement="https://www.unocoin.com/privacy")
     div(ng-if="vm.onStep('verify')" ng-controller="UnocoinVerifyController")
