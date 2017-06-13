@@ -9,8 +9,6 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
 
   let exchange = $scope.vm.exchange;
 
-  $scope.openHelper = modals.openHelper;
-
   let getNextIdType = () => {
     let { required_docs = [] } = exchange.profile.verificationStatus;
 
