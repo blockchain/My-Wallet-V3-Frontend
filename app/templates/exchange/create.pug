@@ -32,7 +32,7 @@
               span.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text Sorry, this email is already registered with {{$ctrl.name}}. 
                 a Change Email
-        .group.pb-40(ng-if="$ctrl.mobileRequired")
+        .group.pb-40(ng-if="$ctrl.views.indexOf('mobile') > -1")
           .item
             label Phone Number
             bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")

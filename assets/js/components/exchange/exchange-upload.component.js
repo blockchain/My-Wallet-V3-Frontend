@@ -5,6 +5,7 @@ angular
       base: '@',
       locked: '=',
       idType: '=',
+      autoFill: '&',
       handleUpload: '&'
     },
     templateUrl: 'templates/exchange/upload.pug',

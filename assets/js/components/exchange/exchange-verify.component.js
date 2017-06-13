@@ -22,6 +22,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     this.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
   });
 
+  this.name = this.exchange.constructor.name.toLowerCase();
   this.showField = (field) => this.fields.indexOf(field) > -1;
 
   $scope.format = bcPhoneNumber.format;
@@ -47,16 +48,13 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.$onInit = () => this.state.step = this.steps[0];
 
   // QA Tools
-  this.unocoinInfoForm = () => angular.merge(this.state, QA.unocoinInfoForm());
-  this.unocoinAddressForm = () => angular.merge(this.state, QA.unocoinAddressForm());
-  this.SFOXAddressForm = () => angular.merge(this.state, QA.SFOXAddressForm());
-
-  this.qa = () => {
-    let name = this.exchange.constructor.name;
-    if (name === 'Unocoin') {
-      this.onStep('address') ? this.unocoinAddressForm() : this.unocoinInfoForm();
-    } else if (name === 'SFOX') {
-      this.SFOXAddressForm();
+  this.qa = {
+    unocoin: {
+      info: () => angular.merge(this.state, QA.unocoin.infoForm()),
+      address: () => angular.merge(this.state, QA.unocoin.addressForm())
+    },
+    sfox: {
+      address: () => angular.merge(this.state, QA.sfox.addressForm())
     }
   };
 }

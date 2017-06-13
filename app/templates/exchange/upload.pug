@@ -12,7 +12,7 @@
           i.mrs.ti-search
           span QA
         ul.pll
-          li.type-lbl.mbm.pointer.blue(ng-click="autoFillPhotos()") Autofill Photos and Verify
+          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.autoFill()") Autofill Photos and Verify
       ul.mbl.pln.pl-20.f-16(ng-show="$ctrl.idType === 'address'")
         li.pb-5
           span(translate="{{$ctrl.base + $ctrl.idType + '_ID'}}.OPTION1")

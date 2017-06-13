@@ -11,7 +11,7 @@
           i.mrs.ti-search
           span QA
         ul.pll
-          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa()") Autofill Form
+          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa[$ctrl.name][$ctrl.state.step]()") Autofill Form
   .width-60
     form.bc-form(ng-if="$ctrl.onStep('address')" name="verifyForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")

@@ -37,7 +37,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
     $scope.lock();
 
     let profile = exchange.profile;
-    
+
     return $q.resolve(profile.verify())
              .then(() => $scope.vm.goTo('pending'))
              .catch(unocoin.displayError)
@@ -47,7 +47,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   AngularHelper.installLock.call($scope);
 
   // QA Tool
-  $scope.autoFillPhotos = () => {
+  $scope.autoFill = () => {
     ['id', 'pancard', 'photo', 'address'].forEach((idType) => exchange.profile.addPhoto(idType, QA.base64DataUrl()));
     $scope.verify();
   };

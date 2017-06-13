@@ -35,9 +35,6 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
     let idType = fields.idType;
     let filename = file.name;
 
-    // QA Tool
-    fields.verifyDoc && (filename = 'testing-' + filename);
-
     return $q.resolve(profile.getSignedURL(idType, filename))
       .then((res) => $scope.upload(res.signed_url, file))
       .catch((err) => console.log(err));
@@ -67,7 +64,4 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
 
   AngularHelper.installLock.call($scope);
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
-
-  // QA Tool
-  $scope.SFOXDebugDocs = QA.SFOXDebugDocs;
 }

@@ -30,7 +30,7 @@
       "showSellFraction": 0
     },
     "sfox": {
-      "production": false,
+      "production": true,
       "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
       "inviteFormFraction": 0.1,
