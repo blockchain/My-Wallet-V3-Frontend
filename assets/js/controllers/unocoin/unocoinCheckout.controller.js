@@ -15,8 +15,8 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.state = {
     trades: exchange.trades,
     limits: {
-      min: mediums.bank.minimumInAmounts[$scope.rupees.code],
-      max: mediums.bank.limitInAmounts['BTC'] * exchangeRate.quoteAmount
+      min: mediums && mediums.bank.minimumInAmounts[$scope.rupees.code],
+      max: mediums && mediums.bank.limitInAmounts['BTC'] * exchangeRate.quoteAmount
     }
   };
 
