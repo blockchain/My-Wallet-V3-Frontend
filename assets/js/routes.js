@@ -344,12 +344,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
-        accounts ($q, MyWallet) {
-          return $q.resolve([]);
-        },
         exchangeRate ($q, MyWallet, unocoin) {
           let exchange = MyWallet.wallet.external.unocoin;
-          return $q.resolve(unocoin.fetchQuote(exchange, 100000000, 'BTC', 'INR'));
+          return $q.resolve(unocoin.fetchQuote(exchange, 1e8, 'BTC', 'INR'));
+        },
+        mediums (exchangeRate) {
+          return exchangeRate.getPaymentMediums();
         },
         showCheckout (Env, MyWallet) {
           return Env.then(env => {

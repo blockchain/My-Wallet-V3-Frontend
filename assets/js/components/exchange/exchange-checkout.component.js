@@ -4,9 +4,9 @@ angular
   .component('exchangeCheckout', {
     bindings: {
       quote: '<',
+      limits: '<',
       userId: '<',
       dollars: '<',
-      buyLimit: '<',
       buyLevel: '<',
       buyEnabled: '<',
       buyAccount: '<',
@@ -138,12 +138,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
     }
   };
 
-  $scope.setLimits = (limit) => {
-    $scope.min = $scope.toSatoshi(0.01, $scope.dollars);
-    $scope.max = $scope.toSatoshi(limit, $scope.dollars);
-  };
-
-  $scope.$watch('$ctrl.buyLimit', (limit) => !isNaN(limit) && $scope.setLimits(limit));
+  $scope.$watch('$ctrl.limits.min', (limit) => $scope.min = $scope.toSatoshi(limit || 0.01, $scope.dollars));
+  $scope.$watch('$ctrl.limits.max', (limit) => $scope.max = $scope.toSatoshi(limit, $scope.dollars));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);

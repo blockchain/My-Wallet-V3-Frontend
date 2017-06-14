@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('UnocoinCheckoutController', UnocoinCheckoutController);
 
-function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, exchangeRate, $rootScope, showCheckout, buyMobile) {
+function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, exchangeRate, mediums, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.unocoin;
 
   $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
@@ -14,12 +14,10 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.state = {
     trades: exchange.trades,
-    buyLimit: exchange.profile && exchange.profile.currentLimits.bank.inRemaining * exchangeRate.quoteAmount
-  };
-
-  $scope.setState = () => {
-    $scope.state.trades = exchange.trades;
-    $scope.state.buyLimit = exchange.profile && exchange.profile.currentLimits.bank.inRemaining * exchangeRate.quoteAmount;
+    limits: {
+      min: mediums.bank.minimumInAmounts[$scope.rupees.code],
+      max: mediums.bank.limitInAmounts['BTC'] * exchangeRate.quoteAmount
+    }
   };
 
   $scope.stepDescription = () => {

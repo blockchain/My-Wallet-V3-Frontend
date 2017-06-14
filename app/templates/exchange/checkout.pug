@@ -15,6 +15,9 @@ form.bc-form(
             .state-danger-text(ng-show="state.loadFailed")
               i.ti-alert
               span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+            .state-danger-text.f-12(ng-show="!state.loadFailed && checkoutForm.$error.min")
+              i.ti-alert
+              span.mls Please enter an amount greater than {{ format($ctrl.limits.min, dollars, false) }} {{ dollars.code }}
         .flex-center
           .flex-1.flex-center.border
             input.form-control.no-border(
@@ -46,7 +49,7 @@ form.bc-form(
             span.mhm {{bitcoin.code}}
         .f-12.mts
           span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | Your remaining daily buy limit is {{ format($ctrl.buyLimit, dollars, false) }} {{ dollars.code }}.
+            | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
             | &nbsp;
           span.primary.pointer(popup
                                popup-name="sfox-identity"
