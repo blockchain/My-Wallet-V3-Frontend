@@ -14,7 +14,7 @@ form.bc-form(
               helper-button(content="EXCHANGE_RATE_HELPER")
             .state-danger-text(ng-show="state.loadFailed")
               i.ti-alert
-              span.mls Failed to load exchange data
+              span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
         .flex-center
           .flex-1.flex-center.border
             input.form-control.no-border(

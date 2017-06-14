@@ -22,7 +22,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -76,6 +76,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
     let fetchSuccess = (quote) => {
       $scope.quote = quote;
       state.rate = quote.rate;
+      state.error = null;
       state.loadFailed = false;
       this.collapseSummary = true;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
@@ -126,7 +127,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
         .then(trade => {
           this.buySuccess({trade});
         })
-        .catch(() => this.buyError())
+        .catch((err) => {
+          $scope.state.loadFailed = true;
+          $scope.state.error = Exchange.interpretError(err);
+        })
         .finally($scope.resetFields).finally($scope.free);
     } else {
       this.buySuccess({quote});
