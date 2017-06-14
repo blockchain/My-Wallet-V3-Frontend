@@ -21,7 +21,7 @@
   .width-60.flex-justify(ng-show="$ctrl.viewing('summary')")
     form.bc-form.width-60.width-100-tablet.width-100-mobile(name="accountForm" ng-submit="$ctrl.createAccount()" novalidate autocomplete="off")
       fieldset(ng-disabled="$ctrl.locked")
-        .group.pb-40
+        .group.pb-20
           .item
             .flex-between
               label Email Address
@@ -32,11 +32,11 @@
               span.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text Sorry, this email is already registered with {{$ctrl.name}}. 
                 a Change Email
-        .group.pb-40(ng-if="$ctrl.views.indexOf('mobile') > -1")
+        .group.pb-20(ng-if="$ctrl.views.indexOf('mobile') > -1")
           .item
             label Phone Number
             bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")
-        .group.pb-30
+        .group.pb-20
           .item.check
             input#terms(type="checkbox" ng-model="$ctrl.state.terms" name="terms" required)
             label(for="terms")
@@ -73,7 +73,7 @@
                 | or 
                 a(ng-click="$ctrl.state.sentEmailCode = false") change email
               span.f-14.mt-5(ng-show="$ctrl.state.resentEmailCode") Another code has been sent!
-            .help(ng-show="emailForm.emailCode.$error.correct")
+            .help.mt-5.mb-15(ng-show="emailForm.emailCode.$error.correct")
               span.state-danger-text 
                 | Verification code incorrect. 
                 a(ng-click="$ctrl.sendEmailCode(); $ctrl.clearInlineErrors(); $ctrl.state.resentEmailCode = true;") Resend
