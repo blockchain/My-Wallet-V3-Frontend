@@ -37,12 +37,13 @@ describe('exchange-checkout.component', () => {
     handleBuy () { return $q.resolve(); },
     buySuccess () { return $q.resolve(); },
     buyError () { return $q.resolve(); },
-    quote () { return mockQuote(); }
+    quote () { return mockQuote(); },
+    dollars: {code: 'USD'}
   };
 
   let getControllerScope = function (bindings) {
     scope = $rootScope.$new(true);
-    $componentController('buyCheckout', {$scope: scope}, bindings);
+    $componentController('exchangeCheckout', {$scope: scope}, bindings);
     let template = $templateCache.get('templates/exchange/checkout.pug');
     $compile(template)(scope);
     return scope;
