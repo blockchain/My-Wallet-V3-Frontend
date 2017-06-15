@@ -3,94 +3,66 @@
   .banner(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
       div.width-100
-        h1.center.width-100(translate="MOST_POPULAR_WALLET")
-      .flex-row.flex-around.width-100.flex-between-mobile.container.hidden-xs.stats
-        .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
-          span.type-h5.white(translate="TRANSACTIONS")
-        .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="WALLETS_AMT" translate-values="{count: walletCount}")
-          span.type-h5.white(translate="WALLETS")
-        .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="COUNTRIES_SERVED_AMT")
-          span.type-h5.white(translate="COUNTRIES_SERVED")
-      .flex-center.flex-column.flex-justify.signup
-        .flex-column.pos-rel.width-100-mobile.center
-          button.button-primary.btn.button-vlg.button-heavy.mtl(
-            type="submit"
-            ui-sref="public.signup"
-            translate="CREATE_YOUR_WALLET")
-          span.f-20.mtm(translate="OR")
-          button.button-purple.button-heavy.upper.btn.button-vlg.mtm(
-            type="submit"
-            ui-sref="public.login-no-uid"
-            translate="LOGIN_NOW")
-  .newtobitcoin.container
-    #newToBTC.container-max-width.container-fluid.width-100
-      .flex-column.flex-justify.flex-center.mvvl
-        h2.em-200.mvn.font-4.font-3-mobile.center(translate=".NEW_TO_BITCOIN")
-    .new.container-max-width.container-fluid.width-100
-        .flex-row.flex-column-mobile.flex-column-med
-          video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" ng-src="adUrl")
-          .flex-column.width-50.flex-1.flex-center.flex-justify
-            #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mbl
-              img.flex-1(src='img/logo-timeline.png' alt="Blockchain Bitcoin Timeline")
-            .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
-              img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png' alt="What is Bitcoin")
-              .flex-column.flex-1
-                h3.flex-1.mtn.blue(translate=".WHAT_IS_BITCOIN")
-                p.flex-1(translate=".BITCOIN_IS")
-            .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile.flex-1
-              img.width-3.width-200-mobile.mrl(src='img/logo-why-bitcoin.png' alt="Why use Blockchain Bitcoin Wallet")
-              .flex-column.flex-1
-                h3.flex-1.blue(translate=".WHY_USE")
-                p.flex-1(translate=".USE_BECAUSE")
-  uib-carousel(active="active" interval="0")
-    h4(translate=".LOVED_BY_ALL")
-    uib-slide(index="0")
-      div
-        img(src="img/logo-nytimes.svg" alt="Blockchain Bitcoin Wallet New York Times")
-        p(translate="QUOTE_0")
-        span.author
-          a(href="http://nyti.ms/1sfHj9b" target="_blank" rel="noopener noreferrer") The New York Times
-    uib-slide(index="1")
-      div
-        p(translate="QUOTE_1")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="2")
-      div
-        img(src="img/logo-wsj.svg" alt="Blockchain Bitcoin Wallet Wall Street Journal")
-        p(translate="QUOTE_2")
-        span.author
-          a(href="http://on.wsj.com/1u5CFZF" target="_blank" rel="noopener noreferrer") The Wall Street Journal
-    uib-slide(index="3")
-      div
-        p(translate="QUOTE_3")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="4")
-      div
-        img(src="img/logo-techcrunch.svg" alt="Blockchain Bitcoin Wallet Techcrunch")
-        p(translate="QUOTE_4")
-        span.author
-          a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank" rel="noopener noreferrer") Tech Crunch
-    uib-slide(index="5")
-      div
-        p(translate="QUOTE_5")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="6")
-      div
-        img(src="img/logo-telegraph.svg" alt="Blockchain Bitcoin Wallet Telegraph")
-        p(translate="QUOTE_6")
-        span.author
-          a(href="http://bit.ly/1sdIEzZ" target="_blank" rel="noopener noreferrer") The Telegraph
-    uib-slide(index="7")
-      div
-        p(translate="QUOTE_7")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="8")
-      div
-        p(translate="QUOTE_8")
-        span.author(translate="WALLET_USER")
+        h1.f-42.em-200.width-100.man.mb-15(translate=".HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate=".SUB_HEADER")
+        a.f-16.em-500.upper.flex-center
+          span(translate="LANDING.GET_STARTED_NOW" ui-sref="public.signup")
+          i.icon-right_arrow.ml-5
+  .stats.upper.clearfix
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-mariner
+      span.em-300.f-24.em-300.white(translate="NUMBER_1_WALLET")
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-blue
+      span.em-300.f-24.em-300.white(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-primary
+      span.em-300.f-24.em-300.white(translate="WALLETS_AMT" translate-values="{count: walletCount}")
+  .container.mt-90
+    h2.upper.f-36.em-200.mvn.center(translate=".WHY_BLOCKCHAIN")
+    p.f-16.em-300.mt-10.mbn.center(translate=".LOVED_BY_ALL")
+    uib-carousel(active="active" interval="0")
+      uib-slide(index="0")
+        div
+          img(src="img/logo-nytimes.svg" alt="Blockchain Bitcoin Wallet New York Times")
+          p(translate="QUOTE_0")
+          span.author
+            a(href="http://nyti.ms/1sfHj9b" target="_blank" rel="noopener noreferrer") The New York Times
+      uib-slide(index="1")
+        div
+          p(translate="QUOTE_1")
+          span.author(translate="WALLET_USER")
+      uib-slide(index="2")
+        div
+          img(src="img/logo-wsj.svg" alt="Blockchain Bitcoin Wallet Wall Street Journal")
+          p(translate="QUOTE_2")
+          span.author
+            a(href="http://on.wsj.com/1u5CFZF" target="_blank" rel="noopener noreferrer") The Wall Street Journal
+      uib-slide(index="3")
+        div
+          p(translate="QUOTE_3")
+          span.author(translate="WALLET_USER")
+      uib-slide(index="4")
+        div
+          img(src="img/logo-techcrunch.svg" alt="Blockchain Bitcoin Wallet Techcrunch")
+          p(translate="QUOTE_4")
+          span.author
+            a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank" rel="noopener noreferrer") Tech Crunch
+      uib-slide(index="5")
+        div
+          p(translate="QUOTE_5")
+          span.author(translate="WALLET_USER")
+      uib-slide(index="6")
+        div
+          img(src="img/logo-telegraph.svg" alt="Blockchain Bitcoin Wallet Telegraph")
+          p(translate="QUOTE_6")
+          span.author
+            a(href="http://bit.ly/1sdIEzZ" target="_blank" rel="noopener noreferrer") The Telegraph
+      uib-slide(index="7")
+        div
+          p(translate="QUOTE_7")
+          span.author(translate="WALLET_USER")
+      uib-slide(index="8")
+        div
+          p(translate="QUOTE_8")
+          span.author(translate="WALLET_USER")
   .container.flex-center
     .whyuseblockchain.width-80.flex-column.flex-center
       .flex-column.flex-justify.flex-center.mtvl.mbm
@@ -215,3 +187,15 @@
           img(class="social-logo mlm" src="{{rootURL}}Resources/linkedin.png" alt="")
         a(href="https://twitter.com/blockchain" target="_blank" rel="noopener noreferrer nofollow")
           img(class="social-logo mlm" src="{{rootURL}}Resources/twitter.png" alt="")
+
+//- .flex-center.flex-column.flex-justify.signup
+//-   .flex-column.pos-rel.width-100-mobile.center
+//-     button.button-primary.btn.button-vlg.button-heavy.mtl(
+//-       type="submit"
+//-       ui-sref="public.signup"
+//-       translate="CREATE_YOUR_WALLET")
+//-     span.f-20.mtm(translate="OR")
+//-     button.button-purple.button-heavy.upper.btn.button-vlg.mtm(
+//-       type="submit"
+//-       ui-sref="public.login-no-uid"
+//-       translate="LOGIN_NOW")
