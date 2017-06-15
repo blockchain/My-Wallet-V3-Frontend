@@ -23,6 +23,10 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    &.sm {
+      height: 300px;
+      background-image: url('../img/landing-page-banner-sm-overlay.jpg');
+    }
   }
   .navbar {
     margin-bottom: 0px;

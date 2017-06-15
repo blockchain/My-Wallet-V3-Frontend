@@ -1175,6 +1175,10 @@
       "TITLE": "Always Supported",
       "COPY": "Should you need help or have a question, our best in class support team will always be there for you."
     },
+    "BITCOIN_ON_ALL_DEVICES": {
+      "HEADER": "Bitcoin on All Your Devices",
+      "SUB_TEXT": "Access your bitcoin wallet securely anywhere you go."
+    },
     "NEW_TO_BITCOIN": {
       "HEADER": "New To Bitcoin?",
       "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."

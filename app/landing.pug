@@ -47,7 +47,13 @@
             i.f-60.icon-always-supported-icon.blue
             p.f-18.em-300.upper(translate=".SUPPORTED.TITLE")
             p.f-14.em-200.left-align(translate=".SUPPORTED.COPY")
-  .container.flex-center.hidden-xs.hidden-sm
+  .banner.sm(data-preflight-tag="LandingPage")
+    .flex-column.height-100.flex-center.flex-justify.container
+      div.width-100
+        h2.f-42.em-200.width-100.man.mb-15(translate=".BITCOIN_ON_ALL_DEVICES.HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate=".BITCOIN_ON_ALL_DEVICES.SUB_TEXT")
+        
+  .container.flex-center.hidden-xs.hidden-sm.mv-70
     .col-md-6
       h2.upper.f-36.em-200.mvn(translate=".NEW_TO_BITCOIN.HEADER")
       p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
@@ -56,14 +62,14 @@
         i.icon-right_arrow.ml-5
     .col-md-6.center
       img.width-80(src="img/bitcoin-network.svg")
-  .container.visible-xs.visible-sm
+  .container.visible-xs.visible-sm.mv-30
     .col-md-6
       h2.upper.f-36.em-200.mvn(translate=".NEW_TO_BITCOIN.HEADER")
       p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
       a.f-16.em-500.upper.flex-center
         span(translate="LEARN_MORE" href="https://blockchain.info/wallet/bitcoin-faq")
         i.icon-right_arrow.ml-5
-    .col-md-6.center
+    .col-md-6.center.mt-30
       img.width-80(src="img/bitcoin-network.svg")
   .pv-70.flex-center.flex-justify.bg-grey
     .flex-column.flex-center
