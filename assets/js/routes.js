@@ -348,7 +348,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           let exchange = MyWallet.wallet.external.unocoin;
           return $q.resolve(unocoin.fetchQuote(exchange, 1e8, 'BTC', 'INR'));
         },
-        mediums ($q, MyWallet, exchangeRate) {
+        mediums ($q, MyWallet, exchangeRate, _loadExchangeData) {
           let exchange = MyWallet.wallet.external.unocoin;
           return exchange.profile && exchange.profile.level > 2
                  ? $q.resolve(exchangeRate.getPaymentMediums())
