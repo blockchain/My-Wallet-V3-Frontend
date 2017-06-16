@@ -1,11 +1,13 @@
 .landing-page {
   overflow: scroll;
-  input {
-    @media (min-width: 768px) {
-      width: auto;
+  .navbar {
+    .round {
+      min-width: 130px;
     }
-    @media (max-width: 767px) {
-      margin-right: 0;
+    .navbar-right {
+      @media (max-width: 767px) {
+        margin-bottom: 30px;
+      }
     }
   }
   .stats {
@@ -52,6 +54,12 @@
         }
       }
     }
+  }
+  .app-store-badge {
+    height: 40px;
+  }
+  .play-store-badge {
+    height: 60px;
   }
 }
 
