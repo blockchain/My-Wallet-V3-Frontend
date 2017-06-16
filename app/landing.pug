@@ -15,36 +15,37 @@
       span.em-300.f-24.em-300.white(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
     .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-primary
       span.em-300.f-24.em-300.white(translate="WALLETS_AMT" translate-values="{count: walletCount}")
-  .container.mt-90
+  .container.mt-90.mb-70
     h2.upper.f-36.em-200.mvn.center(translate=".WHY_BLOCKCHAIN")
     p.f-16.em-300.mt-10.mbn.center(translate=".LOVED_BY_ALL")
     uib-carousel.mt-50(active="active" interval="0")
       uib-slide(index="0")
         .clearfix
           .col-md-4
-            i.f-60.icon-simple-icon.blue
+            i.f-60.icon-simple.blue
             p.f-18.em-300.upper(translate=".SIMPLE.TITLE")
             p.f-14.em-200.left-align(translate=".SIMPLE.COPY")
           .col-md-4
-            i.f-60.icon-safe-secure-icon.blue
+            i.f-60.icon-safe-secure.blue
             p.f-18.em-300.upper(translate=".SAFE_AND_SECURE.TITLE")
             p.f-14.em-200.left-align(translate=".SAFE_AND_SECURE.COPY")
           .col-md-4
-            i.f-60.icon-buy-sell-icon.blue
+            i.f-60.icon-buy-sell.blue
             p.f-18.em-300.upper(translate=".BUY_AND_SELL.TITLE")
             p.f-14.em-200.left-align(translate=".BUY_AND_SELL.COPY")
       uib-slide(index="1")
         .clearfix
           .col-md-4
-            i.f-60.icon-sophisticated-icon.blue
-            p.f-18.em-300.upper(translate=".SOPHISTICATED.TITLE")
+            i.f-60
+              img(height="50px;" src="img/sophisticated.svg")
+            p.f-18.em-300.upper.mt-5(translate=".SOPHISTICATED.TITLE")
             p.f-14.em-200.left-align(translate=".SOPHISTICATED.COPY")
           .col-md-4
-            i.f-60.icon-global-icon.blue
+            i.f-60.icon-global.blue
             p.f-18.em-300.upper(translate=".GLOBAL.TITLE")
             p.f-14.em-200.left-align(translate=".GLOBAL.COPY")
           .col-md-4
-            i.f-60.icon-always-supported-icon.blue
+            i.f-60.icon-always-supported.blue
             p.f-18.em-300.upper(translate=".SUPPORTED.TITLE")
             p.f-14.em-200.left-align(translate=".SUPPORTED.COPY")
   .banner.sm(data-preflight-tag="LandingPage")
@@ -62,7 +63,7 @@
       p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
       a.f-16.em-500.upper.flex-center
         span(translate="LEARN_MORE" href="https://blockchain.info/wallet/bitcoin-faq")
-        i.icon-right_arrow.ml-5
+        i.icon-right_arrow.primary.ml-5
     .col-md-6.center
       img.width-80(src="img/bitcoin-network.svg")
   .container.visible-xs.visible-sm.mv-30
@@ -71,7 +72,7 @@
       p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
       a.f-16.em-500.upper.flex-center
         span(translate="LEARN_MORE" href="https://blockchain.info/wallet/bitcoin-faq")
-        i.icon-right_arrow.ml-5
+        i.icon-right_arrow.primary.ml-5
     .col-md-6.center.mt-30
       img.width-80(src="img/bitcoin-network.svg")
   .pv-70.flex-center.flex-justify.bg-grey
