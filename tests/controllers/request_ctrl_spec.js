@@ -67,7 +67,7 @@ describe('RequestCtrl', () => {
       }
       );
 
-      scope.model = { state: {to: null, amount: '0', currency: Wallet.settings.currency, label: ""} };
+      scope.model = { state: {to: null, amount: '0', address: '', currency: Wallet.settings.currency, label: ""} };
       $compile(template)(scope);
 
       scope.$digest();
@@ -140,6 +140,17 @@ describe('RequestCtrl', () => {
       scope.state.amount = 10000000;
 
       expect(scope.paymentRequestURL()).toContain("USD");
+    });
+    
+    it('should use state.address', () => {
+      scope.state.to = scope.legacyAddresses()[0];
+      scope.state.address = '123abc45660022';
+      scope.state.amountType = 'amount_local';
+      scope.state.baseCurr = scope.settings.currency;
+      scope.state.amount = 10000000;
+      
+      expect(scope.paymentRequestURL()).toContain("123abc45660022");
+      expect(scope.paymentRequestURL()).not.toContain(scope.legacyAddresses()[0]);
     });
 
     it('should show a payment URL when legacy address is selected', () => {
