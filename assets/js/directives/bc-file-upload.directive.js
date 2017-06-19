@@ -2,13 +2,14 @@ angular
   .module('walletDirectives')
   .directive('bcFileUpload', bcFileUpload);
 
-bcFileUpload.$inject = ['$rootScope', 'Alerts'];
+bcFileUpload.$inject = ['$rootScope', 'Alerts', 'AngularHelper'];
 
-function bcFileUpload ($rootScope, Alerts) {
+function bcFileUpload ($rootScope, Alerts, AngularHelper) {
   const directive = {
     restrict: 'E',
     scope: {
       file: '=',
+      base: '=',
       locked: '=',
       idType: '=',
       onUpload: '='

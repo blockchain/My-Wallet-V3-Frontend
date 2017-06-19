@@ -13,12 +13,15 @@
         span.f-16(translate="TX_INITIATED.BODY" translate-values="{email:user.email}")
   .width-60.flex-justify(ng-show="!trade")
     .width-80.width-100-tablet.width-100-mobile
-      buy-checkout(
+      exchange-checkout(
         quote="quote"
         user-id="userId"
-        buy-limit="state.buyLimit"
-        buy-level="state.buyLevel"
+        dollars="dollars"
+        conversion="100"
+        limits="state.limits"
         buy-account="account"
+        buy-level="state.buyLevel"
+        handle-buy="buyHandler(account, quote)"
         handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
         buy-success="buySuccess(trade)"
         buy-error="buyError()"
@@ -27,3 +30,4 @@
     .width-80.width-100-tablet.width-100-mobile
       order-details(formatted-trade="trade")
       button.btn.button-primary.full(type="button" ng-click="$close()" focus-when="trade") Close
+  sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')

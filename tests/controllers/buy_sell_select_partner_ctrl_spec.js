@@ -18,6 +18,9 @@ describe('BuySellSelectPartnerController', () => {
           sfox: {
             countries: ['US'],
             states: ['AL', 'PA', 'CA', 'GA']
+          },
+          unocoin: {
+            countries: ['IN']
           }
         }
       }));

@@ -1,0 +1,109 @@
+.flex-row.flex-column-tablet
+  .width-40
+    .width-80
+      div.mbl(ng-show="$ctrl.viewing('summary')")
+        h4.f-20.em-500.mvn.mb-10(translate="Create {{$ctrl.name}} Account")
+        span.f-16(translate="Please confirm your email and phone number to create your {{$ctrl.name}} exchange account.")
+
+      div.mbl(ng-show="$ctrl.viewing('email')")
+        div(ng-show="$ctrl.state.sentEmailCode")
+          h4.f-20.em-500.mvn.mb-10(translate="Verify Email Address")
+          span.f-16(translate="We just sent a verification code to your email address. Please enter the verification code to create your {{$ctrl.name}} exchange account.")
+        div(ng-hide="$ctrl.state.sentEmailCode")
+          h4.f-20.em-500.mvn.mb-10(translate="Change Your Email Address")
+          span.f-16(translate="Updating your email will also change the email address associated with your wallet.")
+
+      div.mbl(ng-show="$ctrl.viewing('mobile')")
+        h4.f-20.em-500.mvn.mb-10(translate="Verify Phone Number")
+        span.f-16(ng-hide="$ctrl.state.sentMobileCode" translate="Please add your phone number to create your {{$ctrl.name}} exchange account.")
+        span.f-16(ng-show="$ctrl.state.sentMobileCode" translate="We just sent a verification code to your phone. Please enter the verification code to continue creating your {{$ctrl.name}} exchange account.")
+
+  .width-60.flex-justify(ng-show="$ctrl.viewing('summary')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="accountForm" ng-submit="$ctrl.createAccount()" novalidate autocomplete="off")
+      fieldset(ng-disabled="$ctrl.locked")
+        .group.pb-20
+          .item
+            .flex-between
+              label Email Address
+              span.blue.pointer.hidden-sm.hidden-md.hidden-lg(ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy") Change Email
+            input(ng-model="$ctrl.state.email" name="email" disabled)
+          div(ng-show="accountForm.email.$error.registered")
+            .help.mb-15
+              span.flex-column(ng-click="$ctrl.view('email')")
+                a.state-danger-text Sorry, this email is already registered with {{$ctrl.name}}. 
+                a Change Email
+        .group.pb-20(ng-if="$ctrl.views.indexOf('mobile') > -1")
+          .item
+            label Phone Number
+            bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")
+        .group.pb-20
+          .item.check
+            input#terms(type="checkbox" ng-model="$ctrl.state.terms" name="terms" required)
+            label(for="terms")
+              | I accept Blockchain's 
+              a.em-500(href="https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf" translate="Alpha Agreement" target="_blank" rel="noopener noreferrer")
+              | , {{$ctrl.name}}'s 
+              a.em-500(href="{{$ctrl.termsOfService}}" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
+              |  and {{$ctrl.name}}'s 
+              a.em-500(href="{{$ctrl.privacyAgreement}}" translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+              | .
+        .group
+          button.btn.button-primary.full(type="submit" ng-disabled="accountForm.$invalid") Continue
+
+  .width-60.flex-justify(ng-show="$ctrl.viewing('email')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="emailForm" ng-submit="$ctrl.state.sentEmailCode ? $ctrl.verifyEmail() : $ctrl.changeEmail(); emailForm.$setUntouched();" novalidate autocomplete="off")
+      fieldset(ng-disabled="$ctrl.locked")
+        div(ng-hide="$ctrl.state.sentEmailCode")
+          .group
+            .item
+              label Confirm email:
+              input(ng-model="$ctrl.state.email" ng-change="$ctrl.state.sentEmailCode = false" name="email" type="email" required)
+          .group.pt-25
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="emailForm.email.$invalid || ($ctrl.state.verified && $ctrl.state.email === $ctrl.user.email)") Send Verification Email
+            a.f-14.display-block.center.pt-15(ng-show="$ctrl.state.verified" ng-click="$ctrl.setState()") Go Back
+        div(ng-show="$ctrl.state.sentEmailCode")
+          .group
+            .item
+              label Enter verification code sent to your email:
+              input(ng-model="$ctrl.state.emailCode" name="emailCode" ng-change="$ctrl.clearInlineErrors()" focus-when="$ctrl.state.sentEmailCode || $ctrl.state.resentEmailCode" required)
+            .item(ng-hide="emailForm.emailCode.$error.correct")
+              span.f-14.mt-5(ng-hide="$ctrl.state.resentEmailCode")
+                | Didn't receive the email? 
+                a(ng-click="$ctrl.sendEmailCode(); $ctrl.state.resentEmailCode = true;") Resend 
+                | or 
+                a(ng-click="$ctrl.state.sentEmailCode = false") change email
+              span.f-14.mt-5(ng-show="$ctrl.state.resentEmailCode") Another code has been sent!
+            .help.mt-5.mb-15(ng-show="emailForm.emailCode.$error.correct")
+              span.state-danger-text 
+                | Verification code incorrect. 
+                a(ng-click="$ctrl.sendEmailCode(); $ctrl.clearInlineErrors(); $ctrl.state.resentEmailCode = true;") Resend
+          .group.pt-25
+            button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid") Continue
+
+  .width-60.flex-justify(ng-show="$ctrl.viewing('mobile')")
+    form.bc-form.width-60.width-100-tablet.width-100-mobile(name="mobileForm" ng-submit="$ctrl.state.sentMobileCode ? $ctrl.verifyMobile() : $ctrl.changeMobile(); mobileForm.$setUntouched();" novalidate autocomplete="off")
+      fieldset(ng-disabled="$ctrl.locked")
+        .group
+          .item
+            label Add phone number:
+            bc-phone-number(ng-model="$ctrl.state.mobile" ng-change="$ctrl.state.resentMobileCode = $ctrl.state.sentMobileCode = false" name="mobile" preferred-countries="us ca gb au" required)
+        div(ng-hide="$ctrl.state.sentMobileCode")
+          .group.pt-25
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="mobileForm.mobile.$invalid || ($ctrl.state.verified && $ctrl.state.mobile === format(user.mobileNumber))") Text Verification Code
+            a.f-14.display-block.center.pt-15(ng-show="$ctrl.state.verified" ng-click="setState()") Go Back
+        div(ng-show="$ctrl.state.sentMobileCode")
+          .group.pt-30
+            .item
+              label Enter verification code sent to your mobile phone:
+              input(ng-model="$ctrl.state.mobileCode" name="mobileCode" ng-change="$ctrl.clearInlineErrors()" focus-when="$ctrl.state.sentMobileCode || $ctrl.state.resentMobileCode" required)
+            .item(ng-hide="mobileForm.mobileCode.$error.correct")
+              span.f-14.mt-5(ng-hide="$ctrl.state.resentMobileCode")
+                | Didn't receive the code? 
+                a(ng-click="$ctrl.sendMobileCode(); $ctrl.state.resentMobileCode = true;") Resend 
+              span.f-14.mt-5(ng-show="$ctrl.state.resentMobileCode") Another code has been sent!
+            .help(ng-show="mobileForm.mobileCode.$error.correct")
+              span.state-danger-text
+                | Verification code incorrect. 
+                a(ng-click="$ctrl.sendMobileCode(); $ctrl.clearInlineErrors(); $ctrl.state.resentMobileCode = true;") Resend
+          .group.pt-25
+            button.btn.button-primary.full(type="submit" ng-disabled="mobileForm.$invalid") Continue

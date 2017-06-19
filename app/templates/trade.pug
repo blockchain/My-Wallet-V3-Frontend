@@ -18,16 +18,15 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
         ng-class="{disabled: isTradingDisabled}"
         ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
-        ng-show="trade.state === 'awaiting_transfer_in' && trade.medium !== 'blockchain'") Finish payment
+        ng-show="userActionRequired && trade.medium !== 'blockchain'") Finish payment
       span.type-sm.blue.underline.pointer.text-nowrap(
         ng-click="trade.medium === 'blockchain' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
-        ng-show="trade.state !== 'awaiting_transfer_in' || trade.medium === 'blockchain'") View details
+        ng-show="!userActionRequired || trade.medium === 'blockchain'") View details
   td.type-lbl.pvml
     span {{ trade.createdAt | date:dateFormat }}
   td.type-lbl.pvml.hidden-xs
     span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
       span.display-inline-block.left-align
-        //- quote-countdown(trade-obj="trade" expired-quote="expiredQuote")
       span(ng-if="buySellDebug")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
@@ -36,8 +35,8 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
     span.display-inline-block(ng-hide="trade.medium === 'blockchain'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
   td.type-lbl
     span(ng-hide="status.gettingQuote")
-      span.em-600(ng-hide="trade.medium === 'blockchain'") {{ trade.sendAmount / 100 | format }} {{ trade.inCurrency }}
-      span.em-600(ng-show="trade.medium === 'blockchain'") {{ trade.outAmountExpected / 100 }} {{ trade.outCurrency }}
+      span.em-600(ng-hide="trade.medium === 'blockchain'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
+      span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.outAmountExpected / conversion) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
       span.hidden-xs
         i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel && trade.medium !== 'blockchain'" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
         i.ti-trash.fade(ng-hide="canCancel")

@@ -44,7 +44,8 @@ function currency ($q, MyBlockchainApi) {
     'SEK': 'Swedish Krona',
     'NZD': 'New Zealand Dollar',
     'BRL': 'Brazil Real',
-    'RUB': 'Russian Ruble'
+    'RUB': 'Russian Ruble',
+    'INR': 'Indian Rupee'
   };
 
   const bitCurrencies = [
@@ -136,7 +137,7 @@ function currency ($q, MyBlockchainApi) {
 
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0 })[currency.code];
+    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0 })[currency.code];
     return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
 

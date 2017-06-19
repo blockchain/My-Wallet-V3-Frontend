@@ -30,7 +30,7 @@
       "showSellFraction": 0
     },
     "sfox": {
-      "production": false,
+      "production": true,
       "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
       "inviteFormFraction": 0.1,
@@ -43,6 +43,10 @@
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_4HIEh5KIodM8UTP",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_51qOIk4EXHshNFX",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_78S6RzM5ipN66fb"]
+    },
+    "unocoin": {
+      "countries": ["IN"],
+      "showCheckoutFraction": 0
     }
   },
   "domains": {

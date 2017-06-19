@@ -1,0 +1,25 @@
+.modal-body.clearfix(data-preflight-tag="BankTransfer")
+  form.bc-form(ng-submit="vm.onStep('summary') ? vm.goTo('reference') : vm.addReferenceNumber()" id="bankTransferForm" name="bankTransferForm" role="form")
+    div
+      .mbl
+        span.type-h5.em-500.flex-start.pts.capitalize(class="{{vm.formattedTrade.class}}" translate="{{vm.formattedTrade.namespace}}.TITLE")
+        p.ptm(translate="{{vm.formattedTrade.namespace}}.BODY" translate-values="vm.formattedTrade.values")
+      .border(ng-if="vm.onStep('summary')")
+        ul.em-300.bg-grey.border-top.pan.mbn.bank-transfer
+          li.pam.border-right.border-left.border-bottom-light.flex-between(ng-repeat="(prop, val) in vm.formattedTrade.tx track by $index" ng-if="val")
+            span.em-300.colon(translate="{{prop}}" ng-class="{'em-500': prop === 'TOTAL_COST'}")
+            span.em-300.right-align.capitalize(ng-bind="val" ng-class="{'em-500': prop === 'TOTAL_COST', 'capitalize' : prop !== 'RECEIVING_ADDRESS'}")
+      div(ng-if="vm.onStep('initiated')")
+        ul.em-300.bg-grey.border-top.pan.mbn
+          li.pam.border-right.border-left.border-bottom-light.flex-between(ng-repeat="(prop, val) in vm.formattedTrade.tx track by $index" ng-if="val")
+            span.em-300.colon(translate="{{prop}}" ng-class="{'em-500': prop === 'TOTAL_COST'}")
+            span.em-300.right-align.capitalize(ng-bind="val" ng-class="{'em-500': prop === 'TOTAL_COST', 'capitalize' : prop !== 'RECEIVING_ADDRESS'}")
+      .group(ng-if="vm.onStep('reference')")
+        .item
+          label Enter your IMPS/NEFT/RTGS/CHEQUE reference number:
+          input(ng-model="vm.state.reference" name="reference" type="text" required focus-when="vm.onStep('reference')")
+.ph-35.pb-25.flex-end.flex-row
+  button.btn.button-primary(ng-if="vm.onStep('initiated')" ng-click="$dismiss()" translate="CLOSE")
+  button.button-muted.primary.mrm(ng-if="vm.onStep('summary')" ng-click="$dismiss()" translate="CANCEL")
+  button.button-muted.primary.mrm(ng-if="vm.onStep('reference')" ng-click="vm.goTo('summary')" translate="GO_BACK" ng-disabled="vm.locked")
+  button.btn.button-primary(ng-if="vm.onStep('summary') || vm.onStep('reference')" type="submit" translate="{{vm.onStep('summary') ? 'CONTINUE' : 'SUBMIT'}}" form="bankTransferForm" ng-disabled="vm.locked")

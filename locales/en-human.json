@@ -997,7 +997,7 @@
   },
   "TX_CONFIRM": {
     "TITLE": "Confirm Purchase",
-    "BODY": "You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete."
+    "BODY": "You are about to initiate a bank transfer."
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
@@ -1022,6 +1022,10 @@
   "TX_BANK_TRANSFER": {
     "TITLE": "",
     "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to Coinify's bank account below within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
+  },
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Bank Transfer",
+    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below. You will then need to provide the bank transfer reference number."
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1230,6 +1234,36 @@
     "UPLOAD_SELECT": "Select Upload Method",
     "HELP": "Make sure the snapshot clearly displays your address."
   },
+  "unocoin_pancard_ID": {
+    "TITLE": "1. PAN Card",
+    "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
+    "UPLOAD_TITLE": "PAN Card",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Make sure the snapshot clearly displays your pancard number."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Your Photo",
+    "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
+    "UPLOAD_TITLE": "Photo",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Make sure the snapshot clearly displays your face."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Address Proof",
+    "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
+    "UPLOAD_TITLE": "Address Proof",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar Card (front and back)",
+    "OPTION2": "Driving License",
+    "OPTION3": "Passport (page showing address)",
+    "OPTION4": "Utility Bill",
+    "HELP": "Make sure the snapshot clearly displays your name and address."
+  },
+  "BANK_NAME": "Bank Name",
+  "ACCOUNT_HOLDER_NAME": "Account Holder Name",
+  "ACCOUNT_NUMBER": "Account Number",
+  "IFSC_CODE": "IFSC Code",
+  "ACCOUNT_TYPE": "Account Type",
   "bank-check-helper": {
     "TITLE": "Routing and Account Number",
     "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."
@@ -1246,6 +1280,18 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Acceptable PAN Card",
+    "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Acceptable User Photograph",
+    "COPY": "Selfies with goggles or hats are <span class='state-danger-text'>not acceptable</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Acceptable Proof of Address",
+    "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+  },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
@@ -1255,6 +1301,7 @@
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
   "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
   "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
+  "UNOCOIN_EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "coinify-verification": {
@@ -1380,6 +1427,10 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
+  "UNOCOIN": {
+    "PENDING": "Identity Verification Pending",
+    "PENDING_EXPLAIN": "Unocoin is currently verifying your identity. You will receive a phone call within 1 business day. The phone call will verify your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card Information</b>. You will be able to buy bitcoin once you are verified."
+  },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
   "SHOW_QR_CODE": "Show QR Code",

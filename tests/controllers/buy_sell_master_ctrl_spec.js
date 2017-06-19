@@ -10,6 +10,7 @@ describe('BuySellMasterController', () => {
   beforeEach(function () {
     let external = {
       coinify: {},
+      unocoin: {},
       sfox: {}
     };
 

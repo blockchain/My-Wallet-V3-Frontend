@@ -12,6 +12,7 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
       Alerts.surveyCloseConfirm('sfox-survey', links, this.step).then($uibModalInstance.dismiss);
     };
   });
+
   this.exchange = exchange;
   this.accounts = accounts;
   this.quote = quote;

@@ -23,6 +23,7 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   Env.then(env => {
     $scope.coinifyWhitelist = env.partners.coinify.countries;
+    $scope.unocoinWhitelist = env.partners.unocoin.countries;
     $scope.sfoxWhitelist = env.partners.sfox.countries;
     $scope.sfoxStateWhitelist = env.partners.sfox.states;
   });
@@ -43,6 +44,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
       href: 'https://www.sfox.com/',
       subtext: 'SFOX_EXPLAIN',
       route: '.sfox'
+    },
+    'unocoin': {
+      name: 'Unocoin',
+      logo: 'img/unocoin-logo.png',
+      href: 'https://www.unocoin.com/',
+      subtext: 'UNOCOIN_EXPLAIN',
+      route: '.unocoin'
     }
   };
 
@@ -55,11 +63,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   };
 
   $scope.selectPartner = (partner, countryCode) => {
+    $scope.status = { busy: true };
     $state.go($scope.vm.base + partner.route, { countryCode });
   };
 
   $scope.onWhitelist = (countryCode) => (
     (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
+    (contains(countryCode, $scope.unocoinWhitelist) && 'unocoin') ||
     (contains(countryCode, $scope.sfoxWhitelist) && codeGuess === 'US' && 'sfox') || false
   );
 

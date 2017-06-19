@@ -50,7 +50,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         'bank-deposit-helper': 'img/bank-deposit-helper.png',
         'bank-check-helper': 'img/bank-check-helper.png',
         'address-id-helper': 'img/address-id-helper.png',
-        'id-id-helper': 'img/id-id-helper.png'
+        'id-id-helper': 'img/id-id-helper.png',
+        'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
+        'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
+        'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png'
       };
 
       $scope.helper = helper;
@@ -107,6 +110,22 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
+  service.openUnocoinSignup = (exchange, quote) => service.expandTray({
+    templateUrl: 'partials/unocoin/signup.pug',
+    controllerAs: 'vm',
+    controller: 'UnocoinSignupController',
+    resolve: {
+      exchange () { return exchange; },
+      quote () { return quote; }
+    }
+  }).result.then(() => {
+    $state.go('wallet.common.buy-sell.unocoin');
+  }).catch(() => {
+    let base = 'wallet.common.buy-sell';
+    let goingToBuySellState = $state.current.name.indexOf(base) === 0;
+    if (goingToBuySellState) $state.go('wallet.common.buy-sell');
+  });
+
   service.openTradeSummary = service.dismissPrevious((trade, state) => {
     let accounts = ($q, MyWallet) => {
       let exchange = MyWallet.wallet.external.sfox;
@@ -115,14 +134,30 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         : $q.resolve([]);
     };
     return openMobileCompatible({
-      templateUrl: 'partials/trade-modal.pug',
+      templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, trade, formatTrade, accounts) {
+      controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
+        $scope.vm = {
+          trade: trade
+        };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
       },
       resolve: {
         trade: () => trade,
         accounts
+      }
+    });
+  });
+
+  service.openBankTransfer = service.dismissPrevious((trade) => {
+    return openMobileCompatible({
+      templateUrl: 'partials/unocoin/bank-transfer.pug',
+      windowClass: 'bc-modal trade-summary',
+      controller: 'UnocoinBankTransferController',
+      controllerAs: 'vm',
+      resolve: {
+        trade () { return trade; },
+        bankAccount () { return trade.getBankAccountDetails(); }
       }
     });
   });
