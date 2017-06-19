@@ -22,7 +22,8 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     this.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
   });
 
-  this.name = this.exchange.constructor.name.toLowerCase();
+  let name = this.exchange.constructor.name.toLowerCase();
+  this.name = name[0].toUpperCase() + name.slice(1, name.length);
   this.showField = (field) => this.fields.indexOf(field) > -1;
 
   $scope.format = bcPhoneNumber.format;
