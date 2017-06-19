@@ -28,7 +28,7 @@
               span.blue.pointer.hidden-sm.hidden-md.hidden-lg(ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy") Change Email
             input(ng-model="$ctrl.state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
-            .help.mb-15
+            .help.mb-30
               span.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text Sorry, this email is already registered with {{$ctrl.name}}. 
                 a Change Email
