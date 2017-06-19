@@ -40,8 +40,8 @@
           .col-md-6(ng-if="$ctrl.showField('mobile')")
             .mb-20.pos-rel
               label Mobile
-              bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="in" default-country="in" is-valid="isValidMobileNumber")
-              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && verifyForm.mobile.$touched" translate="Required field")
+              bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="in" default-country="in")
+              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber($ctrl.state.mobile) && verifyForm.mobile.$touched" translate="Required field")
           .col-md-6(ng-if="$ctrl.showField('pancard')")
             .mb-20.pos-rel
               label PAN Card

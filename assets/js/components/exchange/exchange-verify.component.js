@@ -25,6 +25,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.name = this.exchange.constructor.name.toLowerCase();
   this.showField = (field) => this.fields.indexOf(field) > -1;
 
+  $scope.isValidMobileNumber = bcPhoneNumber.isValid;
   $scope.format = bcPhoneNumber.format;
   this.format = bcPhoneNumber.format;
 
