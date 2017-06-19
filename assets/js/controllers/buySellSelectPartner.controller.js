@@ -77,11 +77,15 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
-  $scope.tabs = {
-    options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
-      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
-      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
-  };
+  Env.then(env => {
+    let email = MyWallet.wallet.accountInfo.email;
+    $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
+    $scope.tabs = {
+      options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
+        ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+        : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
+    };
+  });
 
   $scope.$watchGroup(['country', 'state'], (newValues) => {
     let country = newValues[0];

@@ -39,8 +39,12 @@ describe('BuySellSelectPartnerController', () => {
 
       MyWallet = $injector.get('MyWallet');
 
-      return MyWallet.wallet =
-        {accountInfo};
+      return MyWallet.wallet = {
+        accountInfo,
+        external: {
+          shouldDisplaySellTab: (email) => email === 'whitelisted'
+        }
+      }
     });
   });
 
