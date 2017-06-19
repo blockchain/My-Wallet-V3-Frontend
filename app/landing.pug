@@ -61,8 +61,8 @@
     .col-md-6
       h2.upper.f-36.em-200.mvn(translate=".NEW_TO_BITCOIN.HEADER")
       p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
-      a.f-16.em-500.upper.flex-center
-        span(translate="LEARN_MORE" href="https://blockchain.info/wallet/bitcoin-faq")
+      a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
+        span(translate="LEARN_MORE")
         i.icon-right_arrow.primary.ml-5
     .col-md-6.center
       img.width-80(src="img/bitcoin-network.svg")
@@ -70,8 +70,8 @@
     .col-md-6
       h2.upper.f-36.em-200.mvn(translate=".NEW_TO_BITCOIN.HEADER")
       p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
-      a.f-16.em-500.upper.flex-center
-        span(translate="LEARN_MORE" href="https://blockchain.info/wallet/bitcoin-faq")
+      a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
+        span(translate="LEARN_MORE")
         i.icon-right_arrow.primary.ml-5
     .col-md-6.center.mt-30
       img.width-80(src="img/bitcoin-network.svg")
@@ -79,7 +79,7 @@
     .flex-column.flex-center
       p.f-24.em-200.center.pt-10.mbn.upper(translate=".GET_WORLDS_MOST_POPULAR_WALLET")
       p.mv-15
-        button.button-primary.round.upper(translate=".GET_STARTED_NOW")
+        button.button-primary.round.upper(translate=".GET_STARTED_NOW" ui-sref="public.signup")
       p.f-14.em-300.upper
         | or&nbsp;
         a(translate="LOGIN" ui-sref="public.login-no-uid")
