@@ -33,6 +33,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.rootURL = res.domains.root + '/';
 
+      env.showMobileLogin = !!res.showMobileLogin;
+
       env.isProduction = env.rootURL === 'https://blockchain.info/' || env.rootURL === '/';
       env.buySellDebug = false;
 

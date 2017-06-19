@@ -78,7 +78,9 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   );
 
   $scope.tabs = {
-    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
+    options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
+      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
   };
 
   $scope.$watchGroup(['country', 'state'], (newValues) => {

@@ -55,5 +55,6 @@
     "api": "REPLACED_BY_DEV_SERVER",
     "walletHelper": "REPLACED_BY_DEV_SERVER"
   },
+  "showMobileLogin": true,
   "network": "bitcoin"
 }

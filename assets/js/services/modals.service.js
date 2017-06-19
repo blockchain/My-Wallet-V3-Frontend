@@ -163,16 +163,18 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openBuyView = service.openOnce((quote, trade) => {
+    let coinifyState = 'wallet.common.buy-sell.coinify';
+
     let exchange = ($q, MyWallet) => {
       let coinify = MyWallet.wallet.external.coinify;
-      return coinify.hasAccount
+      return coinify.hasAccount && $state.$current.name !== coinifyState
         ? coinify.fetchProfile()
         : $q.resolve({profile: {}});
     };
 
     let trades = ($q, MyWallet) => {
       let coinify = MyWallet.wallet.external.coinify;
-      return coinify.hasAccount
+      return coinify.hasAccount && $state.$current.name !== coinifyState
         ? coinify.getTrades()
         : $q.resolve([]);
     };

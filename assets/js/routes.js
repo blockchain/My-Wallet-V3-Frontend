@@ -226,6 +226,18 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'ResetTwoFactorTokenCtrl'
         }
       }
+    })
+    .state('public.mobile-login', {
+      url: '/mobile-login',
+      views: {
+        contents: {
+          templateUrl: 'partials/mobile-login.pug',
+          controller: 'MobileLoginController'
+        }
+      },
+      resolve: {
+        _bcQrReader: ($ocLazyLoad) => $ocLazyLoad.load('bcQrReader')
+      }
     });
 
   $stateProvider
@@ -239,7 +251,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         },
         right: {
           templateUrl: 'partials/home.pug',
-          controller: 'HomeCtrl'
+          controller: 'HomeCtrl',
+          resolve: {
+            loadBcPhoneNumber: ($ocLazyLoad) => {
+              return $ocLazyLoad.load('bcPhoneNumber');
+            }
+          }
         }
       }
     })
