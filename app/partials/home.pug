@@ -20,5 +20,7 @@ blocket-loading(loading="!isWalletInitialized()")
           li.flex-between.basic-grey.em-500
             span Total
             fiat-or-btc(btc="getTotal()")
-      .section
+      .section(ng-show="showMobileConversion()")
+        web-to-mobile-conversion()
+      .section(ng-hide="showMobileConversion()")
         did-you-know(data-preflight-tag="DidYouKnow")

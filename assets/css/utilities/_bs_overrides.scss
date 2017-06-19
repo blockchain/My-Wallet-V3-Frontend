@@ -204,6 +204,14 @@ $tt-position-default: -4px !important;
   box-shadow: 0 3px 8px 0 rgba(158, 158, 158, 0.65) !important;
 }
 
+.address {
+  .tooltip-inner {
+    max-width: none;
+    font-size: 12px !important;
+    font-family: 'Montserrat' !important;
+  }
+}
+
 .tooltip.in {
   opacity: 1 !important;
 }

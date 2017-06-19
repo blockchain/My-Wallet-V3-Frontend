@@ -51,9 +51,9 @@
           ui-ladda="status.busy"
           ladda-translate="LOG_IN"
           ng-disabled="loginForm.$invalid")
-
-  // Wallet Recovery
-  .ptl.flex-end
+  .ptl.flex-between
+    div
+      a(ng-show="showMobileLogin" ui-sref="public.mobile-login" translate="MOBILE_LOGIN.TITLE")
     div(ng-hide="didLogout")
       span(translate="HAVING_TROUBLE")
       | &nbsp;
