@@ -13,7 +13,8 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   });
 
   let contains = (val, list) => list.indexOf(val) > -1;
-  let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
+  let accountInfo = MyWallet.wallet.accountInfo;
+  let codeGuess = accountInfo && accountInfo.countryCodeGuess;
 
   $scope.states = state.stateCodes;
   $scope.state = $scope.states[0];
@@ -69,7 +70,7 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   $scope.onWhitelist = (countryCode) => (
     (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
-    (contains(countryCode, $scope.unocoinWhitelist) && 'unocoin') ||
+    (contains(countryCode, $scope.unocoinWhitelist) && accountInfo.invited.unocoin && 'unocoin') ||
     (contains(countryCode, $scope.sfoxWhitelist) && codeGuess === 'US' && 'sfox') || false
   );
 
