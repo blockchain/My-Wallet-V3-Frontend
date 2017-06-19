@@ -49,7 +49,6 @@ describe('UnocoinCheckoutController', () => {
       $templateCache = _$templateCache_;
 
       $q = $injector.get('$q');
-      $timeout = $injector.get('$timeout');
       modals = $injector.get('modals');
       Alerts = $injector.get('Alerts');
       Wallet = $injector.get('Wallet');
