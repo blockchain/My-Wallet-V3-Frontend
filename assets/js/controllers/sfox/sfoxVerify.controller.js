@@ -25,18 +25,14 @@ function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   $scope.setProfile = (fields) => {
     let profile = $scope.exchange.profile;
 
-    profile.firstName = fields.firstName;
-    profile.middleName = fields.middle;
-    profile.lastName = fields.lastName;
-    profile.dateOfBirth = new Date(fields.dob);
-    profile.setSSN(fields.ssn);
+    profile.setSSN(profile.ssn);
 
     profile.setAddress(
-      fields.addr1,
-      fields.addr2,
-      fields.city,
-      fields.state.Code,
-      fields.zipcode
+      profile.addr1,
+      profile.addr2,
+      profile.city,
+      profile.state.Code,
+      profile.zipcode
     );
   };
 }

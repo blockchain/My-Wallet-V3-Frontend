@@ -22,12 +22,14 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     this.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
   });
 
-  this.name = this.exchange.constructor.name.toLowerCase();
+  let exchange = this.exchange;
+
+  this.profile = exchange.profile;
+  this.name = exchange.constructor.name.toLowerCase();
   this.showField = (field) => this.fields.indexOf(field) > -1;
 
   $scope.isValidMobileNumber = bcPhoneNumber.isValid;
   $scope.format = bcPhoneNumber.format;
-  this.format = bcPhoneNumber.format;
 
   this.isBeforeNow = (date) => {
     let then = new Date(date).getTime();
@@ -41,8 +43,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.onStep = (step) => step === this.state.step;
 
   this.setProfile = () => {
-    let fields = this.state;
-    this.onSetProfile({fields: fields});
+    this.onSetProfile();
     this.steps.length > 1 ? this.state.step = this.steps.shift() && this.steps[0] : this.onVerify();
   };
 
@@ -51,11 +52,11 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   // QA Tools
   this.qa = {
     unocoin: {
-      info: () => angular.merge(this.state, QA.unocoin.infoForm()),
-      address: () => angular.merge(this.state, QA.unocoin.addressForm())
+      info: () => angular.merge(exchange.profile, QA.unocoin.infoForm()),
+      address: () => angular.merge(exchange.profile, QA.unocoin.addressForm())
     },
     sfox: {
-      address: () => angular.merge(this.state, QA.sfox.addressForm())
+      address: () => angular.merge(exchange.profile, QA.sfox.addressForm())
     }
   };
 }

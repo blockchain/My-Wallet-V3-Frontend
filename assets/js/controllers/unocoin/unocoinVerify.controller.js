@@ -18,15 +18,10 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.setProfile = (fields) => {
     let profile = $scope.exchange.profile;
 
-    profile.fullName = fields.fullName;
-    profile.mobile = fields.mobile;
-    profile.pancard = fields.pancard;
-    profile.address.street = fields.street;
-    profile.address.city = fields.city;
-    profile.address.state = fields.state;
-    profile.address.zipcode = fields.zipcode;
-    profile.bankAccountNumber = fields.bankAccountNumber;
-    profile.ifsc = fields.ifsc;
+    profile.address.street = profile.street;
+    profile.address.city = profile.city;
+    profile.address.state = profile.state;
+    profile.address.zipcode = profile.zipcode;
   };
 
   AngularHelper.installLock.call($scope);
