@@ -231,25 +231,11 @@ describe('exchange-checkout.component', () => {
     });
   });
 
-  describe('.setLimits()', () => {
-    beforeEach(function () {
-      scope = getControllerScope(handlers);
-      return scope.$digest();
-    });
-
-    it('should set max min limits', () => {
-      scope.setLimits(100);
-      expect(scope.min).toBe(1);
-      expect(scope.max).toBe(200);
-    });
-  });
-
   describe('$watchers', () => {
     beforeEach(function () {
       scope = getControllerScope(handlers);
       scope.$digest();
       spyOn(scope, 'refreshIfValid');
-      return spyOn(scope, 'setLimits');
     });
 
     describe('fiat', () => {

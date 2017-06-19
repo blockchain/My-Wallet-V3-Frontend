@@ -22,7 +22,9 @@ describe('UnocoinCheckoutController', () => {
 
   let mockMediums = () =>
     ({
-      ach: {
+      bank: {
+        limitInAmounts: {'BTC': 10},
+        minimumInAmounts: {'INR': 1000},
         buy () { return $q.resolve(mockTrade()); }
       }
     })
@@ -102,6 +104,7 @@ describe('UnocoinCheckoutController', () => {
     $controller('UnocoinCheckoutController', {
       $scope: scope,
       accounts: accounts || [],
+      mediums: mockMediums() || {},
       showCheckout: showCheckout || undefined,
       exchangeRate: 1
     }
@@ -116,14 +119,6 @@ describe('UnocoinCheckoutController', () => {
     scope.openUnocoinSignup();
     return expect(modals.openUnocoinSignup).toHaveBeenCalledWith(scope.vm.external.unocoin, undefined);
   });
-
-  describe('setState()', () =>
-    it('should set trades', () => {
-      scope = getControllerScope();
-      scope.setState();
-      expect(scope.state.trades[0]['id']).toBe(123);
-    })
-  );
 
   describe('buySuccess', () => {
     it('should call openBankTransfer', () => {
