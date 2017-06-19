@@ -7,7 +7,6 @@ describe('exchange-create.component', () => {
   let $componentController;
   let Wallet;
   let $q;
-  let $controller;
 
   let views = ['email', 'summary'];
   let onCreate = () => { return true; };
@@ -37,22 +36,9 @@ describe('exchange-create.component', () => {
     return ctrl;
   };
 
-  let getControllerScope = function (bindings) {
-    // scope = $rootScope.$new(true);
-    scope = $rootScope.$new(true);
-    scope.$$childHead = scope.$new();
-    scope.$$childHead.accountForm = {email: {$setValidity () {}}};
-    scope.$$childHead.emailForm = {emailCode: {$setValidity () {}}};
-    scope.$$childHead.mobileForm = {mobileCode: {$setValidity () {}}};
-    $componentController('exchangeCreate', {$scope: scope}, bindings);
-    let template = $templateCache.get('templates/exchange/create.pug');
-    $compile(template)(scope);
-    return scope;
-  };
-
   beforeEach(module('walletApp'));
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend, _$q_, _$controller_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend, _$q_) {
       $rootScope = _$rootScope_;
       $compile = _$compile_;
       $templateCache = _$templateCache_;
@@ -60,7 +46,6 @@ describe('exchange-create.component', () => {
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
       $q = _$q_;
-      $controller = _$controller_;
 
       Wallet = $injector.get('Wallet');
       // Wallet.user = {
@@ -165,23 +150,4 @@ describe('exchange-create.component', () => {
       expect(ctrl.exchange.fetchProfile).toHaveBeenCalled();
     });
   });
-
-  // describe('displayInlineError', () => {
-  //   it('should display the correct error', () => {
-  //     let ctrl = getController(handlers);
-  //     ctrl.displayInlineError('user is already registered');
-  //   });
-  // });
-
-  // describe('changeEmail()', () => {
-  //   it('should call lock()', () => {
-  //     let ctrl = getController(handlers);
-  //     let scope = getControllerScope(handlers);
-  //     console.log('scope', scope.$$childHead.accountForm)
-  //     spyOn(ctrl, 'lock');
-  //     ctrl.changeEmail();
-  //     return expect(ctrl.lock).toHaveBeenCalled();
-  //   });
-  // });
-
 });

@@ -5,7 +5,6 @@ describe('exchange-verify.component', () => {
   let $compile;
   let $templateCache;
   let $componentController;
-  let $controller;
 
   let steps = ['address'];
   let fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
@@ -42,14 +41,12 @@ describe('exchange-verify.component', () => {
 
   beforeEach(module('walletApp'));
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend, _$q_, _$controller_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend, _$q_) {
       $rootScope = _$rootScope_;
       $compile = _$compile_;
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();
-
-      $controller = _$controller_;
     })
   );
 
