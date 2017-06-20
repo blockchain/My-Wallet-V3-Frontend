@@ -28,7 +28,7 @@
               span.blue.pointer.hidden-sm.hidden-md.hidden-lg(ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy") Change Email
             input(ng-model="$ctrl.state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
-            .help.mb-15
+            .help.mb-30
               span.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text Sorry, this email is already registered with {{$ctrl.name}}. 
                 a Change Email
@@ -41,7 +41,7 @@
             input#terms(type="checkbox" ng-model="$ctrl.state.terms" name="terms" required)
             label(for="terms")
               | I accept Blockchain's 
-              a.em-500(href="https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf" translate="Alpha Agreement" target="_blank" rel="noopener noreferrer")
+              a.em-500(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
               | , {{$ctrl.name}}'s 
               a.em-500(href="{{$ctrl.termsOfService}}" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
               |  and {{$ctrl.name}}'s 
