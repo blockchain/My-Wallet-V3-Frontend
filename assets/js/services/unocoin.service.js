@@ -21,7 +21,11 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
       return 'create';
     } else {
       if (profile.level < 2) {
-        return 'verify';
+        if (profile.addressComplete && profile.infoComplete) {
+          return 'upload';
+        } else {
+          return 'verify';
+        }
       } else {
         return 'pending';
       }

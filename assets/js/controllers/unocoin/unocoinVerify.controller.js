@@ -7,11 +7,12 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
     $scope.buySellDebug = env.buySellDebug;
   });
 
-  $scope.exchange = $scope.vm.exchange;
   $scope.openHelper = modals.openHelper;
+  let exchange = $scope.exchange = $scope.vm.exchange;
 
   $scope.steps = ['address', 'info'];
   $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
+  $scope.initialStep = exchange.profile.addressComplete ? 'info' : 'address';
 
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
@@ -25,5 +26,4 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   };
 
   AngularHelper.installLock.call($scope);
-  $scope.$watch('state.step', (val) => console.log(val));
 }

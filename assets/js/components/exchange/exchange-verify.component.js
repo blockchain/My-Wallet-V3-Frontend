@@ -6,6 +6,7 @@ angular
       fields: '<',
       nextStep: '<',
       exchange: '<',
+      initialStep: '<',
       onVerify: '&',
       onSetProfile: '&',
       mobilePreferred: '@'
@@ -36,10 +37,6 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     return then < Date.now();
   };
 
-  this.state = {
-    step: 'address'
-  };
-
   this.onStep = (step) => step === this.state.step;
 
   this.setProfile = () => {
@@ -47,7 +44,8 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     this.steps.length > 1 ? this.state.step = this.steps.shift() && this.steps[0] : this.onVerify();
   };
 
-  this.$onInit = () => this.state.step = this.steps[0];
+  this.state = {};
+  this.$onInit = () => this.state.step = this.initialStep || this.steps[0];
 
   // QA Tools
   this.qa = {
