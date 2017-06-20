@@ -39,8 +39,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
 
     return $q.resolve(profile.verify())
              .then(() => $scope.vm.goTo('pending'))
-             .catch(unocoin.displayError)
-             .finally($scope.free);
+             .catch((err) => { $scope.vm.error = err; $scope.vm.goTo('verify'); }).finally($scope.free);
   };
 
   AngularHelper.installLock.call($scope);

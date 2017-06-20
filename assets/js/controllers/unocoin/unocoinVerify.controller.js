@@ -2,6 +2,8 @@ angular
   .module('walletApp')
   .controller('UnocoinVerifyController', UnocoinVerifyController);
 
+let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+
 function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
@@ -10,7 +12,8 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.openHelper = modals.openHelper;
   let exchange = $scope.exchange = $scope.vm.exchange;
 
-  $scope.steps = ['address', 'info'];
+  $scope.error = $scope.vm.error;
+  $scope.steps = enumify('address', 'info');
   $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
   $scope.initialStep = exchange.profile.addressComplete ? 'info' : 'address';
 
@@ -26,4 +29,5 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   };
 
   AngularHelper.installLock.call($scope);
+  $scope.$onDestroy = () => $scope.vm.error = null;
 }

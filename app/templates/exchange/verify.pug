@@ -11,9 +11,9 @@
           i.mrs.ti-search
           span QA
         ul.pll
-          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa[$ctrl.name][$ctrl.state.step]()") Autofill Form
+          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa()") Autofill Form
   .width-60
-    form.bc-form(ng-if="$ctrl.onStep('address')" name="verifyForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
+    form.bc-form(ng-if="$ctrl.onStep('address')" name="$ctrl.addressForm" role="form" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row(ng-if="$ctrl.showField('fullName')")
           .col-md-12
@@ -41,12 +41,12 @@
             .mb-20.pos-rel
               label Mobile
               bc-phone-number(ng-model="$ctrl.profile.mobile" name="mobile" preferred-countries="in" default-country="in" is-valid="isValidMobileNumber")
-              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && verifyForm.mobile.$touched" translate="Required field")
+              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && $ctrl.addressForm.mobile.$touched" translate="Required field")
           .col-md-6(ng-if="$ctrl.showField('pancard')")
             .mb-20.pos-rel
               label PAN Card
-              input(ng-model="$ctrl.profile.pancard" name="PAN Card" required)
-              span.error(translate="Required field")
+              input(ng-model="$ctrl.profile.pancard" ng-change="$ctrl.clearInlineErrors('addressForm', 'pancard')" name="pancard" required)
+              span.error(translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('ssn')")
             .mb-20.pos-rel
               label.hidden-xs Social Security Number
@@ -79,7 +79,7 @@
           .col-md-4(ng-if="$ctrl.showField('state')")
             .mb-20.pos-rel
               label State
-              input(ng-model="$ctrl.profile.state" name="state" required)
+              input(ng-model="$ctrl.profile.state" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="state" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('state-US')")
             .mb-20.pos-rel
@@ -89,13 +89,13 @@
           .col-md-4
             .mb-20.pos-rel
               label City
-              input(ng-model="$ctrl.profile.city" name="city" required)
+              input(ng-model="$ctrl.profile.city" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="city" required)
               span.error(translate="Required field")
           .col-md-4(ng-if="$ctrl.showField('pincode')")
             .mb-20.pos-rel
               label Pin Code
-              input(ng-model="$ctrl.profile.zipcode" name="zipcode" format-input="xxxxx" required)
-              span.error(translate="Required field")
+              input(ng-model="$ctrl.profile.zipcode" ng-change="$ctrl.clearInlineErrors('addressForm', 'zipcode')" name="zipcode" format-input="xxxxx" required)
+              span.error(translate="{{$ctrl.profile.zipcode.length ? 'PIN_CODE_INCORRECT' : 'PIN_CODE_REQUIRED'}}")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('zipcode')")
             .mb-20.pos-rel
               label Zipcode
@@ -103,20 +103,20 @@
               span.error(translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-    form.bc-form(ng-if="$ctrl.onStep('info')" name="infoForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
+            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$invalid") Continue
+    form.bc-form(ng-if="$ctrl.onStep('info')" name="$ctrl.infoForm" role="form" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
           .col-md-6
             .mb-20.pos-rel
               label Bank Account Number
-              input(ng-model="$ctrl.profile.bankAccountNumber" name="Bank Account Number" required)
-              span.error(translate="Required field")
+              input(ng-model="$ctrl.profile.bankAccountNumber" ng-change="$ctrl.clearInlineErrors('infoForm', 'bankAccountNumber')" name="bankAccountNumber" required)
+              span.error(translate="{{$ctrl.profile.bankAccountNumber.length ? 'BANK_ACCOUNT_NUMBER_INCORRECT': 'REQUIRED_FIELD'}}")
           .col-md-6
             .mb-20.pos-rel
               label IFSC
-              input(ng-model="$ctrl.profile.ifsc" name="ifsc" required)
-              span.error(translate="Required field")
+              input(ng-model="$ctrl.profile.ifsc" ng-change="$ctrl.clearInlineErrors('infoForm', 'ifsc')" name="ifsc" required)
+              span.error(translate="{{$ctrl.profile.ifsc.length ? 'IFSC_INCORRECT' : 'REQUIRED_FIELD'}}")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="infoForm.$invalid") Continue
+            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.infoForm.$invalid") Continue

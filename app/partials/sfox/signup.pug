@@ -5,7 +5,7 @@
     div(ng-if="vm.onStep('create')" ng-controller="SfoxCreateAccountController")
       exchange-create(views="views" exchange="exchange" on-create="vm.goTo('verify')" terms-of-service="https://www.sfox.com/terms.html" privacy-agreement="https://www.sfox.com/privacy.html")
     div(ng-if="vm.onStep('verify')" ng-controller="SfoxVerifyController")
-      exchange-verify(steps="steps" fields="fields" exchange="exchange" next-step="'upload'" on-verify="verifyProfile()" on-set-profile="setProfile(fields)")
+      exchange-verify(steps="steps" fields="fields" exchange="exchange" next-step="'upload'" initial-step="initialStep" on-verify="verifyProfile()" on-set-profile="setProfile(fields)")
     div(ng-if="vm.onStep('upload')" ng-controller="SfoxUploadController")
       exchange-upload(base="" locked="locked" id-type="state.idType" handle-upload="prepUpload(file)")
     div(ng-if="vm.onStep('link')" ng-include="'partials/sfox/link.pug'" ng-controller="SfoxLinkController")
