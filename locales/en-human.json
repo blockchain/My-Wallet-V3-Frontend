@@ -1450,5 +1450,6 @@
     "STEP_2": "Tap <i>Log in to Web Wallet</i>.",
     "STEP_3": "Using your computer's camera, scan the QR code that appears on your device."
   },
+  "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "": ""
 }
