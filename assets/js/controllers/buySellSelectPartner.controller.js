@@ -13,7 +13,8 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   });
 
   let contains = (val, list) => list.indexOf(val) > -1;
-  let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
+  let accountInfo = MyWallet.wallet.accountInfo;
+  let codeGuess = accountInfo && accountInfo.countryCodeGuess;
 
   $scope.states = state.stateCodes;
   $scope.state = $scope.states[0];
@@ -69,7 +70,7 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   $scope.onWhitelist = (countryCode) => (
     (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
-    (contains(countryCode, $scope.unocoinWhitelist) && 'unocoin') ||
+    (contains(countryCode, $scope.unocoinWhitelist) && accountInfo.invited.unocoin && 'unocoin') ||
     (contains(countryCode, $scope.sfoxWhitelist) && codeGuess === 'US' && 'sfox') || false
   );
 
@@ -77,11 +78,15 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
-  $scope.tabs = {
-    options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
-      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
-      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
-  };
+  Env.then(env => {
+    let email = MyWallet.wallet.accountInfo.email;
+    $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
+    $scope.tabs = {
+      options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
+        ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+        : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
+    };
+  });
 
   $scope.$watchGroup(['country', 'state'], (newValues) => {
     let country = newValues[0];

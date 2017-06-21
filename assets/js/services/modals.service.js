@@ -167,9 +167,9 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
     let exchange = ($q, MyWallet) => {
       let coinify = MyWallet.wallet.external.coinify;
-      return coinify.hasAccount && $state.$current.name !== coinifyState
+      return coinify.hasAccount && coinify.profile == null
         ? coinify.fetchProfile()
-        : $q.resolve({profile: {}});
+        : $q.resolve(coinify.profile ? coinify : {profile: {}});
     };
 
     let trades = ($q, MyWallet) => {
