@@ -28,12 +28,13 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
 
   service.canBuy = () => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
-    let isUserInvited = accountInfo && accountInfo.invited && accountInfo.invited.sfox;
+    let isUserInvited = accountInfo && accountInfo.invited && (accountInfo.invited.unocoin || accountInfo.invited.sfox);
 
     // The user can buy if:
     // * they already have an account; or
     // * their IP is in a country supported by Coinify; or
-    // * their IP is in a country supported by SFOX AND their email is invited
+    // * their IP is in a country supported by SFOX AND their email is invited; or
+    // * their IP is in a country supported by Unocoin AND their email is invited;
     let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
 
     return Env.then(processEnv).then(canBuy);

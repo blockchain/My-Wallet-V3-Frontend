@@ -10,7 +10,9 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     replace: true,
     scope: {
       tradingDisabledReason: '=',
+      userActionRequired: '=',
       tradingDisabled: '=',
+      conversion: '=',
       disabled: '=',
       trade: '=',
       buy: '=',
@@ -26,6 +28,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     Env.then(env => {
       scope.buySellDebug = env.buySellDebug;
     });
+
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
 
     scope.update = () => angular.extend(scope, {
@@ -88,8 +91,9 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
       scope.canCancel =
         !scope.disabled &&
         !scope.isTradingDisabled &&
-        scope.trade.state === 'awaiting_transfer_in' &&
-        angular.isFunction(scope.trade.cancel);
+        scope.userActionRequired &&
+        angular.isFunction(scope.trade.cancel) &&
+        scope.trade.state === 'awaiting_transfer_in';
     });
   }
 }

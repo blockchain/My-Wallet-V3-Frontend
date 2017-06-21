@@ -1,5 +1,5 @@
-.modal-body.fade.clearfix
-  i.ti-close.close-modal.alt(ng-click="vm.cancel()")
+.modal-body.clearfix
+  i.ti-close.close-modal.alt(ng-click="vm.cancel ? vm.cancel() : $close()")
   div(data-preflight-tag="TradeSummary")
     .mbl(ng-hide="hideHeader")
       span.type-h5.em-500.flex-start.pts.capitalize(class="{{formattedTrade.class}}" translate="{{formattedTrade.namespace}}.TITLE" translate-values="formattedTrade.values")

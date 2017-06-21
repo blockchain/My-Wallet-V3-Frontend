@@ -284,6 +284,21 @@ i.ti-credit-card.bank {
 }
 
 .signup-steps {
+  span.f-14 {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    background: $basic-grey;
+  }
+  .primary {
+    span.f-14 {
+      background: $primary;
+    }
+  }
+  .border-top {
+    height: 5px;
+  }
   @media (max-width: 991px) {
     .pt-70 {
       padding-top: 25px;
@@ -294,6 +309,7 @@ i.ti-credit-card.bank {
   }
   @media (max-width: 767px) {
     .pt-70 {
+      padding-top: 10px;
       .width-80 {
         padding: 0px 30px;
       }
@@ -411,3 +427,5 @@ input[type="radio"]:checked + label {
 }
 
 .primary { color: $iris; }
+
+.tabs-partner-logo { max-width: 60px; }

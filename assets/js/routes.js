@@ -347,6 +347,48 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'BuySellCtrl',
       params: { countryCode: null, selectedTab: 'BUY_BITCOIN' }
     })
+    .state('wallet.common.buy-sell.unocoin', {
+      templateUrl: 'partials/unocoin/checkout.pug',
+      controller: 'UnocoinCheckoutController',
+      params: { selectedTab: null },
+      resolve: {
+        _loadBcPhoneNumber ($ocLazyLoad) {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        },
+        _loadExchangeData ($q, MyWallet, Exchange) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return exchange.user && !exchange.profile
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
+            : $q.resolve();
+        },
+        exchangeRate ($q, MyWallet, unocoin) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return $q.resolve(unocoin.fetchQuote(exchange, 1e8, 'BTC', 'INR'));
+        },
+        mediums ($q, MyWallet, exchangeRate, _loadExchangeData) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return exchange.profile && exchange.profile.level > 2
+                 ? $q.resolve(exchangeRate.getPaymentMediums())
+                 : $q.resolve();
+        },
+        showCheckout (Env, MyWallet) {
+          return Env.then(env => {
+            let email = MyWallet.wallet.accountInfo.email;
+            let fraction = env.partners.unocoin.showCheckoutFraction;
+
+            return Blockchain.Helpers.isEmailInvited(email, fraction);
+          });
+        }
+      },
+      onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {
+        let exchange = MyWallet.wallet.external.unocoin;
+
+        if (exchange.profile == null && !showCheckout) {
+          $state.transition = null; // hack to prevent transition
+          modals.openUnocoinSignup(exchange);
+        }
+      }
+    })
     .state('wallet.common.buy-sell.sfox', {
       templateUrl: 'partials/sfox/checkout.pug',
       controller: 'SfoxCheckoutController',
@@ -355,10 +397,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet, sfox) {
+        _loadExchangeData ($q, MyWallet, Exchange) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? $q.resolve().then(() => sfox.fetchExchangeData(exchange))
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
         accounts ($q, MyWallet) {

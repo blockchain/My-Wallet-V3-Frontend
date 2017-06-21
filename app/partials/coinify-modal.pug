@@ -12,7 +12,7 @@
             span(ng-if="vm.trade && vm.trade.outAmountExpected" ng-class="{'italic tilda': vm.state.trade.expired}") {{ vm.trade.outAmountExpected / 100000000 }} BTC
             | &nbsp;
             span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
-            span(ng-if="vm.trade && vm.trade.sendAmount") ({{ vm.trade.sendAmount / 100 }} {{ vm.trade.inCurrency }})
+            span(ng-if="vm.trade && vm.trade.sendAmount") ({{ vm.trade.sendAmount / 100 | format }} {{ vm.trade.inCurrency }})
           countdown.mid-grey(ng-if="vm.quote && vm.quote.id" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" debug="vm.buySellDebug" message="vm.message")
           countdown.mid-grey(ng-if="vm.trade && vm.trade.expiresAt && !vm.state.trade.expired" time-to-expiration="vm.timeToExpiration" on-expiration="vm.expireTrade()" debug="vm.buySellDebug" message="vm.message")
   coinify-email(ng-if="vm.onStep('email')" on-complete="vm.goTo('signup')" on-close="vm.close(0)" email="vm.user.email" valid-email="vm.state.email.valid" verified="vm.user.isEmailVerified" on-email-change="vm.onEmailChange(true)")

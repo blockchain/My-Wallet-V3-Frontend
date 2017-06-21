@@ -12,7 +12,7 @@
       .flex-justify.hidden-xs
         i.ti-arrow-right.f-16
 
-      .width-25.flex-column.flex-center(ng-class="vm.onStep('verify') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('verify')")
+      .width-25.flex-column.flex-center(ng-class="vm.onStep('verify') || vm.onStep('upload') ? 'primary' : 'hidden-xs'" ng-click="buySellDebug && vm.goTo('verify')")
         i.f-36.ti-id-badge
         span.mt-10(translate="Verify Identity")
 

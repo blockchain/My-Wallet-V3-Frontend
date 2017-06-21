@@ -3,152 +3,86 @@
   .banner(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
       div.width-100
-        h1.center.width-100(translate="MOST_POPULAR_WALLET")
-      .flex-row.flex-around.width-100.flex-between-mobile.container.hidden-xs.stats
-        .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
-          span.type-h5.white(translate="TRANSACTIONS")
-        .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="WALLETS_AMT" translate-values="{count: walletCount}")
-          span.type-h5.white(translate="WALLETS")
-        .flex-column.center.width-30
-          span.type-med.em-400.white.lh1(translate="COUNTRIES_SERVED_AMT")
-          span.type-h5.white(translate="COUNTRIES_SERVED")
-      .flex-center.flex-column.flex-justify.signup
-        .flex-column.pos-rel.width-100-mobile.center
-          button.button-primary.btn.button-vlg.button-heavy.mtl(
-            type="submit"
-            ui-sref="public.signup"
-            translate="CREATE_YOUR_WALLET")
-          span.f-20.mtm(translate="OR")
-          button.button-purple.button-heavy.upper.btn.button-vlg.mtm(
-            type="submit"
-            ui-sref="public.login-no-uid"
-            translate="LOGIN_NOW")
-  .newtobitcoin.container
-    #newToBTC.container-max-width.container-fluid.width-100
-      .flex-column.flex-justify.flex-center.mvvl
-        h2.em-200.mvn.font-4.font-3-mobile.center(translate=".NEW_TO_BITCOIN")
-    .new.container-max-width.container-fluid.width-100
-        .flex-row.flex-column-mobile.flex-column-med
-          video-container.col-md-6.blue-play-button.small-image(img="img/blockchain-ad-placeholder.jpg" ng-src="adUrl")
-          .flex-column.width-50.flex-1.flex-center.flex-justify
-            #timeline.flex-row.flex-1.flex-center.mhvl.mhl-mobile.mbl
-              img.flex-1(src='img/logo-timeline.png' alt="Blockchain Bitcoin Timeline")
-            .bitinf.flex-row.flex-center.mbl.mhvl.mhl-mobile.flex-1
-              img.width-3.width-200-mobile.mrl(src='img/logo-what-bitcoin.png' alt="What is Bitcoin")
-              .flex-column.flex-1
-                h3.flex-1.mtn.blue(translate=".WHAT_IS_BITCOIN")
-                p.flex-1(translate=".BITCOIN_IS")
-            .bitinf.flex-row.flex-center.mvl.mhvl.mhl-mobile.flex-1
-              img.width-3.width-200-mobile.mrl(src='img/logo-why-bitcoin.png' alt="Why use Blockchain Bitcoin Wallet")
-              .flex-column.flex-1
-                h3.flex-1.blue(translate=".WHY_USE")
-                p.flex-1(translate=".USE_BECAUSE")
-  uib-carousel(active="active" interval="0")
-    h4(translate=".LOVED_BY_ALL")
-    uib-slide(index="0")
-      div
-        img(src="img/logo-nytimes.svg" alt="Blockchain Bitcoin Wallet New York Times")
-        p(translate="QUOTE_0")
-        span.author
-          a(href="http://nyti.ms/1sfHj9b" target="_blank" rel="noopener noreferrer") The New York Times
-    uib-slide(index="1")
-      div
-        p(translate="QUOTE_1")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="2")
-      div
-        img(src="img/logo-wsj.svg" alt="Blockchain Bitcoin Wallet Wall Street Journal")
-        p(translate="QUOTE_2")
-        span.author
-          a(href="http://on.wsj.com/1u5CFZF" target="_blank" rel="noopener noreferrer") The Wall Street Journal
-    uib-slide(index="3")
-      div
-        p(translate="QUOTE_3")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="4")
-      div
-        img(src="img/logo-techcrunch.svg" alt="Blockchain Bitcoin Wallet Techcrunch")
-        p(translate="QUOTE_4")
-        span.author
-          a(href="http://techcrunch.com/2014/07/19/blockchain-releases-new-android-wallet-app-to-put-bitcoin-into-everyones-hands/" target="_blank" rel="noopener noreferrer") Tech Crunch
-    uib-slide(index="5")
-      div
-        p(translate="QUOTE_5")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="6")
-      div
-        img(src="img/logo-telegraph.svg" alt="Blockchain Bitcoin Wallet Telegraph")
-        p(translate="QUOTE_6")
-        span.author
-          a(href="http://bit.ly/1sdIEzZ" target="_blank" rel="noopener noreferrer") The Telegraph
-    uib-slide(index="7")
-      div
-        p(translate="QUOTE_7")
-        span.author(translate="WALLET_USER")
-    uib-slide(index="8")
-      div
-        p(translate="QUOTE_8")
-        span.author(translate="WALLET_USER")
-  .container.flex-center
-    .whyuseblockchain.width-80.flex-column.flex-center
-      .flex-column.flex-justify.flex-center.mtvl.mbm
-        h2.em-200.mvn.font-4.font-3-mobile.center(translate="WHY_USE_BLOCKCHAIN")
-      .type-h5.center.pbm.width-100.font-1-mobile(translate="ABOUT_BLOCKCHAIN_WALLET")
-      .flex-row.pos-rel.width-100.ptl.mbvl.flex-column-mobile
-        .flex-column.width-50.plrl-desk
-          .flex-row.pbvl.flex-center
-            img(src="img/logo-easy-to-use.png" alt="Blockchain Bitcoin Wallet Easy To Use")
-            .flex-column.width-100
-              h3(translate="SIMPLE")
-              h4(translate="WE_MAKE_USING_BTC")
-          .flex-row.pbvl.flex-center
-            img(src="img/logo-mobile-bitcoin.png" alt="Blockchain Bitcoin Wallet Mobile")
-            .flex-column.width-100
-              h3(translate="CROSS_PLATFORM")
-              h4(translate="ACCESS_ANYWHERE")
-          .flex-row.pbvl.flex-center
-            img(src="img/logo-interoperability.png" alt="Blockchain Bitcoin Wallet Interoperability")
-            .flex-column.width-100
-              h3(translate="GLOBAL")
-              h4(translate="GLOBAL_INFO")
-        .flex-column.width-50.plrl-desk
-          .flex-row.pbvl.flex-center
-            img(src="img/logo-client-side-encryption.png" alt="Blockchain Bitcoin Wallet Client Side Encryption")
-            .flex-column.width-100
-              h3(translate="SAFE_AND_SECURE")
-              h4(translate="SECURITY_INFO")
-          .flex-row.pbvl.flex-center
-            img(src="img/logo-support.png" alt="Blockchain Bitcoin Wallet Support")
-            .flex-column.width-100
-              h3(translate="SUPPORTED")
-              h4(translate="DEDICATED_SUPPORT_TEAM")
-          .flex-row.pbvl.flex-center
-            img(src="img/logo-hd-arch.png" alt="Blockchain Bitcoin Wallet Hierarchical Deterministic")
-            .flex-column.width-100
-              h3(translate="SOPHISTICATED")
-              h4(translate="SOPHISTICATED_INFO")
-  .flex-center.flex-column.flex-justify
-    h3.mbn.mtl.flex-start Be Your Own Bank
-      small ®
-    form.form-horizontal(
-      role="form"
-      name="signupForm"
-      ng-submit="signup(fields.email)"
-      autocomplete="off"
-      novalidate)
-      .form-group.flex-row.flex-center.flex-column-mobile.mbvl(ng-class="{'has-error': signupForm.email.$invalid && signupForm.email.$touched}")
-        input.form-control.lrg.mrm.mtl(
-          name="email"
-          type="email"
-          ng-model="fields.email"
-          placeholder="jane@doe.com"
-          required)
-        button.button-primary.btn.button-vlg.button-heavy.mtl(
-          type="submit"
-          ng-disabled="signupForm.$invalid"
-          translate="GET_STARTED")
+        h1.f-42.em-200.width-100.man.mb-15(translate=".HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate=".SUB_HEADER")
+        a.f-16.em-500.upper.flex-center(ui-sref="public.signup")
+          span(translate=".GET_STARTED_NOW")
+          i.icon-right_arrow.ml-5
+  .stats.upper.clearfix
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-mariner
+      span.em-300.f-24.em-300.white(translate="NUMBER_1_WALLET")
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-blue
+      span.em-300.f-24.em-300.white(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-primary
+      span.em-300.f-24.em-300.white(translate="WALLETS_AMT" translate-values="{count: walletCount}")
+  .container.mt-90.mb-70
+    h2.upper.f-36.em-200.mvn.center(translate=".WHY_BLOCKCHAIN")
+    p.f-16.em-300.mt-10.mbn.center(translate=".LOVED_BY_ALL")
+    uib-carousel.mt-50(active="active" interval="0")
+      uib-slide(index="0")
+        .clearfix
+          .col-md-4
+            i.f-60.icon-simple.blue
+            p.f-18.em-300.upper(translate=".SIMPLE.TITLE")
+            p.f-14.em-200.left-align(translate=".SIMPLE.COPY")
+          .col-md-4
+            i.f-60.icon-safe-secure.blue
+            p.f-18.em-300.upper(translate=".SAFE_AND_SECURE.TITLE")
+            p.f-14.em-200.left-align(translate=".SAFE_AND_SECURE.COPY")
+          .col-md-4
+            i.f-60.icon-buy-sell.blue
+            p.f-18.em-300.upper(translate=".BUY_AND_SELL.TITLE")
+            p.f-14.em-200.left-align(translate=".BUY_AND_SELL.COPY")
+      uib-slide(index="1")
+        .clearfix
+          .col-md-4
+            i.f-60
+              img(height="50px;" src="img/sophisticated.svg")
+            p.f-18.em-300.upper.mt-5(translate=".SOPHISTICATED.TITLE")
+            p.f-14.em-200.left-align(translate=".SOPHISTICATED.COPY")
+          .col-md-4
+            i.f-60.icon-global.blue
+            p.f-18.em-300.upper(translate=".GLOBAL.TITLE")
+            p.f-14.em-200.left-align(translate=".GLOBAL.COPY")
+          .col-md-4
+            i.f-60.icon-always-supported.blue
+            p.f-18.em-300.upper(translate=".SUPPORTED.TITLE")
+            p.f-14.em-200.left-align(translate=".SUPPORTED.COPY")
+  .banner.sm(data-preflight-tag="LandingPage")
+    .flex-column.height-100.flex-center.flex-justify.container
+      div.width-100
+        h2.f-42.em-200.width-100.man.mb-15(translate=".BITCOIN_ON_ALL_DEVICES.HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate=".BITCOIN_ON_ALL_DEVICES.SUB_TEXT")
+        a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank" rel="noopener noreferrer")
+          img.app-store-badge(src="img/app-store-badge.svg")
+        a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank" rel="noopener noreferrer")
+          img.play-store-badge(src="img/google-play-badge.png")
+  .container.flex-center.hidden-xs.hidden-sm.mv-70
+    .col-md-6
+      h2.upper.f-36.em-200.mvn(translate=".NEW_TO_BITCOIN.HEADER")
+      p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
+      a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
+        span(translate="LEARN_MORE")
+        i.icon-right_arrow.primary.ml-5
+    .col-md-6.center
+      img.width-80(src="img/bitcoin-network.svg")
+  .container.visible-xs.visible-sm.mv-30
+    .col-md-6
+      h2.upper.f-36.em-200.mvn(translate=".NEW_TO_BITCOIN.HEADER")
+      p.f-16.em-300.mt-10.mb-15(translate=".NEW_TO_BITCOIN.SUB_TEXT")
+      a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
+        span(translate="LEARN_MORE")
+        i.icon-right_arrow.primary.ml-5
+    .col-md-6.center.mt-30
+      img.width-80(src="img/bitcoin-network.svg")
+  .pv-70.flex-center.flex-justify.bg-grey
+    .flex-column.flex-center
+      p.f-24.em-200.center.pt-10.mbn.upper(translate=".GET_WORLDS_MOST_POPULAR_WALLET")
+      p.mv-15
+        button.button-primary.round.upper(translate=".GET_STARTED_NOW" ui-sref="public.signup")
+      p.f-14.em-300.upper
+        | or&nbsp;
+        a(translate="LOGIN" ui-sref="public.login-no-uid")
   .footer.pv-40.ph-10
     .container
       .row.upper
