@@ -94,7 +94,7 @@
           .col-md-4(ng-if="$ctrl.showField('pincode')")
             .mb-20.pos-rel
               label Pin Code
-              input(ng-model="$ctrl.profile.zipcode" ng-change="$ctrl.clearInlineErrors('addressForm', 'zipcode')" name="zipcode" format-input="xxxxx" required)
+              input(ng-model="$ctrl.profile.zipcode" ng-change="$ctrl.clearInlineErrors('addressForm', 'zipcode')" name="zipcode" format-input="xxxxxx" required)
               span.error(translate="{{$ctrl.profile.zipcode.length ? 'PIN_CODE_INCORRECT' : 'PIN_CODE_REQUIRED'}}")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('zipcode')")
             .mb-20.pos-rel
