@@ -1,4 +1,5 @@
 .modal-body.fade.clearfix
+  i.ti-close.close-modal.alt(ng-click="vm.cancel()")
   div(data-preflight-tag="TradeSummary")
     .mbl(ng-hide="hideHeader")
       span.type-h5.em-500.flex-start.pts.capitalize(class="{{formattedTrade.class}}" translate="{{formattedTrade.namespace}}.TITLE" translate-values="formattedTrade.values")
@@ -13,7 +14,6 @@
   p.security-red.pointer.ng-hide(ng-show="vm.buySellDebug && vm.trade.bankAccount && vm.trade.state === 'awaiting_transfer_in'")
     i.ti-search.mrm
     span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
-.modal-footer.flex-end.flex-row
-  button(translate="CLOSE" ng-click="vm.cancel()" ng-class="vm.trade.bitcoinReceived ? 'button-muted' : 'button-primary'")
-  button.button-primary.mll(translate="SEE_BITCOIN" ng-show="!inMobileBuy && vm.trade.bitcoinReceived" ng-click="$close()" ui-sref="wallet.common.transactions")
-  button.button-primary.mll(translate="SEE_BITCOIN" ng-show="inMobileBuy && vm.trade.bitcoinReceived" ng-click="exitToNativeTx()")
+  .flex-end.flex-row.pt-20
+    button.button-primary.mll(translate="SEE_BITCOIN" ng-show="!inMobileBuy && vm.trade.bitcoinReceived" ng-click="$close()" ui-sref="wallet.common.transactions")
+    button.button-primary.mll(translate="SEE_BITCOIN" ng-show="inMobileBuy && vm.trade.bitcoinReceived" ng-click="exitToNativeTx()")

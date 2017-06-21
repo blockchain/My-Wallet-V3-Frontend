@@ -1,4 +1,7 @@
 form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodForm" id="paymentMethodForm" role="form" ng-submit="isBank() && needsKYC() ? openKYC() : submit()" novalidate)
+  i.ti-close.close-modal.alt(ng-show="belowCardMax && !aboveBankMin" ng-click="vm.close(1)")
+  i.ti-close.close-modal.alt(ng-show="belowCardMax && aboveBankMin" ng-click="vm.close(2)")
+  i.ti-close.close-modal.alt(ng-show="!belowCardMax && aboveBankMin" ng-click="vm.close(3)")
   span.type-h5.em-500.flex-start.pts(translate="PAYMENT_METHOD")
   .radio-group.flex-column-mobile.flex-between.mv-20
     .radio-label-alt.width-45(ng-show="aboveBankMin && !pendingKYC()")
@@ -36,8 +39,5 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
       label.pointer.em-300.primary(for="card" ng-click="$timeout(submit, 1)" translate="I want to pay via credit/debit card")
       //- hide above when kyc check is at medium level
       //- label.pointer.em-300.primary(ng-show="needsKYC('card')" for="card" ng-click="openKYC()" translate="Currently you can buy at most {{limits.card.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via credit/debit card. Click here to increase your limit.")
-.modal-footer.flex-end.flex-row
-  button.button-muted.mrm(ng-show="belowCardMax && !aboveBankMin" ng-click="vm.close(1)" translate="CANCEL_ORDER")
-  button.button-muted.mrm(ng-show="belowCardMax && aboveBankMin" ng-click="vm.close(2)" translate="CANCEL_ORDER")
-  button.button-muted.mrm(ng-show="!belowCardMax && aboveBankMin" ng-click="vm.close(3)" translate="CANCEL_ORDER")
-  button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")
+  .flex-end.flex-row.pt-20
+    button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")
