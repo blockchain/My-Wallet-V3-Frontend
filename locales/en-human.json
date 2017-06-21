@@ -1197,6 +1197,7 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
+  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "SUBSCRIBE": "Subscribe",
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1483,5 +1484,6 @@
     "BANK_ACCOUNT_NUMBER": "Bank Account Number",
     "IFSC": "IFSC"
   },
+  "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "": ""
 }

@@ -12,7 +12,14 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
   angular.extend(service, Exchange);
 
   function init (unocoin) {
-    if (unocoin.trades) service.watchTrades(unocoin.trades);
+    return Env.then((env) => {
+      console.info(
+        'Using Unocoin %s environment.',
+        env.partners.unocoin.production ? 'production' : 'staging'
+      );
+      unocoin.api.production = env.partners.unocoin.production;
+      if (unocoin.trades) service.watchTrades(unocoin.trades);
+    });
   }
 
   function determineStep (exchange, accounts) {

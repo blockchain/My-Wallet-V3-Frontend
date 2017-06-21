@@ -46,7 +46,8 @@
     },
     "unocoin": {
       "countries": ["IN"],
-      "showCheckoutFraction": 0
+      "showCheckoutFraction": 0,
+      "production": "REPLACED_BY_DEV_SERVER"
     }
   },
   "domains": {
