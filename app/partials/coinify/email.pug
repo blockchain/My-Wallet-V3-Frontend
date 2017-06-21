@@ -1,4 +1,5 @@
 form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
+  i.ti-close.close-modal.alt(ng-click="$ctrl.onClose()")
   div(ng-hide="$ctrl.state.editing || !$ctrl.validEmail")
     span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
     p.mtl.mbm
@@ -16,9 +17,4 @@ form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
     action-title="'CHANGE' | translate"
     inline
     editing="true")
-.modal-footer.flex-end.flex-row
-  button.button-muted.mrm(ng-click="$ctrl.onClose()" translate="CANCEL_ORDER")
-  button.button-primary(
-    type="submit"
-    ng-disabled="!$ctrl.verified || !$ctrl.validEmail || emailForm.$invalid"
-    translate="CONTINUE")
+  .pt-20

@@ -1,8 +1,9 @@
 form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng-submit="state.editAmount ? commitValues() : buy();" novalidate)
-  .flex-column.mbl(ng-show="error || $parent.error")
+  i.ti-close.close-modal.alt(ng-click="vm.close(3)")
+  .flex-column(ng-show="error || $parent.error")
     p.mvm.state-danger-text.type-md(translate="UNABLE_TO_PROCESS")
     span.mvm(translate="CANNOT_COMPLETE_TRADE_ERROR" translate-values="{error: $parent.error.error_description}")
-  .flex-column.mbl(ng-hide="error || status.creatingSellTrade")
+  .flex-column(ng-hide="error || status.creatingSellTrade")
     span.type-h5.em-500.flex-start.pts(translate="CONFIRM_YOUR_ORDER")
     p.mvm
       span(translate="{{isBank ? 'ORDER_CONFIRMATION_BANK_COPY' : 'ORDER_CONFIRMATION_COPY'}}" ng-if="!summaryForm.fiat.$error.max && !summaryForm.fiat.$error.min")
@@ -58,8 +59,6 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
         input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
       div
         label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
-.modal-footer.flex-between.flex-row(ng-class="{'flex-end': inMobileBuy}")
-  button.button-muted(ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
-  div
-    button.button-muted.mrm(ng-click="vm.close(3)" translate="CANCEL_ORDER")
-    button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="CONFIRM")
+    .flex-row.flex-between.pt-20
+      button.button-muted(ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
+      button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="CONFIRM")
