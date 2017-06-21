@@ -1429,7 +1429,7 @@
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
   "UNOCOIN": {
     "PENDING": "Identity Verification Pending",
-    "PENDING_EXPLAIN": "Unocoin is currently verifying your identity. You will receive a phone call within 1 business day. The phone call will verify your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card Information</b>. You will be able to buy bitcoin once you are verified."
+    "PENDING_EXPLAIN": "Thanks for setting up your profile. In order to verify your identity, a member of the Unocoin team will give you a call within 1 business day to confirm your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card information</b>. Then, you’ll be able to buy bitcoin!"
   },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
@@ -1469,7 +1469,19 @@
     "VERIFICATION_CODE": "Verification Code",
     "VERIFICATION_CODE_INCORRECT": "Verification code incorrect. ",
     "CHANGE_EMAIL_": "change email",
-    "ANOTHER_CODE_SENT": "Another code has been sent!"
+    "ANOTHER_CODE_SENT": "Another code has been sent!",
+    "VERIFY_ACCOUNT": "We need to collect some personal information in order to verify your identity. Note that this information will be sent to {{::exchange}} and will not be directly linked to your Blockchain wallet.",
+    "FULL_NAME": "Full Name",
+    "MOBILE": "Mobile",
+    "PAN_CARD": "PAN Card",
+    "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
+    "ADDRESS_LINE_1": "Address Line 1",
+    "ADDRESS_LINE_2": "Address Line 2",
+    "STATE": "State",
+    "CITY": "City",
+    "PIN_CODE": "Pin Code",
+    "BANK_ACCOUNT_NUMBER": "Bank Account Number",
+    "IFSC": "IFSC"
   },
   "": ""
 }
