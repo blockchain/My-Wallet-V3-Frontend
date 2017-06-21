@@ -19,7 +19,7 @@
           label Enter your IMPS/NEFT/RTGS/CHEQUE reference number:
           input(ng-model="vm.state.reference" name="reference" type="text" required focus-when="vm.onStep('reference')")
 .ph-35.pb-25.flex-end.flex-row
-  button.btn.button-primary(ng-if="vm.onStep('initiated')" ng-click="$dismiss()" translate="CLOSE")
-  button.button-muted.primary.mrm(ng-if="vm.onStep('summary')" ng-click="$dismiss()" translate="CANCEL")
+  button.btn.button-primary(ng-if="vm.onStep('initiated')" ng-click="vm.close()" translate="CLOSE")
+  button.button-muted.primary.mrm(ng-if="vm.onStep('summary')" ng-click="vm.close()" translate="CANCEL")
   button.button-muted.primary.mrm(ng-if="vm.onStep('reference')" ng-click="vm.goTo('summary')" translate="GO_BACK" ng-disabled="vm.locked")
   button.btn.button-primary(ng-if="vm.onStep('summary') || vm.onStep('reference')" type="submit" translate="{{vm.onStep('summary') ? 'CONTINUE' : 'SUBMIT'}}" form="bankTransferForm" ng-disabled="vm.locked")
