@@ -3,9 +3,10 @@
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Setup Your Profile")
       .mbl.hidden-xs
-        span.f-16(translate="As part of your registration, {{$ctrl.name}} will need to collect some personal information to verify your identify.")
+        span.f-16(ng-if="$ctrl.onStep('address')" translate="EXCHANGE.VERIFY.COLLECT_PERSONAL_INFO" translate-values="{name: $ctrl.name}")
+        span.f-16(ng-if="$ctrl.onStep('info')" translate="EXCHANGE.VERIFY.COLLECT_BANK_INFO" translate-values="{name: $ctrl.name}")
       .mbl
-        span.f-16(translate="This information will only be sent to {{$ctrl.name}} and will not be directly linked to your Blockchain wallet.")
+        span.f-16(translate="EXCHANGE.VERIFY.INFO_NOT_LINKED" translate-values="{name: $ctrl.name}")
       .mbl(ng-show="$ctrl.buySellDebug")
         div.type-h4.mbs.underline
           i.mrs.ti-search
@@ -18,7 +19,7 @@
         .row(ng-if="$ctrl.showField('fullName')")
           .col-md-12
             .mb-20.pos-rel
-              label Full Name
+              label(translate="EXCHANGE.VERIFY.FULL_NAME")
               input(ng-model="$ctrl.state.fullName" name="fullName" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('first')")
@@ -39,12 +40,12 @@
         .row
           .col-md-6(ng-if="$ctrl.showField('mobile')")
             .mb-20.pos-rel
-              label Mobile
+              label(translate="MOBILE_NUMBER")
               bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="in" default-country="in" is-valid="isValidMobileNumber")
               span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && verifyForm.mobile.$touched" translate="Required field")
           .col-md-6(ng-if="$ctrl.showField('pancard')")
             .mb-20.pos-rel
-              label PAN Card
+              label(translate="EXCHANGE.VERIFY.PAN_CARD")
               input(ng-model="$ctrl.state.pancard" name="PAN Card" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('ssn')")
@@ -61,7 +62,7 @@
         .row
           .col-md-12(ng-if="$ctrl.showField('address')")
             .mb-20.pos-rel
-              label Full Residential Address (you will need to provide proof of address)
+              label(translate="EXCHANGE.VERIFY.FULL_ADDRESS")
               input(ng-model="$ctrl.state.street" name="street" placeholder="Street address" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr1')")
@@ -78,7 +79,7 @@
         .row
           .col-md-4(ng-if="$ctrl.showField('state')")
             .mb-20.pos-rel
-              label State
+              label(translate="STATE")
               input(ng-model="$ctrl.state.state" name="state" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('state-US')")
@@ -88,12 +89,12 @@
               span.error(translate="Required field")
           .col-md-4
             .mb-20.pos-rel
-              label City
+              label(translate="CITY")
               input(ng-model="$ctrl.state.city" name="city" required)
               span.error(translate="Required field")
           .col-md-4(ng-if="$ctrl.showField('pincode')")
             .mb-20.pos-rel
-              label Pin Code
+              label(translate="EXCHANGE.VERIFY.PIN_CODE")
               input(ng-model="$ctrl.state.zipcode" name="zipcode" format-input="xxxxx" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('zipcode')")
@@ -103,13 +104,13 @@
               span.error(translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
+            button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid" translate="CONTINUE")
     form.bc-form(ng-if="$ctrl.onStep('info')" name="infoForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
           .col-md-6
             .mb-20.pos-rel
-              label Bank Account Number
+              label(translate="EXCHANGE.VERIFY.BANK_ACCOUNT_NUMBER")
               input(ng-model="$ctrl.state.bankAccountNumber" name="Bank Account Number" required)
               span.error(translate="Required field")
           .col-md-6
@@ -119,4 +120,4 @@
               span.error(translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="infoForm.$invalid") Continue
+            button.btn.button-primary.full(type="submit" ng-disabled="infoForm.$invalid" translate="CONTINUE")
