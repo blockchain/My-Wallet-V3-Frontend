@@ -85,7 +85,7 @@
               helper-button(content="SCAN_QR_CODE.HELPER")
             a.f-12.em-300(translate="GO_BACK" ng-click="state.viewQR = false")
           .flex-justify.flex-center.flex-column.mv-25
-            qr(text="paymentRequestURL(true)" size=250 image="true")
+            qr(text="paymentRequestURL(true)" ng-if="state.address" size=250 image="true")
           .flex-row
             span.f-16.bg-grey.ph-25.pv-10.width-100.text-overflow-hidden {{ paymentRequestURL(true) }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel(single-click-select translate="COPY" ng-hide="state.isBitcoinURICopied || !browser.canExecCommand" copy-content="{{ paymentRequestURL(true) }}" ng-click="state.isBitcoinURICopied = true")
