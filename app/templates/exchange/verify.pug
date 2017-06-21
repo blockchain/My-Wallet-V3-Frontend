@@ -3,120 +3,118 @@
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Setup Your Profile")
       .mbl.hidden-xs
-        span.f-16(translate="As part of your registration, {{$ctrl.name}} will need to collect some personal information to verify your identify.")
-      .mbl
-        span.f-16(translate="This information will only be sent to {{$ctrl.name}} and will not be directly linked to your Blockchain wallet.")
+        span.f-16(translate="EXCHANGE.VERIFY_ACCOUNT" translate-values="{exchange: $ctrl.name}")
       .mbl(ng-show="$ctrl.buySellDebug")
         div.type-h4.mbs.underline
           i.mrs.ti-search
           span QA
         ul.pll
-          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa[$ctrl.name][$ctrl.state.step]()") Autofill Form
+          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.qa()") Autofill Form
   .width-60
-    form.bc-form(ng-if="$ctrl.onStep('address')" name="verifyForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
+    form.bc-form(ng-if="$ctrl.onStep('address')" name="$ctrl.addressForm" role="form" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row(ng-if="$ctrl.showField('fullName')")
           .col-md-12
             .mb-20.pos-rel
-              label Full Name
-              input(ng-model="$ctrl.state.fullName" name="fullName" required)
+              label(translate="EXCHANGE.FULL_NAME")
+              input(ng-model="$ctrl.profile.fullName" name="fullName" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('first')")
           .col-md-4.col-xs-12
             .mb-20.pos-rel
               label First Name
-              input(ng-model="$ctrl.state.firstName" name="first" required)
+              input(ng-model="$ctrl.profile.firstName" name="first" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('middle')")
             .mb-20
               label Middle Name
-              input(ng-model="$ctrl.state.middleName" name="middle")
+              input(ng-model="$ctrl.profile.middleName" name="middle")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('last')")
             .mb-20.pos-rel
               label Last Name
-              input(ng-model="$ctrl.state.lastName" name="last" required)
+              input(ng-model="$ctrl.profile.lastName" name="last" required)
               span.error(translate="Required field")
         .row
           .col-md-6(ng-if="$ctrl.showField('mobile')")
             .mb-20.pos-rel
-              label Mobile
-              bc-phone-number(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="in" default-country="in" is-valid="isValidMobileNumber")
-              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && verifyForm.mobile.$touched" translate="Required field")
+              label(translate="MOBILE")
+              bc-phone-number(ng-model="$ctrl.profile.mobile" name="mobile" preferred-countries="in" default-country="in" is-valid="isValidMobileNumber")
+              span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && $ctrl.addressForm.mobile.$touched" translate="Required field")
           .col-md-6(ng-if="$ctrl.showField('pancard')")
             .mb-20.pos-rel
-              label PAN Card
-              input(ng-model="$ctrl.state.pancard" name="PAN Card" required)
-              span.error(translate="Required field")
+              label(translate="EXCHANGE.PAN_CARD")
+              input(ng-model="$ctrl.profile.pancard" ng-change="$ctrl.clearInlineErrors('addressForm', 'pancard')" name="pancard" required)
+              span.error(translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('ssn')")
             .mb-20.pos-rel
               label.hidden-xs Social Security Number
               label.visible-xs SSN
-              input(ng-model="$ctrl.state.ssn" name="ssn" placeholder="___-___-____" format-input="xxx-xx-xxxx" required)
+              input(ng-model="$ctrl.profile.ssn" name="ssn" placeholder="___-___-____" format-input="xxx-xx-xxxx" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('dob')")
             .mb-20.pos-rel
               label Date of Birth
-              input(ng-model="$ctrl.state.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow($ctrl.state.dob)" required)
+              input(ng-model="$ctrl.profile.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow($ctrl.profile.state.dob)" required)
               span.error(translate="Required field")
         .row
           .col-md-12(ng-if="$ctrl.showField('address')")
             .mb-20.pos-rel
-              label Full Residential Address (you will need to provide proof of address)
-              input(ng-model="$ctrl.state.street" name="street" placeholder="Street address" required)
+              label(translate="EXCHANGE.FULL_RESIDENTIAL_ADDRESS")
+              input(ng-model="$ctrl.profile.street" name="street" placeholder="Street address" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr1')")
           .col-md-12
             .mb-20.pos-rel
-              label Address Line 1
-              input(ng-model="$ctrl.state.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+              label(translate="EXCHANGE.ADDRESS_LINE_1")
+              input(ng-model="$ctrl.profile.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr2')")
           .col-md-12
             .mb-20
-              label Address Line 2
-              input(ng-model="$ctrl.state.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
+              label(translate="EXCHANGE.ADDRESS_LINE_2")
+              input(ng-model="$ctrl.profile.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
         .row
           .col-md-4(ng-if="$ctrl.showField('state')")
             .mb-20.pos-rel
-              label State
-              input(ng-model="$ctrl.state.state" name="state" required)
+              label(translate="EXCHANGE.STATE")
+              input(ng-model="$ctrl.profile.state" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="state" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('state-US')")
             .mb-20.pos-rel
               label State
-              select(ng-model="$ctrl.state.state" name="state" ng-options="s as s['Name'] for s in $ctrl.states" tabindex="" required)
+              select(ng-model="$ctrl.profile.state" name="state" ng-options="s as s['Name'] for s in $ctrl.states" tabindex="" required)
               span.error(translate="Required field")
           .col-md-4
             .mb-20.pos-rel
-              label City
-              input(ng-model="$ctrl.state.city" name="city" required)
+              label(translate="EXCHANGE.CITY")
+              input(ng-model="$ctrl.profile.city" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="city" required)
               span.error(translate="Required field")
           .col-md-4(ng-if="$ctrl.showField('pincode')")
             .mb-20.pos-rel
-              label Pin Code
-              input(ng-model="$ctrl.state.zipcode" name="zipcode" format-input="xxxxx" required)
-              span.error(translate="Required field")
+              label(translate="EXCHANGE.PIN_CODE")
+              input(ng-model="$ctrl.profile.zipcode" ng-change="$ctrl.clearInlineErrors('addressForm', 'zipcode')" name="zipcode" format-input="xxxxxx" required)
+              span.error(translate="{{$ctrl.profile.zipcode.length ? 'PIN_CODE_INCORRECT' : 'PIN_CODE_REQUIRED'}}")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('zipcode')")
             .mb-20.pos-rel
               label Zipcode
-              input(ng-model="$ctrl.state.zipcode" name="zipcode" format-input="xxxxx" required)
+              input(ng-model="$ctrl.profile.zipcode" name="zipcode" format-input="xxxxx" required)
               span.error(translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="verifyForm.$invalid") Continue
-    form.bc-form(ng-if="$ctrl.onStep('info')" name="infoForm" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
+            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$invalid") Continue
+    form.bc-form(ng-if="$ctrl.onStep('info')" name="$ctrl.infoForm" role="form" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
           .col-md-6
             .mb-20.pos-rel
-              label Bank Account Number
-              input(ng-model="$ctrl.state.bankAccountNumber" name="Bank Account Number" required)
-              span.error(translate="Required field")
+              label(translate="EXCHANGE.BANK_ACCOUNT_NUMBER")
+              input(ng-model="$ctrl.profile.bankAccountNumber" ng-change="$ctrl.clearInlineErrors('infoForm', 'bankAccountNumber')" name="bankAccountNumber" required)
+              span.error(translate="{{$ctrl.profile.bankAccountNumber.length ? 'BANK_ACCOUNT_NUMBER_INCORRECT': 'REQUIRED_FIELD'}}")
           .col-md-6
             .mb-20.pos-rel
-              label IFSC
-              input(ng-model="$ctrl.state.ifsc" name="ifsc" required)
-              span.error(translate="Required field")
+              label(translate="EXCHANGE.IFSC")
+              input(ng-model="$ctrl.profile.ifsc" ng-change="$ctrl.clearInlineErrors('infoForm', 'ifsc')" name="ifsc" required)
+              span.error(translate="{{$ctrl.profile.ifsc.length ? 'IFSC_INCORRECT' : 'REQUIRED_FIELD'}}")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="infoForm.$invalid") Continue
+            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.infoForm.$invalid") Continue

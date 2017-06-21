@@ -4,10 +4,16 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exchange, quote, Alerts) {
-  this.exchange = exchange;
+function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exchange, quote, Alerts, Env) {
+  Env.then(env => {
+    let links = env.partners.unocoin.surveyLinks;
 
-  let links = [];
+    this.close = () => {
+      Alerts.surveyCloseConfirm('unocoin-survey', links, this.step).then($uibModalInstance.dismiss);
+    };
+  });
+
+  this.exchange = exchange;
   this.quote = quote;
 
   this.steps = enumify('create', 'verify', 'upload', 'pending');
@@ -17,12 +23,4 @@ function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exch
   this.goTo = (s) => this.step = this.steps[s];
 
   this.goTo(unocoin.determineStep(exchange));
-
-  const goToBuy = () => {
-    $stateParams.selectedTab = 'BUY_BITCOIN';
-  };
-
-  this.close = () => {
-    Alerts.surveyCloseConfirm('unocoin-survey', links, this.step).then(goToBuy());
-  };
 }

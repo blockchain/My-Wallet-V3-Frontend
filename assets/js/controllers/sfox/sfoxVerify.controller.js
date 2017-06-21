@@ -2,6 +2,8 @@ angular
   .module('walletApp')
   .controller('SfoxVerifyController', SfoxVerifyController);
 
+let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+
 function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
@@ -10,7 +12,8 @@ function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   $scope.exchange = $scope.vm.exchange;
   $scope.goTo = (s) => $scope.vm.goTo(s);
 
-  $scope.steps = ['address'];
+  $scope.initialStep = 'address';
+  $scope.steps = enumify('address');
   $scope.fields = ['first', 'middle', 'last', 'ssn', 'dob', 'addr1', 'addr2', 'state-US', 'zipcode'];
 
   $scope.openHelper = modals.openHelper;
@@ -25,18 +28,14 @@ function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   $scope.setProfile = (fields) => {
     let profile = $scope.exchange.profile;
 
-    profile.firstName = fields.firstName;
-    profile.middleName = fields.middle;
-    profile.lastName = fields.lastName;
-    profile.dateOfBirth = new Date(fields.dob);
-    profile.setSSN(fields.ssn);
+    profile.setSSN(profile.ssn);
 
     profile.setAddress(
-      fields.addr1,
-      fields.addr2,
-      fields.city,
-      fields.state.Code,
-      fields.zipcode
+      profile.addr1,
+      profile.addr2,
+      profile.city,
+      profile.state.Code,
+      profile.zipcode
     );
   };
 }

@@ -1197,6 +1197,7 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
+  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "SUBSCRIBE": "Subscribe",
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1429,7 +1430,7 @@
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
   "UNOCOIN": {
     "PENDING": "Identity Verification Pending",
-    "PENDING_EXPLAIN": "Unocoin is currently verifying your identity. You will receive a phone call within 1 business day. The phone call will verify your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card Information</b>. You will be able to buy bitcoin once you are verified."
+    "PENDING_EXPLAIN": "Thanks for setting up your profile. In order to verify your identity, a member of the Unocoin team will give you a call within 1 business day to confirm your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card information</b>. Then, you’ll be able to buy bitcoin!"
   },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
@@ -1450,7 +1451,39 @@
     "STEP_2": "Tap <i>Log in to Web Wallet</i>.",
     "STEP_3": "Using your computer's camera, scan the QR code that appears on your device."
   },
+  "REQUIRED_FIELD": "Required field",
+  "IFSC_INCORRECT": "IFSC incorrect",
+  "PIN_CODE_REQUIRED": "Pin Code required",
+  "PIN_CODE_INCORRECT": "Pin Code incorrect",
+  "PAN_CARD_REQUIRED": "Pan Card required",
+  "PAN_CARD_INCORRECT": "Pan Card incorrect",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Create {{::exchange}} Account",
+    "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
+    "VERIFY_EMAIL": "Verify Email Address",
+    "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
+    "CHANGE_EMAIL": "Change Email",
+    "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
+    "CHANGE_EMAIL_FAILED": "Sorry, this email is already registered with {{::exchange}}.",
+    "CONFIRM_EMAIL": "Confirm email",
+    "VERIFICATION_CODE": "Verification Code",
+    "VERIFICATION_CODE_INCORRECT": "Verification code incorrect. ",
+    "CHANGE_EMAIL_": "change email",
+    "ANOTHER_CODE_SENT": "Another code has been sent!",
+    "VERIFY_ACCOUNT": "We need to collect some personal information in order to verify your identity. Note that this information will be sent to {{::exchange}} and will not be directly linked to your Blockchain wallet.",
+    "FULL_NAME": "Full Name",
+    "MOBILE": "Mobile",
+    "PAN_CARD": "PAN Card",
+    "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
+    "ADDRESS_LINE_1": "Address Line 1",
+    "ADDRESS_LINE_2": "Address Line 2",
+    "STATE": "State",
+    "CITY": "City",
+    "PIN_CODE": "Pin Code",
+    "BANK_ACCOUNT_NUMBER": "Bank Account Number",
+    "IFSC": "IFSC"
+  },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
-  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "": ""
 }

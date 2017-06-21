@@ -57,35 +57,12 @@ describe('exchange-verify.component', () => {
     });
   });
 
-  describe('onStep()', () => {
-    it('should check for equality with state.step', () => {
-      let ctrl = getController(handlers);
-      ctrl.state.step = 'address';
-      expect(ctrl.onStep('address')).toBe(true);
-    });
-  });
-
   describe('setProfile()', () => {
     it('should call onSetProfile', () => {
       let ctrl = getController(handlers);
       spyOn(ctrl, 'onSetProfile');
       ctrl.setProfile();
       expect(ctrl.onSetProfile).toHaveBeenCalled();
-    });
-
-    it('should set step if steps.length > 1', () => {
-      let ctrl = getController(handlers);
-      ctrl.steps = ['one', 'two'];
-      ctrl.setProfile();
-      expect(ctrl.state.step).toBe('two');
-    });
-  });
-
-  describe('onInit', () => {
-    it('should set state.step to the first step', () => {
-      let ctrl = getController(handlers);
-      ctrl.$onInit();
-      expect(ctrl.state.step).toBe('address');
     });
   });
 

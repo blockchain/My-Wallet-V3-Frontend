@@ -59,7 +59,7 @@ describe('UnocoinVerifyController', () => {
 
   describe('steps', () => {
     it('should have address and info', () => {
-      return expect(scope.steps[1]).toBe('info');
+      return expect(scope.steps.info).toBe(1);
     });
   });
 
@@ -83,26 +83,11 @@ describe('UnocoinVerifyController', () => {
       return $rootScope.$digest();
     });
 
-    it('should set the profile', () => {
-      let info = {
-        fullName: 'John Smith',
-        mobile: '123456789',
-        pancard: '123ABC',
-        street: 'Main St',
-        city: 'Bangalore',
-        state: 'IN',
-        zipcode: '56789',
-        bankAccountNumber: '1234ABCD',
-        ifsc: '98765'
-      };
-      scope.setProfile(info);
-      expect(scope.vm.exchange.profile.fullName).toBe('John Smith');
-      expect(scope.vm.exchange.profile.mobile).toBe('123456789');
-      expect(scope.vm.exchange.profile.pancard).toBe('123ABC');
+    it('should set the address', () => {
+      scope.vm.exchange.profile.address.city = 'Bangalore';
+      scope.vm.exchange.profile.address.zipcode = '56789';
       expect(scope.vm.exchange.profile.address.city).toBe('Bangalore');
       expect(scope.vm.exchange.profile.address.zipcode).toBe('56789');
-      expect(scope.vm.exchange.profile.bankAccountNumber).toBe('1234ABCD');
-      expect(scope.vm.exchange.profile.ifsc).toBe('98765');
     });
   });
 });

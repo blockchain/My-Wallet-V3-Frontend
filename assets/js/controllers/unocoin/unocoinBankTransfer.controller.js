@@ -4,7 +4,15 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinBankTransferController (trade, bankAccount, formatTrade, $q, unocoin, modals, AngularHelper) {
+function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env) {
+  Env.then(env => {
+    let links = env.partners.unocoin.surveyTradeLinks;
+
+    this.close = () => {
+      Alerts.surveyCloseConfirm('unocoin-trade-survey', links, this.step).then($uibModalInstance.dismiss);
+    };
+  });
+
   this.formattedTrade = formatTrade.bankTransfer(trade, bankAccount);
 
   this.steps = enumify('summary', 'reference', 'initiated');

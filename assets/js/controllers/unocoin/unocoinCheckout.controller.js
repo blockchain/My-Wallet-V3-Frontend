@@ -23,6 +23,7 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Setup Profile', i: 'ti-id-badge' },
+      'upload': { text: 'Upload Documents', i: 'ti-id-badge' },
       'pending': { text: 'Identity Verification Pending', i: 'icon-phone' }
     };
     let step = unocoin.determineStep(exchange);
