@@ -1451,5 +1451,6 @@
     "STEP_3": "Using your computer's camera, scan the QR code that appears on your device."
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
+  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "": ""
 }

@@ -7,7 +7,10 @@ form.bc-form(
     .group
       .item
         .flex-between.flex-baseline.mbs
-          span.f-16.em-500.colon Enter Amount
+          .flex-row
+             span.f-16.em-500.colon Enter Amount
+             div(ng-hide="state.rate && !state.loadFailed")
+               helper-button(content="EXCHANGE_RATE_HELPER_TWO")
           span
             div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed")
               span 1 {{ bitcoin.code }} = ${{ format(state.rate, dollars, false) }}
