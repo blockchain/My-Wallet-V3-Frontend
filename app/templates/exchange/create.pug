@@ -27,10 +27,9 @@
               span.blue.pointer.hidden-sm.hidden-md.hidden-lg(translate="EXCHANGE.CHANGE_EMAIL" ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy")
             input(ng-model="$ctrl.state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
-            .help.mb-10
-              span.flex-row(ng-click="$ctrl.view('email')")
+            .help
+              div.flex-column(ng-click="$ctrl.view('email')")
                 a.state-danger-text(translate="EXCHANGE.CHANGE_EMAIL_FAILED" translate-values="{exchange: $ctrl.name}")
-                | &nbsp;
                 a(translate="EXCHANGE.CHANGE_EMAIL")
         .group.pb-20(ng-if="$ctrl.views.indexOf('mobile') > -1")
           .item
