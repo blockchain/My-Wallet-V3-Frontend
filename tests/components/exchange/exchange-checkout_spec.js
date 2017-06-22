@@ -89,7 +89,7 @@ describe('exchange-checkout.component', () => {
     scope = getControllerScope(handlers);
     scope.$digest();
     expect(scope.quote).not.toBeDefined();
-    expect(scope.state.rate).toEqual(mockQuote().rate);
+    expect(scope.state.rate).toEqual(mockQuote().quoteAmount);
   });
 
   describe('hasMultipleAccounts', () => {
@@ -197,7 +197,7 @@ describe('exchange-checkout.component', () => {
 
       it('should set the quote rate to the scope state', () => {
         scope.$digest();
-        expect(scope.state.rate).toEqual(mockQuote().rate);
+        expect(scope.state.rate).toEqual(mockQuote().quoteAmount);
       });
 
       it('should have loadFailed set to false', () => {
