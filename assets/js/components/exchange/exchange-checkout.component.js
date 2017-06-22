@@ -93,7 +93,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   $scope.getInitialQuote = () => {
     let args = { amount: 100000000, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = quote.rate; });
+    quoteP.then(quote => { $scope.state.rate = quote.quoteAmount; });
   };
 
   $scope.refreshIfValid = (field) => {
