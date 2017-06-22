@@ -95,7 +95,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     let now = Date.now();
     let filterBuySell = (feat) => (
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
-      (feat.title !== 'SELL_BITCOIN' || MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))
+      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify')))
     );
     $scope.feats = whatsNew.filter(filterBuySell).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
