@@ -12,8 +12,8 @@ form.bc-form(
              div(ng-hide="state.rate && !state.loadFailed")
                helper-button(content="EXCHANGE_RATE_HELPER_TWO")
           span
-            div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed")
-              span 1 {{ bitcoin.code }} = {{ format(state.rate, dollars, false) }} {{state.baseCurr.code}}
+            div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed && !checkoutForm.$error.min")
+              span 1 {{ bitcoin.code }} = {{ format(state.rate, dollars, false) }} {{$ctrl.dollars.code}}
               helper-button(content="EXCHANGE_RATE_HELPER")
             .state-danger-text(ng-show="state.loadFailed")
               i.ti-alert
