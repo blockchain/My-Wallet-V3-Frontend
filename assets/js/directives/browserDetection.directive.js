@@ -74,7 +74,7 @@ function directive ($q, $translate, MyWallet) {
       let defer = $q.defer();
 
       let info = browserDetection();
-      let matchingBrowser = browsers[info.browser.toLowerCase()];
+      let matchingBrowser = info.browser && browsers[info.browser.toLowerCase()];
       if (matchingBrowser) { // One of the known browsers listed above
         let requiredVersion = matchingBrowser.requiredVersion;
         if (info.version < requiredVersion) {
