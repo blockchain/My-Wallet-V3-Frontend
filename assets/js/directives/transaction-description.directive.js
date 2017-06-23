@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription ($translate, $injector, Wallet, MyWallet, buySell, unocoin) {
+function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -50,7 +50,7 @@ function transactionDescription ($translate, $injector, Wallet, MyWallet, buySel
       if (external.coinify) buySell.initialized().finally(() => scope.txMethod = buySell.getTxMethod(scope.tx.hash));
 
       if (external.unocoin) scope.exchange = 'Unocoin';
-      if (external.unocoin) $injector.get('unocoin').init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
+      if (external.unocoin) unocoin.init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
     }
 
     buySell.initialized();
