@@ -6,6 +6,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
   const service = {
     buy,
     init,
+    getTxMethod,
     determineStep
   };
 
@@ -19,6 +20,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
       );
       unocoin.api.production = env.partners.unocoin.production;
       if (unocoin.trades) service.watchTrades(unocoin.trades);
+      unocoin.monitorPayments();
     });
   }
 
@@ -42,6 +44,11 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
   function buy (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
              .then(mediums => mediums.bank.buy());
+  }
+
+  function getTxMethod (unocoin, hash) {
+    let trade = unocoin.trades.filter((t) => t.txHash === hash)[0];
+    return trade && (trade.isBuy ? 'buy' : 'sell');
   }
 
   return service;

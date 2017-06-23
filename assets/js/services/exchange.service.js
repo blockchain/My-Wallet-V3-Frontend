@@ -35,6 +35,7 @@ function Exchange ($q, Alerts, modals, Env) {
   function fetchExchangeData (exchange) {
     return $q.resolve(exchange.fetchProfile())
       .then(() => exchange.getTrades())
+      .then((trades) => service.trades = trades)
       .then(service.watchTrades);
   }
 

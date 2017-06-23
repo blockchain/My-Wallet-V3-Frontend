@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription ($translate, Wallet, buySell) {
+function transactionDescription ($translate, $injector, Wallet, MyWallet, buySell, unocoin) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -17,8 +17,7 @@ function transactionDescription ($translate, Wallet, buySell) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.exchange = 'Coinify';
-
+    let { external } = MyWallet.wallet;
     let currentYear = new Date().getFullYear();
     let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
     scope.year = isCurrentYear ? '' : 'yyyy';
@@ -45,7 +44,16 @@ function transactionDescription ($translate, Wallet, buySell) {
     scope.txDirection = scope.getTxDirection(scope.tx.txType);
     scope.txClass = scope.getTxClass(scope.tx.txType);
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
-    buySell.initialized().finally(() => scope.txMethod = buySell.getTxMethod(scope.tx.hash));
+
+    if (external) {
+      if (external.coinify) scope.exchange = 'Coinify';
+      if (external.coinify) buySell.initialized().finally(() => scope.txMethod = buySell.getTxMethod(scope.tx.hash));
+
+      if (external.unocoin) scope.exchange = 'Unocoin';
+      if (external.unocoin) $injector.get('unocoin').init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
+    }
+
+    buySell.initialized();
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {
