@@ -1471,7 +1471,7 @@
     "VERIFICATION_CODE_INCORRECT": "Verification code incorrect. ",
     "CHANGE_EMAIL_": "change email",
     "ANOTHER_CODE_SENT": "Another code has been sent!",
-    "VERIFY_ACCOUNT": "We need to collect some personal information in order to verify your identity. Note that this information will be sent to {{::exchange}} and will not be directly linked to your Blockchain wallet.",
+    "VERIFY_ACCOUNT": "We need to collect some personal information in order to verify your identity. Note that this information will be sent to <span class='capitalize'>{{::exchange}}</span> and will not be directly linked to your Blockchain wallet.",
     "FULL_NAME": "Full Name",
     "MOBILE": "Mobile",
     "PAN_CARD": "PAN Card",

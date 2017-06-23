@@ -67,8 +67,6 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.name = exchange.constructor.name.toLowerCase();
   this.showField = (field) => this.fields.indexOf(field) > -1;
 
-  this.capFirstLetter = (name) => name.charAt(0).toUpperCase() + name.slice(1);
-
   $scope.isValidMobileNumber = bcPhoneNumber.isValid;
   $scope.format = bcPhoneNumber.format;
 
