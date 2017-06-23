@@ -3,7 +3,7 @@
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Setup Your Profile")
       .mbl.hidden-xs
-        span.f-16(translate="EXCHANGE.VERIFY_ACCOUNT" translate-values="{exchange: $ctrl.name}")
+        span.f-16(translate="EXCHANGE.VERIFY_ACCOUNT" translate-values="{exchange: $ctrl.capFirstLetter($ctrl.name)}")
       .mbl(ng-show="$ctrl.buySellDebug")
         div.type-h4.mbs.underline
           i.mrs.ti-search
