@@ -31,6 +31,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
           i.ti-direction-alt.h3.mrm
           h3.em-100(translate="NO_TRADES")
         p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
+    span.hidden-xs.right-align.pbs(ng-show="userId") Unocoin Account: {{ userId }}
     table.width-100(ng-show="state.trades.length")
       tr.border.bg-grey
         th.pvs.width-5-mobile.visible-xs
