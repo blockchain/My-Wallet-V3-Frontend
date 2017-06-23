@@ -28,8 +28,8 @@ function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   $scope.setProfile = (fields) => {
     let profile = $scope.exchange.profile;
 
+    profile.dateOfBirth = new Date(profile.dob);
     profile.setSSN(profile.ssn);
-
     profile.setAddress(
       profile.addr1,
       profile.addr2,
