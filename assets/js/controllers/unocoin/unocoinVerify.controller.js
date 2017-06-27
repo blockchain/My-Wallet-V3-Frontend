@@ -15,7 +15,7 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.error = $scope.vm.error;
   $scope.steps = enumify('address', 'info');
   $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
-  $scope.initialStep = exchange.profile.addressComplete ? 'info' : 'address';
+  $scope.initialStep = exchange.profile.identityComplete ? 'info' : 'address';
 
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
