@@ -1094,5 +1094,92 @@
   "HIDE": "Sembunyikan",
   "EDIT_NAME": "Edit Nama",
   "NOT_BACKED_BY_RECOVERY": "Tidak dicadangkan oleh Frasa Pemulihan Anda. Transfer ke dompet untuk mengamankan dana.",
-  "EXCHANGE_RATE_HELPER": "Kurs yang ditawarkan oleh partner penukaran wilayah Anda. Bisa termasuk biaya."
+  "EXCHANGE_RATE_HELPER": "Kurs yang ditawarkan oleh partner penukaran wilayah Anda. Bisa termasuk biaya.",
+  {
+    "TX_AWAITING_REF_NUMBER": {
+      "TITLE": "Transfer Bank",
+      "BODY": "Silakan kirimkan {{::amount}} secara elektroik (melalui IMPS, NEFT, atau RTGS) ke rekening bank Unocoin di bawah ini. Selanjutnya, Anda wajib memberikan nomor referensi transfer banknya."
+    },
+    "EXCHANGE_RATE_HELPER_TWO": "Nilai tukar yang ditawarkan oleh mitra penukaran di wilayah Anda mungkin termasuk biaya.",
+    "unocoin_pancard_ID": {
+       "TITLE": "1. Kartu PAN",
+       "COPY": "Unggah atau ambil foto Kartu PAN Anda, yang menunjukkan dengan jelas nama dan Nomor Rekening Permanen sepuluh angka Anda.",
+       "UPLOAD_TITLE": "Kartu PAN",
+       "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+       "HELP": "Pastikan foto tersebut menampilkan dengan jelas nomor kartu PAN Anda."
+    },
+    "unocoin_photo_ID": {
+      "TITLE": "2. Foto Anda",
+      "COPY": "Unggah atau ambil foto diri Anda sehingga Unocoin dapat memverifikasi Kartu PAN Anda.",
+      "UPLOAD_TITLE": "Foto",
+      "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+      "HELP": "Pastikan foto tersebut menampilkan dengan jelas wajah Anda."
+    },
+    "unocoin_address_ID": {
+      "TITLE": "3. Bukti Alamat",
+      "COPY": "Unggah atau ambil foto bukti alamat Anda. Anda dapat mengunggah salah satu dokumen yang disetujui berikut ini yang sesuai dengan nama dan alamat yang Anda berikan sebelumnya.",
+      "UPLOAD_TITLE": "Bukti Alamat",
+      "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+      "OPTION1": "Kartu Aadhar (depan dan belakang)",
+      "OPTION2": "SIM",
+      "OPTION3": "Paspor (halaman yang menunjukkan alamat)",
+      "OPTION4": "Tagihan Utilitas",
+      "HELP": "Pastikan foto tersebut menunjukkan dengan jelas nama dan alamat Anda."
+    },
+    "BANK_NAME": "Nama Bank",
+    "ACCOUNT_HOLDER_NAME": "Nama Pemegang Rekening",
+    "ACCOUNT_NUMBER": "Nomor Rekening",
+    "IFSC_CODE": "Kode IFSC",
+    "ACCOUNT_TYPE": "Tipe Rekening",
+    "unocoin_pancard-id-helper": {
+      "TITLE": "Kartu PAN yang Dapat Diterima",
+      "COPY": "Kartu PAN Minor <span class='state-danger-text'>tidak dapat diterima</span>.<br>Kartu PAN harus berlaku sesuai ketentuan Pemerintah."
+    },
+    "unocoin_photo-id-helper": {
+      "TITLE": "Foto Pengguna yang Dapat Diterima",
+      "COPY": "Foto diri yang menggunakan kacamata hitam atau topi<span class='state-danger-text'>tidak dapat diterima</span>."
+    },
+    "unocoin_address-id-helper": {
+      "TITLE": "Bukti Alamat yang Dapat Diterima",
+      "COPY": "Hindari kilat kamera di perincian bukti alamat.<br>Bukti alamat harus berlaku paling tidak selama 6 bulan.<br>Bukti alamat harus sesuai dengan alamat yang dimasukkan sebelumnya.<br>ID Pemilih harus berlaku di website pemerintah.<br>Bukti alamat yang diunggah harus dalam bahasa Inggris."
+    },
+    "UNOCOIN_EXPLAIN": "Mitra Unocoin kami akan memproses pembelian bitcoin Anda. Anda harus memberikan beberapa informasi dan menautkan metode pembayaran.",
+    "UNOCOIN": {
+      "PENDING": "Penangguhan Verifikasi Identitas",
+      "PENDING_EXPLAIN": "Unocoin saat ini sedang memverifikasi identitas Anda. Anda akan menerima panggilan telepon dalam 1 hari kerja. Panggilan telepon akan memverifikasi <b>Nama</b>, <b>Kode Pos Alamat</b>, dan <b>Informasi Kartu PAN</b> Anda. Anda akan dapat membeli bitcoin setelah Anda terverifikasi."
+    },
+    "REQUIRED_FIELD": "Kolom wajib",
+    "IFSC_INCORRECT": "IFSC salah",
+    "PIN_CODE_REQUIRED": "Kode Pin wajib",
+    "PIN_CODE_INCORRECT": "Kode Pin salah",
+    "PAN_CARD_REQUIRED": "Kartu Pan wajib",
+    "PAN_CARD_INCORRECT": "Kartu Pan salah",
+    "BANK_ACCOUNT_NUMBER_INCORRECT": "Nomor Rekening Bank salah",
+    "EXCHANGE": {
+      "CREATE_ACCOUNT": "Buat {{::exchange}} Akun",
+      "CREATE_ACCOUNT_EXPLAIN": "Silakan konfirmasi email dan nomor telepon Anda untuk membuat {{::exchange}} akun penukaran.",
+      "VERIFY_EMAIL": "Verifikasi Alamat Email",
+      "VERIFY_EMAIL_EXPLAIN": "Kami baru saja mengirimkan kode verifikasi ke alamat email Anda. Silakan masukkan kode verifikasi untuk membuat {{::exchange}} akun penukaran Anda.",
+      "CHANGE_EMAIL": "Ubah Email",
+      "CHANGE_EMAIL_EXPLAIN": "Memperbarui email Anda juga akan mengubah alamat email terkait dengan dompet Anda.",
+      "CHANGE_EMAIL_FAILED": "Maaf, alamat ini sudah terdaftar dengan {{::exchange}}.",
+      "CONFIRM_EMAIL": "Konfirmasi email",
+      "VERIFICATION_CODE": "Kode Verifikasi",
+      "VERIFICATION_CODE_INCORRECT": "Kode verifikasi salah. ",
+      "CHANGE_EMAIL_": "Ubah email",
+      "ANOTHER_CODE_SENT": "Kode lain sudah dikirim!",
+      "VERIFY_ACCOUNT": "Kami perlu mengumpulkan beberapa informasi pribadi untuk memverifikasi identitas Anda. Harap diingat bahwa informasi ini akan dikirimkan ke {{::exchange}} dan tidak akan ditautkan langsung ke dompet Blockchain Anda.",
+      "FULL_NAME": "Nama Lengkap",
+      "MOBILE": "Telepon Seluler",
+      "PAN_CARD": "Kartu PAN",
+      "FULL_RESIDENTIAL_ADDRESS": "Alamat Tempat Tinggal Lengkap (Anda harus memberikan bukti alamat)",
+      "ADDRESS_LINE_1": "Baris Alamat 1",
+      "ADDRESS_LINE_2": "Baris Alamat 2",
+      "STATE": "Provinsi",
+      "CITY": "Kota",
+      "PIN_CODE": "Kode Pin",
+      "BANK_ACCOUNT_NUMBER": "Nomor Rekening Bank",
+      "IFSC": "IFSC"
+    },
+  }
 }

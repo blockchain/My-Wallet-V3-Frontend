@@ -1094,5 +1094,90 @@
   "HIDE": "Esconder",
   "EDIT_NAME": "Editar nombre",
   "NOT_BACKED_BY_RECOVERY": "No está respaldado por su frase de recuperación. Transferir a una billetera para obtener fondos.",
-  "EXCHANGE_RATE_HELPER": "La tarifa ofrecida por el socio de intercambio de su región. Puede incluir tasas."
+  "EXCHANGE_RATE_HELPER": "La tarifa ofrecida por el socio de intercambio de su región. Puede incluir tasas.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Transferencia bancaria",
+    "BODY": "Por favor, envíe {{::amount}} electrónicamente (mediante IMPS, NEFT, o RTGS) a la cuenta del banco Unocoin de abajo. Después tendrá que proporcionar el número de referencia de la transferencia bancaria."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "El tipo que ofrece nuestro colaborador de cambio de moneda de su región puede incluir una tarifa.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. Tarjeta PAN",
+     "COPY": "Suba o saque una foto de su tarjeta PAN, donde se vea claramente su nombre y el número de cuenta permanente de diez dígitos.",
+     "UPLOAD_TITLE": "Tarjeta PAN",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Asegúrese de que la foto muestra claramente su número de pancard."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Su foto",
+    "COPY": " Suba o sáquese una foto para que Unocoin pueda verificar su tarjeta PAN.",
+    "UPLOAD_TITLE": "Foto",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Asegúrese de que la foto permite que se le vea claramente."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Prueba de dirección",
+    "COPY": "Suba o saque una foto de una prueba de su dirección. Puede subir uno de los siguientes documentos aprobados, que coincidan con el nombre y la dirección que proporcionó usted inicialmente.", 
+    "UPLOAD_TITLE": "Prueba de dirección",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Tarjeta Aadhar (por delante y por detrás)",
+    "OPTION2": "Carné de conducir",
+    "OPTION3": "Pasaporte (la página que muestra la dirección)",
+    "OPTION4": "Factura de suministros",
+    "HELP": "Asegúrese de que la foto muestra claramente su nombre y dirección."
+  },
+  "BANK_NAME": "Nombre el banco",
+  "ACCOUNT_HOLDER_NAME": "Nombre del titular de la cuenta",
+  "ACCOUNT_NUMBER": "Número de cuenta",
+  "IFSC_CODE": "Código IFSC",
+  "ACCOUNT_TYPE": "Tipo de cuenta",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Tarjeta PAN aceptable",
+    "COPY": "La tarjeta PAN de un menor <span class='state-danger-text'>no es aceptable</span>.<br>la tarjeta PAN debe de ser válida conforme al registro gubernamental."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Fotografía aceptable del usuario",
+    "COPY": "Selfis con gafas o sombreros <span class='state-danger-text'>no son aceptables</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Prueba de dirección aceptable",
+    "COPY": "Evite que el flash de la cámara ilumine los datos de la prueba de la dirección.<br>La prueba de la dirección debe de ser válida al menos por 6 meses.<br>La prueba de la dirección debe de coincidir con la dirección introducida anteriormente.<br>La identificación del votante tiene que ser válida en el sitio web del gobierno.<br>La prueba de dirección que se suba debe de estar en inglés."
+  },
+  "UNOCOIN_EXPLAIN": "Nuestro colaborador, Unocoin, tramitará sus compras de bitcoines. Tendrá que proporcionar alguna información y vincular un método de pago.",
+  "UNOCOIN": {
+    "PENDING": "Pendiente de verificar la identidad",
+    "PENDING_EXPLAIN": "Actualmente, Unocoin verifica su identidad. Recibirá una llamada telefónica en 1 día laborable. La llamada telefónica verificará su <b>nombre</b>, <b>código postal de la dirección</b>, y <b>la información de la tarjeta PAN </b>. Una vez que se haya verificado su identidad, podrá comprar bitcoines."
+  },
+  "REQUIRED_FIELD": "Campo requerido",
+  "IFSC_INCORRECT": "El IFSC es incorrecto",
+  "PIN_CODE_REQUIRED": "Se necesita el código pin",
+  "PIN_CODE_INCORRECT": "Código pin incorrecto",
+  "PAN_CARD_REQUIRED": "Se necesita la tarjeta Pan",
+  "PAN_CARD_INCORRECT": "Tarjeta Pan incorrecta",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Número de cuenta bancaria incorrecta",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Crear cuenta de {{::exchange}}",
+    "CREATE_ACCOUNT_EXPLAIN": "Por favor, confirme su correo electrónico y el número de teléfono para crear su cuenta de cambio de {{::exchange}}.",
+    "VERIFY_EMAIL": "Verifique el correo electrónico",
+    "VERIFY_EMAIL_EXPLAIN": "Acabamos de enviarle un código de verificación a su correo electrónico. Por favor, introduzca el código de verificación para crear su cuenta de cambio de {{::exchange}}.",
+    "CHANGE_EMAIL": "Cambiar correo electrónico",
+    "CHANGE_EMAIL_EXPLAIN": "Al cambiar su correo electrónico, también cambiará la dirección de correo electrónico asociada con su monedero.",
+    "CHANGE_EMAIL_FAILED": "Lo sentimos, este correo ya está registrado en {{::exchange}}.",
+    "CONFIRM_EMAIL": "Confirmar correo electrónico",
+    "VERIFICATION_CODE": "Código de verificación",
+    "VERIFICATION_CODE_INCORRECT": " Código de verificación incorrecto. ",
+    "CHANGE_EMAIL_": "cambiar el correo",
+    "ANOTHER_CODE_SENT": "¡Se ha enviado otro código!",
+    "VERIFY_ACCOUNT": "Necesitamos recoger alguna información personal para poder verificar su identidad. Tenga en cuenta que esta información se enviará a {{::exchange}} y no estará vinculada directamente a su monedero de la cadena de bloques.",
+    "FULL_NAME": "Nombre completo",
+    "MOBILE": "Móvil",
+    "PAN_CARD": "Tarjeta PAN",
+    "FULL_RESIDENTIAL_ADDRESS": "Dirección completa de su domicilio (tendrá que proporcionar la prueba de tal dirección)",
+    "ADDRESS_LINE_1": "Línea de la dirección 1",
+    "ADDRESS_LINE_2": "Línea de la dirección 2",
+    "STATE": "Estado",
+    "CITY": "Ciudad",
+    "PIN_CODE": "Código pin",
+    "BANK_ACCOUNT_NUMBER": "Número de cuenta bancaria",
+    "IFSC": "IFSC"
+  }
 }
