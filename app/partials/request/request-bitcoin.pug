@@ -1,11 +1,3 @@
-.modal-header.flex-column.bc-modal-header(data-preflight-tag="Request")
-  i.ti-close.close-modal(ng-click="$close()")
-  .flex-center
-    h3
-      i.mr-10.icon-receive
-      span(translate="REQUEST" ng-hide="state.requestCreated || state.viewQR")
-      span(translate="PAYMENT_ADDRESS" ng-show="state.viewQR")
-      span(translate="REQUEST_CREATED" ng-show="state.requestCreated")
 #receive.modal-body
   form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="isToImportedAddress() ? state.requestCreated = true : createPaymentRequest();" novalidate)
     fieldset
