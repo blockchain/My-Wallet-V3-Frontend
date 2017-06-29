@@ -27,10 +27,10 @@
       "sellSurveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_56iZITjrjyMOrzL",
                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_9u8XxkrkiUUy6z3",
                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_9ysiGRC4rkMFwFv"],
-      "showSellFraction": 0
+      "showSellFraction": 1
     },
     "sfox": {
-      "production": false,
+      "production": true,
       "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
       "inviteFormFraction": 0.1,
@@ -43,6 +43,17 @@
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_4HIEh5KIodM8UTP",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_51qOIk4EXHshNFX",
                       "https://blockchain.co1.qualtrics.com/SE/?SID=SV_78S6RzM5ipN66fb"]
+    },
+    "unocoin": {
+      "countries": ["IN"],
+      "showCheckoutFraction": 0,
+      "production": "REPLACED_BY_DEV_SERVER",
+      "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_0wAlAEnwlumr4XP",
+                      "https://blockchain.co1.qualtrics.com/jfe/form/SV_8jmvSfjqqPzNWVn",
+                      "https://blockchain.co1.qualtrics.com/jfe/form/SV_25JUYJLoLoHQ5b7"],
+      "surveyTradeLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_87YRZx6LVdaF4kR",
+                           "",
+                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_bBDOyGwj5WOb0hL"]
     }
   },
   "domains": {

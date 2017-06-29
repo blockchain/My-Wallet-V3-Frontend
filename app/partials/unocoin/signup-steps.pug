@@ -1,0 +1,30 @@
+.flex-row.height-100.pt-70.pb-40.pl-40.pr-40
+  .flex-row.flex-column-tablet.center-mobile.width-100-tablet.width-100.width-100-mobile
+    .width-40.hidden-xs
+      .width-80
+        span.f-20.em-500(translate="Complete the following steps to buy bitcoin!")
+
+    .width-60.flex-row.flex-between-mobile.center(ng-class="inMobileBuy ? 'flex-column-mobile' : 'flex-baseline'")
+      .width-20.width-20-tablet.flex-column.flex-center.hidden-xs(ng-class="{primary: vm.onOrAfterStep('create')}" ng-click="buySellDebug && vm.goTo('create')")
+        span.f-14.white(ng-if="!vm.afterStep('create')") 1
+        span.f-14.white(ng-if="vm.afterStep('create')")
+          i.ti-check
+        span.mt-5(ng-class="{primary: vm.onOrAfterStep('create')}" translate="Email Verification")
+
+      .width-20.width-20-tablet.border-top.flex-justify.hidden-xs
+
+      .width-20.width-20-tablet.flex-column.flex-center.hidden-xs(ng-class="{primary: vm.onOrAfterStep('verify')}" ng-click="buySellDebug && vm.goTo('verify')")
+        span.f-14.white(ng-if="!vm.afterStep('verify')") 2
+        span.f-14.white(ng-if="vm.afterStep('verify')")
+          i.ti-check
+        span.mt-5(ng-class="{primary: vm.onOrAfterStep('verify')}" translate="Setup Profile")
+
+      .width-20.width-20-tablet.border-top.flex-justify.hidden-xs
+
+      .width-20.width-20-tablet.flex-column.flex-center.hidden-xs(ng-class="{primary: vm.onOrAfterStep('upload')}" ng-click="buySellDebug && vm.goTo('link')")
+        span.f-14.white(ng-if="!vm.afterStep('upload')") 3
+        span.f-14.white(ng-if="vm.afterStep('upload')")
+          i.ti-check
+        span.mt-5(ng-class="{primary: vm.onOrAfterStep('upload')}" translate="Upload Documents")
+  .close-modal
+    i.ti-close.pointer(ng-click="vm.onStep('pending') ? $dismiss() : vm.close()")

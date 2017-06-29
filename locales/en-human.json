@@ -101,13 +101,10 @@
   "SAVING_DESC": "Please wait while your wallet is saved...",
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
-  "TRANSACTIONS" : "Transactions",
+  "NUMBER_1_WALLET": "#1 Bitcoin Wallet",
   "TRANSACTION" : "Transaction",
-  "WALLETS" : "Wallets",
-  "COUNTRIES_SERVED" : "Countries Served",
-  "TRANSACTIONS_AMT" : "{{count}} Million+",
-  "WALLETS_AMT" : "{{count}} Million+",
-  "COUNTRIES_SERVED_AMT" : "140+",
+  "TRANSACTIONS_AMT" : "{{count}} Million+ Transactions",
+  "WALLETS_AMT" : "{{count}} Million+ Wallets",
   "REQUEST" : "Request",
   "REQUEST_CREATED" : "Request Created",
   "PAYMENT_ADDRESS": "Payment Address",
@@ -887,39 +884,7 @@
   "BELOW_DUST_THRESHOLD" : "One of your amounts is below the required minimum of {{ threshold }} satoshis",
   "STRANGE_SCRIPT" : "Strange Script",
   "CANNOT_DECODE_OUTPUT_ADDRESS" : "Unable to decode output address from transaction hash {{ tx_hash }}",
-  "HD_ARCH": "Hierarchical deterministic address architecture:",
-  "PRIVACY_IN_MIND": "We have your privacy in mind which is why we use HD addresses to avoid address reuse for increased privacy.",
-  "SECURITY_AUDITS": "Successful security audits by world-class researchers:",
-  "AES_ENCRYPTION": "Blockchain.info uses industry standard AES encryption to protect your wallet from thieves and hackers.",
-  "CLIENT_SIDE": "Client side encryption:",
-  "CLIENT_SIDE_ENCRYPTION": "The amazing part is the encryption is all done within your browser, before it is saved on our servers, so not even we have access to your account. This puts our users firmly in control of their funds.",
-  "OPEN_SOURCE": "Open source:",
-  "DYN_TX_FEE_ADJ": "Dynamic transaction fee adjustments:",
-  "DYN_TX_FEE_ADJ_DES": "We take care of adjusting the fees for you, based on the current network conditions. But as always, you’re in control and have the option to use custom fees instead.",
-  "INTEROP": "Interoperability:",
-  "INTEROP_DES": "It's easy to transition to or from another service if you choose to.",
-  "DEDICATED_SUPPORT": "Dedicated support:",
-  "DEDICATED_SUPPORT_TEAM": "Should you need help, our team will be there for you.",
   "OTHER_FEATURES": "Other features:",
-  "CONVERSION_RATES": "20+ currency conversion rates",
-  "GLOBAL_INFO": "20+ currency conversion rates, including JPY, RUB, SGD, USD, CNY, EUR, GBP, and many more. 25+ languages",
-  "LANGUAGES_FEAT": "25+ languages",
-  "WATCH_ONLY_DESC": "Monitoring and spending from Watch Only addresses",
-  "SECOND_PASSWORD_PROTECTION": "Second password protection",
-  "LOGIN_IP_RESTRICTION": "Login IP restriction",
-  "NEW_TO_BITCOIN": "I'm new to bitcoin",
-  "WHY_USE": "Why use Bitcoin?",
-  "EXPERIENCED_USER": "I'm an Experienced bitcoin user",
-  "WHY_USE_BLOCKCHAIN": "Why use Blockchain?",
-  "ACTIVITY_FEED": "Organized activity feed",
-  "NEW_USER": "New to bitcoin?",
-  "BLOCKCHAIN_MISSION": "Bitcoin is great if you need to send money overseas or want to buy something online. There are hundreds of thousands of merchants that accept Bitcoin around the world, and because the fees are so low, you can often get great discounts when you choose to pay with Bitcoin instead of your credit card.",
-  "SEND_AND_RECEIVE": "Send and Receive bitcoin with ease.",
-  "WE_MAKE_USING_BTC": "We make using Bitcoin safe, simple, and fun. You can instantly transact with anyone in the world.",
-  "IN_CONTROL": "You stay in control.",
-  "ACCESS_TO_BITCOINS": "With Blockchain, you are the only one who has access to your bitcoins. Your wallet can never be seized or blocked.",
-  "PROTECTING_FUNDS": "Protecting your funds from unauthorized access.",
-  "STATE_OF_THE_ART_SEC": "A state of the art Security Center helps protect your funds from unauthorized access. We'll help you secure your wallet with a step-by-step guide. Advanced Two Factor Authentication keeps the bad guys out via Google Authenticator, SMS, or Yubikey.",
   "DONT_TRANSFER": "Don't Transfer",
   "OK": "OK",
   "DESCRIPTION:": "Description:",
@@ -949,15 +914,6 @@
   "ABOUT_BLOCKCHAIN_WALLET": "We are not a bank. We cannot view your balance, see your transactions<br class='hidden-xs'/>or make payments on your behalf. You retain complete ownership of your money.",
   "CREATE_NEW": "Create a Free Bitcoin Wallet",
   "WALLET_USER": "Wallet User",
-  "QUOTE_0": "Blockchain is far and away an early leader in Bitcoin. They’re actually enabling the entire ecosystem.",
-  "QUOTE_1": "I definitely see why you guys are raved about by the Bitcoin community! Thanks again!",
-  "QUOTE_2": "...bitcoin...could allow billions of people currently excluded from banking systems to directly send and receive money electronically.",
-  "QUOTE_3": "You are very fast, reliable and [provide] honest service. Big thank you.",
-  "QUOTE_4": "At a larger scale, as Blockchain is developing the most popular wallet apps in the world, it has the opportunity to improve how transactions are handled.",
-  "QUOTE_5": "Really digging the newest Blockchain wallet, especially the added security.",
-  "QUOTE_6": "'Consumers are being offered much greater control and freedom with their money…' [Richard] Branson, founder of Virgin Group Ltd., said.",
-  "QUOTE_7": "New @blockchain mobile Bitcoin wallet makes it really simple to send or ask for btc over social media, message apps, e-mail.",
-  "QUOTE_8": "It's super slick and is easy to use. Would definitely recommend!!",
   "HAVING_TROUBLE": "Having some trouble?",
   "LOGIN_TO_LEGACY": "Login to the Legacy wallet",
   "CONFIRMATIONS": "confirmations",
@@ -972,15 +928,9 @@
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet."
   },
   "SCAN": "Scan",
-  "SIMPLE": "Simple",
   "CROSS_PLATFORM": "Cross-platform",
   "ACCESS_ANYWHERE": "Desktop, iOS and Android apps allow you to access your Bitcoin wallet from any device, anytime, anywhere.",
-  "GLOBAL": "Global",
-  "SAFE_AND_SECURE": "Safe & Secure",
   "SECURITY_INFO": "Our step-by-step Security Center helps you backup your funds and protect them from unauthorized access.",
-  "SUPPORTED": "Supported",
-  "SOPHISTICATED": "Sophisticated",
-  "SOPHISTICATED_INFO": "Hierarchical deterministic addresses. Dynamic transaction fees. Monitoring and spending from Watch Only addresses.",
   "PBKDF2_GREATER_THAN_1": "PBKDF2 must be greater than 1",
   "PBKDF2_LESS_THAN_20000": "PBKDF2 cannot be greater than 20000",
   "LOGOUT_GREATER_THAN_1": "Please set an auto logout time greater than 1 minute.",
@@ -1047,7 +997,7 @@
   },
   "TX_CONFIRM": {
     "TITLE": "Confirm Purchase",
-    "BODY": "You are about to authorize a bank transfer for your SFOX purchase. Bank transfers can take 3-5 days to complete."
+    "BODY": "You are about to initiate a bank transfer."
   },
   "TX_PENDING": {
     "TITLE": "Order Pending",
@@ -1072,6 +1022,10 @@
   "TX_BANK_TRANSFER": {
     "TITLE": "",
     "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to Coinify's bank account below within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
+  },
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Bank Transfer",
+    "BODY": ""
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1178,7 +1132,7 @@
   "SPEND_IMPORTED_ADDRESS": "Spend",
   "ACCEPT_TOS": "I have read and agree to the <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
-  "SIMPLE_SECURE_SEAMLESS": "Simple. Secure. Seamless.",
+  "SIMPLE_SEAMLESS_SECURE": "Simple. Seamless. Secure.",
   "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
   "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
   "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
@@ -1196,12 +1150,44 @@
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
   "GO_BACK": "Go Back",
   "LANDING": {
-    "NEW_TO_BITCOIN" : "New To Bitcoin?",
-    "WHAT_IS_BITCOIN": "What is Bitcoin?",
-    "BITCOIN_IS" : "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike its predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries, which translates to greater control of funds and lower fees.",
-    "WHY_USE" : "Why use it?",
-    "USE_BECAUSE" : "You use bitcoin for many of the same reasons you opt to send an email, stream a movie, or download a song. It’s faster, cheaper, more secure, and immutable. Its uses extend beyond the peer to peer payments. In many places, bitcoin is less volatile than the local currency, so some use it to store value while others use it to consume at hundreds of thousands of vendors across the globe and online.",
+    "HEADER": "@:SIMPLE_SEAMLESS_SECURE",
+    "SUB_HEADER": "Blockchain is the world’s most popular bitcoin wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
+    "GET_STARTED_NOW": "Get Started Now",
+    "WHY_BLOCKCHAIN" : "Why Blockchain?",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
+    "SIMPLE": {
+      "TITLE": "Simple",
+      "COPY": "We make using bitcoin safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world."
+    },
+    "SAFE_AND_SECURE": {
+      "TITLE": "Safe & Secure",
+      "COPY": "Our step-by-step Security Center helps you backup your funds, and protect them from unauthorized access."
+    },
+    "BUY_AND_SELL": {
+      "TITLE": "Buy & Sell",
+      "COPY": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience."
+    },
+    "SOPHISTICATED": {
+      "TITLE": "Sophisticated",
+      "COPY": "Hierarchical deterministic addresses. Dynamic transaction fees. Monitoring and spending from Watch Only addresses."
+    },
+    "GLOBAL": {
+      "TITLE": "Global",
+      "COPY": "140+ countries served. 20+ currency conversion rates, including JPY, RUB, SGD, USD, CNY, EUR, GBP, and many more. 25+ languages"
+    },
+    "SUPPORTED": {
+      "TITLE": "Always Supported",
+      "COPY": "Should you need help or have a question, our best in class support team will always be there for you."
+    },
+    "BITCOIN_ON_ALL_DEVICES": {
+      "HEADER": "Bitcoin on All Your Devices",
+      "SUB_TEXT": "Access your bitcoin wallet securely anywhere you go."
+    },
+    "NEW_TO_BITCOIN": {
+      "HEADER": "New To Bitcoin?",
+      "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."
+    },
+    "GET_WORLDS_MOST_POPULAR_WALLET": "Get the world's most popular<br/>bitcoin wallet",
     "" : ""
   },
   "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
@@ -1211,6 +1197,7 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
+  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "SUBSCRIBE": "Subscribe",
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1248,6 +1235,36 @@
     "UPLOAD_SELECT": "Select Upload Method",
     "HELP": "Make sure the snapshot clearly displays your address."
   },
+  "unocoin_pancard_ID": {
+    "TITLE": "1. PAN Card",
+    "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
+    "UPLOAD_TITLE": "PAN Card",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Make sure the snapshot clearly displays your pancard number."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Your Photo",
+    "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
+    "UPLOAD_TITLE": "Photo",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Make sure the snapshot clearly displays your face."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Address Proof",
+    "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
+    "UPLOAD_TITLE": "Address Proof",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar Card (front and back)",
+    "OPTION2": "Driving License",
+    "OPTION3": "Passport (page showing address)",
+    "OPTION4": "Utility Bill",
+    "HELP": "Make sure the snapshot clearly displays your name and address."
+  },
+  "BANK_NAME": "Bank Name",
+  "ACCOUNT_HOLDER_NAME": "Account Holder Name",
+  "ACCOUNT_NUMBER": "Account Number",
+  "IFSC_CODE": "IFSC Code",
+  "ACCOUNT_TYPE": "Account Type",
   "bank-check-helper": {
     "TITLE": "Routing and Account Number",
     "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."
@@ -1264,6 +1281,18 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Acceptable PAN Card",
+    "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Acceptable User Photograph",
+    "COPY": "Selfies with goggles or hats are <span class='state-danger-text'>not acceptable</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Acceptable Proof of Address",
+    "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+  },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
@@ -1273,6 +1302,7 @@
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
   "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
   "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
+  "UNOCOIN_EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "coinify-verification": {
@@ -1398,6 +1428,10 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
+  "UNOCOIN": {
+    "PENDING": "Identity Verification Pending",
+    "PENDING_EXPLAIN": "Thanks for setting up your profile. In order to verify your identity, a member of the Unocoin team will give you a call within 1 business day to confirm your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card information</b>. Then, you’ll be able to buy bitcoin!"
+  },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
   "SHOW_QR_CODE": "Show QR Code",
@@ -1417,5 +1451,39 @@
     "STEP_2": "Tap <i>Log in to Web Wallet</i>.",
     "STEP_3": "Using your computer's camera, scan the QR code that appears on your device."
   },
+  "REQUIRED_FIELD": "Required field",
+  "IFSC_INCORRECT": "IFSC incorrect",
+  "PIN_CODE_REQUIRED": "Pin Code required",
+  "PIN_CODE_INCORRECT": "Pin Code incorrect",
+  "PAN_CARD_REQUIRED": "Pan Card required",
+  "PAN_CARD_INCORRECT": "Pan Card incorrect",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Create {{::exchange}} Account",
+    "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
+    "VERIFY_EMAIL": "Verify Email Address",
+    "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
+    "CHANGE_EMAIL": "Change Email",
+    "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
+    "CHANGE_EMAIL_FAILED": "Sorry, this email is already registered with {{::exchange}}.",
+    "CONFIRM_EMAIL": "Confirm email",
+    "VERIFICATION_CODE": "Verification Code",
+    "VERIFICATION_CODE_INCORRECT": "Verification code incorrect. ",
+    "CHANGE_EMAIL_": "change email",
+    "ANOTHER_CODE_SENT": "Another code has been sent!",
+    "VERIFY_ACCOUNT": "We need to collect some personal information in order to verify your identity. Note that this information will be sent to <span class='capitalize'>{{::exchange}}</span> and will not be directly linked to your Blockchain wallet.",
+    "FULL_NAME": "Full Name",
+    "MOBILE": "Mobile",
+    "PAN_CARD": "PAN Card",
+    "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
+    "ADDRESS_LINE_1": "Address Line 1",
+    "ADDRESS_LINE_2": "Address Line 2",
+    "STATE": "State",
+    "CITY": "City",
+    "PIN_CODE": "Pin Code",
+    "BANK_ACCOUNT_NUMBER": "Bank Account Number",
+    "IFSC": "IFSC"
+  },
+  "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "": ""
 }

@@ -268,9 +268,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.initExternal = () => {
     let { external } = MyWallet.wallet;
     if (external) {
-      let { coinify, sfox } = external;
+      let { coinify, sfox, unocoin } = external;
       if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
       if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
+      if (unocoin) $injector.get('unocoin').init(unocoin); // init unocoin to monitor incoming payments
     }
   };
 

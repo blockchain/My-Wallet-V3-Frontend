@@ -96,9 +96,9 @@ describe('SfoxBuyController', () => {
   );
 
   describe('.setState()', () =>
-    it('should set buyLimit', () => {
+    it('should set limits', () => {
       scope.setState();
-      return expect(scope.state.buyLimit).toBeDefined();
+      return expect(scope.state.limits.max).toBeDefined();
     })
   );
 });

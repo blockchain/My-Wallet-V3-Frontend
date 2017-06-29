@@ -18,6 +18,7 @@ var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
 var sfoxProduction = parseInt(process.env.SFOX_USE_PRODUCTION, 10) === 1;
+var unocoinProduction = parseInt(process.env.UNOCOIN_USE_PRODUCTION, 10) === 1;
 var testnet = process.env.NETWORK === 'testnet';
 
 // App configuration
@@ -63,7 +64,8 @@ app.use(function (req, res, next) {
         `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
-        `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`
+        `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`,
+        `https://${unocoinProduction ? '' : 'sandbox.'}unocoin.co`
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",
@@ -152,6 +154,7 @@ rootApp.use(function (req, res, next) {
     parsedJSON.partners.sfox.apiKey = process.env.SFOX_API_KEY || parsedJSON.partners.sfox.apiKey;
     parsedJSON.partners.sfox.plaidEnv = process.env.SFOX_PLAID_ENV || parsedJSON.partners.sfox.plaidEnv;
     parsedJSON.partners.sfox.siftScience = process.env.SFOX_SIFT_SCIENCE_KEY || parsedJSON.partners.sfox.siftScience;
+    parsedJSON.partners.unocoin.production = unocoinProduction;
 
     res.json(parsedJSON);
   } else {

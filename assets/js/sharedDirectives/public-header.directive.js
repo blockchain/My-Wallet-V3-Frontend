@@ -27,16 +27,10 @@ function publicHeader ($location, Env, languages) {
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}markets" translate="MARKETS" class="upper"></a></li>
             <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="upper"></a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right hidden-sm">
-            <li class="hidden-md">
-              <form action="{{searchUrl}}" class="bc-form" method="GET">
-                <div class="group">
-                  <div class="item search">
-                    <input type="text" name="search" ng-click="$event.stopPropagation()" id="header-search" class="form-control" placeholder="{{'SEARCH_FOR_BLOCK_ETC'|translate}}">
-                    <i class="icon-search"></i>
-                  </div>
-                </div>
-              </form>
+          <ul class="nav navbar-nav navbar-right hidden-sm flex-center flex-justify-mobile">
+            <li>
+              <button ui-sref="public.login-no-uid" class="round button-white-inverse upper mr-20">Log In</button>
+              <button ui-sref="public.signup" class="round button-primary upper">Sign Up</button>
             </li>
           </ul>
         </div>

@@ -13,12 +13,15 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       form.width-100(ng-submit="openSfoxSignup()")
         button.btn.button-primary.full(type="submit" focus-when="!tabs.selectedTab" ng-disabled="modalOpen") Continue
   .flex-column.pbvl(ng-show="showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
-    buy-checkout.width-50.border-desktop.pt-30.pb-30.ph-15.no-padding-mobile(
+    exchange-checkout.width-50.border-desktop.pt-30.pb-30.ph-15.no-padding-mobile(
       user-id="userId"
-      buy-limit="state.buyLimit"
+      dollars="dollars"
+      conversion="100"
+      limits="state.limits"
       buy-level="state.buyLevel"
       buy-account="state.account"
       collapse-summary="signupCompleted"
+      handle-buy="buyHandler(account, quote)"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       buy-success="userId ? buySuccess(trade) : openSfoxSignup(quote)"
       buy-error="buyError()")
@@ -39,7 +42,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         th.pvs.width-5-mobile.visible-xs
       tr(
         ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
-        trade="trade"
+        user-action-required="trade.state === 'awaiting_transfer_in'"
         buy="inspectTrade"
+        conversion="100"
+        trade="trade"
         usa="true")
 contact-support-footer(ng-hide="inMobileBuy")
+sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')

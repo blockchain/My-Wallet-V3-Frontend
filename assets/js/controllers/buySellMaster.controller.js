@@ -13,6 +13,8 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, cta) {
       return '.coinify';
     } if (this.external.sfox.user) {
       return '.sfox';
+    } if (this.external.unocoin.user) {
+      return '.unocoin';
     } else {
       return '.select';
     }

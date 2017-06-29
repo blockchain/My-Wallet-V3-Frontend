@@ -1,0 +1,12 @@
+.unocoin-signup.pb-50
+  .signup-steps.border-bottom-light
+    div(ng-include="'partials/unocoin/signup-steps.pug'")
+  div.pl-40.pr-40.pt-40.pb-25
+    div(ng-if="vm.onStep('create')" ng-controller="UnocoinCreateAccountController")
+      exchange-create(views="views" exchange="exchange" on-create="vm.goTo('verify')" terms-of-service="https://www.unocoin.com/post/98" privacy-agreement="https://www.unocoin.com/post/104")
+    div(ng-if="vm.onStep('verify')" ng-controller="UnocoinVerifyController")
+      exchange-verify(steps="steps" fields="fields" exchange="exchange" next-step="'upload'" error="error" initial-step="initialStep" mobile-preferences="['IN']" on-verify="verifyProfile()" on-set-profile="setProfile(fields)")
+    div(ng-if="vm.onStep('upload')" ng-controller="UnocoinUploadController")
+      exchange-upload(base="unocoin_" locked="locked" id-type="state.idType" handle-upload="prepUpload(file)" auto-fill="autoFill()")
+    div(ng-if="vm.onStep('pending')" ng-include="'partials/unocoin/pending.pug'")
+  contact-support-footer.abs(ng-hide="inMobileBuy")

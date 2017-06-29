@@ -18,6 +18,9 @@ describe('BuySellSelectPartnerController', () => {
           sfox: {
             countries: ['US'],
             states: ['AL', 'PA', 'CA', 'GA']
+          },
+          unocoin: {
+            countries: ['IN']
           }
         }
       }));
@@ -36,8 +39,12 @@ describe('BuySellSelectPartnerController', () => {
 
       MyWallet = $injector.get('MyWallet');
 
-      return MyWallet.wallet =
-        {accountInfo};
+      return MyWallet.wallet = {
+        accountInfo,
+        external: {
+          shouldDisplaySellTab: (email) => email === 'whitelisted'
+        }
+      }
     });
   });
 

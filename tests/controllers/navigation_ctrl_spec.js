@@ -45,7 +45,7 @@ describe('NavigationCtrl', () => {
       };
 
       MyWallet.wallet = {
-        metadata(n) {
+        metadata (n) {
           return {
             fetch () { return mocked({lastViewed: 3}); },
             update () { return mocked(); },
@@ -71,20 +71,18 @@ describe('NavigationCtrl', () => {
 
       $controller('NavigationCtrl', {
         $scope: scope,
-        whatsNew
-      }
-      );
-
+        whatsNew,
+        Env: $q.resolve({})
+      });
     });
-
   });
 
-  it('should have access to login status',  inject(() => expect(scope.status.isLoggedIn).toBe(true))
+  it('should have access to login status', inject(() => expect(scope.status.isLoggedIn).toBe(true))
   );
 
-  it('should logout',  inject(function (Wallet, $stateParams, $state, $uibModal) {
+  it('should logout', inject(function (Wallet, $stateParams, $state, $uibModal) {
     spyOn(Wallet, 'logout').and.callThrough();
-    spyOn($state, "go");
+    spyOn($state, 'go');
 
     scope.logout();
     scope.$digest();
@@ -94,7 +92,7 @@ describe('NavigationCtrl', () => {
   })
   );
 
-  it('should not logout if save is in progress',  inject(function (Wallet, MyWallet, $stateParams) {
+  it('should not logout if save is in progress', inject(function (Wallet, MyWallet, $stateParams) {
     spyOn(Wallet, 'logout').and.callThrough();
 
     MyWallet.sync();

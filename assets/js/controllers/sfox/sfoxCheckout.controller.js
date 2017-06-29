@@ -5,6 +5,8 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
 
+  $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
+
   $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
     return modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
@@ -13,19 +15,20 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.state = {
     account: accounts[0],
     trades: exchange.trades,
-    buyLimit: exchange.profile && exchange.profile.limits.buy || 100,
+    limits: { max: exchange.profile && exchange.profile.limits.buy || 100 },
     buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
   $scope.setState = () => {
     $scope.state.trades = exchange.trades;
-    $scope.state.buyLimit = exchange.profile && exchange.profile.limits.buy;
+    $scope.state.limits.max = exchange.profile && exchange.profile.limits.buy;
     $scope.state.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   };
 
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
+      'upload': { text: 'Verify Identity', i: 'ti-id-badge' },
       'link': { text: 'Link Payment', i: 'ti-credit-card bank bank-lrg' }
     };
     let step = sfox.determineStep(exchange, accounts);
@@ -48,13 +51,21 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.account = accounts[0];
   $scope.trades = exchange.trades;
+  $scope.buyHandler = (...args) => sfox.buy(...args);
   $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {
+    sfox.watchTrade(trade);
     $scope.tabs.select('ORDER_HISTORY');
     modals.openTradeSummary(trade, 'initiated');
     exchange.fetchProfile().then($scope.setState);
     buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
+    // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+    if ($scope.buySellDebug) {
+      console.info('Load Sift Science iframe');
+    }
+    $scope.tradeId = trade.id;
+    $scope.siftScienceEnabled = true;
   };
 
   $scope.buyError = () => {

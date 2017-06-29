@@ -28,6 +28,7 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
     amount: null,
     viewQR: null,
     amountType: null,
+    address: '',
     requestCreated: null
   };
 
@@ -85,13 +86,12 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
 
   $scope.paymentRequestURL = (isBitcoinURI) => {
     let root = $scope.isProduction ? 'https://blockchain.info/' : $scope.rootURL;
-    let { amount, label, amountType, baseCurr } = $scope.state;
+    let { amount, label, address, amountType, baseCurr } = $scope.state;
     let { currency, btcCurrency } = $scope.settings;
     let url;
 
-    if (isBitcoinURI) url = 'bitcoin:' + $scope.address() + '?';
-
-    else url = root + 'payment_request?' + 'address=' + $scope.address() + '&';
+    if (isBitcoinURI) url = 'bitcoin:' + address + '?';
+    else url = root + 'payment_request?' + 'address=' + address + '&';
 
     if (isBitcoinURI) url += amount ? 'amount=' + $scope.fromSatoshi(amount || 0, btcCurrency) + '&' : '';
     else url += amount ? amountType + '=' + $scope.fromSatoshi(amount || 0, baseCurr) + '&' : '';
@@ -101,6 +101,8 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
     url += label ? 'message=' + label + ' ' : '';
     return encodeURI(url.slice(0, -1));
   };
+
+  $scope.$watch('state.to', () => $scope.state.address = $scope.address());
 
   AngularHelper.installLock.call($scope);
 }

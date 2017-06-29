@@ -13,7 +13,8 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   });
 
   let contains = (val, list) => list.indexOf(val) > -1;
-  let codeGuess = MyWallet.wallet.accountInfo && MyWallet.wallet.accountInfo.countryCodeGuess;
+  let accountInfo = MyWallet.wallet.accountInfo;
+  let codeGuess = accountInfo && accountInfo.countryCodeGuess;
 
   $scope.states = state.stateCodes;
   $scope.state = $scope.states[0];
@@ -23,6 +24,7 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   Env.then(env => {
     $scope.coinifyWhitelist = env.partners.coinify.countries;
+    $scope.unocoinWhitelist = env.partners.unocoin.countries;
     $scope.sfoxWhitelist = env.partners.sfox.countries;
     $scope.sfoxStateWhitelist = env.partners.sfox.states;
   });
@@ -43,6 +45,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
       href: 'https://www.sfox.com/',
       subtext: 'SFOX_EXPLAIN',
       route: '.sfox'
+    },
+    'unocoin': {
+      name: 'Unocoin',
+      logo: 'img/unocoin-logo.png',
+      href: 'https://www.unocoin.com/',
+      subtext: 'UNOCOIN_EXPLAIN',
+      route: '.unocoin'
     }
   };
 
@@ -55,11 +64,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   };
 
   $scope.selectPartner = (partner, countryCode) => {
+    $scope.status = { busy: true };
     $state.go($scope.vm.base + partner.route, { countryCode });
   };
 
   $scope.onWhitelist = (countryCode) => (
     (contains(countryCode, $scope.coinifyWhitelist) && 'coinify') ||
+    (contains(countryCode, $scope.unocoinWhitelist) && accountInfo.invited.unocoin && 'unocoin') ||
     (contains(countryCode, $scope.sfoxWhitelist) && codeGuess === 'US' && 'sfox') || false
   );
 
@@ -67,11 +78,15 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
-  $scope.tabs = {
-    options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
-      ? ['BUY_BITCOIN', 'ORDER_HISTORY']
-      : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
-  };
+  Env.then(env => {
+    let email = MyWallet.wallet.accountInfo.email;
+    $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
+    $scope.tabs = {
+      options: $scope.$root.inMobileBuy || !$scope.canSeeSellTab
+        ? ['BUY_BITCOIN', 'ORDER_HISTORY']
+        : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY']
+    };
+  });
 
   $scope.$watchGroup(['country', 'state'], (newValues) => {
     let country = newValues[0];

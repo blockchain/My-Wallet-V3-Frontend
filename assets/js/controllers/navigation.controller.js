@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -91,12 +91,12 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     }
   }
 
-  buyStatus.canBuy().then(canBuy => {
+  $q.all([Env, buyStatus.canBuy()]).then(([env, canBuy]) => {
     let now = Date.now();
-    let filterBuySell = (feat) => {
-      let isBuySell = feat.title === 'BUY_BITCOIN' || feat.title === 'SELL_BITCOIN';
-      return !(isBuySell && !canBuy);
-    };
+    let filterBuySell = (feat) => (
+      (feat.title !== 'BUY_BITCOIN' || canBuy) &&
+      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify')))
+    );
     $scope.feats = whatsNew.filter(filterBuySell).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
 
