@@ -25,7 +25,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.increaseLimit = () => $scope.originLimit += 50;
 
   $scope.sending = false;
-  $scope.confirm = false;
   $scope.advanced = false;
   $scope.building = false;
 
@@ -301,10 +300,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
     $scope.payment.updateFeePerKb($scope.transaction.satoshiPerByte);
   };
 
-  $scope.backToForm = () => {
-    $scope.confirm = false;
-  };
-
   $scope.advancedSend = () => {
     $scope.advanced = true;
     $scope.setPaymentAmount(true);
@@ -335,7 +330,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
       .then($scope.checkFee)
       .then($scope.finalBuild)
       .then(() => {
-        $scope.confirm = true;
+        $scope.vm.toConfirmView();
         if ($scope.AB_TEST_FEE) {
           Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
         }

@@ -4,6 +4,6 @@
   .flex-center
     h3
       i.mr-10.icon-send
-      span(ng-show="!confirm" translate="SEND")
-      span(ng-show="confirm" translate="CONFIRM")
+      span(ng-show="!vm.confirm" translate="SEND")
+      span(ng-show="vm.confirm" translate="CONFIRM")
 div(ng-include="'partials/send/send-bitcoin.pug'")
