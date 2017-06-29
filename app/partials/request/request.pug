@@ -1,6 +1,11 @@
-.modal-header.flex-column.bc-modal-header(data-preflight-tag="Request")
+.modal-header.flex-column.bc-modal-header.tabbed(data-preflight-tag="Request")
   i.ti-close.close-modal(ng-click="$close()")
-  a(ng-click="vm.currency = 'bitcoin'") Bitcoin
-  a(ng-click="vm.currency = 'ether'") Ether
-div(ng-if="true" ng-include="'partials/request/request-bitcoin.pug'" ng-controller="RequestBitcoinController")
-div(ng-if="false" ng-include="'partials/request/request-ether.pug'" ng-controller="RequestEtherController")
+  .tabs.f-20.pos-rel
+    span.pointer.pv-10.ph-15.border.display-inline-block(ng-class="{'border-bottom-white': vm.onTab('btc')}" ng-click="vm.showTab('btc')")
+      i.pr-10.icon-bitcoin
+      span Request BTC
+    span.pointer.pv-10.ph-15.border.display-inline-block(ng-class="{'border-bottom-white': vm.onTab('eth')}" ng-click="vm.showTab('eth')")
+      i.pr-10.icon-bitcoin
+      span Request ETH
+div(ng-if="vm.onTab('btc')" ng-include="'partials/request/request-bitcoin.pug'" ng-controller="RequestBitcoinController")
+div(ng-if="vm.onTab('eth')" ng-include="'partials/request/request-ether.pug'" ng-controller="RequestEtherController")

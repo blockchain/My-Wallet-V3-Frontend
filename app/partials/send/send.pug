@@ -1,9 +1,11 @@
-.modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
-  .close-modal
-    i.ti-close.pointer(ng-click="vm.close()")
-  .flex-center
-    h3
-      a(ng-click="vm.showTab('btc')") BTC
-      a(ng-click="vm.showTab('eth')") ETH
+.modal-header.flex-column.bc-modal-header.tabbed(data-preflight-tag="Send")
+  i.ti-close.close-modal(ng-click="$close()")
+  .tabs.f-20.pos-rel
+    span.pointer.pv-10.ph-15.border.display-inline-block(ng-class="{'border-bottom-white': vm.onTab('btc')}" ng-click="vm.showTab('btc')")
+      i.pr-10.icon-bitcoin
+      span Send BTC
+    span.pointer.pv-10.ph-15.border.display-inline-block(ng-class="{'border-bottom-white': vm.onTab('eth')}" ng-click="vm.showTab('eth')")
+      i.pr-10.icon-bitcoin
+      span Send ETH
 div(ng-if="vm.onTab('btc')" ng-include="'partials/send/send-bitcoin.pug'")
 div(ng-if="vm.onTab('eth')" ng-include="'partials/send/send-ethereum.pug'")

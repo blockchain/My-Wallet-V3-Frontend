@@ -4,7 +4,7 @@ angular
 
 function SendController ($uibModalInstance, paymentRequest) {
   this.confirm = false;
-  this.tab = 'eth';
+  this.tab = 'btc';
   this.paymentRequest = paymentRequest;
 
   this.showTab = (tab) => {
