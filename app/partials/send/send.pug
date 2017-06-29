@@ -3,7 +3,7 @@
     i.ti-close.pointer(ng-click="vm.close()")
   .flex-center
     h3
-      i.mr-10.icon-send
-      span(ng-show="!vm.confirm" translate="SEND")
-      span(ng-show="vm.confirm" translate="CONFIRM")
-div(ng-include="'partials/send/send-bitcoin.pug'")
+      a(ng-click="vm.showTab('btc')") BTC
+      a(ng-click="vm.showTab('eth')") ETH
+div(ng-if="vm.onTab('btc')" ng-include="'partials/send/send-bitcoin.pug'")
+div(ng-if="vm.onTab('eth')" ng-include="'partials/send/send-ethereum.pug'")

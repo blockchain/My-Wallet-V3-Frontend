@@ -4,7 +4,16 @@ angular
 
 function SendController ($uibModalInstance, paymentRequest) {
   this.confirm = false;
+  this.tab = 'eth';
   this.paymentRequest = paymentRequest;
+
+  this.showTab = (tab) => {
+    this.tab = tab;
+  };
+
+  this.onTab = (tab) => {
+    return tab === this.tab;
+  };
 
   this.close = (result) => {
     $uibModalInstance.close(result);
