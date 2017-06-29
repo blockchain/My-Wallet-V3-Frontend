@@ -34,9 +34,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
   service.openSend = service.openOnce((paymentRequest = {}, options) =>
     open({
-      templateUrl: 'partials/send.pug',
+      templateUrl: 'partials/send/send.pug',
       windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
+      controller: 'SendController',
+      controllerAs: 'vm',
       resolve: {
         paymentRequest: () => paymentRequest,
         loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')

@@ -1,12 +1,4 @@
-.modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
-  .close-modal
-    i.ti-close.pointer(ng-click="close()")
-  .flex-center
-    h3
-      i.mr-10.icon-send
-      span(ng-show="!confirm", translate="SEND")
-      span(ng-show="confirm", translate="CONFIRM")
-#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
+#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" ng-controller="SendBitcoinController")
   .alert-in-app
     alerts(context="alerts")
   div(ng-hide="confirm")

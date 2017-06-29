@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('SendCtrl', SendCtrl);
+  .controller('SendBitcoinController', SendBitcoinController);
 
-function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $uibModalInstance, $timeout, $state, $filter, $stateParams, $translate, paymentRequest, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env) {
+function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $timeout, $state, $filter, $stateParams, $translate, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env, modals) {
   let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
 
@@ -96,7 +96,6 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   $scope.setPaymentHandlers($scope.payment);
 
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
-  $scope.close = () => $uibModalInstance.dismiss('');
 
   $scope.applyPaymentRequest = (paymentRequest, i) => {
     let destination = {
@@ -113,13 +112,8 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
   };
 
   $scope.reopenModal = () => {
-    $timeout(() => $uibModal.open({
-      templateUrl: 'partials/send.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
-      resolve: {paymentRequest}
-    }), 500);
-    $uibModalInstance.dismiss();
+    modals.openSend($scope.vm.paymentRequest);
+    $scope.vm.dismiss();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
@@ -155,14 +149,14 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
       if (msgText.indexOf('Fee is too low') > -1) msgText = 'LOW_FEE_ERROR';
 
       if (msgText.indexOf('Transaction Already Exists') > -1) {
-        $uibModalInstance.close();
+        $scope.vm.close();
       } else {
         Alerts.displayError(msgText, false, $scope.alerts);
       }
     };
 
     const transactionSucceeded = (tx) => {
-      $uibModalInstance.close('');
+      $scope.vm.close('');
       $timeout(() => {
         $scope.$root.scheduleRefresh();
         $scope.sending = false;
@@ -243,6 +237,7 @@ function SendCtrl ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibMo
 
   let unwatchDidLoad = $scope.$watch('status.didLoadBalances', (didLoad) => {
     if (!didLoad || $scope.origins.length !== 0) return;
+    let paymentRequest = $scope.vm.paymentRequest;
     $scope.transaction.from = smartAccount.getDefault();
     $scope.origins = smartAccount.getOptions();
     $scope.originsLoaded = true;

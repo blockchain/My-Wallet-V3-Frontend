@@ -1,4 +1,4 @@
-describe('SendCtrl', () => {
+describe('SendBitcoinController', () => {
   let scope;
   let Wallet;
   let MyWallet;
@@ -85,7 +85,7 @@ describe('SendCtrl', () => {
   describe('', () => {
     beforeEach(() =>
       angular.mock.inject(function ($injector, $rootScope, $controller, $compile) {
-        $controller('SendCtrl', {
+        $controller('SendBitcoinController', {
           $scope: scope,
           $stateParams: {},
           $uibModalInstance: modalInstance,
@@ -768,7 +768,7 @@ describe('SendCtrl', () => {
   describe('with a payment request', () => {
     beforeEach(() =>
       angular.mock.inject(function ($injector, $rootScope, $controller, $compile) {
-        $controller('SendCtrl', {
+        $controller('SendBitcoinController', {
           $scope: scope,
           $stateParams: {},
           $uibModalInstance: modalInstance,
