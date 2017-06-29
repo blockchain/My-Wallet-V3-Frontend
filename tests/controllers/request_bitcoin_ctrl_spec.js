@@ -1,4 +1,4 @@
-describe('RequestCtrl', () => {
+describe('RequestBitcoinController', () => {
 
   let scope;
   let modalInstance = {
@@ -54,15 +54,12 @@ describe('RequestCtrl', () => {
 
       $rootScope.rootURL = 'https://blockchain.info/';
       scope = $rootScope.$new();
-      let template = $templateCache.get('partials/request.pug');
+      let template = $templateCache.get('partials/request/request.pug');
 
-      $controller('RequestCtrl', {
+      $controller('RequestBitcoinController', {
         $scope: scope,
         $rootScope,
         $stateParams: {},
-        $uibModalInstance: modalInstance,
-        destination: undefined,
-        focus: false,
         hasLegacyAddress: true
       }
       );

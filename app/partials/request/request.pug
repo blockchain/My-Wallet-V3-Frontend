@@ -1,0 +1,6 @@
+.modal-header.flex-column.bc-modal-header(data-preflight-tag="Request")
+  i.ti-close.close-modal(ng-click="$close()")
+  a(ng-click="vm.currency = 'bitcoin'") Bitcoin
+  a(ng-click="vm.currency = 'ether'") Ether
+div(ng-if="true" ng-include="'partials/request/request-bitcoin.pug'" ng-controller="RequestBitcoinController")
+div(ng-if="false" ng-include="'partials/request/request-ether.pug'" ng-controller="RequestEtherController")
