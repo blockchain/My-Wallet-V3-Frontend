@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('RequestEtherController', RequestEtherController);
+  .controller('RequestEthereumController', RequestEthereumController);
 
-function RequestEtherController ($scope, AngularHelper, Wallet, Alerts, currency, $log, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, Ethereum) {
+function RequestEthereumController ($scope, AngularHelper, Wallet, Alerts, currency, $log, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, Ethereum) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
@@ -23,11 +23,8 @@ function RequestEtherController ($scope, AngularHelper, Wallet, Alerts, currency
   $scope.state = {
     to: null,
     label: '',
-    amount: null,
-    viewQR: null,
-    amountType: null,
     address: '',
-    requestCreated: null
+    amount: null
   };
 
   $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
