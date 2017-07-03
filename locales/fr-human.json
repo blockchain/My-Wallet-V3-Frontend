@@ -1094,5 +1094,90 @@
   "HIDE": "Masquer",
   "EDIT_NAME": "Modifier le nom",
   "NOT_BACKED_BY_RECOVERY": "N'est pas soutenu par votre phrase de récupération. Transférer dans un portefeuille pour sécuriser les fonds.",
-  "EXCHANGE_RATE_HELPER": "Le taux proposé par le partenaire de change de votre région. Peut inclure des frais."
+  "EXCHANGE_RATE_HELPER": "Le taux proposé par le partenaire de change de votre région. Peut inclure des frais.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Transfert bancaire",
+    "BODY": "Veuillez envoyer {{:: amount}} par voie électronique (via IMPS, NEFT ou RTGS) au compte bancaire Unocoin ci-dessous. Vous devrez alors fournir le numéro de référence du virement bancaire."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Le tarif proposé par le partenaire d'échange de votre région peut inclure des frais.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. Carte PAN",
+     "COPY": "Téléchargez ou prenez une photo de votre carte PAN, indiquant clairement votre nom et votre numéro de compte permanent à dix chiffres.",
+     "UPLOAD_TITLE": "Carte PAN",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Assurez-vous que votre photo permet clairement la lecture de votre numéro de carte pan."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Votre Photo",
+    "COPY": "Téléchargez ou prenez une photo de vous pour permettre à Unocoin de vérifier votre carte PAN.",
+    "UPLOAD_TITLE": "Photo",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Assurez-vous que votre visage est clairement visible sur la photo."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Justificatif de domicile",
+    "COPY": "Téléchargez ou prenez une photo de votre justificatif de domicile. Vous pouvez télécharger l'un des documents approuvés suivants,  correspondant au nom et à l'adresse que vous avez initialement fournis.",
+    "UPLOAD_TITLE": "Justificatif de domicile",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Carte Aadhar (recto-verso)",
+    "OPTION2": "Permis de conduire",
+    "OPTION3": "Passeport (page affichant l'adresse)",
+    "OPTION4": "Facture d'électricité",
+    "HELP": "Assurez-vous que l'image permet clairement la lecture de votre nom et de votre adresse."
+  },
+  "BANK_NAME": "Nom de la banque",
+  "ACCOUNT_HOLDER_NAME": "Nom du titulaire du compte",
+  "ACCOUNT_NUMBER": "Numéro de compte",
+  "IFSC_CODE": "Code IFSC",
+  "ACCOUNT_TYPE": "Type de compte",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Carte PAN acceptée",
+    "COPY": "Carte PAN mineure <span class='state-danger-text'>non acceptée</span>.<br>La carte PAN doit être valide selon les documents gouvernementaux."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Photos d'utilisateur acceptées",
+    "COPY": "Les selfies avec des lunettes ou des chapeaux ne sont <span class='state-danger-text'>pas acceptées</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Justificatifs de domicile acceptés",
+    "COPY": "Évitez le flash de l'appareil-photo sur les détails du justificatif de domicile.<br>Le justificatif de domicile doit être au moins valide pendant 6 mois.<br>Le justificatif de domicile doit correspondre à l'adresse précédemment saisie.<br>Le justificatif de domicile doit être valide sur le site gouvernemental.<br>Le justificatif de domicile téléchargé doit être en anglais."
+  },
+  "UNOCOIN_EXPLAIN": "Notre partenaire Unocoin traitera vos achats par bitcoin. Vous devrez fournir quelques informations et lier un mode de paiement.",
+  "UNOCOIN": {
+    "PENDING": "Vérification d'identité en attente",
+    "PENDING_EXPLAIN": "Unocoin vérifie actuellement votre identité. Vous recevrez un appel téléphonique dans un jour ouvrable. L'appel téléphonique a pour but de vérifier votre <b>Nom</b>, <b>Adresse Code postal</b> et les <b>Informations de la carte PAN</b>. Vous pourrez acheter du bitcoin dès la fin de votre processus de vérification."
+  },
+  "REQUIRED_FIELD": "champs requis",
+  "IFSC_INCORRECT": "IFSC incorrect",
+  "PIN_CODE_REQUIRED": "Code Pin requis",
+  "PIN_CODE_INCORRECT": "Code Pin incorrect",
+  "PAN_CARD_REQUIRED": "Carte Pan requise",
+  "PAN_CARD_INCORRECT": "Carte Pan incorrecte",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Numéro de compte bancaire incorrect",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Créer un compte {{::exchange}}",
+    "CREATE_ACCOUNT_EXPLAIN": "Veuillez confirmer votre adresse e-mail et votre numéro de téléphone pour créer votre compte exchange {{:: exchange}}.",
+    "VERIFY_EMAIL": "Vérifier l'adresse e-mail",
+    "VERIFY_EMAIL_EXPLAIN": "Nous venons de vous envoyer un code de vérification par e-mail. Saisissez le code de vérification pour créer votre compte exchange {{:: exchange}}.",
+    "CHANGE_EMAIL": "Changer d'adresse E-mail",
+    "CHANGE_EMAIL_EXPLAIN": "La mise à jour de votre adresse électronique modifiera également l'adresse électronique associée à votre portefeuille.",
+    "CHANGE_EMAIL_FAILED": "Veuillez nous excuser, cet e-mail est déjà enregistré avec {{:: exchange}}.",
+    "CONFIRM_EMAIL": "Confirmer l'e-mail",
+    "VERIFICATION_CODE": "Code de vérification",
+    "VERIFICATION_CODE_INCORRECT": "Code de vérification incorrect.",
+    "CHANGE_EMAIL_": "changer d'e-mail",
+    "ANOTHER_CODE_SENT": "Un autre code a été envoyé !",
+    "VERIFY_ACCOUNT": "Nous devons recueillir quelques informations personnelles afin de vérifier votre identité. Notez que ces informations seront envoyées à {{:: exchange}} et ne seront pas directement liées à votre portefeuille Blockchain.",
+    "FULL_NAME": "Nom complet",
+    "MOBILE": "Mobile",
+    "PAN_CARD": "Carte PAN",
+    "FULL_RESIDENTIAL_ADDRESS": "Adresse de résidence complète (vous devrez fournir un justificatif de domicile)",
+    "ADDRESS_LINE_1": "Ligne d'adresse 1",
+    "ADDRESS_LINE_2": "Ligne d'adresse 2",
+    "STATE": "État",
+    "CITY": "Ville",
+    "PIN_CODE": "Code Pin",
+    "BANK_ACCOUNT_NUMBER": "Numéro de compte bancaire",
+    "IFSC": "IFSC"
+  }
 }

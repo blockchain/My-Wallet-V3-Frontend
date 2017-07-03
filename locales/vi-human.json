@@ -1095,5 +1095,90 @@
   "HIDE": "Ẩn",
   "EDIT_NAME": "Chỉnh sửa tên",
   "NOT_BACKED_BY_RECOVERY": "Không được sao lưu bằng Nhóm từ khôi phục của bạn. Chuyển vào ví để được an toàn.",
-  "EXCHANGE_RATE_HELPER": "Tỷ giá được cung cấp bởi đối tác chuyển đổi trong khu vực của bạn. Có thể bao gồm các khoản phí."
+  "EXCHANGE_RATE_HELPER": "Tỷ giá được cung cấp bởi đối tác chuyển đổi trong khu vực của bạn. Có thể bao gồm các khoản phí.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Chuyển khoản ngân hàng",
+    "BODY": "Vui lòng chuyển số tiền {{::amount}} theo phương pháp điện tử (qua IMPS, NEFT, hoặc RTGS) đến tài khoản ngân hàng của Unocoin dưới đây. Sau đó, bạn sẽ cần cung cấp số tham chiếu chuyển khoản ngân hàng."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Tỷ giá được cung cấp bởi đối tác hối đoái của khu vực của bạn có thể bao gồm phí.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. Thẻ PAN",
+     "COPY": "Tải lên hoặc chụp ảnh thẻ PAN của bạn, hiển thị rõ tên của bạn và 10 Số tài khoản cố định.",
+     "UPLOAD_TITLE": "Thẻ PAN",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Đảm bảo rằng ảnh chụp hiển thị rõ số thẻ pan của bạn."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Ảnh của bạn",
+    "COPY": "Tải lên hoặc chụp ảnh của chính bạn để Unocoin có thể xác minh thẻ PAN của bạn.",
+    "UPLOAD_TITLE": "Ảnh",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Đảm bảo rằng ảnh chụp hiển thị rõ khuôn mặt của bạn."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Bằng chứng địa chỉ",
+    "COPY": "Tải lên hoặc chụp ảnh bằng chứng địa chỉ của bạn. Bạn có thể tải lên một trong các tài liệu được phê duyệt sau khớp với tên và địa chỉ mà bạn đã cung cấp ban đầu.",
+    "UPLOAD_TITLE": "Bằng chứng địa chỉ",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Thẻ Aadhar (mặt trước và mặt sau)",
+    "OPTION2": "Giấy phép lái xe",
+    "OPTION3": "Hộ chiếu (trang hiển thị địa chỉ)",
+    "OPTION4": "Hóa đơn dịch vụ tiện ích",
+    "HELP": "Đảm bảo rằng ảnh chụp hiển thị rõ ràng tên và địa chỉ của bạn."
+  },
+  "BANK_NAME": "Tên ngân hàng",
+  "ACCOUNT_HOLDER_NAME": "Tên của chủ tài khoản ngân hàng",
+  "ACCOUNT_NUMBER": "Số tài khoản",
+  "IFSC_CODE": "Mã IFSC",
+  "ACCOUNT_TYPE": "Loại tài khoản",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Thẻ PAN có thể chấp nhận được",
+    "COPY": "Thẻ PAN của trẻ vị thành niên <span class='state-danger-text'>không được chấp nhận</span>.<br>Thẻ PAN phải hợp lệ theo các giấy tờ hồ sơ của Chính phủ."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Ảnh chụp người dùng có thể chấp nhận được",
+    "COPY": "Ảnh chân dung đeo kính hoặc đội mũ là <span class='state-danger-text'>không được chấp nhận</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Bằng chứng địa chỉ có thể chấp nhận",
+    "COPY": "Tránh bật đèn flash trên các chi tiết của bằng chứng địa chỉ.<br>Bằng chứng địa chỉ phải có giá trị trong vòng ít nhất 6 tháng.<br>Bằng chứng địa chỉ phải khớp với địa chỉ đã nhập trước đó.<br>ID của người bình chọn phải hợp lệ trong trang web của chính phủ.<br>Bằng chứng địa chỉ đã tải lên phải bằng tiếng Anh."
+  },
+  "UNOCOIN_EXPLAIN": "Đối tác Unocoin của chúng tôi sẽ xử lý giao dịch mua hàng bitcoin của bạn. Bạn sẽ cần cung cấp một số thông tin và liên kết một phương thức thanh toán.",
+  "UNOCOIN": {
+    "PENDING": "Xác minh danh tính đang chờ xử lý",
+    "PENDING_EXPLAIN": "Unocoin hiện đang xác minh danh tính của bạn. Bạn sẽ nhận được một cuộc điện thoại trong vòng 1 ngày làm việc. Cuộc điện thoại sẽ xác minh <b>Tên</b>, <b>Mã bưu chính của địa chỉ</b>, và <b>Thông tin thẻ PAN</b>. Bạn sẽ có thể mua bitcoin sau khi đã được xác minh."
+  },
+  "REQUIRED_FIELD": "Trường bắt buộc",
+  "IFSC_INCORRECT": "IFSC không chính xác",
+  "PIN_CODE_REQUIRED": "Bắt buộc phải có mã PIN",
+  "PIN_CODE_INCORRECT": "Mã Pin không chính xác",
+  "PAN_CARD_REQUIRED": "Bắt buộc phải có thẻ PAN",
+  "PAN_CARD_INCORRECT": "Thẻ PAN không chính xác",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Số tài khoản ngân hàng không chính xác",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Tạo Tài khoản {{::exchange}}",
+    "CREATE_ACCOUNT_EXPLAIN": "Vui lòng xác nhận email và số điện thoại của bạn để tạo tài khoản hối đoái {{::exchange}} của bạn.",
+    "VERIFY_EMAIL": "Xác minh địa chỉ email",
+    "VERIFY_EMAIL_EXPLAIN": "Chúng tôi vừa mới gửi mã xác minh đến địa chỉ email của bạn. Vui lòng nhập mã để tạo tài khoản hối đoái {{::exchange}} của bạn.",
+    "CHANGE_EMAIL": "Đổi Email",
+    "CHANGE_EMAIL_EXPLAIN": "Việc cập nhật email của bạn cũng sẽ thay đổi địa chỉ email được liên kết với ví của bạn.",
+    "CHANGE_EMAIL_FAILED": "Rất tiếc, email này đã được đăng ký với {{::exchange}}.",
+    "CONFIRM_EMAIL": "Xác nhận email",
+    "VERIFICATION_CODE": "Mã xác minh",
+    "VERIFICATION_CODE_INCORRECT": "Mã xác minh không chính xác. ",
+    "CHANGE_EMAIL_": "đổi email",
+    "ANOTHER_CODE_SENT": "Mã khác đã được gửi!",
+    "VERIFY_ACCOUNT": "Chúng tôi cần thu thập một số thông tin cá nhân để xác minh danh tính của bạn. Lưu ý rằng thông tin này sẽ được gửi đến {{::exchange}} và sẽ không được liên kết trực tiếp đến ví Blockchain của bạn.",
+    "FULL_NAME": "Họ và tên",
+    "MOBILE": "Di động",
+    "PAN_CARD": "Thẻ PAN",
+    "FULL_RESIDENTIAL_ADDRESS": "Địa chỉ cư trú đầy đủ (bạn sẽ cần cung cấp bằng chứng của địa chỉ)",
+    "ADDRESS_LINE_1": "Dòng địa chỉ 1",
+    "ADDRESS_LINE_2": "Dòng địa chỉ 2",
+    "STATE": "Bang",
+    "CITY": "Thành phố",
+    "PIN_CODE": "Mã Pin",
+    "BANK_ACCOUNT_NUMBER": "Số tài khoản ngân hàng",
+    "IFSC": "IFSC"
+  }
 }

@@ -1094,5 +1094,90 @@
   "HIDE": "Verbergen",
   "EDIT_NAME": "Naam bewerken",
   "NOT_BACKED_BY_RECOVERY": "Niet gebackupt door uw herstelregel. Overmaken naar een portemonnee om tegoeden te beveiligen.",
-  "EXCHANGE_RATE_HELPER": "Het tarief dat wordt aangeboden door de uitwisselingspartner uit uw regio. Hier kunnen kosten aan verbonden zijn."
+  "EXCHANGE_RATE_HELPER": "Het tarief dat wordt aangeboden door de uitwisselingspartner uit uw regio. Hier kunnen kosten aan verbonden zijn.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Bankoverschrijving",
+    "BODY": "Verzend {{::amount}} elektronisch (via IMPS, NEFT of RTGS) naar onderstaande bankrekening van Unocoin. U dient dan het referentienummer van de bankoverschrijving te verstrekken."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Het tarief dat wordt aangeboden door de wisselpartner van uw regio kan kosten met zich meebrengen.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN-kaart",
+     "COPY": "Upload of maak een foto van uw PAN-kaart, met uw naam en uit tien cijfers bestaande permanente rekeningnummer duidelijk zichtbaar.",
+     "UPLOAD_TITLE": "PAN-kaart",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Zorg ervoor dat de foto uw PAN-kaartnummer duidelijk laat zien."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Uw foto",
+    "COPY": "Upload of maak een foto van uzelf, zodat Unocoin uw PAN-kaart kan verifiÃ«ren.",
+    "UPLOAD_TITLE": "Foto",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Zorg ervoor dat de foto uw gezicht duidelijk laat zien."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Adresbewijs",
+    "COPY": "Upload of maak een foto van uw adresbewijs. U kunt een van de volgende goedgekeurde documenten uploaden die overeenkomen met de naam en het adres dat u oorspronkelijk hebt opgegeven.",
+    "UPLOAD_TITLE": "Adresbewijs",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar-kaart (voor- en achterkant)",
+    "OPTION2": "Rijbewijs",
+    "OPTION3": "Paspoort (de pagina waarop uw adres staat)",
+    "OPTION4": "Elektriciteitsrekening",
+    "HELP": "Zorg ervoor dat de foto uw naam en adres duidelijk weergeeft."
+  },
+  "BANK_NAME": "Naam van de bank",
+  "ACCOUNT_HOLDER_NAME": "Naam van de rekeninghouder",
+  "ACCOUNT_NUMBER": "Rekeningnummer",
+  "IFSC_CODE": "IFSC-code",
+  "ACCOUNT_TYPE": "Rekeningtype",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Aanvaardbare PAN-kaart",
+    "COPY": "PAN-kaart van minderjarige <span class='state-danger-text'>is niet aanvaardbaar</span>.<br>PAN-kaart moet geldig zijn volgens de overheidsregistratie."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Aanvaardbare gebruikersfoto",
+    "COPY": "Selfies met brillen of hoeden zijn <span class='state-danger-text'>niet aanvaardbaar</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Aanvaardbaar adresbewijs",
+    "COPY": "Vermijd flitsen van de camera op de details van het adresbewijs.<br>Het adresbewijs moet nog minstens 6 maanden geldig zijn.<br>Het adresbewijs moet overeenkomen met het eerder ingevoerde adres.<br>De stem-ID moet geldig zijn op de overheidssite.<br>Het geÃ¼ploade adresbewijs moet in het Engels zijn."
+  },
+  "UNOCOIN_EXPLAIN": "Onze partner Unocoin zal uw Bitcoin-aankopen verwerken. U dient enige informatie te geven en een betaalmethode te koppelen.",
+  "UNOCOIN": {
+    "PENDING": "In afwachting van identiteitsverificatie",
+    "PENDING_EXPLAIN": "Unocoin verifieert op dit moment uw identiteit. U ontvangt binnen 1 werkdag een telefoontje. Het telefoongesprek verifieert uw <b>Naam</b>, <b>Postcode</b> en  <b>PAN-kaartinformatie</b>. U kunt Bitcoins kopen zodra u geverifieerd bent."
+  },
+  "REQUIRED_FIELD": "Verplicht veld",
+  "IFSC_INCORRECT": "IFSC onjuist",
+  "PIN_CODE_REQUIRED": "Pincode vereist",
+  "PIN_CODE_INCORRECT": "Pincode onjuist",
+  "PAN_CARD_REQUIRED": "PAN-kaart vereist",
+  "PAN_CARD_INCORRECT": "PAN-kaart onjuist",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Bankrekeningnummer onjuist",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Maak een {{::exchange}} account aan",
+    "CREATE_ACCOUNT_EXPLAIN": " Bevestig uw e-mailadres en telefoonnummer om uw {{::exchange}} wisselaccount aan te maken.",
+    "VERIFY_EMAIL": "Verifieer e-mailadres",
+    "VERIFY_EMAIL_EXPLAIN": " We hebben net een verificatiecode naar uw e-mailadres gestuurd. Voer de verificatiecode in om uw {{::exchange}} wisselaccount aan te maken.",
+    "CHANGE_EMAIL": "E-mailadres wijzigen",
+    "CHANGE_EMAIL_EXPLAIN": "Het updaten van uw e-mailadres verandert ook het e-mailadres dat is gekoppeld aan uw portemonnee.",
+    "CHANGE_EMAIL_FAILED": "Sorry, dit e-mailadres is al geregistreerd bij {{::exchange}}.",
+    "CONFIRM_EMAIL": "E-mailadres bevestigen",
+    "VERIFICATION_CODE": "Verificatiecode",
+    "VERIFICATION_CODE_INCORRECT": "Verificatiecode onjuist. ",
+    "CHANGE_EMAIL_": "E-mailadres wijzigen",
+    "ANOTHER_CODE_SENT": "Er is een andere code verzonden!",
+    "VERIFY_ACCOUNT": "We moeten wat persoonlijke gegevens verzamelen om uw identiteit te verifiÃ«ren. Deze informatie zal worden verzonden naar {{::exchange}} en zal niet rechtstreeks met uw Blockchain-portemonnee worden gekoppeld.",
+    "FULL_NAME": "Volledige naam",
+    "MOBILE": "Mobiel telefoonnummer",
+    "PAN_CARD": "PAN-kaart",
+    "FULL_RESIDENTIAL_ADDRESS": "Volledig woonadres (u moet een adresbewijs opgeven)",
+    "ADDRESS_LINE_1": "Adresregel 1",
+    "ADDRESS_LINE_2": "Adresregel 2",
+    "STATE": "Provincie",
+    "CITY": "Woonplaats",
+    "PIN_CODE": "Pincode",
+    "BANK_ACCOUNT_NUMBER": "Bankrekeningnummer",
+    "IFSC": "IFSC"
+  }
 }

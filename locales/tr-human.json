@@ -1093,5 +1093,90 @@
   "HIDE": "Sakla",
   "EDIT_NAME": "İsmi Düzenle",
   "NOT_BACKED_BY_RECOVERY": "Kurtarma İfadeniz tarafından yedeklenmemiş. Parayı güvenceye almak için bir cüzdana transfer edin.",
-  "EXCHANGE_RATE_HELPER": "Bölgenizdeki dönüştürme ortağınızın teklif ettiği oran. Ücret içerebilir."
+  "EXCHANGE_RATE_HELPER": "Bölgenizdeki dönüştürme ortağınızın teklif ettiği oran. Ücret içerebilir.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Banka Transferi",
+    "BODY": "Lütfen {{::amount}} tutarı ( IMPS, NEFT, veya RTGS aracılığıyla) Unocoin'in aşağıdaki banka hesabına gönderin. Daha sonra banka transfer, referans numarası sunmanız gerekecektir."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Bölgenizdeki dönüştürme ortağı tarafından teklif edilen oran ücret içerebilir.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN Kartı",
+     "COPY": "Adınızı ve on-haneli Kalıcı Hesap Numaranızı açıkça gösterecek şekilde PAN Kartınızın bir fotoğrafını çekin veya yükleyin.",
+     "UPLOAD_TITLE": "PAN Kart",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Fotoğrafın pan kart numaranızı açıkça gösterdiğinden emin olun."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Fotoğrafınız",
+    "COPY": "Unocoin'in PAN Kartınızı doğrulaması için bir fotoğrafınızı çekin veya yükleyin.",
+    "UPLOAD_TITLE": "Fotoğraf",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Fotoğrafın yüzünüzü açıkça gösterdiğinden emin olun."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Adres Kanıtı",
+    "COPY": "Adres kanıtınızın bir fotoğrafını çekin veya yükleyin. Başlangıçta sunmuş olduğunuz isim ve adres ile eşleşen aşağıdaki onaylanmış belgelerden birini yükleyebilirsiniz.",
+    "UPLOAD_TITLE": "Adres Kanıtı",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar Kartı (ön ve arka yüz)",
+    "OPTION2": "Sürücü Belgesi",
+    "OPTION3": "Pasaport (adresi gösteren sayfa)",
+    "OPTION4": "Hizmet Faturası",
+    "HELP": "Fotoğrafın adınızı ve adresinizi açıkça gösterdiğinden emin olun."
+  },
+  "BANK_NAME": "Bank Adı",
+  "ACCOUNT_HOLDER_NAME": "Hesap Sahibinin Adı",
+  "ACCOUNT_NUMBER": "Hesap Numarası",
+  "IFSC_CODE": "IFSC Kodu",
+  "ACCOUNT_TYPE": "Hesap Türü",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Kabul Edilen PAN Kartı",
+    "COPY": "Reşit Olmayan PAN Kartı <span class='state-danger-text'>kabul edilmez</span>.<br>PAN Kartı Resmi kayıtlara göre geçerli olmalıdır."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Kabul Edilen Kullanıcı Fotoğrafı",
+    "COPY": "Normal gözlük dışındaki gözlüklerle veya şapkalı çekilen resimler <span class='state-danger-text'>kabul edilmez</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Kabul Edilen Adres Kanıtı",
+    "COPY": "Kameranın adres kanıtındaki ayrıntıların üzerinde parlamasına izin vermeyin.<br>Adres kanıtı en az 6 ay için geçerli olmalıdır.<br>Adres kanıtının önceden girilmiş adresle aynı olması gerekir.<br>Seçmen Kimliği devletin web sitesinde geçerli olmalıdır.<br>Adres kanıtının İngilizce yüklenmesi gerekir."
+  },
+  "UNOCOIN_EXPLAIN": "Ortağımız Unocoin, bitcoin alımlarınızı işleme alacaktır. Bazı bilgiler sunmanız ve bir ödeme yöntemi ilişkilendirmeniz gerekir.",
+  "UNOCOIN": {
+    "PENDING": "Identity Verification Pending",
+    "PENDING_EXPLAIN": "Unocoin şu anda kimliğinizi doğrulamaktadır. 1 iş günü içinde bir telefon araması alacaksınız. Telefon görüşmesi <b>Adınızı</b>, <b>Adres Posta Kodunuzu</b> ve <b>PAN Kart Bilgilerinizi</b> doğrulayacaktır. Kimliğiniz doğrulandıktan sonra bitcoin satın alabileceksiniz."
+  },
+  "REQUIRED_FIELD": "Gerekli alan",
+  "IFSC_INCORRECT": "IFSC geçersiz",
+  "PIN_CODE_REQUIRED": "Pin Kodu gerekli",
+  "PIN_CODE_INCORRECT": "Pin Kodu geçersiz",
+  "PAN_CARD_REQUIRED": "Pan Kart gerekli",
+  "PAN_CARD_INCORRECT": "Pan Kart geçersiz",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Banka Hesap Numarası geçersiz",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "{{::exchange}} Hesabı Oluştur",
+    "CREATE_ACCOUNT_EXPLAIN": "{{::exchange}} dönüştürme hesabınızı oluşturmak için lütfen e-posta adresinizi ve telefon numaranızı onaylayın.",
+    "VERIFY_EMAIL": "E-posta Adresini Onayla",
+    "VERIFY_EMAIL_EXPLAIN": "E-posta adresinize şimdi bir doğrulama kodu gönderdik.{{::exchange}} dönüştürme hesabınızı oluşturmak için lütfen doğrulama kodunu girin.",
+    "CHANGE_EMAIL": "E-posta Değiştir",
+    "CHANGE_EMAIL_EXPLAIN": "E-postanızı güncellemek ayrıca hesabınızla ilişkili e-posta adresinizi de değiştirecek.",
+    "CHANGE_EMAIL_FAILED": "Üzgünüz, bu e-posta adresi{{::exchange}} ile zaten kaydedilmiş.",
+    "CONFIRM_EMAIL": "E-posta doğrula",
+    "VERIFICATION_CODE": "Doğrulama Kodu",
+    "VERIFICATION_CODE_INCORRECT": "Doğrulama kodu geçersiz. ",
+    "CHANGE_EMAIL_": "E-posta değiştir",
+    "ANOTHER_CODE_SENT": "Başka bir kod gönderildi!",
+    "VERIFY_ACCOUNT": "Kimliğinizi doğrulamak için bazı kişisel bilgiler toplamamız gerekmektedir. Bu bilgilerin {{::exchange}} ile paylaşılacağını ve Blockchain cüzdanınızla doğrudan ilişkilendirilmeyeceğini dikkate alın.",
+    "FULL_NAME": "Adı Soyadı",
+    "MOBILE": "Cep Telefonu",
+    "PAN_CARD": "PAN Kartı",
+    "FULL_RESIDENTIAL_ADDRESS": "Açık İkamet Adresi (ikamet kanıtı sunmanız gerekecek)",
+    "ADDRESS_LINE_1": "Adres Satırı 1",
+    "ADDRESS_LINE_2": "Adres Satırı 2",
+    "STATE": "Eyalet",
+    "CITY": "Şehir",
+    "PIN_CODE": "Pin Kodu",
+    "BANK_ACCOUNT_NUMBER": "Banka Hesap Numarası",
+    "IFSC": "IFSC"
+  }
 }
