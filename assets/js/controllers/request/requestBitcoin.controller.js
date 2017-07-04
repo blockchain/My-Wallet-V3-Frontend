@@ -105,6 +105,11 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
     return encodeURI(url.slice(0, -1));
   };
 
+  $scope.back = () => {
+    $scope.$parent.$parent.vm.btcRequestStep = 0;
+    $scope.state.requestCreated = false;
+  };
+
   $scope.$watch('state.to', () => $scope.state.address = $scope.address());
 
   AngularHelper.installLock.call($scope);

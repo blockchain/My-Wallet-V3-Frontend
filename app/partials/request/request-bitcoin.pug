@@ -105,4 +105,4 @@
     button.btn.button-primary.full.upper.mt-20(single-click-select copy-content="{{ paymentRequestURL() }}" ng-click="state.isPaymentRequestCopied = true" ng-hide="state.isPaymentRequestCopied || !browser.canExecCommand" translate="COPY_LINK")
     button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED" ng-mouseleave="state.isPaymentRequestCopied = false")
 
-    a.display-block.center.mt-20(ng-click="$close()") Close
+    a.display-block.mt-20(ng-click="back()") Back
