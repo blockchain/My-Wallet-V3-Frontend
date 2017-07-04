@@ -2,7 +2,7 @@
   i.icon-receive.f-20.pr-15
   span.f-24(translate="Request")
   i.ti-close.close-modal(ng-click="$close()")
-.width-50.pt-25.ph-35(ng-hide="vm.btcRequestStep > 0")
+.width-50.pt-25.ph-35.ph-20-mobile(ng-hide="vm.btcRequestStep > 0")
   span.f-14.em-500(translate="What would you like to request?")
   ui-select.mtm.hidden-xs(ng-model="vm.asset" ng-change="vm.showTab(vm.asset)" tagging)
     ui-select-match(placeholder="Select currency") 
