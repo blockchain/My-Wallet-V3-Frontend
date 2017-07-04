@@ -4,13 +4,16 @@ angular
 
 function RequestController ($scope, destination) {
   this.destination = destination;
-  this.tab = 'btc';
+  this.assets = [
+    {name: 'Bitcoin', code: 'btc', icon: 'icon-bitcoin'},
+    {name: 'Ether', code: 'eth', icon: 'icon-ethereum'}
+  ];
 
-  this.showTab = (tab) => {
-    this.tab = tab;
-  };
+  this.asset = this.assets.find(a => a.code === 'btc');
 
-  this.onTab = (tab) => {
-    return tab === this.tab;
-  };
+  this.showTab = (tab) => this.asset = tab;
+
+  this.onTab = (tab) => tab === this.asset.code;
+
+  this.btcRequestStep = 0;
 }

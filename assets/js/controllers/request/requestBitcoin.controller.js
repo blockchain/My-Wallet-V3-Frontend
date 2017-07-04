@@ -40,7 +40,10 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
     $scope.lock();
     Alerts.clear();
 
-    const success = () => $scope.state.requestCreated = true;
+    const success = () => {
+      $scope.state.requestCreated = true;
+      $scope.$parent.$parent.vm.btcRequestStep = 1;
+    };
 
     const error = (error) => {
       if (error === 'NOT_ALPHANUMERIC') {

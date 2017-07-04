@@ -1,11 +1,18 @@
-.modal-header.flex-column.bc-modal-header.tabbed(data-preflight-tag="Request")
+.modal-header.flex-row.flex-center.bc-modal-header(data-preflight-tag="Request")
+  i.icon-receive.f-20.pr-15
+  span.f-24(translate="Request")
   i.ti-close.close-modal(ng-click="$close()")
-  .tabs.f-20.pos-rel
-    span.pointer.pv-10.ph-15.border.display-inline-block(ng-class="{'border-bottom-white': vm.onTab('btc')}" ng-click="vm.showTab('btc')")
-      i.pr-10.icon-bitcoin
-      span Request BTC
-    span.pointer.pv-10.ph-15.border.display-inline-block(ng-class="{'border-bottom-white': vm.onTab('eth')}" ng-click="vm.showTab('eth')")
-      i.pr-10.icon-bitcoin
-      span Request ETH
+.width-50.pt-25.ph-35(ng-hide="vm.btcRequestStep > 0")
+  span.f-14.em-500(translate="What would you like to request?")
+  ui-select.mtm.hidden-xs(ng-model="vm.asset" ng-change="vm.showTab(vm.asset)" tagging)
+    ui-select-match(placeholder="Select currency") 
+      i(class="pr-10 {{$select.selected.icon}}")
+      span {{$select.selected.name}}
+    ui-select-choices(repeat="a in vm.assets") 
+      i(class="pr-10 {{a.icon}}")
+      span {{a.name}}
+  select.mtm.visible-xs(
+    ng-model="vm.asset"
+    ng-options="a.name for a in vm.assets")
 div(ng-if="vm.onTab('btc')" ng-include="'partials/request/request-bitcoin.pug'" ng-controller="RequestBitcoinController")
 div(ng-if="vm.onTab('eth')" ng-include="'partials/request/request-ethereum.pug'" ng-controller="RequestEthereumController")
