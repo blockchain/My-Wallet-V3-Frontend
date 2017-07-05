@@ -67,11 +67,36 @@ function currency ($q, MyBlockchainApi) {
     }
   ];
 
+  const ethCurrencies = [
+    {
+      serverCode: 'ETH',
+      code: 'ETH',
+      conversion: 100000000,
+      ethValue: '1 ETH'
+    }, {
+      serverCode: 'Finney',
+      code: 'finney',
+      conversion: 1000,
+      ethValue: '0.001 ETH'
+    }, {
+      serverCode: 'Szabo',
+      code: 'szabo',
+      conversion: 1000000,
+      ethValue: '0.000001 ETH'
+    }, {
+      serverCode: 'Wei',
+      code: 'wei',
+      conversion: 1000000000000000000,
+      ethValue: '0.000000000000000001 ETH'
+    }
+  ];
+
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
     coinifySellCurrencies: formatCurrencies(coinifySellCurrencyCodes),
     bitCurrencies,
+    ethCurrencies,
     conversions,
 
     fetchExchangeRate,
