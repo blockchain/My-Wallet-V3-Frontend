@@ -3,11 +3,21 @@
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
         i.icon-home
-        span(translate="HOME")
+        span(translate="DASHBOARD")
+    li.mv-10
+      div
+        span.tx-divider.pos-rel.ml-10.em-200(translate="Transactions")
     li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
-      a(ui-sref="wallet.common.transactions")
-        i.icon-tx
-        span(translate="MY_TRANSACTIONS")
+      a(ui-sref="wallet.common.btc.transactions")
+        i.icon-bitcoin
+        span(translate="BITCOIN")
+    li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
+      a(ui-sref="wallet.common.eth.transactions")
+        i.icon-ethereum
+        span ETHER
+        | &nbsp;
+        p.f-12.mbn.transform-none.em-300.blue New!
+    div.mv-20.border-dashed.mb-10.mt-15.mh-15
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(

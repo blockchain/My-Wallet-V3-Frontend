@@ -633,7 +633,8 @@
   "MOBILE_LINKED" : "Mobile Linked",
   "SCAN_QR_CODE" : {
     "TITLE": "Scan QR Code",
-    "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet."
+    "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet.",
+    "ETH_HELPER": "Ask the sender to scan this QR code with their ether wallet"
   },
   "HINT_STORED" : "Hint Stored",
   "NOT_STORED" : "Not Stored",

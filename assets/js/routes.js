@@ -42,15 +42,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
-  let transactionsViews = {
-    top: top,
-    left: walletNav,
-    right: {
-      templateUrl: 'partials/transactions.pug',
-      controller: 'TransactionsCtrl'
-    }
-  };
-
   let loadWalletModule = ($ocLazyLoad) => (
     $ocLazyLoad.load('walletLazyLoad')
   );
@@ -279,10 +270,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.transactions', {
-      url: '/transactions',
-      views: transactionsViews
-    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
@@ -323,6 +310,38 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'faqCtrl'
         }
       }
+    });
+
+  $stateProvider
+    .state('wallet.common.btc', {
+      url: '/btc',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin.pug',
+          controller: 'bitcoinTransactionsCtrl'
+        }
+      }
+    })
+    .state('wallet.common.btc.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.eth', {
+      url: '/eth',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-ethereum.pug',
+          controller: 'ethereumTransactionsCtrl'
+        }
+      }
+    })
+    .state('wallet.common.eth.transactions', {
+      url: '/transactions'
     });
 
   $stateProvider
