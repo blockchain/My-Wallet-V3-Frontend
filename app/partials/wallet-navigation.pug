@@ -30,12 +30,12 @@
       a(ng-hide="shouldShowInviteForm"
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
-        i.icon-bitcoin
-        span(translate="BUY_SELL_BITCOIN")
+        i.icon-buysell
+        span(translate="BUY_AND_SELL")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
-        i.icon-bitcoin
-        span(translate="BUY_SELL_BITCOIN")
+        i.icon-buysell
+        span(translate="BUY_AND_SELL")
 
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(
