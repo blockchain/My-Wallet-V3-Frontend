@@ -8,6 +8,7 @@ currency.$inject = ['$q', 'MyBlockchainApi'];
 function currency ($q, MyBlockchainApi) {
   const SATOSHI = 100000000;
   const conversions = {};
+  const ethConversions = {};
   const fiatConversionCache = {};
 
   const coinifyCurrencyCodes = {
@@ -100,15 +101,20 @@ function currency ($q, MyBlockchainApi) {
     conversions,
 
     fetchExchangeRate,
+    fetchEthRate,
     updateCoinifyCurrencies,
     getFiatAtTime,
     isBitCurrency,
     decimalPlacesForCurrency,
     convertToSatoshi,
     convertFromSatoshi,
+    convertToEther,
+    convertFromEther,
     formatCurrencyForView,
     commaSeparate
   };
+
+  window.currency = service;
 
   return service;
 
@@ -134,6 +140,14 @@ function currency ($q, MyBlockchainApi) {
       console.log('Failed to load ticker: %s', error);
     };
     return MyBlockchainApi.getTicker().then(success).catch(fail);
+  }
+
+  function fetchEthRate (currency) {
+    let { code } = currency;
+    return MyBlockchainApi.getExchangeRate(code, 'eth').then((rate) => {
+      ethConversions[code] = rate;
+      return rate;
+    });
   }
 
   function getFiatAtTime (time, amount, currencyCode) {
@@ -187,6 +201,30 @@ function currency ($q, MyBlockchainApi) {
       return amount / conversions[currency.code].conversion;
     } else if (currency.conversion) {
       return Math.ceil(amount * currency.conversion);
+    } else {
+      return null;
+    }
+  }
+
+  function convertToEther (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBitCurrency(currency)) {
+      console.warn('do not try to convert bitcoin to ether');
+      return null;
+    } else if (ethConversions[currency.code] != null) {
+      return amount / ethConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
+  function convertFromEther (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBitCurrency(currency)) {
+      console.warn('do not try to convert bitcoin from ether');
+      return null;
+    } else if (ethConversions[currency.code] != null) {
+      return amount * ethConversions[currency.code].last;
     } else {
       return null;
     }
