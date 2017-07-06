@@ -6,14 +6,14 @@
       span(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
       span(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
-      ui-select.mbl(
+      //- ui-select.mbl(
         ng-show="accounts.length > 1"
         ng-model="filterBy.account"
         name="accounts"
         tagging)
-        //- ui-select-match
+        ui-select-match
           label-origin(origin="$select.selected")
-        //- ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
+        ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
           span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
             label-origin(origin="::account" highlight="$select.search")
       ui-select.mbl(
@@ -85,7 +85,7 @@
         i.icon-down_arrow
       .tx-details.width-100.mll.mvm
         span 
-          transaction-description(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")
+          transaction-description-ethereum(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")
     .row
       .col-xs-5
       .col-xs-2
