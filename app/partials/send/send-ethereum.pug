@@ -1,1 +1,119 @@
-div(ng-controller="SendEthereumController" controller-as="$ctrl")
+#send.modal-body(ng-controller="SendEthereumController as $ctrl")
+  div(ng-hide="vm.confirm")
+    form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
+      fieldset
+        .group.mb-20.inline
+          .item.width-50.pr-25
+            label(translate="What would you like to send?")
+            asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
+
+        .group
+          .item
+            label.colon(translate="TO")
+            .input-group
+              input#address-field.form-control(
+                type="text"
+                tabindex="1"
+                placeholder="Paste or scan an address"
+                ng-model="$ctrl.tx.to"
+                ng-model-options="{debounce:250}"
+                is-valid="$ctrl.isAddress($ctrl.tx.to)"
+                autofocus)
+              .input-group-btn
+                qr-scan(on-scan="$ctrl.onScan")
+
+          //- Amount
+          .item.mt-20
+            label.colon(translate="AMOUNT")
+            .flex-center
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="$ctrl.tx.amount"
+                  ng-change="$ctrl.setAmount()"
+                  name="amount"
+                  tabindex="2"
+                  placeholder="0"
+                  required)
+                span.mhm ETH
+              i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="$ctrl.tx.amount"
+                  name="fiat"
+                  tabindex="3"
+                  placeholder="0"
+                  required)
+                //- TODO: make this dynamic
+                span.mhm USD
+            .has-error
+              span.state-danger-text(
+                ng-click="$ctrl.setSweep()"
+                ng-show="$ctrl.tx.amount > $ctrl.maxAvailable")
+                span.type-sm(translate="USE_TOTAL")
+                | :&nbsp;
+                span.type-sm.pointer {{ $ctrl.maxAvailable }}
+
+          //- Description
+          .item.mt-20
+            label
+              span(translate="DESCRIPTION:")
+              helper-button(content="SEND_BITOIN_STEP2B")
+            .flex-1
+              textarea.pas(
+                rows="4"
+                ng-model="$ctrl.tx.note"
+                name="note"
+                maxlength="512"
+                placeholder="{{'NOTE_PLACEHOLDER' | translate}}"
+                tabindex="4")
+
+          //- Fee
+          .item.mt-20
+            label
+              span(translate="TX_FEE")
+            .flex-1
+              span.f-16 {{ $ctrl.tx.fee }} ETH (0.15 USD)
+
+  //- Step 2 (confirm)
+  .overview(ng-show="vm.confirm")
+    .flex-column.f-16
+      .flex-row
+        label.colon.width-30.width-30-mobile(translate="FROM")
+        .width-70.width-70-mobile {{ $ctrl.account.address }}
+      .flex-row.mt-10
+        label.colon.width-30.width-30-mobile(translate="TO")
+        .width-70.width-70-mobile
+          span(translate="no") {{ $ctrl.tx.to }}
+      .flex-row.mt-10(ng-show="$ctrl.tx.note")
+        label.colon.width-30.width-30-mobile(translate="FOR")
+        .width-70.width-70-mobile {{ $ctrl.tx.note }}
+      .flex-row.mt-10
+        label.colon.width-30.width-30-mobile(translate="PAYMENT")
+        .width-70.width-70-mobile
+          span.mr-10 {{ $ctrl.tx.amount }}
+      .flex-row.mt-10
+        label.colon.width-30.width-30-mobile(translate="FEE")
+        .width-70.width-70-mobile
+          span.mr-10 {{ $ctrl.tx.fee }}
+      .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
+        span.mb-10(translate="TOTAL")
+        span.f-28.mb-10.em-600 {{ $ctrl.tx.amount }} Eth
+        span.f-20.em-300 {{ $ctrl.tx.amount }} Fiat
+
+  .mt-25
+    button.full.button-primary.upper(
+      translate="CONTINUE"
+      ng-click="$ctrl.nextStep()"
+      tabindex="5"
+      ng-disabled="sendForm.$invalid"
+      ng-hide="vm.confirm")
+    button.full.button-primary.upper(
+      ladda-translate="Send Ether"
+      ui-ladda="sending"
+      ng-click="$ctrl.send()"
+      data-style="expand-left"
+      ng-show="vm.confirm")
+    div.width-100.center.mt-10(ng-show="vm.confirm")
+      a(ng-click="vm.toSendView()" translate="GO_BACK")
