@@ -4,16 +4,11 @@ angular
 
 function SendController ($uibModalInstance, paymentRequest) {
   this.confirm = false;
-  this.tab = 'btc';
   this.paymentRequest = paymentRequest;
 
-  this.showTab = (tab) => {
-    this.tab = tab;
-  };
-
-  this.onTab = (tab) => {
-    return tab === this.tab;
-  };
+  this.asset = { name: 'Bitcoin', code: 'btc', icon: 'icon-bitcoin' };
+  this.showTab = (asset) => this.asset = asset;
+  this.onTab = (asset) => asset === this.asset.code;
 
   this.close = (result) => {
     $uibModalInstance.close(result);
