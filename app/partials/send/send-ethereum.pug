@@ -69,21 +69,12 @@
                 placeholder="{{'NOTE_PLACEHOLDER' | translate}}"
                 tabindex="4")
 
-        //- Fee
-        .group(ng-if="!advanced")
-          .group.inline.flex-center.mt-20
-            .item.inline.width-60.width-60-mobile.flex-between
-              label.mbn.colon(translate="TX_FEE")
-              input.width-50(
-                name="fee"
-                ng-model="$ctrl.tx.fee"
-                ng-change="$ctrl.setGasPrice($ctrl.tx.fee)"
-                min="1"
-                step="1"
-                max="50"
-                required)
-            .item.right-align.width-40.width-40-mobile
-              span.f-14 {{ $ctrl.tx.fee }} Gwei
+          //- Fee
+          .item.mt-20
+            label
+              span(translate="TX_FEE")
+            .flex-1
+              span.f-16 {{ $ctrl.tx.fee }} ETH (0.15 USD)
 
   //- Step 2 (confirm)
   .overview(ng-show="vm.confirm")

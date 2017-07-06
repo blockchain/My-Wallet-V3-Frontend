@@ -14,6 +14,7 @@ function SendEthereumController ($scope, Ethereum) {
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
+  this.payment.setGasPrice(20);
 
   this.refreshTx = () => {
     this.tx = angular.copy(txTemplate);
@@ -32,10 +33,6 @@ function SendEthereumController ($scope, Ethereum) {
     if (this.isAddress(result)) {
       this.tx.to = result;
     }
-  };
-
-  this.setGasPrice = (price) => {
-    this.payment.setGasPrice(price);
   };
 
   this.setAmount = () => {
