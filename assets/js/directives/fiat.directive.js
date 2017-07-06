@@ -11,6 +11,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     replace: true,
     scope: {
       btc: '=',
+      eth: '=',
       date: '=',
       currency: '='
     },
@@ -41,12 +42,13 @@ function fiat ($rootScope, $q, Wallet, currency) {
       if (!conversion || conversion.conversion <= 0) return;
 
       let btc = scope.btc;
-      if (btc == null || isNaN(scope.btc)) return;
+      let eth = scope.eth;
+      if ((btc == null || isNaN(scope.btc)) && (eth == null || isNaN(scope.eth))) return;
 
       if (attrs.abs != null && btc < 0) btc *= -1;
 
       scope.fiat.currencySymbol = conversion.symbol;
-
+      console.log('fiat.directive', eth, curr);
       if (scope.date) {
         $q.resolve(currency.getFiatAtTime(scope.date, btc, curr.code))
           .then((fiat) => { scope.fiat.amount = currency.commaSeparate(fiat); })

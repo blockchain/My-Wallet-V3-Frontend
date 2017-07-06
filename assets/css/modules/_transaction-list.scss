@@ -273,6 +273,11 @@ a.date,p.date { color: $black; }
   padding: 7px 8px 7px 8px;
 }
 
+.ethAmountTotal {
+  @extend .amountTotal;
+  min-width: 225px;
+}
+
 .from, .to{
   padding: 5px 0;
   strong{

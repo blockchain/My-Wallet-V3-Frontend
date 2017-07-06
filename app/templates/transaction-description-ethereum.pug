@@ -10,16 +10,21 @@
       br
     .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       .flex-row
-        span.dest-oflow.f-14.em-300 To: {{ tx.to }}
+        span.f-14.em-300 To:
+        | &nbsp;
+        span.dest-oflow.f-14.em-300(ng-bind-html="tx.to | escapeHtml | highlight:search")
       .flex-row
-        span.dest-oflow.f-14.em-300 From: {{tx.from}}
+        span.dest-oflow.f-14.em-300 From:
+        | &nbsp;
+        span.dest-oflow.f-14.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
       transaction-note(transaction="tx" search="search")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       asset-transaction-pending(transaction="tx" confirmations="12" showTooltip="false")
     .flex-1.width-20.amount.flex-end
       span
-        amount(transaction="tx")
+        ethereum-transaction-amount(transaction="tx" confirmations-needed="12")
+        //- amount(transaction="tx")
   //- toggled and mobile
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
     transaction-note(transaction="tx")
@@ -27,7 +32,7 @@
     //- transaction-destinations(transaction="tx" search="search")
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
-      transaction-status(transaction="tx")
+      transaction-status(transaction="tx" confirmations="12")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")

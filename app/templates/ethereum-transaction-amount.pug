@@ -1,0 +1,9 @@
+div.ethAmountTotal.em-400.amount.flex-center.flex-justify(
+  ng-class="{\
+    'button-transferred': $ctrl.tx.txType === 'transfer',\
+    'button-received'    : $ctrl.tx.txType === 'received',\
+    'button-sent'       : $ctrl.tx.txType === 'sent',\
+    'unconfirmed' : $ctrl.tx.confirmations < $ctrl.confirmationsNeeded \
+  }" ng-click="$ctrl.toggleTx()")
+  fiat(eth="$ctrl.tx.amount" ng-show="$ctrl.showFiat" abs)
+  span(ng-hide="$ctrl.showFiat") {{ $ctrl.absolute($ctrl.tx.amount) }} ETH
