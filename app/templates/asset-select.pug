@@ -3,8 +3,10 @@ ui-select.hidden-xs(ng-model="$ctrl.asset" ng-change="$ctrl.onChange($ctrl.asset
     i(class="pr-10 {{$select.selected.icon}}")
     span {{$select.selected.name}}
   ui-select-choices(repeat="asset in $ctrl.assets")
-    i(class="pr-10 {{asset.icon}}")
-    span {{asset.name}}
+    .flex-row
+      .width-10.flex-justify
+        i(class="pr-10 {{asset.icon}}")
+      span {{asset.name}}
 select.mtm.visible-xs(
   ng-model="$ctrl.asset"
   ng-options="asset.name for asset in $ctrl.assets")
