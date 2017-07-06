@@ -114,8 +114,6 @@ function currency ($q, MyBlockchainApi) {
     commaSeparate
   };
 
-  window.currency = service;
-
   return service;
 
   function formatCurrencies (currencies) {
@@ -144,7 +142,7 @@ function currency ($q, MyBlockchainApi) {
 
   function fetchEthRate (currency) {
     let { code } = currency;
-    return MyBlockchainApi.getExchangeRate(code, 'eth').then((rate) => {
+    return MyBlockchainApi.getExchangeRate(code, 'ETH').then((rate) => {
       ethConversions[code] = rate;
       return rate;
     });

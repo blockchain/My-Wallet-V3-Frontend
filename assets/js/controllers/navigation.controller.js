@@ -75,7 +75,10 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   };
 
   $interval(() => {
-    if (Wallet.status.isLoggedIn) currency.fetchExchangeRate();
+    if (Wallet.status.isLoggedIn) {
+      currency.fetchExchangeRate();
+      currency.fetchEthRate(Wallet.settings.currency);
+    }
   }, 15 * 60000);
 
   if ($scope.status.isLoggedIn) {

@@ -133,7 +133,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.refresh = () => {
     $scope.refreshing = true;
-    $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
+    let tasks = [
+      MyWallet.wallet.getHistory(),
+      currency.fetchExchangeRate(),
+      currency.fetchEthRate(Wallet.settings.currency)
+    ];
+    $q.all(tasks)
       .catch(() => console.log('error refreshing'))
       .finally(() => {
         $scope.$broadcast('refresh');

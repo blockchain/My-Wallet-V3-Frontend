@@ -80,7 +80,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   MyBlockchainApi.API_CODE = wallet.api_code;
 
   wallet.didLogin = (uid, successCallback) => {
-    currency.fetchExchangeRate();
     wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
     if (wallet.my.wallet.isUpgradedToHD) {
       wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
@@ -96,6 +95,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
     $window.name = 'blockchain-' + uid;
     wallet.fetchAccountInfo().then((guid) => {
+      currency.fetchExchangeRate();
+      currency.fetchEthRate(wallet.settings.currency);
       wallet.initExternal();
       wallet.status.isLoggedIn = true;
       successCallback && successCallback(guid);
@@ -893,6 +894,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {
     wallet.settings_api.changeLocalCurrency(curr.code, () => {
       wallet.settings.currency = curr;
+      currency.fetchEthRate(curr);
       if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
         wallet.settings.displayCurrency = curr;
       }
