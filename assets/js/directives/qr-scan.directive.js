@@ -3,7 +3,7 @@ angular
   .module('walletDirectives')
   .directive('qrScan', qrScan);
 
-function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Alerts) {
+function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Ethereum, Alerts) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -31,7 +31,8 @@ function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Alerts
 
       scope.scanSuccess = Wallet.isValidAddress(Wallet.parsePaymentRequest(result).address) ||
                           Wallet.isValidPrivateKey(result) ||
-                          Wallet.isValidAddress(result);
+                          Wallet.isValidAddress(result) ||
+                          Ethereum.isAddress(result);
 
       AngularHelper.$safeApply();
 
