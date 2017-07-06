@@ -8,6 +8,7 @@ currency.$inject = ['$q', 'MyBlockchainApi'];
 function currency ($q, MyBlockchainApi) {
   const SATOSHI = 100000000;
   const conversions = {};
+  const ethConversions = {};
   const fiatConversionCache = {};
 
   const coinifyCurrencyCodes = {
@@ -100,12 +101,16 @@ function currency ($q, MyBlockchainApi) {
     conversions,
 
     fetchExchangeRate,
+    fetchEthRate,
     updateCoinifyCurrencies,
     getFiatAtTime,
     isBitCurrency,
+    isEthCurrency,
     decimalPlacesForCurrency,
     convertToSatoshi,
     convertFromSatoshi,
+    convertToEther,
+    convertFromEther,
     formatCurrencyForView,
     commaSeparate
   };
@@ -136,6 +141,14 @@ function currency ($q, MyBlockchainApi) {
     return MyBlockchainApi.getTicker().then(success).catch(fail);
   }
 
+  function fetchEthRate (currency) {
+    let { code } = currency;
+    return MyBlockchainApi.getExchangeRate(code, 'ETH').then((rate) => {
+      ethConversions[code] = rate;
+      return rate;
+    });
+  }
+
   function getFiatAtTime (time, amount, currencyCode) {
     time = time * 1000;
     currencyCode = currencyCode.toLowerCase();
@@ -158,6 +171,11 @@ function currency ($q, MyBlockchainApi) {
   function isBitCurrency (currency) {
     if (currency == null) return null;
     return bitCurrencies.map(c => c.code).indexOf(currency.code) > -1;
+  }
+
+  function isEthCurrency (currency) {
+    if (currency == null) return null;
+    return ethCurrencies.map(c => c.code).indexOf(currency.code) > -1;
   }
 
   function decimalPlacesForCurrency (currency) {
@@ -192,6 +210,30 @@ function currency ($q, MyBlockchainApi) {
     }
   }
 
+  function convertToEther (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBitCurrency(currency)) {
+      console.warn('do not try to convert bitcoin to ether');
+      return null;
+    } else if (ethConversions[currency.code] != null) {
+      return amount / ethConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
+  function convertFromEther (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBitCurrency(currency)) {
+      console.warn('do not try to convert bitcoin from ether');
+      return null;
+    } else if (ethConversions[currency.code] != null) {
+      return amount * ethConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
   function formatCurrencyForView (amount, currency, showCode = true) {
     if (amount == null || currency == null) return null;
     let decimalPlaces = decimalPlacesForCurrency(currency);
@@ -199,6 +241,8 @@ function currency ($q, MyBlockchainApi) {
     if (isBitCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
+    } else if (isEthCurrency(currency)) {
+      amount = amount.toFixed(4);
     } else {
       amount = parseFloat(amount).toFixed(decimalPlaces);
     }
