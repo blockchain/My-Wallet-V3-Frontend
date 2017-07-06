@@ -105,6 +105,7 @@ function currency ($q, MyBlockchainApi) {
     updateCoinifyCurrencies,
     getFiatAtTime,
     isBitCurrency,
+    isEthCurrency,
     decimalPlacesForCurrency,
     convertToSatoshi,
     convertFromSatoshi,
@@ -172,6 +173,11 @@ function currency ($q, MyBlockchainApi) {
     return bitCurrencies.map(c => c.code).indexOf(currency.code) > -1;
   }
 
+  function isEthCurrency (currency) {
+    if (currency == null) return null;
+    return ethCurrencies.map(c => c.code).indexOf(currency.code) > -1;
+  }
+
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
     let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0 })[currency.code];
@@ -235,6 +241,8 @@ function currency ($q, MyBlockchainApi) {
     if (isBitCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
+    } else if (isEthCurrency(currency)) {
+      amount = amount.toFixed(4);
     } else {
       amount = parseFloat(amount).toFixed(decimalPlaces);
     }
