@@ -25,6 +25,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     settings: {
       currency: null,
       displayCurrency: null,
+      displayTransactionCurrencyAsFiat: null,
       language: null,
       btcCurrency: null,
       needs2FA: null,
@@ -241,6 +242,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.setLanguage($filter('getByProperty')('code', result.language, languages.languages));
       wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
+      wallet.settings.displayTransactionCurrencyAsFiat = false;
       wallet.settings.theme = $filter('getByProperty')('name', localStorageService.get('theme'), theme.themes) || theme.themes[0];
       wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
       wallet.settings.blockTOR = !!result.block_tor_ips;
@@ -533,6 +535,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
     }
   };
+
+  wallet.toggleTransactionDisplayCurrency = () => wallet.settings.displayTransactionCurrencyAsFiat = !wallet.settings.displayTransactionCurrencyAsFiat;
 
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) => {
     amount = currency.convertToSatoshi(amount, currency);

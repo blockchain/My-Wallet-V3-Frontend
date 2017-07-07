@@ -4,6 +4,8 @@ div.ethAmountTotal.em-400.amount.flex-center.flex-justify(
     'button-received'    : $ctrl.tx.txType === 'received',\
     'button-sent'       : $ctrl.tx.txType === 'sent',\
     'unconfirmed' : $ctrl.tx.confirmations < $ctrl.confirmationsNeeded \
-  }" ng-click="$ctrl.toggleTx()")
-  fiat(eth="$ctrl.tx.amount" ng-show="$ctrl.showFiat" abs)
-  span(ng-hide="$ctrl.showFiat") {{ $ctrl.absolute($ctrl.tx.amount) }} ETH
+  }" ng-click="$ctrl.toggleTransactionDisplayCurrency()")
+  fiat(eth="$ctrl.tx.amount" ng-show="$ctrl.settings.displayTransactionCurrencyAsFiat" abs)
+  span.ethTransactionAmount(ng-hide="$ctrl.settings.displayTransactionCurrencyAsFiat") {{ $ctrl.absolute($ctrl.tx.amount) }}
+  | &nbsp;
+  span(ng-hide="$ctrl.settings.displayTransactionCurrencyAsFiat") ETH

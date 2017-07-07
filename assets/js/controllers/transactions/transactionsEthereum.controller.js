@@ -12,6 +12,7 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
       gasLimit: 21000,
       gasPrice: 35082752902,
       gasUsed: 21000,
+      fee: 0.0004851,
       txType: 'sent',
       time: 1498661191,
       confirmations: 100,

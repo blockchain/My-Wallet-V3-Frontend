@@ -275,7 +275,7 @@ a.date,p.date { color: $black; }
 
 .ethAmountTotal {
   @extend .amountTotal;
-  min-width: 225px;
+  width: 130px;
 }
 
 .from, .to{
@@ -358,4 +358,10 @@ a.date,p.date { color: $black; }
     z-index: 4;
     position: relative;
   }
+}
+
+.ethTransactionAmount {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

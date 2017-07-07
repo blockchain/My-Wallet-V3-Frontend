@@ -48,13 +48,14 @@ function fiat ($rootScope, $q, Wallet, currency) {
       if (attrs.abs != null && btc < 0) btc *= -1;
 
       scope.fiat.currencySymbol = conversion.symbol;
-      console.log('fiat.directive', eth, curr);
       if (scope.date) {
         $q.resolve(currency.getFiatAtTime(scope.date, btc, curr.code))
           .then((fiat) => { scope.fiat.amount = currency.commaSeparate(fiat); })
           .catch(() => { scope.loadFailed = true; });
       } else {
-        let fiat = currency.convertFromSatoshi(btc, curr);
+        let fiat;
+        if (btc) fiat = currency.convertFromSatoshi(btc, curr);
+        else fiat = currency.convertFromEther(eth, curr);
         scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
       }
     };
