@@ -26,10 +26,10 @@ function transactionNote ($translate, $rootScope, Wallet, Labels) {
             scope.label = scope.transaction.to[0].label;
           }
         } else {
-          // scope.label = Labels.getLabel(
-          //   scope.transaction.to[0].accountIndex,
-          //   scope.transaction.to[0].receiveIndex
-          // );
+          scope.label = Labels.getLabel(
+            scope.transaction.to[0].accountIndex,
+            scope.transaction.to[0].receiveIndex
+          );
         }
       }
     }

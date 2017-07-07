@@ -32,6 +32,34 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
       confirmations: 1,
       amount: 0.075353338472268105,
       hash: '0x1b6f33078ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
+    },
+    {
+      nonce: '',
+      from: '0x14c6f6043dc49377e49355a03ed50044cd3282af',
+      to: '0xe29835a9z8z851dc5dc247c6da8df38ef18349518',
+      value: '98278525000000000',
+      gasLimit: 21000,
+      gasPrice: 40082752902,
+      gasUsed: 21000,
+      txType: 'received',
+      time: 1499447561,
+      confirmations: 15,
+      amount: 0.59893338472268105,
+      hash: '0x2c4f33078ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
+    },
+    {
+      nonce: '',
+      from: '0x14c6f6043dc41255e49355a03ed50044cd3282af',
+      to: '0xe87611a9z8z851dc5dc247c6da8df38ef18349518',
+      value: '98278525000000000',
+      gasLimit: 21000,
+      gasPrice: 40082752902,
+      gasUsed: 21000,
+      txType: 'sent',
+      time: 1499447432,
+      confirmations: 13,
+      amount: 0.71893338472268105,
+      hash: '0x2c4f12118ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
     }
   ];
 

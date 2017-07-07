@@ -347,6 +347,7 @@
   "RENAME_ACCOUNT" : "Name",
   "RENAME" : "Rename",
   "TRANSACTION_WILL_COMPLETE_IN" : "Your transaction will be complete after it has 3 confirmations.",
+  "TRANSACTION_WILL_COMPLETE_IN_ETH" : "Your transaction will be complete after it has 12 confirmations.",
   "EXPORT_HISTORY" : "Export History",
   "EXPORT_HISTORY_EXPLAIN" : "Export the transaction history of your addresses in CSV format",
   "DEV_THEMES": "Dev Themes",
