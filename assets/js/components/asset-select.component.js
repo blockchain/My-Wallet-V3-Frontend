@@ -9,11 +9,8 @@ angular
     controller: AssetSelectController
   });
 
-function AssetSelectController () {
-  this.assets = [
-    { name: 'Bitcoin', code: 'btc', icon: 'icon-bitcoin' },
-    { name: 'Ether', code: 'eth', icon: 'icon-ethereum' }
-  ];
+function AssetSelectController (assetContext) {
+  this.assets = assetContext.getAssets();
 
   this.onChange = (asset) => {
     this.onSelect({ asset });
