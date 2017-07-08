@@ -54,7 +54,8 @@ function fiat ($rootScope, $q, Wallet, currency) {
           .catch(() => { scope.loadFailed = true; });
       } else {
         let fiat;
-        if (btc) fiat = currency.convertFromSatoshi(btc, curr);
+        if (btc && eth) fiat = currency.convertFromSatoshi(btc, curr) + currency.convertFromEther(eth, curr);
+        else if (btc) fiat = currency.convertFromSatoshi(btc, curr);
         else fiat = currency.convertFromEther(eth, curr);
         scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
       }

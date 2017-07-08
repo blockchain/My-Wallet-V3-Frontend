@@ -7,12 +7,15 @@ function TopCtrl ($scope, Wallet, currency, browser) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = currency.isBitCurrency;
-  $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.browser = browser;
 
+  $scope.toggleDisplayCurrency = () => Wallet.toggleTransactionDisplayCurrency();
+
   $scope.getTotal = () => Wallet.total();
+  // TODO add getTotal for ETH
+  $scope.getEthTotal = () => 0.555;
   $scope.resetCopy = () => $scope.copied = false;
 
   $scope.nextAddress = () => {

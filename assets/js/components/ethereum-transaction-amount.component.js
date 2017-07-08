@@ -11,7 +11,6 @@ angular
   });
 
 function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency) {
-  console.log(this);
   this.tx = this.transaction;
   this.showFiat = true;
 
