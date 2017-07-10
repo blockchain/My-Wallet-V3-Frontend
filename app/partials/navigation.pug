@@ -16,10 +16,14 @@
         li.item.hidden-xs(ng-hide="true")
           button.button-transparent.button-border.button(translate="SUBSCRIBE" ng-click="subscribe()")
         li.item(ng-show="settings.btcCurrency")
-          a.flex-important.flex-column(href="/markets" target="_blank" rel="noopener noreferrer")
+          a.flex-important.flex-row(href="/markets" target="_blank" rel="noopener noreferrer")
             span
               | 1 {{ settings.btcCurrency.code }} =&nbsp;
               fiat(btc="settings.btcCurrency.conversion")
+            .vertical-line.mh-10.border-white
+            span
+              | 1 ETH =&nbsp;
+              fiat(eth="1")
         li.dropdown.item.hidden-xs(uib-dropdown)
           a.uib-dropdown-toggle(href="#" data-toggle="uib-dropdown" role="button" aria-expanded="false" uib-dropdown-toggle)
             span(translate="EXPLORE")
