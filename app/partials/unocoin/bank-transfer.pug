@@ -3,7 +3,7 @@
     div
       .mbl
         span.type-h5.em-500.flex-start.pts.capitalize(class="{{vm.formattedTrade.class}}" translate="{{vm.formattedTrade.namespace}}.TITLE")
-        p.ptm(translate="{{vm.formattedTrade.namespace}}.BODY" translate-values="vm.formattedTrade.values")
+        p.ptm(ng-show="vm.onStep('summary')" translate="{{vm.formattedTrade.namespace}}.BODY" translate-values="vm.formattedTrade.values")
       .border(ng-if="vm.onStep('summary')")
         ul.em-300.bg-grey.border-top.pan.mbn.bank-transfer
           li.pam.border-right.border-left.border-bottom-light.flex-between(ng-repeat="(prop, val) in vm.formattedTrade.tx track by $index" ng-if="val")

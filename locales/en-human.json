@@ -1025,7 +1025,8 @@
   },
   "TX_AWAITING_REF_NUMBER": {
     "TITLE": "Bank Transfer",
-    "BODY": ""
+    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below. You will then need to provide the bank transfer reference number."
+
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
