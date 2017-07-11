@@ -125,20 +125,16 @@ function currency ($q, MyBlockchainApi) {
     return Object.keys(currencies).map(currencyFormat);
   }
 
-  function fetchExchangeRate () {
+  function fetchExchangeRate (currency) {
+    let { code } = currency;
     let currencyFormat = info => ({
       symbol: info.symbol,
       conversion: parseInt(SATOSHI / info.last, 10)
     });
-    let success = result => {
-      Object.keys(result).forEach(code => {
-        conversions[code] = currencyFormat(result[code]);
-      });
-    };
-    let fail = error => {
-      console.log('Failed to load ticker: %s', error);
-    };
-    return MyBlockchainApi.getTicker().then(success).catch(fail);
+    return MyBlockchainApi.getExchangeRate(code, 'BTC').then((rate) => {
+      conversions[code] = currencyFormat(rate);
+      return conversions[code];
+    });
   }
 
   function fetchEthRate (currency) {

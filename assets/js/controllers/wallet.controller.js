@@ -135,7 +135,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $scope.refreshing = true;
     let tasks = [
       MyWallet.wallet.getHistory(),
-      currency.fetchExchangeRate(),
+      currency.fetchExchangeRate(Wallet.settings.currency),
       currency.fetchEthRate(Wallet.settings.currency)
     ];
     $q.all(tasks)

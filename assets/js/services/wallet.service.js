@@ -96,7 +96,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
     $window.name = 'blockchain-' + uid;
     wallet.fetchAccountInfo().then((guid) => {
-      currency.fetchExchangeRate();
+      currency.fetchExchangeRate(wallet.settings.currency);
       currency.fetchEthRate(wallet.settings.currency);
       wallet.initExternal();
       wallet.status.isLoggedIn = true;
@@ -898,6 +898,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {
     wallet.settings_api.changeLocalCurrency(curr.code, () => {
       wallet.settings.currency = curr;
+      currency.fetchExchangeRate(curr);
       currency.fetchEthRate(curr);
       if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
         wallet.settings.displayCurrency = curr;
