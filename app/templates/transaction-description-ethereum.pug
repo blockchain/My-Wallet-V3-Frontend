@@ -28,7 +28,14 @@
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
     transaction-note(transaction="tx")
   .hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
-    //- transaction-destinations(transaction="tx" search="search")
+    .flex-row
+      span.f-12.em-300 To:
+      | &nbsp;
+      span.dest-oflow.f-12.em-300(ng-bind-html="tx.to | escapeHtml | highlight:search")
+    .flex-row
+      span.dest-oflow.f-12.em-300 From:
+      | &nbsp;
+      span.dest-oflow.f-12.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
       transaction-status(transaction="tx" confirmations="12")
@@ -41,4 +48,4 @@
         helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
-        fiat-or-btc.em-600(btc=":: tx.fee")
+        fiat-or-btc.em-600(eth=":: tx.fee")

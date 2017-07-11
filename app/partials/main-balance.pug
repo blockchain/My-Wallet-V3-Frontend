@@ -6,7 +6,7 @@
     p.mvn.f-28.em-300
       fiat(btc="getTotal()" eth="getEthTotal()")
     p.mvn.mt-5.em-300
-      .flex-row.f-20.em-200
+      .flex-row.f-20.em-200.flex-column-tablet.flex-column-mobile
         .flex-row.flex-center(ng-hide="hideBtcBalance")
           i.icon-bitcoin.f-20.mrs
           span(ng-hide="settings.displayTransactionCurrencyAsFiat")
@@ -14,7 +14,7 @@
           span(ng-show="settings.displayTransactionCurrencyAsFiat")
             fiat(btc="getTotal()")
         .flex-row.flex-center(ng-hide="hideEthBalance")
-          .vertical-line.mh-15(ng-show="!hideEthBalance && !hideBtcBalance")
+          .vertical-line.mh-15.hidden-sm.hidden-xs(ng-show="!hideEthBalance && !hideBtcBalance")
           i.icon-ethereum.f-20.mrs
           span(ng-hide="settings.displayTransactionCurrencyAsFiat")
             span {{ getEthTotal() }} ETH
