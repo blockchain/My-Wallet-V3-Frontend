@@ -21,7 +21,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   };
 
   let getTxMessage = (tx) => (
-    buySell.getTxMethod(tx.hash) === 'buy' ? 'BOUGHT' : tx.txType.toUpperCase()
+    buySell.getTxMethod(tx.hash) === 'buy' ? 'BOUGHT' : `${tx.txType.toUpperCase()} ${tx.asset.toUpperCase()}`
   );
 
   setTxSub();
@@ -79,7 +79,8 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     let a = { type: type };
     switch (type) {
       case 0:
-        a.title = 'TRANSACTION';
+        a.title = obj.txType;
+        a.asset = obj.asset;
         a.icon = 'icon-tx';
         a.time = obj.time * 1000;
         a.message = getTxMessage(obj);

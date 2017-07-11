@@ -1,18 +1,18 @@
 .col-md-6.col-sm-12.col-xs-12.pos-rel.pln.col-home
-  .activity-feed(ng-if="status.isLoggedIn")
-    h5.mtn.em-400.type-h5.af-header.mb-20(translate="MOST_RECENT_ACTIVITY")
+  .activity-feed.border.pal(ng-if="status.isLoggedIn")
+    h5.mtn.f-24.em-300.blue.mb-20.upper(translate="MOST_RECENT_ACTIVITY")
     ul.af.pln
       li.af-item.flex-align-start(
         ng-class="{ 'af-fade' : $last && activities.length >= 8 }"
         ng-repeat="activity in activities | limitTo: 8"
         )
-        .af-marker
-          i.flex-center.flex-justify(ng-class="activity.icon")
-        .af-info.flex-center.width-100.width-100-mobile
-          p.h5.af-type.flex-1.mvn(translate="{{::activity.title}}")
-          p.af-date.mlm.flex-1.hidden-xs.mvn {{::activity.time | date:'mediumDate'}}
-          .af-log.flex-center.flex-3.flex-end
-            p.mvn.right-align(ng-class="::activity.labelClass" translate="{{::activity.message}}")
+        .af-info.flex-center.width-100.width-100-mobile.border-bottom
+          .af-marker
+            i.flex-center.flex-justify(ng-class="activity.icon")
+          p.em-300.f-16.af-type.flex-3.mvn(ng-class="::activity.labelClass" translate="{{::activity.message}}")
+          p.af-date.f-16.flex-1.hidden-xs.mvn {{::activity.time | date:'mediumDate'}}
+          .af-log.flex-center.flex-3.flex-end.f-16
+            //- p.mvn.right-align(ng-class="::activity.labelClass" translate="{{::activity.message}}")
             span.pls(ng-show="activity.type == 0")
               fiat-or-btc(btc="activity.amount")
       //psuedo empty-state
@@ -20,21 +20,21 @@
         .af-marker
           i.ti-wallet
         .af-info.flex-center.width-100.width-100-mobile
-          p.mvn.h5.af-type(translate="ACTIVITY_1")
+          p.mvn.em-300.f-16.af-type(translate="ACTIVITY_1")
           p.mvn.af-date.mll.flex-1
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_1_DESC")
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 6")
         .af-marker
           i.ti-settings
         .af-info.flex-center.width-100.width-100-mobile
-          p.mvn.h5.af-type(translate="SETTINGS")
+          p.mvn.em-300.f-16.af-type(translate="SETTINGS")
           p.mvn.af-date.mll.flex-1
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_2_DESC")
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 5")
         .af-marker
           i.ti-settings
         .af-info.flex-center.width-100.width-100-mobile
-          p.mvn.h5.af-type(translate="SETTINGS")
+          p.mvn.em-300.f-16.af-type(translate="SETTINGS")
           p.mvn.af-date.mll.flex-1 
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_3_DESC")
     .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-hide="loading || activities.length > 0")

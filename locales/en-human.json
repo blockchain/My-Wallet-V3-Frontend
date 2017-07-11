@@ -679,7 +679,7 @@
   "NO_THANKS" : "No thanks",
   "CONTINUE_LOGOUT": "Continue signing out",
   "SECURE_WALLET" : "Secure Wallet",
-  "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
+  "MOST_RECENT_ACTIVITY" : "Recent Activity",
   "DYK" : "Did You Know?",
   "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
   "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions & important activites surrounding your wallet.",
@@ -1495,5 +1495,6 @@
     "IFSC": "IFSC"
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
+  "YOUR_BALANCES": "YOUR BALANCES",
   "": ""
 }

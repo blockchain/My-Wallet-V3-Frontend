@@ -1,6 +1,6 @@
 .af-header {}
 .af-item {
-  height: calc(635px/8);
+  height: calc(450px/8);
   border-left: 1px solid #d2ced0;
   margin-left: 15px;
   &:last-child, &.af-fade {
@@ -25,7 +25,7 @@
   }
 }
 .af-info {
-  border: 1px solid #d2ced0;
+  // border: 1px solid #d2ced0;
   overflow-x: hidden;
   padding: .8em;
 }
@@ -37,12 +37,13 @@
   position: relative;
   right: 15px;
   top: 5px;
-  color: #ffffff;
+  color: #004a7c;
   i {
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    background-color: $blue;
+    background-color: white;
+    border: 1px solid #d2ced0;
     @extend .flex-center;
     @extend .flex-justify;
   }
