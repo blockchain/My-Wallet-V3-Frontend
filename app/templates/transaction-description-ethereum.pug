@@ -45,7 +45,7 @@
       div
     .flex-2.flex-column.flex-align-end.f-12.mtvl(ng-if=":: tx.confirmations > 5")
       .flex-row.fee(ng-if=":: tx.txType !== 'received'")
-        helper-button(content="{{ 'TX_FEE_EXPLAINATION' | translate }}" append="true")
+        helper-button(content="{{ 'TX_FEE_EXPLAINATION_ETH' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
         | :&nbsp;
         fiat-or-btc.em-600(eth=":: tx.fee")

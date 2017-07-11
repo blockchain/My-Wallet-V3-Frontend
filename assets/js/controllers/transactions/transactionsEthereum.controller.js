@@ -135,9 +135,9 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
 
   // Searching and filtering
   if ($scope.$root.size.sm || $scope.$root.size.xs) {
-    $scope.filterTypes = ['ALL_TRANSACTIONS', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+    $scope.filterTypes = ['ALL_TRANSACTIONS', 'SENT', 'RECEIVED'];
   } else {
-    $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED', 'TRANSFERRED'];
+    $scope.filterTypes = ['ALL', 'SENT', 'RECEIVED'];
   }
   $scope.setFilterType = (type) => $scope.filterBy.type = $scope.filterTypes[type];
   $scope.isFilterType = (type) => $scope.filterBy.type === $scope.filterTypes[type];

@@ -18,12 +18,18 @@ function transactionStatus (BrowserHelper, Env) {
 
   function link (scope, elem, attrs) {
     scope.verify = () => {
-      Env.then(env => {
-        BrowserHelper.safeWindowOpen(env.rootURL + 'tx/' + scope.transaction.hash);
-      });
+      if (scope.confirmations === 3) {
+        Env.then(env => {
+          BrowserHelper.safeWindowOpen(env.rootURL + 'tx/' + scope.transaction.hash);
+        });
+      } else if (scope.confirmations === 12) {
+        BrowserHelper.safeWindowOpen(`https://etherscan.io/tx/${scope.transaction.hash}`);
+      }
     };
 
     scope.confirmationsNeeded = scope.confirmations || 3;
+
+    scope.forEth = scope.confirmations === 12;
 
     scope.$watch('transaction.confirmations', () => {
       if (scope.transaction && scope.transaction.confirmations != null) {
