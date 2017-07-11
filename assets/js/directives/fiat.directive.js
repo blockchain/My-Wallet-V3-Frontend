@@ -62,7 +62,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     };
 
     scope.$watchCollection('conversions', () => scope.updateFiat());
-    scope.$watch('settings.currency.code + btc + currency', () => scope.updateFiat());
+    scope.$watch('settings.currency.code + btc + eth + currency', () => scope.updateFiat());
     $rootScope.$on('refresh', () => scope.updateFiat());
   }
 }
