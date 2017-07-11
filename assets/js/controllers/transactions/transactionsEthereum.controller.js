@@ -131,6 +131,18 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
     }
   });
 
+  $scope.exportEthPriv = () => $uibModal.open({
+    templateUrl: 'partials/show-private-key-ethereum.pug',
+    controllerAs: '$ctrl',
+    windowClass: 'bc-modal',
+    controller (Ethereum) {
+      this.accessAllowed = false;
+      this.address = Ethereum.defaultAccount.address;
+      this.balance = Ethereum.defaultAccount.balance;
+      this.key = '0x' + Ethereum.defaultAccount.privateKey.toString('hex');
+    }
+  });
+
   let unsub = txList.subscribe(setTxs);
   $scope.$on('$destroy', unsub);
 

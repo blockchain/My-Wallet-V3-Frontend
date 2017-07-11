@@ -51,10 +51,12 @@
             ng-click="setFilterType($index)"
             ng-class="{'active': isFilterType($index)}"
             translate="{{::f}}")
-      .flex-center.flex-end.width-45
+      .flex-center.flex-end.width-50
+        a.f-12.pointer.mr-10(ng-click="exportEthPriv()")
+          span Export Private Key
         a.black.mhl.em-500.upper.hidden-xs.hidden-sm(ng-click="exportHistory()")
           i.f-24.icon-export
-        .filter-search.input-group.width-70
+        .filter-search.input-group.width-60
           input.form-control(
             type="text"
             placeholder="{{::'SEARCH_ETH_TX' | translate}}"
@@ -84,7 +86,7 @@
       .tx-toggle.pointer.hidden-xs.mtm(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
         i.icon-down_arrow
       .tx-details.width-100.mll.mvm
-        span 
+        span
           transaction-description-ethereum(transaction="tx" highlight="searchText" ng-if="canDisplayDescriptions" account="account")
     .row
       .col-xs-5

@@ -420,6 +420,7 @@
   "ADDRESS_VALID" : "The Bitcoin address is valid",
   "ADDRESS_FOR_PRIVATE_KEY" : "The Bitcoin address associated with this Private Key is",
   "PRIVATE_KEY_WARNING" : "<b>WARNING:</b> Granting others  access to this Private Key gives them the ability to send bitcoin from this address. Exposing your Private Key to others is a security risk that may result in lost bitcoin. Do you wish to continue?",
+  "PRIVATE_KEY_WARNING_ETH" : "<b>WARNING:</b> Granting others  access to this Private Key gives them the ability to send ether from this address. Exposing your Private Key to others is a security risk that may result in lost ether. Do you wish to continue?",
   "BALANCE_FOR_ADDRESS": "The balance of this address is",
   "INPUT_NOT_RECOGNIZED" : "The value you entered does not appear to be a valid Private Key or bitcoin address",
   "ALREADY_IN_WALLET" : "This address is already present in the wallet",
