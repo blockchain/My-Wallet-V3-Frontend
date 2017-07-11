@@ -118,19 +118,6 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
     AngularHelper.$safeApply($scope);
   };
 
-  $scope.exportHistory = () => $uibModal.open({
-    templateUrl: 'partials/export-history.pug',
-    controller: 'ExportHistoryController',
-    controllerAs: 'vm',
-    windowClass: 'bc-modal',
-    resolve: {
-      activeIndex: () => {
-        let idx = $scope.filterBy.account.index;
-        return isNaN(idx) ? 'imported' : idx.toString();
-      }
-    }
-  });
-
   $scope.exportEthPriv = () => $uibModal.open({
     templateUrl: 'partials/show-private-key-ethereum.pug',
     controllerAs: '$ctrl',

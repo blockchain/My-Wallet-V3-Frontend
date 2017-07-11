@@ -1,8 +1,6 @@
 .transactions(ng-if="status.isLoggedIn")
   .filter-bar.flex-center.hidden-md.hidden-lg(data-preflight-tag="TxsOptions" ng-class="{open: isFilterOpen}")
     .hidden-md.hidden-lg.pointer.blue.right-align.width-100.flex-between.flex-center(ng-class="{mbl: isFilterOpen}")
-      a.blue.hidden-md.hidden-lg.pointer(ng-click="exportHistory()")
-        i.f-24.icon-export
       span(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
       span(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
@@ -52,10 +50,8 @@
             ng-class="{'active': isFilterType($index)}"
             translate="{{::f}}")
       .flex-center.flex-end.width-50
-        a.f-12.pointer.mr-10(ng-click="exportEthPriv()")
+        a.f-12.pointer.mr-30(ng-click="exportEthPriv()")
           span Export Private Key
-        a.black.mhl.em-500.upper.hidden-xs.hidden-sm(ng-click="exportHistory()")
-          i.f-24.icon-export
         .filter-search.input-group.width-60
           input.form-control(
             type="text"
