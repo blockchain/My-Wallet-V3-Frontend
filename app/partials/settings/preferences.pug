@@ -86,14 +86,6 @@
         a.button-primary(ng-click="setHandleBitcoinLinks()", translate="SET_HANDLE_BITCOIN_LINKS", ng-hide="settings.handleBitcoinLinks")
         p.alt-font.f-14.settingtext.mtl.mbn(translate="HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN")
 
-    .form-group.mbn.border-bottom.clearfix.pvl.phm(data-preflight-tag="ChangeEtherCurrency")
-      .col-sm-12.col-md-6
-        label.em-400.type-h5(translate="ETHER_CURRENCY")
-        p.alt-font.f-16.em-300.hidden-xs(translate="ETHER_CURRENCY_EXPLAIN")
-      .col-sm-6.col-md-3
-      .col-sm-6.col-md-3.setting-result
-        async-select(selected="settings.ethCurrency" range="ethCurrencies" display-prop="code" display-optional="ethValue" on-change="changeETHCurrency")
-
     .form-group.mbn.border-bottom.clearfix.pvl.phm(ng-controller="ChangeLogoutTimeCtrl" data-preflight-tag="ChangeLogoutTime")
       div(settings-form)
         .col-sm-12.col-md-6
