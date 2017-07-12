@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendEthereumController', SendEthereumController);
 
-function SendEthereumController ($scope, $window, Alerts, Ethereum) {
+function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wallet) {
   const txTemplate = {
     to: null,
     amount: null,
@@ -57,6 +57,11 @@ function SendEthereumController ($scope, $window, Alerts, Ethereum) {
         win.opener = null;
       });
     });
+  };
+
+  this.convertFromEther = (eth) => {
+    let fiat = Wallet.settings.currency;
+    return currency.formatCurrencyForView(currency.convertFromEther(eth, fiat), fiat, false);
   };
 
   this.refreshTx();

@@ -43,12 +43,9 @@
               .flex-1.flex-center.border
                 input.form-control.no-border(
                   type="number"
-                  ng-model="$ctrl.tx.amount"
-                  name="fiat"
+                  ng-value="$ctrl.convertFromEther($ctrl.tx.amount)"
                   tabindex="3"
-                  placeholder="0"
-                  required)
-                //- TODO: make this dynamic
+                  placeholder="0")
                 span.mhm USD
             .has-error
               span.state-danger-text(
@@ -76,8 +73,11 @@
           .item.mt-20
             label
               span(translate="TX_FEE")
-            .flex-1
-              span.f-16 {{ $ctrl.payment.fee }} ETH (0.15 USD)
+            .flex-1.f-16
+              span {{ $ctrl.payment.fee }} ETH
+              | &nbsp;(
+              fiat(eth="$ctrl.payment.fee")
+              | )
 
   //- Step 2 (confirm)
   .overview(ng-show="vm.confirm")
@@ -95,15 +95,16 @@
       .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="PAYMENT")
         .width-70.width-70-mobile
-          span.mr-10 {{ $ctrl.tx.amount }}
+          span.mr-10 {{ $ctrl.payment.amount }} ETH
       .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="FEE")
         .width-70.width-70-mobile
-          span.mr-10 {{ $ctrl.payment.fee }}
+          span.mr-10 {{ $ctrl.payment.fee }} ETH
       .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
         span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{ $ctrl.tx.amount }} Eth
-        span.f-20.em-300 {{ $ctrl.tx.amount }} Fiat
+        span.f-28.mb-10.em-600 {{ $ctrl.payment.amount }} ETH
+        span.f-20.em-300
+          fiat(eth="$ctrl.payment.amount")
 
   .mt-25
     button.full.button-primary.upper(
