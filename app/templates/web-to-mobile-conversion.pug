@@ -1,7 +1,9 @@
-.dyk
+.dyk.border.pbl.prs.pll
+  .flex-row.flex-end.pts
+    i.pointer.ti-close.f-12(ng-click="$ctrl.dismiss()")
   .flex-between.flex-center.mbl
-    h5.mvn.type-h5.em-400(translate="DYK")
-  .widget.flex-row
+    h5.mvn.f-24.em-300.blue(translate="DYK")
+  .flex-row
     div.flex-column
       //- img.mobile-conversion(src="assets/icons/mobile.svg")
       i.f-60.primary.icon-mobile.lh1
@@ -12,4 +14,3 @@
         div.flex-row.flex-align-start
           a.upper.em-500(ng-click="$ctrl.openModal()" translate="PAIR_DEVICE")
           i.icon-right_arrow.ml-5.pointer.pts.primary.f-10(ng-click="$ctrl.openModal()")
-    i.pointer.ti-close(ng-click="$ctrl.dismiss()")

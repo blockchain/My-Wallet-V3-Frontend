@@ -3,7 +3,7 @@ blocket-loading(loading="!isWalletInitialized()")
   .mtl.row.pl-15.pr-15
     activity-feed(data-preflight-tag="ActivityFeed")
     .col-md-6.col-sm-12.col-xs-12.col-home.flex-column.pb-50
-      .section.mbvl.border.pal(ng-show="true")
+      .section.mbvl.border.pal(ng-hide="showBalances")
         h5.mtn.f-24.em-300.blue.mb-20(translate="YOUR_BALANCES")
         ul.pln.account-balances
           li.flex-row.flex-justify.border-bottom-light

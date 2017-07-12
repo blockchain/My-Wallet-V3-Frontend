@@ -1,7 +1,13 @@
 .col-md-6.col-sm-12.col-xs-12.pos-rel.pln.col-home
   .activity-feed.border.pal(ng-if="status.isLoggedIn")
     h5.mtn.f-24.em-300.blue.mb-20.upper(translate="MOST_RECENT_ACTIVITY")
-    ul.af.pln
+    .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-hide="loading || activities.length > 0")
+      img.pb-20(src="img/blue-logo.svg")
+      span.em-300.f-18.center-align(translate="ACTIVITY_EMPTY_MSG_1")
+      span.em-300.f-18.center-align(translate="ACTIVITY_EMPTY_MSG_2")
+      button.button-primary.mtl(ng-show="canBuy" ui-sref="wallet.common.buy-sell" translate="GET_STARTED")
+      button.button-primary.mtl(ng-hide="canBuy" ng-click="request()" translate="GET_STARTED")
+    ul.af.pln(ng-show="activities.length > 0")
       li.af-item.flex-align-start(
         ng-class="{ 'af-fade' : $last && activities.length >= 8 }"
         ng-repeat="activity in activities | limitTo: 8"
@@ -37,7 +43,7 @@
           p.mvn.em-300.f-16.af-type(translate="SETTINGS")
           p.mvn.af-date.mll.flex-1 
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_3_DESC")
-    .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-hide="loading || activities.length > 0")
+    //- .flex-center.flex-justify.flex-column.af-empty-state.pal(ng-hide="loading || activities.length > 0")
       h2.em-400.center-align.shadow.mbm.f-24(translate="ACTIVITY_EMPTY")
       h5.flex-0.em-300.center-align(translate="{{canBuy ? 'CAN_BUY_ACTIVITY_EMPTY_MSG' : 'ACTIVITY_EMPTY_MSG'}}")
       button.button-primary.mtl(ng-show="canBuy" ui-sref="wallet.common.buy-sell" translate="BUY_BITCOIN")
