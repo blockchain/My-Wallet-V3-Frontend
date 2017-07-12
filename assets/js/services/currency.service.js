@@ -132,7 +132,7 @@ function currency ($q, MyBlockchainApi) {
       conversion: parseInt(SATOSHI / info.last, 10)
     });
     return MyBlockchainApi.getExchangeRate(code, 'BTC').then((rate) => {
-      conversions[code] = currencyFormat(rate[code]);
+      conversions[code] = currencyFormat(rate);
       return conversions[code];
     });
   }
