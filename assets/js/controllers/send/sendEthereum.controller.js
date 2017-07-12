@@ -2,27 +2,24 @@ angular
   .module('walletApp')
   .controller('SendEthereumController', SendEthereumController);
 
-function SendEthereumController ($scope, Ethereum) {
+function SendEthereumController ($scope, $window, Alerts, Ethereum) {
   const txTemplate = {
     to: null,
     amount: null,
-    description: null,
-    fee: 20,
-    gasLimit: null,
-    gasPrice: null
+    description: null
   };
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
-  this.payment.setGasPrice(20);
+  this.payment.setGasPrice(10);
 
   this.refreshTx = () => {
     this.tx = angular.copy(txTemplate);
   };
 
   this.setSweep = () => {
-    // TODO: implement sweep
-    console.log('setting sweep');
+    this.payment.setSweep();
+    this.tx.amount = this.payment.amount;
   };
 
   this.isAddress = (address) => {
@@ -35,9 +32,14 @@ function SendEthereumController ($scope, Ethereum) {
     }
   };
 
+  this.setTo = () => {
+    let { to } = this.tx;
+    if (to && this.isAddress(to)) this.payment.setTo(to);
+  };
+
   this.setAmount = () => {
     let { amount } = this.tx;
-    this.payment.setValue(amount);
+    if (amount) this.payment.setValue(amount);
   };
 
   this.nextStep = () => {
@@ -46,16 +48,19 @@ function SendEthereumController ($scope, Ethereum) {
   };
 
   this.send = () => {
-    this.payment.publish().then(() => {
-      console.log('success');
+    this.payment.publish().then(({ hash }) => {
+      $scope.vm.close();
+      this.account.fetchBalance();
+      console.log('sent ether:', hash);
+      Alerts.displaySuccess('Successfully sent Ether!').then(() => {
+        let win = $window.open(`https://etherscan.io/tx/${hash}`, '__blank');
+        win.opener = null;
+      });
     });
   };
 
   this.refreshTx();
 
-  this.account.fetchBalance().then(() => {
-    this.maxAvailable = parseFloat(this.account.balance);
-  });
-
+  this.account.fetchBalance();
   window.ctrl = this;
 }

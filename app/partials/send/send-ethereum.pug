@@ -17,6 +17,7 @@
                 placeholder="Paste or scan an address"
                 ng-model="$ctrl.tx.to"
                 ng-model-options="{debounce:250}"
+                ng-change="$ctrl.setTo()"
                 is-valid="$ctrl.isAddress($ctrl.tx.to)"
                 autofocus)
               .input-group-btn
@@ -31,6 +32,8 @@
                   type="number"
                   ng-model="$ctrl.tx.amount"
                   ng-change="$ctrl.setAmount()"
+                  ng-max="$ctrl.payment.available"
+                  ng-min="0.0000000000001"
                   name="amount"
                   tabindex="2"
                   placeholder="0"
@@ -50,10 +53,10 @@
             .has-error
               span.state-danger-text(
                 ng-click="$ctrl.setSweep()"
-                ng-show="$ctrl.tx.amount > $ctrl.maxAvailable")
+                ng-show="sendForm.amount.$error.max")
                 span.type-sm(translate="USE_TOTAL")
                 | :&nbsp;
-                span.type-sm.pointer {{ $ctrl.maxAvailable }}
+                span.type-sm.pointer {{ $ctrl.payment.available }}
 
           //- Description
           .item.mt-20
@@ -74,7 +77,7 @@
             label
               span(translate="TX_FEE")
             .flex-1
-              span.f-16 {{ $ctrl.tx.fee }} ETH (0.15 USD)
+              span.f-16 {{ $ctrl.payment.fee }} ETH (0.15 USD)
 
   //- Step 2 (confirm)
   .overview(ng-show="vm.confirm")
@@ -96,7 +99,7 @@
       .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="FEE")
         .width-70.width-70-mobile
-          span.mr-10 {{ $ctrl.tx.fee }}
+          span.mr-10 {{ $ctrl.payment.fee }}
       .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
         span.mb-10(translate="TOTAL")
         span.f-28.mb-10.em-600 {{ $ctrl.tx.amount }} Eth

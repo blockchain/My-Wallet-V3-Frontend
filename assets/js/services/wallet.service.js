@@ -262,6 +262,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           AngularHelper.$safeApply();
         };
         wallet.my.wallet.getHistory().then(didFetchTransactions);
+
+        let eth = wallet.my.wallet.eth;
+        if (eth) $q.resolve(eth.fetchBalances());
       }
 
       return result.guid;
