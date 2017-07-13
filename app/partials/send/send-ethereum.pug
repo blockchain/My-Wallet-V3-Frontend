@@ -43,7 +43,9 @@
               .flex-1.flex-center.border
                 input.form-control.no-border(
                   type="number"
-                  ng-value="$ctrl.convertFromEther($ctrl.tx.amount)"
+                  ng-model="$ctrl.tx.amountFiat"
+                  ng-change="$ctrl.setAmountFiat()"
+                  name="amountFiat"
                   tabindex="3"
                   placeholder="0")
                 span.mhm USD

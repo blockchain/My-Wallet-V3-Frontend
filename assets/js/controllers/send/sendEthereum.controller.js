@@ -6,6 +6,7 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   const txTemplate = {
     to: null,
     amount: null,
+    amountFiat: null,
     description: null
   };
 
@@ -20,6 +21,7 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   this.setSweep = () => {
     this.payment.setSweep();
     this.tx.amount = this.payment.amount;
+    this.tx.amountFiat = parseFloat(this.convertFromEther(this.tx.amount));
   };
 
   this.isAddress = (address) => {
@@ -39,7 +41,23 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
 
   this.setAmount = () => {
     let { amount } = this.tx;
-    if (amount) this.payment.setValue(amount);
+    if (amount) {
+      this.tx.amountFiat = parseFloat(this.convertFromEther(amount));
+      this.payment.setValue(amount);
+    } else {
+      this.tx.amountFiat = null;
+    }
+  };
+
+  this.setAmountFiat = () => {
+    let { amountFiat } = this.tx;
+    if (amountFiat) {
+      let fiat = Wallet.settings.currency;
+      this.tx.amount = currency.convertToEther(amountFiat, fiat);
+      this.payment.setValue(this.tx.amount);
+    } else {
+      this.tx.amount = null;
+    }
   };
 
   this.nextStep = () => {
