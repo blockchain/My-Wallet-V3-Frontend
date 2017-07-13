@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, Ethereum) {
   $scope.goal = Wallet.goal;
 
   $scope.status = Wallet.status;
@@ -136,7 +136,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     let tasks = [
       MyWallet.wallet.getHistory(),
       currency.fetchExchangeRate(Wallet.settings.currency),
-      currency.fetchEthRate(Wallet.settings.currency)
+      currency.fetchEthRate(Wallet.settings.currency),
+      Ethereum.fetchBalances()
     ];
     $q.all(tasks)
       .catch(() => console.log('error refreshing'))
