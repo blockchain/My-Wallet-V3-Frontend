@@ -11,7 +11,8 @@ function TopCtrl ($scope, Wallet, currency, browser, Ethereum, assetContext) {
 
   $scope.browser = browser;
 
-  $scope.toggleDisplayCurrency = () => Wallet.toggleTransactionDisplayCurrency();
+  // $scope.toggleDisplayCurrency = () => Wallet.toggleTransactionDisplayCurrency();
+  $scope.toggleDisplayCurrency = () => Wallet.toggleDisplayCurrency();
 
   $scope.getTotal = () => Wallet.total();
   $scope.getEthTotal = () => Ethereum.balance;

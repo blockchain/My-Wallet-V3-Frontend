@@ -18,8 +18,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     factory: factory,
     updateTxActivities: updateTxActivities,
     updateLogActivities: updateLogActivities,
-    updateAllActivities: updateAllActivities,
-    updateEthTxs: updateEthTxs
+    updateAllActivities: updateAllActivities
   };
 
   let getTxMessage = (tx) => (
@@ -45,7 +44,6 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   function updateAllActivities () {
     activity.updateTxActivities();
     activity.updateLogActivities();
-    activity.updateEthTxs();
   }
 
   function updateTxActivities () {
@@ -54,10 +52,6 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
       .map(factory.bind(null, 0));
     combineAll();
   }
-
-  // function updateEthTxs () {
-  //   activity.ethTransactions = MyWallet.wallet.eth.defaultAccount.txs;
-  // }
 
   function updateLogActivities () {
     if (Wallet.settings.loggingLevel > 0) {

@@ -21,7 +21,7 @@
             //- p.mvn.right-align(ng-class="::activity.labelClass" translate="{{::activity.message}}")
             span.pls(ng-show="activity.type == 0")
               fiat-or-btc(ng-show="activity.asset === 'btc'" btc="activity.amount")
-              span(ng-show="activity.asset === 'eth'") {{ activity.amount | number:8 }} ETH
+              fiat-or-eth(ng-show="activity.asset === 'eth'" eth="activity.amount")
       //psuedo empty-state
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 7")
         .af-info.flex-center.width-100.width-100-mobile.border-bottom

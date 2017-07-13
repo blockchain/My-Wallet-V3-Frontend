@@ -9,14 +9,14 @@
       .flex-row.f-20.em-200.flex-column-tablet.flex-column-mobile
         .flex-row.flex-center(ng-hide="hideBtcBalance()")
           i.icon-bitcoin.f-20.mrs
-          span(ng-hide="settings.displayTransactionCurrencyAsFiat")
+          span(ng-show="isBitCurrency(settings.displayCurrency)")
             span {{ getTotal() | toBitCurrency:BTCCurrency }}
-          span(ng-show="settings.displayTransactionCurrencyAsFiat")
+          span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(btc="getTotal()")
         .flex-row.flex-center(ng-hide="hideEthBalance()")
           .vertical-line.mh-15.hidden-sm.hidden-xs(ng-show="!hideEthBalance() && !hideBtcBalance()")
           i.icon-ethereum.f-20.mrs
-          span(ng-hide="settings.displayTransactionCurrencyAsFiat")
+          span(ng-show="isBitCurrency(settings.displayCurrency)")
             span {{ getEthTotal() }} ETH
-          span(ng-show="settings.displayTransactionCurrencyAsFiat")
+          span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(eth="getEthTotal()")
