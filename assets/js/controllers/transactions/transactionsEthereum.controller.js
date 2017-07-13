@@ -78,7 +78,7 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
 
-  $scope.hideEtherWelcome = () => localStorageService.get('hideEtherWelcome') ? true : false;
+  $scope.hideEtherWelcome = () => localStorageService.get('hideEtherWelcome');
   $scope.dismissWelcome = () => localStorageService.set('hideEtherWelcome', true);
 
   $scope.isFilterOpen = false;
