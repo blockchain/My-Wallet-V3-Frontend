@@ -48,12 +48,12 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   };
 
   this.send = () => {
-    this.payment.publish().then(({ hash }) => {
+    this.payment.publish().then(({ txHash }) => {
       $scope.vm.close();
       this.account.fetchBalance();
-      console.log('sent ether:', hash);
+      console.log('sent ether:', txHash);
       Alerts.displaySuccess('Successfully sent Ether!').then(() => {
-        let win = $window.open(`https://etherscan.io/tx/${hash}`, '__blank');
+        let win = $window.open(`https://etherscan.io/tx/${txHash}`, '__blank');
         win.opener = null;
       });
     });
