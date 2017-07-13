@@ -14,7 +14,7 @@
           i.mrs.media-middle.icon-receive
           span.em-300(translate="REQUEST")
         button.btn.button-default.button-short.type-h5(
-          ng-if="browser.canExecCommand && !hideBtcBalance()"
+          ng-if="browser.canExecCommand && showBtcClipboard()"
           on-click-copy="nextAddress()"
           ng-mouseleave="resetCopy()"
           uib-tooltip="{{'RECEIVE_HELPER' | translate}}"
