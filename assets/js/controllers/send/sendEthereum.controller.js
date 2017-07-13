@@ -12,7 +12,7 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
-  this.payment.setGasPrice(10);
+  this.payment.setGasPrice(20);
 
   this.fiat = Wallet.settings.currency;
 
