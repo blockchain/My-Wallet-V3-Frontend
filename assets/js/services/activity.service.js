@@ -4,12 +4,13 @@ angular
 
 Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
 
-function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell) {
+function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell, Ethereum) {
   var txSub;
 
   const activity = {
     activities: [],
     transactions: [],
+    ethTransactions: [],
     logs: [],
     limit: 8,
     timeSort: timeSort,
@@ -17,7 +18,8 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     factory: factory,
     updateTxActivities: updateTxActivities,
     updateLogActivities: updateLogActivities,
-    updateAllActivities: updateAllActivities
+    updateAllActivities: updateAllActivities,
+    updateEthTxs: updateEthTxs
   };
 
   let getTxMessage = (tx) => (
@@ -43,14 +45,19 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   function updateAllActivities () {
     activity.updateTxActivities();
     activity.updateLogActivities();
+    activity.updateEthTxs();
   }
 
   function updateTxActivities () {
-    activity.transactions = MyWallet.wallet.txList.transactions()
+    activity.transactions = MyWallet.wallet.txList.transactions().concat(MyWallet.wallet.eth.defaultAccount.txs)
       .slice(0, activity.limit)
       .map(factory.bind(null, 0));
     combineAll();
   }
+
+  // function updateEthTxs () {
+  //   activity.ethTransactions = MyWallet.wallet.eth.defaultAccount.txs;
+  // }
 
   function updateLogActivities () {
     if (Wallet.settings.loggingLevel > 0) {

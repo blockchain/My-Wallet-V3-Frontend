@@ -20,7 +20,8 @@
           .af-log.flex-center.flex-3.flex-end.f-16
             //- p.mvn.right-align(ng-class="::activity.labelClass" translate="{{::activity.message}}")
             span.pls(ng-show="activity.type == 0")
-              fiat-or-btc(btc="activity.amount")
+              fiat-or-btc(ng-show="activity.asset === 'btc'" btc="activity.amount")
+              span(ng-show="activity.asset === 'eth'") {{ activity.amount | number:8 }} ETH
       //psuedo empty-state
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 7")
         .af-info.flex-center.width-100.width-100-mobile.border-bottom
@@ -30,7 +31,7 @@
           p.mvn.af-date.mll.flex-1
           p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_1_DESC")
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 6")
-        .af-info.flex-center.width-100.width-100-mobile.border-botom
+        .af-info.flex-center.width-100.width-100-mobile.border-bottom
           .af-marker
             i.ti-settings
           p.mvn.em-300.f-16.af-type(translate="SETTINGS")
