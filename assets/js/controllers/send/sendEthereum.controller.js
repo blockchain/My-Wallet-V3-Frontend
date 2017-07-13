@@ -14,6 +14,8 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   this.payment = this.account.createPayment();
   this.payment.setGasPrice(10);
 
+  this.fiat = Wallet.settings.currency;
+
   this.refreshTx = () => {
     this.tx = angular.copy(txTemplate);
   };
@@ -52,8 +54,7 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   this.setAmountFiat = () => {
     let { amountFiat } = this.tx;
     if (amountFiat) {
-      let fiat = Wallet.settings.currency;
-      this.tx.amount = currency.convertToEther(amountFiat, fiat);
+      this.tx.amount = currency.convertToEther(amountFiat, this.fiat);
       this.payment.setValue(this.tx.amount);
     } else {
       this.tx.amount = null;
@@ -78,8 +79,7 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   };
 
   this.convertFromEther = (eth) => {
-    let fiat = Wallet.settings.currency;
-    return currency.formatCurrencyForView(currency.convertFromEther(eth, fiat), fiat, false);
+    return currency.formatCurrencyForView(currency.convertFromEther(eth, this.fiat), this.fiat, false);
   };
 
   this.refreshTx();

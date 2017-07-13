@@ -48,7 +48,7 @@
                   name="amountFiat"
                   tabindex="3"
                   placeholder="0")
-                span.mhm USD
+                span.mhm {{ $ctrl.fiat.code }}
             .has-error
               span.state-danger-text(
                 ng-click="$ctrl.setSweep()"
