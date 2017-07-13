@@ -47,7 +47,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   }
 
   function updateTxActivities () {
-    activity.transactions = MyWallet.wallet.txList.transactions().concat(MyWallet.wallet.eth.defaultAccount.txs)
+    activity.transactions = MyWallet.wallet.txList.transactions()/*.concat(MyWallet.wallet.eth.defaultAccount.txs)*/
       .slice(0, activity.limit)
       .map(factory.bind(null, 0));
     combineAll();

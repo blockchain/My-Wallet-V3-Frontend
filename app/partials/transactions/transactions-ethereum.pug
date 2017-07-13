@@ -42,8 +42,8 @@
   .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed")
     .flex-center.flex-justify.flex-column(ng-hide="loading || ethTotal > 0 || ethTransactions.length > 0")
       .flex-row.flex-column-mobile.flex-column.tablet.bg-footer-blue(ng-hide="hideEtherWelcome()")
-        .hidden-sm.hidden-md.hidden-xs
-          img.half-eth.opacity-3(src="img/half-ether.svg")
+        .flex-1
+          img.half-eth.opacity-3.hidden-sm.hidden-md.hidden-xs(src="img/half-ether.svg")
         .flex-column.flex-center.col-md-3.col-xs-12.flex-baseline.flex-justify.pl-25.flex-center-mobile
           span.upper.f-28.em-300.blue.pb-5(translate="WELCOME_TO_ETHER")
           a(href="https://blockchain.info/wallet/bitcoin-faq" rel="noopener noreferrer" target="_blank")
