@@ -4,16 +4,6 @@
       span(translate="HIDE" ng-show="isFilterOpen" ng-click="toggleFilter()")
       span(translate="FILTER" ng-hide="isFilterOpen" ng-click="toggleFilter()")
     .hidden-md.hidden-lg(ng-class="{hide: !isFilterOpen}")
-      //- ui-select.mbl(
-        ng-show="accounts.length > 1"
-        ng-model="filterBy.account"
-        name="accounts"
-        tagging)
-        ui-select-match
-          label-origin(origin="$select.selected")
-        ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
-          span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
-            label-origin(origin="::account" highlight="$select.search")
       ui-select.mbl(
         ng-model="filterBy.type"
         name="filters"
@@ -33,16 +23,6 @@
   .filter-bar.flex-center.hidden-xs.hidden-sm(data-preflight-tag="TxsOptions")
     .flex-between.width-100
       .flex-row.flex-center
-        //- ui-select.hidden-md.mrl(
-          ng-show="accounts.length > 1"
-          ng-model="filterBy.account"
-          name="accounts"
-          tagging)
-          ui-select-match
-            label-origin(origin="$select.selected")
-          ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
-            span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
-              label-origin(origin="::account" highlight="$select.search")
         .filter-buttons
           a.black.em-500.upper(
             ng-repeat="f in filterTypes track by f"
@@ -60,20 +40,34 @@
             ng-model-options="{ debounce: 250 }")
           i.ti-search
   .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed")
-    .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
-      .flex-column.mbl.border-bottom.black.ph-25.center
+    .flex-center.flex-justify.flex-column(ng-hide="loading || ethTotal > 0 || ethTransactions.length > 0")
+      .flex-row.flex-column-mobile.flex-column.tablet.bg-footer-blue(ng-hide="hideEtherWelcome()")
+        .hidden-sm.hidden-md.hidden-xs
+          img.half-eth(src="img/half-ether.svg")
+        .flex-column.flex-center.col-md-3.col-xs-12.flex-baseline.flex-justify.pl-25.flex-center-mobile
+          span.upper.f-28.em-300.blue(translate="WELCOME_TO_ETHER")
+          a(href="https://blockchain.info/wallet/bitcoin-faq" rel="noopener noreferrer" target="_blank")
+            span.upper(translate="LEARN_MORE")
+            i.icon-right_arrow.f-12.pl-5
+        .flex-column.col-md-4.col-xs-12.pt-30.pb-15
+          span.border-bottom.upper.f-18.em-300.blue.mb-5.width-90(translate="WHAT_IS_ETH_HEADER")
+          span.f-16.em-300(translate="WHAT_IS_ETHER")
+        .flex-column.col-md-4.col-xs-12.pt-30.pb-15
+          span.border-bottom.upper.f-18.em-300.blue.mb-5.width-90(translate="WHY_SHOULD_I_USE_ETHER_HEADER")
+          span.f-16.em-300(translate="WHY_SHOULD_I_USE_ETHER")
+        .hidden-sm.hidden-md.hidden-xs
+          .pr-20.pt-20
+            i.pointer.ti-close.f-16(ng-click="dismissWelcome()")
+      .flex-column.mbl.border-bottom.black.ph-25.center.mtvl
         .flex-center.flex-justify
           i.icon-tx.h3.mrm
           h3.em-300(translate="NO_TRANSACTIONS_YET")
-        p.em-300(translate="DESCRIBE_TRANSACTIONS")
+        p.em-300(translate="DESCRIBE_TRANSACTIONS_ETH")
       .flex.flex-center-mobile
-        button.btn.button-default.button-short-wide.type-h5.mrm(ng-click="send()")
-          i.mrs.media-middle.icon-send
-          span.em-300(translate="SEND")
         .btn-group
-          button.btn.button-default.button-short-wide.type-h5.pos-rel(ng-click="request()")
+          button.btn.button-default.type-h5.pos-rel(ng-click="request()")
             i.mrs.media-middle.icon-receive
-            span.em-300(translate="REQUEST")
+            span.em-300.upper(translate="START_RECEIVING_ETHER")
     .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")
       i.ti-search.h1.mrm
       h3.em-300.mbl(translate="SORRY_ZERO_TXS")

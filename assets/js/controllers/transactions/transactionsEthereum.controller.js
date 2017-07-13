@@ -2,8 +2,9 @@ angular
   .module('walletApp')
   .controller('ethereumTransactionsCtrl', ethereumTransactionsCtrl);
 
-function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
-  $scope.ethTransactions = [
+function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount, Ethereum, localStorageService) {
+  $scope.ethTransactions = [];
+  /*$scope.ethTransactions = [
     {
       nonce: '',
       from: '0x16c6f6043dc49377e49388a03ed50044cd3282af',
@@ -61,23 +62,24 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
       amount: 0.71893338472268105,
       hash: '0x2c4f12118ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
     }
-  ];
+  ];*/
 
-  // $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
-  // $scope.totals = Wallet.totals;
   $scope.filterBy = {
     type: undefined,
     account: undefined
   };
 
-  $scope.getTotal = Wallet.total;
+  $scope.ethTotal = Ethereum.defaultAccount.balance;
 
   $scope.loading = false;
   $scope.allTxsLoaded = false;
   $scope.canDisplayDescriptions = false;
   $scope.txLimit = 10;
+
+  $scope.hideEtherWelcome = () => localStorageService.get('hideEtherWelcome') ? true : false;
+  $scope.dismissWelcome = () => localStorageService.set('hideEtherWelcome', true);
 
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
@@ -156,10 +158,6 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
             (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
   };
 
-  $scope.checkLabelDiff = (label, address) => {
-    return label === address ? address : label + ', ' + address;
-  };
-
   $scope.filterTx = (coins, search) => {
     return coins
       .map(coin => $scope.checkLabelDiff(coin.label, coin.address))
@@ -174,8 +172,6 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
         return tx.txType === 'sent';
       case $scope.filterTypes[2]:
         return tx.txType === 'received';
-      case $scope.filterTypes[3]:
-        return tx.txType === 'transfer';
     }
     return false;
   };

@@ -111,6 +111,7 @@
   "VIEW_QR": "View QR Code",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
+  "START_RECEIVING_ETHER": "start receiving ether",
   "RECEIVE_TO" : "Receive To:",
   "AMOUNT" : "Amount",
   "PAID" : "Paid:",
@@ -547,7 +548,8 @@
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
   "TRY_AGAIN": "Try Again",
-  "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
+  "DESCRIBE_TRANSACTIONS" : " Transactions occur when you receive and send bitcoin.",
+  "DESCRIBE_TRANSACTIONS_ETH": "Transactions occur when you receive and send Ether",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
@@ -1496,5 +1498,10 @@
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "YOUR_BALANCES": "YOUR BALANCES",
+  "WELCOME_TO_ETHER": "Welcome to Ether!",
+  "WHAT_IS_ETH_HEADER": "What is Ether?",
+  "WHY_SHOULD_I_USE_ETHER_HEADER": "Why Should I Use It?",
+  "WHAT_IS_ETHER": "Ether is a digital currency. Like Bitcoin, it enables people around the world to transact, save, and hedge their way to a better financial future. In addition to sending value, Ether also powers the Ethereum platform.",
+  "WHY_SHOULD_I_USE_ETHER": "As the Ethereum platform grows, more intelligent applications will be built on top of it. We want to give you the opportunity to start using Ether now, so you'll be ready to use these products in the future. ",
   "": ""
 }
