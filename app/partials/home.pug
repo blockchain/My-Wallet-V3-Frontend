@@ -21,7 +21,7 @@ blocket-loading(loading="!isWalletInitialized()")
           li.flex-between.border-bottom-light()
             span.f-18.em-200.flex-center ETH BALANCE
             .flex-column.flex-align-end
-              span.f-18.em-200 {{ getEthTotal() }} ETH
+              span.f-18.em-200 {{ getEthTotal() | number:8 }} ETH
               fiat.f-12.em-200(eth="getEthTotal()")
           li.flex-between.border-bottom-light.mid-grey(ng-show="activeLegacyAddresses().length > 5")
             span(translate="IMPORTED_ADDRESSES")
@@ -31,9 +31,6 @@ blocket-loading(loading="!isWalletInitialized()")
               .width-60.width-40-mobile
                 span.text-overflow-hidden(title="{{address.address}}") {{address.label ? address.label : address.address}}
               fiat-or-btc(btc="address.balance")
-          //- li.flex-between.basic-grey.em-500
-            span Total
-            fiat-or-btc(btc="getTotal()")
       .section(ng-show="showMobileConversion()")
         web-to-mobile-conversion()
       .section(ng-hide="showMobileConversion()")
