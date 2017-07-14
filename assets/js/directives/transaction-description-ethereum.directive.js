@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescriptionEthereum', transactionDescriptionEthereum);
 
-function transactionDescriptionEthereum ($translate, Wallet, MyWallet) {
+function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -20,23 +20,28 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet) {
     let currentYear = new Date().getFullYear();
     let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
     scope.year = isCurrentYear ? '' : 'yyyy';
+    scope.addr = Ethereum.defaultAccount.address;
 
-    scope.getTxDirection = (txType) => {
-      if (txType === 'sent') return 'SENT';
-      if (txType === 'received') return 'RECEIVED_BITCOIN_FROM';
-      if (txType === 'transfer') return 'MOVED_BITCOIN_TO';
+    scope.getTxDirection = (address, tx) => {
+      let { from, to } = tx;
+      if (address === from) {
+        scope.tx.txType = 'sent';
+        return 'SENT';
+      }
+      if (address === to) {
+        scope.tx.txType = 'received';
+        return 'RECEIVED_BITCOIN_FROM';
+      }
     };
 
     scope.getTxClass = (txType) => {
       if (txType === 'sent') return 'outgoing_tx';
       if (txType === 'received') return 'incoming_tx';
-      if (txType === 'transfer') return 'local_tx';
     };
-
 
     scope.settings = Wallet.settings;
 
-    scope.txDirection = scope.getTxDirection(scope.tx.txType);
+    scope.txDirection = scope.getTxDirection(scope.addr, scope.tx);
     scope.txClass = scope.getTxClass(scope.tx.txType);
 
     scope.$watch('tx.confirmations', () => {

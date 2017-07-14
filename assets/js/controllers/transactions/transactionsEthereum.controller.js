@@ -4,6 +4,10 @@ angular
 
 function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount, Ethereum, localStorageService) {
   $scope.ethTransactions = [];
+  // Ethereum.defaultAccount.fetchTxs().then($scope.ethTransactions = Ethereum.defaultAccount.txs);
+  // $scope.ethTransactions = Ethereum.defaultAccount.txs;
+
+  //  --- MOCKED TXS ---
   /*$scope.ethTransactions = [
     {
       nonce: '',
