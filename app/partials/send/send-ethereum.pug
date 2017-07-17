@@ -15,15 +15,16 @@
                 type="text"
                 tabindex="1"
                 placeholder="Paste or scan an address"
+                name="to"
                 ng-model="$ctrl.tx.to"
                 ng-model-options="{debounce:250}"
                 ng-change="$ctrl.setTo()"
-                is-valid="$ctrl.isAddress($ctrl.tx.to) && !$ctrl.state.isContract"
+                validate-eth-address
                 autofocus)
               .input-group-btn
                 qr-scan(on-scan="$ctrl.onScan")
             .has-error
-              span.state-danger-text(ng-show="$ctrl.state.isContract")
+              span.state-danger-text(ng-show="sendForm.to.$error.isContract")
                 span.type-sm(translate="ETHER_DISABLE_SEND_TO_CONTRACT")
 
           //- Amount
@@ -116,7 +117,7 @@
       translate="CONTINUE"
       ng-click="$ctrl.nextStep()"
       tabindex="5"
-      ng-disabled="sendForm.$invalid || $ctrl.state.pending || $ctrl.state.isContract"
+      ng-disabled="sendForm.$pending || sendForm.$invalid"
       ng-hide="vm.confirm")
     button.full.button-primary.upper(
       ladda-translate="Send Ether"
