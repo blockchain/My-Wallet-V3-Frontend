@@ -102,7 +102,8 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     let txType = obj.isFromAccount(Ethereum.defaultAccount) ? 'sent' : 'received';
     return angular.merge(txFactory(obj), {
       message: getTxMessage(obj.hash, txType, 'eth'),
-      labelClass: txType
+      labelClass: txType,
+      asset: 'eth'
     });
   }
 
