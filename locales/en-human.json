@@ -1503,5 +1503,6 @@
   "WHY_SHOULD_I_USE_ETHER_HEADER": "Why Should I Use It?",
   "WHAT_IS_ETHER": "Ether is a digital currency. Like Bitcoin, it enables people around the world to transact, save, and hedge their way to a better financial future. In addition to sending value, Ether also powers the Ethereum platform.",
   "WHY_SHOULD_I_USE_ETHER": "As the Ethereum platform grows, more intelligent applications will be built on top of it. We want to give you the opportunity to start using Ether now, so you'll be ready to use these products in the future. ",
+  "ETHER_DISABLE_SEND_TO_CONTRACT": "Sending to contract addresses is disabled.",
   "": ""
 }

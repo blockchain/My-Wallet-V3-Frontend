@@ -10,6 +10,10 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
     description: null
   };
 
+  const state = this.state = {
+    pending: false
+  };
+
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
 
@@ -43,7 +47,10 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
 
   this.setTo = () => {
     let { to } = this.tx;
-    if (to && this.isAddress(to)) this.payment.setTo(to);
+    if (to && this.isAddress(to)) {
+      this.payment.setTo(to);
+      this.checkIfContract();
+    }
   };
 
   this.setAmount = () => {
@@ -64,6 +71,13 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
     } else {
       this.tx.amount = null;
     }
+  };
+
+  this.checkIfContract = () => {
+    state.pending = true;
+    Ethereum.isContractAddress(this.tx.to)
+      .then(isContract => { state.isContract = isContract; }, () => {})
+      .then(() => { state.pending = false; });
   };
 
   this.nextStep = () => {

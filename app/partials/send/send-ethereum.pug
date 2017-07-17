@@ -18,10 +18,13 @@
                 ng-model="$ctrl.tx.to"
                 ng-model-options="{debounce:250}"
                 ng-change="$ctrl.setTo()"
-                is-valid="$ctrl.isAddress($ctrl.tx.to)"
+                is-valid="$ctrl.isAddress($ctrl.tx.to) && !$ctrl.state.isContract"
                 autofocus)
               .input-group-btn
                 qr-scan(on-scan="$ctrl.onScan")
+            .has-error
+              span.state-danger-text(ng-show="$ctrl.state.isContract")
+                span.type-sm(translate="ETHER_DISABLE_SEND_TO_CONTRACT")
 
           //- Amount
           .item.mt-20
@@ -113,7 +116,7 @@
       translate="CONTINUE"
       ng-click="$ctrl.nextStep()"
       tabindex="5"
-      ng-disabled="sendForm.$invalid"
+      ng-disabled="sendForm.$invalid || $ctrl.state.pending || $ctrl.state.isContract"
       ng-hide="vm.confirm")
     button.full.button-primary.upper(
       ladda-translate="Send Ether"
