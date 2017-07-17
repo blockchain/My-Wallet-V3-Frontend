@@ -6,7 +6,7 @@
           ng-class=":: txClass"
           translate="{{:: txDirection }}")
       span.timestamp.type-sm.basic-grey.main-font.f-14
-        date {{:: tx.timeStamp * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
+        date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
       br
     .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       .flex-row

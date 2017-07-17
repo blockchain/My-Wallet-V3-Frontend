@@ -4,69 +4,10 @@ angular
 
 function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount, Ethereum, localStorageService) {
   $scope.ethTransactions = [];
-  // Ethereum.defaultAccount.fetchTxs().then($scope.ethTransactions = Ethereum.defaultAccount.txs);
-  // $scope.ethTransactions = Ethereum.defaultAccount.txs;
-
-  //  --- MOCKED TXS ---
-  /*$scope.ethTransactions = [
-    {
-      nonce: '',
-      from: '0x16c6f6043dc49377e49388a03ed50044cd3282af',
-      to: '0xc6435a9a7a851dc5dc247c6da8df38ef18349518',
-      value: '65568525000000000',
-      gasLimit: 21000,
-      gasPrice: 35082752902,
-      gasUsed: 21000,
-      fee: 0.0004851,
-      txType: 'sent',
-      time: 1498661191,
-      confirmations: 100,
-      amount: 0.018353338472268105,
-      hash: '0x2b6f33078ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
-    },
-    {
-      nonce: '',
-      from: '0x11c6f6043dc49377e49388a03ed50044cd3282af',
-      to: '0xc6235a9a7a851dc5dc247c6da8df38ef18349518',
-      value: '94168525000000000',
-      gasLimit: 21000,
-      gasPrice: 25082752902,
-      gasUsed: 21000,
-      txType: 'received',
-      time: 1498661791,
-      confirmations: 1,
-      amount: 0.075353338472268105,
-      hash: '0x1b6f33078ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
-    },
-    {
-      nonce: '',
-      from: '0x14c6f6043dc49377e49355a03ed50044cd3282af',
-      to: '0xe29835a9z8z851dc5dc247c6da8df38ef18349518',
-      value: '98278525000000000',
-      gasLimit: 21000,
-      gasPrice: 40082752902,
-      gasUsed: 21000,
-      txType: 'received',
-      time: 1499447561,
-      confirmations: 15,
-      amount: 0.59893338472268105,
-      hash: '0x2c4f33078ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
-    },
-    {
-      nonce: '',
-      from: '0x14c6f6043dc41255e49355a03ed50044cd3282af',
-      to: '0xe87611a9z8z851dc5dc247c6da8df38ef18349518',
-      value: '98278525000000000',
-      gasLimit: 21000,
-      gasPrice: 40082752902,
-      gasUsed: 21000,
-      txType: 'sent',
-      time: 1499447432,
-      confirmations: 13,
-      amount: 0.71893338472268105,
-      hash: '0x2c4f12118ad0b6cfddbac51956596b4f3b70d155fac555a54049934989790fcb'
-    }
-  ];*/
+  $scope.$watch(
+    () => Ethereum.defaultAccount.txs,
+    (txs) => { $scope.ethTransactions = txs; }
+  );
 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
