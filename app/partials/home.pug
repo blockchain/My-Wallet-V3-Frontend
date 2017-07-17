@@ -9,19 +9,19 @@ blocket-loading(loading="!isWalletInitialized()")
           li.flex-row.flex-justify.border-bottom-light
             fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
-            span.f-18.em-200.flex-center {{::account.label}}
+            span.f-16.em-200.flex-center.upper {{::account.label}}
             .flex-column.flex-align-end
-              span.f-18.em-200 {{ account.balance | toBitCurrency:BTCCurrency }}
+              span.f-16.em-200 {{ account.balance | toBitCurrency:BTCCurrency }}
               fiat.f-12.em-200(btc="account.balance")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
-            span.f-18.em-200.flex-center BTC BALANCE
+            span.f-16.em-200.flex-center.upper {{::account.label}}
             .flex-column.flex-align-end
-              span.f-18.em-200 {{ getTotal() | toBitCurrency:BTCCurrency }}
+              span.f-16.em-200 {{ getTotal() | toBitCurrency:BTCCurrency }}
               fiat.f-12.em-200(btc="account.balance")
           li.flex-between.border-bottom-light()
-            span.f-18.em-200.flex-center ETH BALANCE
+            span.f-16.em-200.flex-center.upper(translate="MY_ETHER_WALLET")
             .flex-column.flex-align-end
-              span.f-18.em-200 {{ getEthTotal() | number:8 }} ETH
+              span.f-16.em-200 {{ getEthTotal() | number:8 }} ETH
               fiat.f-12.em-200(eth="getEthTotal()")
           li.flex-between.border-bottom-light.mid-grey(ng-show="activeLegacyAddresses().length > 5")
             span(translate="IMPORTED_ADDRESSES")
