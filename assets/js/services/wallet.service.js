@@ -264,7 +264,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         wallet.my.wallet.getHistory().then(didFetchTransactions);
 
         let eth = wallet.my.wallet.eth;
-        if (eth) $q.resolve(eth.fetchBalances());
+        if (eth) $q.resolve(eth.fetchHistory());
       }
 
       return result.guid;

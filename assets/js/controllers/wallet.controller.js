@@ -137,7 +137,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       MyWallet.wallet.getHistory(),
       currency.fetchExchangeRate(Wallet.settings.currency),
       currency.fetchEthRate(Wallet.settings.currency),
-      Ethereum.fetchBalances()
+      Ethereum.fetchHistory()
     ];
     $q.all(tasks)
       .catch(() => console.log('error refreshing'))

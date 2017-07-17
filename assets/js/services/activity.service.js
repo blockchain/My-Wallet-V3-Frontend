@@ -2,31 +2,36 @@ angular
   .module('walletApp')
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'buySell'];
+Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'buySell', 'Ethereum'];
 
 function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell, Ethereum) {
   var txSub;
+  console.log(MyWallet);
 
   const activity = {
     activities: [],
-    transactions: [],
+    btcTransactions: [],
     ethTransactions: [],
     logs: [],
     limit: 8,
-    timeSort: timeSort,
-    capitalize: capitalize,
-    factory: factory,
-    updateTxActivities: updateTxActivities,
-    updateLogActivities: updateLogActivities,
-    updateAllActivities: updateAllActivities
+    timeSort,
+    capitalize,
+    btcTxFactory,
+    ethTxFactory,
+    logFactory,
+    updateBtcTxActivities,
+    updateEthTxActivities,
+    updateLogActivities,
+    updateAllActivities
   };
 
-  let getTxMessage = (tx) => (
-    buySell.getTxMethod(tx.hash) === 'buy' ? 'BOUGHT' : `${tx.txType.toUpperCase()} ${tx.asset.toUpperCase()}`
+  let getTxMessage = (hash, type, asset) => (
+    buySell.getTxMethod(hash) === 'buy' ? 'BOUGHT' : `${type.toUpperCase()} ${asset.toUpperCase()}`
   );
 
   setTxSub();
   $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
+  $rootScope.$watch(() => Ethereum.defaultAccount && Ethereum.defaultAccount.txs, activity.updateEthTxActivities);
   return activity;
 
   // Wait for wallet to be defined before subscribing to tx updates
@@ -35,21 +40,30 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     if (txSub) {
       return;
     } else if (w) {
-      txSub = w.txList.subscribe(updateTxActivities);
+      txSub = w.txList.subscribe(updateBtcTxActivities);
     } else {
       $timeout(setTxSub, 250);
     }
   }
 
   function updateAllActivities () {
-    activity.updateTxActivities();
+    activity.updateBtcTxActivities();
+    activity.updateEthTxActivities();
     activity.updateLogActivities();
   }
 
-  function updateTxActivities () {
-    activity.transactions = MyWallet.wallet.txList.transactions()/*.concat(MyWallet.wallet.eth.defaultAccount.txs)*/
+  function updateBtcTxActivities () {
+    activity.btcTransactions = MyWallet.wallet.txList.transactions()
       .slice(0, activity.limit)
-      .map(factory.bind(null, 0));
+      .map(btcTxFactory);
+    combineAll();
+  }
+
+  function updateEthTxActivities () {
+    if (!Ethereum.defaultAccount) return;
+    activity.ethTransactions = Ethereum.defaultAccount.txs
+      .slice(0, activity.limit)
+      .map(ethTxFactory);
     combineAll();
   }
 
@@ -58,7 +72,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
       Wallet.getActivityLogs(logs => {
         activity.logs = logs.results
           .slice(0, activity.limit)
-          .map(factory.bind(null, 4));
+          .map(logFactory);
         combineAll();
       });
     } else {
@@ -68,7 +82,8 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   }
 
   function combineAll () {
-    activity.activities = activity.transactions
+    activity.activities = activity.btcTransactions
+      .concat(activity.ethTransactions)
       .concat(activity.logs)
       .filter(hasTime)
       .sort(timeSort)
@@ -76,26 +91,38 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     AngularHelper.$safeApply();
   }
 
-  function factory (type, obj) {
-    let a = { type: type };
-    switch (type) {
-      case 0:
-        a.title = obj.txType;
-        a.asset = obj.asset;
-        a.icon = 'icon-tx';
-        a.time = obj.time * 1000;
-        a.message = getTxMessage(obj);
-        a.amount = Math.abs(obj.amount);
-        a.labelClass = obj.txType.toLowerCase();
-        break;
-      case 4:
-        a.title = 'LOG';
-        a.icon = 'ti-settings';
-        a.time = obj.time;
-        a.message = capitalize(obj.action);
-        a.labelClass = obj.action.toLowerCase();
-    }
-    return a;
+  function btcTxFactory (obj) {
+    return angular.merge(txFactory(obj), {
+      message: getTxMessage(obj.hash, obj.txType, 'btc'),
+      labelClass: obj.txType.toLowerCase()
+    });
+  }
+
+  function ethTxFactory (obj) {
+    let txType = obj.isFromAccount(Ethereum.defaultAccount) ? 'sent' : 'received';
+    return angular.merge(txFactory(obj), {
+      message: getTxMessage(obj.hash, txType, 'eth'),
+      labelClass: txType
+    });
+  }
+
+  function txFactory (obj) {
+    return {
+      type: 0,
+      icon: 'icon-tx',
+      time: obj.time * 1000,
+      amount: Math.abs(obj.amount)
+    };
+  }
+
+  function logFactory (obj) {
+    return {
+      type: 4,
+      icon: 'ti-settings',
+      time: obj.time,
+      message: capitalize(obj.action),
+      labelClass: obj.action.toLowerCase()
+    };
   }
 
   function capitalize (str) {
