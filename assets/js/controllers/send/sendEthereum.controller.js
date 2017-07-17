@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendEthereumController', SendEthereumController);
 
-function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wallet) {
+function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wallet, Env) {
   const txTemplate = {
     to: null,
     amount: null,
@@ -12,7 +12,12 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
-  this.payment.setGasPrice(20);
+
+  Env.then(({ ethereum = {} }) => {
+    let { gasPrice, gasLimit } = ethereum;
+    this.payment.setGasPrice(gasPrice || Ethereum.defaults.GAS_PRICE);
+    this.payment.setGasLimit(gasLimit || Ethereum.defaults.GAS_LIMIT);
+  });
 
   this.fiat = Wallet.settings.currency;
 
