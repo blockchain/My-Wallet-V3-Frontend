@@ -1,9 +1,11 @@
-.dyk.border.ptn.phl.pbl
-  .flex.flex-center
-    i.title.blue.pr-15(ng-class="dyk.icon")
-    h5.mvn.f-24.em-300.blue {{ dyk.title | translate }}
-  div
-    p.alt-font.f-16.em-300
+.dyk.border.pal
+  .flex-between.flex-center.mb-10
+    h5.mvn.f-24.em-300.blue.upper(translate="DYK")
+  .flex-center
+    i.f-36.blue.pr-15(ng-class="dyk.icon")
+    h6.mvn.f-18.em-300.blue {{ dyk.title | translate }}
+  .mt-5
+    p.f-14.em-300
       | {{ dyk.text | translate }}
       span(ng-if="dyk.state")
         a.mls(ui-sref="{{ dyk.state }}" ng-hide="dyk.external") {{ dyk.linkText | translate }}

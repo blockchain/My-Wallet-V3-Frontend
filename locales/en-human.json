@@ -714,7 +714,7 @@
   "DEAUTH_SUCCESS": "This browser has been deauthorized.",
   "PENDING_REFRESH": "Refreshing in {{time}} seconds",
   "BOUGHT": "Bought",
-  "DYK_CUSTOM_FEES": "Want to set your own fees? You can! Just click on Advanced Send on the Send screen.",
+  "DYK_CUSTOM_FEES": "Want to set your own fees? You can! Just click on Customize Fee on the Send screen.",
   "DYK_CUSTOM_FEES_TITLE": "Set your own fees",
   "DYK_RECOVERY": "We never see or store your password, which means if you forget it we cannot reset it. Be sure to record your backup recovery phrase to ensure you never lose access to your bitcoin. Find out how by visiting the Security Center.",
   "DYK_RECOVERY_TITLE": "Passwords are not shared or stored with us",
