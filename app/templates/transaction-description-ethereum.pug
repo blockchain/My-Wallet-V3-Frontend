@@ -18,7 +18,7 @@
         | &nbsp;
         span.dest-oflow.f-14.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
-      transaction-note-ethereum(transaction="tx" search="search")
+      transaction-note(transaction="tx" note="note" search="search" set-note="setNote(note)" delete-note="setNote('')")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       asset-transaction-pending(transaction="tx" confirmations="12" showTooltip="false")
     .flex-1.width-20.amount.flex-end
@@ -26,7 +26,7 @@
         ethereum-transaction-amount(transaction="tx" confirmations-needed="12")
   //- toggled and mobile
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
-    transaction-note-ethereum(transaction="tx")
+    transaction-note(transaction="tx" note="note" set-note="setNote(note)" delete-note="setNote('')")
   .hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
     .flex-row
       span.f-12.em-300 To:
