@@ -9,25 +9,25 @@ blocket-loading(loading="!isWalletInitialized()")
           li.flex-row.flex-justify.border-bottom-light
             fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-200.flex-center {{::account.label}}
+            span.f-16.em-300.flex-center {{::account.label}}
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ account.balance | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-200(btc="account.balance")
+              span.f-16.em-300 {{ account.balance | toBitCurrency:BTCCurrency }}
+              fiat.f-12.em-300(btc="account.balance")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-200.flex-center {{::account.label}}
+            span.f-16.em-300.flex-center {{::account.label}}
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ getTotal() | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-200(btc="account.balance")
+              span.f-16.em-300 {{ getTotal() | toBitCurrency:BTCCurrency }}
+              fiat.f-12.em-300(btc="account.balance")
           li.flex-between.border-bottom-light.mid-grey(ng-if="activeLegacyAddresses().length > 0")
-            span.f-16.em-200.flex-center(translate="IMPORTED_ADDRESSES")
+            span.f-16.em-300.flex-center(translate="IMPORTED_ADDRESSES")
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
+              span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
               fiat(btc="getLegacyTotal()")
           li.flex-between.border-bottom-light()
-            span.f-16.em-200.flex-center(translate="MY_ETHER_WALLET")
+            span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ getEthTotal() | number:8 }} ETH
-              fiat.f-12.em-200(eth="getEthTotal()")
+              span.f-16.em-300 {{ getEthTotal() | number:8 }} ETH
+              fiat.f-12.em-300(eth="getEthTotal()")
       .section(ng-show="showMobileConversion()")
         web-to-mobile-conversion()
       .section(ng-hide="showMobileConversion()")
