@@ -1,4 +1,4 @@
-.heavy.pointer.flex-column.flex-align-end.right-align.pointer.center-mobile.main-balance(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
+.heavy.flex-column.flex-align-end.right-align.center-mobile.main-balance(ng-class="{pointer: showAll()}" ng-click="showAll() && toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
   span(ng-show="getTotal() == null")
     h3
       img(ng-show="balance == null" src="img/spinner.gif")
@@ -12,7 +12,7 @@
           span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(btc="getTotal()")
         .flex-row.flex-center(ng-hide="hideEthBalance()")
-          .vertical-line.mh-15.hidden-sm.hidden-xs(ng-show="!hideEthBalance() && !hideBtcBalance()")
+          .vertical-line.mh-15.hidden-sm.hidden-xs(ng-show="showAll()")
           i.icon-ethereum.f-20.mrs
           span(ng-show="isBitCurrency(settings.displayCurrency)")
             span {{ getEthTotal() | number:8 }} ETH
