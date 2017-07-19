@@ -15,7 +15,7 @@
           .vertical-line.mh-15.hidden-sm.hidden-xs(ng-show="showAll()")
           i.icon-ethereum.f-20.mrs
           span(ng-show="isBitCurrency(settings.displayCurrency)")
-            span {{ getEthTotal() | number:8 }} ETH
+            span {{ getEthTotal() }} ETH
           span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(eth="getEthTotal()")
     .mvn.f-20.em-200.lh1

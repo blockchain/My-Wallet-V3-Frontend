@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, Wallet, currency, browser, Ethereum, assetContext) {
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext) {
   $scope.copied = false;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -14,7 +14,7 @@ function TopCtrl ($scope, Wallet, currency, browser, Ethereum, assetContext) {
   $scope.toggleDisplayCurrency = () => Wallet.toggleDisplayCurrency();
 
   $scope.getTotal = () => Wallet.total();
-  $scope.getEthTotal = () => Ethereum.balance;
+  $scope.getEthTotal = () => Ethereum.balance > 0 ? $filter('number')(Ethereum.balance, 8) : 0;
 
   $scope.hideBtcBalance = () => assetContext.getContext().balance === 'eth';
   $scope.hideEthBalance = () => assetContext.getContext().balance === 'btc';

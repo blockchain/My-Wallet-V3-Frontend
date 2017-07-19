@@ -13,6 +13,7 @@
   }
   .transaction-feed {
     position: relative;
+    overflow-x: hidden;
     .loading .col-xs-2 {
       text-align: center;
       margin-bottom: 10px;
