@@ -29,13 +29,13 @@
             ng-click="setFilterType($index)"
             ng-class="{'active': isFilterType($index)}"
             translate="{{::f}}")
-      .flex-center.flex-end.width-50
-        a.f-12.pointer.mr-30(ng-click="exportEthPriv()")
+      .flex-center.flex-end
+        a.f-12.pointer.mh-15.button-nowrap(ng-click="exportEthPriv()")
           span Export Private Key
         .filter-search.input-group.width-60
           input.form-control(
             type="text"
-            placeholder="{{::'SEARCH_ETH_TX' | translate}}"
+            placeholder="{{::'SEARCH' | translate}}"
             ng-model="$parent.searchText"
             ng-model-options="{ debounce: 250 }")
           i.ti-search

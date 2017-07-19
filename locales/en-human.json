@@ -836,7 +836,6 @@
   "CHECKING_LOGIN_ATTEMPT" : "Checking login attempt",
   "ERROR" : "Error",
   "SEARCH" : "Search",
-  "SEARCH_ETH_TX": "Search ETH Transactions",
   "SEARCH_FOR_BLOCK_ETC": "Search for block hash, transaction, address, etc",
   "BALANCES" : "Balances",
   "MUST_SELECT_ORIGIN" : "Must select where to send from",
