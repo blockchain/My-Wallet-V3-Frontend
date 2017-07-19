@@ -91,6 +91,7 @@
     "test": "node_modules/karma/bin/karma start karma.conf.js",
     "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
     "build": "node_modules/grunt-cli/bin/grunt build",
+
     "build-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack --config partsApp/webpack.config.dev.js",
     "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
     "heroku-postbuild": "make build ; webpack --config partsApp/webpack.config.dev.js",
