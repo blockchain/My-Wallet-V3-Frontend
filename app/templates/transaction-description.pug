@@ -15,7 +15,7 @@
     .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       transaction-destinations(transaction="tx" search="search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
-      transaction-note(transaction="tx", account="account" search="search")
+      transaction-note(transaction="tx", account="account" search="search" note="note" label="label" set-note="setNote(note)" delete-note="deleteNote()")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       transaction-pending(transaction="tx")
     .flex-1.width-20.amount.flex-end
@@ -23,7 +23,7 @@
         amount(transaction="tx")
   //- toggled and mobile
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
-    transaction-note(transaction="tx" account="account")
+    transaction-note(transaction="tx" account="account" note="note" label="label" set-note="setNote(note)" delete-note="deleteNote()")
   .hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
     transaction-destinations(transaction="tx" search="search")
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")

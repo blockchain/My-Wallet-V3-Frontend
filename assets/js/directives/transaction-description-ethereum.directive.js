@@ -16,11 +16,15 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum)
   return directive;
 
   function link (scope, elem, attrs) {
-    let { external } = MyWallet.wallet;
     let currentYear = new Date().getFullYear();
     let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
     scope.year = isCurrentYear ? '' : 'yyyy';
     scope.addr = Ethereum.defaultAccount.address;
+    scope.note = Ethereum.getTxNote(scope.tx.hash);
+
+    scope.setNote = (note) => {
+      Ethereum.setTxNote(scope.tx.hash, note);
+    };
 
     scope.getTxDirection = (address, tx) => {
       let { from, to } = tx;
