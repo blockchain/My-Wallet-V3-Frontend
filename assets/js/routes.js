@@ -338,6 +338,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/transactions/transactions-ethereum.pug',
           controller: 'ethereumTransactionsCtrl'
         }
+      },
+      resolve: {
+        _initialize (Ethereum) {
+          return Ethereum.initialize();
+        }
       }
     })
     .state('wallet.common.eth.transactions', {
