@@ -89,22 +89,22 @@
   .overview(ng-show="vm.confirm")
     .flex-column.f-16
       .flex-row
-        label.colon.width-30.width-30-mobile(translate="FROM")
-        .width-70.width-70-mobile {{ $ctrl.account.label }}
+        label.colon.width-20.width-20-mobile(translate="FROM")
+        .width-80.width-80-mobile {{ $ctrl.account.label }}
       .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="TO")
-        .width-70.width-70-mobile
+        label.colon.width-20.width-20-mobile(translate="TO")
+        .width-80.width-80-mobile
           span(translate="no") {{ $ctrl.tx.to }}
       .flex-row.mt-10(ng-show="$ctrl.tx.note")
-        label.colon.width-30.width-30-mobile(translate="FOR")
-        .width-70.width-70-mobile {{ $ctrl.tx.note }}
+        label.colon.width-20.width-20-mobile(translate="FOR")
+        .width-80.width-80-mobile {{ $ctrl.tx.note }}
       .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="PAYMENT")
-        .width-70.width-70-mobile
+        label.colon.width-20.width-20-mobile(translate="PAYMENT")
+        .width-80.width-80-mobile
           span.mr-10 {{ $ctrl.payment.amount }} ETH
       .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="FEE")
-        .width-70.width-70-mobile
+        label.colon.width-20.width-20-mobile(translate="FEE")
+        .width-80.width-80-mobile
           span.mr-10 {{ $ctrl.payment.fee }} ETH
       .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
         span.mb-10(translate="TOTAL")
