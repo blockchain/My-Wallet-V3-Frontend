@@ -15,9 +15,9 @@
         .af-info.flex-center.width-100.width-100-mobile.border-bottom
           .af-marker
             i.flex-center.flex-justify(ng-class="activity.icon")
-          p.em-300.f-16.af-type.flex-3.mvn(ng-class="::activity.labelClass" translate="{{::activity.message}}")
-          p.af-date.f-16.flex-1.hidden-xs.mvn {{::activity.time | date:'mediumDate'}}
-          .af-log.flex-center.flex-3.flex-end.f-16
+          p.em-300.f-14.af-type.flex-3.mvn.capitalize(ng-class="::activity.labelClass" translate="{{::activity.message}}")
+          p.af-date.f-14.flex-1.hidden-xs.mvn {{::activity.time | date:'mediumDate'}}
+          .af-log.flex-center.flex-3.flex-end.f-14
             //- p.mvn.right-align(ng-class="::activity.labelClass" translate="{{::activity.message}}")
             span.pls(ng-show="activity.type == 0")
               fiat-or-btc(ng-hide="activity.asset === 'eth'" btc="activity.amount")
@@ -27,22 +27,19 @@
         .af-info.flex-center.width-100.width-100-mobile.border-bottom
           .af-marker
             i.ti-wallet
-          p.mvn.em-300.f-16.af-type(translate="ACTIVITY_1")
-          p.mvn.af-date.mll.flex-1
-          p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_1_DESC")
+          p.em-300.f-14.af-type.flex-3.mvn.capitalize(translate="ACTIVITY_1")
+          p.af-date.f-14.flex-1.hidden-xs.mvn
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 6")
         .af-info.flex-center.width-100.width-100-mobile.border-bottom
           .af-marker
             i.ti-settings
-          p.mvn.em-300.f-16.af-type(translate="SETTINGS")
-          p.mvn.af-date.mll.flex-1
-          p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_2_DESC")
+          p.em-300.f-14.af-type.flex-3.mvn.capitalize(translate="ACTIVITY_2")
+          p.af-date.f-14.flex-1.hidden-xs.mvn
       li.af-item.flex-align-start(ng-hide="loading || activities.length > 5")
         .af-info.flex-center.width-100.width-100-mobile
           .af-marker
             i.ti-settings
-          p.mvn.em-300.f-16.af-type(translate="SETTINGS")
-          p.mvn.af-date.mll.flex-1 
-          p.mvn.af-log.flex-2.right-align(translate="ACTIVITY_3_DESC")
+          p.em-300.f-14.af-type.flex-3.mvn.capitalize(translate="ACTIVITY_3")
+          p.af-date.f-14.flex-1.hidden-xs.mvn
     .flex-center.flex-justify.flex-column.width-100.width-100-mobile(ng-show="loading")
       img(src="img/spinner.gif")

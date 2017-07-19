@@ -32,14 +32,6 @@ describe('Activity', () => {
     )
   );
 
-  describe('capitalize', () =>
-    it('should capitalize a string', () => {
-      let str = 'capitalize me';
-      str = Activity.capitalize(str);
-      expect(str).toBe('Capitalize me');
-    })
-  );
-
   describe('time sort', () =>
     it('should be able to sort time', () => {
       let x = {};
@@ -58,7 +50,7 @@ describe('Activity', () => {
       expect(tx).toEqual(jasmine.objectContaining({
         icon: 'icon-tx',
         time: 25000,
-        message: 'RECEIVED BTC',
+        message: 'Received BTC',
         amount: 1,
         labelClass: 'received'
       }));
