@@ -5,8 +5,8 @@
       img.pb-20(src="img/blue-logo.svg")
       span.em-300.f-18.center-align(translate="ACTIVITY_EMPTY_MSG_1")
       span.em-300.f-18.center-align(translate="ACTIVITY_EMPTY_MSG_2")
-      button.button-primary.mtl(ng-show="canBuy" ui-sref="wallet.common.buy-sell" translate="GET_STARTED")
-      button.button-primary.mtl(ng-hide="canBuy" ng-click="request()" translate="GET_STARTED")
+      button.button-primary.mtl.upper(ng-show="canBuy" ui-sref="wallet.common.buy-sell" translate="GET_STARTED")
+      button.button-primary.mtl.upper(ng-hide="canBuy" ng-click="request()" translate="GET_STARTED")
     ul.af.pln(ng-show="activities.length > 0")
       li.af-item.flex-align-start(
         ng-class="{ 'af-fade' : $last && activities.length >= 8 }"
