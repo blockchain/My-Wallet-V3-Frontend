@@ -76,6 +76,8 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
         let win = $window.open(`https://etherscan.io/tx/${txHash}`, '__blank');
         win.opener = null;
       });
+    }).catch(({ message }) => {
+      Alerts.displayError(message);
     });
   };
 
