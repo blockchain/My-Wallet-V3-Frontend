@@ -3,34 +3,31 @@ blocket-loading(loading="!isWalletInitialized()")
   .mtl.row.pl-15.pr-15
     activity-feed(data-preflight-tag="ActivityFeed")
     .col-md-6.col-sm-12.col-xs-12.col-home.flex-column.pb-50
-      .section.mb-25.border.pal(ng-show="showBalances()")
-        h5.mtn.f-24.em-300.blue.mb-20(translate="YOUR_BALANCES")
+      .section.mb-15.border.pal(ng-show="showBalances()")
+        h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
         ul.pln.account-balances
           li.flex-row.flex-justify.border-bottom-light
             fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-200.flex-center.upper {{::account.label}}
+            span.f-16.em-300.flex-center {{::account.label}}
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ account.balance | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-200(btc="account.balance")
+              span.f-16.em-300 {{ account.balance | toBitCurrency:BTCCurrency }}
+              fiat.f-12.em-300(btc="account.balance")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-200.flex-center.upper {{::account.label}}
+            span.f-16.em-300.flex-center {{::account.label}}
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ getTotal() | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-200(btc="account.balance")
+              span.f-16.em-300 {{ getTotal() | toBitCurrency:BTCCurrency }}
+              fiat.f-12.em-300(btc="account.balance")
+          li.flex-between.border-bottom-light.mid-grey(ng-if="activeLegacyAddresses().length > 0")
+            span.f-16.em-300.flex-center(translate="IMPORTED_ADDRESSES")
+            .flex-column.flex-align-end
+              span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
+              fiat(btc="getLegacyTotal()")
           li.flex-between.border-bottom-light()
-            span.f-16.em-200.flex-center.upper(translate="MY_ETHER_WALLET")
+            span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
             .flex-column.flex-align-end
-              span.f-16.em-200 {{ getEthTotal() | number:8 }} ETH
-              fiat.f-12.em-200(eth="getEthTotal()")
-          li.flex-between.border-bottom-light.mid-grey(ng-show="activeLegacyAddresses().length > 5")
-            span(translate="IMPORTED_ADDRESSES")
-            fiat-or-btc(btc="getLegacyTotal()")
-          ul(ng-show="activeLegacyAddresses().length <= 5")
-            li.flex-between.border-bottom-light.mid-grey(ng-repeat="address in activeLegacyAddresses()")
-              .width-60.width-40-mobile
-                span.text-overflow-hidden(title="{{address.address}}") {{address.label ? address.label : address.address}}
-              fiat-or-btc(btc="address.balance")
+              span.f-16.em-300 {{ getEthTotal() | number:8 }} ETH
+              fiat.f-12.em-300(eth="getEthTotal()")
       .section(ng-show="showMobileConversion()")
         web-to-mobile-conversion()
       .section(ng-hide="showMobileConversion()")
