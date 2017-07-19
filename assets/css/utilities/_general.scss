@@ -28,6 +28,9 @@ body {
   @media (max-width: 767px) {
     flex: 0 0 50px;
   }
+  .navbar-nav > li {
+    font-weight: 300;
+  }
 }
 
 .line-split {
