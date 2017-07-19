@@ -15,7 +15,6 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
     logs: [],
     limit: 8,
     timeSort,
-    capitalize,
     btcTxFactory,
     ethTxFactory,
     logFactory,
@@ -26,7 +25,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   };
 
   let getTxMessage = (hash, type, asset) => (
-    buySell.getTxMethod(hash) === 'buy' ? 'BOUGHT' : `${type.toUpperCase()} ${asset.toUpperCase()}`
+    buySell.getTxMethod(hash) === 'buy' ? 'BOUGHT' : `${type} ${asset.toUpperCase()}`
   );
 
   setTxSub();
@@ -121,13 +120,9 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
       type: 4,
       icon: 'ti-settings',
       time: obj.time,
-      message: capitalize(obj.action),
+      message: obj.action,
       labelClass: obj.action.toLowerCase()
     };
-  }
-
-  function capitalize (str) {
-    return str[0].toUpperCase() + str.substr(1);
   }
 
   function timeSort (x, y) {

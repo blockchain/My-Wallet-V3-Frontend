@@ -6,6 +6,20 @@
   &:last-child, &.af-fade {
     opacity: 0.5;
   }
+  &:first-child {
+    @extend .pos-rel;
+    &:before {
+      content: '';
+      left: -1px;
+      width: 1px;
+      height: 10px;
+      @extend .pos-abs;
+      background: white;
+    }
+  }
+}
+.af-type {
+  margin-left: -15px;
 }
 .af-empty-state {
   height: 55vh;
