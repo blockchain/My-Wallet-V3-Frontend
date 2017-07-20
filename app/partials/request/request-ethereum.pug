@@ -8,7 +8,7 @@
               span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
               helper-button(content="COPY_AND_SHARE_ADDRESS.ETH_HELPER")
           .flex-row.flex-column-mobile
-            span.f-16.bg-grey.ph-25.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
+            span.f-14.bg-grey.ph-25.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel.center-mobile(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browser.canExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
             span.f-14.ph-25.pv-10.upper.white.bg-success.center-mobile(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
       .group.mb-20
