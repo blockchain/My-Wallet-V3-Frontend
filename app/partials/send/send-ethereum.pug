@@ -2,9 +2,9 @@
   div(ng-hide="vm.confirm")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
       fieldset
-        .group.mb-20.inline
-          .item.width-50.pr-25(ng-hide="vm.hideAssetSelect")
-            label(translate="What would you like to send?")
+        .group.mb-20.inline(ng-hide="vm.hideAssetSelect")
+          .item.width-30.width-50-mobile.mr-20
+            label.colon(translate="CURR")
             asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
 
         .group
@@ -24,9 +24,8 @@
               .input-group-btn
                 qr-scan(on-scan="$ctrl.onScan")
             .has-error
-              span.state-danger-text(ng-show="sendForm.to.$error.isContract")
-                span.type-sm(translate="ETHER_DISABLE_SEND_TO_CONTRACT")
-
+              span.help-block.type-sm(ng-show="sendForm.to.$error.isContract" translate="ETHER_DISABLE_SEND_TO_CONTRACT")
+              span.help-block.type-sm(ng-show="sendForm.to.$error.isEthAddress && !sendForm.to.$error.isContract" translate="ETHER_ADDRESS_INVALID")
           //- Amount
           .item.mt-20
             label.colon(translate="AMOUNT")
@@ -108,9 +107,9 @@
           span.mr-10 {{ $ctrl.payment.fee }} ETH
       .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
         span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{ $ctrl.payment.amount }} ETH
+        span.f-28.mb-10.em-600 {{ $ctrl.getTransactionTotal() }} ETH
         span.f-20.em-300
-          fiat(eth="$ctrl.payment.amount")
+          fiat(eth="$ctrl.getTransactionTotal()")
 
   .mt-25
     button.full.button-primary.upper(

@@ -42,7 +42,6 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
 
     const success = () => {
       $scope.state.requestCreated = true;
-      $scope.$parent.$parent.vm.btcRequestStep = 1;
     };
 
     const error = (error) => {
@@ -106,7 +105,6 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
   };
 
   $scope.back = () => {
-    $scope.$parent.$parent.vm.btcRequestStep = 0;
     $scope.state.requestCreated = false;
   };
 
