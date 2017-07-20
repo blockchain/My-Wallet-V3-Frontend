@@ -42,6 +42,8 @@ function Ethereum ($q, Wallet) {
     if (!service.eth.defaultAccount) {
       return Wallet.askForSecondPasswordIfNeeded().then(secPass => {
         service.eth.createAccount(void 0, secPass);
+      }, () => {
+        return $q.reject('ETHER_SECPASS_REQUIRED');
       });
     } else {
       return $q.resolve();
