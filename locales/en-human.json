@@ -23,9 +23,13 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
-    "CAN_I_BUY": {
+    "CAN_I_BUY_BTC": {
       "Q": "How do I buy bitcoin?",
       "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
+    },
+    "CAN_I_BUY_ETH": {
+      "Q": "How do I buy ether?",
+      "A": "We're working on that. Our users will be notified once that feature becomes available."
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy bitcoin?",
@@ -36,28 +40,32 @@
       "A": "Our Security Center can help you keep your wallet secure and ensure that you can access your funds even if you lose your password - all in less than 5 minutes. A great place to start is to enable 2-Step Verification to help prevent unauthorized access to your wallet and write down your Recovery Phrase to make sure you never lose access to your funds. We also recommend using a unique, random password that’s at least 16 characters or more."
     },
     "WALLET_ID_VS_ADDRESS": {
-      "Q": "What is the difference between a wallet ID and a bitcoin address?",
-      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. A bitcoin address is what you share with others when you want to receive funds. To generate a new bitcoin address click on Receive."
+      "Q": "What is the difference between a wallet ID and an address?",
+      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. Bitcoin and ether addresses are what you share with others when you want to receive funds. To find your bitcoin or ether address click on Request."
     },
-    "HOW_TO_TRANSACT": {
+    "HOW_TO_TRANSACT_BTC": {
       "Q": "How do I receive/send bitcoin?",
       "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Receive and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
     },
+    "HOW_TO_TRANSACT_ETH": {
+      "Q": "How do I receive/send ether?",
+      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Ether’ in the left menu to access your ether dashboard. Once there, click on ‘Request’ to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ from the ether transactions tab, enter the recipient’s ether address in the ‘To’ field and how much you want to send."
+    },
     "HOW_MUCH_TO_SEND": {
-      "Q": "How much does it cost to send bitcoin?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin network. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. Before you send your transaction, you can view the included fee that we recommend. If you wish to specify your own fee, you can do so under Advanced Send."
+      "Q": "How much does it cost to send bitcoin or ether?",
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin and Ethereum networks. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. Before you send your transaction, you can view the included fee that we recommend. If you wish to specify your own fee, you can do so under Advanced Send."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
       "Q": "How do I know a transaction has been successfully received/sent?",
-      "A": "Transactions will appear almost instantly in your transaction feed which you can find on the left navigation of the wallet. Your transaction is considered complete once it has received 3 network confirmations. This typically takes about 30 minutes, but can vary. Until then your transaction will show up as pending."
+      "A": "Transactions will appear almost instantly in your transaction feed which you can find in your bitcoin and ether dashboards (by clicking on the corresponding currency on the left navigation of the wallet). While your bitcoin transaction is considered complete once it has 3 network confirmations, your ether transaction will be considered complete once it has 12 confirmations. This typically takes about 30 minutes for bitcoin and 5 minutes for ether, but can vary. Until then your transaction will show up as pending."
     },
     "CAN_BC_SEE_FUNDS": {
       "Q": "Can Blockchain see or access my funds?",
-      "A": "We are a noncustodial wallet and do not have access to your bitcoins. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin."
+      "A": "We are a noncustodial wallet and do not have access to your funds. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin and ether."
     },
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
-      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a recovery phrase that can be used to restore access to your bitcoins. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a recovery phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
     }
   },
   "SETTINGS": "Settings",
@@ -180,13 +188,13 @@
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
-  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds.",
+  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send payment alerts when you receive funds.",
   "CHANGE_EMAIL_NOT_EXCHANGE": "This will change your wallet's email address, but the email address you signed up to Buy Bitcoin with will remain the same.",
   "MAIL_PROVIDER_WARN": "Your mail provider may have issues receiving emails from Blockchain",
   "VERIFIED" : "Verified",
   "UNVERIFIED" : "Unverified",
   "MOBILE_NUMBER" : "Mobile Number",
-  "MOBILE_NUMBER_EXPLAIN" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access, and to send bitcoin payment alerts when you receive funds.",
+  "MOBILE_NUMBER_EXPLAIN" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access, and to send payment alerts when you receive funds.",
   "ADD_MOBILE_NUMBER" : "Link Mobile Number",
   "WALLET_PASSWORD" : "Wallet Password",
   "WALLET_PASSWORD_EXPLAIN" : "Your password is never shared with our servers, which means we cannot help reset your password if you forget it. Make sure you write down your recovery phrase which can restore access to your wallet in the event of a lost password.",
@@ -225,7 +233,7 @@
   "CANCEL_EDIT_NOTE" : "Cancel",
   "WALLET_RECOVERY_PHRASE" : "Wallet Recovery Phrase",
   "RECOVERY_PHRASE" : "Recovery Phrase",
-  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
+  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins and ether as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
@@ -328,7 +336,7 @@
   "DELETE" : "Delete",
   "SECOND_PASSWORD" : "Second Password",
   "CURRENT_SECOND_PASSWORD": "Current Second Password",
-  "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend bitcoins. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
+  "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend your funds. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_WARNING" : "This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
@@ -556,7 +564,7 @@
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
   "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Please return to your previous browser / tab to see your wallet.",
-  "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you, and it is what you will use to log in and access your wallet. It is <b>not</b> a bitcoin address for sending or receiving.",
+  "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you, and it is what you will use to log in and access your wallet. It is <b>not</b> an address for sending or receiving.",
   "UID_EXPLAIN_WARN": "Do not share your Wallet ID with others.",
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
@@ -669,7 +677,7 @@
   "VERIFY_ON_ETHERSCAN": "Verify on Etherscan.io",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
   "ACCOUNT_NAME_TAKEN" : "That name is already in use",
-  "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send bitcoin payment alerts when you receive funds.",
+  "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send payment alerts when you receive funds.",
   "RECOVERY_PHRASE_TOOLTIP" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers.",
   "PASSWORD_HINT_TOOLTIP" : "Allows us to send your password hint to your verified email address in case you forget your password.",
   "MOBILE_NUMBER_TOOLTIP" : "@:MOBILE_NUMBER_EXPLAIN",
@@ -678,7 +686,7 @@
   "ALL_WALLETS" : "All Wallets",
   "ALL_TRANSACTIONS": "All Transactions",
   "NOTE_LC" : "Note:",
-  "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
+  "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your Blockchain wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
   "NO_THANKS" : "No thanks",
   "CONTINUE_LOGOUT": "Continue signing out",
@@ -815,7 +823,7 @@
   "REDIRECTING": "We're redirecting you to your wallet now!",
   "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
   "NOTIFICATIONS" : "Notifications",
-  "NOTIFICATIONS_EXPLAIN" : "Get notified when you receive bitcoin.",
+  "NOTIFICATIONS_EXPLAIN" : "Get notified when you receive bitcoin or ether.",
   "VERIFY_EMAIL_FIRST" : "Verify your email address to enable notifications",
   "VERIFY_MOBILE_FIRST": "Verify your mobile number to enable notifications",
   "SMS": "SMS",
