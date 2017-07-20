@@ -24,9 +24,8 @@
               .input-group-btn
                 qr-scan(on-scan="$ctrl.onScan")
             .has-error
-              span.state-danger-text(ng-show="sendForm.to.$error.isContract")
-                span.type-sm(translate="ETHER_DISABLE_SEND_TO_CONTRACT")
-
+              span.help-block.type-sm(ng-show="sendForm.to.$error.isContract" translate="ETHER_DISABLE_SEND_TO_CONTRACT")
+              span.help-block.type-sm(ng-show="sendForm.to.$error.isEthAddress && !sendForm.to.$error.isContract" translate="ETHER_ADDRESS_INVALID")
           //- Amount
           .item.mt-20
             label.colon(translate="AMOUNT")

@@ -516,6 +516,7 @@
   "API_ACCESS" : "API Access",
   "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>here</a> to get started.",
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
+  "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
   "EMAIL_CONFIRMATION_SENT" : "Sent",
