@@ -107,9 +107,9 @@
           span.mr-10 {{ $ctrl.payment.fee }} ETH
       .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
         span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{ $ctrl.payment.amount }} ETH
+        span.f-28.mb-10.em-600 {{ $ctrl.getTransactionTotal() }} ETH
         span.f-20.em-300
-          fiat(eth="$ctrl.payment.amount")
+          fiat(eth="$ctrl.getTransactionTotal()")
 
   .mt-25
     button.full.button-primary.upper(

@@ -84,6 +84,10 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
     });
   };
 
+  this.getTransactionTotal = () => {
+    return this.payment.amount + this.payment.fee;
+  };
+
   this.convertFromEther = (eth) => {
     return currency.formatCurrencyForView(currency.convertFromEther(eth, this.fiat), this.fiat, false);
   };
