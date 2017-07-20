@@ -113,6 +113,5 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     };
 
     scope.getInitialExchangeRate();
-
   }
 }
