@@ -1,6 +1,10 @@
 #receive.modal-body
   form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="isToImportedAddress() ? state.requestCreated = true : createPaymentRequest();" novalidate)
     fieldset
+      .group.mb-20.inline
+        .item.width-30.width-50-mobile(ng-hide="vm.hideAssetSelect")
+          label.colon(translate="CURR")
+          asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
       .group.mb-20
         .item
           label.flex-between.flex-baseline
