@@ -38,6 +38,10 @@ function Ethereum ($q, Wallet) {
     return service.eth.isAddress(address);
   };
 
+  service.getPrivateKeyForAccount = (account) => {
+    return service.eth.getPrivateKeyForAccount(account);
+  };
+
   service.initialize = () => {
     if (!service.eth.defaultAccount) {
       return Wallet.askForSecondPasswordIfNeeded().then(secPass => {

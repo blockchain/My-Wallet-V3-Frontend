@@ -63,8 +63,11 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   };
 
   this.nextStep = () => {
-    this.payment.sign();
-    $scope.vm.toConfirmView();
+    Wallet.askForSecondPasswordIfNeeded().then(secPass => {
+      let privateKey = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass);
+      this.payment.sign(privateKey);
+      $scope.vm.toConfirmView();
+    });
   };
 
   this.send = () => {

@@ -3,7 +3,7 @@
 .modal-body
   div(ng-hide="$ctrl.accessAllowed")
     p(translate="PRIVATE_KEY_WARNING_ETH")
-  div(ng-show="$ctrl.accessAllowed")
+  div(ng-if="$ctrl.accessAllowed")
     .row
       .col-sm-4.col-md-3
         qr(text="$ctrl.key" size="120" correction-level="'M'" image="true")
@@ -19,4 +19,4 @@
           span(translate="no") : {{ $ctrl.key }}
 .modal-footer
   button.button-default.mrm(ng-click="$close()" translate="CLOSE")
-  button.button-primary(ng-hide="$ctrl.accessAllowed" ng-click="$ctrl.accessAllowed = true" translate="CONTINUE")
+  button.button-primary(ng-hide="$ctrl.accessAllowed" ng-click="$ctrl.requestAccess()" translate="CONTINUE")

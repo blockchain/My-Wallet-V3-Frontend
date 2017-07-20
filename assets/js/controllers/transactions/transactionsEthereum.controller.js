@@ -73,7 +73,10 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
       this.accessAllowed = false;
       this.address = Ethereum.defaultAccount.address;
       this.balance = Ethereum.defaultAccount.balance;
-      this.key = '0x' + Ethereum.defaultAccount.privateKey.toString('hex');
+      this.requestAccess = () => Wallet.askForSecondPasswordIfNeeded().then(secPass => {
+        this.accessAllowed = true;
+        this.key = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass).toString('hex');
+      });
     }
   });
 
