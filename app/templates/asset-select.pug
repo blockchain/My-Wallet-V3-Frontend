@@ -1,5 +1,5 @@
 ui-select.hidden-xs(ng-model="$ctrl.asset" ng-change="$ctrl.onChange($ctrl.asset)" tagging)
-  ui-select-match(placeholder="Select currency")
+  ui-select-match(placeholder="Select")
     i(class="pr-10 {{$select.selected.icon}}")
     span {{$select.selected.name}}
   ui-select-choices(repeat="asset in $ctrl.assets")
