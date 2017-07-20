@@ -19,8 +19,11 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum)
     let currentYear = new Date().getFullYear();
     let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
     scope.year = isCurrentYear ? '' : 'yyyy';
+    scope.acct = Ethereum.defaultAccount.label;
     scope.addr = Ethereum.defaultAccount.address;
     scope.note = Ethereum.getTxNote(scope.tx.hash);
+    scope.isToAccount = scope.tx.isToAccount(Ethereum.defaultAccount);
+    scope.isFromAccount = scope.tx.isFromAccount(Ethereum.defaultAccount);
 
     scope.setNote = (note) => {
       Ethereum.setTxNote(scope.tx.hash, note);

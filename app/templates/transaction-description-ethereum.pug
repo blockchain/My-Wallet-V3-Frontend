@@ -12,11 +12,11 @@
       .flex-row
         span.f-14.em-300 To:
         | &nbsp;
-        span.dest-oflow.f-14.em-300(ng-bind-html="tx.to | escapeHtml | highlight:search")
+        span.dest-oflow.f-14.em-300(ng-bind-html="isToAccount ? acct : tx.to | escapeHtml | highlight:search")
       .flex-row
         span.f-14.em-300 From:
         | &nbsp;
-        span.dest-oflow.f-14.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
+        span.dest-oflow.f-14.em-300(ng-bind-html="isFromAccount ? acct : tx.from | escapeHtml | highlight:search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
       transaction-note(transaction="tx" note="note" search="search" set-note="setNote(note)" delete-note="setNote('')")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
