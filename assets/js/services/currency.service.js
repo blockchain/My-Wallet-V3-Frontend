@@ -132,16 +132,18 @@ function currency ($q, MyBlockchainApi) {
       conversion: parseInt(SATOSHI / info.last, 10)
     });
     return MyBlockchainApi.getExchangeRate(code, 'BTC').then((rate) => {
-      conversions[code] = currencyFormat(rate);
-      return conversions[code];
+      Object.keys(rate).forEach(key => {
+        conversions[key] = currencyFormat(rate[key]);
+      });
     });
   }
 
   function fetchEthRate (currency) {
     let { code } = currency;
     return MyBlockchainApi.getExchangeRate(code, 'ETH').then((rate) => {
-      ethConversions[code] = rate;
-      return rate;
+      Object.keys(rate).forEach(key => {
+        ethConversions[key] = rate[key];
+      });
     });
   }
 
