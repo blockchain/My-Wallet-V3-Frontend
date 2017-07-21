@@ -14,7 +14,7 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetCon
   $scope.toggleDisplayCurrency = () => Wallet.toggleDisplayCurrency();
 
   $scope.getTotal = () => Wallet.total();
-  $scope.getEthTotal = () => Ethereum.balance > 0 ? $filter('number')(Ethereum.balance, 8) : 0;
+  $scope.getEthTotal = () => Ethereum.balance;
 
   $scope.hideBtcBalance = () => assetContext.getContext().balance === 'eth';
   $scope.hideEthBalance = () => assetContext.getContext().balance === 'btc';

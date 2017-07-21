@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .factory('currency', currency);
 
-currency.$inject = ['$q', 'MyBlockchainApi'];
+currency.$inject = ['$q', 'MyBlockchainApi', 'MyWalletHelpers'];
 
-function currency ($q, MyBlockchainApi) {
+function currency ($q, MyBlockchainApi, MyWalletHelpers) {
   const SATOSHI = 100000000;
   const conversions = {};
   const ethConversions = {};
@@ -112,6 +112,7 @@ function currency ($q, MyBlockchainApi) {
     convertToEther,
     convertFromEther,
     formatCurrencyForView,
+    getCurrencyByCode: MyWalletHelpers.memoize(getCurrencyByCode),
     commaSeparate
   };
 
@@ -178,7 +179,8 @@ function currency ($q, MyBlockchainApi) {
 
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0 })[currency.code];
+    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 18 };
+    let decimalPlaces = decimalMap[currency.code];
     return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
 
@@ -236,7 +238,8 @@ function currency ($q, MyBlockchainApi) {
     if (amount == null || currency == null) return null;
     let decimalPlaces = decimalPlacesForCurrency(currency);
     let code = showCode ? (' ' + currency.code) : '';
-    if (isBitCurrency(currency)) {
+    amount = parseFloat(amount);
+    if (isBitCurrency(currency) || isEthCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
     } else if (isEthCurrency(currency)) {
@@ -245,6 +248,12 @@ function currency ($q, MyBlockchainApi) {
       amount = parseFloat(amount).toFixed(decimalPlaces);
     }
     return commaSeparate(amount) + code;
+  }
+
+  function getCurrencyByCode (code) {
+    code = code.toUpperCase();
+    return service.currencies.concat(bitCurrencies).concat(ethCurrencies)
+      .find(curr => curr.code === code);
   }
 
   function commaSeparate (amount) {

@@ -5,8 +5,9 @@ angular
 formatFilter.$inject = ['Wallet', 'currency'];
 function formatFilter (Wallet, currency) {
   return function (amount, curr) {
-    let fiatSettings = curr || Wallet.settings.currency;
-
-    return currency.formatCurrencyForView(amount, fiatSettings, false);
+    let currSetting = typeof curr === 'string'
+      ? currency.getCurrencyByCode(curr)
+      : (curr || Wallet.settings.currency);
+    return currency.formatCurrencyForView(amount, currSetting, false);
   };
 }

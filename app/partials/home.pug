@@ -26,7 +26,7 @@ blocket-loading(loading="!isWalletInitialized()")
           li.flex-between.border-bottom-light()
             span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
             .flex-column.flex-align-end
-              span.f-16.em-300 {{ getEthTotal() | number:8 }} ETH
+              span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH
               fiat.f-12.em-300(eth="getEthTotal()")
       .section(ng-show="showMobileConversion()")
         web-to-mobile-conversion()
