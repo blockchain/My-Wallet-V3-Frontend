@@ -18,11 +18,11 @@ function transactionStatus (BrowserHelper, Env) {
 
   function link (scope, elem, attrs) {
     scope.verify = () => {
-      if (scope.confirmations === 3) {
+      if (scope.transaction.constructor.name === 'Tx') {
         Env.then(env => {
           BrowserHelper.safeWindowOpen(env.rootURL + 'tx/' + scope.transaction.hash);
         });
-      } else if (scope.confirmations === 12) {
+      } else if (scope.transaction.constructor.name === 'EthWalletTx') {
         BrowserHelper.safeWindowOpen(`https://etherscan.io/tx/${scope.transaction.hash}`);
       }
     };

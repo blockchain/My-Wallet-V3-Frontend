@@ -28,7 +28,7 @@
     transaction-destinations(transaction="tx" search="search")
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
-      transaction-status(transaction="tx")
+      transaction-status(transaction="tx" confirmations="3")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
