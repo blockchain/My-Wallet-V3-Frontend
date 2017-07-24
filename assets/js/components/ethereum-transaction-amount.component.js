@@ -10,9 +10,10 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency) {
+function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency, Ethereum) {
   this.tx = this.transaction;
   this.showFiat = true;
+  this.account = Ethereum.defaultAccount;
 
   this.settings = Wallet.settings;
   this.isBitCurrency = currency.isBitCurrency;

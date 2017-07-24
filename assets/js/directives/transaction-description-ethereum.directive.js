@@ -29,27 +29,22 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum)
       Ethereum.setTxNote(scope.tx.hash, note);
     };
 
-    scope.getTxDirection = (address, tx) => {
-      let { from, to } = tx;
-      if (address === from) {
-        scope.tx.txType = 'sent';
-        return 'SENT';
-      }
-      if (address === to) {
-        scope.tx.txType = 'received';
-        return 'RECEIVED_BITCOIN_FROM';
-      }
+    scope.txType = scope.tx.getTxType(Ethereum.defaultAccount);
+
+    scope.getTxDirection = (type) => {
+      if (type === 'sent') return 'SENT';
+      if (type === 'received') return 'RECEIVED_BITCOIN_FROM';
     };
 
     scope.getTxClass = (txType) => {
-      if (txType === 'sent') return 'outgoing_tx';
-      if (txType === 'received') return 'incoming_tx';
+      if (scope.txType === 'sent') return 'outgoing_tx';
+      if (scope.txType === 'received') return 'incoming_tx';
     };
 
     scope.settings = Wallet.settings;
 
-    scope.txDirection = scope.getTxDirection(scope.addr, scope.tx);
-    scope.txClass = scope.getTxClass(scope.tx.txType);
+    scope.txDirection = scope.getTxDirection(scope.txType);
+    scope.txClass = scope.getTxClass(scope.txType);
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {

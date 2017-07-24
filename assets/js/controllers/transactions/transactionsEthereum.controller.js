@@ -94,8 +94,7 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
   $scope.setFilterType(0);
 
   $scope.transactionFilter = item => {
-    return ($scope.filterByType(item) &&
-            $scope.filterSearch(item, $scope.searchText));
+    return ($scope.filterByType(item) && $scope.filterSearch(item, $scope.searchText));
   };
 
   $scope.filterSearch = (tx, search) => {
