@@ -101,7 +101,7 @@
       .flex-row.mt-10
         label.colon.width-20.width-20-mobile(translate="PAYMENT")
         .width-80.width-80-mobile
-          span.mr-10 {{ $ctrl.payment.amount }} ETH
+          span.mr-10 {{ $ctrl.payment.amount | format:'eth':8 }} ETH
       .flex-row.mt-10
         label.colon.width-20.width-20-mobile(translate="FEE")
         .width-80.width-80-mobile
