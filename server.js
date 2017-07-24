@@ -63,6 +63,7 @@ app.use(function (req, res, next) {
         "'self'",
         rootURL,
         (webSocketURL || 'wss://ws.blockchain.info'),
+        (webSocketURL || 'wss://ws.blockchain.info/inv').replace('/inv', '/eth/ws'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
         `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
