@@ -20,7 +20,8 @@
                 ng-model-options="{debounce:250}"
                 ng-change="$ctrl.setTo()"
                 validate-eth-address
-                autofocus)
+                autofocus
+                required)
               .input-group-btn
                 qr-scan(on-scan="$ctrl.onScan")
             .has-error
