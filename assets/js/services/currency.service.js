@@ -179,7 +179,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 18 };
+    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8 };
     let decimalPlaces = decimalMap[currency.code];
     return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
