@@ -26,10 +26,6 @@ var rootApp = express();
 var app = express();
 var helperApp = runWalletHelper ? express() : null;
 
-var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({ target: 'http://localhost:8085' });
-rootApp.use('/eth', proxy.web.bind(proxy));
-
 app.use(compression());
 
 if (runWalletHelper) {
