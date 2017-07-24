@@ -538,9 +538,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
     }
   };
-
-  wallet.toggleTransactionDisplayCurrency = () => wallet.settings.displayTransactionCurrencyAsFiat = !wallet.settings.displayTransactionCurrencyAsFiat;
-
+  
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) => {
     amount = currency.convertToSatoshi(amount, currency);
     if (success == null || error == null) {
