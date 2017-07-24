@@ -1025,7 +1025,8 @@
   },
   "TX_AWAITING_REF_NUMBER": {
     "TITLE": "Bank Transfer",
-    "BODY": ""
+    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below. You will then need to provide the bank transfer reference number."
+
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1397,8 +1398,8 @@
     "QUOTE_EXPIRED_ERROR": "{{::error}} Please re-start your trade to complete the sale. If you continue to experience this issue, contact our support team <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>here</a>.",
     "IBAN": "International Bank Account Number (IBAN)",
     "BIC": "Bank Identifier Code (SWIFT/BIC)",
-    "BBAN": "Basic Bank Account Number (BBAN)",
-    "REG": "Bank REG Number",
+    "BBAN": "Account Number",
+    "REG": "REG Number",
     "HOLDER_NAME": "Account Holder's Full Name",
     "HOLDER_STREET": "Street and Number",
     "HOLDER_CITY": "City",

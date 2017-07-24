@@ -40,7 +40,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
-        scope.getMinLimits(quote);
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
       }, error).finally(scope.getQuote);
     };
@@ -84,7 +83,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     const success = (quote) => {
       scope.status = {};
       scope.quote = quote;
-      scope.getMinLimits(quote);
+      scope.getLimits();
       scope.exchangeRate.fiat = scope.getExchangeRate();
 
       if (quote.baseCurrency === 'BTC') {
@@ -107,9 +106,13 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
         .finally(() => scope.disabled = false);
     };
 
-    scope.getMinLimits = (quote) => {
-      $q.resolve(buySell.getMinLimits(quote))
-        .then(scope.limits = buySell.limits);
+    scope.getLimits = (quote) => {
+      $q.resolve(quote.getPaymentMediums())
+        .then((mediums) => {
+          console.log(scope.transaction);
+          scope.limits.bank = mediums.bank._limitsInAmounts;
+          scope.limits.card = mediums.card._limitsInAmounts;
+        });
     };
 
     scope.getInitialExchangeRate();
