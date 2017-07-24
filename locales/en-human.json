@@ -1515,5 +1515,7 @@
   "ETHER_DISABLE_SEND_TO_CONTRACT": "Sending to contract addresses is disabled.",
   "MY_ETHER_WALLET": "My Ether Wallet",
   "ETHER_SECPASS_REQUIRED": "You must enter your second password to initialize your ether wallet.",
+  "ETHER_SEND_RECEIVE": "Send & Receive Ether",
+  "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive Ether from your Blockchain wallet!",
   "": ""
 }
