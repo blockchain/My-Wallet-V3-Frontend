@@ -6,7 +6,6 @@ Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWall
 
 function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell, Ethereum) {
   var txSub;
-  console.log(MyWallet);
 
   const activity = {
     activities: [],

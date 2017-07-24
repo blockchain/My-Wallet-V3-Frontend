@@ -340,8 +340,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        _initialize (Ethereum) {
-          return Ethereum.initialize();
+        _initialize ($injector, $q, Wallet) {
+          return Wallet.status.isLoggedIn
+            ? $injector.get('Ethereum').initialize()
+            : $q.resolve();
         }
       }
     })
