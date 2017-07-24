@@ -30,6 +30,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     scope.fiat = { currencySymbol: null, amount: null };
     scope.settings = Wallet.settings;
     scope.conversions = currency.conversions;
+    scope.ethConversions = currency.ethConversions;
 
     scope.updateFiat = () => {
       scope.fiat = { currencySymbol: null, amount: null };
@@ -62,6 +63,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     };
 
     scope.$watchCollection('conversions', () => scope.updateFiat());
+    scope.$watchCollection('ethConversions', () => scope.updateFiat());
     scope.$watch('settings.currency.code + btc + eth + currency', () => scope.updateFiat());
     $rootScope.$on('refresh', () => scope.updateFiat());
   }
