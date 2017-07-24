@@ -101,16 +101,10 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
 
   $scope.filterSearch = (tx, search) => {
     if (!search) return true;
-    return ($scope.filterTx(tx.processedInputs, search) ||
-            $scope.filterTx(tx.processedOutputs, search) ||
+    tx.addresses = tx.from.concat(tx.to);
+    return (tx.addresses.toLowerCase().search(search.toLowerCase()) > -1 ||
             (tx.hash.toLowerCase().search(search.toLowerCase()) > -1) ||
             (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
-  };
-
-  $scope.filterTx = (coins, search) => {
-    return coins
-      .map(coin => $scope.checkLabelDiff(coin.label, coin.address))
-      .join(', ').toLowerCase().search(search.toLowerCase()) > -1;
   };
 
   $scope.filterByType = tx => {
