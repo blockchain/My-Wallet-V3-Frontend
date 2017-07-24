@@ -83,7 +83,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     const success = (quote) => {
       scope.status = {};
       scope.quote = quote;
-      scope.getLimits();
+      scope.getLimits(quote);
       scope.exchangeRate.fiat = scope.getExchangeRate();
 
       if (quote.baseCurrency === 'BTC') {
@@ -109,9 +109,11 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.getLimits = (quote) => {
       $q.resolve(quote.getPaymentMediums())
         .then((mediums) => {
-          console.log(scope.transaction);
+          console.log(mediums);
           scope.limits.bank = mediums.bank._limitsInAmounts;
           scope.limits.card = mediums.card._limitsInAmounts;
+          scope.limits.absoluteBuyMax = scope.limits.bank > scope.limits.card ? scope.limits.bank : scope.limits.card;
+          console.log('buymax: ' + scope.limits.absoluteBuyMax);
         });
     };
 

@@ -55,7 +55,7 @@
                 span.btc BTC
         .mts.pos-rel(ng-hide="tradingDisabled")
           span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW" translate-values="{limit: limits.absoluteMin(transaction.currency.code), symbol: symbol}")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH" translate-values="{limit: limits.absoluteMax(transaction.currency.code), symbol: symbol}")
+          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH" translate-values="{limit: limits.absoluteBuyMax(transaction.currency.code), symbol: symbol}")
         .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
           span.pos-abs.type-sm
             span.state-danger-text(translate="TRADING_IS_DISABLED")
