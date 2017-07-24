@@ -9,6 +9,8 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
     (txs) => { $scope.ethTransactions = txs; }
   );
 
+  $scope.account = Ethereum.defaultAccount;
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.filterBy = {
@@ -116,9 +118,9 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
       case $scope.filterTypes[0]:
         return true;
       case $scope.filterTypes[1]:
-        return tx.txType === 'sent';
+        return tx.getTxType($scope.account) === 'sent';
       case $scope.filterTypes[2]:
-        return tx.txType === 'received';
+        return tx.getTxType($scope.account) === 'received';
     }
     return false;
   };
