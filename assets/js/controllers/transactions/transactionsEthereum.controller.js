@@ -9,6 +9,8 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
     (txs) => { $scope.ethTransactions = txs; }
   );
 
+  $scope.account = Ethereum.defaultAccount;
+
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.filterBy = {
@@ -94,22 +96,15 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
   $scope.setFilterType(0);
 
   $scope.transactionFilter = item => {
-    return ($scope.filterByType(item) &&
-            $scope.filterSearch(item, $scope.searchText));
+    return ($scope.filterByType(item) && $scope.filterSearch(item, $scope.searchText));
   };
 
   $scope.filterSearch = (tx, search) => {
     if (!search) return true;
-    return ($scope.filterTx(tx.processedInputs, search) ||
-            $scope.filterTx(tx.processedOutputs, search) ||
+    tx.addresses = tx.from.concat(tx.to);
+    return (tx.addresses.toLowerCase().search(search.toLowerCase()) > -1 ||
             (tx.hash.toLowerCase().search(search.toLowerCase()) > -1) ||
             (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
-  };
-
-  $scope.filterTx = (coins, search) => {
-    return coins
-      .map(coin => $scope.checkLabelDiff(coin.label, coin.address))
-      .join(', ').toLowerCase().search(search.toLowerCase()) > -1;
   };
 
   $scope.filterByType = tx => {
@@ -117,9 +112,9 @@ function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMo
       case $scope.filterTypes[0]:
         return true;
       case $scope.filterTypes[1]:
-        return tx.txType === 'sent';
+        return tx.getTxType($scope.account) === 'sent';
       case $scope.filterTypes[2]:
-        return tx.txType === 'received';
+        return tx.getTxType($scope.account) === 'received';
     }
     return false;
   };
