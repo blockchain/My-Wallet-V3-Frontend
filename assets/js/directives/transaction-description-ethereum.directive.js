@@ -48,9 +48,8 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum)
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {
-        scope.minutesRemaining = 30 - scope.tx.confirmations * 10;
-        scope.complete = scope.tx.confirmations >= 3;
-        scope.frugalWarning = scope.tx.frugal && scope.tx.confirmations === 0;
+        scope.minutesRemaining = Math.ceil(3 - (scope.tx.confirmations * 0.25));
+        scope.complete = scope.tx.confirmations >= 12;
       }
     });
   }
