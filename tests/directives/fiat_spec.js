@@ -22,6 +22,9 @@ describe('Fiat Directive', () => {
         },
         getFiatAtTime: () => {
         },
+        convertFromEther: (eth, curr) => {
+          return eth / 100000000;
+        },
         convertFromSatoshi: (btc, curr) => {
           return btc / 1000;
         },
@@ -125,6 +128,7 @@ describe('Fiat Directive', () => {
 
       it('should set the amount correctly when btc is 0', () => {
         isoScope.btc = 0;
+        isoScope.eth = null;
         isoScope.updateFiat();
         expect(isoScope.fiat.amount).toEqual('0.00');
       });
