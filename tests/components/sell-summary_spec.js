@@ -51,7 +51,10 @@ describe('sell-summary.component', () => {
   };
 
   let payment = {
-    sideEffect () { return $q.resolve(true); }
+    amount: 1,
+    fee: 50,
+    sideEffect () { return { fees: { priority: 150 } }; },
+    updateFeePerKb (f) { this.fee = f; }
   };
 
   let handlers = {
@@ -142,6 +145,16 @@ describe('sell-summary.component', () => {
       spyOn(ctrl.bankAccount, 'updateQuote');
       ctrl.checkForUpdatedQuote();
       expect(ctrl.bankAccount.updateQuote).toHaveBeenCalled();
+    });
+  });
+
+  describe('paymentFee', () => {
+    it('should set to the priority fee', () => {
+      const setFee = (data) => ctrl.payment.updateFeePerKb(data.fees.priority);
+      let ctrl = getController(handlers);
+      let result = ctrl.payment.sideEffect();
+      setFee(result);
+      expect(ctrl.payment.fee).toEqual(150);
     });
   });
 });
