@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ethereumTransactionsCtrl', ethereumTransactionsCtrl);
 
-function ethereumTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount, Ethereum, localStorageService) {
+function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localStorageService) {
   $scope.loading = true;
   $scope.ethTransactions = [];
   $scope.$watch(
