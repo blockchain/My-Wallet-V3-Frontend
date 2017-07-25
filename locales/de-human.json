@@ -1094,5 +1094,90 @@
   "HIDE": "Ausblenden",
   "EDIT_NAME": "Name bearbeiten",
   "NOT_BACKED_BY_RECOVERY": "Wird nicht durch Ihr Wiederherstellungspasswort gesichert. Zur Guthabensicherung in eine Wallet überweisen.",
-  "EXCHANGE_RATE_HELPER": "Der von Ihrem regionalen Wechselgeschäftspartner angebotene Kurs. Inklusive eventueller Gebühren."
+  "EXCHANGE_RATE_HELPER": "Der von Ihrem regionalen Wechselgeschäftspartner angebotene Kurs. Inklusive eventueller Gebühren.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Banküberweisung",
+    "BODY": "Bitte senden Sie auf elektronischem Weg {{::amount}} (per IMPS, NEFT oder RTGS) an das nachstehende Unocoin-Bankkonto. Anschließend ist die Referenznummer der Banküberweisung anzugeben."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Der von Ihrem regionalen Umtauschpartner angebotene Kurs kann Gebühren enthalten.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN-Karte",
+     "COPY": "Laden Sie Ihre PAN-Karte hoch oder nehmen Sie von ihr ein Foto auf. Auf diesem müssen Ihr Name und die zehnstellige Permanent Account Number/PAN-Nummer deutlich erkennbar sein.",
+     "UPLOAD_TITLE": "PAN-Karte",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Vergewissern Sie sich, dass Ihre PAN-Kartennummer auf der Aufnahme klar erkennbar ist."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Ihr Foto",
+    "COPY": "Laden Sie ein Foto von sich hoch oder nehmen Sie ein solches auf, damit Unocoin Ihre PAN-Karte verifizieren kann.",
+    "UPLOAD_TITLE": "Foto",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Vergewissern Sie sich, dass Ihr Gesicht auf der Aufnahme klar erkennbar ist."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Adressennachweis",
+    "COPY": "Laden Sie Ihren Adressennachweis hoch oder nehmen Sie diesen auf. Sie können eines der folgenden dazu zugelassenen Dokumente hochladen. Dieses muss mit den von Ihnen anfangs genannten Namens- und Adressenangaben übereinstimmen.",
+    "UPLOAD_TITLE": "Adressennachweis",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar-Karte (Vorder- und Rückseite)",
+    "OPTION2": "Führerschein",
+    "OPTION3": "Reisepass (Seite mit Adresse)",
+    "OPTION4": "Rechnung eines Versorgungsunternehmens",
+    "HELP": "Vergewissern Sie sich, dass Name und Adresse auf der Aufnahme klar erkennbar sind."
+  },
+  "BANK_NAME": "Bankname",
+  "ACCOUNT_HOLDER_NAME": "Name des Kontoinhabers",
+  "ACCOUNT_NUMBER": "Kontonummer",
+  "IFSC_CODE": "IFSC-Code",
+  "ACCOUNT_TYPE": "Kontoart",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Anerkennbare PAN-Karte",
+    "COPY": "PAN-Karten für Minderjährige <span class='state-danger-text'>werden nicht anerkannt</span>.<br>Die PAN-Karte muss den amtlich geltenden Gültigkeitsbestimmungen entsprechen."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Anerkennbares Benutzerfoto",
+    "COPY": "Selfies mit Sonnenbrillen oder Hüten werden <span class='state-danger-text'>nicht anerkannt</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Anerkennbarer Adressennachweis",
+    "COPY": "Vermeiden Sie, das Blitzlicht der Kamera auf die Angaben des Adressennachweises zu richten.<br>Der Adressennachweis muss mindestens 6 Monate gültig sein.<br>Ferner hat er der zuvor genannten Anschrift zu entsprechen.<br>Die Wähler-ID muss außerdem auf der Webseite der zuständigen Regierungsstelle offiziell anerkannt sein.<br>Nur Dokumente in englischer Sprache können zum Nachweis der Adresse hochgeladen werden."
+  },
+  "UNOCOIN_EXPLAIN": "Unser Partner Unocoin wird Ihren Bitcoin-Kauf bearbeiten. Dazu ist die Bereitstellung einiger Informationen und die Verknüpfung einer Zahlungsweise erforderlich.",
+  "UNOCOIN": {
+    "PENDING": "Ausstehende Identitätsüberprüfung",
+    "PENDING_EXPLAIN": "Unocoin überprüft derzeit Ihre Identität. Innerhalb 1 Werktages werden Sie zur Verifizierung von <b>Namen</b>, <b>Postleitzahl</b> und <b>PAN-Kartenangaben</b> einen Anruf erhalten. Sobald die Überprüfung abgeschlossen ist, können Sie Bitcoin erwerben."
+  },
+  "REQUIRED_FIELD": "Erforderliches Feld",
+  "IFSC_INCORRECT": "IFSC ist unzutreffend",
+  "PIN_CODE_REQUIRED": "PIN-Code ist nötig",
+  "PIN_CODE_INCORRECT": "PIN-Code ist unzutreffend",
+  "PAN_CARD_REQUIRED": "PAN-Karte ist nötig",
+  "PAN_CARD_INCORRECT": "PAN-Karte ist unzutreffend",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Bankkontonummer ist unzutreffend",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Erstellen Sie ein {{::exchange}}-Konto",
+    "CREATE_ACCOUNT_EXPLAIN": "Bitte bestätigen Sie zur Erstellung Ihres {{::exchange}}-Tauschkontos Ihre E-Mail-Adresse und Telefonnummer.",
+    "VERIFY_EMAIL": "Verifizieren Sie Ihre E-Mail-Adresse",
+    "VERIFY_EMAIL_EXPLAIN": "Wir haben gerade einen Verifizierungscode an Ihre E-Mail-Adresse gesandt. Bitte geben Sie diesen zur Erstellung Ihres {{::exchange}}-Tauschkontos ein.",
+    "CHANGE_EMAIL": "Ändern Sie Ihre E-Mail-Adresse",
+    "CHANGE_EMAIL_EXPLAIN": "Durch die Aktualisierung Ihrer E-Mail-Adresse wird auch die mit Ihrer Wallet verbundene geändert.",
+    "CHANGE_EMAIL_FAILED": "Leider wurde diese E-Mail-Adresse bereits für {{::exchange}} registriert.",
+    "CONFIRM_EMAIL": "Bestätigen Sie Ihre E-Mail-Adresse",
+    "VERIFICATION_CODE": "Verifikationscode",
+    "VERIFICATION_CODE_INCORRECT": "Verifikationscode ist unzutreffend. ",
+    "CHANGE_EMAIL_": "Ändern Sie Ihre E-Mail-Adresse",
+    "ANOTHER_CODE_SENT": "Es wurde ein weiterer Code gesandt!",
+    "VERIFY_ACCOUNT": "Wir benötigen von Ihnen zur Identifizierung Ihrer Identität einige persönliche Information. Bitte beachten Sie, dass diese Angaben an {{::exchange}} gesandt und nicht direkt mit Ihrer Blockchain-Wallet verknüpft werden.",
+    "FULL_NAME": "Vollständiger Name",
+    "MOBILE": "Handy",
+    "PAN_CARD": "PAN-Karte",
+    "FULL_RESIDENTIAL_ADDRESS": "Vollständige Wohnanschrift (die Vorlage eines Adressennachweises ist dazu erforderlich)",
+    "ADDRESS_LINE_1": "Addresszeile 1",
+    "ADDRESS_LINE_2": "Addresszeile 2",
+    "STATE": "Bundesland",
+    "CITY": "Stadt",
+    "PIN_CODE": "PIN-Code",
+    "BANK_ACCOUNT_NUMBER": "Bankkontonummer",
+    "IFSC": "IFSC"
+  }
 }

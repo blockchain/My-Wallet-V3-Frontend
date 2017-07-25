@@ -1094,5 +1094,90 @@
   "HIDE": "Ocultar",
   "EDIT_NAME": "Editar Nome",
   "NOT_BACKED_BY_RECOVERY": "Não protegido por sua Frase de Recuperação. Transferir para a carteira e proteger fundos.",
-  "EXCHANGE_RATE_HELPER": "A taxa oferecida pelo parceiro de conversão de sua região. Pode incluir taxas."
+  "EXCHANGE_RATE_HELPER": "A taxa oferecida pelo parceiro de conversão de sua região. Pode incluir taxas.",
+  "TX_AGUARDANDO_REF_NÚMERO": {
+    "Título": "Transferência bancária",
+    "CORPO": "Por favor enviar {{::quantia}} eletronicamente (via IMPS, NEFT, ou RTGS) Para a conta bancária da Unocoin abaixo. Você precisará fornecer o número de referência da transferência bancária."
+  },
+  "TAXA_CÂMBIO_AJUDADOR_DOIS": "A taxa oferecida pelo parceiro de câmbio da região pode incluir taxas.",
+  "unocoin_pancard_ID": {
+     "TÍTULO": "1. PAN Card",
+     "CÓPIA": "Faça o upload ou tire uma foto do seu PAN card, mostrando claramente o seu nome e o número de conta permanente de dez dígitos.",
+     "UPLOAD_TÍTULO": "PAN Card",
+     "UPLOAD_SELECIONAR": "@:id_ID.UPLOAD_SELECT",
+     "AJUDA": "Verifique se a foto mostra claramente o seu número de pancard."
+  },
+  "unocoin_photo_ID": {
+    "TÍTULO": "2. Sua Foto",
+    "CÓPIA": "Faça o upload ou tire uma foto de você, então Unocoin pode verificar seu PAN Card.",
+    "UPLOAD_TÍTULO": "Foto",
+    "UPLOAD_SELECIONAR": "@:id_ID.UPLOAD_SELECT",
+    "AJUDA": "Verifique se a foto mostra claramente o seu rosto."
+  },
+  "unocoin_address_ID": {
+    "TÍTULO": "3. Comprovante de residência",
+    "CÓPIA": "Faça upload ou tire uma foto de seu comprovante de residência. Você pode fazer o upload de um dos seguintes documentos aprovados que correspondem ao nome e endereço que você forneceu inicialmente.",
+    "UPLOAD_TÍTULO": "Comprovante de residência",
+    "UPLOAD_SELECIONAR": "@:id_ID.UPLOAD_SELECT",
+    "OPÇÃO1": "Aadhar Card (frente e verso)",
+    "OPÇÃO2": "Carteira de motorista",
+    "OPÇÃO3": "Passaporte (página mostrando o endereço)",
+    "OPÇÃO4": "CONTA DE SERVIÇOS",
+    "AJUDA": "Verifique se a foto mostra claramente o seu nome e endereço."
+  },
+  "NOME_BANCO": "Nome do Banco",
+  "NOME_TITULAR_CONTA": "Nome do Títular da Conta",
+  "NÚMERO_CONTA": "Número da Conta",
+  "CÓDIGO_ISFC": "Código IFSC",
+  "TIPO_CONTA": "Tipo da Conta",
+  "unocoin_pancard-id-helper": {
+    "TÍTULO": "PAN Card Aceitável",
+    "CÓPIA": "PAN Card de Menor de Idade <span class='state-danger-text'>não é aceitável</span>.<br>O PAN Card deve ser válido de acordo com o registro do governo."
+  },
+  "unocoin_photo-id-helper": {
+    "TÍTULO": "Foto Aceitável de Usuário",
+    "CÓPIA": "Fotos de si mesmo com óculos ou chapéus não <span class='state-danger-text'>são aceitáveis</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TÍTULO": "Comprovante de Residência Aceitável",
+    "CÓPIA": "Evite o flash da câmera nos detalhes do comprovante de residência.<br>O comprovante de residência deve ser válido por pelo menos 6 meses.<br>O comprovante de residência deve corresponder ao endereço anterior inserido.<br>O título de eleitor deve ser válido no site do governo.<br>O comprovante de residência enviado por upload deve estar em inglês."
+  },
+  "UNOCOIN_EXPLICAR": "Nosso parceiro Unocoin irá processar suas compras de bitcoin. Você precisará fornecer algumas informações e vincular um método de pagamento.",
+  "UNOCOIN": {
+    "PENDENTE": "Verificação de identidade pendente",
+    "PENDENTE_EXPLICAR": "Unocoin está atualmente verificando sua identidade. Você receberá uma chamada telefônica no prazo de 1 dia útil. O telefonema verificará seu <b>Nome</b>, <b>Código de endereço postal</b>, e <b>Informações do PAN Card</b>. Você poderá comprar bitcoin assim que for verificado."
+  },
+  "CAMPO_OBRIGATÓRIO": "Campo obrigatório",
+  "IFSC_INCORRETO": "IFSC incorreto",
+  "CÓDIGO_PIN_OBRIGATÓRIO": "Pin Code obrigatório",
+  "CÓDIGO_PIN_INCORRETO": "Pin Code incorreto",
+  "PAN_CARD_OBRIGATÓRIO": "Pan Card obrigatório",
+  "PAN_CARD_INCORRETO": "Pan Card incorreto",
+  "NÚMERO_CONTA_BANCO_INCORRETO": "Número da conta do banco incorreto",
+  "CÂMBIO": {
+    "CRIAR_CONTA": "Criar {{::câmbio}} Conta",
+    "EXPLICAR_CRIAR_CONTA": "Confirme seu e-mail e número de telefone para criar sua {{::câmbio}} conta de câmbio.",
+    "VERIFICAR_EMAIL": "Verificar Endereço de Email",
+    "EXPLICAR_VERIFICAR_EMAIL": "Acabamos de enviar um código de verificação para o seu endereço de email. Digite o código de verificação para criar sua {{::câmbio}} conta de câmbio.",
+    "MUDAR_EMAIL": "Mudar Email",
+    "EXPLICAR_MUDAR_EMAIL": "A atualização do seu email também alterará o endereço de email associado à sua carteira.",
+    "FALHA_MUDAR_EMAIL": "Desculpe, este email já está registrado com {{::exchange}}.",
+    "CONFIRMAR_EMAIL": "Confirmar email",
+    "CÓDIGO_VERIFICAÇÃO": "Código de verificação",
+    "CÓDIGO_VERIFICAÇÃO_INCORRETO": "Código de verificação incorreto. ",
+    "MUDAR_EMAIL_": "mudar email",
+    "OUTRO_CÓDIGO_ENVIADO": "Outro código foi enviado!",
+    "VERIFICAR_CONTA": "Precisamos coletar algumas informações pessoais para verificar sua identidade. Observe que essas informações serão enviadas para o {{::câmbio}} e não estarão diretamente ligadas à sua carteira Blockchain.",
+    "NOME_COMPLETO": "Nome completo",
+    "CELULAR": "Celular",
+    "PAN_CARD": "PAN Card",
+    "ENDEREÇO_RESIDENCIAL_COMPLETO": "Endereço residencial completo (você precisará fornecer um comprovante de residência)",
+    "LINHA_ENDEREÇO_1": "Linha de endereço 1",
+    "LINHA_ENDEREÇO_2": "Linha de endereço 2",
+    "ESTADO": "Estado",
+    "CIDADE": "Cidade",
+    "CÓDIGO_PIN": "Código Pin",
+    "NÚMERO_CONTA_BANCO": "Número da Conta do Banco",
+    "IFSC": "IFSC"
+  }
 }
