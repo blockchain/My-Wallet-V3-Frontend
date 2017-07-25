@@ -30,6 +30,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.currencies = currency.coinifyCurrencies;
     scope.format = currency.formatCurrencyForView;
     scope.inMobileBuy = $rootScope.inMobileBuy;
+    scope.symbol = currency.conversions[scope.transaction.currency.code].symbol;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
@@ -39,7 +40,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
-        scope.getMinLimits(quote);
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
       }, error).finally(scope.getQuote);
     };
@@ -61,6 +61,15 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
+    scope.handleCurrencyClick = (curr) => {
+      scope.changeCurrency(curr);
+      scope.refreshSymbol();
+    };
+
+    scope.refreshSymbol = () => {
+      scope.symbol = currency.conversions[scope.transaction.currency.code].symbol;
+    };
+
     scope.getQuote = () => {
       scope.status.busy = true;
 
@@ -74,7 +83,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     const success = (quote) => {
       scope.status = {};
       scope.quote = quote;
-      scope.getMinLimits(quote);
+      scope.getLimits(quote);
       scope.exchangeRate.fiat = scope.getExchangeRate();
 
       if (quote.baseCurrency === 'BTC') {
@@ -97,9 +106,15 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
         .finally(() => scope.disabled = false);
     };
 
-    scope.getMinLimits = (quote) => {
-      $q.resolve(buySell.getMinLimits(quote))
-        .then(scope.limits = buySell.limits);
+    scope.getLimits = (quote) => {
+      $q.resolve(quote.getPaymentMediums())
+        .then((mediums) => {
+          console.log(mediums);
+          scope.limits.bank = mediums.bank._limitsInAmounts;
+          scope.limits.card = mediums.card._limitsInAmounts;
+          scope.limits.absoluteBuyMax = scope.limits.bank > scope.limits.card ? scope.limits.bank : scope.limits.card;
+          console.log('buymax: ' + scope.limits.absoluteBuyMax);
+        });
     };
 
     scope.getInitialExchangeRate();
