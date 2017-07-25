@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('Ethereum', Ethereum);
 
-function Ethereum ($q, Wallet) {
+function Ethereum ($q, Wallet, MyBlockchainApi) {
   const service = {
     get eth () {
       return Wallet.my.wallet.eth;
@@ -53,6 +53,18 @@ function Ethereum ($q, Wallet) {
     } else {
       return $q.resolve();
     }
+  };
+
+  service.recordStats = () => {
+    let btcBalance = Wallet.total();
+    let btcTxs = Wallet.my.wallet.txList.transactions().length;
+
+    let ethInititalized = service.eth && service.defaultAccount && true;
+    let ethBalance = ethInititalized ? parseFloat(service.defaultAccount.balance) : 0;
+    let ethTxs = ethInititalized ? service.defaultAccount.txs.length : 0;
+
+    console.log(JSON.stringify({ btcBalance, ethBalance, btcTxs, ethTxs }));
+    MyBlockchainApi.btcEthUsageStats(btcBalance, ethBalance, btcTxs, ethTxs);
   };
 
   return service;

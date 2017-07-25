@@ -259,12 +259,17 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           }
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
+          Ethereum.recordStats();
           AngularHelper.$safeApply();
         };
-        wallet.my.wallet.getHistory().then(didFetchTransactions);
 
-        let eth = wallet.my.wallet.eth;
-        if (eth) $q.resolve(eth.fetchHistory());
+        let history = [];
+        history.push(wallet.my.wallet.getHistory());
+
+        let Ethereum = $injector.get('Ethereum');
+        if (Ethereum.eth) history.push(Ethereum.fetchHistory());
+
+        $q.all(history).then(didFetchTransactions);
       }
 
       return result.guid;
@@ -538,7 +543,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
     }
   };
-  
+
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) => {
     amount = currency.convertToSatoshi(amount, currency);
     if (success == null || error == null) {
