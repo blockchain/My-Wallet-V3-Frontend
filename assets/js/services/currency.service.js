@@ -99,7 +99,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     bitCurrencies,
     ethCurrencies,
     conversions,
-
+    ethConversions,
     fetchExchangeRate,
     fetchEthRate,
     updateCoinifyCurrencies,
