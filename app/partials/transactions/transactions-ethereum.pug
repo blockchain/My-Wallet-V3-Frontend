@@ -68,8 +68,8 @@
           button.btn.button-default.type-h5.pos-rel(ng-click="request()")
             i.mrs.media-middle.icon-receive
             span.em-300.upper(translate="START_RECEIVING_ETHER")
-      .flex-column.col-md-6.col-xs-8.f-12.mbl.border-bottom.black.ph-25.center.mtvl
-        p.em-300(translate="WEB_ONLY_ETH")
+      .flex-column.col-md-6.col-xs-8.f-12.black.ph-25.mtl.center
+        p.f-14.em-300(translate="WEB_ONLY_ETH")
     .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")
       i.ti-search.h1.mrm
       h3.em-300.mbl(translate="SORRY_ZERO_TXS")
