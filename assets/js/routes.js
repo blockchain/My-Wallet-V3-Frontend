@@ -7,6 +7,12 @@ angular
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.rule(($injector, $location) => {
+    if (!$injector.has('Wallet') && $location.path() === '/eth/transactions') {
+      return '/login';
+    }
+  });
+
   $urlRouterProvider.otherwise(function ($injector, $location) {
     if (!$injector.has('Wallet')) {
       return '/';
