@@ -22,6 +22,9 @@ angular
 function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   this.sellRateForm;
 
+  const setFee = (data) => this.payment.updateFeePerKb(data.fees.priority);
+  this.payment.sideEffect(setFee);
+
   this.insufficientFunds = () => {
     const tx = this.transaction;
     const combined = tx.btc + tx.fee.btc;
