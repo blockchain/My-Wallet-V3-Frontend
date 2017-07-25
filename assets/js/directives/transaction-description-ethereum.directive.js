@@ -45,12 +45,5 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum)
 
     scope.txDirection = scope.getTxDirection(scope.txType);
     scope.txClass = scope.getTxClass(scope.txType);
-
-    scope.$watch('tx.confirmations', () => {
-      if (scope.tx && scope.tx.confirmations != null) {
-        scope.minutesRemaining = Math.ceil(3 - (scope.tx.confirmations * 0.25));
-        scope.complete = scope.tx.confirmations >= 12;
-      }
-    });
   }
 }
