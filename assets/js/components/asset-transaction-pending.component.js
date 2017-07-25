@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .component('assetTransactionPending', {
     bindings: {
-      transaction: '=',
-      confirmations: '=',
-      showTooltip: '='
+      txType: '<',
+      txConfirmations: '<',
+      confirmations: '<',
+      showTooltip: '<'
     },
     templateUrl: 'templates/asset-transaction-pending.pug',
     controller: assetTransactionPendingController,
@@ -12,20 +13,14 @@ angular
   });
 
 function assetTransactionPendingController () {
-  this.complete = this.transaction.confirmations >= this.confirmations;
-
-  this.pendingMessage = (transaction) => {
-    switch (transaction.txType) {
-      case 'sent':
-        this.message = 'PENDING_TX_SENDER';
-        break;
-      case 'received':
-        this.message = 'PENDING_TX_RECEIVER';
-        break;
-      case 'transfer':
-        this.message = 'PENDING_TX_SENDER';
-        break;
-    }
+  this.pendingMessageMap = {
+    'sent': 'PENDING_TX_SENDER',
+    'received': 'PENDING_TX_RECEIVER',
+    'transfer': 'PENDING_TX_SENDER'
   };
-  if (this.showTooltip) this.pendingMessage(this.transaction);
+
+  this.$onChanges = () => {
+    this.complete = this.txConfirmations >= this.confirmations;
+    if (this.showTooltip) this.message = this.pendingMessageMap[this.txType];
+  };
 }
