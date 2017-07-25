@@ -50,13 +50,18 @@ describe('sell-summary.component', () => {
     expiresAt: 1494028203205
   };
 
+  let payment = {
+    sideEffect () { return $q.resolve(true); }
+  };
+
   let handlers = {
     transaction,
     sellTrade,
     bankAccount,
     quote,
     sellRateForm: true,
-    fields: true
+    fields: true,
+    payment
   };
 
   let getController = function (bindings) {
