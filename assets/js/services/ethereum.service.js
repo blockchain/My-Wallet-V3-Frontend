@@ -22,7 +22,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     countries: [],
     rolloutFraction: 0,
     get userHasAccess () {
-      if (Wallet.my.wallet == null || this.eth == null) return false;
+      if (Wallet.my.wallet == null) return false;
       return this.ethInititalized || (
         (this.countries === '*' || this.countries.indexOf(Wallet.my.wallet.accountInfo.countryCodeGuess) > -1) &&
         MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction)
@@ -54,17 +54,30 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     return service.eth.getPrivateKeyForAccount(account, secPass);
   };
 
-  service.initialize = () => {
-    if (!service.eth.defaultAccount) {
-      return Wallet.askForSecondPasswordIfNeeded().then(secPass => {
-        service.eth.createAccount(void 0, secPass);
-        service.fetchHistory();
-      }, () => {
-        return $q.reject('ETHER_SECPASS_REQUIRED');
-      });
-    } else {
-      return $q.resolve();
+  service.initialize = (_secPass) => {
+    let wallet = Wallet.my.wallet;
+    let needsSecPass = _secPass == null && wallet.isDoubleEncrypted;
+
+    let initializeWithSecPass = () => (
+      Wallet.askForSecondPasswordIfNeeded().then(
+        (secPass) => service.initialize(secPass),
+        () => $q.reject('ETHER_SECPASS_REQUIRED'))
+    );
+
+    if (!wallet.isMetadataReady) {
+      if (needsSecPass) return initializeWithSecPass();
+      return wallet.cacheMetadataKey(_secPass)
+        .then(() => wallet.loadMetadata())
+        .then(() => service.initialize(_secPass));
     }
+
+    if (!service.eth.defaultAccount) {
+      if (needsSecPass) return initializeWithSecPass();
+      service.eth.createAccount(void 0, _secPass);
+      return service.fetchHistory();
+    }
+
+    return $q.resolve();
   };
 
   service.recordStats = () => {
