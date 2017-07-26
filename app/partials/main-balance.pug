@@ -7,16 +7,16 @@
       .flex-row
         .flex-row.flex-center(ng-hide="hideBtcBalance()")
           i.icon-bitcoin.f-20.mrs
-          span(ng-show="isBitCurrency(settings.displayCurrency)")
+          span(ng-show="isBitCurrency(settings.displayCurrency) || showAsset()")
             span {{ getTotal() | toBitCurrency:BTCCurrency }}
-          span(ng-hide="isBitCurrency(settings.displayCurrency)")
+          span(ng-hide="isBitCurrency(settings.displayCurrency) || showAsset()")
             fiat(btc="getTotal()")
         .flex-row.flex-center(ng-hide="hideEthBalance()")
           .vertical-line.mh-15.hidden-sm.hidden-xs(ng-show="showAll()")
           i.icon-ethereum.f-20.mrs
-          span(ng-show="isBitCurrency(settings.displayCurrency)")
+          span(ng-show="isBitCurrency(settings.displayCurrency) || showAsset()")
             span {{ getEthTotal() | format:'eth' }} ETH
-          span(ng-hide="isBitCurrency(settings.displayCurrency)")
+          span(ng-hide="isBitCurrency(settings.displayCurrency) || showAsset()")
             fiat(eth="getEthTotal()")
     .mvn.f-20.em-200.lh1
       fiat(btc="getTotal()" eth="getEthTotal() > 0 ? getEthTotal() : null")

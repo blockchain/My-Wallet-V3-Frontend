@@ -20,6 +20,7 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetCon
   $scope.hideEthBalance = () => assetContext.getContext().balance === 'btc';
   $scope.showBtcClipboard = () => assetContext.getContext().defaultTo === 'btc';
   $scope.showAll = () => !$scope.hideBtcBalance() && !$scope.hideEthBalance();
+  $scope.showAsset = () => $scope.hideBtcBalance() || $scope.hideEthBalance();
 
   $scope.resetCopy = () => $scope.copied = false;
 
