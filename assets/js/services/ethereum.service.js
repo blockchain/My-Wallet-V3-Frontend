@@ -2,25 +2,31 @@ angular
   .module('walletApp')
   .factory('Ethereum', Ethereum);
 
-function Ethereum ($q, Wallet, MyBlockchainApi) {
+function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   const service = {
     get eth () {
       return Wallet.my.wallet.eth;
     },
     get balance () {
-      return this.eth.getApproximateBalance(8);
+      return this.ethInititalized ? this.eth.getApproximateBalance(8) : null;
     },
     get defaultAccount () {
-      return this.eth.defaultAccount;
+      return this.ethInititalized ? this.eth.defaultAccount : null;
     },
     get defaults () {
       return this.eth.defaults;
     },
     get ethInititalized () {
-      return this.eth && this.defaultAccount && true;
+      return Wallet.my.wallet && this.eth && this.eth.defaultAccount && true;
     },
+    countries: [],
+    rolloutFraction: 0,
     get userHasAccess () {
-      return this.ethInititalized;
+      if (Wallet.my.wallet == null || this.eth == null) return false;
+      return this.ethInititalized || (
+        (this.countries === '*' || this.countries.indexOf(Wallet.my.wallet.accountInfo.countryCodeGuess) > -1) &&
+        MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction)
+      );
     }
   };
 
@@ -67,6 +73,14 @@ function Ethereum ($q, Wallet, MyBlockchainApi) {
     console.log(JSON.stringify({ btcBalance, ethBalance }));
     MyBlockchainApi.incrementBtcEthUsageStats(btcBalance, ethBalance);
   };
+
+  Env.then((options) => {
+    let { ethereum } = options;
+    if (ethereum && !isNaN(ethereum.rolloutFraction)) {
+      service.countries = ethereum.countries || [];
+      service.rolloutFraction = ethereum.rolloutFraction;
+    }
+  });
 
   return service;
 }

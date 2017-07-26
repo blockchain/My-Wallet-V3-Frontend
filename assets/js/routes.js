@@ -411,7 +411,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.unocoin.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },
@@ -449,7 +449,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.sfox.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },

@@ -62,6 +62,10 @@
     "api": "REPLACED_BY_DEV_SERVER",
     "walletHelper": "REPLACED_BY_DEV_SERVER"
   },
+  "ethereum": {
+    "countries": ["US"],
+    "rolloutFraction": 1
+  },
   "showMobileLogin": true,
   "network": "bitcoin"
 }

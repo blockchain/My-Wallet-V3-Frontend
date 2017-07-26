@@ -51,6 +51,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.walletHelperDomain = res.domains.walletHelper;
 
+      env.ethereum = res.ethereum;
+
       defer.resolve(env);
     }
   );
