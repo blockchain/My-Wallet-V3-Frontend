@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env, Ethereum) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -12,7 +12,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   $scope.lastViewedWhatsNew = null;
 
   $rootScope.isSubscribed = localStorageService.get('subscribed');
-
+  $scope.showEthereum = () => Ethereum.userHasAccess;
   $scope.getTheme = () => $scope.settings.theme;
 
   let asyncAssert = (value) => value ? $q.resolve(value) : $q.reject();

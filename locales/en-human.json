@@ -41,7 +41,7 @@
     },
     "WALLET_ID_VS_ADDRESS": {
       "Q": "What is the difference between a wallet ID and an address?",
-      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. Bitcoin and ether addresses are what you share with others when you want to receive funds. To find your bitcoin or ether address click on Request."
+      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. Bitcoin{{showEthereum ? ' and ether' : ''}} addresses are what you share with others when you want to receive funds. To find your bitcoin{{showEthereum ? ' or ether' : ''}} address click on Request."
     },
     "HOW_TO_TRANSACT_BTC": {
       "Q": "How do I receive/send bitcoin?",
@@ -52,16 +52,16 @@
       "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Ether’ in the left menu to access your ether dashboard. Once there, click on ‘Request’ to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ from the ether transactions tab, enter the recipient’s ether address in the ‘To’ field and how much you want to send."
     },
     "HOW_MUCH_TO_SEND": {
-      "Q": "How much does it cost to send bitcoin or ether?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin and Ethereum networks. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under Customize Fee."
+      "Q": "How much does it cost to send bitcoin{{showEthereum ? ' or ether' : ''}}?",
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin {{showEthereum ? 'and Ethereum networks' : 'network'}}. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under Customize Fee."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
       "Q": "How do I know a transaction has been successfully received/sent?",
-      "A": "Transactions will appear almost instantly in your transaction feed which you can find in your bitcoin and ether dashboards (by clicking on the corresponding currency on the left navigation of the wallet). While your bitcoin transaction is considered complete once it has 3 network confirmations, your ether transaction will be considered complete once it has 12 confirmations. This typically takes about 30 minutes for bitcoin and 5 minutes for ether, but can vary. Until then your transaction will show up as pending."
+      "A": "Transactions will appear almost instantly in your transaction feed which you can find in your bitcoin{{showEthereum ? ' and ether' : ''}} dashboards (by clicking on the corresponding currency on the left navigation of the wallet). {{showEthereum ? 'While your' : 'Your'}} bitcoin transaction is considered complete once it has 3 network confirmations{{showEthereum ? ', your ether transaction will be considered complete once it has 12 confirmations' : ''}}. This typically takes about 30 minutes{{showEthereum ? ' for bitcoin and 5 minutes for ether' : ''}}, but can vary. Until then your transaction will show up as pending."
     },
     "CAN_BC_SEE_FUNDS": {
       "Q": "Can Blockchain see or access my funds?",
-      "A": "We are a noncustodial wallet and do not have access to your funds. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin and ether."
+      "A": "We are a noncustodial wallet and do not have access to your funds. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin{{showEthereum ? ' and ether' : ''}}."
     },
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
@@ -233,7 +233,7 @@
   "CANCEL_EDIT_NOTE" : "Cancel",
   "WALLET_RECOVERY_PHRASE" : "Wallet Recovery Phrase",
   "RECOVERY_PHRASE" : "Recovery Phrase",
-  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins and ether as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
+  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins{{showEthereum ? ' and ether' : ''}} as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",

@@ -18,6 +18,9 @@ function Ethereum ($q, Wallet, MyBlockchainApi) {
     },
     get ethInititalized () {
       return this.eth && this.defaultAccount && true;
+    },
+    get userHasAccess () {
+      return this.ethInititalized;
     }
   };
 

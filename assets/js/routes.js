@@ -351,6 +351,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             ? $injector.get('Ethereum').initialize()
             : $q.resolve();
         }
+      },
+      onEnter ($state, Ethereum) {
+        if (!Ethereum.userHasAccess) $state.transition = null;
       }
     })
     .state('wallet.common.eth.transactions', {

@@ -2,9 +2,12 @@ angular
   .module('walletApp')
   .controller('SettingsSecurityCtrl', SettingsSecurityCtrl);
 
-function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts) {
+function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts, Ethereum) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
+
+  let showEthereum = Ethereum.userHasAccess || void 0;
+  $scope.phraseTranslateValues = { showEthereum };
 
   $scope.processToggleRememberTwoFactor = null;
 
