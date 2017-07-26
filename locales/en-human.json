@@ -29,7 +29,7 @@
     },
     "CAN_I_BUY_ETH": {
       "Q": "How do I buy ether?",
-      "A": "We're working on that. Our users will be notified once that feature becomes available."
+      "A": "We'll let you know when this feature becomes available."
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy bitcoin?",
@@ -45,7 +45,7 @@
     },
     "HOW_TO_TRANSACT_BTC": {
       "Q": "How do I receive/send bitcoin?",
-      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Receive and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
+      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Request and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
     },
     "HOW_TO_TRANSACT_ETH": {
       "Q": "How do I receive/send ether?",
@@ -53,7 +53,7 @@
     },
     "HOW_MUCH_TO_SEND": {
       "Q": "How much does it cost to send bitcoin or ether?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin and Ethereum networks. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. Before you send your transaction, you can view the included fee that we recommend. If you wish to specify your own fee, you can do so under Advanced Send."
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin and Ethereum networks. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under Customize Fee."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
       "Q": "How do I know a transaction has been successfully received/sent?",
@@ -65,7 +65,7 @@
     },
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
-      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a recovery phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
     }
   },
   "SETTINGS": "Settings",
@@ -560,7 +560,7 @@
   "TRY_AGAIN": "Try Again",
   "DESCRIBE_TRANSACTIONS" : " Transactions occur when you receive and send bitcoin.",
   "DESCRIBE_TRANSACTIONS_ETH" : "Transactions occur when you receive and send ether",
-  "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. You transactions won't be visible in your mobile wallet.",
+  "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. Your transactions won't be visible in your mobile wallet.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
