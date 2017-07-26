@@ -15,6 +15,9 @@ function Ethereum ($q, Wallet, MyBlockchainApi) {
     },
     get defaults () {
       return this.eth.defaults;
+    },
+    get ethInititalized () {
+      return this.eth && this.defaultAccount && true;
     }
   };
 
@@ -56,15 +59,10 @@ function Ethereum ($q, Wallet, MyBlockchainApi) {
   };
 
   service.recordStats = () => {
-    // let btcBalance = Wallet.total();
-    // let btcTxs = Wallet.my.wallet.txList.transactions().length;
-    //
-    // let ethInititalized = service.eth && service.defaultAccount && true;
-    // let ethBalance = ethInititalized ? parseFloat(service.defaultAccount.balance) : 0;
-    // let ethTxs = ethInititalized ? service.defaultAccount.txs.length : 0;
-    //
-    // console.log(JSON.stringify({ btcBalance, ethBalance, btcTxs, ethTxs }));
-    // MyBlockchainApi.btcEthUsageStats(btcBalance, ethBalance, btcTxs, ethTxs);
+    let btcBalance = Wallet.total();
+    let ethBalance = service.ethInititalized ? parseFloat(service.defaultAccount.balance) : 0;
+    console.log(JSON.stringify({ btcBalance, ethBalance }));
+    MyBlockchainApi.incrementBtcEthUsageStats(btcBalance, ethBalance);
   };
 
   return service;
