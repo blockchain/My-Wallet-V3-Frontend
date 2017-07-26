@@ -75,7 +75,7 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
       $scope.vm.close();
       this.account.fetchBalance();
       console.log('sent ether:', txHash);
-      Alerts.displaySuccess('Successfully sent Ether!');
+      Alerts.displaySuccess('ETHER_SEND_SUCCESS');
     }).catch(({ message }) => {
       Alerts.displayError(message);
     });
