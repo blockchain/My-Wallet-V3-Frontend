@@ -49,7 +49,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
       } else {
         if (!isSFOXCountry) { return false; }
         if (!accountInfo.email) { return false; }
-        return MyWalletHelpers.isEmailInvited(accountInfo.email, sfoxInviteFraction);
+        return MyWalletHelpers.isStringHashInFraction(accountInfo.email, sfoxInviteFraction);
       }
     });
   };

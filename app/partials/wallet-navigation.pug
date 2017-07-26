@@ -4,21 +4,22 @@
       a(ui-sref="wallet.common.home")
         i.icon-home
         span(translate="DASHBOARD")
-    li.mv-10
+    li.mv-10(ng-show="showEthereum()")
       div
-        span.tx-divider.pos-rel.ml-10.em-200(translate="Transactions")
+        span.tx-divider.pos-rel.ml-10.em-200(translate="MY_TRANSACTIONS")
     li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
       a(ui-sref="wallet.common.btc.transactions")
         i.icon-bitcoin
-        span(translate="BITCOIN")
-    li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
+        span(ng-show="showEthereum()" translate="BITCOIN")
+        span(ng-hide="showEthereum()" translate="MY_TRANSACTIONS")
+    li.scroll-parent.header(ui-sref-active="current" ng-show="showEthereum()" ng-click="hideMenu()")
       a(ui-sref="wallet.common.eth.transactions")
         i.icon-ethereum
         span.flex-row.flex-align-end
           span ETHER
           | &nbsp;
           p.f-12.mbn.transform-none.em-300.blue(translate="BETA")
-    div.border-dashed.mb-15.mt-15.mh-15
+    div.border-dashed.mb-15.mt-15.mh-15(ng-show="showEthereum()")
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
