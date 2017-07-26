@@ -22,10 +22,11 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     countries: [],
     rolloutFraction: 0,
     get userHasAccess () {
-      if (Wallet.my.wallet == null) return false;
+      let wallet = Wallet.my.wallet;
+      if (wallet == null) return false;
       return this.ethInititalized || (
-        (this.countries === '*' || this.countries.indexOf(Wallet.my.wallet.accountInfo.countryCodeGuess) > -1) &&
-        MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction)
+        (this.countries === '*' || this.countries.indexOf(wallet.accountInfo.countryCodeGuess) > -1) &&
+        MyWalletHelpers.isStringHashInFraction(wallet.guid, this.rolloutFraction)
       );
     }
   };
