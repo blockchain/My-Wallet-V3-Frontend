@@ -1518,6 +1518,6 @@
   "ETHER_SECPASS_REQUIRED": "You must enter your second password to initialize your ether wallet.",
   "ETHER_SEND_RECEIVE": "Send & Receive Ether",
   "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
-  "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update in a few minutes.",
+  "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
   "": ""
 }
