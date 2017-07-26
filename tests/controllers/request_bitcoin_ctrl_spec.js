@@ -54,6 +54,9 @@ describe('RequestBitcoinController', () => {
 
       $rootScope.rootURL = 'https://blockchain.info/';
       scope = $rootScope.$new();
+      scope.vm = {
+        destination: undefined
+      };
       let template = $templateCache.get('partials/request/request.pug');
 
       $controller('RequestBitcoinController', {

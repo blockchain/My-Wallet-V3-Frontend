@@ -5,7 +5,7 @@ module.exports = function (config) {
 
     logLevel: config.LOG_WARN,
 
-    client: { captureConsole: false },
+    client: { captureConsole: true },
 
     exclude: [],
 
