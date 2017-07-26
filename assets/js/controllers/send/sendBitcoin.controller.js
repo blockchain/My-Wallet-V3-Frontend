@@ -322,7 +322,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
       let errorMsg = error.error ? $translate.instant(error.error, error) : errorMsg = error;
       if (modalErrors.indexOf(errorMsg) === -1) Alerts.displayError(errorMsg, false, $scope.alerts);
       if (error === 'cancelled') $scope.advancedSend();
-      $scope.backToForm();
+      $scope.vm.toSendView();
       AngularHelper.$safeApply($scope);
     };
 
