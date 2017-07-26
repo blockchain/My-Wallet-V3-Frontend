@@ -144,7 +144,8 @@ describe('walletServices', () => {
 
     it('conversion should be set on load', inject(function (Wallet, currency) {
       spyOn(currency, 'fetchExchangeRate');
-      Wallet.login();
+      Wallet.didLogin();
+      $rootScope.$digest();
       expect(currency.fetchExchangeRate).toHaveBeenCalled();
     })
     );
