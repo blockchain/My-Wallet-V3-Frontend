@@ -63,7 +63,8 @@ function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localSto
     tx.addresses = tx.from.concat(tx.to);
     return (tx.addresses.toLowerCase().search(search.toLowerCase()) > -1 ||
             (tx.hash.toLowerCase().search(search.toLowerCase()) > -1) ||
-            (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1));
+            (tx.note && tx.note.toLowerCase().search(search.toLowerCase()) > -1) ||
+            $scope.account.label.toLowerCase().search(search.toLowerCase()) > -1);
   };
 
   $scope.filterByType = tx => {
