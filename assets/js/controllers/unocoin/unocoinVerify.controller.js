@@ -28,6 +28,12 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
     profile.address.zipcode = profile.zipcode;
   };
 
+  $scope.setBankInfo = () => {
+    let profile = $scope.exchange.profile;
+    profile.submittedBankInfo = true;
+    $scope.verifyProfile();
+  };
+
   AngularHelper.installLock.call($scope);
   $scope.$onDestroy = () => $scope.vm.error = null;
 }
