@@ -29,7 +29,7 @@
     },
     "CAN_I_BUY_ETH": {
       "Q": "How do I buy ether?",
-      "A": "We're working on that. Our users will be notified once that feature becomes available."
+      "A": "We'll let you know when this feature becomes available."
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy bitcoin?",
@@ -45,7 +45,7 @@
     },
     "HOW_TO_TRANSACT_BTC": {
       "Q": "How do I receive/send bitcoin?",
-      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Receive and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
+      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Request and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
     },
     "HOW_TO_TRANSACT_ETH": {
       "Q": "How do I receive/send ether?",
@@ -53,7 +53,7 @@
     },
     "HOW_MUCH_TO_SEND": {
       "Q": "How much does it cost to send bitcoin or ether?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin and Ethereum networks. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. Before you send your transaction, you can view the included fee that we recommend. If you wish to specify your own fee, you can do so under Advanced Send."
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin and Ethereum networks. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under Customize Fee."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
       "Q": "How do I know a transaction has been successfully received/sent?",
@@ -65,7 +65,7 @@
     },
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
-      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a recovery phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
     }
   },
   "SETTINGS": "Settings",
@@ -455,7 +455,7 @@
   "IP_INVALID": "Invalid IP Address",
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
-  "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
+  "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend your funds. Beware that there is no password reset functionality.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
@@ -560,7 +560,7 @@
   "TRY_AGAIN": "Try Again",
   "DESCRIBE_TRANSACTIONS" : " Transactions occur when you receive and send bitcoin.",
   "DESCRIBE_TRANSACTIONS_ETH" : "Transactions occur when you receive and send ether",
-  "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. You transactions won't be visible in your mobile wallet.",
+  "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. Your transactions won't be visible in your mobile wallet.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
@@ -745,7 +745,7 @@
   "DYK_HOW_IT_WORKS_TITLE": "How it works",
   "DYK_HD_PRIVACY": "If you use the same address each time you receive funds, it becomes easy for anyone to track your entire payment history. So we create a new bitcoin address for every transaction to give you more privacy.",
   "DYK_HD_PRIVACY_TITLE": "Privacy benefits of HD addresses",
-  "DYK_DYNAMIC_FEES": "We adjust your fees dynamically depending on network conditions and the size of your transaction.",
+  "DYK_DYNAMIC_FEES": "We adjust your bitcoin fees dynamically depending on network conditions and the size of your transaction.",
   "DYK_DYNAMIC_FEES_TITLE": "Blockchain optimizes your fees",
   "DYK_OPEN_SOURCE": "All the code related to our wallet is open source. Contribute to the development of our wallet at https://github.com/blockchain.",
   "DYK_OPEN_SOURCE_TITLE": "Open source",
@@ -824,7 +824,7 @@
   "REDIRECTING": "We're redirecting you to your wallet now!",
   "TAKES_A_WHILE": "This may take a while. If your browser asks if you want to cancel the script, please press continue.",
   "NOTIFICATIONS" : "Notifications",
-  "NOTIFICATIONS_EXPLAIN" : "Get notified when you receive bitcoin or ether.",
+  "NOTIFICATIONS_EXPLAIN" : "Get notified when you receive bitcoin.",
   "VERIFY_EMAIL_FIRST" : "Verify your email address to enable notifications",
   "VERIFY_MOBILE_FIRST": "Verify your mobile number to enable notifications",
   "SMS": "SMS",
