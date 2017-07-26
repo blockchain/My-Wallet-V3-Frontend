@@ -8,7 +8,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi) {
       return Wallet.my.wallet.eth;
     },
     get balance () {
-      return this.eth.balance;
+      return this.eth.getApproximateBalance(8);
     },
     get defaultAccount () {
       return this.eth.defaultAccount;

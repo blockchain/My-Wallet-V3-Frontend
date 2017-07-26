@@ -10,7 +10,6 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
   $scope.themes = theme.themes;
   $scope.currencies = currency.currencies;
   $scope.btcCurrencies = currency.bitCurrencies;
-  $scope.ethCurrencies = currency.ethCurrencies;
   $scope.btc = currency.bitCurrencies[0];
 
   $scope.changeLanguage = Wallet.changeLanguage;
@@ -18,10 +17,6 @@ function SettingsPreferencesCtrl ($scope, Wallet, Alerts, currency, $uibModal, $
   $scope.changeBTCCurrency = Wallet.changeBTCCurrency;
   $scope.changeTheme = Wallet.changeTheme;
   $window.innerWidth < 992 ? $scope.responsivePlacement = 'right' : $scope.responsivePlacement = 'left';
-
-  $scope.changeETHCurrency = (val) => {
-    console.log('change eth currency', val);
-  };
 
   $scope.updateNotificationsType = () => {
     Wallet.updateNotificationsType($scope.notifications).then(() => {

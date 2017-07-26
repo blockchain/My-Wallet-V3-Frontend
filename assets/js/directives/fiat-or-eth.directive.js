@@ -20,7 +20,6 @@ function fiatOrEth (Wallet, currency) {
   function link (scope, elem, attrs) {
     scope.settings = Wallet.settings;
     scope.currency = scope.settings.displayCurrency;
-    scope.ethCurrency = currency.ethCurrencies[0];
 
     scope.isBitCurrency = currency.isBitCurrency;
 

@@ -70,25 +70,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   const ethCurrencies = [
     {
-      serverCode: 'ETH',
-      code: 'ETH',
-      conversion: 100000000,
-      ethValue: '1 ETH'
-    }, {
-      serverCode: 'Finney',
-      code: 'finney',
-      conversion: 1000,
-      ethValue: '0.001 ETH'
-    }, {
-      serverCode: 'Szabo',
-      code: 'szabo',
-      conversion: 1000000,
-      ethValue: '0.000001 ETH'
-    }, {
-      serverCode: 'Wei',
-      code: 'wei',
-      conversion: 1000000000000000000,
-      ethValue: '0.000000000000000001 ETH'
+      code: 'ETH'
     }
   ];
 
@@ -242,8 +224,6 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (isBitCurrency(currency) || isEthCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
-    } else if (isEthCurrency(currency)) {
-      amount = amount.toFixed(4);
     } else {
       amount = parseFloat(amount).toFixed(decimalPlaces);
     }
