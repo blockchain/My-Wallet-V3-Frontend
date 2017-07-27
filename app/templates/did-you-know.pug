@@ -6,7 +6,7 @@
     h6.mvn.f-18.em-300.blue {{ dyk.title | translate }}
   .mt-5
     p.f-14.em-300
-      | {{ dyk.text | translate }}
+      | {{ dyk.text | translate:textValues }}
       span(ng-if="dyk.state")
         a.mls(ui-sref="{{ dyk.state }}" ng-hide="dyk.external") {{ dyk.linkText | translate }}
         a.mls(href="{{ dyk.state }}" target="_blank" rel="noopener noreferrer" ng-show="dyk.external") {{ dyk.linkText | translate }}
