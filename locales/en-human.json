@@ -1025,7 +1025,7 @@
   },
   "TX_AWAITING_REF_NUMBER": {
     "TITLE": "Bank Transfer",
-    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below. You will then need to provide the bank transfer reference number."
+    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below before continuing. You will then need to provide the bank transfer reference number. <b>Please use the same bank account that was used to create the account.</b>"
 
   },
   "TX_INITIATED": {
@@ -1486,5 +1486,6 @@
     "IFSC": "IFSC"
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
+  "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
   "": ""
 }
