@@ -21,13 +21,25 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     },
     countries: [],
     rolloutFraction: 0,
+    get isInWhitelistedCountry () {
+      return this.countries === '*' || this.countries.indexOf(Wallet.my.wallet.accountInfo.countryCodeGuess) > -1;
+    },
+    get isInRolloutGroup () {
+      return MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction);
+    },
     get userHasAccess () {
-      let wallet = Wallet.my.wallet;
-      if (wallet == null) return false;
-      return this.ethInititalized || (
-        (this.countries === '*' || this.countries.indexOf(wallet.accountInfo.countryCodeGuess) > -1) &&
-        MyWalletHelpers.isStringHashInFraction(wallet.guid, this.rolloutFraction)
-      );
+      if (Wallet.my.wallet == null) return false;
+      return this.ethInititalized || (this.isInWhitelistedCountry && this.isInRolloutGroup);
+    },
+    get userAccessReason () {
+      let reason;
+      if (Wallet.my.wallet == null) reason = 'wallet is null';
+      else if (this.ethInititalized) reason = 'it is already initialized';
+      else if (this.isInWhitelistedCountry && this.isInRolloutGroup) reason = 'they are in a whitelisted country and in the rollout group';
+      else if (this.isInWhitelistedCountry) reason = 'they are in a whitelisted country but not in the rollout group';
+      else if (this.isInRolloutGroup) reason = 'they are in the rollout group but not in a whitelisted country';
+      else reason = 'they are not in a whitelisted country or the rollout group';
+      return `User can${this.userHasAccess ? '' : 'not'} see Ethereum because ${reason}`;
     }
   };
 
@@ -96,5 +108,6 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     }
   });
 
+  window.Ethereum = service;
   return service;
 }
