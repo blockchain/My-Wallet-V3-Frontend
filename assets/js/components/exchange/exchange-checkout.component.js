@@ -60,7 +60,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? $scope.fromSatoshi(state.fiat, $scope.dollars) * this.conversion | 0 : $scope.fromSatoshi(state.btc * 100000000, $scope.bitcoin),
+    amount: state.baseFiat ? state.fiat * this.conversion | 0 : state.btc * 1e8,
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });
@@ -75,13 +75,13 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
 
     let fetchSuccess = (quote) => {
       $scope.quote = quote;
+      $scope.getRate(quote);
       state.error = null;
       state.loadFailed = false;
       this.collapseSummary = true;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
-      if (state.baseFiat) state.btc = quote.quoteAmount;
-      else state.fiat = $scope.toSatoshi(quote.quoteAmount, $scope.dollars) / this.conversion;
-      $scope.getInitialQuote();
+      if (state.baseFiat) state.btc = quote.quoteAmount / 1e8;
+      else state.fiat = quote.quoteAmount;
     };
 
     this.handleQuote($scope.getQuoteArgs(state))
@@ -90,8 +90,23 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
     $scope.quote = null;
   });
 
+  $scope.getRate = (quote) => {
+    let rate, fiat;
+    let { baseAmount, quoteAmount, baseCurrency } = quote;
+
+    if (baseCurrency === 'BTC') {
+      rate = 1 / (baseAmount / 1e8);
+      fiat = quoteAmount;
+    } else {
+      rate = 1 / (quoteAmount / 1e8);
+      fiat = baseAmount;
+    }
+
+    $scope.state.rate = Math.abs(rate * fiat);
+  };
+
   $scope.getInitialQuote = () => {
-    let args = { amount: 100000000, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
+    let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
     let quoteP = $q.resolve(this.handleQuote(args));
     quoteP.then(quote => { $scope.state.rate = quote.quoteAmount; });
   };
@@ -138,8 +153,11 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
     }
   };
 
-  $scope.$watch('$ctrl.limits.min', (limit) => $scope.min = $scope.toSatoshi(limit || 0.01, $scope.dollars));
-  $scope.$watch('$ctrl.limits.max', (limit) => $scope.max = $scope.toSatoshi(limit, $scope.dollars));
+  $scope.$watch('state.rate', (rate) => {
+    let limits = this.limits;
+    $scope.min = { fiat: limits.min, btc: limits.min / rate };
+    $scope.max = { fiat: limits.max, btc: limits.max / rate };
+  });
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$on('$destroy', $scope.cancelRefresh);
