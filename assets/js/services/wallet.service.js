@@ -1097,11 +1097,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.toggleSave2FA(true, success, error);
   };
 
-  wallet.handleBitcoinLinks = () => {
-    wallet.saveActivity(2);
-    const uri = $rootScope.rootPath + '/open/%s';
+  wallet.handleBitcoinLinks = () => Env.then(env => {
+    let uri = env.rootPath + '/open/%s';
     $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
-  };
+  });
 
   wallet.enableBlockTOR = () => {
     wallet.settings_api.updateTorIpBlock(1, () => {
