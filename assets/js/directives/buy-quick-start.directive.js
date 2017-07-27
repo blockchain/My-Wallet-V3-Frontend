@@ -107,6 +107,10 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
         .finally(() => scope.disabled = false);
     };
 
+    scope.setFiat = (amount) => {
+      scope.transaction.fiat = amount;
+    };
+
     scope.getMinLimits = (quote) => {
       $q.resolve(buySell.getMinLimits(quote))
         .then(scope.limits = buySell.limits);

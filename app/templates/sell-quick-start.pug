@@ -65,10 +65,10 @@
           span or
           | &nbsp;
           a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
-        .pos-rel.mt-10(ng-hide="tradingDisabled")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.bank.min[$ctrl.transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-          span.pos-abs.type-sm.state-danger-text(ng-show="fiatForm.fiat.$error.max" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.maxOutRemaining[$ctrl.transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-        .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet && !fiatForm.fiat.$error.min && !fiatForm.fiat.$error.max")
+        .pos-rel.mt-10(ng-hide="tradingDisabled || $ctrl.error.moreThanInWallet")
+          span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.bank.min[$ctrl.transaction.currency.code]); updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.bank.min[$ctrl.transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
+          span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.bank.maxOutRemaining[$ctrl.transaction.currency.code]); updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.max" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.maxOutRemaining[$ctrl.transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
+        .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS" translate-values="{account: defaultAccount()}")
           br
