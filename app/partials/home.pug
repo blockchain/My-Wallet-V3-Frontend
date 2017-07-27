@@ -23,7 +23,7 @@ blocket-loading(loading="!isWalletInitialized()")
             .flex-column.flex-align-end
               span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
               fiat(btc="getLegacyTotal()")
-          li.flex-between.border-bottom-light()
+          li.flex-between.border-bottom-light(ng-if="showEthereum()")
             span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
             .flex-column.flex-align-end
               span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH

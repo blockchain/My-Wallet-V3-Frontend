@@ -8,6 +8,7 @@ function HomeCtrl ($scope, Wallet, $uibModal, buyStatus, localStorageService, Et
   $scope.getTotal = () => Wallet.total('');
   $scope.getEthTotal = () => Ethereum.balance;
   $scope.getLegacyTotal = () => Wallet.total('imported');
+  $scope.showEthereum = () => Ethereum.userHasAccess && Ethereum.ethInititalized;
 
   $scope.isWalletInitialized = () => {
     let { isLoggedIn, didLoadSettings, didLoadTransactions } = Wallet.status;
