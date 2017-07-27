@@ -7,7 +7,7 @@ function faqCtrl ($scope, faq, buyStatus, $uibModal, Ethereum) {
 
   $scope.questions = faq.questions
     .filter(q => !q.eth || showEthereum)
-    .map(q => angular.merge({ displayed: true, values: { showEthereum } }, q));
+    .map(q => angular.merge({ displayed: false, values: { showEthereum } }, q));
 
   $scope.toggle = (q) => { q.displayed = !q.displayed; };
 
