@@ -496,7 +496,7 @@ describe('SendBitcoinController', () => {
           spyOn($state, 'go');
           scope.send();
           digestAndFlush();
-          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions');
+          expect($state.go).toHaveBeenCalledWith('wallet.common.btc.transactions');
         })
         );
 
@@ -505,7 +505,7 @@ describe('SendBitcoinController', () => {
           scope.transaction.from = Wallet.legacyAddresses()[0];
           scope.send();
           digestAndFlush();
-          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions');
+          expect($state.go).toHaveBeenCalledWith('wallet.common.btc.transactions');
         })
         );
 

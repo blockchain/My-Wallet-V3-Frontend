@@ -168,8 +168,8 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
         let note = $scope.transaction.note;
         if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
 
-        if ($state.current.name !== 'wallet.common.transactions') {
-          $state.go('wallet.common.transactions');
+        if ($state.current.name !== 'wallet.common.btc.transactions') {
+          $state.go('wallet.common.btc.transactions');
         }
 
         let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
