@@ -7,7 +7,7 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
     to: null,
     amount: null,
     amountFiat: null,
-    description: null
+    note: null
   };
 
   this.account = Ethereum.defaultAccount;
@@ -78,6 +78,7 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
       this.account.fetchBalance();
       console.log('sent ether:', txHash);
       Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
+      if (this.tx.note) Ethereum.setTxNote(txHash, this.tx.note);
     }).catch(({ message }) => {
       Alerts.displayError(message);
     });
