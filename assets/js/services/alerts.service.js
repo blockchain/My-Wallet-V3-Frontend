@@ -79,7 +79,10 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
                         index >= links.length ||
                         surveyOpened && surveyOpened.index >= index;
 
-    if (hasSeenPrompt) {
+    let unocoinCompletedTrade = survey === 'unocoin-trade-survey' &&
+                                index === 2;
+
+    if (hasSeenPrompt && !unocoinCompletedTrade) {
       if (sell === true) {
         return service.confirm('CONFIRM_CLOSE_SELL', {action: 'IM_DONE'});
       }
