@@ -245,6 +245,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.settings.blockTOR = !!result.block_tor_ips;
       wallet.status.didLoadSettings = true;
 
+      let isUsingThemesExperiment = MyBlockchainApi.createExperiment(0);
+      if (wallet.settings.theme === theme.themes[0]) isUsingThemesExperiment.recordA();
+      else isUsingThemesExperiment.recordB();
+
       if (wallet.my.wallet.isUpgradedToHD) {
         let didFetchTransactions = () => {
           if (browserDetection().browser === 'ie') {
