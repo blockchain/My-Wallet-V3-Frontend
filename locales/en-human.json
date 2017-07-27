@@ -283,7 +283,7 @@
   "2FA_NOT_SUPPORTED" : "This method of two factor authentication is not supported",
   "DISABLE" : "Disable",
   "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable two step authentication?",
-  "IMPORTED_ADDRESSES" : "Imported Addresses",
+  "IMPORTED_ADDRESSES" : "Imported Bitcoin Addresses",
   "HD_ADDRESSES" : "HD Addresses",
   "ADDRESS_BOOK" : "Address Book",
   "MANAGE_ADDRESS_BOOK" : "Manage Address Book",
@@ -311,7 +311,7 @@
   "MY_ADDRESSES_EXPLAIN" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEW_ADDRESS" : "New Address",
   "ADD_NEXT_ADDRESS": "Add Next Address",
-  "IMPORT_ADDRESS" : "Import Address",
+  "IMPORT_ADDRESS" : "Import Bitcoin Address",
   "MORE_ACTIONS" : "More Actions",
   "CONFIRM_IMPORT_WATCH": {
     "TITLE": "Import Watch-only Address?",
@@ -386,7 +386,7 @@
   "CURRENT_BALANCE_HELP" : "When you send bitcoin, your Blockchain wallet automatically selects addresses to spend from. That's why the current balance of an address can be different from the total received value.",
   "NO_TXS" : "No Transactions",
   "WATCH_ONLY_ADDRESSES" : "Watch-only Addresses",
-  "ARCHIVED_ADDRESSES" : "Archived Addresses",
+  "ARCHIVED_ADDRESSES" : "Archived Bitcoin Addresses",
   "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can unarchive them at any time.",
   "CONFIRM_LOSE_ACCESS": {
     "TITLE": "Delete Address?",
