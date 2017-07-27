@@ -25,8 +25,12 @@ function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, f
   this.addReferenceNumber = () => {
     this.lock();
     $q.resolve(trade.addReferenceNumber(this.state.reference))
-      .then((trade) => this.formattedTrade = formatTrade.initiated(trade))
-      .then(() => this.goTo('initiated'))
+      .then((trade) => {
+        this.formattedTrade = formatTrade.initiated(trade);
+      })
+      .then(() => {
+        this.goTo('initiated');
+      })
       .catch((err) => { console.log(err); }).finally(this.free);
   };
 
