@@ -10,6 +10,7 @@ angular
       initialStep: '<',
       onVerify: '&',
       onSetProfile: '&',
+      onSetBankInfo: '&',
       mobilePreferred: '@'
     },
     templateUrl: 'templates/exchange/verify.pug',
@@ -46,10 +47,12 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
       case 'You entered wrong account number':
         this.goTo('info');
         $timeout(() => $scope.$ctrl.infoForm.bankAccountNumber.$setValidity('correct', false), 100);
+        this.profile.submittedBankInfo = false;
         break;
       case 'You entered wrong IFSC':
         this.goTo('info');
         $timeout(() => $scope.$ctrl.infoForm.ifsc.$setValidity('correct', false), 100);
+        this.profile.submittedBankInfo = false;
         break;
       default:
         Exchange.displayError(error);
@@ -78,6 +81,10 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.setProfile = () => {
     this.onSetProfile();
     this.step < Object.keys(this.steps).length - 1 ? this.step++ : this.onVerify();
+  };
+
+  this.setBankInfo = () => {
+    this.onSetBankInfo();
   };
 
   this.error && this.displayInlineError(this.error);
