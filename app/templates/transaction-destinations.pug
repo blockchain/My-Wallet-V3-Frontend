@@ -17,7 +17,7 @@ div.main-font.em-300.f-14(ng-class="{'flex-column-reverse' : (transaction.txType
     span.pointer(ng-show="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled" ng-click="transaction.toggled = !transaction.toggled") {{ txLabels.preview }}
     span.dest-oflow(ng-hide="txLabels.preview && txLabels.secondary.length > 1 && !transaction.toggled")
       span
-        .flex-row(ng-repeat="address in txLabels.secondary track by $index")
+        .overflow-scroll.flex-row(ng-repeat="address in txLabels.secondary track by $index")
           span(ng-bind-html="address.label | escapeHtml | highlight:search" uib-tooltip="{{address.address}}" tooltip-class="address" tooltip-enable="address.identity >= 0" tooltip-append-to-body="true")
           span(ng-show="txLabels.secondary.length > 1")
             |&nbsp;(
