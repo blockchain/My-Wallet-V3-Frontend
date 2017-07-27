@@ -19,7 +19,7 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
 
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
-  $scope.setProfile = (fields) => {
+  $scope.setProfile = () => {
     let profile = $scope.exchange.profile;
 
     profile.address.street = profile.street;
