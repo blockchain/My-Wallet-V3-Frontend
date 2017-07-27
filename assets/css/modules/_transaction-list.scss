@@ -362,12 +362,6 @@ a.date,p.date { color: $black; }
   }
 }
 
-.ethTransactionAmount {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .half-eth {
   height: 200px;
   width: auto;

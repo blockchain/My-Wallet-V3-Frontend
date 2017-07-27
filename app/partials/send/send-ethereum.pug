@@ -101,14 +101,14 @@
       .flex-row.mt-10
         label.colon.width-20.width-20-mobile(translate="PAYMENT")
         .width-80.width-80-mobile
-          span.mr-10 {{ $ctrl.payment.amount | format:'eth':8 }} ETH
+          span.mr-10 {{ $ctrl.payment.amount | format:'eth' }} ETH
       .flex-row.mt-10
         label.colon.width-20.width-20-mobile(translate="FEE")
         .width-80.width-80-mobile
           span.mr-10 {{ $ctrl.payment.fee }} ETH
       .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
         span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{ $ctrl.getTransactionTotal() }} ETH
+        span.f-28.mb-10.em-600 {{ $ctrl.getTransactionTotal() | format:'eth' }} ETH
         span.f-20.em-300
           fiat(eth="$ctrl.getTransactionTotal()")
 

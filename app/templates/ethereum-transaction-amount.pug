@@ -7,6 +7,6 @@ div.ethAmountTotal.em-400.amount.flex-center.flex-justify(
   }" ng-click="$ctrl.toggle()")
   span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")
   fiat(eth="$ctrl.tx.amount" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
-  span.ethTransactionAmount(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.absolute($ctrl.tx.amount) }}
+  span(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.absolute($ctrl.tx.amount) | format:'eth' }}
   | &nbsp;
   span(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") ETH
