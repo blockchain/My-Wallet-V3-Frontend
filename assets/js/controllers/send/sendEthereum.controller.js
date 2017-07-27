@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendEthereumController', SendEthereumController);
 
-function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wallet, Env) {
+function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum, Wallet, Env) {
   const txTemplate = {
     to: null,
     amount: null,
@@ -63,15 +63,17 @@ function SendEthereumController ($scope, $window, currency, Alerts, Ethereum, Wa
   };
 
   this.nextStep = () => {
-    Wallet.askForSecondPasswordIfNeeded().then(secPass => {
-      let privateKey = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass);
-      this.payment.sign(privateKey);
-      $scope.vm.toConfirmView();
-    });
+    $scope.vm.toConfirmView();
   };
 
   this.send = () => {
-    this.payment.publish().then(({ txHash }) => {
+    Wallet.askForSecondPasswordIfNeeded().then(secPass => {
+      let privateKey = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass);
+      this.payment.sign(privateKey);
+      return this.payment.publish();
+    }, () => {
+      return $q.reject({ message: 'SECOND_PASSWORD_CANCEL' });
+    }).then(({ txHash }) => {
       $scope.vm.close();
       this.account.fetchBalance();
       console.log('sent ether:', txHash);

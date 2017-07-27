@@ -338,7 +338,7 @@
   "CURRENT_SECOND_PASSWORD": "Current Second Password",
   "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend your funds. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_WARNING" : "This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
-  "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
+  "SECOND_PASSWORD_CANCEL": "Your second password is required to send. Please try again",
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
   "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Try again.",
