@@ -1326,6 +1326,7 @@
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
+  "TRADING_SERVICE_IS_DISABLED": "Coinify's services have been temporarily disabled. Please read more at <a href='https://support.coinify.com/' target='_blank' rel='noopener noreferrer'>https://support.coinify.com/</a>",
   "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
   "OR": "or",
   "PRODUCTS": "Products",

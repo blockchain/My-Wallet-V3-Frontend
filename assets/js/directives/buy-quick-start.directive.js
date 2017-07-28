@@ -1,9 +1,9 @@
 angular.module('walletDirectives')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals', 'Exchange'];
 
-function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals, Exchange) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -86,9 +86,15 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       Alerts.clear();
     };
 
-    const error = () => {
-      scope.status = {};
-      scope.fiatForm.fiat.$setValidity('max', false);
+    const error = (err) => {
+      let error = Exchange.interpretError(err);
+      if (error === 'service_temporarily_unavailable') {
+        scope.serviceSuspended = true;
+        scope.serviceSuspendedReason = error;
+      } else {
+        scope.status = {};
+        scope.fiatForm.fiat.$setValidity('max', false);
+      }
     };
 
     scope.cancelTrade = () => {
