@@ -80,6 +80,11 @@
       .tx-details.width-100.mll.mvm
         span
           transaction-description-ethereum(transaction="tx" highlight="searchText" account="account")
+    .row
+      .col-xs-5
+      .col-xs-2
+        p(align="center" ng-hide="loading || allTxsLoaded || filteredTransactions.length == 0")
+          a(in-view="nextPage()" ng-click="nextPage()")
     .row(ng-show="loading").mtm.loading
        .col-xs-5
        .col-xs-2.center

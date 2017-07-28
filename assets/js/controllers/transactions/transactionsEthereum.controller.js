@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ethereumTransactionsCtrl', ethereumTransactionsCtrl);
 
-function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localStorageService) {
+function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localStorageService, $q) {
   $scope.loading = true;
   $scope.ethTransactions = [];
   $scope.$watch(
@@ -12,6 +12,12 @@ function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localSto
       $scope.loading = false;
     }
   );
+
+  $scope.txLimit = 10;
+
+  $scope.nextPage = () => {
+    if ($scope.txLimit < $scope.ethTransactions.length) $scope.txLimit += 5;
+  };
 
   $scope.account = Ethereum.defaultAccount;
 
