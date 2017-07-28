@@ -20,4 +20,8 @@ function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency,
   this.toggleTx = () => this.showFiat = !this.showFiat;
   this.toggle = Wallet.toggleDisplayCurrency;
   this.absolute = (value) => Math.abs(value);
+
+  this.transaction.isFromAccount(this.account)
+    ? this.totalAmount = parseFloat(this.tx.fee) + parseFloat(this.tx.amount)
+    : this.totalAmount = parseFloat(this.tx.amount);
 }
