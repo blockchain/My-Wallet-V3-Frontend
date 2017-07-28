@@ -75,7 +75,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
 
     let fetchSuccess = (quote) => {
       $scope.quote = quote;
-      $scope.getRate(quote);
       state.error = null;
       state.loadFailed = false;
       this.collapseSummary = true;
@@ -89,21 +88,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   }, 500, () => {
     $scope.quote = null;
   });
-
-  $scope.getRate = (quote) => {
-    let rate, fiat;
-    let { baseAmount, quoteAmount, baseCurrency } = quote;
-
-    if (baseCurrency === 'BTC') {
-      rate = 1 / (baseAmount / 1e8);
-      fiat = quoteAmount;
-    } else {
-      rate = 1 / (quoteAmount / 1e8);
-      fiat = baseAmount;
-    }
-
-    $scope.state.rate = Math.abs(rate * fiat);
-  };
 
   $scope.getInitialQuote = () => {
     let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
@@ -154,6 +138,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   };
 
   $scope.$watch('state.rate', (rate) => {
+    if (!rate) return;
     let limits = this.limits;
     $scope.min = { fiat: limits.min, btc: limits.min / rate };
     $scope.max = { fiat: limits.max, btc: limits.max / rate };
