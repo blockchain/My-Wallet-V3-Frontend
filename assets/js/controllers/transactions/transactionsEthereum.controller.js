@@ -13,21 +13,10 @@ function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localSto
     }
   );
 
-  $scope.allTxsLoaded = false;
   $scope.txLimit = 10;
 
   $scope.nextPage = () => {
     if ($scope.txLimit < $scope.ethTransactions.length) $scope.txLimit += 5;
-    else if (!$scope.allTxsLoaded && !$scope.loading) fetchTxs();
-  };
-
-  let fetchTxs = () => {
-    $scope.loading = true;
-    $q.resolve(Ethereum.defaultAccount.fetchTransactions())
-      .then(txs => {
-        $scope.allTxsLoaded = txs.length === $scope.ethTransactions.length;
-      })
-      .finally(() => $scope.loading = false);
   };
 
   $scope.account = Ethereum.defaultAccount;
