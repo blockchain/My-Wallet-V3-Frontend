@@ -25,6 +25,10 @@ describe('qr-scan directive', function () {
     let $compile = _$compile_;
     let $rootScope = _$rootScope_;
 
+    let Ethereum = $injector.get('Ethereum');
+
+    Ethereum.isAddress = () => false;
+
     $rootScope.onScan = jasmine.createSpy();
 
     let element = $compile('<qr-scan on-scan="onScan"></qr-scan>')($rootScope);

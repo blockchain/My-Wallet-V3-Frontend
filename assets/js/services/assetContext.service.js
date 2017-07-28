@@ -16,10 +16,6 @@ function AssetContextService ($state, Wallet, Ethereum) {
   service.isViewingBtc = () => $state.current.name.includes('btc');
   service.isViewingEth = () => $state.current.name.includes('eth');
 
-  service.shouldShowBalanceFor = (assetCode) => (
-    service.getBalanceContext().indexOf(assetCode) > 0
-  );
-
   service.getContext = () => {
     let hasBtc = service.hasBtcBalance();
     let hasEth = service.hasEthBalance();

@@ -48,9 +48,10 @@ describe('Activity', () => {
     it('should produce a tx object when type is 0', () => {
       let tx = Activity.btcTxFactory(MyWallet.wallet.txList.transactions()[0]);
       expect(tx).toEqual(jasmine.objectContaining({
+        type: 0,
         icon: 'icon-tx',
         time: 25000,
-        message: 'Received BTC',
+        message: 'received BTC',
         amount: 1,
         labelClass: 'received'
       }));
@@ -60,6 +61,7 @@ describe('Activity', () => {
       spyOn(buySell, 'getTxMethod').and.returnValue('buy');
       let tx = Activity.btcTxFactory(MyWallet.wallet.txList.transactions()[0]);
       expect(tx).toEqual(jasmine.objectContaining({
+        type: 0,
         icon: 'icon-tx',
         time: 25000,
         message: 'BOUGHT',
@@ -73,7 +75,7 @@ describe('Activity', () => {
       expect(log).toEqual(jasmine.objectContaining({
         icon: 'ti-settings',
         time: 25,
-        message: 'Login',
+        message: 'login',
         labelClass: 'login'
       }));
     });
