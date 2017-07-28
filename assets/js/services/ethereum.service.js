@@ -4,6 +4,7 @@ angular
 
 function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   const service = {
+    lastTxHash: null,
     get eth () {
       return Wallet.my.wallet.eth;
     },
@@ -65,6 +66,17 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
 
   service.getPrivateKeyForAccount = (account, secPass) => {
     return service.eth.getPrivateKeyForAccount(account, secPass);
+  };
+
+  service.recordLastTransaction = (hash) => {
+    service.lastTxHash = hash;
+  };
+
+  service.isWaitingOnTransaction = () => {
+    return (
+      service.lastTxHash != null &&
+      service.defaultAccount.txs.find(tx => tx.hash === service.lastTxHash) == null
+    );
   };
 
   service.initialize = (_secPass) => {

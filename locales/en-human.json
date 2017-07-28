@@ -1519,5 +1519,6 @@
   "ETHER_SEND_RECEIVE": "Send & Receive Ether",
   "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
   "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
+  "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
   "": ""
 }

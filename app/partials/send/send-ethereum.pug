@@ -1,12 +1,11 @@
 #send.modal-body(ng-controller="SendEthereumController as $ctrl")
   div(ng-hide="vm.confirm")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
-      fieldset
-        .group.mb-20.inline(ng-hide="vm.hideAssetSelect")
-          .item.width-30.width-50-mobile.mr-20
-            label.colon(translate="CURR")
-            asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
-
+      .group.mb-20.inline(ng-hide="vm.hideAssetSelect")
+        .item.width-30.width-50-mobile.mr-20
+          label.colon(translate="CURR")
+          asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
+      fieldset(ng-disabled="$ctrl.isWaitingOnTransaction")
         .group
           .item
             label.colon(translate="TO")
@@ -27,6 +26,7 @@
             .has-error
               span.help-block.type-sm(ng-show="sendForm.to.$error.isContract" translate="ETHER_DISABLE_SEND_TO_CONTRACT")
               span.help-block.type-sm(ng-show="sendForm.to.$error.isEthAddress && !sendForm.to.$error.isContract" translate="ETHER_ADDRESS_INVALID")
+              span.help-block.type-sm(ng-show="$ctrl.isWaitingOnTransaction" translate="WAIT_FOR_CONFIRM")
           //- Amount
           .item.mt-20
             label.colon(translate="AMOUNT")

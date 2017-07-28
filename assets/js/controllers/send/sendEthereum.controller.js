@@ -12,6 +12,7 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
+  this.isWaitingOnTransaction = Ethereum.isWaitingOnTransaction();
 
   Env.then(({ ethereum = {} }) => {
     let { gasPrice, gasLimit } = ethereum;
@@ -78,6 +79,7 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
       this.account.fetchBalance();
       console.log('sent ether:', txHash);
       Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
+      Ethereum.recordLastTransaction(txHash);
       if (this.tx.note) Ethereum.setTxNote(txHash, this.tx.note);
     }).catch(({ message }) => {
       Alerts.displayError(message);
