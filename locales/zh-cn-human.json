@@ -1093,5 +1093,90 @@
   "HIDE": "隐藏",
   "EDIT_NAME": "编辑名称",
   "NOT_BACKED_BY_RECOVERY": "没有使用您的恢复密语备份。转帐到一个钱包以获取资金。",
-  "EXCHANGE_RATE_HELPER": "您的地区的兑换合作伙伴提供的兑换率。可能包含费用。"
+  "EXCHANGE_RATE_HELPER": "您的地区的兑换合作伙伴提供的兑换率。可能包含费用。",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "银行转帐",
+    "BODY": "请以电子方式（通过IMPS，NEFT，或者RTGS）向 Unocoin 的以下银行帐户发送{{::amount}}。而后，您将需要提供银行转帐参考编号。"
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "您的地区的兑换合作伙伴提供的价格中可能包含费用。",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN Card",
+     "COPY": "上传或者拍一张您的 PAN Card 照片，上面清楚地显示您的姓名和10位数永久帐号。",
+     "UPLOAD_TITLE": "PAN Card",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "确保截图上清楚地显示您的pancard号。"
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. 您的照片",
+    "COPY": "上传或者拍一张您自己的照片，从而让 Unocoin 能够验证您的 PAN Card。",
+    "UPLOAD_TITLE": "照片",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "确保截图上清楚地显示您的脸。"
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. 地址证明",
+    "COPY": "上传或者拍一张您的地址证明照片。您可以上传以下经审批的文件之一，该文件与您最初提供的姓名和地址相匹配。",
+    "UPLOAD_TITLE": "地址证明",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar Card（正面和背面）",
+    "OPTION2": "驾照",
+    "OPTION3": "护照（显示地址的页）",
+    "OPTION4": "公共设施帐单",
+    "HELP": "确保截图上清楚地显示您的姓名和地址。"
+  },
+  "BANK_NAME": "银行名称",
+  "ACCOUNT_HOLDER_NAME": "帐户持有者姓名",
+  "ACCOUNT_NUMBER": "帐号",
+  "IFSC_CODE": "IFSC 代码",
+  "ACCOUNT_TYPE": "帐户类别",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "可接受的 PAN Card",
+    "COPY": "不接受未成年人 PAN Card <span class='state-danger-text'></span>。<br>PAN Card 必须依据政府记录有效。"
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "可接受的用户照片",
+    "COPY": "不接受戴着护目镜或者帽子的自拍照<span class='state-danger-text'></span>。"
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "可接受的地址证明",
+    "COPY": "在地址证明信息上避免使用相机闪光灯。<br>地址证明有效期必须至少6个月。<br>地址证明应与之前输入的地址匹配。<br>投票人ID在政府网站中必须是有效的。<br>上传的地址证明必须为英文。"
+  },
+  "UNOCOIN_EXPLAIN": "我们的合作伙伴 Unocoin 会处理您的比特币购买。您将需要提供一些信息并且链接一种支付方式。",
+  "UNOCOIN": {
+    "PENDING": "身份验证待定",
+    "PENDING_EXPLAIN": "Unocoin 目前正在验证您的身份。您将在1个工作日内接到一通电话以核实您的<b>姓名</b>、<b>地址邮编</b>，以及<b>PAN Card 信息</b>。您的身份一经验证，您就可以购买比特币。"
+  },
+  "REQUIRED_FIELD": "必填栏",
+  "IFSC_INCORRECT": "IFSC 不正确",
+  "PIN_CODE_REQUIRED": "要求 Pin 码",
+  "PIN_CODE_INCORRECT": "Pin 码不正确",
+  "PAN_CARD_REQUIRED": "要求 Pan Card",
+  "PAN_CARD_INCORRECT": "Pan Card 不正确",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "银行帐号不正确",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "创建{{::exchange}}帐户",
+    "CREATE_ACCOUNT_EXPLAIN": "请确认您的邮箱地址和电话号码以创建您的{{::exchange}} 兑换帐户。",
+    "VERIFY_EMAIL": "验证邮箱地址",
+    "VERIFY_EMAIL_EXPLAIN": "我们刚刚向您的邮箱地址发送了一条验证码。请输入该验证码以创建您的{{::exchange}}兑换帐户。",
+    "CHANGE_EMAIL": "更改邮箱",
+    "CHANGE_EMAIL_EXPLAIN": "更新您的邮箱还会更改与您的钱包相关联的邮箱地址。",
+    "CHANGE_EMAIL_FAILED": "抱歉，该邮箱已经注册了{{::exchange}}。",
+    "CONFIRM_EMAIL": "确认邮件",
+    "VERIFICATION_CODE": "验证码",
+    "VERIFICATION_CODE_INCORRECT": "验证码不正确。",
+    "CHANGE_EMAIL_": "更改邮箱",
+    "ANOTHER_CODE_SENT": "已发送了另一个代码！",
+    "VERIFY_ACCOUNT": "我们需要收集一些个人信息以核实您的身份。请注意，这些信息会被发送至{::exchange}}，并且不会直接链接至您的 Blockchain 钱包。",
+    "FULL_NAME": "全名",
+    "MOBILE": "手机",
+    "PAN_CARD": "PAN Card",
+    "FULL_RESIDENTIAL_ADDRESS": "完整住宅地址（您将需要提供地址证明）",
+    "ADDRESS_LINE_1": "地址行1",
+    "ADDRESS_LINE_2": "地址行2",
+    "STATE": "州",
+    "CITY": "城市",
+    "PIN_CODE": "PIN 码",
+    "BANK_ACCOUNT_NUMBER": "银行帐户",
+    "IFSC": "IFSC"
+  }
 }

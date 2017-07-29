@@ -1,0 +1,87 @@
+{
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Bančno nakazilo",
+    "BODY": "Prosimo, pošljite {{::amount}} v elektronski obliki (prek IMPS, NEFT ali RTGS) na spodnji Unocoinov bančni naslov. Nato boste morali zagotoviti referenčno številko bančnega nakazila."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Cena, ki jo nudi vaš regijski menjalni partner lahko vključuje tarife.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN kartica",
+     "COPY": "Naložite ali zajemite sliko vaše PAN kartice, na kateri je jasno vidno vaše ime in desetmestna Stalna številka računa.",
+     "UPLOAD_TITLE": "PAN kartica",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Zagotovite, da je na sliki jasno prikazana številka vaše pan kartice."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Vaša fotografija",
+    "COPY": "Naložite ali zajemite svojo sliko, tako da lahko Unocoin potrdi vašo PAN kartico.",
+    "UPLOAD_TITLE": "Fotografija",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Zagotovite, da je na sliki jasno prikazan vaš obraz."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Dokaz o naslovu",
+    "COPY": "Naložite ali zajemite svojo sliko vašega dokaza o naslovu. Naložite lahko enega izmed sledečih odobrenih dokumentov, ki se ujema z imenom in naslovom, kot ste ju vnesli na začetku.",
+    "UPLOAD_TITLE": "Dokaz o naslovu",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar kartica (sprednja in zadnja stran)",
+    "OPTION2": "Vozniško dovoljenje",
+    "OPTION3": "Potni list (stran, ki prikazuje naslov)",
+    "OPTION4": "Račun za javne storitve",
+    "HELP": "Zagotovite, da sta na sliki jasno prikazana ime in naslov."
+  },
+  "BANK_NAME": "Ime banke",
+  "ACCOUNT_HOLDER_NAME": "Ime imetnika eačuna",
+  "ACCOUNT_NUMBER": "Številka računa",
+  "IFSC_CODE": "IFSC koda",
+  "ACCOUNT_TYPE": "Vrsta računa",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Sprejemljiva PAN kartica",
+    "COPY": "Manjše PAN kartice <span class='state-danger-text'>niso sprejemljive</span>.<br>PAN kartica mora biti veljavna v skladu z vladnimi določbami."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Sprejemljiva fotografija uporabnika",
+    "COPY": "Selfiji z očali ali klobuki <span class='state-danger-text'>niso sprejemljivi</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Sprejemljiv dokaz o naslovu",
+    "COPY": "Izogibajte se bliskavici kamere na dokazu o naslovu.<br>Dokaz o naslovu mora veljati še vsaj 6 mesecev.<br>Dokaz o naslovu se mora ujemati s prej navedenim naslovom.<br>Identifikacijska številka volivca mora biti veljavna na vladni spletni strani.<br>Naloženi dokaz o naslovu mora biti v angleščini."
+  },
+  "UNOCOIN_EXPLAIN": "Naš partner Unocoin bo obdeloval vse vaše nakupe bitcoinov. Navesti boste morali nekaj informacij in dodati metodo plačila.",
+  "UNOCOIN": {
+    "PENDING": "Potrjevanje identitete v teku",
+    "PENDING_EXPLAIN": "Unocoin v tem trenutku potrjuje vašo identiteto. V roku 1 poslovnega dne boste prejeli telefonski klic. Telefonski klic bo potrdil vaše <b>Ime</b>, <b>Poštno številko naslova</b>, in <b>informacije PAN kartice</b>. Ko je vaš račun potrjen boste lahko kupovali bitcoine."
+  },
+  "REQUIRED_FIELD": "Zahtevano polje",
+  "IFSC_INCORRECT": "Nepravilen IFSC",
+  "PIN_CODE_REQUIRED": "Zahtevana je Pin koda",
+  "PIN_CODE_INCORRECT": "Pin koda ni pravilna",
+  "PAN_CARD_REQUIRED": "Zahtevana je Pan kartica",
+  "PAN_CARD_INCORRECT": "Pan kartica ni pravilna",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Številka bančnega računa ni pravilna",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Ustvari {{::exchange}} račun",
+    "CREATE_ACCOUNT_EXPLAIN": "Prosimo, potrdite vaš e-poštni naslov in telefonsko številko, da ustvarite svoj {{::exchange}} menjalni račun.",
+    "VERIFY_EMAIL": "Potrdi e-poštni naslov",
+    "VERIFY_EMAIL_EXPLAIN": "Na vaš e-poštni naslov smo pravkar poslali potrditveno kodo. Prosimo, vnesite potrditveno kodo, da ustvarite svoj {{::exchange}} menjalni račun.",
+    "CHANGE_EMAIL": "Spremeni e-pošto",
+    "CHANGE_EMAIL_EXPLAIN": "Posodabljanje vaše e-pošte bo spremenilo tudi e-poštni naslov, povezan z vašo denarnico.",
+    "CHANGE_EMAIL_FAILED": "Oprostite, ta e-poštni naslov je že registriran na {{::exchange}}.",
+    "CONFIRM_EMAIL": "Potrdi e-pošto",
+    "VERIFICATION_CODE": "Potrditvena koda",
+    "VERIFICATION_CODE_INCORRECT": "Potrditvena koda ni pravilna. ",
+    "CHANGE_EMAIL_": "spremeni e-pošto",
+    "ANOTHER_CODE_SENT": "Poslana je bila druga koda!",
+    "VERIFY_ACCOUNT": "Zbrati moramo nekaj osebnih informacij in potrditi vašo identiteto. Te informacije bodo poslane na {{::exchange}} in ne bodo neposredno povezane z vašo Blockchain denarnico.",
+    "FULL_NAME": "Polno ime",
+    "MOBILE": "Št. mobilnega telefona",
+    "PAN_CARD": "PAN kartica",
+    "FULL_RESIDENTIAL_ADDRESS": "Poln naslov (zagotoviti morate dokaz o naslovu)",
+    "ADDRESS_LINE_1": "Naslov 1",
+    "ADDRESS_LINE_2": "Naslov 2",
+    "STATE": "Zvezna država",
+    "CITY": "Mesto",
+    "PIN_CODE": "Pin Code",
+    "BANK_ACCOUNT_NUMBER": "Številka bančnega računa",
+    "IFSC": "IFSC"
+  }
+}

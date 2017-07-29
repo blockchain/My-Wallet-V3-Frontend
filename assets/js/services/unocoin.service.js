@@ -30,7 +30,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
       return 'create';
     } else {
       if (profile.level < 2) {
-        if (profile.addressComplete && profile.infoComplete) {
+        if (profile.identityComplete && profile.bankInfoComplete) {
           return 'upload';
         } else {
           return 'verify';

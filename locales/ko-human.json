@@ -1094,5 +1094,90 @@
   "HIDE": "숨기기",
   "EDIT_NAME": "이름 편집",
   "NOT_BACKED_BY_RECOVERY": "귀하 복구 구절로 백업 되지 않음 지갑으로 이체해서 자금 확보.",
-  "EXCHANGE_RATE_HELPER": "귀하 지역 환전 파트너가 제공한 환율. 수수료 포함 가능."
+  "EXCHANGE_RATE_HELPER": "귀하 지역 환전 파트너가 제공한 환율. 수수료 포함 가능.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "은행 이체",
+    "BODY": "{{::amount}}를 아래 Unocoin 은행 계좌로 전자 이체 해 주세요(IMPS, NEFT, RTGS 등 이용). 다음 은행 이체 참조 번호를 제공해야 할 겁니다."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "귀하 지역 교환 파트너가 제시하는 요율은 수수료가 포함되어 있을 수 있습니다.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN 카드",
+     "COPY": "PAN 카드를 업로드 하거나 사진을 찍으세요. 이름과 10 자리 영구 계좌 번호가 잘 보여야 합니다.",
+     "UPLOAD_TITLE": "PAN 카드",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "PAN 카드 번호가 스냅샷에서 확실히 보이게 하세요."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. 귀하 사진",
+    "COPY": "Unocoin이 귀하 PAN 카드를 확인할 수 있게 PAN 카드를 업로드 하거나 사진을 찍으세요.",
+    "UPLOAD_TITLE": "사진",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "얼굴이 스냅샷에서 확실히 보이게 하세요."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. 주소 증빙",
+    "COPY": "주소 증빙을 업로드 하거나 사진을 찍으세요. 처음 제공한 이름과 주소가 같은 다음 승인 문서 중 하나를 업로드 하세요.",
+    "UPLOAD_TITLE": "주소 증빙",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar 카드 (앞과 뒤)",
+    "OPTION2": "운전 면허",
+    "OPTION3": "여권 (주소가 나오는 페이지)",
+    "OPTION4": "전기나 수도 청구서",
+    "HELP": "이름과 주소가 스냅샷에서 확실히 보이게 하세요."
+  },
+  "BANK_NAME": "은행 이름",
+  "ACCOUNT_HOLDER_NAME": "계좌 소유자 이름",
+  "ACCOUNT_NUMBER": "계좌 번호",
+  "IFSC_CODE": "IFSC 코드",
+  "ACCOUNT_TYPE": "계좌 유형",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "유효한 PAN 카드",
+    "COPY": "미성년자 PAN 카드 <span class='state-danger-text'>유효하지 않음</span>.<br>PAN 카드는 정부 기록으로 유효해야 합니다."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "유효한 사용자 사진",
+    "COPY": "고글이나 모자를 쓴 셀카는 <span class='state-danger-text'>안됩니다</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "유효한 주소 증빙",
+    "COPY": "주소 증빙 상세 내용에 카메라 플래시 자국이 겹치지 않게 하세요.<br>주소 증빙은 적어도 6 개월은 유효해야 합니다.<br>주소 증빙은 이전에 입력한 주소와 같아야 합니다.<br>투표자 아이디는 정부 웹사이트에서 유효해야 합니다.<br>영문으로 된 주소 증빙을 업로드 해야 합니다."
+  },
+  "UNOCOIN_EXPLAIN": "우리 파트너 Unocoin이 귀하 비트코인 구매를 처리할 겁니다. 귀하는 일정 정보를 제공하고 결제 방법을 연결해야 합니다.",
+  "UNOCOIN": {
+    "PENDING": "신원 확인 중",
+    "PENDING_EXPLAIN": "Unocoin이 현재 귀하 신원 확인 중입니다. 1 업무 일 안에 전화가 갈 겁니다. 전화로 귀하 <b>이름</b>, <b>주소의 우편 번호</b>, <b>PAN 카드 정보</b>를 확인하게 됩니다. 확인 후 비트코인을 살 수 있습니다."
+  },
+  "REQUIRED_FIELD": "필요한 필드",
+  "IFSC_INCORRECT": "IFSC 틀림",
+  "PIN_CODE_REQUIRED": "비밀 번호 필요",
+  "PIN_CODE_INCORRECT": "비밀 번호 틀림",
+  "PAN_CARD_REQUIRED": "PAN 카드 필요",
+  "PAN_CARD_INCORRECT": "PAN 카드 틀림",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "은행 계좌 번호 틀림",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "{{::exchange}} 계정 만들기",
+    "CREATE_ACCOUNT_EXPLAIN": "이메일과 전화 번호를 확인해서 {{::exchange}} 교환 계정을 만드세요.",
+    "VERIFY_EMAIL": "이메일 주소 확인",
+    "VERIFY_EMAIL_EXPLAIN": "귀하 이메일 주소로 확인 코드를 보냈습니다. 확인 코드를 입력해서 {{::exchange}} 교환 계정을 만드세요.",
+    "CHANGE_EMAIL": "이메일 변경",
+    "CHANGE_EMAIL_EXPLAIN": "이메일을 변경하면 연결된 귀하 지갑도 변경됩니다.",
+    "CHANGE_EMAIL_FAILED": "미안하지만 이 이메일은 이미 {{::exchange}}로 등록된 것입니다.",
+    "CONFIRM_EMAIL": "이메일 확인",
+    "VERIFICATION_CODE": "확인 코드",
+    "VERIFICATION_CODE_INCORRECT": "확인 코드 틀림. ",
+    "CHANGE_EMAIL_": "이메일 변경",
+    "ANOTHER_CODE_SENT": "다른 코드를 보냈습니다!",
+    "VERIFY_ACCOUNT": "귀하 신원 확인을 위해 개인 정보가 필요합니다. 이 정보는 {{::exchange}}에게 보낼 것이며 귀하 Blockchain 지갑과 직접 연결되지 않습니다.",
+    "FULL_NAME": "이름 전체",
+    "MOBILE": "모바일",
+    "PAN_CARD": "PAN 카드",
+    "FULL_RESIDENTIAL_ADDRESS": "거주 주소 전체 (주소 증빙도 보내야 합니다)",
+    "ADDRESS_LINE_1": "주소 줄 1",
+    "ADDRESS_LINE_2": "주소 줄 2",
+    "STATE": "주",
+    "CITY": "도시",
+    "PIN_CODE": "비밀 번호",
+    "BANK_ACCOUNT_NUMBER": "은행 계좌 번호",
+    "IFSC": "IFSC"
+  }
 }

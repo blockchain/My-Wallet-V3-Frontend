@@ -1,0 +1,87 @@
+{
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Transfer bancar",
+    "BODY": "Vă rugăm să trimiteți suma de {{::amount}} prin mijloace electronice (prin IMPS, NEFT sau RTGS) în contul bancar al Unocoin menționat mai jos. Apoi, va trebui să ne furnizați numărul de referință al transferului bancar."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Rata de schimb valutar oferită de partenerul din regiunea dvs. poate include comisioane.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. Card PAN",
+     "COPY": "Încărcați sau faceți o fotografie Cardului dvs. PAN, afișând în mod clar numele dvs. și numărul de cont permanent din 10 cifre.",
+     "UPLOAD_TITLE": "Card PAN",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Asigurați-vă că numărul dvs. pancard se vede clar în imagine."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Fotografia dvs.",
+    "COPY": "Încărcați sau faceți-vă o fotografie, astfel încât Unocoin să vă poată verifica Cardul PAN.",
+    "UPLOAD_TITLE": "Fotografie",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Asigurați-vă că fața dvs. se vede clar în fotografie."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Dovada adresei",
+    "COPY": "Încărcați sau faceți o fotografie dovezii privind adresa dvs. Puteți încărca unul dintre următoarele documente aprobate, care corespund cu numele și adresa pe care le-ați furnizat inițial.",
+    "UPLOAD_TITLE": "Dovada adresei",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Card Aadhar (față și spate)",
+    "OPTION2": "Permis de conducere",
+    "OPTION3": "Pașaport (pagina unde este înscrisă adresa)",
+    "OPTION4": "Factură de utilități",
+    "HELP": "Asigurați-vă că numele și adresa dvs. se văd clar în imagine."
+  },
+  "BANK_NAME": "Denumire bancă",
+  "ACCOUNT_HOLDER_NAME": "Nume titular de cont",
+  "ACCOUNT_NUMBER": "Număr de cont",
+  "IFSC_CODE": "Cod IFSC",
+  "ACCOUNT_TYPE": "Tip de cont",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Card PAN acceptabil",
+    "COPY": "Card PAN minor <span class='state-danger-text'>not acceptable</span>.<br>Cardul PAN trebuie să fie valid conform înregistrărilor autorităților statale."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Fotografie utilizator acceptabilă",
+    "COPY": "Selfie-urile cu ochelari opaci sau pălării <span class='state-danger-text'>nu sunt acceptabile</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Dovadă acceptabilă a adresei",
+    "COPY": "Evitați folosirea blitzului aparatului foto pe detaliile dovezii privind adresa.<br>Dovada adresei trebuie să fie validă cel puțin 6 luni.<br>Dovada adresei trebuie să corespundă cu adresa declarată anterior.<br>Cartea de alegător trebuie să fie validă pe site-ul web al autorității statale.<br>Dovada adresei încărcată trebuie să fie în limba engleză."
+  },
+  "UNOCOIN_EXPLAIN": "Partenerul nostru Unocoin va procesa achizițiile dvs. bitcoin. Va trebui să ne furnizați anumite informații și un link către o metodă de plată.",
+  "UNOCOIN": {
+    "PENDING": "Verificarea identității este în așteptare",
+    "PENDING_EXPLAIN": "Unocoin vă verifică identitatea în acest moment. Veți primi un apel telefonic în 1 zi lucrătoare. Apelul telefonic vă va verifica <b>Numele</b>, <b>Codul poștal al adresei</b>, și <b>Datele de pe Cardul PAN</b>. După finalizarea verificării, veți putea să cumpărați bitcoin."
+  },
+  "REQUIRED_FIELD": "Câmp obligatoriu",
+  "IFSC_INCORRECT": "IFSC incorect",
+  "PIN_CODE_REQUIRED": "Cod PIN obligatoriu",
+  "PIN_CODE_INCORRECT": "Cod PIN incorect",
+  "PAN_CARD_REQUIRED": "Card Pan obligatoriu",
+  "PAN_CARD_INCORRECT": "Card Pan incorect",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Număr de cont bancar incorect",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Creare cont {{::exchange}}",
+    "CREATE_ACCOUNT_EXPLAIN": "Vă rugăm să confirmași adresa dvs. de e-mail și numărul de telefon pentru a vă crea contul de schimb valutar {{::exchange}}.",
+    "VERIFY_EMAIL": "Verificare adresă de e-mail",
+    "VERIFY_EMAIL_EXPLAIN": "Tocmai am trimis un cod de verificare pe adresa dvs. de e-mail. Vă rugăm să introduceți codul de verificare pentru a vă crea contul de schimb valutar {{::exchange}}.",
+    "CHANGE_EMAIL": "Modificare e-mail",
+    "CHANGE_EMAIL_EXPLAIN": "Actualizarea adresei de e-mail va modifica și adresa de e-mail asociată portofelului dvs.",
+    "CHANGE_EMAIL_FAILED": "Ne pare rău, acest e-mail este deja înregistrat pentru {{::exchange}}.",
+    "CONFIRM_EMAIL": "Confirmare e-mail",
+    "VERIFICATION_CODE": "Cod de verificare",
+    "VERIFICATION_CODE_INCORRECT": "Cod de verificare incorect. ",
+    "CHANGE_EMAIL_": "modificare e-mail",
+    "ANOTHER_CODE_SENT": "A fost trimis un alt cod!",
+    "VERIFY_ACCOUNT": "Trebuie să colectăm anumite date cu caracter personal pentru a vă verifica identitatea. Rețineți că aceste date vor fi trimise la {{::exchange}} și nu vor fi legate direct la portofelul dvs. Blockchain.",
+    "FULL_NAME": "Nume complet",
+    "MOBILE": "Mobil",
+    "PAN_CARD": "Card PAN",
+    "FULL_RESIDENTIAL_ADDRESS": "Adresa completă de reședință (va trebui să ne furnizați dovada adresei)",
+    "ADDRESS_LINE_1": "Adresa, linia 1",
+    "ADDRESS_LINE_2": "Adresa, linia 2",
+    "STATE": "Stat",
+    "CITY": "Oraș",
+    "PIN_CODE": "Cod PIN",
+    "BANK_ACCOUNT_NUMBER": "Număr cont bancar",
+    "IFSC": "IFSC"
+  }
+}

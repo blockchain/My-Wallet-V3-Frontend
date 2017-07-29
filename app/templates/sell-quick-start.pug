@@ -4,7 +4,7 @@
       .flex-row.flex-between
         .flex-center
           label.em-500(translate="ENTER_AMOUNT:")
-        .flex-center(ng-hide="$ctrl.status.fetching")
+        .flex-center(ng-hide="$ctrl.status.fetching || $ctrl.serviceSuspended")
           span.type-sm.em-500 1 BTC = {{ exchangeRate.fiat }} {{$ctrl.transaction.currency.code}}
           helper-button(content="EXCHANGE_RATE_HELPER")
         .flex-row.flex-center(ng-show="$ctrl.status.fetching")
@@ -55,7 +55,7 @@
                    ng-click="handleCurrencyClick({currency: currency}); getQuote();"
                    ng-class="{active: isCurrencySelected(currency)}")
                   a(ng-click="$event.preventDefault()") {{ currency.code }}
-        .mts.pos-rel.mb-10.mtm.pbl(ng-show="showZeroBalance && !isPendingSellTrade()")
+        .mts.pos-rel.mb-10(ng-show="!$ctrl.serviceSuspended && showZeroBalance && !isPendingSellTrade()")
           | &#x1F622;
           |
           span.type-sm(translate="SELL.ZERO_BALANCE")
@@ -65,10 +65,13 @@
           span or
           | &nbsp;
           a(ng-click="$ctrl.selectTab({tab:'BUY_BITCOIN'})") Buy.
-        .pos-rel.mt-10(ng-hide="tradingDisabled || $ctrl.error.moreThanInWallet")
+        .mts.pos-rel(ng-hide="tradingDisabled || $ctrl.error.moreThanInWallet")
           span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.bank.min[$ctrl.transaction.currency.code]); updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.min" translate="SELL_AMT_LOW" translate-values="{limit: limits.bank.min[$ctrl.transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
           span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.bank.maxOutRemaining[$ctrl.transaction.currency.code]); updateLastInput('fiat'); $ctrl.transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.max" translate="SELL_AMT_HIGH" translate-values="{limit: limits.bank.maxOutRemaining[$ctrl.transaction.currency.code], symbol: $ctrl.sellCurrencySymbol.symbol}")
-        .mtm.pos-rel(ng-show="$ctrl.error.moreThanInWallet")
+        .mts.pos-rel(ng-show="$ctrl.serviceSuspended && $ctrl.serviceSuspendedReason === 'service_temporarily_unavailable'")
+          span.pos-abs.type-sm
+            span.state-danger-text(translate="TRADING_SERVICE_IS_DISABLED")
+        .mtm.pos-rel(ng-show="!$ctrl.serviceSuspended && $ctrl.error.moreThanInWallet && !fiatForm.fiat.$error.min && !fiatForm.fiat.$error.max")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && !multipleAccounts()" translate="SELL.MORE_THAN_BALANCE")
           span.pos-abs.state-danger-text(ng-show="$ctrl.error.moreThanInWallet && multipleAccounts()" translate="SELL.MORE_THAN_BALANCE_LABELS" translate-values="{account: defaultAccount()}")
           br

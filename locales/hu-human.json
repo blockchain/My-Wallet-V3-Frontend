@@ -1,0 +1,87 @@
+{
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Banki átutalás",
+    "BODY": "Kérjük, küldjön {{::amount}} összeget elektronikusan (a következők egyikén keresztül: IMPS, NEFT vagy RTGS) az alábbi Unocoin-bankszámlaszámra. Ezt követően meg kell majd adnia a banki átutaláshoz tartozó hivatkozási számot."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Az Ön régiójának értéktőzsdepartnere által felajánlott ár díjakat tartalmazhat.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN-kártya",
+     "COPY": "Töltse fel vagy készítsen fényképet PAN-kártyájáról, amelyen tisztán olvasható az Ön neve és a 10 számjegyből álló állandó bankszámlaszáma.",
+     "UPLOAD_TITLE": "PAN-kártya",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Gondoskodjon róla, hogy a felvételen tisztán olvasható PAN-kártyájának száma."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Az Ön képe",
+    "COPY": "Töltse fel vagy készítsen fényképet önmagáról, hogy az Unocoin hitelesíthesse PAN-kártyáját.",
+    "UPLOAD_TITLE": "Fénykép",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Gondoskodjon róla, hogy a felvételen tisztán látható az Ön arca."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Lakcímigazolás",
+    "COPY": "Töltse fel vagy készítsen fényképet lakcímét igazoló dokumentumáról. Az alábbi dokumentumokat töltheti fel lakcímigazolásként, amelyeken a névnek és a lakcímnek meg kell egyeznie az Ön által számunkra elsődlegesen megadott névvel és lakcímmel.",
+    "UPLOAD_TITLE": "Lakcímigazolás",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar-kártya (az első és hátoldala)",
+    "OPTION2": "Vezetői engedély",
+    "OPTION3": "Útlevél (az oldal, amelyen fel van tüntetve az Ön lakcíme)",
+    "OPTION4": "Közüzemi számla",
+    "HELP": "Gondoskodjon róla, hogy a felvételen tisztán látható az Ön neve és lakcíme."
+  },
+  "BANK_NAME": "Bank neve",
+  "ACCOUNT_HOLDER_NAME": "Számlatulajdonos neve",
+  "ACCOUNT_NUMBER": "Számlaszám",
+  "IFSC_CODE": "IFSC-kód",
+  "ACCOUNT_TYPE": "Számla típusa",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Elfogadható PAN-kártya",
+    "COPY": "A kisméretű PAN-kártyákat <span class='state-danger-text'>nem fogadjuk el</span>.<br>A PAN-kártyának a kormány nyilvántartásában érvényesnek kell lennie."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Elfogadható felhasználói fénykép",
+    "COPY": "Szemüvegben, illetve sapkában készült szelfiket <span class='state-danger-text'>nem fogadunk el</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Elfogadható lakcímigazolás",
+    "COPY": "Kerülje a vaku használatát a lakcímigazolás fényképezése közben.<br>A lakcímigazolásnak legalább 6 hónapig érvényesnek kell lennie.<br>A lakcímigazolásként szolgáló dokumentumon szereplő lakcímnek meg kell egyeznie az előzőekben megadott lakcímmel.<br>A szavazói azonosítókártyának érvényesnek kell lennie a kormány weboldalán.<br>A feltöltött lakcímigazolásnak angol nyelvűnek kell lennie."
+  },
+  "UNOCOIN_EXPLAIN": "Partnerünk, az Unocoin fogja feldolgozni az Ön bitcoin vásárlásait. Önnek meg kell majd adnia bizonyos információkat és hozzá kell kapcsolnia egy fizetési módot.",
+  "UNOCOIN": {
+    "PENDING": "A személyazonosság ellenőrzése függőben van",
+    "PENDING_EXPLAIN": "Az Unocoin jelenleg ellenőrzi az Ön személyazonosságát. Egy munkanapon belül kapni fog egy telefonhívást. A telefonhívással ellenőrizzük az Ön <b>nevét</b>, az <b>irányítószámát</b> és <b>PAN-kártyájához tartozó adatait</b>. Személyazonosságának ellenőrzését követően vásárolhat majd bitcoint."
+  },
+  "REQUIRED_FIELD": "Kötelezően kitöltendő mező",
+  "IFSC_INCORRECT": "Helytelen IFSC",
+  "PIN_CODE_REQUIRED": "PIN kód megadása kötelező",
+  "PIN_CODE_INCORRECT": "Helytelen PIN kód",
+  "PAN_CARD_REQUIRED": "PAN-kártya megadása kötelező",
+  "PAN_CARD_INCORRECT": "Helytelen PAN-kártya",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Helytelen bankszámlaszám",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "{{::exchange}} alapú számla létrehozása",
+    "CREATE_ACCOUNT_EXPLAIN": "Kérjük, erősítse meg e-mail-címét és telefonszámát {{::exchange}} alapú devizaszámla létrehozásához.",
+    "VERIFY_EMAIL": "E-mail-cím megerősítése",
+    "VERIFY_EMAIL_EXPLAIN": "Küldtünk Önnek egy megerősítő kódot az e-mail-címére. Kérjük, adja meg megerősítő kódját {{::exchange}} alapú devizaszámlájának létrehozásához.",
+    "CHANGE_EMAIL": "E-mail-cím módosítása",
+    "CHANGE_EMAIL_EXPLAIN": "Amennyiben frissíti e-mail-címét, az ehhez a pénztárcához tartozó e-mail-cím is módosul.",
+    "CHANGE_EMAIL_FAILED": "Sajnáljuk, ezt az e-mail-címet már regisztrálta {{::exchange}} pénznemmel.",
+    "CONFIRM_EMAIL": "E-mail-cím megerősítése",
+    "VERIFICATION_CODE": "Ellenőrző kód",
+    "VERIFICATION_CODE_INCORRECT": "Helytelen ellenőrző kód. ",
+    "CHANGE_EMAIL_": "e-mail-cím módosítása",
+    "ANOTHER_CODE_SENT": "Elküldtünk Önnek egy új kódot!",
+    "VERIFY_ACCOUNT": "Személyazonosságának hitelesítése érdekében szükségünk van néhány információra. Tájékoztatjuk, hogy ezeket az információkat elküldjük a következőre: {{::exchange}} és azok nem kerülnek közvetlenül összekapcsolásra az Ön Blockchain-pénztárcájával.",
+    "FULL_NAME": "Teljes név",
+    "MOBILE": "Mobiltelefonszám",
+    "PAN_CARD": "PAN-kártya",
+    "FULL_RESIDENTIAL_ADDRESS": "Teljes lakcím (igazolnia kell a megadott lakcímet)",
+    "ADDRESS_LINE_1": "Lakcím, 1. sor",
+    "ADDRESS_LINE_2": "Lakcím, 2. sor",
+    "STATE": "Állam",
+    "CITY": "Város",
+    "PIN_CODE": "PIN kód",
+    "BANK_ACCOUNT_NUMBER": "Bankszámlaszám",
+    "IFSC": "IFSC"
+  }
+}
