@@ -1,0 +1,26 @@
+.height-100.flex-column.flex-1(translate-namespace="SHIFT")
+  bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
+    .shift-logo
+      span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
+      a(href="https://www.shapeshift.io/" target="_blank" rel="noopener noreferrer")
+        img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
+  .overflow-scroll.flex-1.pt-20.ph-15
+    .flex-column.pbvl(ng-show="tabs.selectedTab === 'EXCHANGE'")
+      shift-checkout-amount.width-50.border-desktop.pv-30.ph-30.no-padding-mobile()
+    .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+      .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
+        .flex-column.mbl.border-bottom.black
+          .flex-center.flex-justify
+            i.ti-direction-alt.h3.mrm
+            h3.em-100(translate=".NO_EXCHANGES")
+          p.em-400.pointer(translate=".NO_EXCHANGES_EXPLAIN" ng-click="tabs.select('EXCHANGE')")
+      table.width-100(ng-show="state.trades.length")
+        tr.border.bg-grey
+          th.pvs.width-5-mobile.visible-xs
+          th.phml.pvs.width-30.width-40-mobile(translate="STATUS")
+          th.pvs.width-30(translate="DATE")
+          th.pvs.width-25.hidden-xs(translate="EXCHANGED")
+          th.pvs.width-15(translate="RECEIVED")
+          th.pvs.width-5-mobile.visible-xs
+        tr(ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index")
+  contact-support-footer()

@@ -8,6 +8,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.security = SecurityCenter.security;
   $scope.userHasAccount = buyStatus.userHasAccount();
   $scope.showEthereum = () => Ethereum.userHasAccess;
+  $scope.showShift = () => true;
 
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
   $scope.setBuyCtaDismissed = cta.setBuyCtaDismissed;

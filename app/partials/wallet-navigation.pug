@@ -38,7 +38,14 @@
         ng-click="showInviteForm()")
         i.icon-buysell
         span(translate="BUY_AND_SELL")
-
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift()")
+      a(ui-sref="wallet.common.shift")
+        i.icon-ExchangeTab
+        span.flex-row.flex-align-end
+          span(translate="EXCHANGE_SIMPLE")
+          | &nbsp;
+          p.f-12.mbn.transform-none.em-300.blue.exclaim(translate="NEW")
+    div.border-dashed.mb-15.mt-15.mh-15(ng-show="showShift()")
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(
         active-when="shouldShowSecurityWarning()"

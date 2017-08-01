@@ -1520,5 +1520,12 @@
   "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
   "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
   "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
+  "EXCHANGE_SIMPLE": "Exchange",
+  "NEW": "New",
+  "SHIFT": {
+    "NO_EXCHANGES": "@:NO_TRADES",
+    "NO_EXCHANGES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span>.",
+    "EXCHANGE_FROM": "Exchange From"
+  },
   "": ""
 }

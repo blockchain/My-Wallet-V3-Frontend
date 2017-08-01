@@ -1,0 +1,69 @@
+form.bc-form(
+  name="checkoutForm"
+  ng-submit="exchange()"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .group.inline.mb-30
+      .item.width-50.pr-15
+        .flex-between.flex-baseline.mbs
+          span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
+        ui-select(ng-model="from" name="from")
+          ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+            span {{ from.label }}
+          ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
+            span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
+              span {{ origin.label }}
+      .item.width-50.pl-15
+        .flex-between.flex-baseline.mbs
+          span.f-16.em-500.colon(translate="TO")
+        ui-select(ng-model="to" name="to" ng-disabled="true")
+          ui-select-match
+            span {{ to.label }}
+          ui-select-choices(repeat="destination in destinations")
+            span {{ destination.label }}
+    .group
+      .item
+        .flex-between.flex-baseline.mbs
+          .flex-row
+             span.f-16.em-500.colon Enter Amount
+          span
+            .state-danger-text(ng-show="state.loadFailed")
+              i.ti-alert
+              span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+        .flex-center
+          .flex-1.flex-center.border
+            input.form-control.no-border(
+              type="number"
+              name="input"
+              ng-model="state.input"
+              ng-max="max"
+              ng-min="min"
+              ng-change="state.baseCurr = inputCurr"
+              step="0.01"
+              prevent-event="mousewheel"
+              focus-when="true"
+              required)
+            span.mhm {{input.code}}
+          i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+          .flex-1.flex-center.border
+            input.form-control.no-border(
+              type="number"
+              name="output"
+              ng-model="state.output"
+              ng-max="max"
+              ng-min="min"
+              ng-change="state.baseCurr = outputCurr"
+              prevent-event="mousewheel"
+              step="0.01"
+              required)
+            span.mhm {{output.code}}
+        .f-12.mts
+          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+            | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
+            | &nbsp;
+          span(ng-show="!state.loadFailed && checkoutForm.$error.min")
+            | Please enter an amount greater than {{ format($ctrl.limits.min, dollars, false) }} {{ dollars.code }}.
+    .group.mt-30
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed" translate="EXCHANGE_SIMPLE")

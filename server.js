@@ -66,7 +66,8 @@ app.use(function (req, res, next) {
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`,
-        `https://${unocoinProduction ? '' : 'sandbox.'}unocoin.co`
+        `https://${unocoinProduction ? '' : 'sandbox.'}unocoin.co`,
+        'https://shapeshift.io'
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",

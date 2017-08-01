@@ -361,6 +361,20 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
+    .state('wallet.common.shift', {
+      url: '/exchange',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/shift/checkout.pug',
+          controller: 'ShiftCheckoutController',
+          controllerAs: 'vm'
+        }
+      }
+    });
+
+  $stateProvider
     .state('wallet.common.buy-sell', {
       url: '/buy-sell',
       views: {
