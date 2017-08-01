@@ -9,8 +9,8 @@ function ShapeShift (Wallet) {
     }
   };
 
-  service.getQuote = (pair, amount, withdrawl, address) => {
-    return service.shapeshift.getQuote(pair, amount, withdrawl, address);
+  service.getQuote = (pair, amount) => {
+    return service.shapeshift.getQuote(pair, amount);
   };
 
   window.ShapeShift = service;

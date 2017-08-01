@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('ShiftCheckoutController', ShiftCheckoutController);
+  .controller('ShapeShiftCheckoutController', ShapeShiftCheckoutController);
 
-function ShiftCheckoutController ($scope, $stateParams, ShapeShift) {
+function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift) {
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'EXCHANGE',
     options: ['EXCHANGE', 'ORDER_HISTORY'],

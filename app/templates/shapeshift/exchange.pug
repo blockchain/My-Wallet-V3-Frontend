@@ -1,5 +1,5 @@
 form.bc-form(
-  name="checkoutForm"
+  name="forms.exchangeForm"
   ng-submit="exchange()"
   novalidate
   translate-namespace="SHIFT"
@@ -9,20 +9,15 @@ form.bc-form(
       .item.width-50.pr-15
         .flex-between.flex-baseline.mbs
           span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
-        ui-select(ng-model="from" name="from")
-          ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+        ui-select.asset-select(ng-model="from" name="from")
+          ui-select-match
             span {{ from.label }}
-          ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
-            span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
-              span {{ origin.label }}
+          ui-select-choices(repeat="origin in origins")
+            span {{ origin.label }}
       .item.width-50.pl-15
         .flex-between.flex-baseline.mbs
           span.f-16.em-500.colon(translate="TO")
-        ui-select(ng-model="to" name="to" ng-disabled="true")
-          ui-select-match
-            span {{ to.label }}
-          ui-select-choices(repeat="destination in destinations")
-            span {{ destination.label }}
+        input.form-control.bg-white(ng-disabled="true" ng-model="to.label")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -37,33 +32,33 @@ form.bc-form(
             input.form-control.no-border(
               type="number"
               name="input"
-              ng-model="state.input"
+              ng-model="state.input.amount"
               ng-max="max"
               ng-min="min"
-              ng-change="state.baseCurr = inputCurr"
+              ng-change="state.baseCurr = state.input.curr"
               step="0.01"
               prevent-event="mousewheel"
               focus-when="true"
               required)
-            span.mhm {{input.code}}
+            span.mhm.upper {{state.input.curr}}
           i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
           .flex-1.flex-center.border
             input.form-control.no-border(
               type="number"
               name="output"
-              ng-model="state.output"
+              ng-model="state.output.amount"
               ng-max="max"
               ng-min="min"
-              ng-change="state.baseCurr = outputCurr"
+              ng-change="state.baseCurr = state.output.curr"
               prevent-event="mousewheel"
               step="0.01"
               required)
-            span.mhm {{output.code}}
-        .f-12.mts
-          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+            span.mhm.upper {{state.output.curr}}
+        .f-12.mts.state-danger-text
+          span(ng-show="!state.loadFailed && forms.exchangeForm.$error.min")
             | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
             | &nbsp;
-          span(ng-show="!state.loadFailed && checkoutForm.$error.min")
+          span(ng-show="!state.loadFailed && forms.exchangeForm.$error.min")
             | Please enter an amount greater than {{ format($ctrl.limits.min, dollars, false) }} {{ dollars.code }}.
     .group.mt-30
-      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed" translate="EXCHANGE_SIMPLE")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || exchangeForm.$invalid || !quote || state.loadFailed" translate="EXCHANGE_SIMPLE")

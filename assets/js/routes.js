@@ -367,8 +367,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         top: top,
         left: walletNav,
         right: {
-          templateUrl: 'partials/shift/checkout.pug',
-          controller: 'ShiftCheckoutController',
+          templateUrl: 'partials/shapeshift/checkout.pug',
+          controller: 'ShapeShiftCheckoutController',
           controllerAs: 'vm'
         }
       }

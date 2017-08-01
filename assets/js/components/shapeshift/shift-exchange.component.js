@@ -1,48 +1,43 @@
 angular
   .module('walletApp')
-  .component('shiftCheckoutAmount', {
+  .component('shiftExchange', {
     bindings: {
       quote: '<',
       limits: '<',
-      inputCurr: '<',
-      outputCurr: '<',
       handleQuote: '&',
       handleExchange: '&',
       exchangeSuccess: '&',
       exchangeError: '&'
     },
-    templateUrl: 'templates/shift/checkout-amount.pug',
-    controller: ShiftCheckoutAmountController,
+    templateUrl: 'templates/shapeshift/exchange.pug',
+    controller: ShiftExchangeController,
     controllerAs: '$ctrl'
   });
 
-function ShiftCheckoutAmountController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
-  $scope.format = currency.formatCurrencyForView;
-  $scope.input = this.inputCurr;
-  $scope.output = this.outputCurr;
-  $scope.from = Wallet.getDefaultAccount();
-  $scope.origins = smartAccount.getOptions();
+function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
   $scope.to = Ethereum.defaultAccount;
+  $scope.from = Wallet.getDefaultAccount();
+  $scope.origins = [$scope.from, $scope.to];
+  $scope.format = currency.formatCurrencyForView;
+  $scope.forms = $scope.state = {};
 
   let state = $scope.state = {
-    input: null,
-    output: null,
-    rate: null,
-    baseCurr: $scope.inputCurr,
-    get quoteCurr () { return this.baseInput ? $scope.outputCurr : $scope.inputCurr; },
-    get baseInput () { return this.baseCurr === $scope.inputCurr; },
+    baseCurr: null,
+    input: { amount: null, curr: 'btc' },
+    output: { amount: null, curr: 'eth' },
+    get quoteCurr () { return this.baseInput ? state.output.curr : state.input.curr; },
+    get baseInput () { return this.baseCurr === state.input.curr; },
     get total () { return this.fiat; }
   };
 
   $scope.resetFields = () => {
-    state.input = state.output = null;
-    state.baseCurr = $scope.input;
+    state.input.amount = state.output.amount = null;
+    state.baseCurr = state.input.curr;
   };
 
   $scope.getQuoteArgs = (state) => ({
-    pair: state.baseInput ? state.inputCurr + '_' + state.outputCurr : state.outputCurr + '_' + state.inputCurr,
-    amount: state.input,
-    withdrawl: state.withdrawl
+    pair: state.baseInput ? state.input.curr + '_' + state.output.curr : state.output.curr + '_' + state.input.curr,
+    amount: state.input.amount
   });
 
   $scope.cancelRefresh = () => {
@@ -54,12 +49,13 @@ function ShiftCheckoutAmountController (Env, AngularHelper, $scope, $timeout, $q
     $scope.cancelRefresh();
 
     let fetchSuccess = (quote) => {
+      let now = new Date();
       $scope.quote = quote;
       state.error = null;
       state.loadFailed = false;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
-      if (state.baseInput) state.btc = quote.quoteAmount;
-      else state.input = $scope.toSatoshi(quote.quoteAmount, $scope.input) / this.conversion;
+      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.expires - now);
+      if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
+      else state.input.amount = Number.parseFloat(quote.withdrawalAmount);
     };
 
     this.handleQuote($scope.getQuoteArgs(state))
@@ -69,7 +65,7 @@ function ShiftCheckoutAmountController (Env, AngularHelper, $scope, $timeout, $q
   });
 
   $scope.refreshIfValid = (field) => {
-    if (state[field]) {
+    if ($scope.state[field].amount) {
       $scope.quote = null;
       $scope.refreshQuote();
     } else {
@@ -90,8 +86,8 @@ function ShiftCheckoutAmountController (Env, AngularHelper, $scope, $timeout, $q
       }).finally($scope.resetFields).finally($scope.free);
   };
 
-  $scope.$watch('state.input', () => state.baseInput && $scope.refreshIfValid('input'));
-  $scope.$watch('state.output', () => !state.baseInput && $scope.refreshIfValid('output'));
+  $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
+  $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
 }
