@@ -88,18 +88,27 @@
       .row.upper
         .col-md-3
           img(src="{{rootURL}}Resources/blockchain-blue.svg" width="170px")
-        .col-md-2.col-sm-6.col-xs-6
-          p.primary.uppercase.ls-label(translate="PRODUCTS")
-          p
-            a(href="{{rootURL}}wallet/" target="_blank" rel="noopener noreferrer" class="mrl ls-label uppercase medium-blue" translate="WALLET")
-          p
-            a(href="https://www.blockchain.com/enterprise" class="mrl ls-label uppercase medium-blue" translate="BUSINESS")
-          p
-            a(href="https://www.blockchain.com/research" target="_blank" rel="noopener noreferrer" class="mrl ls-label uppercase medium-blue" translate="RESEARCH")
-          p
-            a(href="{{rootURL}}" target="_blank" rel="noopener noreferrer" class="mrl ls-label uppercase medium-blue") .Info Explorer
-          p
-            a(href="https://support.blockchain.com" target="_blank" rel="noopener noreferrer" class="mrl ls-label uppercase medium-blue" translate="SUPPORT")
+        .col-md-2.col-sm-6.col-xs-6.mr-40
+          p.blue.uppercase.em-600.f-12.underline-blue(translate="PRODUCTS")
+          .flex-column.footer-links.flex-wrap
+            p
+              a(href="{{rootURL}}wallet/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="WALLET")
+            p
+              a(href="{{rootURL}}api/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") API
+            p
+              a(href="https://www.blockchain.com/enterprise" class="blue em-300 f-12 uppercase" translate="BUSINESS")
+            p
+              a(href="https://www.blockchain.com/thunder" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="THUNDER")
+            p
+              a(href="https://www.blockchain.com/research" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="RESEARCH")
+            p
+              a(href="{{rootURL}}" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Explorer
+            p
+              a(href="{{rootURL}}charts" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Charts
+            p
+              a(href="{{rootURL}}markets" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Markets
+            p
+              a(href="{{rootURL}}stats" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Stats
         .col-md-3.col-sm-6.col-xs-6.right-align.visible-sm.visible-xs
           li.dropup(uib-dropdown)
             a(href="#" uib-dropdown-toggle)
@@ -108,24 +117,29 @@
             ul.languages_select(uib-dropdown-menu)
               li(ng-repeat="lang in languages")
                 a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
+        .col-md-2.mr-40
+          p.blue.uppercase.em-600.f-12.underline-blue Company
+          .flex-column.footer-links.flex-wrap
+            p
+              a(href="https://www.blockchain.com/about" class="blue em-300 f-12 uppercase" translate="ABOUT")
+            p
+              a(href="https://www.blockchain.com/team" class="blue em-300 f-12 uppercase" translate="TEAM")
+            p
+              a(href="https://www.blockchain.com/careers" class="blue em-300 f-12 uppercase" translate="CAREERS")
+            p
+              a(href="https://www.blockchain.com/interview" class="blue em-300 f-12 uppercase" translate="INTERVIEWING")
+            p
+              a(href="https://www.blockchain.com/faq" class="blue em-300 f-12 uppercase") FAQ
+            p
+              a(href="https://www.blockchain.com/faq" class="blue em-300 f-12 uppercase") Press
+            p
+              a(href="https://www.blockchain.com/faq" class="blue em-300 f-12 uppercase") Blog
         .col-md-2
-          p.primary.uppercase.ls-label Company
+          p.blue.uppercase.em-600.f-12.underline-blue Support
           p
-            a(href="https://www.blockchain.com/about" class="mrl ls-label uppercase medium-blue" translate="ABOUT")
+            a(href="https://www.blockchain.com/press" class="blue em-300 f-12 uppercase" translate="PRESS")
           p
-            a(href="https://www.blockchain.com/team" class="mrl ls-label uppercase medium-blue" translate="TEAM")
-          p
-            a(href="https://www.blockchain.com/careers" class="mrl ls-label uppercase medium-blue" translate="CAREERS")
-          p
-            a(href="https://www.blockchain.com/interview" class="mrl ls-label uppercase medium-blue" translate="INTERVIEWING")
-          p
-            a(href="https://www.blockchain.com/faq" class="mrl ls-label uppercase medium-blue") FAQ
-        .col-md-2
-          p(class="primary uppercase ls-label") News
-          p
-            a(href="https://www.blockchain.com/press" class="mrl ls-label uppercase medium-blue" translate="PRESS")
-          p
-            a(href="https://blog.blockchain.com" target="_blank" rel="noopener noreferrer" class="mrl ls-label uppercase medium-blue" translate="BLOG")
+            a(href="https://blog.blockchain.com" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="BLOG")
         .col-md-3.right-align.hidden-sm.hidden-xs
           li.dropup(uib-dropdown)
             a(href="#" uib-dropdown-toggle)
@@ -139,9 +153,9 @@
         span(class="medium-blue mbn upper f-10")
           span(class="mrm") 2017 Blockchain Luxembourg S.A. All Rights Reserved.
           br.visible-xs
-          a(class="blue light-bg mrm legal-link" href="https://blockchain.com/privacy") Privacy
-          a(class="blue light-bg mrm legal-link" href="https://blockchain.com/terms") Terms
-          a(class="blue light-bg legal-link" href="https://blockchain.com/legal") Law Enforcement Guide
+          a(class="blue light-bg mrm legal-link" href="https://support.blockchain.com/") Help Center
+          a(class="blue light-bg mrm legal-link" href="https://blog.blockchain.com/category/tutorials-and-guides/") Tutorials
+          a(class="blue light-bg legal-link" href="https://blockchain.info/wallet/bitcoin-faq") Learning Portal
       .col-md-4.prn.pt-60.right-align
         a(href="https://www.facebook.com/blockchain/" target="_blank" rel="noopener noreferrer nofollow")
           img(class="social-logo mlm" src="{{rootURL}}Resources/facebook.png" alt="")
