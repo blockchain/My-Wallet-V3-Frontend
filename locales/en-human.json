@@ -1025,7 +1025,7 @@
   },
   "TX_AWAITING_REF_NUMBER": {
     "TITLE": "Bank Transfer",
-    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below. You will then need to provide the bank transfer reference number."
+    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below before continuing. You will then need to provide the bank transfer reference number. <b>Please use the same bank account that was used to create the account.</b>"
 
   },
   "TX_INITIATED": {
@@ -1109,10 +1109,10 @@
   "MAX_LIMIT_EXCEEDED": "To pay via {{::medium}}, please decrease your amount below {{::max}} {{::code}}.",
   "BELOW_MIN_LIMIT": "To pay via {{::medium }}, please increase your amount to {{::min}} {{::code}} or more.",
   "MAX_MIN_HELPER": "Minimum buy amount is {{::min}} {{::code}}. Maximum buy amount is {{::max}} {{::code}}.",
-  "BUY_AMT_LOW": "Buy amount too low.",
-  "BUY_AMT_HIGH": "Buy amount too high.",
+  "BUY_AMT_LOW": "Minimum buy amount is {{::symbol}}{{::limit}}",
+  "BUY_AMT_HIGH": "Maximum buy amount is {{::symbol}}{{::limit}}",
   "BUY_AMT_IS": "Your limit is set to {{::amount}} {{::code}}.",
-  "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}.",
+  "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}",
   "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
   "UPDATE": "Update",
@@ -1326,6 +1326,7 @@
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
+  "TRADING_SERVICE_IS_DISABLED": "Coinify's services have been temporarily disabled. Please read more at <a href='https://support.coinify.com/' target='_blank' rel='noopener noreferrer'>https://support.coinify.com/</a>",
   "TRADING_IS_DISABLED": "Trading is temporarily disabled while we make a few updates.",
   "OR": "or",
   "PRODUCTS": "Products",
@@ -1431,7 +1432,7 @@
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
   "UNOCOIN": {
     "PENDING": "Identity Verification Pending",
-    "PENDING_EXPLAIN": "Thanks for setting up your profile. In order to verify your identity, a member of the Unocoin team will give you a call within 1 business day to confirm your <b>Name</b>, <b>Address Postal Code</b>, and <b>PAN Card information</b>. Then, you’ll be able to buy bitcoin!"
+    "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!"
   },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
@@ -1486,5 +1487,6 @@
     "IFSC": "IFSC"
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
+  "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
   "": ""
 }

@@ -2,11 +2,13 @@ angular
   .module('walletApp')
   .controller('RequestCtrl', RequestCtrl);
 
-function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env) {
+function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, MyBlockchainApi) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
   });
+
+  let isUsingPaymentRequestsExperiment = MyBlockchainApi.createExperiment(2);
 
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -35,6 +37,19 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
   $scope.destinations = smartAccount.getOptions();
   $scope.state.to = destination || Wallet.my.wallet.hdwallet.defaultAccount;
   $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
+
+  $scope.didCopyManually = false;
+  $scope.manuallyCopiedAddress = () => {
+    if ($scope.didCopyManually) return;
+    $scope.didCopyManually = true;
+    isUsingPaymentRequestsExperiment.recordA();
+  };
+
+  $scope.nextStep = () => {
+    if ($scope.isToImportedAddress()) $scope.state.requestCreated = true;
+    else $scope.createPaymentRequest();
+    isUsingPaymentRequestsExperiment.recordB();
+  };
 
   $scope.createPaymentRequest = () => {
     $scope.lock();

@@ -38,6 +38,7 @@ describe('exchange-checkout.component', () => {
     buySuccess () { return $q.resolve(); },
     buyError () { return $q.resolve(); },
     quote () { return mockQuote(); },
+    limits: { min: {}, max: {} },
     dollars: {code: 'USD'}
   };
 
@@ -140,8 +141,8 @@ describe('exchange-checkout.component', () => {
 
     it('should get args for a BTC->USD quote', () => {
       scope.state.baseCurr = scope.bitcoin;
-      scope.state.btc = 350000;
-      expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([350000, 'BTC', 'USD']));
+      scope.state.btc = 3.5;
+      expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([350000000, 'BTC', 'USD']));
     });
 
     // it('should get the correct fiat arg with a number js has trouble with', () => {
@@ -208,7 +209,7 @@ describe('exchange-checkout.component', () => {
       it('should set state.btc to quoteAmount if in baseFiat', () => {
         scope.state.baseCurr = scope.dollars;
         scope.$digest();
-        expect(scope.state.btc).toEqual(150);
+        expect(scope.state.btc).toEqual(0.0000015);
       });
 
       // it('should set state.fiat to quoteAmount if not in baseFiat', () => {

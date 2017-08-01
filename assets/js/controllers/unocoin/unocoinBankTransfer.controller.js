@@ -4,12 +4,17 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env) {
+function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env, localStorageService) {
   Env.then(env => {
     let links = env.partners.unocoin.surveyTradeLinks;
 
     this.close = () => {
-      Alerts.surveyCloseConfirm('unocoin-trade-survey', links, this.step).then($uibModalInstance.dismiss);
+      let survey = 'unocoin-trade-survey';
+      let surveyCache = localStorageService.get(survey);
+      let shouldClose = surveyCache && surveyCache.index === links.length - 1;
+
+      if (shouldClose) $uibModalInstance.dismiss();
+      else Alerts.surveyCloseConfirm(survey, links, this.step).then($uibModalInstance.dismiss);
     };
   });
 
@@ -25,8 +30,12 @@ function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, f
   this.addReferenceNumber = () => {
     this.lock();
     $q.resolve(trade.addReferenceNumber(this.state.reference))
-      .then((trade) => this.formattedTrade = formatTrade.initiated(trade))
-      .then(() => this.goTo('initiated'))
+      .then((trade) => {
+        this.formattedTrade = formatTrade.initiated(trade);
+      })
+      .then(() => {
+        this.goTo('initiated');
+      })
       .catch((err) => { console.log(err); }).finally(this.free);
   };
 
