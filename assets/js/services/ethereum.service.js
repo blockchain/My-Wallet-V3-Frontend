@@ -61,7 +61,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   };
 
   service.isAddress = (address) => {
-    return service.eth.isAddress(address);
+    return MyWalletHelpers.isEtherAddress(address);
   };
 
   service.getPrivateKeyForAccount = (account, secPass) => {
