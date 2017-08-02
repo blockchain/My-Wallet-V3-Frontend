@@ -9,15 +9,15 @@ form.bc-form(
       .item.width-50.pr-15
         .flex-between.flex-baseline.mbs
           span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
-        ui-select.asset-select(ng-model="from" name="from")
+        ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()")
           ui-select-match
-            span {{ from.label }}
-          ui-select-choices(repeat="origin in origins")
+            span {{ $ctrl.from.label }}
+          ui-select-choices(repeat="origin in $ctrl.origins")
             span {{ origin.label }}
       .item.width-50.pl-15
         .flex-between.flex-baseline.mbs
           span.f-16.em-500.colon(translate="TO")
-        input.form-control.bg-white(ng-disabled="true" ng-model="to.label")
+        input.form-control.bg-white(ng-disabled="true" ng-model="$ctrl.to.label")
     .group
       .item
         .flex-between.flex-baseline.mbs

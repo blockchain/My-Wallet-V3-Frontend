@@ -15,9 +15,9 @@ angular
   });
 
 function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
-  $scope.to = Ethereum.defaultAccount;
-  $scope.from = Wallet.getDefaultAccount();
-  $scope.origins = [$scope.from, $scope.to];
+  this.to = Ethereum.defaultAccount;
+  this.from = Wallet.getDefaultAccount();
+  this.origins = [this.from, this.to];
   $scope.format = currency.formatCurrencyForView;
   $scope.forms = $scope.state = {};
 
@@ -37,7 +37,7 @@ function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, curr
 
   $scope.getQuoteArgs = (state) => ({
     pair: state.baseInput ? state.input.curr + '_' + state.output.curr : state.output.curr + '_' + state.input.curr,
-    amount: state.input.amount
+    amount: state.baseInput ? state.input.amount : state.output.amount
   });
 
   $scope.cancelRefresh = () => {
@@ -84,6 +84,13 @@ function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, curr
         $scope.state.loadFailed = true;
         $scope.state.error = Exchange.interpretError(err);
       }).finally($scope.resetFields).finally($scope.free);
+  };
+
+  $scope.setTo = () => {
+    let output = state.output;
+    state.baseCurr = state.output.curr;
+    state.output = state.input; state.input = output;
+    this.to = this.origins.find((o) => o.label !== this.from.label);
   };
 
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
