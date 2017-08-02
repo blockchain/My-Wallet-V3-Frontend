@@ -17,7 +17,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       modalOpen: '=',
       transaction: '=',
       changeCurrency: '&',
-      getDays: '&'
+      getDays: '&',
+      openKyc: '&',
+      kyc: '='
     },
     templateUrl: 'templates/buy-quick-start.pug',
     link: link
@@ -92,7 +94,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       } else {
         scope.transaction.btc = quote.quoteAmount / 100000000;
       }
-
+      scope.checkLimit(scope.transaction.fiat);
       Alerts.clear();
     };
 
@@ -120,6 +122,39 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.getMinLimits = (quote) => {
       $q.resolve(buySell.getMinLimits(quote))
         .then(scope.limits = buySell.limits);
+    };
+
+    let exchange = buySell.getExchange();
+    scope.profile = exchange && exchange.profile ? exchange.profile : {profile: {}};
+
+    scope.checkLimit = fiat => {
+      let levelLimits = scope.profile.level.limits;
+      let limits = scope.limits;
+
+      let curr = scope.transaction.currency.code;
+      let bankMax = limits.bank.max;
+      let cardMax = limits.card.max;
+      let dailyBankMax = levelLimits.bank.inDaily;
+      let dailyCardMax = levelLimits.card.inDaily;
+
+      let max = limits.absoluteMax(curr);
+      let dailyMax = dailyBankMax > dailyCardMax ? dailyBankMax : dailyCardMax;
+
+      console.log('checkLimit', fiat, max, bankMax[curr], cardMax[curr]);
+      if (fiat > max) {
+        scope.status.limitError = true;
+        scope.dailyLimit = dailyMax;
+      } else {
+        scope.status.limitError = false;
+      }
+    };
+
+    scope.openKyc = () => {
+      if (!scope.kyc) {
+        buySell.triggerKYC().then(kyc => {
+          modals.openBuyView(scope.quote, kyc).result.finally(scope.onCloseModal).catch(scope.onCloseModal);
+        });
+      }
     };
 
     scope.getInitialExchangeRate();

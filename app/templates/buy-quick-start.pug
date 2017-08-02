@@ -21,7 +21,7 @@
               ng-model-options="{debounce: 100}"
               placeholder="{{placeholder}}"
               min="{{limits.absoluteMin(transaction.currency.code)}}"
-              max="{{limits.absoluteMax(transaction.currency.code)}}"
+              max="100000000"
               step="any"
               prevent-event="mousewheel"
               required)
@@ -59,8 +59,17 @@
               span.state-danger-text(translate="TRADING_SERVICE_IS_DISABLED")
         div(ng-show="!serviceSuspended")
           .mts.pos-rel(ng-hide="tradingDisabled")
+            div(ng-show="status.limitError && !fiatForm.fiat.$error.min")
+              div(ng-show="")
+                span.type-sm.state-danger-text(translate="COINIFY_LIMITS.DAILY_LIMIT_IS" translate-values="{dailyLimit: dailyLimit, currency: profile.level.currency}")
+                helper-button(ng-show="profile.level.name === '2'" content="COINIFY_LIMITS.HOW_LVL_3")
+              div(ng-show="profile.level.name === '1'")
+                span.type-sm.state-danger-text(translate="COINIFY_LIMITS.DAILY_LIMIT_IS" translate-values="{dailyLimit: dailyLimit, currency: profile.level.currency}")
+                | &nbsp;
+                a(ng-show="profile.level.name && !kyc" ng-click="openKyc()") Increase limit
             span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.absoluteMin(transaction.currency.code)); updateLastInput('fiat'); transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.min" translate="BUY_AMT_LOW" translate-values="{limit: limits.absoluteMin(transaction.currency.code), symbol: symbol}")
-            span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.absoluteMax(transaction.currency.code)); updateLastInput('fiat'); transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH" translate-values="{limit: limits.absoluteMax(transaction.currency.code), symbol: symbol}")
+            
+            //- span.pos-abs.type-sm.state-danger-text(ng-click="setFiat(limits.absoluteMax(transaction.currency.code)); updateLastInput('fiat'); transaction.fiat && getQuote();" ng-show="fiatForm.fiat.$error.max" translate="BUY_AMT_HIGH" translate-values="{limit: limits.absoluteMax(transaction.currency.code), symbol: symbol}")
           .mts.pos-rel(ng-show="tradingDisabled && tradingDisabledReason === 'disabled'")
             span.pos-abs.type-sm
               span.state-danger-text(translate="TRADING_IS_DISABLED")
@@ -94,4 +103,4 @@
           a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
             img(src="img/coinify-logo.svg")
             span.pos-abs.fade.height-100.width-100(uib-tooltip="{{'PROCESSED_BY_EXCHANGE' | translate}}" tooltip-append-to-body="true")
-        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled || serviceSuspended")
+        button.button-primary(translate="Buy Bitcoin" type="submit" ng-disabled="!fiatForm.$valid || status.busy || tradingDisabled || serviceSuspended || status.limitError")

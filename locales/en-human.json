@@ -1488,5 +1488,9 @@
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
+  "COINIFY_LIMITS": {
+    "DAILY_LIMIT_IS": "Your daily limit is {{:: dailyLimit}} {{:: currency}}.",
+    "HOW_LVL_3": "To increase your daily limit further, you must complete a transaction of at least 1,000 EUR. 14 days after the transaction completes, your daily limit will increase and your yearly limit will be uncapped."
+  },
   "": ""
 }
