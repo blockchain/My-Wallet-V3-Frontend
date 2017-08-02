@@ -136,11 +136,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     return openMobileCompatible({
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
+      controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance) {
         $scope.vm = {
           trade: trade
         };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
+        $scope.unoActive = ($scope.formattedTrade.values.state === 'canceled') && MyWallet.wallet.external.unocoin.hasAccount;
       },
       resolve: {
         trade: () => trade,
