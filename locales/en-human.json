@@ -1487,6 +1487,8 @@
     "IFSC": "IFSC"
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
-  "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
+  "UNOCOIN_IF_IMPS": "For IMPS transfers, the reference number is RRN OR External Reference number and is 12 digits long, starting from \"7\".",
+  "UNOCOIN_IF_NEFT_OR_RTGS": "For NEFT or RTGS transfers, the reference number is UTR NUMBER (does not start with \"IR\" or \"IZ\").",
+  "UNOCOIN_IF_CANT_ID": "If you cannot identify the UTR number, please provide all reference numbers you see along with the narration as per your bank statement.",
   "": ""
 }
