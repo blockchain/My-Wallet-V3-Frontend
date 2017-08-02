@@ -1,20 +1,18 @@
 angular
   .module('walletApp')
-  .component('shiftExchange', {
+  .component('shiftCreate', {
     bindings: {
+      fiat: '<',
       quote: '<',
-      limits: '<',
       handleQuote: '&',
-      handleExchange: '&',
-      exchangeSuccess: '&',
-      exchangeError: '&'
+      handleNext: '&'
     },
-    templateUrl: 'templates/shapeshift/exchange.pug',
-    controller: ShiftExchangeController,
+    templateUrl: 'templates/shapeshift/create.pug',
+    controller: ShiftCreateController,
     controllerAs: '$ctrl'
   });
 
-function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
+function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
@@ -73,17 +71,9 @@ function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, curr
     }
   };
 
-  $scope.exchange = () => {
-    $scope.lock();
+  $scope.next = () => {
     let quote = $scope.quote;
-    this.handleExchange({quote: quote})
-      .then(trade => {
-        this.exchangeSuccess({trade});
-      })
-      .catch((err) => {
-        $scope.state.loadFailed = true;
-        $scope.state.error = Exchange.interpretError(err);
-      }).finally($scope.resetFields).finally($scope.free);
+    quote && $scope.handleNext({quote});
   };
 
   $scope.setTo = () => {

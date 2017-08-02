@@ -6,10 +6,15 @@
         img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
   .overflow-scroll.flex-1.pt-20.ph-15
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'EXCHANGE'")
-      shift-exchange.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+      shift-create.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+        fiat="fiat"
+        handle-shift="shiftHandler(quote)"
         handle-quote="quoteHandler(pair, amount)"
+        shift-success="shiftSuccess(trade)"
       )
-      //- shift-confirm.width-50.border-desktop.pv-30.ph-30.no-padding-mobile()
+      shift-confirm.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+        
+      )
       //- shift-receipt.width-50.border-desktop.pv-30.ph-30.no-padding-mobile()
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
       .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")

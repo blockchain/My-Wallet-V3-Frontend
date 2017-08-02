@@ -13,6 +13,11 @@ function ShapeShift (Wallet) {
     return service.shapeshift.getQuote(pair, amount);
   };
 
+  service.shift = (quote) => {
+    return Wallet.askForSecondPasswordIfNeeded()
+                 .then((secPass) => service.shapeshift.shift(quote, secPass));
+  };
+
   window.ShapeShift = service;
   return service;
 }
