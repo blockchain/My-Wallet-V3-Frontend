@@ -1521,11 +1521,16 @@
   "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
   "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
   "EXCHANGE_SIMPLE": "Exchange",
+  "EXCHANGE_RATE": "Exchange Rate",
   "NEW": "New",
   "SHIFT": {
     "NO_EXCHANGES": "@:NO_TRADES",
     "NO_EXCHANGES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span>.",
-    "EXCHANGE_FROM": "Exchange From"
+    "EXCHANGE_FROM": "Exchange From",
+    "CONFIRM_EXCHANGE": "Confirm Exchange Order",
+    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::amount}}</b> {{::input}} will be sent directly from {{::from}} to {{::to}} once you click confirm.",
+    "TO_DEPOSIT": "{{::input}} to Deposit",
+    "TO_RECEIVE": "{{::output}} to be Received"
   },
   "": ""
 }

@@ -1,0 +1,23 @@
+form.bc-form(
+  name="forms.confirmForm"
+  ng-submit="shift()"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .border-bottom.pb-30
+      span.f-16.em-500.pl-30(translate=".CONFIRM_EXCHANGE")
+    .ph-30
+      .f-13.mv-20
+        span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{amount: quote.depositAmount, input: input.toUpperCase(), from: from.label, to: to.label}")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10(ng-class="{'bank-transfer': isPendingBankTransfer && isPendingBankTransfer()}")
+        li.pb-10.border-bottom-light.flex-between
+          span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[input]}")
+          span.em-300.right-align {{ quote.depositAmount }} {{ input }}
+        li.pv-10.border-bottom-light.flex-between
+          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
+          span.em-300.right-align {{ quote.withdrawalAmount }} {{ output }}
+        li.pv-10.border-bottom-light.flex-between
+          span.em-500.colon(translate="EXCHANGE_RATE")
+          span.em-300.right-align 1 {{ input }} = {{ quote.rate }} {{ output }}
+        

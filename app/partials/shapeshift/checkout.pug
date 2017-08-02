@@ -6,16 +6,12 @@
         img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
   .overflow-scroll.flex-1.pt-20.ph-15
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'EXCHANGE'")
-      shift-create.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
-        fiat="fiat"
-        handle-shift="shiftHandler(quote)"
-        handle-quote="quoteHandler(pair, amount)"
-        shift-success="shiftSuccess(trade)"
-      )
-      shift-confirm.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
-        
-      )
-      //- shift-receipt.width-50.border-desktop.pv-30.ph-30.no-padding-mobile()
+      div.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(ng-if="vm.onStep('create')" ng-controller="ShapeShiftCreateController")
+        shift-create(on-complete="onComplete(quote)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)")
+      div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
+        shift-confirm(quote="vm.quote" handle-shift="shiftHandler(quote)" shift-success="onComplete(trade)")
+      //- div.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
+      //-   shift-receipt(trade="vm.trade")
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
       .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
         .flex-column.mbl.border-bottom.black

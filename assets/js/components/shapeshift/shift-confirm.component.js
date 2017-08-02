@@ -4,17 +4,24 @@ angular
     bindings: {
       fiat: '<',
       quote: '<',
-      handleQuote: '&',
       handleShift: '&',
-      shiftSuccess: '&',
-      shiftError: '&'
+      shiftSuccess: '&'
     },
-    templateUrl: 'templates/shapeshift/exchange.pug',
-    controller: ShiftExchangeController,
+    templateUrl: 'templates/shapeshift/confirm.pug',
+    controller: ShiftConfirmController,
     controllerAs: '$ctrl'
   });
 
-function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
+function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum) {
+  $scope.quote = this.quote;
+  $scope.human = {'BTC': 'Bitcoin', 'ETH': 'Ether'};
+  console.log(this.quote);
+
+  $scope.input = this.quote.pair.split('_')[0].toUpperCase();
+  $scope.output = this.quote.pair.split('_')[1].toUpperCase();
+  $scope.from = $scope.input === 'BTC' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+  $scope.to = $scope.output === 'BTC' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+
   $scope.shift = () => {
     $scope.lock();
     let quote = $scope.quote;
@@ -27,4 +34,6 @@ function ShiftExchangeController (Env, AngularHelper, $scope, $timeout, $q, curr
         $scope.state.error = Exchange.interpretError(err);
       }).finally($scope.resetFields).finally($scope.free);
   };
+
+  AngularHelper.installLock.call($scope);
 }

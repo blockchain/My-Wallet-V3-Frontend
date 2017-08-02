@@ -3,9 +3,9 @@ angular
   .component('shiftCreate', {
     bindings: {
       fiat: '<',
-      quote: '<',
+      onComplete: '&',
       handleQuote: '&',
-      handleNext: '&'
+      handleApproximateQuote: '&'
     },
     templateUrl: 'templates/shapeshift/create.pug',
     controller: ShiftCreateController,
@@ -56,7 +56,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
       else state.input.amount = Number.parseFloat(quote.withdrawalAmount);
     };
 
-    this.handleQuote($scope.getQuoteArgs(state))
+    this.handleApproximateQuote($scope.getQuoteArgs(state))
       .then(fetchSuccess, () => { state.loadFailed = true; });
   }, 500, () => {
     $scope.quote = null;
@@ -71,9 +71,9 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     }
   };
 
-  $scope.next = () => {
+  $scope.getSendAmount = () => {
     let quote = $scope.quote;
-    quote && $scope.handleNext({quote});
+    this.handleQuote($scope.getQuoteArgs(state)).then(this.onComplete({quote}));
   };
 
   $scope.setTo = () => {
