@@ -19,30 +19,35 @@
             i.ti-direction-alt.h3.mrm
             h3.em-100(translate=".NO_EXCHANGES")
           p.em-400.pointer(translate=".NO_EXCHANGES_EXPLAIN" ng-click="tabs.select('EXCHANGE')")
-      //- css grid-like table
-      .shift-history.width-100.border.bg-light-blue(ng-show="vm.trades.length")
-        .order-header.pvs
-          span.em-500.pl-25 Status
-        .order-header.pvs
-          span.em-500 Date
-        .order-header.pvs
-          span.em-500 Exchanged
-        .order-header.pvs
-          span.em-500 Received
-      exchange-trade(
-        ng-repeat="t in vm.trades | orderBy:'createdAt':true track by $index"
-        ex-trade="t"
-      )
-      //- table.width-100(ng-show="vm.trades.length")
-      //-   tr.border.bg-grey
-      //-     th.pvs.width-5-mobile.visible-xs
-      //-     th.phml.pvs.width-30.width-40-mobile(translate="STATUS")
-      //-     th.pvs.width-30(translate="DATE")
-      //-     th.pvs.width-25.hidden-xs(translate="EXCHANGED")
-      //-     th.pvs.width-15(translate="RECEIVED")
-      //-     th.pvs.width-5-mobile.visible-xs
-      //-     tr(ng-repeat="t in vm.trades | orderBy:'createdAt':true track by $index")
-      //-       exchange-trade(
-      //-         exchange-trade="t"
-      //-       )
+      //- Pending Trades
+      .width-100.mb-30
+        .shift-history.border.bg-light-blue(ng-show="vm.pendingTrades.length")
+          .pvs
+            span.em-500.pl-25 Status
+          .pvs
+            span.em-500 Date
+          .pvs
+            span.em-500 Exchanged
+          .pvs
+            span.em-500 Received
+        exchange-trade(
+          ng-repeat="t in vm.pendingTrades | orderBy:'createdAt':true track by $index"
+          ex-trade="t"
+        )
+      //- Completed Trades
+      .width-100
+        span.f-16.em-600 Completed Exchanges
+        .shift-history.width-100.border.bg-light-blue.mt-5(ng-show="vm.trades.length")
+          .pvs
+            span.em-500.pl-25 Status
+          .pvs
+            span.em-500 Date
+          .pvs
+            span.em-500 Exchanged
+          .pvs
+            span.em-500 Received
+        exchange-trade(
+          ng-repeat="t in vm.trades | orderBy:'createdAt':true track by $index"
+          ex-trade="t"
+        )
   contact-support-footer()

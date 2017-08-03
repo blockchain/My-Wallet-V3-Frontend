@@ -19,7 +19,5 @@ function ExchangeTradeController (Env, $scope, QA, $q, $timeout, Exchange, Angul
 
   this.trade = this.exTrade;
 
-  ShapeShift.shapeshift.updateTradeStatus(this.trade).then(console.log);
-
-  console.log('ExchangeTradeController', this);
+  ShapeShift.shapeshift.updateTradeStatus(this.trade).then();
 }

@@ -12,11 +12,13 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift) {
   };
 
   this.trades = [];
+  this.pendingTrades = [];
 
   $scope.$watch(
     () => ShapeShift.shapeshift.trades,
     (trades) => {
-      this.trades = trades;
+      this.pendingTrades = trades.filter(t => t.isProcessing || t.isWaitingForDeposit);
+      this.trades = trades.filter(t => t.isComplete || t.isFailed);
     }
   );
 
@@ -28,6 +30,4 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift) {
   this.goTo = (s) => this.step = this.steps[s];
 
   this.goTo('create');
-
-  console.log('ShapeShiftCheckoutController', ShapeShift, ShapeShift.shapeshift.trades);
 }
