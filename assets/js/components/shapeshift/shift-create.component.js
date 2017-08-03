@@ -4,6 +4,7 @@ angular
     bindings: {
       onComplete: '&',
       handleQuote: '&',
+      buildPayment: '&',
       handleApproximateQuote: '&'
     },
     templateUrl: 'templates/shapeshift/create.pug',
@@ -11,7 +12,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
+function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift) {
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
@@ -75,9 +76,9 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
 
   $scope.getSendAmount = () => {
     $scope.lock();
-    this.handleQuote($scope.getQuoteArgs(state))
-        .then((quote) => this.onComplete({quote}))
-        .then(($scope.free));
+    this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
+      ShapeShift.shapeshift.buildPayment(quote).getFee().then((fee) => this.onComplete({quote: quote, fee: fee}));
+    }).then(($scope.free));
   };
 
   $scope.setTo = () => {

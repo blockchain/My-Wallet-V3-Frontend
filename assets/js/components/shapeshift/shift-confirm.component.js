@@ -2,7 +2,9 @@ angular
   .module('walletApp')
   .component('shiftConfirm', {
     bindings: {
+      fee: '<',
       quote: '<',
+      onCancel: '&',
       onComplete: '&',
       handleShift: '&'
     },
@@ -12,13 +14,14 @@ angular
   });
 
 function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum) {
+  $scope.fee = this.fee;
   $scope.quote = this.quote;
-  $scope.human = {'BTC': 'Bitcoin', 'ETH': 'Ether'};
+  $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether'};
 
-  $scope.input = this.quote.pair.split('_')[0].toUpperCase();
-  $scope.output = this.quote.pair.split('_')[1].toUpperCase();
-  $scope.from = $scope.input === 'BTC' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
-  $scope.to = $scope.output === 'BTC' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+  $scope.input = this.quote.pair.split('_')[0];
+  $scope.output = this.quote.pair.split('_')[1];
+  $scope.from = $scope.input === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+  $scope.to = $scope.output === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
   $scope.shift = () => {
     $scope.lock();

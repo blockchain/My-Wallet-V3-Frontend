@@ -9,4 +9,8 @@ function ShapeShiftConfirmController ($scope, ShapeShift) {
     $scope.vm.trade = trade;
     $scope.vm.goTo('receipt');
   };
+
+  $scope.onCancel = () => {
+    $scope.vm.goTo('create');
+  };
 }
