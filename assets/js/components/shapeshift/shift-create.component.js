@@ -86,7 +86,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
 
   let getAvailableBalance = () => {
     $q.resolve(this.from.getAvailableBalance('priority'))
-      .then((balance) => {debugger;});
+      .then((balance) => {});
   };
 
   $scope.$watch('from', getAvailableBalance);

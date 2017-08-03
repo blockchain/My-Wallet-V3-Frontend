@@ -4,12 +4,21 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function ShapeShiftCheckoutController ($scope, $stateParams) {
+function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift) {
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'EXCHANGE',
     options: ['EXCHANGE', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
+
+  this.trades = [];
+
+  $scope.$watch(
+    () => ShapeShift.shapeshift.trades,
+    (trades) => {
+      this.trades = trades;
+    }
+  );
 
   this.human = {'BTC': 'bitcoin', 'ETH': 'ether'};
   this.steps = enumify('create', 'confirm', 'receipt');
@@ -19,4 +28,6 @@ function ShapeShiftCheckoutController ($scope, $stateParams) {
   this.goTo = (s) => this.step = this.steps[s];
 
   this.goTo('create');
+
+  console.log('ShapeShiftCheckoutController', ShapeShift, ShapeShift.shapeshift.trades);
 }

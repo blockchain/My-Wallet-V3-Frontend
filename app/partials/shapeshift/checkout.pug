@@ -13,19 +13,36 @@
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
         shift-receipt(shift="vm.trade")
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
-      .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
+      .flex-center.flex-justify.flex-column.mtvl(ng-hide="vm.trades.length")
         .flex-column.mbl.border-bottom.black
           .flex-center.flex-justify
             i.ti-direction-alt.h3.mrm
             h3.em-100(translate=".NO_EXCHANGES")
           p.em-400.pointer(translate=".NO_EXCHANGES_EXPLAIN" ng-click="tabs.select('EXCHANGE')")
-      table.width-100(ng-show="state.trades.length")
-        tr.border.bg-grey
-          th.pvs.width-5-mobile.visible-xs
-          th.phml.pvs.width-30.width-40-mobile(translate="STATUS")
-          th.pvs.width-30(translate="DATE")
-          th.pvs.width-25.hidden-xs(translate="EXCHANGED")
-          th.pvs.width-15(translate="RECEIVED")
-          th.pvs.width-5-mobile.visible-xs
-        tr(ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index")
+      //- css grid-like table
+      .shift-history.width-100.border.bg-light-blue(ng-show="vm.trades.length")
+        .order-header.pvs
+          span.em-500.pl-25 Status
+        .order-header.pvs
+          span.em-500 Date
+        .order-header.pvs
+          span.em-500 Exchanged
+        .order-header.pvs
+          span.em-500 Received
+      exchange-trade(
+        ng-repeat="t in vm.trades | orderBy:'createdAt':true track by $index"
+        ex-trade="t"
+      )
+      //- table.width-100(ng-show="vm.trades.length")
+      //-   tr.border.bg-grey
+      //-     th.pvs.width-5-mobile.visible-xs
+      //-     th.phml.pvs.width-30.width-40-mobile(translate="STATUS")
+      //-     th.pvs.width-30(translate="DATE")
+      //-     th.pvs.width-25.hidden-xs(translate="EXCHANGED")
+      //-     th.pvs.width-15(translate="RECEIVED")
+      //-     th.pvs.width-5-mobile.visible-xs
+      //-     tr(ng-repeat="t in vm.trades | orderBy:'createdAt':true track by $index")
+      //-       exchange-trade(
+      //-         exchange-trade="t"
+      //-       )
   contact-support-footer()
