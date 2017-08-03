@@ -77,7 +77,8 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.getSendAmount = () => {
     $scope.lock();
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
-      ShapeShift.shapeshift.buildPayment(quote).getFee().then((fee) => this.onComplete({quote: quote, fee: fee}));
+      let payment = ShapeShift.shapeshift.buildPayment(quote);
+      payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
     }).then(($scope.free));
   };
 

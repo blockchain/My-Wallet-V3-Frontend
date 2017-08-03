@@ -1529,7 +1529,7 @@
     "EXCHANGE_FROM": "Exchange From",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
-    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::amount}}</b> {{::input}} will be sent directly from {{::from}} to {{::to}} once you click confirm.",
+    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::amount | format:input:true}}</b> will be sent directly from {{::from}} to {{::to}} once you click confirm.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",

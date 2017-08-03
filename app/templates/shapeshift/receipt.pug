@@ -10,17 +10,17 @@ form.bc-form(
     .ph-30
       .f-13.mv-20
         span(translate=".EXCHANGE_IN_PROGRESS_EXPLAIN" translate-values="{output: human[output]}")
-      .f-16.em-500
+      .f-16.em-500.mb-5
         span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-10.flex-between
           span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")
-          span.em-300.right-align {{ trade.depositAmount }} {{ input }}
+          span.em-300.right-align {{ trade.depositAmount | format:input:true }}
         li.pv-10.flex-between
           span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
-          span.em-300.right-align {{ trade.withdrawalAmount }} {{ output }}
+          span.em-300.right-align {{ trade.withdrawalAmount | format:output:true }}
         li.pt-10.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
-          span.em-300.right-align 1 {{ input }} = {{ trade.rate }} {{ output }}
+          span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
       .flex-row.flex-end
         button.button-primary(type="submit" translate="CLOSE" ng-disabled="forms.confirmForm.$invalid")

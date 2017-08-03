@@ -7,9 +7,9 @@
   .overflow-scroll.flex-1.pt-30.ph-30
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'EXCHANGE'")
       div.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(ng-if="vm.onStep('create')" ng-controller="ShapeShiftCreateController")
-        shift-create(on-complete="onComplete(quote, fee)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)")
+        shift-create(on-complete="onComplete(payment, fee, quote)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
-        shift-confirm(on-complete="onComplete(trade)" on-cancel="onCancel()" quote="vm.quote" fee="vm.fee" handle-shift="shiftHandler(quote)")
+        shift-confirm(on-complete="onComplete(trade)" on-cancel="onCancel()" payment="vm.payment" fee="vm.fee" quote="vm.quote" handle-shift="shiftHandler(payment)")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
         shift-receipt(shift="vm.trade")
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")

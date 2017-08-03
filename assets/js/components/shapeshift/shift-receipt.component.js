@@ -11,8 +11,8 @@ angular
 
 function ShiftReceiptController ($scope) {
   $scope.trade = this.shift;
-  $scope.human = {'BTC': 'bitcoin', 'ETH': 'ether'};
+  $scope.human = {'btc': 'bitcoin', 'eth': 'ether'};
 
-  $scope.input = this.shift.pair.split('_')[0].toUpperCase();
-  $scope.output = this.shift.pair.split('_')[1].toUpperCase();
+  $scope.input = this.shift.pair.split('_')[0];
+  $scope.output = this.shift.pair.split('_')[1];
 }

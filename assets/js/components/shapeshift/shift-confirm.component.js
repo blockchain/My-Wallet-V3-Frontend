@@ -4,6 +4,7 @@ angular
     bindings: {
       fee: '<',
       quote: '<',
+      payment: '<',
       onCancel: '&',
       onComplete: '&',
       handleShift: '&'
@@ -25,15 +26,10 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
 
   $scope.shift = () => {
     $scope.lock();
-    let quote = $scope.quote;
-    this.handleShift({quote: quote})
-      .then(trade => {
-        this.onComplete({trade});
-      })
-      .catch((err) => {
-        $scope.state.loadFailed = true;
-        $scope.state.error = Exchange.interpretError(err);
-      }).finally($scope.resetFields).finally($scope.free);
+    let payment = this.payment;
+    this.handleShift({payment})
+        .then(trade => this.onComplete({trade}))
+        .catch(() => {}).finally($scope.free);
   };
 
   AngularHelper.installLock.call($scope);

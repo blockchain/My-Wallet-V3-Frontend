@@ -28,4 +28,4 @@ form.bc-form(
         label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
       .flex-row.flex-end
         button.button-muted(type="button" translate="CANCEL" ng-click="$ctrl.onCancel()")
-        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="forms.confirmForm.$invalid")
+        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="locked || forms.confirmForm.$invalid")
