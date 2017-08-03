@@ -111,7 +111,7 @@
           //- Description
           .item.mt-20
             label
-              span(translate="FOR:")
+              span(translate="DESCRIPTION:")
               helper-button(content="SEND_BITOIN_STEP2B")
             .flex-1
               textarea.pas(rows="4" ng-model="transaction.note" name="note" maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
@@ -176,7 +176,7 @@
         .width-70.width-70-mobile
           span(translate="no") {{ transaction.destination.label || transaction.destination.address }}
       .flex-row.mt-10(ng-show="transaction.note.length")
-        label.colon.width-30.width-30-mobile(translate="FOR")
+        label.colon.width-30.width-30-mobile(translate="DESCRIPTION")
         .width-70.width-70-mobile {{ transaction.note }}
       .flex-row.mt-10
         label.colon.width-30.width-30-mobile(translate="PAYMENT")
