@@ -137,12 +137,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
       controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance) {
+        let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
+
         $scope.vm = {
           trade: trade
         };
+
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
-        $scope.unoActive = MyWallet.wallet.external.unocoin.hasAccount;
-        $scope.isCanceled = $scope.formattedTrade.values.state === 'canceled';
+        unocoin && trade.state === 'cancelled' && ($scope.formattedTrade.namespace = 'UNOCOIN_TX_ERROR_STATE');
       },
       resolve: {
         trade: () => trade,
