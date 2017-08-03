@@ -197,5 +197,17 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openShiftTradeDetails = service.openOnce(trade => {
+    return openMobileCompatible({
+      templateUrl: 'partials/shapeshift/trade-details.pug',
+      controller: 'ShapeShiftTradeDetailsController',
+      controllerAs: 'vm',
+      windowClass: 'bc-modal',
+      resolve: {
+        trade () { return trade; }
+      }
+    });
+  });
+
   return service;
 }

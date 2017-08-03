@@ -4,7 +4,7 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift) {
+function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals) {
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'EXCHANGE',
     options: ['EXCHANGE', 'ORDER_HISTORY'],
@@ -30,4 +30,6 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift) {
   this.goTo = (s) => this.step = this.steps[s];
 
   this.goTo('create');
+
+  this.openTradeDetails = trade => modals.openShiftTradeDetails(trade);
 }

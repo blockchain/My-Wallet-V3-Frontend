@@ -2,7 +2,8 @@ angular
   .module('walletApp')
   .component('exchangeTrade', {
     bindings: {
-      exTrade: '<'
+      exTrade: '<',
+      viewDetails: '&'
     },
     templateUrl: 'templates/exchange/trade.pug',
     controller: ExchangeTradeController,

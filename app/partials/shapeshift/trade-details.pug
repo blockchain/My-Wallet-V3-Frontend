@@ -1,0 +1,28 @@
+.modal-header
+  h3.f-18.em-600.pl-30 {{ vm.getHeader() }}
+.modal-body
+  form.bc-form(translate-namespace="SHIFT")
+    .ph-30(ng-class="{'mid-grey': vm.negativeState()}")
+      .f-16.em-500.mb-5
+        span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+        li.ph-15.pv-10.flex-between
+          span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: vm.human[vm.trade.fromCurrency]}")
+          div
+            span.em-300.right-align {{ vm.trade.depositAmount }}
+            | &nbsp;
+            span.em-300.upper {{ vm.trade.fromCurrency }}
+        li.ph-15.pv-10.flex-between
+          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: vm.human[vm.trade.toCurrency]}")
+          div
+            span.em-300.right-align {{ vm.trade.withdrawalAmount }}
+            | &nbsp;
+            span.em-300.upper {{ vm.trade.toCurrency }}
+        li.ph-15.pv-10.flex-between
+          span.em-500.colon(translate="EXCHANGE_RATE")
+          span.em-300.right-align {{ 1 | format:input:true }} = {{ vm.trade.rate | format:output:true }}
+        li.ph-15.pv-10.flex-between
+          span.em-500.colon(translate="TX_FEE")
+          span.em-300.right-align tx fee here
+      .flex-row.flex-end
+        button.button-primary(ng-click="vm.close()" translate="CLOSE")
