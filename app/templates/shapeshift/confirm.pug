@@ -22,7 +22,7 @@ form.bc-form(
           span.em-300.right-align {{ 1 | format:input:true }} = {{ quote.rate | format:output:true }}
         li.pt-10.flex-between
           span.em-500.colon(translate="TX_FEE")
-          span.em-300.right-align {{ fee | convert:input:true }}
+          span.em-300.right-align {{ fee | convert:input:true:true }}
       .flex-row.flex-center.mb-15
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
         label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
