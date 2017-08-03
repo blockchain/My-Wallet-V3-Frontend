@@ -128,6 +128,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       } else if ((error.length && error.indexOf('Invalid authentication code') > -1) || (error.length && error.indexOf('Authentication code is incorrect') > -1)) {
         errorCallback('twoFactor', error);
       } else {
+        console.log(error);
         Alerts.displayError(error.message || error, true);
         errorCallback();
       }
