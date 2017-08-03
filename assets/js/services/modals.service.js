@@ -141,7 +141,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
           trade: trade
         };
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
-        $scope.unoActive = ($scope.formattedTrade.values.state === 'canceled') && MyWallet.wallet.external.unocoin.hasAccount;
+        $scope.unoActive = MyWallet.wallet.external.unocoin.hasAccount;
+        $scope.isCanceled = $scope.formattedTrade.values.state === 'canceled';
       },
       resolve: {
         trade: () => trade,
