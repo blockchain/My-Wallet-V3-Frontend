@@ -13,16 +13,19 @@ form.bc-form(
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-10.border-bottom-light.flex-between
           span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[input]}")
-          span.em-300.right-align {{ quote.depositAmount }} {{ input }}
+          span.em-300.right-align {{ quote.depositAmount | format:input:true }}
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
-          span.em-300.right-align {{ quote.withdrawalAmount }} {{ output }}
+          span.em-300.right-align {{ quote.withdrawalAmount | format:output:true }}
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
-          span.em-300.right-align 1 {{ input }} = {{ quote.rate }} {{ output }}
+          span.em-300.right-align {{ 1 | format:input:true }} = {{ quote.rate | format:output:true }}
+        li.pt-10.flex-between
+          span.em-500.colon(translate="TX_FEE")
+          span.em-300.right-align {{ fee | convert:input:true }}
       .flex-row.flex-center.mb-15
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
         label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
       .flex-row.flex-end
-        button.button-muted(translate="CANCEL" ng-click="vm.cancel()")
-        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="forms.confirmForm.$invalid")
+        button.button-muted(type="button" translate="CANCEL" ng-click="$ctrl.onCancel()")
+        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="locked || forms.confirmForm.$invalid")

@@ -4,6 +4,7 @@ angular
     bindings: {
       onComplete: '&',
       handleQuote: '&',
+      buildPayment: '&',
       handleApproximateQuote: '&'
     },
     templateUrl: 'templates/shapeshift/create.pug',
@@ -11,11 +12,12 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, smartAccount) {
+function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift) {
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
-  $scope.format = currency.formatCurrencyForView;
+  $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
+  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.forms = $scope.state = {};
 
   let state = $scope.state = {
@@ -53,6 +55,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.expires - now);
       if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
       else state.input.amount = Number.parseFloat(quote.withdrawalAmount);
+      AngularHelper.$safeApply();
     };
 
     this.handleApproximateQuote($scope.getQuoteArgs(state))
@@ -64,6 +67,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.refreshIfValid = (field) => {
     if ($scope.state[field].amount) {
       $scope.quote = null;
+      state.loadFailed = false;
       $scope.refreshQuote();
     } else {
       $scope.cancelRefresh();
@@ -72,9 +76,10 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
 
   $scope.getSendAmount = () => {
     $scope.lock();
-    this.handleQuote($scope.getQuoteArgs(state))
-        .then((quote) => this.onComplete({quote}))
-        .then(($scope.free));
+    this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
+      let payment = ShapeShift.shapeshift.buildPayment(quote);
+      payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
+    }).then(($scope.free));
   };
 
   $scope.setTo = () => {
@@ -85,11 +90,12 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   };
 
   let getAvailableBalance = () => {
-    $q.resolve(this.from.getAvailableBalance('priority'))
-      .then((balance) => {});
+    let fromBTC = state.input.curr === 'btc';
+    $q.resolve(this.from.getAvailableBalance(fromBTC && 'priority'))
+      .then((balance) => $scope.max = fromBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false)));
   };
 
-  $scope.$watch('from', getAvailableBalance);
+  $scope.$watch('state.input.curr', getAvailableBalance);
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
   $scope.$on('$destroy', $scope.cancelRefresh);
