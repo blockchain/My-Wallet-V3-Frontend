@@ -32,9 +32,8 @@ form.bc-form(
             input.form-control.no-border(
               type="number"
               name="input"
-              ng-model="state.input.amount"
               ng-max="max"
-              ng-min="min"
+              ng-model="state.input.amount"
               ng-change="state.baseCurr = state.input.curr"
               step="0.01"
               prevent-event="mousewheel"
@@ -47,18 +46,15 @@ form.bc-form(
               type="number"
               name="output"
               ng-model="state.output.amount"
-              ng-max="max"
-              ng-min="min"
               ng-change="state.baseCurr = state.output.curr"
               prevent-event="mousewheel"
               step="0.01"
               required)
             span.mhm.upper {{state.output.curr}}
-        .f-12.mts.state-danger-text
-          span(ng-show="!state.loadFailed && forms.shiftForm.$error.min")
-            | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
-            | &nbsp;
-          span(ng-show="!state.loadFailed && forms.shiftForm.$error.min")
-            | Please enter an amount greater than {{ format($ctrl.limits.min, dollars, false) }} {{ dollars.code }}.
+        .pos-rel.f-12.mts.state-danger-text
+          span.pos-abs(ng-show="forms.shiftForm.$error.max")
+            span(translate=".MAX_AVAILABLE_ERROR")
+            | :&nbsp;
+            span.pointer.upper(ng-click="state.input.amount = max; state.baseCurr = state.input.curr") {{ max }} {{ state.input.curr }}
     .group.mt-30
       button.btn.button-primary.full(type="submit" ng-disabled="locked || shiftForm.$invalid || !quote || state.loadFailed" translate="EXCHANGE_SIMPLE")
