@@ -70,7 +70,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   const ethCurrencies = [
     {
-      code: 'ETH'
+      code: 'ETH',
+      conversion: 1
     }
   ];
 
@@ -209,6 +210,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (isBitCurrency(currency)) {
       console.warn('do not try to convert bitcoin from ether');
       return null;
+    } else if (isEthCurrency(currency)) {
+      return amount / currency.conversion;
     } else if (ethConversions[currency.code] != null) {
       return amount * ethConversions[currency.code].last;
     } else {
