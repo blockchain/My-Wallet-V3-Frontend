@@ -3,7 +3,7 @@
     span.pl-25.state-danger-text(ng-show="$ctrl.trade.isFailed") {{ $ctrl.trade.status | translate }}
     span.pl-25.state.success(ng-show="$ctrl.trade.isComplete") Complete
     span.pl-25.state.medium-blue(ng-show="$ctrl.trade.isWaitingForDeposit || $ctrl.trade.isProcessing") In Progress
-    a(ng-click="$ctrl.viewDetails()") View Details
+    a.hidden-xs(ng-click="$ctrl.viewDetails($ctrl.trade)") View Details
   .exchange-date.pv-15
     span {{ $ctrl.trade.time | date:$ctrl.dateFormat }}
   .exchange-exchanged.pv-15

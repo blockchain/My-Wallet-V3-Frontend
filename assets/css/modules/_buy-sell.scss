@@ -444,3 +444,8 @@ input[type="radio"]:checked + label {
   display: grid;
   grid-template-columns: 50% 50%;
 }
+@media(max-width: 768px) {
+  .exchange-status {
+    grid-template-columns: 100%;
+  }
+}
