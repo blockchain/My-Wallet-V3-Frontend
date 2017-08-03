@@ -4,14 +4,14 @@
       span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
       a(href="https://www.shapeshift.io/" target="_blank" rel="noopener noreferrer")
         img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
-  .overflow-scroll.flex-1.pt-20.ph-15
+  .overflow-scroll.flex-1.pt-30.ph-30
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'EXCHANGE'")
       div.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(ng-if="vm.onStep('create')" ng-controller="ShapeShiftCreateController")
         shift-create(on-complete="onComplete(quote)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
-        shift-confirm(quote="vm.quote" handle-shift="shiftHandler(quote)" shift-success="onComplete(trade)")
-      //- div.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
-      //-   shift-receipt(trade="vm.trade")
+        shift-confirm(on-complete="onComplete(trade)" quote="vm.quote" handle-shift="shiftHandler(quote)")
+      div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
+        shift-receipt(shift="vm.trade")
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
       .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
         .flex-column.mbl.border-bottom.black

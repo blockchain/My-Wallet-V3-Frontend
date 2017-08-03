@@ -1529,8 +1529,13 @@
     "EXCHANGE_FROM": "Exchange From",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::amount}}</b> {{::input}} will be sent directly from {{::from}} to {{::to}} once you click confirm.",
-    "TO_DEPOSIT": "{{::input}} to Deposit",
-    "TO_RECEIVE": "{{::output}} to be Received"
+    "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
+    "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
+    "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
+    "ACCEPT_TERMS": "I agree to ShapeShift's <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>terms and conditions</a>.",
+    "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN": "Once the trade is complete, your {{::output}} will arrive in your wallet. In the meantime, you can check your pending transaction’s progress in the Order History tab.",
+    "ORDER_SUMMARY": "Order Summary"
   },
   "": ""
 }

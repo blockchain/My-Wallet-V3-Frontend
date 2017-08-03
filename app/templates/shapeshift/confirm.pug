@@ -9,8 +9,8 @@ form.bc-form(
       span.f-16.em-500.pl-30(translate=".CONFIRM_EXCHANGE")
     .ph-30
       .f-13.mv-20
-        span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{amount: quote.depositAmount, input: input.toUpperCase(), from: from.label, to: to.label}")
-      ul.f-13.em-300.bg-grey.border.pv-10.ph-10(ng-class="{'bank-transfer': isPendingBankTransfer && isPendingBankTransfer()}")
+        span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{amount: quote.depositAmount, input: input, from: from.label, to: to.label}")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-10.border-bottom-light.flex-between
           span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[input]}")
           span.em-300.right-align {{ quote.depositAmount }} {{ input }}
@@ -20,4 +20,9 @@ form.bc-form(
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align 1 {{ input }} = {{ quote.rate }} {{ output }}
-        
+      .flex-row.flex-center.mb-15
+        input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
+        label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
+      .flex-row.flex-end
+        button.button-muted(translate="CANCEL" ng-click="vm.cancel()")
+        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="forms.confirmForm.$invalid")

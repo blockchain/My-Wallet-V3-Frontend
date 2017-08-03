@@ -2,10 +2,9 @@ angular
   .module('walletApp')
   .component('shiftConfirm', {
     bindings: {
-      fiat: '<',
       quote: '<',
-      handleShift: '&',
-      shiftSuccess: '&'
+      onComplete: '&',
+      handleShift: '&'
     },
     templateUrl: 'templates/shapeshift/confirm.pug',
     controller: ShiftConfirmController,
@@ -15,7 +14,6 @@ angular
 function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum) {
   $scope.quote = this.quote;
   $scope.human = {'BTC': 'Bitcoin', 'ETH': 'Ether'};
-  console.log(this.quote);
 
   $scope.input = this.quote.pair.split('_')[0].toUpperCase();
   $scope.output = this.quote.pair.split('_')[1].toUpperCase();
@@ -27,7 +25,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
     let quote = $scope.quote;
     this.handleShift({quote: quote})
       .then(trade => {
-        this.shiftSuccess({trade});
+        this.onComplete({trade});
       })
       .catch((err) => {
         $scope.state.loadFailed = true;

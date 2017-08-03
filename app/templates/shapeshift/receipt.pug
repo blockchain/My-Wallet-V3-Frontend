@@ -1,0 +1,26 @@
+form.bc-form(
+  name="forms.receiptForm"
+  ng-submit="close()"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .border-bottom.pb-30
+      span.f-16.em-500.pl-30(translate=".EXCHANGE_IN_PROGRESS")
+    .ph-30
+      .f-13.mv-20
+        span(translate=".EXCHANGE_IN_PROGRESS_EXPLAIN" translate-values="{output: human[output]}")
+      .f-16.em-500
+        span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+        li.pb-10.flex-between
+          span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")
+          span.em-300.right-align {{ trade.depositAmount }} {{ input }}
+        li.pv-10.flex-between
+          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
+          span.em-300.right-align {{ trade.withdrawalAmount }} {{ output }}
+        li.pt-10.flex-between
+          span.em-500.colon(translate="EXCHANGE_RATE")
+          span.em-300.right-align 1 {{ input }} = {{ trade.rate }} {{ output }}
+      .flex-row.flex-end
+        button.button-primary(type="submit" translate="CLOSE" ng-disabled="forms.confirmForm.$invalid")

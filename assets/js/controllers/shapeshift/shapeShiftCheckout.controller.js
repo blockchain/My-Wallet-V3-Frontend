@@ -11,6 +11,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams) {
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
+  this.human = {'BTC': 'bitcoin', 'ETH': 'ether'};
   this.steps = enumify('create', 'confirm', 'receipt');
   this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
   this.afterStep = (s) => this.step > this.steps[s];

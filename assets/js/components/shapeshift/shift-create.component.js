@@ -2,7 +2,6 @@ angular
   .module('walletApp')
   .component('shiftCreate', {
     bindings: {
-      fiat: '<',
       onComplete: '&',
       handleQuote: '&',
       handleApproximateQuote: '&'
@@ -72,8 +71,10 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   };
 
   $scope.getSendAmount = () => {
-    let quote = $scope.quote;
-    this.handleQuote($scope.getQuoteArgs(state)).then(this.onComplete({quote}));
+    $scope.lock();
+    this.handleQuote($scope.getQuoteArgs(state))
+        .then((quote) => this.onComplete({quote}))
+        .then(($scope.free));
   };
 
   $scope.setTo = () => {
@@ -83,6 +84,12 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     this.to = this.origins.find((o) => o.label !== this.from.label);
   };
 
+  let getAvailableBalance = () => {
+    $q.resolve(this.from.getAvailableBalance('priority'))
+      .then((balance) => {debugger;});
+  };
+
+  $scope.$watch('from', getAvailableBalance);
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
   $scope.$on('$destroy', $scope.cancelRefresh);
