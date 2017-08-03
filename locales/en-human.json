@@ -1459,6 +1459,7 @@
   "PIN_CODE_INCORRECT": "Pin Code incorrect",
   "PAN_CARD_REQUIRED": "Pan Card required",
   "PAN_CARD_INCORRECT": "Pan Card incorrect",
+  "PAN_CARD_DUPLICATE": "PAN already registered",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
   "EXCHANGE": {
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",
@@ -1487,6 +1488,9 @@
     "IFSC": "IFSC"
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
-  "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
+  "UNOCOIN_IF_IMPS": "For IMPS transfers, the reference number is RRN OR External Reference number and is 12 digits long, starting from \"7\".",
+  "UNOCOIN_IF_NEFT_OR_RTGS": "For NEFT or RTGS transfers, the reference number is UTR NUMBER (does not start with \"IR\" or \"IZ\").",
+  "UNOCOIN_IF_CANT_ID": "If you cannot identify the UTR number, please provide all reference numbers you see along with the narration as per your bank statement.",
+  "UNOCOIN_CANCELED": "Your transaction has been canceled. If the funds were withdrawn from your bank account, create a new trade for the same amount and use the original reference number.",
   "": ""
 }
