@@ -1459,6 +1459,7 @@
   "PIN_CODE_INCORRECT": "Pin Code incorrect",
   "PAN_CARD_REQUIRED": "Pan Card required",
   "PAN_CARD_INCORRECT": "Pan Card incorrect",
+  "PAN_CARD_DUPLICATE": "PAN already registered",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
   "EXCHANGE": {
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",
