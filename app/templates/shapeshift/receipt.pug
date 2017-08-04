@@ -8,7 +8,7 @@ form.bc-form(
     .border-bottom.pb-30
       span.f-16.em-500.pl-30(translate=".EXCHANGE_IN_PROGRESS")
     .ph-30
-      .mv-20
+      .mv-20.ph-30
         shift-progress(shift="trade")
       .f-13.mb-20
         span(translate=".EXCHANGE_IN_PROGRESS_EXPLAIN" translate-values="{output: human[output]}")
@@ -24,5 +24,5 @@ form.bc-form(
         li.pt-10.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
-      .flex-row.flex-end()
+      .flex-row.flex-end
         button.button-primary(type="submit" translate="CLOSE" ng-disabled="forms.confirmForm.$invalid")
