@@ -14,7 +14,9 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum) {
+function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q) {
+  let now = new Date();
+
   $scope.fee = this.fee;
   $scope.quote = this.quote;
   $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether'};
@@ -23,6 +25,9 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   $scope.output = this.quote.pair.split('_')[1];
   $scope.from = $scope.input === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
   $scope.to = $scope.output === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+
+  $scope.onExpiration = () => $scope.lock();
+  $scope.getTimeToExpiration = () => $scope.quote.expires - now;
 
   $scope.shift = () => {
     $scope.lock();

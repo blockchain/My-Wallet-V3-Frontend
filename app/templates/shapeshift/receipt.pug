@@ -8,7 +8,9 @@ form.bc-form(
     .border-bottom.pb-30
       span.f-16.em-500.pl-30(translate=".EXCHANGE_IN_PROGRESS")
     .ph-30
-      .f-13.mv-20
+      .mv-20
+        shift-progress(shift="trade")
+      .f-13.mb-20
         span(translate=".EXCHANGE_IN_PROGRESS_EXPLAIN" translate-values="{output: human[output]}")
       .f-16.em-500.mb-5
         span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")

@@ -22,20 +22,8 @@ function ShapeShift (Wallet) {
                  .then((secPass) => service.shapeshift.shift(quote, secPass));
   };
 
-  service.translateStatus = status => {
-    switch (status) {
-      case 'complete':
-        return 'Trade Complete';
-      case 'no_deposits':
-      case 'received':
-        return 'Exchange in Progress';
-      case 'failed':
-        return 'Trade Failed';
-      case 'expired':
-        return 'Trade Expired';
-      case 'cancelled':
-        return 'Trade Cancelled';
-    }
+  service.watchTradeForCompletion = (trade) => {
+    return service.shapeshift.watchTradeForCompletion(trade);
   };
 
   window.ShapeShift = service;

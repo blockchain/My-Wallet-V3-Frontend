@@ -1,0 +1,19 @@
+.shift-progress {
+  @extend .flex-row;
+  @extend .flex-between;
+  span:first-child {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: 1px solid $blue;
+    i {
+      @extend .f-28;
+      @extend .blue;
+      @extend .flex-center;
+    }
+  }
+  > div {
+    @extend .pos-rel;
+    @extend .width-33;
+  }
+}

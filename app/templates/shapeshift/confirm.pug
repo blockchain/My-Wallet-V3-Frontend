@@ -4,9 +4,12 @@ form.bc-form(
   novalidate
   translate-namespace="SHIFT"
   autocomplete="off")
-  fieldset(ng-disabled="locked")
-    .border-bottom.pb-30
+  fieldset
+    .border-bottom.pb-30.flex-between.flex-center
       span.f-16.em-500.pl-30(translate=".CONFIRM_EXCHANGE")
+      .pr-30.flex-row.flex-center
+        countdown(time-to-expiration="getTimeToExpiration" on-expiration="onExpiration()" debug="true" message="QUOTE_EXPIRES_IN")
+        helper-button(content="SHIFT.QUOTE_EXPIRES_IN_HELPER")
     .ph-30
       .f-13.mv-20
         span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{amount: quote.depositAmount, input: input, from: from.label, to: to.label}")
