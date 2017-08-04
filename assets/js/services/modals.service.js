@@ -199,7 +199,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
   service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
-      templateUrl: 'partials/shapeshift/trade-details.pug',
+      templateUrl: 'templates/shapeshift/receipt.pug',
       controller: 'ShapeShiftReceiptController',
       controllerAs: 'vm',
       windowClass: 'bc-modal',
