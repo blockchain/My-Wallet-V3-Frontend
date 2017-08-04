@@ -17,5 +17,5 @@ function ShapeShiftCheckoutController ($scope, $stateParams) {
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => this.step = this.steps[s];
 
-  this.goTo('create');
+  this.goTo('receipt');
 }

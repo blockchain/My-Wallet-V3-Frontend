@@ -22,6 +22,10 @@ function ShapeShift (Wallet) {
                  .then((secPass) => service.shapeshift.shift(quote, secPass));
   };
 
+  service.watchTradeForCompletion = (trade) => {
+    return service.shapeshift.watchTradeForCompletion(trade);
+  };
+
   window.ShapeShift = service;
   return service;
 }
