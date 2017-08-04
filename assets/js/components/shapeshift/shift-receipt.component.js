@@ -2,7 +2,8 @@ angular
   .module('walletApp')
   .component('shiftReceipt', {
     bindings: {
-      shift: '<'
+      shift: '<',
+      isCheckout: '<'
     },
     templateUrl: 'templates/shapeshift/receipt.pug',
     controller: ShiftReceiptController,
@@ -11,6 +12,7 @@ angular
 
 function ShiftReceiptController ($scope, $q, ShapeShift) {
   $scope.trade = this.shift;
+  $scope.isCheckout = this.isCheckout;
   $scope.human = {'btc': 'bitcoin', 'eth': 'ether'};
 
   $scope.input = this.shift.pair.split('_')[0];

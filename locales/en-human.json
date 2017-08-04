@@ -1357,6 +1357,7 @@
   "INTERVIEWING": "Interviewing",
   "PRESS": "Press",
   "BLOG": "Blog",
+  "TRADE_COMPLETE": "Trade Complete",
   "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "CLICK_TO_DELETE_ACCOUNT": "Delete bank account",
@@ -1412,7 +1413,7 @@
     "PLEASE_NOTE_BANK_POLICIES": "Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1 - 2 business days from the transfer date.",
     "ENTER_DANISH_BANK": "Please enter your information for your Danish bank account.",
     "ENTER_BANK_INFO": "Please enter your bank information below.",
-    "TRADE_COMPLETE": "Trade Complete",
+    "TRADE_COMPLETE": "@:TRADE_COMPLETE",
     "SOLD": "Sold",
     "FIRST_CONFIRMATION": "The rate will be set after the first confirmation",
     "WAIT_FOR_TRADE_COMPLETE": "Trading is disabled until your pending trade is complete.",
@@ -1538,7 +1539,23 @@
     "ACCEPT_TERMS": "I agree to ShapeShift's <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>terms and conditions</a>.",
     "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
     "EXCHANGE_IN_PROGRESS_EXPLAIN": "Once the trade is complete, your {{::output}} will arrive in your wallet. In the meantime, you can check your pending transaction’s progress in the Order History tab.",
-    "ORDER_SUMMARY": "Order Summary"
+    "ORDER_SUMMARY": "Order Summary",
+    "SENDING_FUNDS": "Sending Funds",
+    "FUNDS_SENT": "Funds Sent",
+    "TRADE": {
+      "complete": {
+        "HEADER": "@:TRADE_COMPLETE",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      },
+      "received": {
+        "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      },
+      "no_deposits": {
+        "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      }
+    }
   },
   "": ""
 }

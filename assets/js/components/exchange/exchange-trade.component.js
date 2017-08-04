@@ -10,15 +10,9 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeTradeController (Env, $scope, QA, $q, $timeout, Exchange, AngularHelper, ShapeShift) {
-  Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
-  });
-
+function ExchangeTradeController ($scope, Env, Exchange, AngularHelper, ShapeShift) {
   this.dateFormat = 'd MMMM yyyy, ' + 'HH:mm';
   this.dateFormat = $scope.$root.size.xs ? 'MMM d' : this.dateFormat;
 
   this.trade = this.exTrade;
-
-  ShapeShift.shapeshift.updateTradeStatus(this.trade).then();
 }

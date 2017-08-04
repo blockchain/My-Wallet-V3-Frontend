@@ -199,12 +199,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
   service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
-      templateUrl: 'templates/shapeshift/receipt.pug',
-      controller: 'ShapeShiftReceiptController',
       controllerAs: 'vm',
-      windowClass: 'bc-modal',
-      resolve: {
-        trade () { return trade; }
+      windowClass: 'buy',
+      template: `
+        <div class='pv-30'>
+          <shift-receipt shift='trade'></shift-receipt>
+        </div>`,
+      controller: function ($scope) {
+        $scope.trade = trade;
       }
     });
   });

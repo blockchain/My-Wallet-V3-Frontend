@@ -24,12 +24,10 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals)
 
   this.human = {'BTC': 'bitcoin', 'ETH': 'ether'};
   this.steps = enumify('create', 'confirm', 'receipt');
-  this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
-  this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => this.step = this.steps[s];
 
-  this.openTradeDetails = trade => modals.openShiftTradeDetails(trade);
+  this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
 
-  this.goTo('receipt');
+  this.goTo('create');
 }
