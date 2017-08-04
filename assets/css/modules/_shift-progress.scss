@@ -4,16 +4,49 @@
   span:first-child {
     width: 60px;
     height: 60px;
+    overflow: hidden;
     border-radius: 30px;
     border: 1px solid $blue;
     i {
       @extend .f-28;
       @extend .blue;
+      @extend .pos-rel;
       @extend .flex-center;
+      left: 0;
+      bottom: 0;
+      -moz-transition: all $fast;
+      -webkit-transition: all $fast;
+      -o-transition: all $fast;
+      -ms-transition: all $fast;
+      transition: all $fast;
+    }
+    &:after {
+      content: '';
+      @extend .bg-blue;
+      @extend .pos-abs;
+      @extend .width-50;
+      top: 33.333%;
+      height: 1px;
+      left: 75%;
     }
   }
   > div {
     @extend .pos-rel;
     @extend .width-33;
+    &:last-child {
+      span:first-child {
+        &:after {
+          content: initial;
+        }
+      }
+    }
+    &.active {
+      & span:first-child {
+        i {
+          left: 30px;
+          bottom: 30px;
+        }
+      }
+    }
   }
 }
