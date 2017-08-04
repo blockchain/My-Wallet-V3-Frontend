@@ -15,13 +15,5 @@
   > div {
     @extend .pos-rel;
     @extend .width-33;
-    &:after {
-      content: '';
-      right: 0;
-      height: 1px;
-      width: 100%;
-      @extend .bg-blue;
-      @extend .pos-abs;
-    }
   }
 }
