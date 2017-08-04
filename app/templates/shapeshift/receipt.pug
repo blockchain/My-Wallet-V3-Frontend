@@ -24,5 +24,5 @@ form.bc-form(
         li.pt-10.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
-      .flex-row.flex-end
+      .flex-row.flex-end()
         button.button-primary(type="submit" translate="CLOSE" ng-disabled="forms.confirmForm.$invalid")

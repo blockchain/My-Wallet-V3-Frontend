@@ -30,5 +30,6 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals)
   this.goTo = (s) => this.step = this.steps[s];
 
   this.openTradeDetails = trade => modals.openShiftTradeDetails(trade);
+
   this.goTo('receipt');
 }

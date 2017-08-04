@@ -197,10 +197,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openShiftTradeDetails = service.openOnce(trade => {
+  service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
       templateUrl: 'partials/shapeshift/trade-details.pug',
-      controller: 'ShapeShiftTradeDetailsController',
+      controller: 'ShapeShiftReceiptController',
       controllerAs: 'vm',
       windowClass: 'bc-modal',
       resolve: {
