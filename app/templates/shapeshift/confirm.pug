@@ -26,8 +26,8 @@ form.bc-form(
           span.em-300.right-align
             span {{ quote.withdrawalAmount | format:output:true }}
             | 
-            fiat(eth="quote.depositAmount" ng-if="output === 'eth'" parens="true")
-            fiat(btc="toSatoshi(quote.depositAmount, bitcoin)" ng-if="output === 'btc'" parens="true")
+            fiat(eth="quote.withdrawalAmount" ng-if="output === 'eth'" parens="true")
+            fiat(btc="toSatoshi(quote.withdrawalAmount, bitcoin)" ng-if="output === 'btc'" parens="true")
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ quote.rate | format:output:true }}
