@@ -11,7 +11,7 @@ function convertFilter (Wallet, currency) {
   };
 
   // target => { 'primary' | 'secondary' | 'btc' | 'fiat' | currency }
-  return function (amount, target = 'primary', showCode, test) {
+  return function (amount, target = 'primary', showCode) {
     let fiat = Wallet.settings.currency;
     let eth = currency.ethCurrencies[0];
     let btc = Wallet.settings.btcCurrency;

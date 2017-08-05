@@ -24,37 +24,47 @@ form.bc-form(
           .flex-row
              span.f-16.em-500.colon Enter Amount
           span
-            .state-danger-text(ng-show="state.loadFailed")
+            .state-danger-text(ng-if="state.loadFailed || state.balanceFailed")
               i.ti-alert
               span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
         .flex-center
-          .flex-1.flex-center.border
-            input.form-control.no-border(
-              type="number"
-              name="input"
-              ng-max="max"
-              ng-model="state.input.amount"
-              ng-change="state.baseCurr = state.input.curr"
-              step="0.01"
-              prevent-event="mousewheel"
-              focus-when="true"
-              required)
-            span.mhm.upper {{state.input.curr}}
+          .flex-column.flex-1.border
+            .flex-center
+              input.form-control.no-border(
+                type="number"
+                name="input"
+                ng-max="max"
+                ng-model="state.input.amount"
+                ng-change="state.baseCurr = state.input.curr"
+                step="0.01"
+                prevent-event="mousewheel"
+                focus-when="true"
+                required)
+              span.mhm.upper {{state.input.curr}}
+            .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
+              fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.input.$invalid")
+              fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.input.$invalid")
+              fiat(btc="toSatoshi(state.input.amount, bitcoin)" ng-if="state.input.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.input.$invalid")
           i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
-          .flex-1.flex-center.border
-            input.form-control.no-border(
-              type="number"
-              name="output"
-              ng-model="state.output.amount"
-              ng-change="state.baseCurr = state.output.curr"
-              prevent-event="mousewheel"
-              step="0.01"
-              required)
-            span.mhm.upper {{state.output.curr}}
+          .flex-column.flex-1.border
+            .flex-center
+              input.form-control.no-border(
+                type="number"
+                name="output"
+                ng-model="state.output.amount"
+                ng-change="state.baseCurr = state.output.curr"
+                prevent-event="mousewheel"
+                step="0.01"
+                required)
+              span.mhm.upper {{state.output.curr}}
+            .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
+              fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.output.$invalid")
+              fiat(eth="state.output.amount" ng-if="state.output.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.output.$invalid")
+              fiat(btc="toSatoshi(state.output.amount, bitcoin)" ng-if="state.output.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.output.$invalid")
         .pos-rel.f-12.mts.state-danger-text
           span.pos-abs(ng-show="forms.shiftForm.$error.max")
             span(translate=".MAX_AVAILABLE_ERROR")
             | :&nbsp;
             span.pointer.upper(ng-click="state.input.amount = max; state.baseCurr = state.input.curr") {{ max }} {{ state.input.curr }}
     .group.mt-30
-      button.btn.button-primary.full(type="submit" ng-disabled="locked || shiftForm.$invalid || !quote || state.loadFailed" translate="EXCHANGE_SIMPLE")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="EXCHANGE_SIMPLE")

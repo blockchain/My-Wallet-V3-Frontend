@@ -16,8 +16,10 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
+  $scope.toSatoshi = currency.convertToSatoshi;
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+  $scope.dollars = Wallet.settings.displayCurrency;
   $scope.forms = $scope.state = {};
 
   let state = $scope.state = {
@@ -91,8 +93,19 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
 
   let getAvailableBalance = () => {
     let fromBTC = state.input.curr === 'btc';
+
+    let fetchSuccess = (balance) => {
+      $scope.max = fromBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
+      state.balanceFailed = false;
+    };
+
+    let fetchError = (err) => {
+      state.error = err;
+      state.balanceFailed = true;
+    };
+
     $q.resolve(this.from.getAvailableBalance(fromBTC && 'priority'))
-      .then((balance) => $scope.max = fromBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false)));
+      .then(fetchSuccess, fetchError);
   };
 
   $scope.$watch('state.input.curr', getAvailableBalance);
