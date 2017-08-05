@@ -203,10 +203,11 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       windowClass: 'buy',
       template: `
         <div class='pv-30'>
-          <shift-receipt shift='trade'></shift-receipt>
+          <shift-receipt shift='trade' on-close="onClose()"></shift-receipt>
         </div>`,
-      controller: function ($scope) {
+      controller: function ($scope, $uibModalInstance) {
         $scope.trade = trade;
+        $scope.onClose = () => $uibModalInstance.dismiss();
       }
     });
   });

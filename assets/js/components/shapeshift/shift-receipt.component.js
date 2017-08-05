@@ -3,7 +3,8 @@ angular
   .component('shiftReceipt', {
     bindings: {
       shift: '<',
-      isCheckout: '<'
+      isCheckout: '<',
+      onClose: '&'
     },
     templateUrl: 'templates/shapeshift/receipt.pug',
     controller: ShiftReceiptController,

@@ -1,6 +1,5 @@
 form.bc-form(
   name="forms.receiptForm"
-  ng-submit="close()"
   novalidate
   translate-namespace="SHIFT"
   autocomplete="off")
@@ -25,4 +24,4 @@ form.bc-form(
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
       .flex-row.flex-end
-        button.button-primary(type="submit" translate="CLOSE")
+        button.button-primary(ng-click="$ctrl.onClose()" translate="CLOSE")
