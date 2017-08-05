@@ -97,9 +97,11 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     let fetchSuccess = (balance) => {
       $scope.max = fromBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
       state.balanceFailed = false;
+      state.error = null;
     };
 
     let fetchError = (err) => {
+      $scope.max = 0;
       state.error = err;
       state.balanceFailed = true;
     };

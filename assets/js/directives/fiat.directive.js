@@ -13,13 +13,14 @@ function fiat ($rootScope, $q, Wallet, currency) {
       btc: '=',
       eth: '=',
       date: '=',
+      parens: '=',
       currency: '='
     },
     template: `
       <span>
         <img ng-show="fiat.amount == null && !loadFailed" src="img/spinner.gif" width="35" />
         <span ng-show="fiat.amount == null && loadFailed">N/A</span>
-        <span ng-show="fiat.amount != null">{{ fiat.currencySymbol }}{{ fiat.amount }}</span>
+        <span ng-show="fiat.amount != null" ng-class="{parens: parens}">{{ fiat.currencySymbol }}{{ fiat.amount }}</span>
       <span>
     `,
     link: link

@@ -16,16 +16,28 @@ form.bc-form(
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-10.border-bottom-light.flex-between
           span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[input]}")
-          span.em-300.right-align {{ quote.depositAmount | format:input:true }}
+          span.em-300.right-align
+            span {{ quote.depositAmount | format:input:true }}
+            | 
+            fiat(eth="quote.depositAmount" ng-if="input === 'eth'" parens="true")
+            fiat(btc="toSatoshi(quote.depositAmount, bitcoin)" ng-if="input === 'btc'" parens="true")
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
-          span.em-300.right-align {{ quote.withdrawalAmount | format:output:true }}
+          span.em-300.right-align
+            span {{ quote.withdrawalAmount | format:output:true }}
+            | 
+            fiat(eth="quote.depositAmount" ng-if="output === 'eth'" parens="true")
+            fiat(btc="toSatoshi(quote.depositAmount, bitcoin)" ng-if="output === 'btc'" parens="true")
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ quote.rate | format:output:true }}
         li.pt-10.flex-between
           span.em-500.colon(translate="TX_FEE")
-          span.em-300.right-align {{ fee | convert:input:true:true }}
+          span.em-300.right-align
+            span {{ fee | convert:input:true }}
+            | 
+            fiat(eth="fee" ng-if="input === 'eth'" parens="true")
+            fiat(btc="fee" ng-if="input === 'btc'" parens="true")
       .flex-row.flex-center.mb-15
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
         label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")

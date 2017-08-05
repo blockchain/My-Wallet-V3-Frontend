@@ -14,12 +14,15 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q) {
+function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q, currency) {
   let now = new Date();
 
   $scope.fee = this.fee;
   $scope.quote = this.quote;
   $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether'};
+
+  $scope.toSatoshi = currency.convertToSatoshi;
+  $scope.bitcoin = $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.input = this.quote.pair.split('_')[0];
   $scope.output = this.quote.pair.split('_')[1];
