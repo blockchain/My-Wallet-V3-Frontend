@@ -24,6 +24,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
 
   let state = $scope.state = {
     baseCurr: null,
+    rate: { min: null, max: null },
     input: { amount: null, curr: 'btc' },
     output: { amount: null, curr: 'eth' },
     get quoteCurr () { return this.baseInput ? state.output.curr : state.input.curr; },
@@ -91,26 +92,30 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     this.to = this.origins.find((o) => o.label !== this.from.label);
   };
 
+  let getRate = () => {
+    $q.resolve(ShapeShift.shapeshift.getRate(state.input.curr + '_' + state.output.curr))
+      .then((rate) => { state.rate.min = rate.minimum; state.rate.max = rate.maxLimit; });
+  };
+
   let getAvailableBalance = () => {
-    let fromBTC = state.input.curr === 'btc';
+    let baseBTC = state.input.curr === 'btc';
 
     let fetchSuccess = (balance) => {
-      $scope.max = fromBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
+      $scope.maxAvailable = baseBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
       state.balanceFailed = false;
       state.error = null;
     };
 
     let fetchError = (err) => {
-      $scope.max = 0;
-      state.error = err;
+      $scope.maxAvailable = 0;
       state.balanceFailed = true;
+      state.error = err;
     };
 
-    $q.resolve(this.from.getAvailableBalance(fromBTC && 'priority'))
-      .then(fetchSuccess, fetchError);
+    return $q.resolve(this.from.getAvailableBalance(baseBTC && 'priority')).then(fetchSuccess, fetchError);
   };
 
-  $scope.$watch('state.input.curr', getAvailableBalance);
+  $scope.$watch('state.input.curr', () => getAvailableBalance().then(getRate));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
   $scope.$on('$destroy', $scope.cancelRefresh);

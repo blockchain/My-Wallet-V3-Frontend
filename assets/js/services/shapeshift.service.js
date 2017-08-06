@@ -9,6 +9,10 @@ function ShapeShift (Wallet) {
     }
   };
 
+  service.getRate = (pair) => {
+    return service.shapeshift.getRate(pair);
+  };
+
   service.getApproximateQuote = (pair, amount) => {
     return service.shapeshift.getApproximateQuote(pair, amount);
   };

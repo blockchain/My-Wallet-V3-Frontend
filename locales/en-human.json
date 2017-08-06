@@ -1530,6 +1530,7 @@
     "NO_EXCHANGES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span>.",
     "EXCHANGE_FROM": "Exchange From",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
+    "MIN_NEEDED_TO_SHIFT": "{{::min}} {{::curr}} needed to shift.",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
     "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::amount | format:input:true}}</b> will be sent directly from {{::from}} to {{::to}} once you click confirm.",

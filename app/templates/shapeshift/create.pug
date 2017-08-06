@@ -33,8 +33,9 @@ form.bc-form(
               input.form-control.no-border(
                 type="number"
                 name="input"
-                ng-max="max"
+                ng-min="state.rate.min"
                 ng-model="state.input.amount"
+                ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
                 ng-change="state.baseCurr = state.input.curr"
                 step="0.01"
                 prevent-event="mousewheel"
@@ -62,9 +63,11 @@ form.bc-form(
               fiat(eth="state.output.amount" ng-if="state.output.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.output.$invalid")
               fiat(btc="toSatoshi(state.output.amount, bitcoin)" ng-if="state.output.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.output.$invalid")
         .pos-rel.f-12.mts.state-danger-text
-          span.pos-abs(ng-show="forms.shiftForm.$error.max")
+          span.pos-abs(ng-show="forms.shiftForm.input.$error.min")
+            span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
+          span.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min")
             span(translate=".MAX_AVAILABLE_ERROR")
             | :&nbsp;
-            span.pointer.upper(ng-click="state.input.amount = max; state.baseCurr = state.input.curr") {{ max }} {{ state.input.curr }}
+            span.pointer.upper(ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr") {{ maxAvailable }} {{ state.input.curr }}
     .group.mt-30
       button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="EXCHANGE_SIMPLE")
