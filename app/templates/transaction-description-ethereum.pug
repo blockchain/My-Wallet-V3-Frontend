@@ -8,15 +8,15 @@
       span.timestamp.type-sm.basic-grey.main-font.f-14
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
       br
-    .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
+    .dest-oflow.flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       .flex-row
         span.f-14.em-300 To:
         | &nbsp;
-        span.dest-oflow.f-14.em-300(ng-bind-html="isToAccount ? acct : tx.to | escapeHtml | highlight:search")
+        span.overflow-scroll.f-14.em-300(ng-bind-html="isToAccount ? acct : tx.to | escapeHtml | highlight:search")
       .flex-row
         span.f-14.em-300 From:
         | &nbsp;
-        span.dest-oflow.f-14.em-300(ng-bind-html="isFromAccount ? acct : tx.from | escapeHtml | highlight:search")
+        span.overflow-scroll.f-14.em-300(ng-bind-html="isFromAccount ? acct : tx.from | escapeHtml | highlight:search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
       transaction-note(transaction="tx" note="note" search="search" set-note="setNote(note)" delete-note="setNote('')")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
@@ -27,15 +27,15 @@
   //- toggled and mobile
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
     transaction-note(transaction="tx" note="note" set-note="setNote(note)" delete-note="setNote('')")
-  .hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
+  .dest-oflow.hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
     .flex-row
       span.f-12.em-300 To:
       | &nbsp;
-      span.dest-oflow.f-12.em-300(ng-bind-html="tx.to | escapeHtml | highlight:search")
+      span.overflow-scroll.f-12.em-300(ng-bind-html="tx.to | escapeHtml | highlight:search")
     .flex-row
-      span.dest-oflow.f-12.em-300 From:
+      span.overflow-scroll.f-12.em-300 From:
       | &nbsp;
-      span.dest-oflow.f-12.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
+      span.overflow-scroll.f-12.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
       transaction-status(transaction="tx" confirmations="12")
