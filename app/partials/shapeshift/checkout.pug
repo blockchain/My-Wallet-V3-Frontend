@@ -31,7 +31,7 @@
           .pvs
             span.em-500 Received
         exchange-trade(
-          ng-repeat="trade in vm.pendingTrades | orderBy:'createdAt':true track by $index"
+          ng-repeat="trade in vm.pendingTrades | orderBy:'-createdAt':false track by $index"
           view-details="vm.openTradeDetails(trade)"
           ex-trade="trade"
         )
@@ -48,7 +48,7 @@
           .pvs
             span.em-500 Received
         exchange-trade(
-          ng-repeat="trade in vm.trades | orderBy:'createdAt':true track by $index"
+          ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           view-details="vm.openTradeDetails(trade)"
           ex-trade="trade"
         )
