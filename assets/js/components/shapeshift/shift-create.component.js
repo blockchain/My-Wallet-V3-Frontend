@@ -109,7 +109,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     let fetchError = (err) => {
       $scope.maxAvailable = 0;
       state.balanceFailed = true;
-      state.error = err;
+      state.error = Exchange.interpretError(err);
     };
 
     return $q.resolve(this.from.getAvailableBalance(baseBTC && 'priority')).then(fetchSuccess, fetchError);
