@@ -35,6 +35,8 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
   this.onScan = (result) => {
     if (Ethereum.isAddress(result)) {
       this.tx.to = result;
+    } else {
+      throw new Error('ETHER_ADDRESS_INVALID');
     }
   };
 

@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, Ethereum) {
-  $scope.goal = Wallet.goal;
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum) {
+  let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
+  $scope.goal = Wallet.goal;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -45,6 +46,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.request = modals.openOnce(() => {
     Alerts.clear();
+    isUsingRequestQuickCopyExperiment.recordA();
     return $uibModal.open({
       templateUrl: 'partials/request/request.pug',
       windowClass: 'bc-modal initial',

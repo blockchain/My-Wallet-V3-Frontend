@@ -2,7 +2,9 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext) {
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi) {
+  let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
+
   $scope.copied = false;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -27,6 +29,7 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetCon
   $scope.nextAddress = () => {
     if ($scope.copied) return;
     $scope.copied = true;
+    isUsingRequestQuickCopyExperiment.recordB();
     let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
     return Wallet.getReceivingAddressForAccount(defaultIdx);
   };

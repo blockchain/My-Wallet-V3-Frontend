@@ -266,9 +266,13 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   };
 
   $scope.setPrivateKey = (priv) => {
-    let field = $scope.sendForm.priv;
-    if (field) priv ? field.$setTouched() : field.$setUntouched();
-    $scope.transaction.priv = priv;
+    if (priv == null || Wallet.isValidPrivateKey(priv)) {
+      let field = $scope.sendForm.priv;
+      if (field) priv ? field.$setTouched() : field.$setUntouched();
+      $scope.transaction.priv = priv;
+    } else {
+      throw new Error('INVALID_PRIV');
+    }
   };
 
   let lastOrigin;

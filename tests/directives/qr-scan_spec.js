@@ -4,7 +4,7 @@ describe('qr-scan directive', function () {
   let isValidPrivateKey;
 
   beforeEach(module('walletDirectives'));
-  
+
   beforeEach(module('walletApp'));
 
   beforeEach(() => {
@@ -57,15 +57,16 @@ describe('qr-scan directive', function () {
     expect(isoScope.scanSuccess).toEqual(true);
   });
 
-  it('should not call onScan when there is a scan error', inject(() => {
-    isValidAddress = false;
-    isValidPrivateKey = false;
+  it('should call onScan and detect a scan error', () => {
+    isoScope.onScan = () => {};
+    isoScope.cameraOn = true;
+    spyOn(isoScope, 'onScan').and.throwError(new Error('invalid input'));
     isoScope.onCameraResult('notbitcoin:asdfasdfasdf');
-    expect(isoScope.onScan).not.toHaveBeenCalled();
+    expect(isoScope.onScan).toHaveBeenCalled();
     expect(isoScope.scanComplete).toEqual(true);
-    expect(isoScope.scanSuccess).toEqual(false);
-  })
-  );
+    expect(isoScope.scanSuccess).not.toBeDefined();
+    expect(isoScope.scanResultError).toEqual('invalid input');
+  });
 
   it('should reset after a scan', inject(function ($timeout) {
     isoScope.onCameraResult('bitcoin:1JryFnzBdE8YRu6nDzZTZtyw9Sy4RbeABL');

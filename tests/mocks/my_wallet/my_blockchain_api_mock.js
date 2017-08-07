@@ -17,5 +17,8 @@ angular
     },
     getFiatAtTime (time, amount, currency) {
       return $q.resolve(amount.toFixed(2));
+    },
+    createExperiment () {
+      return { recordA: () => {}, recordB: () => {} };
     }
   }));
