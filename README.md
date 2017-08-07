@@ -31,7 +31,7 @@ gem install sass
 
 Install dependencies:
 ```sh
-npm install
+yarn install
 ```
 
 Create a file called `.env` in the root of the project. Put the following in it:
@@ -52,7 +52,7 @@ WALLET_HELPER_URL=http://localhost:8081
 To inspect individual directives, run:
 
 ```sh
-npm run start-parts
+yarn run start-parts
 ```
 
 ## Build
@@ -66,7 +66,7 @@ grunt
 
 To run test and monitor for changes:
 ```sh
-npm test
+yarn test
 ```
 
 A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.
@@ -75,7 +75,7 @@ A coverage report is generated after you run the test for the first time. Just o
 
 Run local http server:
 ```sh
-npm start
+yarn start
 ```
 
 Visit [localhost:8080](http://localhost:8080/).
