@@ -29,7 +29,7 @@
     },
     "CAN_I_BUY_ETH": {
       "Q": "How do I buy ether?",
-      "A": "We'll let you know when this feature becomes available."
+      "A": "We're working on that! In the meantime, you can exchange your bitcoin for ether in the 'Exchange' tab of your wallet."
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy bitcoin?",
@@ -110,6 +110,7 @@
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
   "NUMBER_1_WALLET": "#1 Bitcoin Wallet",
+  "NUMBER_1_DIGITAL_WALLET": "#1 Digital Wallet",
   "TRANSACTION" : "Transaction",
   "TRANSACTIONS_AMT" : "{{count}} Million+ Transactions",
   "WALLETS_AMT" : "{{count}} Million+ Wallets",
@@ -1174,12 +1175,14 @@
   "LANDING": {
     "HEADER": "@:SIMPLE_SEAMLESS_SECURE",
     "SUB_HEADER": "Blockchain is the world’s most popular bitcoin wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
+    "SUB_HEADER_ETH": "Blockchain is the world’s most popular digital wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
     "GET_STARTED_NOW": "Get Started Now",
     "WHY_BLOCKCHAIN" : "Why Blockchain?",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
     "SIMPLE": {
       "TITLE": "Simple",
-      "COPY": "We make using bitcoin safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world."
+      "COPY": "We make using bitcoin safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world.",
+      "COPY_ETH": "We make using bitcoin and ether safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world."
     },
     "SAFE_AND_SECURE": {
       "TITLE": "Safe & Secure",
@@ -1207,9 +1210,12 @@
     },
     "NEW_TO_BITCOIN": {
       "HEADER": "New To Bitcoin?",
-      "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."
+      "HEADER_ETH": "New To Digital Currencies?",
+      "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+      "SUB_TEXT_ETH": "Like paper money and gold before it, bitcoin and ether allow parties to exchange value. Unlike their predecessors, they are digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."
     },
     "GET_WORLDS_MOST_POPULAR_WALLET": "Get the world's most popular<br/>bitcoin wallet",
+    "GET_WORLDS_MOST_POPULAR_WALLET_ETH": "Get the world's most popular<br/>digital currency wallet",
     "" : ""
   },
   "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
