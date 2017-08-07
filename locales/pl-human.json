@@ -1094,5 +1094,90 @@
   "HIDE": "Ukryj",
   "EDIT_NAME": "Edytuj nazwę",
   "NOT_BACKED_BY_RECOVERY": "Nie wspierane przez Twój zwrot do odzyskiwania hasła. Prześlij do portfela, by zabezpieczyć środki.",
-  "EXCHANGE_RATE_HELPER": "Kurs oferowany przez partnera wymiany z Twojego regionu. Może zawierać opłaty."
+  "EXCHANGE_RATE_HELPER": "Kurs oferowany przez partnera wymiany z Twojego regionu. Może zawierać opłaty.",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Przelew bankowy",
+    "BODY": "Wyślij {{::amount}} elektronicznie (za pośrednictwem IMPS, NEFT, lub RTGS) na podane poniżej konto Unocoin. Następnie będziesz musiał(-a) podać numer referencyjny przelewu bankwego."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Kurs oferowany przez partnera wymiany walut z Twojego regionu może uwzględniać opłaty.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. Karta PAN",
+     "COPY": "Prześlij lub zrób zdjęcie swojej karty PAN, na którym będzie wyraźnie widoczne Twoje nazwisko oraz 10-cyfrowy Permanent Account Number.",
+     "UPLOAD_TITLE": "Karta PAN",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Upewnij się, że na zdjęciu jest wyraźnie widoczny Twój numer karty PAN."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Twoje zdjęcie",
+    "COPY": "Prześlij lub zrób swoje zdjęcie, aby firma Unocoin mogła zweryfikować Twoją kartę PAN.",
+    "UPLOAD_TITLE": "Zdjęcie",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Upewnij się, że na zdjęciu wyraźnie widoczna jest Twoja twarz."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Potwierdzenie adresu",
+    "COPY": "Prześlij lub zrób zdjęcie dokumentu potwierdzającego Twój adres. Możesz przesłać jeden z następujących akceptowanych dokumentów, który będzie wydany na początkowo podane przez Ciebie imię i nazwisko.",
+    "UPLOAD_TITLE": "Potwierdzenie adresu",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Karta Aadhar (przód i tył)",
+    "OPTION2": "Prawo jazdy",
+    "OPTION3": "Paszport (strona z adresem)",
+    "OPTION4": "Rachunek za usługi",
+    "HELP": "Upewnij się, że na zdjęciu wyraźnie widoczne jest Twoje imię i nazwisko."
+  },
+  "BANK_NAME": "Nazwa banku",
+  "ACCOUNT_HOLDER_NAME": "Nazwisko posiadacza konta",
+  "ACCOUNT_NUMBER": "Numer konta",
+  "IFSC_CODE": "Kod IFSC",
+  "ACCOUNT_TYPE": "Rodzaj konta",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Akceptowana karta PAN",
+    "COPY": "Mniejsza karta PAN Card <span class='state-danger-text'>nie jest akceptowana</span>.<br>Karta PAN musi być ważna i zapisana w rejestrach Państwowych."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Akceptowane zdjęcie użytkownika",
+    "COPY": "Zdjęcia selfie w okularach lub w czapce <span class='state-danger-text'>nie są akceptowane</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Akceptowane potwierdzenie adresu",
+    "COPY": "Fotografując potwierdzenie adresu, unikaj korzystania z lampy błyskowej aparatu.<br>Potwierdzenie adresu musi być ważne przez co najmniej 6 miesięcy.<br>Potwierdzenie adresu musi zawierać identyczny adres, jaki podałeś(-aś) wcześniej.<br>Voter ID musi być ważne i zarejestrowane na rządowej witrynie internetowej.<br>Przesłane potwierdzenie adresu powinno być w języku angielskim."
+  },
+  "UNOCOIN_EXPLAIN": "Nasz partner, firma Unocoin, przetworzy Twoje zakupy bitcoin. Koniecznie będzie podanie kilku informacji oraz zalinkowanie metody płatności.",
+  "UNOCOIN": {
+    "PENDING": "Weryfikacja tożsamości w toku",
+    "PENDING_EXPLAIN": "Unocoin weryfikuje aktualnie Twoją tożsamość. Otrzymasz telefon w ciągu 1 dnia roboczego. Celem tej rozmowy będzie weryfikacja Twojego <b>imienia i nazwiska</b>, <b>kodu pocztowego</b>, oraz <b>danych karty PAN</b>. Po pozytywnej weryfikacji, będziesz mógł/mogła kupić bitcoiny."
+  },
+  "REQUIRED_FIELD": "Wymagane pole",
+  "IFSC_INCORRECT": "Nieprawidłowy kod IFSC",
+  "PIN_CODE_REQUIRED": "Wymagany jest kod pin",
+  "PIN_CODE_INCORRECT": "Nieprawidłowy kod pin",
+  "PAN_CARD_REQUIRED": "Wymagana jest karta Pan",
+  "PAN_CARD_INCORRECT": "Nieprawidłowa karta Pan",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Nieprawidłowy numer konta bankowego",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Otwórz {{::exchange}} konto",
+    "CREATE_ACCOUNT_EXPLAIN": "Potwierdź swój adres e-mail oraz numer telefonu, aby otworzyć swoje {{::exchange}} konto wymiany.",
+    "VERIFY_EMAIL": "Zweryfikuj swój adres e-mail",
+    "VERIFY_EMAIL_EXPLAIN": "Właśnie wysłaliśmy Ci kod weryfikacyjny na Twój adres e-mail. Wprowadź swój kod weryfikacyjny, aby otworzyć swoje {{::exchange}} konto wymiany.",
+    "CHANGE_EMAIL": "Zmień adres e-mail",
+    "CHANGE_EMAIL_EXPLAIN": "Zmiana Twojego adresu e-mail będzie oznaczała także zmianę adresu e-mail powiązanego z Twoim portfelem.",
+    "CHANGE_EMAIL_FAILED": "Przepraszamy, ale ten adres e-mail jest już zarejestrowany z {{::exchange}}.",
+    "CONFIRM_EMAIL": "Potwierdź adres e-mail",
+    "VERIFICATION_CODE": "Kod weryfikacyjny",
+    "VERIFICATION_CODE_INCORRECT": "Nieprawidłowy kod weryfikacyjny. ",
+    "CHANGE_EMAIL_": "zmień adres e-mail",
+    "ANOTHER_CODE_SENT": "Wysłano kolejny kod!",
+    "VERIFY_ACCOUNT": "Potrzebujemy kilku danych osobowych, aby móc zweryfikować Twoją tozsamość. Informujemy, że te informacje będą wyłane do {{::exchange}} i nie będą bezpośrednio powiązane z Twoim portfelem Blockchain.",
+    "FULL_NAME": "Imię i nazwisko",
+    "MOBILE": "Telefon komórkowy",
+    "PAN_CARD": "Karta PAN",
+    "FULL_RESIDENTIAL_ADDRESS": "Pełny adres zamieszkania (musisz dostarczyć dowód potwierdzający zamieszkanie)",
+    "ADDRESS_LINE_1": "Adres, linia 1",
+    "ADDRESS_LINE_2": "Adres, linia 2",
+    "STATE": "Stan",
+    "CITY": "Miasto",
+    "PIN_CODE": "Kod Pin",
+    "BANK_ACCOUNT_NUMBER": "Numer konta bankowego",
+    "IFSC": "IFSC"
+  }
 }

@@ -1094,5 +1094,90 @@
   "HIDE": "隠す",
   "EDIT_NAME": "名前を編集",
   "NOT_BACKED_BY_RECOVERY": "リカバリーフレーズでバックアップされていません。ウォレットに送金して資金をセキュアにする。",
-  "EXCHANGE_RATE_HELPER": "お住いの地域の取引パートナーによってオファーされているレート。手数料が含まれていることがあります。"
+  "EXCHANGE_RATE_HELPER": "お住いの地域の取引パートナーによってオファーされているレート。手数料が含まれていることがあります。",
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "銀行振込",
+    "BODY": "以下のUnocoinの銀行口座宛に、{{::amount}}を電子的手段（IMPS、NEFTまたはRTGS経由)で送金してください。その後、銀行振込の取扱番号をご提供ください。"
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "お住まいの地域の提携取引所のレートには、手数料が含まれている場合があります。",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PANカード",
+     "COPY": "PANカードの写真をアップロードまたは撮影してください。お客様の氏名と10桁の納税者番号がはっきりと写っている必要があります。",
+     "UPLOAD_TITLE": "PANカード",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "写真にPANカード番号がはっきりと写っていることをご確認ください。"
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. お客様の写真",
+    "COPY": "当社にてお客様のPANカードを検証できるよう、お客様自身の写真をアップロードまたは撮影してください。",
+    "UPLOAD_TITLE": "写真",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "写真にお客様の顔がはっきりと写っていることをご確認ください。"
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. 居住証明書",
+    "COPY": "居住証明書の写真をアップロードまたは撮影してください。以下の受理可能な書類のうち、いずれか一つをアップロードしてください。最初にご提供になった氏名および住所と合致するものでなければなりません。",
+    "UPLOAD_TITLE": "居住証明書",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadharカード（表裏両面）",
+    "OPTION2": "運転免許証",
+    "OPTION3": "パスポート（住所が記載されたページ）",
+    "OPTION4": "公共料金請求書",
+    "HELP": "写真に氏名と住所がはっきりと写っていることをご確認ください。"
+  },
+  "BANK_NAME": "銀行名",
+  "ACCOUNT_HOLDER_NAME": "口座名義",
+  "ACCOUNT_NUMBER": "口座番号",
+  "IFSC_CODE": "IFSCコード",
+  "ACCOUNT_TYPE": "口座種別",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "受理可能なPANカード",
+    "COPY": "未成年者用のPANカードは<span class='state-danger-text'>受理することができません</span>。<br>PANカードは、政府の記録に従い有効なものでなければなりません。"
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "受理可能なユーザーの写真",
+    "COPY": "ゴーグルや帽子を着用した状態の自撮り写真は<span class='state-danger-text'>受理することができません</span>。"
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "受理可能な居住証明書",
+    "COPY": "居住証明書の詳細部分にカメラのフラッシュが当たらないようにしてください。<br>居住証明書は、有効期間が6か月以上あるものをご用意ください。<br>居住証明書は、以前ご入力になった住所と合致するものでなければなりません。<br>有権者IDは、政府のウェブサイト上で有効なものでなければなりません。<br>アップロードする居住証明書は英語で記載されている必要があります。"
+  },
+  "UNOCOIN_EXPLAIN": "当社の提携取引所であるUnocoinが、ビットコインの購入処理を行います。お客様には、情報のご提供と支払い方法のリンクをお願いしております。",
+  "UNOCOIN": {
+    "PENDING": "本人確認待ち",
+    "PENDING_EXPLAIN": "現在、Unocoinにてお客様の本人確認を行っております。1営業日以内に、電話でご連絡を差し上げます。この電話では、お客様の<b>氏名</b>、<b>住所の郵便番号</b>、<b>PANカード情報</b>の確認が行われます。本人確認が終了しましたら、ビットコインの購入が可能になります。"
+  },
+  "REQUIRED_FIELD": "必須項目",
+  "IFSC_INCORRECT": "IFSCが間違っています",
+  "PIN_CODE_REQUIRED": "PINコードが必要です",
+  "PIN_CODE_INCORRECT": "PINコードが間違っています",
+  "PAN_CARD_REQUIRED": "PANカードが必要です",
+  "PAN_CARD_INCORRECT": "PANカードが間違っています",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "銀行口座番号が間違っています",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "{{::exchange}}口座の作成",
+    "CREATE_ACCOUNT_EXPLAIN": "{{::exchange}}取引口座を作成するには、メールアドレスと電話番号の確認を行ってください。",
+    "VERIFY_EMAIL": "メールアドレスの認証",
+    "VERIFY_EMAIL_EXPLAIN": "お客様のメールアドレス宛に認証コードを送信しました。{{::exchange}}取引口座を作成するには、認証コードを入力してください。",
+    "CHANGE_EMAIL": "メールアドレスの変更",
+    "CHANGE_EMAIL_EXPLAIN": "メールアドレスを更新した場合、ウォレットに関連付けられているメールアドレスも変更されます。",
+    "CHANGE_EMAIL_FAILED": "申し訳ありません。このメールアドレスは既に{{::exchange}}に登録されています。",
+    "CONFIRM_EMAIL": "メールアドレスの確認",
+    "VERIFICATION_CODE": "認証コード",
+    "VERIFICATION_CODE_INCORRECT": "認証コードが間違っています。",
+    "CHANGE_EMAIL_": "メールアドレスの変更",
+    "ANOTHER_CODE_SENT": "別のコードが送信されました！",
+    "VERIFY_ACCOUNT": "お客様の本人確認を行うため、いくつかの個人情報を収集する必要があります。この情報は{{::exchange}}に送信され、お客様のBlockchainウォレットとは直接リンクされませんのでご了承ください。",
+    "FULL_NAME": "氏名",
+    "MOBILE": "モバイル",
+    "PAN_CARD": "PANカード",
+    "FULL_RESIDENTIAL_ADDRESS": "完全な住所（居住証明書の提出が必要です）",
+    "ADDRESS_LINE_1": "住所1",
+    "ADDRESS_LINE_2": "住所2",
+    "STATE": "都道府県",
+    "CITY": "市区郡",
+    "PIN_CODE": "PINコード",
+    "BANK_ACCOUNT_NUMBER": "銀行口座番号",
+    "IFSC": "IFSC"
+  }
 }

@@ -1,9 +1,9 @@
 angular.module('walletDirectives')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals', 'Exchange'];
 
-function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals, Exchange) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -30,6 +30,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.currencies = currency.coinifyCurrencies;
     scope.format = currency.formatCurrencyForView;
     scope.inMobileBuy = $rootScope.inMobileBuy;
+    scope.symbol = currency.conversions[scope.transaction.currency.code].symbol;
 
     scope.updateLastInput = (type) => scope.lastInput = type;
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
@@ -61,6 +62,15 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
     scope.isCurrencySelected = (currency) => currency === scope.transaction.currency;
 
+    scope.handleCurrencyClick = (curr) => {
+      scope.changeCurrency(curr);
+      scope.refreshSymbol();
+    };
+
+    scope.refreshSymbol = () => {
+      scope.symbol = currency.conversions[scope.transaction.currency.code].symbol;
+    };
+
     scope.getQuote = () => {
       scope.status.busy = true;
 
@@ -86,15 +96,25 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       Alerts.clear();
     };
 
-    const error = () => {
-      scope.status = {};
-      scope.fiatForm.fiat.$setValidity('max', false);
+    const error = (err) => {
+      let error = Exchange.interpretError(err);
+      if (error === 'service_temporarily_unavailable') {
+        scope.serviceSuspended = true;
+        scope.serviceSuspendedReason = error;
+      } else {
+        scope.status = {};
+        scope.fiatForm.fiat.$setValidity('max', false);
+      }
     };
 
     scope.cancelTrade = () => {
       scope.disabled = true;
       $q.resolve(buySell.cancelTrade(scope.pendingTrade))
         .finally(() => scope.disabled = false);
+    };
+
+    scope.setFiat = (amount) => {
+      scope.transaction.fiat = amount;
     };
 
     scope.getMinLimits = (quote) => {

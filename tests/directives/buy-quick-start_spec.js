@@ -8,7 +8,7 @@ describe('buyQuickStart', () => {
   let buySell;
 
   beforeEach(module('walletDirectives'));
-  
+
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function ($compile, $rootScope, $injector, _$q_, $httpBackend) {
@@ -62,6 +62,8 @@ describe('buyQuickStart', () => {
         getBuyQuote () { return $q.resolve([]); }
       })
     ;
+
+    currency.conversions.USD = { conversion: 1000, symbol: '$' };
 
     buySell.getMinLimits = () => $q.resolve(limits);
     buySell.cancelTrade = () => $q.resolve(trade);

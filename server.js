@@ -62,12 +62,12 @@ app.use(function (req, res, next) {
         (webSocketURL || 'wss://ws.blockchain.info/inv').replace('/inv', '/eth/inv'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
+        'https://shapeshift.io',
         `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`,
-        `https://${unocoinProduction ? '' : 'sandbox.'}unocoin.co`,
-        'https://shapeshift.io'
+        `https://${unocoinProduction ? 'www.' : 'sandbox.'}unocoin.${unocoinProduction ? 'com' : 'co'}`
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",

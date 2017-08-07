@@ -15,17 +15,23 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.error = $scope.vm.error;
   $scope.steps = enumify('address', 'info');
   $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
-  $scope.initialStep = exchange.profile.addressComplete ? 'info' : 'address';
+  $scope.initialStep = exchange.profile.identityComplete ? 'info' : 'address';
 
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
-  $scope.setProfile = (fields) => {
+  $scope.setProfile = () => {
     let profile = $scope.exchange.profile;
 
     profile.address.street = profile.street;
     profile.address.city = profile.city;
     profile.address.state = profile.state;
     profile.address.zipcode = profile.zipcode;
+  };
+
+  $scope.setBankInfo = () => {
+    let profile = $scope.exchange.profile;
+    profile.submittedBankInfo = true;
+    $scope.verifyProfile();
   };
 
   AngularHelper.installLock.call($scope);

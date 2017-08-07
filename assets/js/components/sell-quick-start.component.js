@@ -21,7 +21,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams, $uibModal) {
+function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts, $interval, $timeout, modals, Wallet, MyWalletHelpers, $q, $stateParams, $uibModal, Exchange) {
   $scope.exchangeRate = {};
   $scope.tradingDisabled = this.tradingDisabled;
   $scope.currencies = currency.coinifySellCurrencies;
@@ -108,6 +108,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   };
 
+  $scope.setFiat = (amount) => {
+    this.transaction.fiat = amount;
+  };
+
   const success = (quote) => {
     $scope.quote = quote;
     $scope.getMinLimits(quote);
@@ -133,9 +137,15 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }
   };
 
-  const error = () => {
-    this.status = {};
-    Alerts.displayError('ERROR_QUOTE_FETCH');
+  const error = (err) => {
+    let error = Exchange.interpretError(err);
+    if (error === 'service_temporarily_unavailable') {
+      this.serviceSuspended = true;
+      this.serviceSuspendedReason = error;
+    } else {
+      this.status = {};
+      Alerts.displayError('ERROR_QUOTE_FETCH');
+    }
   };
 
   $scope.triggerSell = () => {
