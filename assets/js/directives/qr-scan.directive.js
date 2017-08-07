@@ -29,14 +29,16 @@ function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Alerts
     scope.onCameraResult = (result) => {
       scope.scanComplete = true;
 
-      scope.scanSuccess = Wallet.isValidAddress(Wallet.parsePaymentRequest(result).address) ||
-                          Wallet.isValidPrivateKey(result) ||
-                          Wallet.isValidAddress(result);
+      if (scope.onScan && scope.cameraOn) {
+        try {
+          scope.onScan(result);
+          scope.scanSuccess = true;
+        } catch (error) {
+          scope.scanResultError = error.message;
+        }
+      }
 
       AngularHelper.$safeApply();
-
-      if (scope.scanSuccess && scope.onScan && scope.cameraOn) scope.onScan(result);
-
       $timeout(() => scope.cameraOn = false, 1250);
       $timeout(() => scope.scanComplete = false, 1500);
     };
