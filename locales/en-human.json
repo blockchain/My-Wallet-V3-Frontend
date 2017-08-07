@@ -1539,6 +1539,7 @@
     "EXCHANGE_FROM": "Exchange From",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
     "MIN_NEEDED_TO_SHIFT": "{{::min}} {{::curr}} needed to shift.",
+    "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
     "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::amount | format:input:true}}</b> will be sent directly from {{::from}} to {{::to}} once you click confirm.",
