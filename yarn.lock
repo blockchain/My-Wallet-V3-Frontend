@@ -4735,7 +4735,7 @@ karma-jasmine@0.3.*:
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-0.3.8.tgz#5b6457791ad9b89aa173f079e3ebe1b8c805236c"
 
-karma-ng-pug2js-preprocessor@*:
+karma-ng-pug2js-preprocessor@1.0.0-beta.0:
   version "1.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/karma-ng-pug2js-preprocessor/-/karma-ng-pug2js-preprocessor-1.0.0-beta.0.tgz#8b3ec77ed27edb5764deb103227ceeac6d334a75"
   dependencies:
@@ -4754,7 +4754,7 @@ karma-phantomjs-launcher@1.0.*:
     lodash "^4.0.1"
     phantomjs-prebuilt "^2.1.7"
 
-karma-pug-preprocessor@*:
+karma-pug-preprocessor@1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/karma-pug-preprocessor/-/karma-pug-preprocessor-1.0.0-beta.1.tgz#ce938ed91bd970c4b341d1de9fae0e6c9f126b56"
   dependencies:
@@ -6526,7 +6526,7 @@ pug-linker@^3.0.2:
     pug-error "^1.3.2"
     pug-walk "^1.1.4"
 
-pug-lint@*:
+pug-lint@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/pug-lint/-/pug-lint-2.4.0.tgz#1f584c1624fac48e5a0d03e40823caef736702e0"
   dependencies:
