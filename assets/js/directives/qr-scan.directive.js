@@ -3,7 +3,7 @@ angular
   .module('walletDirectives')
   .directive('qrScan', qrScan);
 
-function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Ethereum, Alerts) {
+function qrScan ($rootScope, AngularHelper, $timeout, $translate, Wallet, Alerts) {
   const directive = {
     restrict: 'E',
     replace: true,
