@@ -11,4 +11,5 @@
       span.bright-green(translate="SCAN_SUCCESS")
     .flex-center.flex-column(ng-hide="scanSuccess")
       i.ti-close.security-red
-      span.security-red(translate="SCAN_FAILED")
+      span.security-red(ng-hide="scanResultError" translate="SCAN_FAILED")
+      span.security-red(ng-show="scanResultError") {{ scanResultError | translate }}
