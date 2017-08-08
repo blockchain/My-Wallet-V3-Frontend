@@ -12,7 +12,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift) {
+function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, buyStatus) {
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
@@ -21,13 +21,15 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.dollars = Wallet.settings.displayCurrency;
   $scope.forms = $scope.state = {};
 
+  buyStatus.canBuy().then((res) => $scope.canBuy = res);
+
   let state = $scope.state = {
     baseCurr: null,
     rate: { min: null, max: null },
     input: { amount: null, curr: 'btc' },
     output: { amount: null, curr: 'eth' },
-    get quoteCurr () { return this.baseInput ? state.output.curr : state.input.curr; },
     get baseInput () { return this.baseCurr === state.input.curr; },
+    get baseBTC () { return state.input.curr === 'btc'; },
     get total () { return this.fiat; }
   };
 
@@ -97,10 +99,8 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   };
 
   let getAvailableBalance = () => {
-    let baseBTC = state.input.curr === 'btc';
-
     let fetchSuccess = (balance) => {
-      $scope.maxAvailable = baseBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
+      $scope.maxAvailable = state.baseBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
       state.balanceFailed = false;
       state.error = null;
     };
@@ -111,7 +111,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
       state.error = Exchange.interpretError(err);
     };
 
-    return $q.resolve(this.from.getAvailableBalance(baseBTC && 'priority')).then(fetchSuccess, fetchError);
+    return $q.resolve(this.from.getAvailableBalance(state.baseBTC && 'priority')).then(fetchSuccess, fetchError);
   };
 
   $scope.$watch('state.input.curr', () => getAvailableBalance().then(getRate));

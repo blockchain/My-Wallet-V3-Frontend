@@ -20,25 +20,8 @@
             h3.em-100(translate=".NO_EXCHANGES")
           p.em-400.pointer(translate=".NO_EXCHANGES_EXPLAIN" ng-click="tabs.select('EXCHANGE')")
       //- Pending Trades
-      .width-100.mb-30
-        .shift-history.border.bg-light-blue(ng-show="vm.pendingTrades.length")
-          .pvs
-            span.em-500.pl-25 Status
-          .pvs
-            span.em-500 Date
-          .pvs
-            span.em-500 Exchanged
-          .pvs
-            span.em-500 Received
-        exchange-trade(
-          ng-repeat="trade in vm.pendingTrades | orderBy:'-createdAt':false track by $index"
-          view-details="vm.openTradeDetails(trade)"
-          ex-trade="trade"
-        )
-      //- Completed Trades
-      .width-100
-        span.f-16.em-600 Completed Exchanges
-        .shift-history.width-100.border.bg-light-blue.mt-5(ng-show="vm.trades.length")
+      .width-100.mb-30(ng-if="vm.pendingTrades()")
+        .shift-history.border.bg-light-blue
           .pvs
             span.em-500.pl-25 Status
           .pvs
@@ -49,6 +32,25 @@
             span.em-500 Received
         exchange-trade(
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
+          ng-if="trade.isProcessing || trade.isWaitingForDeposit"
+          view-details="vm.openTradeDetails(trade)"
+          ex-trade="trade"
+        )
+      //- Completed Trades
+      .width-100(ng-if="vm.completedTrades()")
+        span.f-16.em-600 Completed Exchanges
+        .shift-history.width-100.border.bg-light-blue.mt-5
+          .pvs
+            span.em-500.pl-25 Status
+          .pvs
+            span.em-500 Date
+          .pvs
+            span.em-500 Exchanged
+          .pvs
+            span.em-500 Received
+        exchange-trade(
+          ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
+          ng-if="trade.isComplete || trade.isFailed"
           view-details="vm.openTradeDetails(trade)"
           ex-trade="trade"
         )

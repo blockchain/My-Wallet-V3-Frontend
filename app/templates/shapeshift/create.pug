@@ -33,8 +33,8 @@ form.bc-form(
               input.form-control.no-border(
                 type="number"
                 name="input"
-                ng-min="state.rate.min"
                 ng-model="state.input.amount"
+                ng-min="state.rate.min > maxAvailable ? state.rate.min : maxAvailable"
                 ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
                 ng-change="state.baseCurr = state.input.curr"
                 step="0.01"
@@ -54,14 +54,20 @@ form.bc-form(
                 step="0.01"
                 required)
               span.mhm.upper {{state.output.curr}}
-        .pos-rel.f-12.mts.state-danger-text
-          span.pos-abs(ng-show="forms.shiftForm.input.$error.min || forms.shiftForm.input.$error.max && maxAvailable < state.rate.min")
+        .pos-rel.f-12.mts.state-danger-text(ng-show="forms.shiftForm.input.$error")
+          span.pos-abs(ng-show="maxAvailable < state.rate.min")
             span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
+            | &nbsp;
+            a(translate="BUY" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
+          span.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min")
+            span(translate=".BELOW_MIN_SHIFT_LIMIT")
+            | :&nbsp;
+            span.pointer.upper(ng-click="state.input.amount = state.rate.min; state.baseCurr = state.input.curr") {{ state.rate.min }} {{ state.input.curr }}
           span.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max")
             span(translate=".MAX_AVAILABLE_ERROR")
             | :&nbsp;
             span.pointer.upper(ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr") {{ maxAvailable }} {{ state.input.curr }}
-          span.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.max")
+          span.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable >= state.rate.max")
             span(translate=".EXCEEDED_MAX_SHIFT")
             | :&nbsp;
             span.pointer.upper(ng-click="state.input.amount = state.rate.max; state.baseCurr = state.input.curr") {{ state.rate.max }} {{ state.input.curr }}
