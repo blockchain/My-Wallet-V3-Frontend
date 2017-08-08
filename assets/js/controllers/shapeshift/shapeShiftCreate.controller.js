@@ -3,7 +3,9 @@ angular
   .controller('ShapeShiftCreateController', ShapeShiftCreateController);
 
 function ShapeShiftCreateController ($scope, ShapeShift) {
+  $scope.rateHandler = ShapeShift.getRate;
   $scope.quoteHandler = ShapeShift.getQuote;
+  $scope.buildPayment = ShapeShift.buildPayment;
   $scope.approximateQuoteHandler = ShapeShift.getApproximateQuote;
 
   $scope.onComplete = (payment, fee, quote) => {

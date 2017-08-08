@@ -3,6 +3,7 @@ angular
   .component('shiftCreate', {
     bindings: {
       onComplete: '&',
+      handleRate: '&',
       handleQuote: '&',
       buildPayment: '&',
       handleApproximateQuote: '&'
@@ -28,14 +29,8 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     rate: { min: null, max: null },
     input: { amount: null, curr: 'btc' },
     output: { amount: null, curr: 'eth' },
-    get baseInput () { return this.baseCurr === state.input.curr; },
     get baseBTC () { return state.input.curr === 'btc'; },
-    get total () { return this.fiat; }
-  };
-
-  $scope.resetFields = () => {
-    state.input.amount = state.output.amount = null;
-    state.baseCurr = state.input.curr;
+    get baseInput () { return this.baseCurr === state.input.curr; }
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -81,7 +76,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   $scope.getSendAmount = () => {
     $scope.lock();
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
-      let payment = ShapeShift.shapeshift.buildPayment(quote);
+      let payment = this.buildPayment({quote});
       payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
     }).then(($scope.free));
   };
@@ -94,7 +89,7 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
   };
 
   let getRate = () => {
-    $q.resolve(ShapeShift.shapeshift.getRate(state.input.curr + '_' + state.output.curr))
+    $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
       .then((rate) => { state.rate.min = rate.minimum; state.rate.max = rate.maxLimit; });
   };
 

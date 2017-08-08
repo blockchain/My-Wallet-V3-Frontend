@@ -30,6 +30,10 @@ function ShapeShift (Wallet, modals) {
     return service.shapeshift.watchTradeForCompletion(trade);
   };
 
+  service.buildPayment = (quote) => {
+    return service.shapeshift.buildPayment(quote);
+  };
+
   service.checkForCompletedTrades = () => {
     service.shapeshift.checkForCompletedTrades(modals.openShiftTradeDetails);
   };

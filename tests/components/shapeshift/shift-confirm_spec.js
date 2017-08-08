@@ -18,10 +18,10 @@ describe('shift-confirm.component', () => {
     });
 
   let mockPayment = () =>
-  ({
-    quote: mockQuote(),
-    payment: () => { return $q.resolve(); }
-  });
+    ({
+      quote: mockQuote(),
+      payment: () => { return $q.resolve(); }
+    });
 
   let handlers = {
     handleShift () { return $q.resolve(mockPayment()); },
