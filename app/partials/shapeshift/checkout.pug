@@ -11,7 +11,7 @@
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
         shift-confirm(on-complete="onComplete(trade)" on-cancel="onCancel()" payment="vm.payment" fee="vm.fee" quote="vm.quote" handle-shift="shiftHandler(payment)")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
-        shift-receipt(shift="trade" is-checkout="true" on-close="vm.goTo('create')")
+        shift-receipt(shift="trade" is-checkout="true" on-close="onClose()")
     .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
       .flex-center.flex-justify.flex-column.mtvl(ng-hide="vm.trades.length")
         .flex-column.mbl.border-bottom.black

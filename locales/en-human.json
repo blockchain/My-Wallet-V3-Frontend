@@ -178,17 +178,29 @@
     "TITLE": "Cancel Trade?",
     "BODY": "You're so close to receiving bitcoin."
   },
-  "CONFIRM_CLOSE_BUY": {
+  "BUY_SURVEY_OPENED": {
     "TITLE": "Are You Sure?",
     "BODY": "You're just a few steps from receiving bitcoin, are you sure you want to stop?"
   },
-  "CONFIRM_CLOSE_SELL": {
+  "SELL_SURVEY_OPENED": {
     "TITLE": "Are You Sure?",
     "BODY": "You're just one click away from completing your sale. Are you sure you want to stop?"
   },
-  "CONFIRM_CLOSE_EXCHANGE": {
+  "SHIFT_TRADE_SURVEY": {
     "TITLE": "Are You Sure?",
     "BODY": "You're just one click away from completing your coin exchange. Are you sure you want to stop?"
+  },
+  "SFOX_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+  },
+  "UNOCOIN_TRADE_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",

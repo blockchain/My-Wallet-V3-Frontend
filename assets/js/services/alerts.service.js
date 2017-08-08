@@ -71,24 +71,14 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
     });
   }
 
-  function surveyCloseConfirm (survey, links, index, sell, shift) {
+  function surveyCloseConfirm (survey, links, index) {
     let link = links[index];
     let surveyOpened = localStorageService.get(survey);
-
-    let hasSeenPrompt = !links.length ||
-                        index >= links.length ||
-                        surveyOpened && surveyOpened.index >= index;
+    let namespace = survey.split('-').join('_').toUpperCase();
+    let hasSeenPrompt = !links.length || index >= links.length || surveyOpened && surveyOpened.index >= index;
 
     if (hasSeenPrompt) {
-      if (shift) {
-        return service.confirm('CONFIRM_CLOSE_EXCHANGE', {action: 'IM_DONE'})
-          .then(() => $uibModalStack.dismissAll());
-      }
-      if (sell === true) {
-        return service.confirm('CONFIRM_CLOSE_SELL', {action: 'IM_DONE'});
-      }
-      return service.confirm('CONFIRM_CLOSE_BUY', {action: 'IM_DONE'})
-        .then(() => $uibModalStack.dismissAll());
+      return service.confirm(namespace, { action: 'IM_DONE' }).then(() => $uibModalStack.dismissAll());
     } else {
       localStorageService.set(survey, {index: index});
       let openSurvey = () => BrowserHelper.safeWindowOpen(link);

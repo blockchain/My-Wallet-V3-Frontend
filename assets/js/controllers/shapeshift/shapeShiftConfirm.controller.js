@@ -3,23 +3,8 @@ angular
   .controller('ShapeShiftConfirmController', ShapeShiftConfirmController);
 
 function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageService, $uibModalStack, Env, modals) {
-  Env.then(env => {
-    // let links = env.partners.shapeshift.surveyLinks;
-    let links = [1, 2];
-
-    $scope.onCancel = () => {
-      let survey = 'shift-trade-survey';
-      let surveyCache = localStorageService.get(survey);
-      let shouldClose = surveyCache && surveyCache.index === links.length;
-
-      if (shouldClose) {
-        $scope.vm.goTo('create');
-        $uibModalStack.dismissAll();
-      } else {
-        Alerts.surveyCloseConfirm(survey, links, 1, false, true).then(() => { $scope.vm.goTo('create'); });
-      }
-    };
-  });
+  let links;
+  Env.then(env => links = env.shapeshift.surveyLinks);
 
   $scope.shiftHandler = ShapeShift.shift;
 
@@ -27,5 +12,9 @@ function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageSe
     $scope.vm.trade = trade;
     $scope.vm.goTo('receipt');
     ShapeShift.watchTradeForCompletion(trade).then(modals.openShiftTradeDetails);
+  };
+
+  $scope.onCancel = () => {
+    Alerts.surveyCloseConfirm('shift-trade-survey', links, 0).then(() => { $scope.vm.goTo('create'); });
   };
 }

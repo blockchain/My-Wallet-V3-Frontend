@@ -53,6 +53,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.ethereum = res.ethereum;
 
+      env.shapeshift = res.shapeshift;
+
       defer.resolve(env);
     }
   );
