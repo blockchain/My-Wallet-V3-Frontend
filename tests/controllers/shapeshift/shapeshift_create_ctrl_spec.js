@@ -1,4 +1,4 @@
-fdescribe('ShapeShiftCreateController', () => {
+describe('ShapeShiftCreateController', () => {
   let scope;
   let $rootScope;
   let $controller;
