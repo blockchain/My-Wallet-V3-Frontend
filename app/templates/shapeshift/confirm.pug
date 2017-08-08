@@ -12,31 +12,31 @@ form.bc-form(
         helper-button(content="SHIFT.QUOTE_EXPIRES_IN_HELPER")
     .ph-30
       .f-13.mv-20
-        span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{amount: quote.depositAmount, input: input, from: from.label, to: to.label}")
+        span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{amount: quote.depositAmount, input: quote.fromCurrency, from: from.label, to: to.label}")
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-10.border-bottom-light.flex-between
-          span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[input]}")
+          span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[quote.fromCurrency]}")
           span.em-300.right-align
-            span {{ quote.depositAmount | format:input:true }}
+            span {{ quote.depositAmount | format:quote.fromCurrency:true }}
         li.pv-10.border-bottom-light.flex-between
-          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
+          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[toCurrency]}")
           span.em-300.right-align
-            span {{ quote.withdrawalAmount | format:output:true }}
+            span {{ quote.withdrawalAmount | format:quote.toCurrency:true }}
         li.pv-10.border-bottom-light.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
-          span.em-300.right-align {{ 1 | format:input:true }} = {{ quote.rate | format:output:true }}
+          span.em-300.right-align {{ 1 | format:quote.fromCurrency:true }} = {{ quote.rate | format:quote.toCurrency:true }}
         li.pv-10.border-bottom-light.flex-between
           span.em-500
             span.colon(translate="TX_FEE")
             helper-button(content="SHIFT.TX_FEE_EXPLAIN")
           span.em-300.right-align
-            span {{ fee | convert:input:true }}
+            span {{ fee | convert:quote.fromCurrency:true }}
         li.pt-10.flex-between
           span.em-500
             span.colon(translate=".WITHDRAWAL_FEE")
             helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
           span.em-300.right-align
-            span {{ quote.minerFee | format:output:true }}
+            span {{ quote.minerFee | format:quote.toCurrency:true }}
       .flex-row.flex-center.mb-15
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
         label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")

@@ -1,4 +1,4 @@
-fdescribe('ShapeShiftReceiptController', () => {
+describe('ShapeShiftReceiptController', () => {
   let scope;
   let Alerts;
   let $rootScope;

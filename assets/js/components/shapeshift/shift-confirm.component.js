@@ -23,11 +23,8 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
 
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.bitcoin = $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-
-  $scope.input = this.quote.pair.split('_')[0];
-  $scope.output = this.quote.pair.split('_')[1];
-  $scope.from = $scope.input === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
-  $scope.to = $scope.output === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+  $scope.from = $scope.quote.fromCurrency === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+  $scope.to = $scope.quote.toCurrency === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
   $scope.onExpiration = () => $scope.lock();
   $scope.getTimeToExpiration = () => $scope.quote.expires - now;
