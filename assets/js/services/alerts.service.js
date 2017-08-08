@@ -71,7 +71,7 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
     });
   }
 
-  function surveyCloseConfirm (survey, links, index, sell) {
+  function surveyCloseConfirm (survey, links, index, sell, shift) {
     let link = links[index];
     let surveyOpened = localStorageService.get(survey);
 
@@ -80,6 +80,10 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
                         surveyOpened && surveyOpened.index >= index;
 
     if (hasSeenPrompt) {
+      if (shift) {
+        return service.confirm('CONFIRM_CLOSE_EXCHANGE', {action: 'IM_DONE'})
+          .then(() => $uibModalStack.dismissAll());
+      }
       if (sell === true) {
         return service.confirm('CONFIRM_CLOSE_SELL', {action: 'IM_DONE'});
       }

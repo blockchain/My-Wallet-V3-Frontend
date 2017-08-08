@@ -186,6 +186,10 @@
     "TITLE": "Are You Sure?",
     "BODY": "You're just one click away from completing your sale. Are you sure you want to stop?"
   },
+  "CONFIRM_CLOSE_EXCHANGE": {
+    "TITLE": "Are You Sure?",
+    "BODY": "You're just one click away from completing your coin exchange. Are you sure you want to stop?"
+  },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
