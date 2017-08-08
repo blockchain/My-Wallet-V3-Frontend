@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('ShapeShift', ShapeShift);
 
-function ShapeShift (Wallet) {
+function ShapeShift (Wallet, modals) {
   const service = {
     get shapeshift () {
       return Wallet.my.wallet.shapeshift;
@@ -28,6 +28,14 @@ function ShapeShift (Wallet) {
 
   service.watchTradeForCompletion = (trade) => {
     return service.shapeshift.watchTradeForCompletion(trade);
+  };
+
+  service.checkForCompletedTrades = () => {
+    service.shapeshift.checkForCompletedTrades(modals.openShiftTradeDetails);
+  };
+
+  service.fetchFullTrades = () => {
+    return service.shapeshift.fetchFullTrades();
   };
 
   window.ShapeShift = service;

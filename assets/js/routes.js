@@ -371,6 +371,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'ShapeShiftCheckoutController',
           controllerAs: 'vm'
         }
+      },
+      onEnter (ShapeShift) {
+        ShapeShift.fetchFullTrades();
       }
     });
 

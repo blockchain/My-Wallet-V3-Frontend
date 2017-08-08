@@ -18,6 +18,4 @@ function ShiftReceiptController ($scope, $q, ShapeShift) {
 
   $scope.input = this.shift.pair.split('_')[0];
   $scope.output = this.shift.pair.split('_')[1];
-
-  ShapeShift.watchTradeForCompletion($scope.trade);
 }

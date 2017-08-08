@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ShapeShiftConfirmController', ShapeShiftConfirmController);
 
-function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageService, $uibModalStack, Env) {
+function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageService, $uibModalStack, Env, modals) {
   Env.then(env => {
     // let links = env.partners.shapeshift.surveyLinks;
     let links = [1, 2];
@@ -20,10 +20,12 @@ function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageSe
       }
     };
   });
+
   $scope.shiftHandler = ShapeShift.shift;
 
   $scope.onComplete = (trade) => {
     $scope.vm.trade = trade;
     $scope.vm.goTo('receipt');
+    ShapeShift.watchTradeForCompletion(trade).then(modals.openShiftTradeDetails);
   };
 }
