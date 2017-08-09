@@ -42,6 +42,14 @@ function ShapeShift (Wallet, modals) {
     return service.shapeshift.fetchFullTrades();
   };
 
+  service.isDepositTx = (hash) => {
+    return service.shapeshift.isDepositTx(hash);
+  };
+
+  service.isWithdrawalTx = (hash) => {
+    return service.shapeshift.isWithdrawalTx(hash);
+  };
+
   window.ShapeShift = service;
   return service;
 }

@@ -9,9 +9,10 @@
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
       br
       span.label.label-default.mts(translate="WATCH_ONLY" ng-show=":: txWatchOnly")
-      span.label.label-primary.mts(ng-show="txMethod != null")
-        span(translate="BOUGHT_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'buy'")
-        span(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
+      span.label.label-primary.mts(translate="BOUGHT_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'buy'")
+      span.label.label-primary.mts(translate="SOLD_VIA" translate-values="{exchange:exchange}" ng-show="txMethod === 'sell'")
+      span.label.label-primary.mts(translate="DEPOSITED_TO" translate-values="{exchange: 'ShapeShift'}" ng-show="isDepositTx(tx.hash)")
+      span.label.label-primary.mts(translate="RECEIVED_FROM" translate-values="{exchange: 'ShapeShift'}" ng-show="isWithdrawalTx(tx.hash)")
     .flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       transaction-destinations(transaction="tx" search="search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300

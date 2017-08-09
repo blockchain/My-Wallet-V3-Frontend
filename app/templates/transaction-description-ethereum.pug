@@ -8,6 +8,8 @@
       span.timestamp.type-sm.basic-grey.main-font.f-14
         date {{:: tx.time * 1000 | date:'MMMM d ' + year + ' @ hh:mm a' }}
       br
+      span.label.label-primary.mts(translate="DEPOSITED_TO" translate-values="{exchange: 'ShapeShift'}" ng-show="isDepositTx(tx.hash)")
+      span.label.label-primary.mts(translate="RECEIVED_FROM" translate-values="{exchange: 'ShapeShift'}" ng-show="isWithdrawalTx(tx.hash)")
     .dest-oflow.flex-1-0.width-30.hidden-sm.hidden-xs.destination.em-400.basic-grey.mrm
       .flex-row
         span.f-14.em-300 To:

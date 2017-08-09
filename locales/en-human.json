@@ -1031,6 +1031,8 @@
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
   "BOUGHT_VIA": "Bought via {{exchange}}",
   "SOLD_VIA": "Sold via {{exchange}}",
+  "DEPOSITED_TO": "Deposited to {{exchange}}",
+  "RECEIVED_FROM": "Received from {{exchange}}",
   "TX_ERROR_STATE": {
     "TITLE": "Transaction {{::state}}",
     "BODY": ""

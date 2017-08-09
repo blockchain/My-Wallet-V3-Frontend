@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescriptionEthereum', transactionDescriptionEthereum);
 
-function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum) {
+function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum, ShapeShift) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -24,6 +24,9 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum)
     scope.note = Ethereum.getTxNote(scope.tx.hash);
     scope.isToAccount = scope.tx.isToAccount(Ethereum.defaultAccount);
     scope.isFromAccount = scope.tx.isFromAccount(Ethereum.defaultAccount);
+
+    scope.isDepositTx = ShapeShift.isDepositTx;
+    scope.isWithdrawalTx = ShapeShift.isWithdrawalTx;
 
     scope.setNote = (note) => {
       Ethereum.setTxNote(scope.tx.hash, note);
