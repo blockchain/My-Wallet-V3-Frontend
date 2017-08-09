@@ -376,6 +376,13 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controllerAs: 'vm'
         }
       },
+      resolve: {
+        _initialize ($injector, $q, Wallet) {
+          return Wallet.status.isLoggedIn
+            ? $injector.get('Ethereum').initialize()
+            : $q.resolve();
+        }
+      },
       onEnter (ShapeShift) {
         ShapeShift.fetchFullTrades();
       }
