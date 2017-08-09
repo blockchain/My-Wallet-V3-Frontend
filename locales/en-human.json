@@ -1568,7 +1568,7 @@
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
-    "INPUT_RECEIVED": "<span class='capitalize'>{{::input}}</span> Received",
+    "OUTPUT_RECEIVED": "<span class='capitalize'>{{::output}}</span> Received",
     "TX_FEE_EXPLAIN": "This fee is used to send funds from your wallet.",
     "WITHDRAWAL_FEE": "ShapeShift Withdrawal Fee",
     "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the withdrawal amount to your wallet.",
