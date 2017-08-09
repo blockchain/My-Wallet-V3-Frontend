@@ -58,7 +58,7 @@ describe('ShapeShiftCheckoutController', () => {
 
   describe('tabs', () => {
     describe('select', () => {
-      it('select a tab', () => {
+      it('should select a tab', () => {
         scope.tabs.select('ORDER_HISTORY');
         expect(scope.tabs.selectedTab).toBe('ORDER_HISTORY');
       });
