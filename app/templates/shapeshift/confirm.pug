@@ -19,7 +19,7 @@ form.bc-form(
           span.em-300.right-align
             span {{ quote.depositAmount | format:quote.fromCurrency:true }}
         li.pv-10.border-bottom-light.flex-between
-          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[toCurrency]}")
+          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[quote.toCurrency]}")
           span.em-300.right-align
             span {{ quote.withdrawalAmount | format:quote.toCurrency:true }}
         li.pv-10.border-bottom-light.flex-between

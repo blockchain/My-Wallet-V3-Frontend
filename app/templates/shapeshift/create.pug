@@ -72,4 +72,4 @@ form.bc-form(
             | :&nbsp;
             span.pointer.upper(ng-click="state.input.amount = state.rate.max; state.baseCurr = state.input.curr") {{ state.rate.max }} {{ state.input.curr }}
     .group.mt-30
-      button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="EXCHANGE_SIMPLE")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")

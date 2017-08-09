@@ -18,7 +18,7 @@ form.bc-form(
           span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")
           span.em-300.right-align {{ trade.depositAmount | format:input:true }}
         li.pv-10.flex-between
-          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
+          span.em-500.colon(translate=".OUTPUT_RECEIVED" translate-values="{output: human[output]}")
           span.em-300.right-align {{ trade.withdrawalAmount | format:output:true }}
         li.pv-10.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
