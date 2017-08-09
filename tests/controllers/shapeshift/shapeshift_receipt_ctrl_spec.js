@@ -25,7 +25,8 @@ describe('ShapeShiftReceiptController', () => {
     if (params == null) { params = {}; }
     scope = $rootScope.$new();
     scope.vm = {
-      goTo: (step) => { scope.vm.step = step; }
+      goTo: (step) => { scope.vm.step = step; },
+      trade: 'a b c'
     };
     $controller('ShapeShiftReceiptController',
       {$scope: scope});
@@ -38,7 +39,7 @@ describe('ShapeShiftReceiptController', () => {
   });
 
   it('should define trade', () => {
-    expect(scope.trade).toEqual(scope.vm.trade);
+    expect(scope.trade).toEqual('a b c');
   });
 
   describe('onClose', () => {
@@ -50,6 +51,12 @@ describe('ShapeShiftReceiptController', () => {
       });
       scope.onClose();
       expect(Alerts.surveyCloseConfirm).toHaveBeenCalled();
+    });
+    it('should go to create after close', () => {
+      spyOn(scope.vm, 'goTo');
+      scope.onClose();
+      scope.$digest();
+      expect(scope.vm.goTo).toHaveBeenCalledWith('create');
     });
   });
 });
