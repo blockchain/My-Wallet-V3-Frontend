@@ -17,10 +17,11 @@ describe('ShapeShiftConfirmController', () => {
       $q = _$q_;
       $controller = _$controller_;
 
-      Alerts = $injector.get('Alerts');
-      Alerts.surveyCloseConfirm = () => $q.resolve();
       ShapeShift = $injector.get('ShapeShift');
       ShapeShift.watchTradeForCompletion = () => $q.resolve();
+
+      Alerts = $injector.get('Alerts');
+      Alerts.surveyCloseConfirm = $q.resolve().then(() => scope.vm.goTo('create'));
     })
   );
 
@@ -31,7 +32,7 @@ describe('ShapeShiftConfirmController', () => {
       goTo: (step) => { scope.vm.step = step; }
     };
     $controller('ShapeShiftConfirmController',
-      {$scope: scope});
+      {$scope: scope, Env: $q.resolve({shapeshift: { surveyLinks: {} }})});
     return scope;
   };
 
@@ -73,6 +74,7 @@ describe('ShapeShiftConfirmController', () => {
         return deferred.promise;
       });
       scope.onCancel();
+      scope.$digest();
       expect(Alerts.surveyCloseConfirm).toHaveBeenCalled();
     });
   });

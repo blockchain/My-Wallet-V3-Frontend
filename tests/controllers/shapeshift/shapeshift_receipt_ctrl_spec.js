@@ -29,7 +29,7 @@ describe('ShapeShiftReceiptController', () => {
       trade: 'a b c'
     };
     $controller('ShapeShiftReceiptController',
-      {$scope: scope});
+      {$scope: scope, Env: $q.resolve({shapeshift: { surveyLinks: {} }})});
     return scope;
   };
 
