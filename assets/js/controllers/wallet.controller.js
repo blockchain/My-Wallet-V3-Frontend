@@ -63,6 +63,18 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     modals.openSend({ address: '', amount: '' });
   };
 
+  $scope.$on('requireMainPassword', (notification, defer) => {
+    const modalInstance = $uibModal.open({
+      templateUrl: 'partials/main-password.pug',
+      controller: 'MainPasswordCtrl',
+      windowClass: 'bc-modal',
+      resolve: {
+        defer: () => defer
+      }
+    });
+    modalInstance.result.then(() => {}, () => defer.reject());
+  });
+
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
       templateUrl: 'partials/second-password.pug',

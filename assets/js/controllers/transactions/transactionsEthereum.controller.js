@@ -39,11 +39,12 @@ function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localSto
     templateUrl: 'partials/show-private-key-ethereum.pug',
     controllerAs: '$ctrl',
     windowClass: 'bc-modal',
-    controller (Ethereum) {
+    controller (Ethereum, MyWallet) {
       this.accessAllowed = false;
       this.address = Ethereum.defaultAccount.address;
       this.balance = Ethereum.defaultAccount.balance;
-      this.requestAccess = () => Wallet.askForSecondPasswordIfNeeded().then(secPass => {
+      let requestAccessP = MyWallet.wallet.isDoubleEncrypted ? Wallet.askForSecondPasswordIfNeeded : Wallet.askForMainPassword;
+      this.requestAccess = () => requestAccessP().then(secPass => {
         this.accessAllowed = true;
         this.key = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass).toString('hex');
       });
