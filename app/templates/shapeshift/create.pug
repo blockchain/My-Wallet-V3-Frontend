@@ -22,11 +22,13 @@ form.bc-form(
       .item
         .flex-between.flex-baseline.mbs
           .flex-row
-             span.f-16.em-500.colon Enter Amount
-          span
-            .state-danger-text(ng-if="state.loadFailed || state.balanceFailed")
-              i.ti-alert
-              span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+            span.f-16.em-500.colon Enter Amount
+          .flex-row
+            span
+              .state-danger-text(ng-if="state.loadFailed || state.balanceFailed")
+                i.ti-alert
+                span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+            helper-button(content="SHIFT.EXPLAIN_QUOTE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
         .flex-center
           .flex-column.flex-1.border
             .flex-center
