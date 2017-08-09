@@ -39,6 +39,10 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
         this.goTo('address');
         $timeout(() => $scope.$ctrl.addressForm.pancard.$setValidity('correct', false), 100);
         break;
+      case 'This pancard number is already used on another account':
+        this.goTo('address');
+        $timeout(() => $scope.$ctrl.addressForm.pancard.$setValidity('duplicate', false), 100);
+        break;
       case 'Please select valid State and City':
         this.goTo('address');
         $timeout(() => $scope.$ctrl.addressForm.city.$setValidity('correct', false), 100);
@@ -62,6 +66,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.clearInlineErrors = (form, input) => {
     $scope.$ctrl[form][input].$setUntouched();
     $scope.$ctrl[form][input].$setValidity('correct', true);
+    $scope.$ctrl[form][input].$setValidity('duplicate', true);
   };
 
   let exchange = this.exchange;
