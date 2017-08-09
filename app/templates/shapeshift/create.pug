@@ -21,12 +21,12 @@ form.bc-form(
     .group
       .item
         .flex-between.flex-baseline.mbs
-          .flex-row
-             span.f-16.em-500.colon Enter Amount
-          span
-            .state-danger-text(ng-if="state.loadFailed || state.balanceFailed")
-              i.ti-alert
-              span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+          span.f-16.em-500.colon Enter Amount
+          span.state-danger-text(ng-if="state.loadFailed || state.balanceFailed")
+            i.ti-alert
+            span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+          span(ng-if="!state.loadFailed && !state.balanceFailed")
+            helper-button(content="SHIFT.EXPLAIN_QUOTE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
         .flex-center
           .flex-column.flex-1.border
             .flex-center
@@ -58,7 +58,7 @@ form.bc-form(
           span.pos-abs(ng-show="maxAvailable < state.rate.min")
             span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
             | &nbsp;
-            a(translate="BUY" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
+            a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
           span.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min")
             span(translate=".BELOW_MIN_SHIFT_LIMIT")
             | :&nbsp;
@@ -72,4 +72,4 @@ form.bc-form(
             | :&nbsp;
             span.pointer.upper(ng-click="state.input.amount = state.rate.max; state.baseCurr = state.input.curr") {{ state.rate.max }} {{ state.input.curr }}
     .group.mt-30
-      button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="EXCHANGE_SIMPLE")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")

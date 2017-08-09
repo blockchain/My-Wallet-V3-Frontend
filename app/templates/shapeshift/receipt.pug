@@ -18,7 +18,7 @@ form.bc-form(
           span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")
           span.em-300.right-align {{ trade.depositAmount | format:input:true }}
         li.pv-10.flex-between
-          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[output]}")
+          span.em-500.colon(translate=".OUTPUT_RECEIVED" translate-values="{output: human[output]}")
           span.em-300.right-align {{ trade.withdrawalAmount | format:output:true }}
         li.pv-10.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
@@ -26,7 +26,7 @@ form.bc-form(
         li.pt-10.flex-between
           span.em-500
             span.colon(translate=".WITHDRAWAL_FEE")
-            helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
+            helper-button(content="SHIFT.EXPLAIN_RATE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
           span.em-300.right-align
             span {{ trade.quote.minerFee | format:output:true }}
       .flex-row.flex-end
