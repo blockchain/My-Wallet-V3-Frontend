@@ -13,7 +13,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, buyStatus) {
+function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, buyStatus) {
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
@@ -103,7 +103,11 @@ function ShiftCreateController (Env, AngularHelper, $scope, $timeout, $q, curren
     let fetchError = (err) => {
       $scope.maxAvailable = 0;
       state.balanceFailed = true;
-      state.error = Exchange.interpretError(err);
+      if (Exchange.interpretError(err) === 'No free outputs to spend') {
+        state.error = $translate.instant('.NO_FUNDS_TO_EXCHANGE');
+      } else {
+        state.error = Exchange.interpretError(err);
+      }
     };
 
     return $q.resolve(this.from.getAvailableBalance(state.baseBTC && 'priority')).then(fetchSuccess, fetchError);

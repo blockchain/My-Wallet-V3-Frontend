@@ -58,7 +58,7 @@ form.bc-form(
           span.pos-abs(ng-show="maxAvailable < state.rate.min")
             span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
             | &nbsp;
-            a(translate="BUY" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
+            a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
           span.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min")
             span(translate=".BELOW_MIN_SHIFT_LIMIT")
             | :&nbsp;
