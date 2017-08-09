@@ -374,6 +374,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       });
   };
 
+  wallet.askForMainPassword = () => {
+    let defer = $q.defer();
+    $rootScope.$broadcast('requireMainPassword', defer);
+    return defer.promise;
+  };
+
   wallet.askForSecondPasswordIfNeeded = () => {
     let defer = $q.defer();
     if (wallet.my.wallet.isDoubleEncrypted) {
