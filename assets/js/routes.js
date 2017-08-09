@@ -328,6 +328,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/transactions/transactions-bitcoin.pug',
           controller: 'bitcoinTransactionsCtrl'
         }
+      },
+      onEnter (ShapeShift) {
+        ShapeShift.fetchFullTrades();
       }
     })
     .state('wallet.common.btc.transactions', {
@@ -352,8 +355,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             : $q.resolve();
         }
       },
-      onEnter ($state, Ethereum) {
+      onEnter ($state, Ethereum, ShapeShift) {
         if (!Ethereum.userHasAccess) $state.transition = null;
+        ShapeShift.fetchFullTrades();
       }
     })
     .state('wallet.common.eth.transactions', {
