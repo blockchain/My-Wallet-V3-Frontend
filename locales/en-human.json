@@ -1556,7 +1556,7 @@
   "NEW": "New",
   "SHIFT": {
     "NO_EXCHANGES": "@:NO_TRADES",
-    "NO_EXCHANGES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span>.",
+    "NO_EXCHANGES_EXPLAIN": "You haven't made any exchanges yet, <span class='primary'>click here to start</span>.",
     "EXCHANGE_FROM": "Exchange From",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
     "MIN_NEEDED_TO_SHIFT": "{{::min}} {{::curr}} needed to exchange.",
