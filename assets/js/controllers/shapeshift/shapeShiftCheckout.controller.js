@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('ShapeShiftCheckoutController', ShapeShiftCheckoutController);
 
-let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
-
 function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper) {
+  let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'EXCHANGE',
     options: ['EXCHANGE', 'ORDER_HISTORY'],
