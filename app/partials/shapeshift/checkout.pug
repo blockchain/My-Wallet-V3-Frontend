@@ -12,7 +12,7 @@
         shift-confirm(on-complete="onComplete(trade)" on-cancel="onCancel()" payment="vm.payment" fee="vm.fee" quote="vm.quote" handle-shift="shiftHandler(payment)")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
         shift-receipt(shift="trade" is-checkout="true" on-close="onClose()")
-      .flex-end.pal.width-50.pv-30-mobile
+      .flex-end.width-50.pv-15
         .em-500
           span(translate="NEED_HELP")
           | &nbsp;
