@@ -19,7 +19,7 @@
           span ETHER
           | &nbsp;
           p.f-12.mbn.transform-none.em-300.blue(translate="BETA")
-    div.border-dashed.mb-15.mt-15.mh-15(ng-show="showEthereum()")
+    div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
@@ -32,11 +32,11 @@
       a(ng-hide="shouldShowInviteForm"
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
-        i.icon-buysell
+        i.icon-buy-sell
         span(translate="{{buyLink}}")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
-        i.icon-buysell
+        i.icon-buy-sell
         span(translate="BUY_AND_SELL_BITCOIN")
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift()")
       a(ui-sref="wallet.common.shift")
@@ -45,7 +45,6 @@
           span(translate="EXCHANGE_SIMPLE")
           | &nbsp;
           p.f-12.mbn.transform-none.em-300.blue.exclaim(translate="NEW")
-    div.border-dashed.mb-15.mt-15.mh-15(ng-show="showShift()")
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(
         active-when="shouldShowSecurityWarning()"
