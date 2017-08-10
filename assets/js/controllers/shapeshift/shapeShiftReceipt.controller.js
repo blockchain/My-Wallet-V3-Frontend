@@ -9,6 +9,6 @@ function ShapeShiftReceiptController ($scope, Alerts, Env) {
   $scope.trade = $scope.vm.trade;
 
   $scope.onClose = () => {
-    Alerts.surveyCloseConfirm('shift-trade-survey', links, 1).then(() => { $scope.vm.goTo('create'); });
+    $scope.vm.goTo('create');
   };
 }

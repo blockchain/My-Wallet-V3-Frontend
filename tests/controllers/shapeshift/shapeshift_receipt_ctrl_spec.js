@@ -43,19 +43,9 @@ describe('ShapeShiftReceiptController', () => {
   });
 
   describe('onClose', () => {
-    it('should close modal', () => {
-      spyOn(Alerts, 'surveyCloseConfirm').and.callFake(function () {
-        var deferred = $q.defer();
-        deferred.resolve('Remote call result');
-        return deferred.promise;
-      });
-      scope.onClose();
-      expect(Alerts.surveyCloseConfirm).toHaveBeenCalled();
-    });
     it('should go to create after close', () => {
       spyOn(scope.vm, 'goTo');
       scope.onClose();
-      scope.$digest();
       expect(scope.vm.goTo).toHaveBeenCalledWith('create');
     });
   });
