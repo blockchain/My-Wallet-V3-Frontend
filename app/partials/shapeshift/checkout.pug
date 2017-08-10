@@ -7,9 +7,9 @@
   .overflow-scroll.flex-1.pt-30.ph-30
     .flex-column.pbvl(ng-if="tabs.selectedTab === 'EXCHANGE'")
       .flex-row(ng-if="vm.onStep('create')")
-        div.width-50.border-desktop.pv-30.ph-30.mr-25.no-padding-mobile(ng-controller="ShapeShiftCreateController")
+        div.width-50.border-desktop.pv-30.mr-25.no-padding-mobile(ng-controller="ShapeShiftCreateController")
           shift-create(on-complete="onComplete(payment, fee, quote)" build-payment="buildPayment(quote)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
-        div.width-50.ml-25
+        div.width-50.ml-25.hidden-sm.hidden-xs
           p.blue.f-18.em-600(translate="SIMPLE_SEAMLESS_SECURE")
           p.f-16.em-300(translate="{{ vm.trades.length ? 'SHIFT.EXCHANGE_NOTICE' : 'SHIFT.WELCOME_INFO' }}")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
