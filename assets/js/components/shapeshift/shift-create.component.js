@@ -17,6 +17,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
+  $scope.toSatoshi = currency.convertToSatoshi;
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.dollars = Wallet.settings.displayCurrency;

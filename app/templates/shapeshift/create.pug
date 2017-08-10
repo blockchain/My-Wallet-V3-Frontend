@@ -42,6 +42,10 @@ form.bc-form(
                 focus-when="true"
                 required)
               span.mhm.upper {{state.input.curr}}
+            .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
+              fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
+              fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
+              fiat(btc="toSatoshi(state.input.amount, bitcoin)" ng-if="state.input.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
           i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
           .flex-column.flex-1.border
             .flex-center
@@ -54,6 +58,10 @@ form.bc-form(
                 step="0.01"
                 required)
               span.mhm.upper {{state.output.curr}}
+            .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
+              fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
+              fiat(eth="state.output.amount" ng-if="state.output.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
+              fiat(btc="toSatoshi(state.output.amount, bitcoin)" ng-if="state.output.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
         .pos-rel.f-12.mts.state-danger-text(ng-show="forms.shiftForm.input.$error")
           span.pos-abs(ng-show="maxAvailable < state.rate.min")
             span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
