@@ -51,6 +51,8 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
     'wallet.common.settings.imported_addresses'
   ].indexOf($state.current.name) > -1;
 
+  buyStatus.buyLink().then(res => $scope.buyLink = res);
+
   $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
 
   $rootScope.supportModal = () => $uibModal.open({
