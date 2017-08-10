@@ -86,6 +86,10 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     );
   };
 
+  service.fetchFees = () => {
+    return $q.resolve(service.eth.fetchFees());
+  };
+
   service.initialize = (_secPass) => {
     let wallet = Wallet.my.wallet;
     let needsSecPass = _secPass == null && wallet.isDoubleEncrypted;
