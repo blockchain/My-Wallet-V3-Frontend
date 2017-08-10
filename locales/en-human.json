@@ -1592,6 +1592,10 @@
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      },
+      "resolved": {
+        "HEADER": "Trade Resolved",
+        "BODY": "Your deposit was not in the exact amount required and will be returned to you shortly."
       }
     }
   },

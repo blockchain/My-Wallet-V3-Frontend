@@ -16,6 +16,6 @@ function ShiftReceiptController ($scope, $q, ShapeShift) {
   $scope.isCheckout = this.isCheckout;
   $scope.human = {'BTC': 'bitcoin', 'ETH': 'ether'};
 
-  $scope.input = this.shift.pair.split('_')[0];
-  $scope.output = this.shift.pair.split('_')[1];
+  $scope.input = this.shift.pair.split('_')[0].toUpperCase();
+  $scope.output = this.shift.pair.split('_')[1].toUpperCase();
 }

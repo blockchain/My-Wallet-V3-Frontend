@@ -14,7 +14,7 @@ div(translate-namespace="SHIFT")
       span.flex-justify.flex-center
         i.icon-completed-check
       span.mt-10(translate="TRADE_COMPLETE")
-  .shift-failed(ng-show="$ctrl.onStep('failed')")
+  .shift-failed(ng-show="$ctrl.onStep('failed') || $ctrl.onStep('resolved')")
     .flex-column.flex-center
       span.flex-justify.flex-center
         i.icon-alert
