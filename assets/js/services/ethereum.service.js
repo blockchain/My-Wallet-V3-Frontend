@@ -41,6 +41,9 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
       else if (this.isInRolloutGroup) reason = 'they are in the rollout group but not in a whitelisted country';
       else reason = 'they are not in a whitelisted country or the rollout group';
       return `User can${this.userHasAccess ? '' : 'not'} see Ethereum because ${reason}`;
+    },
+    get hasSeen () {
+      return this.eth.hasSeen;
     }
   };
 
@@ -70,6 +73,10 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
 
   service.recordLastTransaction = (hash) => {
     service.lastTxHash = hash;
+  };
+
+  service.setHasSeen = () => {
+    service.eth.setHasSeen(true);
   };
 
   service.isWaitingOnTransaction = () => {
