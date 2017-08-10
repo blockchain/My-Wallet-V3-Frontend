@@ -10,9 +10,7 @@ function ShapeShiftReceiptController ($scope, Alerts, Env, localStorageService) 
   $scope.onClose = () => {
     let survey = 'shift-trade-survey';
     let surveyCache = localStorageService.get(survey);
-    console.log(surveyCache);
     let shouldClose = surveyCache && surveyCache.index === links.length - 1;
-    console.log(shouldClose);
     if (shouldClose) {
       $scope.vm.goTo('create');
     } else {
