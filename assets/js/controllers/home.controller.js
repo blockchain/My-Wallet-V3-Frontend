@@ -35,8 +35,4 @@ function HomeCtrl ($scope, Wallet, $uibModal, buyStatus, localStorageService, Et
       return true;
     }
   };
-
-  $scope.showBalances = () => {
-    return ($scope.getTotal() > 0 && $scope.activeAccounts().length > 1) || $scope.getEthTotal() > 0;
-  };
 }

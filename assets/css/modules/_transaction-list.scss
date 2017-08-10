@@ -141,6 +141,9 @@
   .rotated {
     transform: rotate(-90deg);
   }
+  .get-started-ether {
+    border-radius: 5px;
+  }
 }
 
 .transaction-card {
@@ -363,6 +366,6 @@ a.date,p.date { color: $black; }
 }
 
 .half-eth {
-  height: 200px;
+  height: 230px;
   width: auto;
 }

@@ -212,5 +212,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openEthLogin = service.openOnce(() => {
+    return openMobileCompatible({
+      windowClass: 'bc-modal buy',
+      templateUrl: 'partials/first-login-modal-eth.pug'
+    });
+  });
+
   return service;
 }

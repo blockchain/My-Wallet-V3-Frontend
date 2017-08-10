@@ -41,23 +41,32 @@
           i.ti-search
   .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed")
     .flex-center.flex-justify.flex-column(ng-hide="loading || ethTotal > 0 || ethTransactions.length > 0")
-      .flex-row.flex-column-mobile.flex-column.tablet.bg-footer-blue(ng-hide="hideEtherWelcome()")
-        .flex-1
-          img.half-eth.opacity-3.hidden-sm.hidden-md.hidden-xs(src="img/half-ether.svg")
-        .flex-column.flex-center.col-md-3.col-xs-12.flex-baseline.flex-justify.pl-25.flex-center-mobile
-          span.upper.f-28.em-300.blue.pb-5(translate="WELCOME_TO_ETHER")
-          a(href="https://support.blockchain.com/hc/en-us/categories/115000850223" rel="noopener noreferrer" target="_blank")
-            span.upper(translate="LEARN_MORE")
-            i.icon-right_arrow.f-12.pl-5
-        .flex-column.col-md-4.col-xs-12.pt-20.pb-25
-          span.border-bottom.upper.f-18.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHAT_IS_ETH_HEADER")
-          span.f-16.em-300(translate="WHAT_IS_ETHER")
-        .flex-column.col-md-4.col-xs-12.pt-20.pb-25
-          span.border-bottom.upper.f-18.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHY_SHOULD_I_USE_ETHER_HEADER")
-          span.f-16.em-300(translate="WHY_SHOULD_I_USE_ETHER")
-        .hidden-sm.hidden-md.hidden-xs
-          .pr-20.pt-20
-            i.pointer.ti-close.f-16(ng-click="dismissWelcome()")
+      .flex-column.flex-column.tablet.bg-footer-blue(ng-hide="hideEtherWelcome()")
+        .flex-end
+          .hidden-sm.hidden-xs
+            .pr-10.pt-5
+              i.pointer.ti-close.f-14(ng-click="dismissWelcome()")
+        .flex-row
+          .flex-1.mr-25.hidden-sm.hidden-xs
+            img.half-eth.opacity-3.hidden-sm.hidden-md.hidden-xs(src="img/half-ether.svg")
+          .flex-column
+            .flex.flex-justify-mobile
+              .get-started-ether.width-90.bg-primary.bg-primary.pv-10.ph-25-mobile.width-90-tablet
+                a.width-100.flex-center.flex-justify(ui-sref="wallet.common.shift")
+                  i.icon-ExchangeTab.mr-10
+                  span.upper.em-600.f-16.white(translate="GET_STARTED_WITH_ETHER")
+            .flex-row.flex-column-mobile.pv-20-mobile
+              .flex-column.flex-center.col-md-3.col-xs-12.flex-baseline.flex-justify.pln.flex-center-mobile
+                span.upper.f-28.em-300.blue.pb-5(translate="WELCOME_TO_ETHER")
+                a(href="https:www.blockchain.com/ether-basics" rel="noopener noreferrer" target="_blank")
+                  span.upper(translate="LEARN_MORE")
+                  i.icon-right_arrow.f-12.pl-5
+              .flex-column.col-md-4.col-xs-12.pt-20.pb-25
+                span.border-bottom.upper.f-18.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHAT_IS_ETH_HEADER")
+                span.f-16.em-300(translate="WHAT_IS_ETHER")
+              .flex-column.col-md-4.col-xs-12.pt-20.pb-25
+                span.border-bottom.upper.f-18.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHY_SHOULD_I_USE_ETHER_HEADER")
+                span.f-16.em-300(translate="WHY_SHOULD_I_USE_ETHER")
       .flex-column.mbl.border-bottom.black.ph-25.center.mtvl
         .flex-center.flex-justify
           i.icon-tx.h3.mrm
@@ -65,9 +74,9 @@
         p.em-300(translate="DESCRIBE_TRANSACTIONS_ETH")
       .flex.flex-center-mobile
         .btn-group
-          button.btn.button-default.type-h5.pos-rel(ng-click="request()")
-            i.mrs.media-middle.icon-receive
-            span.em-300.upper(translate="START_RECEIVING_ETHER")
+          button.btn.button-default.type-h5.pos-rel(ui-sref="wallet.common.shift")
+            i.mrs.media-middle.icon-ExchangeTab
+            span.em-300.upper(translate="GET_ETHER")
       .flex-column.col-md-6.col-xs-8.f-12.black.ph-25.mtl.center
         p.f-14.em-300(translate="WEB_ONLY_ETH")
     .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal(account) > 0 ")

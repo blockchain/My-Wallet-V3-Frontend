@@ -1,7 +1,7 @@
 #receive.modal-body
   form.bc-form
     fieldset
-      .group.mb-20.inline(ng-hide="vm.hideAssetSelect")
+      .group.mb-20.inline
         .item.width-30.width-50-mobile
           label.colon(translate="CURR")
           asset-select(asset="vm.asset" on-select="vm.showTab(asset)")

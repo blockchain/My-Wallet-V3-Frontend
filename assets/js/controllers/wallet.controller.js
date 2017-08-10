@@ -200,11 +200,16 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.firstTime = void 0;
       }
       if (!Wallet.goal.firstLogin) {
-        buyStatus.canBuy().then((canBuy) => {
-          if (buyStatus.shouldShowBuyReminder() &&
-              !buyStatus.userHasAccount() &&
-              canBuy) buyStatus.showBuyReminder();
-        });
+        if (Ethereum.userHasAccess && !Ethereum.hasSeen) {
+          modals.openEthLogin();
+          Ethereum.setHasSeen();
+        } else {
+          buyStatus.canBuy().then((canBuy) => {
+            if (buyStatus.shouldShowBuyReminder() &&
+                !buyStatus.userHasAccount() &&
+                canBuy) buyStatus.showBuyReminder();
+          });
+        }
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {

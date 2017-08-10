@@ -1,7 +1,7 @@
 #send.modal-body(ng-controller="SendEthereumController as $ctrl")
   div(ng-hide="vm.confirm")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
-      .group.mb-20.inline(ng-hide="vm.hideAssetSelect")
+      .group.mb-20.inline
         .item.width-30.width-50-mobile.mr-20
           label.colon(translate="CURR")
           asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
