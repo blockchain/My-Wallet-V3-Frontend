@@ -10,7 +10,10 @@ form.bc-form(
       .mv-20.ph-30
         shift-progress(shift="trade")
       .f-13.mb-20
-        span.em-500(translate=".TRADE.{{trade.status}}.BODY" translate-values="{output: human[output]}" ng-show="isCheckout")
+        span(translate="{{ trade.error || 'SHIFT.TRADE.' + trade.status + '.BODY' }}" 
+             ng-show="isCheckout || trade.isResolved || trade.isFailed"
+             ng-class="isCheckout ? 'em-500' : 'em-300'" 
+             translate-values="{output: human[output]}")
       .f-16.em-500.mb-5
         span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
@@ -19,7 +22,7 @@ form.bc-form(
           span.em-300.right-align {{ trade.depositAmount | format:input:true }}
         li.pv-10.flex-between
           span.em-500.colon(translate=".OUTPUT_RECEIVED" translate-values="{output: human[output]}")
-          span.em-300.right-align {{ trade.withdrawalAmount | format:output:true }}
+          span.em-300.right-align(ng-class="{'mid-grey opacity-5': trade.isResolved}") {{ trade.withdrawalAmount | format:output:true }}
         li.pv-10.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}

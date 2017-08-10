@@ -1592,6 +1592,13 @@
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      },
+      "resolved": {
+        "HEADER": "Trade Resolved"
+      },
+      "failed": {
+        "HEADER": "Trade Failed",
+        "BODY": "This trade has failed. Any funds broadcast from your wallet, will be returned minus the transaction fee. Please return to the exchange tab to start a new trade"
       }
     }
   },

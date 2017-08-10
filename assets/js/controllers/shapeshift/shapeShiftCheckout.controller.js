@@ -18,7 +18,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
 
   this.trades = ShapeShift.shapeshift.trades;
   this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
-  this.completedTrades = () => this.trades.some(t => t.isComplete || t.isFailed);
+  this.completedTrades = () => this.trades.some(t => t.isComplete || t.isFailed || t.isResolved);
   this.pendingTrades = () => this.trades.some(t => t.isProcessing || t.isWaitingForDeposit);
 
   this.goTo('create');

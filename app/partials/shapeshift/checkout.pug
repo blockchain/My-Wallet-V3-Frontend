@@ -50,7 +50,7 @@
             span.em-500 Received
         exchange-trade(
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
-          ng-if="trade.isComplete || trade.isFailed"
+          ng-if="trade.isComplete || trade.isFailed || trade.isResolved"
           view-details="vm.openTradeDetails(trade)"
           ex-trade="trade"
         )
