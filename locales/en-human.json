@@ -1556,6 +1556,7 @@
   "NEW": "New",
   "SHIFT": {
     "WELCOME_INFO": "You can now exchange your bitcoin for ether and vice versa directly from your Blockchain wallet. In a few simple steps, your exchange will be in progress. Note: exchanges usually take between twenty minutes and two hours.",
+    "EXCHANGE_NOTICE": "In a few simple steps, your exchange will be in progress. Note: exchanges usually take between twenty minutes and two hours.",
     "NO_EXCHANGES": "@:NO_TRADES",
     "NO_EXCHANGES_EXPLAIN": "You haven't made any exchanges yet, <span class='primary'>click here to start</span>.",
     "EXCHANGE_FROM": "Exchange From",

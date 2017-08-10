@@ -11,7 +11,7 @@
           shift-create(on-complete="onComplete(payment, fee, quote)" build-payment="buildPayment(quote)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
         div.width-50.ml-25
           p.blue.f-18.em-600(translate="SIMPLE_SEAMLESS_SECURE")
-          p.f-16.em-300(translate=".WELCOME_INFO")
+          p.f-16.em-300(translate="{{ vm.trades.length ? 'SHIFT.EXCHANGE_NOTICE' : 'SHIFT.WELCOME_INFO' }}")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
         shift-confirm(on-complete="onComplete(trade)" on-cancel="onCancel()" payment="vm.payment" fee="vm.fee" quote="vm.quote" handle-shift="shiftHandler(payment)")
       div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
