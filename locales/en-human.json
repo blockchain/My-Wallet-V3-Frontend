@@ -1578,14 +1578,13 @@
     "ACCEPT_TERMS": "I agree to ShapeShift's <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>terms and conditions</a>.",
     "NO_FUNDS_TO_EXCHANGE": "Not enough funds to exchange",
     "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
-    "EXCHANGE_IN_PROGRESS_EXPLAIN": "Once the trade is complete, your {{::output}} will arrive in your wallet. In the meantime, you can check your pending transaction’s progress in the Order History tab.",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN": "Exchanges can take up to two hours, you can keep track of your exchange progress in the Order History tab. Once the trade is complete, your {{::output}} will arrive in your wallet.",
     "ORDER_SUMMARY": "Order Summary",
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
     "TRADE": {
       "complete": {
-        "HEADER": "@:TRADE_COMPLETE",
-        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+        "HEADER": "@:TRADE_COMPLETE"
       },
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
