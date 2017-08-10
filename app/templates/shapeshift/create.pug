@@ -22,7 +22,7 @@ form.bc-form(
       .item
         .flex-between.flex-baseline.mbs
           span.f-16.em-500.colon Enter Amount
-          span.state-danger-text(ng-if="state.loadFailed || state.balanceFailed")
+          span.state-danger-text(ng-if="state.loadFailed || state.balanceFailed && maxAvailable > state.rate.min")
             i.ti-alert
             span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
           span(ng-if="!state.loadFailed && !state.balanceFailed")
