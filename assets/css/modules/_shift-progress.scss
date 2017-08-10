@@ -83,12 +83,21 @@
         & + img { display: block; }
       }
     }
-    &.complete {
+    &.complete,
+    &.failed {
       > span:first-child {
         opacity: 1;
       }
       &:after {
         opacity: 1;
+      }
+    }
+    &.failed {
+      > span:first-child {
+        border: 1px solid $state-danger-text;
+        i {
+          @extend .state-danger-text;
+        }
       }
     }
   }
