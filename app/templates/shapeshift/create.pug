@@ -71,17 +71,17 @@ form.bc-form(
               span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
               | &nbsp;
               a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
-            span.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min")
+            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min" ng-click="state.input.amount = state.rate.min; state.baseCurr = state.input.curr")
               span(translate=".BELOW_MIN_SHIFT_LIMIT")
               | :&nbsp;
-              span.pointer.upper(ng-click="state.input.amount = state.rate.min; state.baseCurr = state.input.curr") {{ state.rate.min }} {{ state.input.curr }}
-            span.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max")
+              span.upper {{ state.rate.min }} {{ state.input.curr }}
+            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max" ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr")
               span(translate=".MAX_AVAILABLE_ERROR")
               | :&nbsp;
-              span.pointer.upper(ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr") {{ maxAvailable }} {{ state.input.curr }}
-            span.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable >= state.rate.max")
+              span.upper {{ maxAvailable }} {{ state.input.curr }}
+            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable >= state.rate.max" ng-click="state.input.amount = state.rate.max; state.baseCurr = state.input.curr")
               span(translate=".EXCEEDED_MAX_SHIFT")
               | :&nbsp;
-              span.pointer.upper(ng-click="state.input.amount = state.rate.max; state.baseCurr = state.input.curr") {{ state.rate.max }} {{ state.input.curr }}
+              span.upper {{ state.rate.max }} {{ state.input.curr }}
       .group.mt-30
         button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")
