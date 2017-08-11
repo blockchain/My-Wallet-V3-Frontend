@@ -8,7 +8,7 @@ AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.rule(($injector, $location) => {
-    if (!$injector.has('Wallet') && $location.path() === '/eth/transactions') {
+    if (!$injector.has('Wallet') && ($location.path() === '/eth/transactions' || $location.path() === '/exchange')) {
       return '/login';
     }
   });
