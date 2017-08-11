@@ -1556,6 +1556,8 @@
   "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
   "EXCHANGE_SIMPLE": "Exchange",
   "EXCHANGE_RATE": "Exchange Rate",
+  "BTC_ETH_EXCHANGE": "Exchange Assets",
+  "BTC_ETH_EXCHANGE_WHATS_NEW": "You can now exchange your bitcoin for ether and vice versa directly from your Blockchain wallet.",
   "NEW": "New",
   "SHIFT": {
     "WELCOME_INFO": "You can now exchange your bitcoin for ether and vice versa directly from your Blockchain wallet. In a few simple steps, your exchange will be in progress. Note: exchanges usually take between twenty minutes and two hours.",
