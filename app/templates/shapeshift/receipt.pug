@@ -16,16 +16,16 @@ form.bc-form(
       .f-16.em-500.mb-5
         span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
-        li.pb-10.flex-between
+        li.pb-5.flex-between
           span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")
           span.em-300.right-align {{ trade.depositAmount | format:input:true }}
-        li.pv-10.flex-between
-          span.em-500.colon(translate=".OUTPUT_RECEIVED" translate-values="{output: human[output]}")
+        li.pv-5.flex-between
+          span.em-500.colon(translate="{{ trade.isComplete ? 'SHIFT.OUTPUT_RECEIVED' : 'SHIFT.TO_RECEIVE'}}" translate-values="{output: human[output]}")
           span.em-300.right-align(ng-class="{'mid-grey opacity-5': trade.isResolved}") {{ trade.withdrawalAmount | format:output:true }}
-        li.pv-10.flex-between
+        li.pv-5.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
-        li.pt-10.flex-between
+        li.pt-5.flex-between
           span.em-500
             span.colon(translate=".WITHDRAWAL_FEE")
             helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
