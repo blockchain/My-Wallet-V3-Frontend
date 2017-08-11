@@ -19,6 +19,9 @@ describe('buyStatus service', () => {
           coinify: {
             countries: ['NL']
           },
+          unocoin: {
+            countries: ['IN']
+          },
           sfox: sfoxOptions
         }
       }));
