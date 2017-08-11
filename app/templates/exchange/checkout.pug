@@ -33,6 +33,7 @@ form.bc-form(
               step="1"
               prevent-event="mousewheel"
               focus-when="true"
+              ng-model-options="{debounce: 250}"
               required)
             span.mhm {{dollars.code}}
           i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
@@ -46,6 +47,7 @@ form.bc-form(
               ng-change="state.baseCurr = bitcoin"
               step="0.01"
               prevent-event="mousewheel"
+              ng-model-options="{debounce: 250}"
               required)
             span.mhm {{bitcoin.code}}
         .f-12.mts
