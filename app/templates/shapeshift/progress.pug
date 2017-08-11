@@ -4,13 +4,13 @@ div(translate-namespace="SHIFT")
       span.flex-justify.flex-center
         i.icon-paper-airplane
         i.icon-paper-airplane
-      span.mt-10(translate="{{ $ctrl.onStep('no_deposits') ? '.SENDING_FUNDS' : '.FUNDS_SENT' }}")
+      span.em-500.mt-10(translate="{{ $ctrl.onStep('no_deposits') ? '.SENDING_FUNDS' : '.FUNDS_SENT' }}")
     .flex-column.flex-center(ng-class="{active: $ctrl.onStep('received'), complete: $ctrl.afterStep('received')}")
       span.flex-justify.flex-center
         i.icon-ExchangeTab
         img(ng-src="img/exchange-processing.gif")
-      span.mt-10(translate=".EXCHANGE_IN_PROGRESS")
+      span.em-500.mt-10(translate=".EXCHANGE_IN_PROGRESS")
     .flex-column.flex-center(ng-class="{complete: $ctrl.onStep('complete'), failed: $ctrl.onStep('failed') || $ctrl.onStep('resolved')}")
       span.flex-justify.flex-center
         i(ng-class="$ctrl.onStep('failed') || $ctrl.onStep('resolved') ? 'icon-alert' : 'icon-completed-check'")
-      span.mt-10(translate="{{ $ctrl.onStep('failed') || $ctrl.onStep('resolved') ? 'SHIFT.TRADE.' + trade.status + '.HEADER' : 'TRADE_COMPLETE' }}")
+      span.em-500.mt-10(translate="{{ $ctrl.onStep('failed') || $ctrl.onStep('resolved') ? 'SHIFT.TRADE.' + trade.status + '.HEADER' : 'TRADE_COMPLETE' }}")

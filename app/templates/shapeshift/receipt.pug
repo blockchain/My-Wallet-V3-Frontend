@@ -13,8 +13,10 @@ form.bc-form(
         span(translate="{{ trade.error || 'SHIFT.TRADE.' + trade.status + '.BODY' }}"
              ng-show="isCheckout || trade.isResolved || trade.isFailed"
              translate-values="{output: human[output]}")
+        span(translate="{{ 'SHIFT.TRADE.' + trade.status + '.BODY' }}"
+             ng-show="trade.isComplete")
       .f-16.em-500.mb-5
-        span(translate=".ORDER_SUMMARY" translate-values="{output: human[output]}")
+        span(translate=".ORDER_SUMMARY")
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-5.flex-between
           span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")

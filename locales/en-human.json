@@ -1590,7 +1590,8 @@
     "SEE_YOUR_OUTPUT": "See Your <span class='capitalize'>{{::output}}</span>",
     "TRADE": {
       "complete": {
-        "HEADER": "@:TRADE_COMPLETE"
+        "HEADER": "Success! Your exchange has completed!",
+        "BODY": "Your exchange is completed. It may take a few minutes for the funds to show in your balance."
       },
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
