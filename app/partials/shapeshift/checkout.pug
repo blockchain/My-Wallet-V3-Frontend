@@ -1,13 +1,13 @@
 .height-100.flex-column.flex-1(translate-namespace="SHIFT")
   bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
-    .shift-logo
+    .shift-logo.hidden-xs
       span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
       a(href="https://www.shapeshift.io/" target="_blank" rel="noopener noreferrer")
         img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
-  .overflow-scroll.flex-1.pt-30.ph-30
+  .overflow-scroll.flex-1.pt-30.ph-30.no-padding-mobile
     .flex-column.pbvl(ng-if="tabs.selectedTab === 'EXCHANGE'")
       .flex-row(ng-if="vm.onStep('create')")
-        div.width-50.border-desktop.pv-30.mr-25.no-padding-mobile(ng-controller="ShapeShiftCreateController")
+        div.width-50.border-desktop.pv-30.mr-25.no-margin-mobile.no-padding-mobile(ng-controller="ShapeShiftCreateController")
           shift-create(on-complete="onComplete(payment, fee, quote)" build-payment="buildPayment(quote, fee)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
         div.width-50.ml-25.hidden-sm.hidden-xs
           p.blue.f-18.em-600(translate="SIMPLE_SEAMLESS_SECURE")

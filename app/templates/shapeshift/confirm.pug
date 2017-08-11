@@ -5,10 +5,10 @@ form.bc-form(
   translate-namespace="SHIFT"
   autocomplete="off")
   fieldset
-    .border-bottom.pb-30.flex-between.flex-center
-      span.f-16.em-500.pl-30(translate=".CONFIRM_EXCHANGE")
-      span.pr-30.flex-row.flex-center(translate="Step 2 of 2")
-    .ph-30
+    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500.pl-30.no-padding-mobile(translate=".CONFIRM_EXCHANGE")
+      span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 2 of 2")
+    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
       .f-13.mv-20
         span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{deposit: total, widthdrawal: quote.withdrawalAmount, input: quote.fromCurrency, output: quote.toCurrency, from: from.label, to: to.label}")
       .flex-end.mb-5

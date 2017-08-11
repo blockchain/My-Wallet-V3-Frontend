@@ -4,10 +4,10 @@ form.bc-form(
   translate-namespace="SHIFT"
   autocomplete="off")
   fieldset(ng-disabled="locked")
-    .border-bottom.pb-30
-      span.f-16.em-500.pl-30(translate=".TRADE.{{trade.status}}.HEADER")
-    .ph-30
-      .mv-20.ph-30
+    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500.pl-30.no-padding-mobile(translate=".TRADE.{{trade.status}}.HEADER")
+    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
+      .mv-20.ph-30.no-padding-mobile
         shift-progress(shift="trade")
       .f-13.mb-20
         span(translate="{{ trade.error || 'SHIFT.TRADE.' + trade.status + '.BODY' }}"
