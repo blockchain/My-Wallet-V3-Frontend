@@ -1578,6 +1578,7 @@
     "TX_FEE_EXPLAIN": "This fee is used to send funds from your wallet.",
     "WITHDRAWAL_FEE": "ShapeShift Withdrawal Fee",
     "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the withdrawal amount to your wallet.",
+    "ORDER_ID": "Order ID",
     "EXPLAIN_QUOTE": "This quote may change depending on the market price at the time of your transaction.",
     "ACCEPT_TERMS": "I agree to ShapeShift's <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>terms and conditions</a>.",
     "NO_FUNDS_TO_EXCHANGE": "Not enough funds to exchange",

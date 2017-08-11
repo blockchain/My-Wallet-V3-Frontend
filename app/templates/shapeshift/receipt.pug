@@ -25,11 +25,16 @@ form.bc-form(
         li.pv-5.flex-between
           span.em-500.colon(translate="EXCHANGE_RATE")
           span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
-        li.pt-5.flex-between
+        li.pv-5.flex-between
           span.em-500
             span.colon(translate=".WITHDRAWAL_FEE")
             helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
           span.em-300.right-align
             span {{ trade.quote.minerFee | format:output:true }}
+        li.pt-5.flex-between
+          span.em-500
+            span.colon(translate=".ORDER_ID")
+          span.em-300.right-align
+            span {{ trade.quote.orderId }}
       .flex-row.flex-end
         button.button-primary(ng-click="$ctrl.onClose()" translate="CLOSE")
