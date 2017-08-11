@@ -1587,6 +1587,7 @@
     "ORDER_SUMMARY": "Order Summary",
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
+    "SEE_YOUR_OUTPUT": "See Your <span class='capitalize'>{{::output}}</span>",
     "TRADE": {
       "complete": {
         "HEADER": "@:TRADE_COMPLETE"

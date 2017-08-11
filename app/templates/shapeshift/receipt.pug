@@ -37,4 +37,6 @@ form.bc-form(
           span.em-300.right-align
             span {{ trade.quote.orderId }}
       .flex-row.flex-end
-        button.button-primary(ng-click="$ctrl.onClose()" translate="CLOSE")
+        button.button-muted.mr-15(ng-if="trade.isComplete" ng-click="$ctrl.onClose()" translate="CLOSE")
+        button.button-primary(ng-if="!trade.isComplete" ng-click="$ctrl.onClose()" translate="CLOSE")
+        button.button-primary(ng-if="trade.isComplete" ui-sref="{{ output === 'btc' ? 'wallet.common.btc.transactions' : 'wallet.common.eth.transactions' }}" translate=".SEE_YOUR_OUTPUT" translate-values="{output: human[output]}")  
