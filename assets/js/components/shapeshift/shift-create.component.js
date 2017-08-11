@@ -77,7 +77,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
   $scope.getSendAmount = () => {
     $scope.lock();
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
-      let payment = this.buildPayment({quote});
+      let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee});
       payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
     }).then(($scope.free));
   };
@@ -95,8 +95,9 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
   };
 
   let getAvailableBalance = () => {
-    let fetchSuccess = (balance) => {
-      $scope.maxAvailable = state.baseBTC ? currency.convertFromSatoshi(balance, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance, $scope.ether, false));
+    let fetchSuccess = (balance, fee) => {
+      $scope.maxAvailable = state.baseBTC ? currency.convertFromSatoshi(balance.amount, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance.amount, $scope.ether, false));
+      $scope.cachedFee = balance.fee;
       state.balanceFailed = false;
       state.error = null;
     };
