@@ -369,7 +369,7 @@
     "BODY": "Viewing used addresses can be helpful for debugging purposes, and is recommended for advanced users only. For privacy reasons, we strongly discourage using each address more than once."
   },
   "PAST_ADDRESSES" : "Used Addresses",
-  "PAST_ADDRESSES_COPY": "Previously used addresses are helpful for debugging purposes and viewing associated balances. For privacy <br> reasons, we do not recommend re-using these addresses. Change addresses are not included here.",
+  "PAST_ADDRESSES_COPY": "Previously used addresses are helpful for debugging purposes and viewing associated balances. For privacy reasons, we do not recommend re-using these addresses. Change addresses are not included here.",
   "TOTAL_RECEIVED" : "Total Received",
   "CURRENT_BALANCE" : "Current Balance",
   "CURRENT_BALANCE_HELP" : "When you send bitcoin, your Blockchain wallet automatically selects addresses to spend from. That's why the current balance of an address can be different from the total received value.",
