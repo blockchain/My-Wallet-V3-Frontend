@@ -13,4 +13,5 @@ div(translate-namespace="SHIFT")
     .flex-column.flex-center.center(ng-class="{complete: $ctrl.onStep('complete'), failed: $ctrl.onStep('failed') || $ctrl.onStep('resolved')}")
       span.flex-justify.flex-center
         i(ng-class="$ctrl.onStep('failed') || $ctrl.onStep('resolved') ? 'icon-alert' : 'icon-completed-check'")
-      span.em-500.mt-10(translate="{{ $ctrl.onStep('failed') || $ctrl.onStep('resolved') ? 'SHIFT.TRADE.' + trade.status + '.HEADER' : 'TRADE_COMPLETE' }}")
+      span.em-500.mt-10(ng-hide="$ctrl.onStep('resolved')" translate="{{ $ctrl.onStep('failed') ? 'SHIFT.TRADE.' + trade.status + '.HEADER' : 'TRADE_COMPLETE' }}")
+      span.em-500.mt-10(ng-show="$ctrl.onStep('resolved')" translate="SHIFT.TRADE.resolved.HEADER")

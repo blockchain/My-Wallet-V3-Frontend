@@ -1604,7 +1604,7 @@
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
       },
       "resolved": {
-        "HEADER": "Trade Resolved"
+        "HEADER": "Trade Refunded"
       },
       "failed": {
         "HEADER": "Trade Failed",
