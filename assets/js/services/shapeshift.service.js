@@ -50,6 +50,5 @@ function ShapeShift (Wallet, modals) {
     return service.shapeshift.isWithdrawalTx(hash);
   };
 
-  window.ShapeShift = service;
   return service;
 }
