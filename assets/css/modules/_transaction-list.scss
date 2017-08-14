@@ -13,6 +13,7 @@
   }
   .transaction-feed {
     position: relative;
+    overflow-x: hidden;
     .loading .col-xs-2 {
       text-align: center;
       margin-bottom: 10px;
@@ -60,6 +61,7 @@
         margin: 0px;
       }
     }
+    transaction-description-ethereum,
     transaction-description {
       .progress {
         @extend .mbn;
@@ -138,6 +140,9 @@
 
   .rotated {
     transform: rotate(-90deg);
+  }
+  .get-started-ether {
+    border-radius: 5px;
   }
 }
 
@@ -273,6 +278,11 @@ a.date,p.date { color: $black; }
   padding: 7px 8px 7px 8px;
 }
 
+.ethAmountTotal {
+  @extend .amountTotal;
+  width: 130px;
+}
+
 .from, .to{
   padding: 5px 0;
   strong{
@@ -353,4 +363,9 @@ a.date,p.date { color: $black; }
     z-index: 4;
     position: relative;
   }
+}
+
+.half-eth {
+  height: 230px;
+  width: auto;
 }

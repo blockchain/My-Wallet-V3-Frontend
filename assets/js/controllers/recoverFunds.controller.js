@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RecoverFundsCtrl', RecoverFundsCtrl);
 
-function RecoverFundsCtrl ($scope, AngularHelper, $state, $timeout, $translate, localStorageService, Wallet, Alerts) {
+function RecoverFundsCtrl ($scope, AngularHelper, $state, $timeout, $translate, localStorageService, Wallet, Alerts, Ethereum) {
   $scope.isValidMnemonic = Wallet.isValidBIP39Mnemonic;
   $scope.currentStep = 1;
   $scope.fields = {
@@ -27,6 +27,7 @@ function RecoverFundsCtrl ($scope, AngularHelper, $state, $timeout, $translate, 
       AngularHelper.$safeApply();
 
       const loginSuccess = () => {
+        if (Ethereum.userHasAccess) Ethereum.initialize();
         $state.go('wallet.common.home');
       };
 

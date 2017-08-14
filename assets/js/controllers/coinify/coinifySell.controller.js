@@ -165,7 +165,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     if (!this.exchange.user) index = 0;
     else if (this.onStep('account')) index = 1;
     else if (this.onStep('summary')) index = 2;
-    Alerts.surveyCloseConfirm('survey-opened', links, index, true).then(this.cancel);
+    Alerts.surveyCloseConfirm('sell-survey-opened', links, index).then(this.cancel);
   };
 
   let startedPayment = $scope.startPayment();

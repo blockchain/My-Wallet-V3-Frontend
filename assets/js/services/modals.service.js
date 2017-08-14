@@ -34,9 +34,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
   service.openSend = service.openOnce((paymentRequest = {}, options) =>
     open({
-      templateUrl: 'partials/send.pug',
+      templateUrl: 'partials/send/send.pug',
       windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
+      controller: 'SendController',
+      controllerAs: 'vm',
       resolve: {
         paymentRequest: () => paymentRequest,
         loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
@@ -197,6 +198,28 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         trade () { return trade; },
         paymentMediums () { return quote && quote.getPaymentMediums(); }
       }
+    });
+  });
+
+  service.openShiftTradeDetails = service.openOnce((trade) => {
+    return openMobileCompatible({
+      controllerAs: 'vm',
+      windowClass: 'buy',
+      template: `
+        <div class='pv-30'>
+          <shift-receipt shift='trade' on-close="onClose()"></shift-receipt>
+        </div>`,
+      controller: function ($scope, $uibModalInstance) {
+        $scope.trade = trade;
+        $scope.onClose = () => $uibModalInstance.dismiss();
+      }
+    });
+  });
+
+  service.openEthLogin = service.openOnce(() => {
+    return openMobileCompatible({
+      windowClass: 'bc-modal buy',
+      templateUrl: 'partials/first-login-modal-eth.pug'
     });
   });
 

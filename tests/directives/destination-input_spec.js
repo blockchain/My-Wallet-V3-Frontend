@@ -7,7 +7,7 @@ describe('Destination Input directive', () => {
   let ignore;
 
   beforeEach(module('walletDirectives'));
-  
+
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
@@ -47,7 +47,7 @@ describe('Destination Input directive', () => {
 
   it('should call change on addressScan', inject(function ($timeout) {
     spyOn(isoScope, 'change');
-    let result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX';
+    let result = 'bitcoin:valid_btc_address';
     isoScope.onAddressScan(result);
     $timeout.flush();
     expect(isoScope.change).toHaveBeenCalled();
@@ -56,7 +56,7 @@ describe('Destination Input directive', () => {
 
   it('should trigger onPaymentRequest', inject(function ($timeout) {
     spyOn(isoScope, 'onPaymentRequest');
-    let result = 'bitcoin:1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX';
+    let result = 'bitcoin:valid_btc_address';
     isoScope.onAddressScan(result);
     $timeout.flush();
     expect(isoScope.onPaymentRequest).toHaveBeenCalled();

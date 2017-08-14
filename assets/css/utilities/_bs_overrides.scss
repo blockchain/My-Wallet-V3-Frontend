@@ -59,7 +59,7 @@ $select-fg: #686868;
       border-radius: 0px !important;
     }
     .ui-select-container .ui-select-toggle {
-    height: 30px;
+      height: 30px;
     }
   }
 
@@ -68,6 +68,13 @@ $select-fg: #686868;
     background-color: transparent;
     border-color: none;
   }
+  
+  &.asset-select {
+    .ui-select-choices-row > a {
+      padding: 8px 16px;
+    }
+  }
+  
   &.ui-select-bootstrap.dropdown.open {
     input {
       border-radius: 0;

@@ -422,8 +422,7 @@ module.exports = (grunt) => {
             'dist/js/bc-phone-number.min.js',
             'dist/img/*.*',
             'dist/img/favicon/*',
-            'dist/fonts/*.*',
-            'dist/fonts/bootstrap/*',
+            'dist/fonts/**/*.*',
             'dist/locales/*',
             'dist/beep.wav'
           ]

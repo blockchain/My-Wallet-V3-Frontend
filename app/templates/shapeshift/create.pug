@@ -1,0 +1,87 @@
+form.bc-form(
+  name="forms.shiftForm"
+  ng-submit="getSendAmount()"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500.pl-30.no-padding-mobile(translate=".EXCHANGE_DETAILS")
+      span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
+    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
+      .group.inline.mb-30.mb-10
+        .item.width-50.width-50-mobile.pr-15.no-padding-mobile
+          .flex-between.flex-baseline.mbs
+            span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()")
+            ui-select-match
+              span {{ $ctrl.from.label }}
+            ui-select-choices(repeat="origin in $ctrl.origins")
+              span {{ origin.label }}
+        .item.width-50.width-50-mobile.pl-15.no-padding-mobile
+          .flex-between.flex-baseline.mbs
+            span.f-16.em-500.colon(translate="TO")
+          input.form-control.bg-white(ng-disabled="true" ng-model="$ctrl.to.label")
+      .group
+        .item
+          .flex-between.flex-baseline.mbs
+            span.f-16.em-500.colon Enter Amount
+            span.state-danger-text(ng-if="state.loadFailed || state.balanceFailed && maxAvailable > state.rate.min")
+              i.ti-alert
+              span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+            span(ng-if="!state.loadFailed && !state.balanceFailed")
+              helper-button(content="SHIFT.EXPLAIN_QUOTE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
+          .flex-center
+            .flex-column.flex-1.border
+              .flex-center
+                input.form-control.no-border(
+                  type="number"
+                  name="input"
+                  ng-model="state.input.amount"
+                  ng-min="state.rate.min < maxAvailable ? state.rate.min : maxAvailable"
+                  ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
+                  ng-change="state.baseCurr = state.input.curr"
+                  step="0.01"
+                  prevent-event="mousewheel"
+                  focus-when="true"
+                  required)
+                span.mhm.upper {{state.input.curr}}
+              .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
+                fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
+                fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
+                fiat(btc="toSatoshi(state.input.amount, bitcoin)" ng-if="state.input.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
+            i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+            .flex-column.flex-1.border
+              .flex-center
+                input.form-control.no-border(
+                  type="number"
+                  name="output"
+                  ng-model="state.output.amount"
+                  ng-change="state.baseCurr = state.output.curr"
+                  prevent-event="mousewheel"
+                  step="0.01"
+                  required)
+                span.mhm.upper {{state.output.curr}}
+              .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
+                fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
+                fiat(eth="state.output.amount" ng-if="state.output.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
+                fiat(btc="toSatoshi(state.output.amount, bitcoin)" ng-if="state.output.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
+          .pos-rel.f-12.mts.state-danger-text(ng-show="forms.shiftForm.input.$error")
+            span.pos-abs(ng-show="maxAvailable < state.rate.min")
+              span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
+              | &nbsp;
+              a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
+            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min" ng-click="state.input.amount = state.rate.min; state.baseCurr = state.input.curr")
+              span(translate=".BELOW_MIN_SHIFT_LIMIT")
+              | :&nbsp;
+              span.upper {{ state.rate.min }} {{ state.input.curr }}
+            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max" ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr")
+              span(translate=".MAX_AVAILABLE_ERROR")
+              | :&nbsp;
+              span.upper {{ maxAvailable }} {{ state.input.curr }}
+            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable >= state.rate.max" ng-click="state.input.amount = state.rate.max; state.baseCurr = state.input.curr")
+              span(translate=".EXCEEDED_MAX_SHIFT")
+              | :&nbsp;
+              span.upper {{ state.rate.max }} {{ state.input.curr }}
+      .group.mt-30.mt-10-mobile
+        button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")

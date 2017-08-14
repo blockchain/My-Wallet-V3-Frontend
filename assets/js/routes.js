@@ -7,6 +7,12 @@ angular
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.rule(($injector, $location) => {
+    if (!$injector.has('Wallet') && ($location.path() === '/eth/transactions' || $location.path() === '/exchange')) {
+      return '/login';
+    }
+  });
+
   $urlRouterProvider.otherwise(function ($injector, $location) {
     if (!$injector.has('Wallet')) {
       return '/';
@@ -39,15 +45,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     },
     common: {
       templateUrl: 'partials/common.pug'
-    }
-  };
-
-  let transactionsViews = {
-    top: top,
-    left: walletNav,
-    right: {
-      templateUrl: 'partials/transactions.pug',
-      controller: 'TransactionsCtrl'
     }
   };
 
@@ -279,10 +276,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.transactions', {
-      url: '/transactions',
-      views: transactionsViews
-    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
@@ -322,6 +315,72 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/faq.pug',
           controller: 'faqCtrl'
         }
+      }
+    });
+
+  $stateProvider
+    .state('wallet.common.btc', {
+      url: '/btc',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin.pug',
+          controller: 'bitcoinTransactionsCtrl'
+        }
+      }
+    })
+    .state('wallet.common.btc.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.eth', {
+      url: '/eth',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-ethereum.pug',
+          controller: 'ethereumTransactionsCtrl'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q, Wallet) {
+          return Wallet.status.isLoggedIn
+            ? $injector.get('Ethereum').initialize()
+            : $q.resolve();
+        }
+      },
+      onEnter ($state, Ethereum, ShapeShift) {
+        if (!Ethereum.userHasAccess) $state.transition = null;
+      }
+    })
+    .state('wallet.common.eth.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.shift', {
+      url: '/exchange',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/shapeshift/checkout.pug',
+          controller: 'ShapeShiftCheckoutController',
+          controllerAs: 'vm'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q, Wallet) {
+          return Wallet.status.isLoggedIn
+            ? $injector.get('Ethereum').initialize()
+            : $q.resolve();
+        }
+      },
+      onEnter (ShapeShift) {
+        ShapeShift.fetchFullTrades();
       }
     });
 
@@ -376,7 +435,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.unocoin.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },
@@ -414,7 +473,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.sfox.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },

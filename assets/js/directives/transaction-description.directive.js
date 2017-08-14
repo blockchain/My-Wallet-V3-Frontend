@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin) {
+function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin, Labels, ShapeShift) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -21,6 +21,33 @@ function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin)
     let currentYear = new Date().getFullYear();
     let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
     scope.year = isCurrentYear ? '' : 'yyyy';
+    scope.note = scope.tx.note;
+
+    scope.isDepositTx = ShapeShift.isDepositTx;
+    scope.isWithdrawalTx = ShapeShift.isWithdrawalTx;
+
+    if (scope.tx.txType === 'received') {
+      if (scope.tx.to.length) {
+        if (scope.tx.to[0].identity === 'imported') {
+          if (scope.tx.to[0].label !== scope.tx.to[0].address) {
+            scope.label = scope.tx.to[0].label;
+          }
+        } else {
+          scope.label = Labels.getLabel(
+            scope.tx.to[0].accountIndex,
+            scope.tx.to[0].receiveIndex
+          );
+        }
+      }
+    }
+
+    scope.deleteNote = () => {
+      Wallet.deleteNote(scope.tx);
+    };
+
+    scope.setNote = (note) => {
+      Wallet.setNote(scope.tx, note);
+    };
 
     scope.getTxDirection = (txType) => {
       if (txType === 'sent') return 'SENT';

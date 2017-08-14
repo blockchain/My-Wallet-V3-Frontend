@@ -1,0 +1,46 @@
+form.bc-form(
+  name="forms.confirmForm"
+  ng-submit="shift()"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset
+    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500.pl-30.no-padding-mobile(translate=".CONFIRM_EXCHANGE")
+      span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 2 of 2")
+    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
+      .f-13.mv-20
+        span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{deposit: total, widthdrawal: quote.withdrawalAmount, input: quote.fromCurrency, output: quote.toCurrency, from: from.label, to: to.label}")
+      .flex-end.mb-5
+        countdown(time-to-expiration="getTimeToExpiration" on-expiration="onExpiration()" debug="true" message="QUOTE_EXPIRES_IN")
+        helper-button(content="SHIFT.QUOTE_EXPIRES_IN_HELPER")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+        li.pb-10.border-bottom-light.flex-between
+          span.em-500.colon(translate=".TO_DEPOSIT" translate-values="{input: human[quote.fromCurrency]}")
+          span.em-300.right-align
+            span {{ quote.depositAmount | format:quote.fromCurrency:true }}
+        li.pv-10.border-bottom-light.flex-between
+          span.em-500.colon(translate=".TO_RECEIVE" translate-values="{output: human[quote.toCurrency]}")
+          span.em-300.right-align
+            span {{ quote.withdrawalAmount | format:quote.toCurrency:true }}
+        li.pv-10.border-bottom-light.flex-between
+          span.em-500.colon(translate="EXCHANGE_RATE")
+          span.em-300.right-align {{ 1 | format:quote.fromCurrency:true }} = {{ quote.rate | format:quote.toCurrency:true }}
+        li.pv-10.border-bottom-light.flex-between
+          span.em-500
+            span.colon(translate="TX_FEE")
+            helper-button(content="SHIFT.TX_FEE_EXPLAIN")
+          span.em-300.right-align
+            span {{ fee | convert:quote.fromCurrency:true }}
+        li.pt-10.flex-between
+          span.em-500
+            span.colon(translate=".WITHDRAWAL_FEE")
+            helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
+          span.em-300.right-align
+            span {{ quote.minerFee | format:quote.toCurrency:true }}
+      .flex-row.flex-center.mb-15
+        input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
+        label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
+      .flex-row.flex-end
+        button.button-muted(type="button" translate="CANCEL" ng-click="$ctrl.onCancel()")
+        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="locked || forms.confirmForm.$invalid")

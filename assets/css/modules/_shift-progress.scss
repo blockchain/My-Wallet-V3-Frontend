@@ -1,0 +1,145 @@
+.shift-progress {
+  @extend .flex-row;
+  @extend .flex-between;
+  span:first-child {
+    @extend .pos-rel;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 30px;
+    border: 1px solid $blue;
+    i {
+      @extend .f-28;
+      @extend .blue;
+      @extend .pos-rel;
+      @extend .flex-center;
+      &.icon-paper-airplane {
+        @extend .pos-abs;
+        top: 50%;
+        left: 50%;
+        &:first-child {
+          transform: translate(-50%, -50%);
+        }
+        &:last-child {
+          transform: translate(-300%, 100%);
+        }
+      }
+    }
+  }
+  > div {
+    @extend .pos-rel;
+    @extend .width-33;
+    > span:first-child {
+      @extend .opacity-5;
+    }
+    &:before,
+    &:after {
+      content: '';
+      @extend .bg-blue;
+      @extend .pos-abs;
+      @extend .width-50;
+      right: initial;
+      top: 33.333%;
+      height: 1px;
+      left: 75%;
+    }
+    &:before {
+      opacity: 0;
+    }
+    &:after {
+      @extend .opacity-5;
+    }
+    &:last-child {
+      &:before,
+      &:after {
+        content: initial;
+      }
+    }
+    i.icon-ExchangeTab {
+      & + img {
+        height: 40px;
+        display: none;
+      }
+    }
+    &.active {
+      > span:first-child {
+        opacity: 1;
+      }
+      &:before {
+        opacity: 1;
+        animation: 2s linear infinite line;
+      }
+      &:after {
+        @extend .opacity-5;
+      }
+      i.icon-paper-airplane:first-child {
+        animation: 1.2s cubic-bezier(0.680, -0.550, 0.265, 1.550) infinite fly-away;
+      }
+      i.icon-paper-airplane:last-child {
+        animation: 1.2s cubic-bezier(0.680, -0.550, 0.265, 1.550) infinite fly-in;
+      }
+      i.icon-ExchangeTab {
+        display: none;
+        & + img { display: block; }
+      }
+    }
+    &.complete,
+    &.failed {
+      > span:first-child {
+        opacity: 1;
+      }
+      &:after {
+        opacity: 1;
+      }
+    }
+    &.failed {
+      > span:first-child {
+        border: 1px solid $state-danger-text;
+        i {
+          @extend .state-danger-text;
+        }
+      }
+    }
+  }
+}
+
+@-webkit-keyframes fly-away {
+  from   { transform: translate(-50%, -50%); }
+  to     { transform: translate(200%, -300%); }
+}
+@-moz-keyframes fly-away {
+  from   { transform: translate(-50%, -50%); }
+  to     { transform: translate(200%, -300%); }
+}
+@-o-keyframes fly-away {
+  from   { transform: translate(-50%, -50%); }
+  to     { transform: translate(200%, -300%); }
+}
+@keyframes fly-away {
+  from   { transform: translate(-50%, -50%); }
+  to     { transform: translate(200%, -300%); }
+}
+
+@-webkit-keyframes fly-in {
+  from   { transform: translate(-300%, 100%); }
+  to     { transform: translate(-50%, -50%); }
+}
+@-moz-keyframes fly-in {
+  from   { transform: translate(-300%, 100%); }
+  to     { transform: translate(-50%, -50%); }
+}
+@-o-keyframes fly-in {
+  from   { transform: translate(-300%, 100%); }
+  to     { transform: translate(-50%, -50%); }
+}
+@keyframes fly-in {
+  from   { transform: translate(-300%, 100%); }
+  to     { transform: translate(-50%, -50%); }
+}
+
+@keyframes line {
+  0%     { width: 0%; }
+  25%    { width: 50%; }
+  50%    { right: -25%; left: initial; width: 0%; }
+  100%   { left: 75%; right: initial; width: 0%; }
+}

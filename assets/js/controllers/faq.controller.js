@@ -2,8 +2,13 @@ angular
   .module('walletApp')
   .controller('faqCtrl', faqCtrl);
 
-function faqCtrl ($scope, faq, buyStatus, $uibModal) {
-  $scope.questions = faq.questions.map(q => angular.merge({ displayed: false }, q));
+function faqCtrl ($scope, faq, buyStatus, $uibModal, Ethereum) {
+  let showEthereum = Ethereum.userHasAccess || void 0;
+
+  $scope.questions = faq.questions
+    .filter(q => !q.eth || showEthereum)
+    .map(q => angular.merge({ displayed: false, values: { showEthereum } }, q));
+
   $scope.toggle = (q) => { q.displayed = !q.displayed; };
 
   $scope.subscribe = () => {

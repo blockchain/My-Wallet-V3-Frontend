@@ -9,7 +9,7 @@ function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exch
     let links = env.partners.unocoin.surveyLinks;
 
     this.close = () => {
-      Alerts.surveyCloseConfirm('unocoin-survey', links, this.step).then($uibModalInstance.dismiss);
+      Alerts.surveyCloseConfirm('unocoin-signup-survey', links, this.step).then($uibModalInstance.dismiss);
     };
   });
 

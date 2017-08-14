@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env, Ethereum) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -12,7 +12,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   $scope.lastViewedWhatsNew = null;
 
   $rootScope.isSubscribed = localStorageService.get('subscribed');
-
+  $scope.showEthereum = () => Ethereum.userHasAccess;
   $scope.getTheme = () => $scope.settings.theme;
 
   let asyncAssert = (value) => value ? $q.resolve(value) : $q.reject();
@@ -75,7 +75,10 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   };
 
   $interval(() => {
-    if (Wallet.status.isLoggedIn) currency.fetchExchangeRate();
+    if (Wallet.status.isLoggedIn) {
+      currency.fetchExchangeRate(Wallet.settings.currency);
+      currency.fetchEthRate(Wallet.settings.currency);
+    }
   }, 15 * 60000);
 
   if ($scope.status.isLoggedIn) {
@@ -93,11 +96,13 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   $q.all([Env, buyStatus.canBuy()]).then(([env, canBuy]) => {
     let now = Date.now();
-    let filterBuySell = (feat) => (
+    let filterFeatures = (feat) => (
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
-      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify')))
+      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
+      (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
+      (feat.title !== 'BTC_ETH_EXCHANGE' || Ethereum.userHasAccess)
     );
-    $scope.feats = whatsNew.filter(filterBuySell).filter(f => (now - f.date) < whatsNewDateCutoff);
+    $scope.feats = whatsNew.filter(filterFeatures).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {

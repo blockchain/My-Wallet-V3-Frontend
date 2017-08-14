@@ -1,15 +1,14 @@
-.dyk
-  .flex-between.flex-center.mbl
-    h5.mvn.type-h5.em-400(translate="DYK")
-  .widget.flex-row
-    div.flex-column
-      //- img.mobile-conversion(src="assets/icons/mobile.svg")
-      i.f-60.primary.icon-mobile.lh1
-    div.flex-column.pl-10
-      span.em-300.f-16.mbs(translate="GO_MOBILE")
-      span(translate="DOWNLOAD_OUR_APP")
-      .flex-row.mtm
-        div.flex-row.flex-align-start
-          a.upper.em-500(ng-click="$ctrl.openModal()" translate="PAIR_DEVICE")
-          i.icon-right_arrow.ml-5.pointer.pts.primary.f-10(ng-click="$ctrl.openModal()")
-    i.pointer.ti-close(ng-click="$ctrl.dismiss()")
+.dyk.border.pal
+  .pull-right
+    i.pointer.ti-close.f-12(ng-click="$ctrl.dismiss()")
+  .flex-between.flex-center.mb-10
+    h5.mvn.f-24.em-300.blue.upper(translate="DYK")
+  .flex-center
+    i.icon-mobile.f-36.blue.pr-15
+    h6.mvn.f-18.em-300.blue(translate="GO_MOBILE")
+  .mt-5
+    p.f-14.em-300
+      | {{ 'DOWNLOAD_OUR_APP' | translate }}
+    div.flex-row.flex-align-start
+      a.upper.em-500(ng-click="$ctrl.openModal()" translate="PAIR_DEVICE")
+      i.icon-right_arrow.ml-5.pointer.pts.primary.f-10(ng-click="$ctrl.openModal()")
