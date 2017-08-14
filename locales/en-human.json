@@ -1615,5 +1615,7 @@
   "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
   "WE_LISTENED": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
   "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
+  "EXCHANGED": "Exchanged",
+  "TO_BE_RECEIVED": "To Be Received",
   "": ""
 }

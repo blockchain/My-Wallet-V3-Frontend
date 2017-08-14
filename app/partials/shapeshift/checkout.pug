@@ -31,13 +31,13 @@
       .width-100.mb-30(ng-if="vm.pendingTrades()")
         .shift-history.border.bg-footer-blue
           .pvs
-            span.em-500.pl-25 Status
+            span.em-500.pl-25(translate="STATUS")
           .pvs
-            span.em-500 Date
+            span.em-500(translate="DATE")
           .pvs
-            span.em-500 Exchanged
+            span.em-500(translate="EXCHANGED")
           .pvs
-            span.em-500 Received
+            span.em-500(translate="TO_BE_RECEIVED")
         exchange-trade(
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           ng-if="trade.isProcessing || trade.isWaitingForDeposit"
@@ -49,13 +49,13 @@
         span.f-16.em-600 Completed Exchanges
         .shift-history.width-100.border.bg-footer-blue.mt-5
           .pvs
-            span.em-500.pl-25 Status
+            span.em-500.pl-25(translate="STATUS")
           .pvs
-            span.em-500 Date
+            span.em-500(translate="DATE")
           .pvs
-            span.em-500 Exchanged
+            span.em-500(translate="EXCHANGED")
           .pvs
-            span.em-500 Received
+            span.em-500(translate="RECEIVED")
         exchange-trade(
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           ng-if="trade.isComplete || trade.isFailed || trade.isResolved"
