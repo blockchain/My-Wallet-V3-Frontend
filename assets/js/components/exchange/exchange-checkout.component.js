@@ -79,8 +79,13 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
       state.loadFailed = false;
       this.collapseSummary = true;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
-      if (state.baseFiat) state.btc = quote.quoteAmount / 1e8;
-      else state.fiat = quote.quoteAmount;
+      if (state.baseFiat) {
+        state.btc = quote.quoteAmount / 1e8;
+        state.rate = (1 / (quote.quoteAmount / 1e8)) * Math.abs(quote.baseAmount);
+      } else {
+        state.rate = (1 / (Math.abs(quote.baseAmount) / 1e8)) * (quote.quoteAmount);
+        state.fiat = quote.quoteAmount;
+      }
     };
 
     this.handleQuote($scope.getQuoteArgs(state))
