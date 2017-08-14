@@ -7,25 +7,11 @@ angular
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.rule(($injector, $location) => {
-    if (!$injector.has('Wallet') && ($location.path() === '/eth/transactions' || $location.path() === '/exchange')) {
-      return '/login';
-    }
-  });
+  let isAuthenticated = (injector) => (
+    injector.has('Wallet') && injector.get('Wallet').status.isLoggedIn
+  );
 
-  $urlRouterProvider.otherwise(function ($injector, $location) {
-    if (!$injector.has('Wallet')) {
-      return '/';
-    } else {
-      let Wallet = $injector.get('Wallet');
-      if (!Wallet.status.isLoggedIn) {
-        return '/';
-      } else {
-        return '/home';
-      }
-    }
-  });
-
+  $urlRouterProvider.otherwise($injector => isAuthenticated($injector) ? '/home' : '/');
   $urlRouterProvider.when('/settings', '/settings/wallet');
 
   let top = {
@@ -65,7 +51,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       }
     })
     .state('wallet.common', {
-      views: commonViews
+      views: commonViews,
+      resolve: {
+        _authenticate ($q, $state, $injector, $timeout) {
+          if (isAuthenticated($injector)) {
+            return $q.resolve();
+          } else {
+            $timeout(() => $state.go('public.login-no-uid'));
+            return $q.reject();
+          }
+        }
+      }
     });
 
   $stateProvider
