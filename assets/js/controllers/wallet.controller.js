@@ -203,6 +203,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         if (Ethereum.userHasAccess && !Ethereum.hasSeen) {
           modals.openEthLogin();
           Ethereum.setHasSeen();
+          return;
         } else {
           buyStatus.canBuy().then((canBuy) => {
             if (buyStatus.shouldShowBuyReminder() &&
