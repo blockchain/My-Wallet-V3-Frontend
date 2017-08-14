@@ -52,7 +52,7 @@
           .flex-column
             .flex.flex-justify-mobile
               .get-started-ether.width-90.bg-primary.bg-primary.pv-10.ph-25-mobile.width-90-tablet
-                a.width-100.flex-center.flex-justify(ui-sref="wallet.common.shift")
+                a.width-100.flex-center.flex-justify(ng-click="onClickCta()")
                   i.icon-ExchangeTab.mr-10
                   span.upper.em-600.f-16.white(translate="GET_STARTED_WITH_ETHER")
             .flex-row.flex-column-mobile.pv-20-mobile
@@ -74,7 +74,7 @@
         p.em-300(translate="DESCRIBE_TRANSACTIONS_ETH")
       .flex.flex-center-mobile
         .btn-group
-          button.btn.button-default.type-h5.pos-rel(ui-sref="wallet.common.shift")
+          button.btn.button-default.type-h5.pos-rel(ng-click="onClickCta()")
             i.mrs.media-middle.icon-ExchangeTab
             span.em-300.upper(translate="GET_ETHER")
       .flex-column.col-md-6.col-xs-8.f-12.black.ph-25.mtl.center

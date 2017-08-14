@@ -375,8 +375,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             : $q.resolve();
         }
       },
-      onEnter (ShapeShift) {
-        ShapeShift.fetchFullTrades();
+      onEnter ($state, ShapeShift) {
+        if (!ShapeShift.userHasAccess) $state.transition = null;
+        else ShapeShift.fetchFullTrades();
       }
     });
 

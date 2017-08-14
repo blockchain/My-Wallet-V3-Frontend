@@ -67,6 +67,8 @@
     "rolloutFraction": 1
   },
   "shapeshift": {
+    "countriesBlacklist": ["US"],
+    "rolloutFraction": 0,
     "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_1MuVnVEtWhiVIQl",
                     "https://blockchain.co1.qualtrics.com/jfe/form/SV_3QV1OgysGUC0hXD"]
   },

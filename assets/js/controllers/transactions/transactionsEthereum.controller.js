@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ethereumTransactionsCtrl', ethereumTransactionsCtrl);
 
-function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localStorageService, $q) {
+function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, localStorageService, $q, ShapeShift, modals) {
   $scope.loading = true;
   $scope.ethTransactions = [];
   $scope.$watch(
@@ -34,6 +34,14 @@ function ethereumTransactionsCtrl ($scope, $uibModal, Wallet, Ethereum, localSto
 
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
+
+  $scope.onClickCta = () => {
+    if (ShapeShift.userHasAccess) {
+      $state.go('wallet.common.shift');
+    } else {
+      modals.openRequest(null, { asset: 'eth' });
+    }
+  };
 
   $scope.exportEthPriv = () => $uibModal.open({
     templateUrl: 'partials/show-private-key-ethereum.pug',

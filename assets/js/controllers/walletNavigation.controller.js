@@ -2,13 +2,13 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta, Ethereum) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta, Ethereum, ShapeShift) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
   $scope.userHasAccount = buyStatus.userHasAccount();
   $scope.showEthereum = () => Ethereum.userHasAccess;
-  $scope.showShift = () => Ethereum.userHasAccess;
+  $scope.showShift = () => ShapeShift.userHasAccess;
 
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
   $scope.setBuyCtaDismissed = cta.setBuyCtaDismissed;
