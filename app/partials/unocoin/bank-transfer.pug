@@ -16,7 +16,10 @@
             span.em-300.right-align.capitalize(ng-bind="val" ng-class="{'em-500': prop === 'TOTAL_COST', 'capitalize' : prop !== 'RECEIVING_ADDRESS'}")
       .group(ng-if="vm.onStep('reference')")
         .item
-          label.em-300.colon(translate="UNOCOIN_AFTER_TRANSFER")
+          label.em-300(translate="UNOCOIN_IF_IMPS")
+          label.em-300(translate="UNOCOIN_IF_NEFT_OR_RTGS")
+          label.em-300(translate="UNOCOIN_IF_CANT_ID")
+          label.em-300.colon.mt-10(translate="REF_NUMBER")
           input(ng-model="vm.state.reference" name="reference" type="text" required focus-when="vm.onStep('reference')")
 .ph-35.pb-25.flex-end.flex-row
   button.btn.button-primary(ng-if="vm.onStep('initiated')" ng-click="vm.close()" translate="CLOSE")
