@@ -50,7 +50,7 @@ form.bc-form(
                 fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
                 fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
                 fiat(btc="toSatoshi(state.input.amount, bitcoin)" ng-if="state.input.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
-            i.icon-skinny-arrow-right.f-12.border-grey.phm.hidden-xs
+            i.icon-skinny-arrow-right.f-12.border-grey.ph-10.hidden-xs
             .flex-column.flex-1.border
               .flex-center
                 input.form-control.no-border(
