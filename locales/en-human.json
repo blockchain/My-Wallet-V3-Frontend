@@ -1626,7 +1626,8 @@
   "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
-  "REFUNDED": "Refunded",
+  "resolved": "Refunded",
   "VIEW_DETAILS": "View Details",
+  "no_deposits": "In Progress",
   "": ""
 }

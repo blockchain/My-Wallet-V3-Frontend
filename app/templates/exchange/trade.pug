@@ -1,9 +1,6 @@
 .exchange-trade.border-right.border-bottom.border-left
   .exchange-status.pv-15
-    span.pl-25.ph-10-mobile.state-danger-text(ng-show="$ctrl.trade.isFailed") {{ $ctrl.trade.status | translate }}
-    span.pl-25.ph-10-mobile.state.success(ng-show="$ctrl.trade.isComplete" translate="COMPLETE")
-    span.pl-25.ph-10-mobile.state.medium-blue(ng-show="$ctrl.trade.isWaitingForDeposit || $ctrl.trade.isProcessing" translate="IN_PROGRESS")
-    span.pl-25.ph-10-mobile.state-danger-text(ng-show="$ctrl.trade.isResolved" translate="REFUNDED")
+    span.pl-25.ph-10-mobile.capitalize(ng-class="$ctrl.getClass()") {{ $ctrl.trade.status | translate }}
     a.hidden-xs(ng-click="$ctrl.viewDetails($ctrl.trade)" translate="VIEW_DETAILS")
   .exchange-date.pv-15
     span {{ $ctrl.trade.time | date:$ctrl.dateFormat }}
