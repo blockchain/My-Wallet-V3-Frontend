@@ -99,7 +99,8 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     let filterFeatures = (feat) => (
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
       (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
-      (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess)
+      (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
+      (feat.title !== 'BTC_ETH_EXCHANGE' || Ethereum.userHasAccess)
     );
     $scope.feats = whatsNew.filter(filterFeatures).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
