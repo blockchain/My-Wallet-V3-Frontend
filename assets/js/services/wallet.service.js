@@ -67,6 +67,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
 
     BlockchainConstants.NETWORK = env.network;
+    BlockchainConstants.SHAPE_SHIFT_KEY = env.shapeshift.apiKey;
 
     if ($window.location.hostname === 'localhost' || !env.isProduction) {
       const KEY = 'qa-tools-enabled';
