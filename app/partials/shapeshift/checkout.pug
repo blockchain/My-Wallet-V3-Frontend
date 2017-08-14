@@ -29,7 +29,7 @@
           p.em-400.pointer(translate=".NO_EXCHANGES_EXPLAIN" ng-click="tabs.select('EXCHANGE')")
       //- Pending Trades
       .width-100.mb-30(ng-if="vm.pendingTrades()")
-        .shift-history.border.bg-light-blue
+        .shift-history.border.bg-footer-blue
           .pvs
             span.em-500.pl-25 Status
           .pvs
@@ -47,7 +47,7 @@
       //- Completed Trades
       .width-100(ng-if="vm.completedTrades()")
         span.f-16.em-600 Completed Exchanges
-        .shift-history.width-100.border.bg-light-blue.mt-5
+        .shift-history.width-100.border.bg-footer-blue.mt-5
           .pvs
             span.em-500.pl-25 Status
           .pvs
