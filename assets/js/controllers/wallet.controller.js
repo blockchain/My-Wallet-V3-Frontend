@@ -68,6 +68,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       templateUrl: 'partials/main-password.pug',
       controller: 'MainPasswordCtrl',
       windowClass: 'bc-modal',
+      keyboard: false,
       resolve: {
         defer: () => defer
       }
