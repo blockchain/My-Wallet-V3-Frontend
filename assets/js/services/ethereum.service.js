@@ -131,6 +131,5 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     }
   });
 
-  window.Ethereum = service;
   return service;
 }
