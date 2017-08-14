@@ -1,0 +1,10 @@
+.exchange-trade.border-right.border-bottom.border-left
+  .exchange-status.pv-15
+    span.pl-25.ph-10-mobile.capitalize(ng-class="$ctrl.getClass()") {{ $ctrl.trade.status | translate }}
+    a.hidden-xs(ng-click="$ctrl.viewDetails($ctrl.trade)" translate="VIEW_DETAILS")
+  .exchange-date.pv-15
+    span {{ $ctrl.trade.time | date:$ctrl.dateFormat }}
+  .exchange-exchanged.pv-15
+    span.upper {{ $ctrl.trade.depositAmount }} {{ $ctrl.trade.fromCurrency }}
+  .exchange-received.pv-15
+    span.upper(ng-class="{'mid-grey opacity-5': $ctrl.trade.isWaitingForDeposit || $ctrl.trade.isProcessing || $ctrl.trade.isResolved}") {{ $ctrl.trade.withdrawalAmount }} {{ $ctrl.trade.toCurrency }}

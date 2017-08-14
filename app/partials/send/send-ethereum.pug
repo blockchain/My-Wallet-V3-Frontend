@@ -1,0 +1,129 @@
+#send.modal-body(ng-controller="SendEthereumController as $ctrl")
+  div(ng-hide="vm.confirm")
+    form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
+      .group.mb-20.inline
+        .item.width-30.width-50-mobile.mr-20
+          label.colon(translate="CURR")
+          asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
+      fieldset(ng-disabled="$ctrl.isWaitingOnTransaction")
+        .group
+          .item
+            label.colon(translate="TO")
+            .input-group
+              input#address-field.form-control(
+                type="text"
+                tabindex="1"
+                placeholder="Paste or scan an address"
+                name="to"
+                ng-model="$ctrl.tx.to"
+                ng-model-options="{debounce:250}"
+                ng-change="$ctrl.setTo()"
+                validate-eth-address
+                autofocus
+                required)
+              .input-group-btn
+                qr-scan(on-scan="$ctrl.onScan")
+            .has-error
+              span.help-block.type-sm(ng-show="sendForm.to.$error.isContract" translate="ETHER_DISABLE_SEND_TO_CONTRACT")
+              span.help-block.type-sm(ng-show="sendForm.to.$error.isEthAddress && !sendForm.to.$error.isContract" translate="ETHER_ADDRESS_INVALID")
+              span.help-block.type-sm(ng-show="$ctrl.isWaitingOnTransaction" translate="WAIT_FOR_CONFIRM")
+          //- Amount
+          .item.mt-20
+            label.colon(translate="AMOUNT")
+            .flex-center
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="$ctrl.tx.amount"
+                  ng-change="$ctrl.setAmount()"
+                  ng-max="$ctrl.payment.available"
+                  ng-min="0.0000000000001"
+                  name="amount"
+                  tabindex="2"
+                  placeholder="0"
+                  required)
+                span.mhm ETH
+              i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="$ctrl.tx.amountFiat"
+                  ng-change="$ctrl.setAmountFiat()"
+                  name="amountFiat"
+                  tabindex="3"
+                  placeholder="0")
+                span.mhm {{ $ctrl.fiat.code }}
+            .has-error
+              span.state-danger-text(
+                ng-click="$ctrl.setSweep()"
+                ng-show="sendForm.amount.$error.max")
+                span.type-sm(translate="USE_TOTAL")
+                | :&nbsp;
+                span.type-sm.pointer {{ $ctrl.payment.available }}
+
+          //- Description
+          .item.mt-20
+            label
+              span(translate="DESCRIPTION:")
+              helper-button(content="SEND_BITOIN_STEP2B")
+            .flex-1
+              textarea.pas(
+                rows="4"
+                ng-model="$ctrl.tx.note"
+                name="note"
+                maxlength="512"
+                placeholder="{{'NOTE_PLACEHOLDER' | translate}}"
+                tabindex="4")
+
+          //- Fee
+          .item.mt-20
+            label
+              span(translate="TX_FEE")
+            .flex-1.f-16
+              span {{ $ctrl.payment.fee }} ETH
+              | &nbsp;(
+              fiat(eth="$ctrl.payment.fee")
+              | )
+
+  //- Step 2 (confirm)
+  .overview(ng-show="vm.confirm")
+    .flex-column.f-16
+      .flex-row
+        label.colon.width-20.width-20-mobile(translate="FROM")
+        .width-80.width-80-mobile {{ $ctrl.account.label }}
+      .flex-row.mt-10
+        label.colon.width-20.width-20-mobile(translate="TO")
+        .width-80.width-80-mobile
+          span(translate="no") {{ $ctrl.tx.to }}
+      .flex-row.mt-10(ng-show="$ctrl.tx.note")
+        label.colon.width-20.width-20-mobile(translate="FOR")
+        .width-80.width-80-mobile {{ $ctrl.tx.note }}
+      .flex-row.mt-10
+        label.colon.width-20.width-20-mobile(translate="PAYMENT")
+        .width-80.width-80-mobile
+          span.mr-10 {{ $ctrl.payment.amount | format:'eth' }} ETH
+      .flex-row.mt-10
+        label.colon.width-20.width-20-mobile(translate="FEE")
+        .width-80.width-80-mobile
+          span.mr-10 {{ $ctrl.payment.fee }} ETH
+      .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
+        span.mb-10(translate="TOTAL")
+        span.f-28.mb-10.em-600 {{ $ctrl.getTransactionTotal() | format:'eth' }} ETH
+        span.f-20.em-300
+          fiat(eth="$ctrl.getTransactionTotal()")
+
+  .mt-25
+    button.full.button-primary.upper(
+      translate="CONTINUE"
+      ng-click="$ctrl.nextStep()"
+      tabindex="5"
+      ng-disabled="sendForm.$pending || sendForm.$invalid"
+      ng-hide="vm.confirm")
+    button.full.button-primary.upper(
+      ladda-translate="Send Ether"
+      ui-ladda="sending"
+      ng-click="$ctrl.send()"
+      data-style="expand-left"
+      ng-show="vm.confirm")
+    div.width-100.center.mt-10(ng-show="vm.confirm")
+      a(ng-click="vm.toSendView()" translate="GO_BACK")

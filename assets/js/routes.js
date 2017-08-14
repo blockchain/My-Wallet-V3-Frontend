@@ -7,19 +7,11 @@ angular
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise(function ($injector, $location) {
-    if (!$injector.has('Wallet')) {
-      return '/';
-    } else {
-      let Wallet = $injector.get('Wallet');
-      if (!Wallet.status.isLoggedIn) {
-        return '/';
-      } else {
-        return '/home';
-      }
-    }
-  });
+  let isAuthenticated = (injector) => (
+    injector.has('Wallet') && injector.get('Wallet').status.isLoggedIn
+  );
 
+  $urlRouterProvider.otherwise($injector => isAuthenticated($injector) ? '/home' : '/');
   $urlRouterProvider.when('/settings', '/settings/wallet');
 
   let top = {
@@ -42,15 +34,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
-  let transactionsViews = {
-    top: top,
-    left: walletNav,
-    right: {
-      templateUrl: 'partials/transactions.pug',
-      controller: 'TransactionsCtrl'
-    }
-  };
-
   let loadWalletModule = ($ocLazyLoad) => (
     $ocLazyLoad.load('walletLazyLoad')
   );
@@ -68,7 +51,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       }
     })
     .state('wallet.common', {
-      views: commonViews
+      views: commonViews,
+      resolve: {
+        _authenticate ($q, $state, $injector, $timeout) {
+          if (isAuthenticated($injector)) {
+            return $q.resolve();
+          } else {
+            $timeout(() => $state.go('public.login-no-uid'));
+            return $q.reject();
+          }
+        }
+      }
     });
 
   $stateProvider
@@ -279,10 +272,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.transactions', {
-      url: '/transactions',
-      views: transactionsViews
-    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
@@ -322,6 +311,72 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/faq.pug',
           controller: 'faqCtrl'
         }
+      }
+    });
+
+  $stateProvider
+    .state('wallet.common.btc', {
+      url: '/btc',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin.pug',
+          controller: 'bitcoinTransactionsCtrl'
+        }
+      }
+    })
+    .state('wallet.common.btc.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.eth', {
+      url: '/eth',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-ethereum.pug',
+          controller: 'ethereumTransactionsCtrl'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q, Wallet) {
+          return Wallet.status.isLoggedIn
+            ? $injector.get('Ethereum').initialize()
+            : $q.resolve();
+        }
+      },
+      onEnter ($state, Ethereum, ShapeShift) {
+        if (!Ethereum.userHasAccess) $state.transition = null;
+      }
+    })
+    .state('wallet.common.eth.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.shift', {
+      url: '/exchange',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/shapeshift/checkout.pug',
+          controller: 'ShapeShiftCheckoutController',
+          controllerAs: 'vm'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q, Wallet) {
+          return Wallet.status.isLoggedIn
+            ? $injector.get('Ethereum').initialize()
+            : $q.resolve();
+        }
+      },
+      onEnter (ShapeShift) {
+        ShapeShift.fetchFullTrades();
       }
     });
 
@@ -376,7 +431,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.unocoin.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },
@@ -414,7 +469,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.sfox.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },

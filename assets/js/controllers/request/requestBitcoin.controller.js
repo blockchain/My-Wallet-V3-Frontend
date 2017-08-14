@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('RequestCtrl', RequestCtrl);
+  .controller('RequestBitcoinController', RequestBitcoinController);
 
-function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModalInstance, $log, destination, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, MyBlockchainApi) {
+function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, currency, $log, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, MyBlockchainApi) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
@@ -35,7 +35,7 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
   };
 
   $scope.destinations = smartAccount.getOptions();
-  $scope.state.to = destination || Wallet.my.wallet.hdwallet.defaultAccount;
+  $scope.state.to = $scope.vm.destination || Wallet.my.wallet.hdwallet.defaultAccount;
   $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
 
   $scope.didCopyManually = false;
@@ -55,7 +55,9 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
     $scope.lock();
     Alerts.clear();
 
-    const success = () => $scope.state.requestCreated = true;
+    const success = () => {
+      $scope.state.requestCreated = true;
+    };
 
     const error = (error) => {
       if (error === 'NOT_ALPHANUMERIC') {
@@ -115,6 +117,10 @@ function RequestCtrl ($scope, AngularHelper, Wallet, Alerts, currency, $uibModal
 
     url += label ? 'message=' + label + ' ' : '';
     return encodeURI(url.slice(0, -1));
+  };
+
+  $scope.back = () => {
+    $scope.state.requestCreated = false;
   };
 
   $scope.$watch('state.to', () => $scope.state.address = $scope.address());

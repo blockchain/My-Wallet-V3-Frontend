@@ -1,14 +1,10 @@
-.modal-header.flex-column.bc-modal-header(data-preflight-tag="Request")
-  i.ti-close.close-modal(ng-click="$close()")
-  .flex-center
-    h3
-      i.mr-10.icon-receive
-      span(translate="REQUEST" ng-hide="state.requestCreated || state.viewQR")
-      span(translate="PAYMENT_ADDRESS" ng-show="state.viewQR")
-      span(translate="REQUEST_CREATED" ng-show="state.requestCreated")
 #receive.modal-body
   form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="nextStep()" novalidate)
     fieldset
+      .group.mb-20.inline(ng-hide="vm.hideAssetSelect")
+        .item.width-30.width-50-mobile
+          label.colon(translate="CURR")
+          asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
       .group.mb-20
         .item
           label.flex-between.flex-baseline
@@ -18,7 +14,7 @@
               helper-button(content="COPY_AND_SHARE_IMPORTED_ADDRESS.HELPER" ng-show="isToImportedAddress()")
             a.f-12.em-300(translate="VIEW_QR" ng-click="state.viewQR = true")
           .flex-row.flex-column-mobile(ng-click="manuallyCopiedAddress()")
-            span.f-16.bg-grey.ph-25.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
+            span.f-14.bg-grey.ph-10.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel.center-mobile(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browser.canExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
             span.f-14.ph-25.pv-10.upper.white.bg-success.center-mobile(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
       .group.mb-20
@@ -113,4 +109,4 @@
     button.btn.button-primary.full.upper.mt-20(single-click-select copy-content="{{ paymentRequestURL() }}" ng-click="state.isPaymentRequestCopied = true" ng-hide="state.isPaymentRequestCopied || !browser.canExecCommand" translate="COPY_LINK")
     button.btn.button-success-alt.full.upper.mt-20(ng-show="state.isPaymentRequestCopied" translate="LINK_COPIED" ng-mouseleave="state.isPaymentRequestCopied = false")
 
-    a.display-block.center.mt-20(ng-click="$close()") Close
+    a.display-block.mt-20(ng-click="back()") Back

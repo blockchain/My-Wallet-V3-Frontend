@@ -1,4 +1,4 @@
-describe('SendCtrl', () => {
+describe('SendBitcoinController', () => {
   let scope;
   let Wallet;
   let MyWallet;
@@ -11,11 +11,6 @@ describe('SendCtrl', () => {
   let $timeout;
 
   let askForSecondPassword;
-
-  let modalInstance = {
-    close () {},
-    dismiss () {}
-  };
 
   let hasErr = (input, err) => scope.sendForm[input].$error[err];
 
@@ -76,6 +71,13 @@ describe('SendCtrl', () => {
       Wallet.askForSecondPasswordIfNeeded = () => askForSecondPassword.promise;
 
       scope = $rootScope.$new();
+      scope.vm = {
+        confirm: false,
+        close: () => {},
+        toSendView: () => scope.vm.confirm = false,
+        toConfirmView: () => scope.vm.confirm = true,
+        paymentRequest: { address: '123abc45660022' }
+      };
 
       scope.qrStream = {};
       scope.qrStream.stop = function () { };
@@ -85,10 +87,9 @@ describe('SendCtrl', () => {
   describe('', () => {
     beforeEach(() =>
       angular.mock.inject(function ($injector, $rootScope, $controller, $compile) {
-        $controller('SendCtrl', {
+        $controller('SendBitcoinController', {
           $scope: scope,
           $stateParams: {},
-          $uibModalInstance: modalInstance,
           paymentRequest: {address: '', amount: ''},
           options: {}
         });
@@ -110,12 +111,6 @@ describe('SendCtrl', () => {
       })
     );
 
-    it('should be able to close', () => {
-      spyOn(modalInstance, 'dismiss');
-      scope.close();
-      expect(modalInstance.dismiss).toHaveBeenCalled();
-    });
-
     describe('initialization', () => {
 
       it('should load wallet status', () => expect(scope.status).toBeDefined());
@@ -128,7 +123,7 @@ describe('SendCtrl', () => {
 
       it('should not be sending', () => expect(scope.sending).toEqual(false));
 
-      it('should not start on the confirmation step', () => expect(scope.confirm).toEqual(false));
+      it('should not start on the confirmation step', () => expect(scope.vm.confirm).toEqual(false));
 
       it('should not start in advanced send mode', () => expect(scope.advanced).toEqual(false));
     });
@@ -259,6 +254,7 @@ describe('SendCtrl', () => {
       it('should be invalid if null', () => {
         // check first destination
         expect(scope.transaction.destination).toBeNull();
+        scope.$apply();
         expect(hasErr('destination', 'required')).toBe(true);
       });
 
@@ -428,18 +424,21 @@ describe('SendCtrl', () => {
 
         it('should close the modal if it receives Tx Exists error', inject(function (Alerts) {
           scope.payment = MyWallet.wallet.createPayment({}, true, 'Transaction Already Exists');
-          spyOn(modalInstance, 'close').and.callThrough();
+          spyOn(scope.vm, 'close').and.callThrough();
           spyOn(Alerts, 'displayError').and.callThrough();
           scope.send();
           scope.$digest();
-          expect(modalInstance.close).toHaveBeenCalled();
+          expect(scope.vm.close).toHaveBeenCalled();
           expect(Alerts.displayError).not.toHaveBeenCalled();
         })
         );
       });
 
       describe('success', () => {
-        beforeEach(() => askForSecondPassword.resolve());
+        beforeEach(() => {
+          $httpBackend.expectGET('https://blockchain.info/event?name=wallet_web_tx_from_uri').respond('success');
+          askForSecondPassword.resolve();
+        });
 
         let digestAndFlush = function () {
           scope.$digest();
@@ -453,10 +452,10 @@ describe('SendCtrl', () => {
         });
 
         it('should close the modal', () => {
-          spyOn(modalInstance, 'close');
+          spyOn(scope.vm, 'close');
           scope.send();
           digestAndFlush();
-          expect(modalInstance.close).toHaveBeenCalled();
+          expect(scope.vm.close).toHaveBeenCalled();
         });
 
         it('should play "The Beep"', inject(function (Wallet) {
@@ -496,7 +495,7 @@ describe('SendCtrl', () => {
           spyOn($state, 'go');
           scope.send();
           digestAndFlush();
-          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions');
+          expect($state.go).toHaveBeenCalledWith('wallet.common.btc.transactions');
         })
         );
 
@@ -505,7 +504,7 @@ describe('SendCtrl', () => {
           scope.transaction.from = Wallet.legacyAddresses()[0];
           scope.send();
           digestAndFlush();
-          expect($state.go).toHaveBeenCalledWith('wallet.common.transactions');
+          expect($state.go).toHaveBeenCalledWith('wallet.common.btc.transactions');
         })
         );
 
@@ -532,6 +531,7 @@ describe('SendCtrl', () => {
           beforeEach(() => spyOn(scope, 'sendInputMetrics'));
 
           it('should not send if inputMetric is null', () => {
+            scope.inputMetric = null;
             scope.send();
             digestAndFlush();
             expect(scope.sendInputMetrics).not.toHaveBeenCalled();
@@ -658,14 +658,14 @@ describe('SendCtrl', () => {
         scope.goToConfirmation();
         scope.$digest();
         expect(scope.finalBuild).toHaveBeenCalled();
-        expect(scope.confirm).toEqual(true);
+        expect(scope.vm.confirm).toEqual(true);
       })
       );
 
       it('should be able to go back from confirmation step', () => {
-        scope.confirm = true;
-        scope.backToForm();
-        expect(scope.confirm).toBeFalsy();
+        scope.vm.confirm = true;
+        scope.vm.toSendView();
+        expect(scope.vm.confirm).toBeFalsy();
       });
 
       it('should be able to switch to advanced send', () => {
@@ -768,11 +768,10 @@ describe('SendCtrl', () => {
   describe('with a payment request', () => {
     beforeEach(() =>
       angular.mock.inject(function ($injector, $rootScope, $controller, $compile) {
-        $controller('SendCtrl', {
+        scope.vm.paymentRequest = {address: 'valid_address', amount: 1000000};
+        $controller('SendBitcoinController', {
           $scope: scope,
           $stateParams: {},
-          $uibModalInstance: modalInstance,
-          paymentRequest: {address: "valid_address", amount: 1000000},
           options: {}
         });
 

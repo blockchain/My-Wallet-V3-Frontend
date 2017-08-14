@@ -23,9 +23,13 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
-    "CAN_I_BUY": {
+    "CAN_I_BUY_BTC": {
       "Q": "How do I buy bitcoin?",
       "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
+    },
+    "CAN_I_BUY_ETH": {
+      "Q": "How do I buy ether?",
+      "A": "We're working on that! In the meantime, you can exchange your bitcoin for ether in the 'Exchange' tab of your wallet."
     },
     "CAN_I_BUY_UNINVITED": {
       "Q": "Can I buy bitcoin?",
@@ -36,28 +40,32 @@
       "A": "Our Security Center can help you keep your wallet secure and ensure that you can access your funds even if you lose your password - all in less than 5 minutes. A great place to start is to enable 2-Step Verification to help prevent unauthorized access to your wallet and write down your Recovery Phrase to make sure you never lose access to your funds. We also recommend using a unique, random password that’s at least 16 characters or more."
     },
     "WALLET_ID_VS_ADDRESS": {
-      "Q": "What is the difference between a wallet ID and a bitcoin address?",
-      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. A bitcoin address is what you share with others when you want to receive funds. To generate a new bitcoin address click on Receive."
+      "Q": "What is the difference between a wallet ID and an address?",
+      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. Bitcoin{{showEthereum ? ' and ether' : ''}} addresses are what you share with others when you want to receive funds. To find your bitcoin{{showEthereum ? ' or ether' : ''}} address click on Request."
     },
-    "HOW_TO_TRANSACT": {
+    "HOW_TO_TRANSACT_BTC": {
       "Q": "How do I receive/send bitcoin?",
-      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Receive and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
+      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Request and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
+    },
+    "HOW_TO_TRANSACT_ETH": {
+      "Q": "How do I receive/send ether?",
+      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Ether’ in the left menu to access your ether dashboard. Once there, click on ‘Request’ to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ from the ether transactions tab, enter the recipient’s ether address in the ‘To’ field and how much you want to send."
     },
     "HOW_MUCH_TO_SEND": {
-      "Q": "How much does it cost to send bitcoin?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin network. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. Before you send your transaction, you can view the included fee that we recommend. If you wish to specify your own fee, you can do so under Advanced Send."
+      "Q": "How much does it cost to send bitcoin{{showEthereum ? ' or ether' : ''}}?",
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin {{showEthereum ? 'and Ethereum networks' : 'network'}}. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under Customize Fee."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
       "Q": "How do I know a transaction has been successfully received/sent?",
-      "A": "Transactions will appear almost instantly in your transaction feed which you can find on the left navigation of the wallet. Your transaction is considered complete once it has received 3 network confirmations. This typically takes about 30 minutes, but can vary. Until then your transaction will show up as pending."
+      "A": "Transactions will appear almost instantly in your transaction feed which you can find in your bitcoin{{showEthereum ? ' and ether' : ''}} dashboards (by clicking on the corresponding currency on the left navigation of the wallet). {{showEthereum ? 'While your' : 'Your'}} bitcoin transaction is considered complete once it has 3 network confirmations{{showEthereum ? ', your ether transaction will be considered complete once it has 12 confirmations' : ''}}. This typically takes about 30 minutes{{showEthereum ? ' for bitcoin and 5 minutes for ether' : ''}}, but can vary. Until then your transaction will show up as pending."
     },
     "CAN_BC_SEE_FUNDS": {
       "Q": "Can Blockchain see or access my funds?",
-      "A": "We are a noncustodial wallet and do not have access to your bitcoins. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin."
+      "A": "We are a noncustodial wallet and do not have access to your funds. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin{{showEthereum ? ' and ether' : ''}}."
     },
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
-      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a recovery phrase that can be used to restore access to your bitcoins. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
     }
   },
   "SETTINGS": "Settings",
@@ -102,6 +110,7 @@
   "CANCEL_TRADE": "Cancel Trade",
   "CLOSE": "Close",
   "NUMBER_1_WALLET": "#1 Bitcoin Wallet",
+  "NUMBER_1_DIGITAL_WALLET": "#1 Digital Wallet",
   "TRANSACTION" : "Transaction",
   "TRANSACTIONS_AMT" : "{{count}} Million+ Transactions",
   "WALLETS_AMT" : "{{count}} Million+ Wallets",
@@ -111,6 +120,7 @@
   "VIEW_QR": "View QR Code",
   "SEND" : "Send",
   "RECEIVE_BITCOIN" : "Receive",
+  "START_RECEIVING_ETHER": "start receiving ether",
   "RECEIVE_TO" : "Receive To:",
   "AMOUNT" : "Amount",
   "PAID" : "Paid:",
@@ -168,24 +178,40 @@
     "TITLE": "Cancel Trade?",
     "BODY": "You're so close to receiving bitcoin."
   },
-  "CONFIRM_CLOSE_BUY": {
+  "BUY_SURVEY_OPENED": {
     "TITLE": "Are You Sure?",
     "BODY": "You're just a few steps from receiving bitcoin, are you sure you want to stop?"
   },
-  "CONFIRM_CLOSE_SELL": {
+  "SELL_SURVEY_OPENED": {
     "TITLE": "Are You Sure?",
     "BODY": "You're just one click away from completing your sale. Are you sure you want to stop?"
+  },
+  "SHIFT_TRADE_SURVEY": {
+    "TITLE": "Are You Sure?",
+    "BODY": "You're just one click away from completing your coin exchange. Are you sure you want to stop?"
+  },
+  "SFOX_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+  },
+  "UNOCOIN_TRADE_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
   },
   "LANGUAGE_EXPLAIN" : "Set your preferred language.",
   "EMAIL_ADDRESS" : "Email Address",
   "NOT_VALID_EMAIL_ADDRESS": "Please enter a valid email address.",
-  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send bitcoin payment alerts when you receive funds.",
+  "EMAIL_ADDRESS_EXPLAIN" : "Your verified email address is used to send login codes when suspicious or unusual activity is detected, to remind you of your wallet login ID, and to send payment alerts when you receive funds.",
   "CHANGE_EMAIL_NOT_EXCHANGE": "This will change your wallet's email address, but the email address you signed up to Buy Bitcoin with will remain the same.",
   "MAIL_PROVIDER_WARN": "Your mail provider may have issues receiving emails from Blockchain",
   "VERIFIED" : "Verified",
   "UNVERIFIED" : "Unverified",
   "MOBILE_NUMBER" : "Mobile Number",
-  "MOBILE_NUMBER_EXPLAIN" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access, and to send bitcoin payment alerts when you receive funds.",
+  "MOBILE_NUMBER_EXPLAIN" : "Your mobile phone can be used to enable two-factor authentication, helping to secure your wallet from unauthorized access, and to send payment alerts when you receive funds.",
   "ADD_MOBILE_NUMBER" : "Link Mobile Number",
   "WALLET_PASSWORD" : "Wallet Password",
   "WALLET_PASSWORD_EXPLAIN" : "Your password is never shared with our servers, which means we cannot help reset your password if you forget it. Make sure you write down your recovery phrase which can restore access to your wallet in the event of a lost password.",
@@ -213,6 +239,7 @@
   "CHANGE_PASSWORD_SUCCESS" : "Password has been changed.",
   "CHANGE_PASSWORD_FAILED" : "Could not change password.",
   "MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA" : "Please disable 2-step Verification via SMS in the security settings first",
+  "CURR": "Currency",
   "CURRENCY" : "Local Currency",
   "CURRENCY_EXPLAIN" : "Select your local currency.",
   "SETTINGS" : "Settings",
@@ -223,7 +250,7 @@
   "CANCEL_EDIT_NOTE" : "Cancel",
   "WALLET_RECOVERY_PHRASE" : "Wallet Recovery Phrase",
   "RECOVERY_PHRASE" : "Recovery Phrase",
-  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
+  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins{{showEthereum ? ' and ether' : ''}} as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
@@ -273,7 +300,7 @@
   "2FA_NOT_SUPPORTED" : "This method of two factor authentication is not supported",
   "DISABLE" : "Disable",
   "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable two step authentication?",
-  "IMPORTED_ADDRESSES" : "Imported Addresses",
+  "IMPORTED_ADDRESSES" : "Imported Bitcoin Addresses",
   "HD_ADDRESSES" : "HD Addresses",
   "ADDRESS_BOOK" : "Address Book",
   "MANAGE_ADDRESS_BOOK" : "Manage Address Book",
@@ -301,7 +328,7 @@
   "MY_ADDRESSES_EXPLAIN" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEW_ADDRESS" : "New Address",
   "ADD_NEXT_ADDRESS": "Add Next Address",
-  "IMPORT_ADDRESS" : "Import Address",
+  "IMPORT_ADDRESS" : "Import Bitcoin Address",
   "MORE_ACTIONS" : "More Actions",
   "CONFIRM_IMPORT_WATCH": {
     "TITLE": "Import Watch-only Address?",
@@ -324,11 +351,13 @@
   "ARCHIVED" : "Archived",
   "UNARCHIVE" : "Unarchive",
   "DELETE" : "Delete",
+  "MAIN_PASSWORD": "Main Password",
+  "MAIN_PASSWORD_CANCEL": "Your main password is required.",
   "SECOND_PASSWORD" : "Second Password",
   "CURRENT_SECOND_PASSWORD": "Current Second Password",
-  "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend bitcoins. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
+  "SECOND_PASSWORD_EXPLAIN" : "For Additional security, you can choose a second password that is required whenever you want to spend your funds. This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
   "SECOND_PASSWORD_WARNING" : "This is different from your standard wallet password. If you set your second wallet password, don’t forget it!",
-  "SECOND_PASSWORD_CANCEL": "Your second password is required to send bitcoin. Please try again",
+  "SECOND_PASSWORD_CANCEL": "Your second password is required to send. Please try again",
   "SECOND_PASSWORD_REMOVE_SUCCESS" : "Second password has been removed.",
   "SECOND_PASSWORD_REMOVE_LOGOUT" : "You need to logout and then login again to proceed.",
   "SECOND_PASSWORD_REMOVE_ERR": "Second password cannot be removed. Try again.",
@@ -347,6 +376,7 @@
   "RENAME_ACCOUNT" : "Name",
   "RENAME" : "Rename",
   "TRANSACTION_WILL_COMPLETE_IN" : "Your transaction will be complete after it has 3 confirmations.",
+  "TRANSACTION_WILL_COMPLETE_IN_ETH" : "Your transaction will be complete after it has 12 confirmations.",
   "EXPORT_HISTORY" : "Export History",
   "EXPORT_HISTORY_EXPLAIN" : "Export the transaction history of your addresses in CSV format",
   "DEV_THEMES": "Dev Themes",
@@ -375,7 +405,7 @@
   "CURRENT_BALANCE_HELP" : "When you send bitcoin, your Blockchain wallet automatically selects addresses to spend from. That's why the current balance of an address can be different from the total received value.",
   "NO_TXS" : "No Transactions",
   "WATCH_ONLY_ADDRESSES" : "Watch-only Addresses",
-  "ARCHIVED_ADDRESSES" : "Archived Addresses",
+  "ARCHIVED_ADDRESSES" : "Archived Bitcoin Addresses",
   "ARCHIVED_ADDRESSES_EXPLAIN" : "Archived addresses are addresses you may not need anymore that are hidden from the main view but still part of your wallet. You can unarchive them at any time.",
   "CONFIRM_LOSE_ACCESS": {
     "TITLE": "Delete Address?",
@@ -419,6 +449,7 @@
   "ADDRESS_VALID" : "The Bitcoin address is valid",
   "ADDRESS_FOR_PRIVATE_KEY" : "The Bitcoin address associated with this Private Key is",
   "PRIVATE_KEY_WARNING" : "<b>WARNING:</b> Granting others  access to this Private Key gives them the ability to send bitcoin from this address. Exposing your Private Key to others is a security risk that may result in lost bitcoin. Do you wish to continue?",
+  "PRIVATE_KEY_WARNING_ETH" : "<b class='state-danger-text'><i class='icon-alert'></i> WARNING:</b> Granting others  access to this Private Key gives them the ability to send ether from this address. Exposing your Private Key to others is a security risk that may result in lost ether. <b>You will be asked for you main password in order to continue.</b>",
   "BALANCE_FOR_ADDRESS": "The balance of this address is",
   "INPUT_NOT_RECOGNIZED" : "The value you entered does not appear to be a valid Private Key or bitcoin address",
   "ALREADY_IN_WALLET" : "This address is already present in the wallet",
@@ -443,7 +474,7 @@
   "IP_INVALID": "Invalid IP Address",
   "IP_NOT_ALLOWED" : "%.%.%.% is not allowed",
   "WALLET_SECOND_PASSWORD" : "Second Wallet Password",
-  "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend bitcoins. Beware that there is no password reset functionality.",
+  "WALLET_SECOND_PASSWORD_EXPLAIN" : "For additional security, you can choose a second password that is asked whenever you want to spend your funds. Beware that there is no password reset functionality.",
   "SECOND_PASSWORD_SET" : "Second Password Enabled",
   "REMOVE_SECOND_PASSWORD" : "Remove Second Password",
   "SECOND_PASSWORD_INCORRECT" : "Incorrect Second Password, please try again.",
@@ -512,6 +543,7 @@
   "API_ACCESS" : "API Access",
   "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>here</a> to get started.",
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
+  "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
   "EMAIL_CONFIRMATION_SENT" : "Sent",
@@ -534,6 +566,8 @@
   "SPONSORS" : "Sponsored Links",
   "BITCOIN_CURRENCY" : "Bitcoin Unit",
   "BITCOIN_CURRENCY_EXPLAIN": "Adjust the precision you would prefer bitcoin values to be displayed in.",
+  "ETHER_CURRENCY" : "Ether Unit",
+  "ETHER_CURRENCY_EXPLAIN": "Adjust the precision you would prefer ether values to be displayed in.",
   "JUST_RECEIVED_BITCOIN" : "You've just received Bitcoin!",
   "SUCCESS" : "Success!",
   "COPY_SUCCESS": "Successfully copied to your clipboard!",
@@ -543,12 +577,14 @@
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
   "TRY_AGAIN": "Try Again",
-  "DESCRIBE_TRANSACTIONS" : "Transactions occur when you receive and send bitcoin.",
+  "DESCRIBE_TRANSACTIONS" : " Transactions occur when you receive and send bitcoin.",
+  "DESCRIBE_TRANSACTIONS_ETH" : "Transactions occur when you receive and send ether",
+  "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. Your transactions won't be visible in your mobile wallet.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
   "HIT_SEND" : "Click <b class='pointer black em-500'><i class='bc-icon-send'></i> Send </b> to instantly send bitcoin anywhere in the world!",
   "FIRST_ACCOUNT_NAME" : "My Bitcoin Wallet",
   "EMAIL_VERIFIED_SUCCESS" : "You've successfully verified your email! Please return to your previous browser / tab to see your wallet.",
-  "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you, and it is what you will use to log in and access your wallet. It is <b>not</b> a bitcoin address for sending or receiving.",
+  "UID_EXPLAIN" : "Wallet ID is your unique identifier. It is completely individual to you, and it is what you will use to log in and access your wallet. It is <b>not</b> an address for sending or receiving.",
   "UID_EXPLAIN_WARN": "Do not share your Wallet ID with others.",
   "AUTHORIZED" : "Authorized!",
   "AUTHORIZED_MESSAGE" : "You have authorized this login attempt.",
@@ -569,6 +605,7 @@
   "TX_FEE_REQUIRED": "Transaction Fee (required by Bitcoin miners)",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TX_FEE_EXPLAINATION": "Bitcoin miners receive fees for verifying transactions. We set fees dynamically based on network conditions and transaction size. You can customize your fee in advanced send.",
+  "TX_FEE_EXPLAINATION_ETH": "Miners received this fee to process this transaction",
   "TX_FEE_CONFIRM_EXPLAIN": "Transaction fees cover the mining network fees and the Blockchain infrastructure necessary to ensure fast and reliable transaction confirmation times. At this time, we recommend the transaction fee shown.",
   "USE_TOTAL": "Use total available minus fee",
   "ENTER_VALID_AMOUNT": "Please enter a valid amount",
@@ -633,7 +670,8 @@
   "MOBILE_LINKED" : "Mobile Linked",
   "SCAN_QR_CODE" : {
     "TITLE": "Scan QR Code",
-    "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet."
+    "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet.",
+    "ETH_HELPER": "Ask the sender to scan this QR code with their ether wallet"
   },
   "HINT_STORED" : "Hint Stored",
   "NOT_STORED" : "Not Stored",
@@ -643,7 +681,7 @@
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
-  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular bitcoin wallet platform. We’re helping to create a fair and open financial future.",
+  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular digital currency wallet platform. We’re helping to create an open, accessible, and fair financial future, one piece of software at a time.",
   "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!",
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
@@ -656,9 +694,10 @@
   "VALUE_WHEN_RECEIVED": "Value when Received",
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
+  "VERIFY_ON_ETHERSCAN": "Verify on Etherscan.io",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
   "ACCOUNT_NAME_TAKEN" : "That name is already in use",
-  "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send bitcoin payment alerts when you receive funds.",
+  "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send payment alerts when you receive funds.",
   "RECOVERY_PHRASE_TOOLTIP" : "Your recovery phrase allows you to restore your wallet in case of loss of password or extended downtime on our servers.",
   "PASSWORD_HINT_TOOLTIP" : "Allows us to send your password hint to your verified email address in case you forget your password.",
   "MOBILE_NUMBER_TOOLTIP" : "@:MOBILE_NUMBER_EXPLAIN",
@@ -667,16 +706,16 @@
   "ALL_WALLETS" : "All Wallets",
   "ALL_TRANSACTIONS": "All Transactions",
   "NOTE_LC" : "Note:",
-  "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your bitcoin wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
+  "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your Blockchain wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
   "SECURE_WALLET_MSG_2" : "Don't forget to secure your wallet - take advantage of our Security Center and keep your funds safe",
   "NO_THANKS" : "No thanks",
   "CONTINUE_LOGOUT": "Continue signing out",
   "SECURE_WALLET" : "Secure Wallet",
-  "MOST_RECENT_ACTIVITY" : "Most Recent Activity",
+  "MOST_RECENT_ACTIVITY" : "Recent Activity",
   "DYK" : "Did You Know?",
   "ACTIVITY_EMPTY": "Welcome to your Activity Feed",
-  "ACTIVITY_EMPTY_MSG": "Here we'll give you a snapshot of recent transactions & important activites surrounding your wallet.",
-  "CAN_BUY_ACTIVITY_EMPTY_MSG": "No transactions yet? No problem. Get started by adding some bitcoins to your wallet!",
+  "ACTIVITY_EMPTY_MSG_1": "No transactions yet? No problem.",
+  "ACTIVITY_EMPTY_MSG_2": "Get started by adding some funds to your wallet!",
   "RECEIVE_BTC": "Start Receiving Bitcoins",
   "FEATURE": "Feature",
   "EDUCATIONAL": "Educational",
@@ -705,27 +744,27 @@
   "DEAUTH_SUCCESS": "This browser has been deauthorized.",
   "PENDING_REFRESH": "Refreshing in {{time}} seconds",
   "BOUGHT": "Bought",
-  "DYK_CUSTOM_FEES": "Want to set your own fees? You can! Just click on Advanced Send on the Send screen.",
+  "DYK_CUSTOM_FEES": "Want to set your own bitcoin fees? You can! Just click on Customize Fee on the Send screen.",
   "DYK_CUSTOM_FEES_TITLE": "Set your own fees",
-  "DYK_RECOVERY": "We never see or store your password, which means if you forget it we cannot reset it. Be sure to record your backup recovery phrase to ensure you never lose access to your bitcoin. Find out how by visiting the Security Center.",
+  "DYK_RECOVERY": "We never see or store your password, which means if you forget it we cannot reset it. Be sure to record your backup recovery phrase to ensure you never lose access to your funds. Find out how by visiting the Security Center.",
   "DYK_RECOVERY_TITLE": "Passwords are not shared or stored with us",
-  "DYK_TX_FEES": "Transaction fees are used for sending bitcoins. To assure your transaction is confirmed by the network, we automatically include the appropriate fee based on the network standards and size of your transaction.",
+  "DYK_TX_FEES": "Transaction fees are used for sending bitcoin{{showEthereum ? ' and ether' : ''}}. To assure your transaction is confirmed by the network, we automatically include the appropriate fee based on network standards.",
   "DYK_TX_FEES_TITLE": "Transaction Fees",
   "DYK_FEEDBACK": "Our Wallet depends on you! Send us what you liked, loved, or hated to our team. All of the feedback is collected and reviewed directly by our development team.",
   "DYK_FEEDBACK_TITLE": "We're interested in your feedback",
-  "DYK_BTC_VALUE": "Your bitcoin balance will never change. However, as the exchange rate of bitcoin fluctuates you will see changes in the local currency estimation of your wallet balance. Simply click the balance to switch between bitcoin and your local currency.",
+  "DYK_BTC_VALUE": "Your bitcoin{{showEthereum ? ' and ether' : ''}} balances will never change. However, as their exchange rates fluctuate you will see changes in the local currency estimation of your wallet balance. Simply click the balance to switch between bitcoin{{showEthereum ? ' or ether' : ''}} and your local currency.",
   "DYK_BTC_VALUE_TITLE": "Why does my balance keep changing?",
   "DYK_TOP_SECURITY_TIPS": "Keep your wallet safe and secure by visiting the security center to record your backup phrase and enabling 2-step Verification. We also recommend using a unique, random password that’s at least 16 characters or more!",
   "DYK_TOP_SECURITY_TIPS_TITLE": "Top security tips",
-  "WALLET_ID_EXPLANATION": "Your wallet ID is like a username, you use it to login to your wallet. To send/receive bitcoin you need a bitcoin address.  To generate a new bitcoin address click Receive.",
-  "WALLET_ID_EXPLANATION_TITLE": "Your wallet ID cannot be used to send/receive bitcoin",
-  "DYK_MOBILE": "Download our mobile app and easily pair it with your wallet to quickly pay with bitcoin on the go.",
+  "WALLET_ID_EXPLANATION": "Your wallet ID is like a username, you use it to login to your wallet. To send/receive bitcoin{{showEthereum ? ' or ether' : ''}} you need an address. To find your bitcoin{{showEthereum ? ' or ether' : ''}} address click Request.",
+  "WALLET_ID_EXPLANATION_TITLE": "Your wallet ID cannot be used to send/receive funds",
+  "DYK_MOBILE": "Download our mobile app and easily pair it with your wallet to use your wallet on the go.",
   "DYK_MOBILE_TITLE": "Use your Blockchain wallet on mobile",
   "DYK_HOW_IT_WORKS": "Client side encryption keeps you firmly in control of your funds. Not even we have access. Your wallet is encrypted within your browser before it’s sent to our servers.",
   "DYK_HOW_IT_WORKS_TITLE": "How it works",
   "DYK_HD_PRIVACY": "If you use the same address each time you receive funds, it becomes easy for anyone to track your entire payment history. So we create a new bitcoin address for every transaction to give you more privacy.",
   "DYK_HD_PRIVACY_TITLE": "Privacy benefits of HD addresses",
-  "DYK_DYNAMIC_FEES": "We adjust your fees dynamically depending on network conditions and the size of your transaction.",
+  "DYK_DYNAMIC_FEES": "We adjust your bitcoin fees dynamically depending on network conditions and the size of your transaction.",
   "DYK_DYNAMIC_FEES_TITLE": "Blockchain optimizes your fees",
   "DYK_OPEN_SOURCE": "All the code related to our wallet is open source. Contribute to the development of our wallet at https://github.com/blockchain.",
   "DYK_OPEN_SOURCE_TITLE": "Open source",
@@ -747,10 +786,9 @@
   "LOGGING" : "Activity Logging",
   "LOG" : "Log",
   "LOGGING_EXPLAIN" : "Record wallet activity and display it in your activity feed.",
-  "ACTIVITY_1": "Addresses",
-  "ACTIVITY_1_DESC": "Created My Bitcoin Wallet",
-  "ACTIVITY_2_DESC": "Set password",
-  "ACTIVITY_3_DESC": "Created wallet!",
+  "ACTIVITY_1": "Created My Wallet",
+  "ACTIVITY_2": "Set Password",
+  "ACTIVITY_3": "Created Wallet!",
   "FEE_PER_KB" : "Fee Per KB",
   "FEE_PER_KB_EXPLAIN" : "When the network is stressed, including a higher fee per kb will ensure faster transaction confirmations.",
   "FEE_PER_KB_MORE_THAN_ZERO" : "Must be more than zero",
@@ -922,7 +960,8 @@
   "COPY_AND_SHARE": "Copy and Share",
   "COPY_AND_SHARE_ADDRESS": {
     "TITLE": "Copy & Share Address",
-    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below."
+    "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below.",
+    "ETH_HELPER": "Share this address with others, and they can send you ETH directly to your wallet. Your request address will not change."
   },
   "COPY_AND_SHARE_IMPORTED_ADDRESS": {
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet."
@@ -940,7 +979,10 @@
   "WHY_HD": "For increased privacy, we generate a unique address for every payment you receive.",
   "PHONE_NUMBER": "Phone Number",
   "EDIT_PROFILE": "Edit Your Profile",
+  "BUY": "Buy",
   "BUY_BITCOIN": "Buy Bitcoin",
+  "BUY_AND_SELL": "BUY & SELL",
+  "BUY_AND_SELL_BITCOIN": "BUY & SELL BITCOIN",
   "SELL_BITCOIN": "Sell Bitcoin",
   "ORDER_HISTORY": "Order History",
   "BANK_TRANSFER_HEADING": "Bank Transfer",
@@ -970,6 +1012,7 @@
   "EST_QUOTE_2": "This is an estimated quote. The original quote for this trade expired. The exact amount of bitcoin received depends on when the payment is received.",
   "RATE_WILL_EXPIRE": "Complete this trade before the rate expires to receive the guaranteed amount of bitcoin.",
   "RATE_GUARANTEED": "Rate guaranteed: {{::count}}",
+  "QUOTE_EXPIRES_IN": "Quote expires in: {{::count}}",
   "NOT_FINISHED": "Not Finished",
   "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
   "awaiting_transfer_in": "Pending",
@@ -991,6 +1034,8 @@
   "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
   "BOUGHT_VIA": "Bought via {{exchange}}",
   "SOLD_VIA": "Sold via {{exchange}}",
+  "DEPOSITED_TO": "Deposited to {{exchange}}",
+  "RECEIVED_FROM": "Received from {{exchange}}",
   "TX_ERROR_STATE": {
     "TITLE": "Transaction {{::state}}",
     "BODY": ""
@@ -1153,12 +1198,14 @@
   "LANDING": {
     "HEADER": "@:SIMPLE_SEAMLESS_SECURE",
     "SUB_HEADER": "Blockchain is the world’s most popular bitcoin wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
+    "SUB_HEADER_ETH": "Blockchain is the world’s most popular digital wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
     "GET_STARTED_NOW": "Get Started Now",
     "WHY_BLOCKCHAIN" : "Why Blockchain?",
     "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
     "SIMPLE": {
       "TITLE": "Simple",
-      "COPY": "We make using bitcoin safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world."
+      "COPY": "We make using bitcoin safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world.",
+      "COPY_ETH": "We make using bitcoin and ether safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world."
     },
     "SAFE_AND_SECURE": {
       "TITLE": "Safe & Secure",
@@ -1186,9 +1233,12 @@
     },
     "NEW_TO_BITCOIN": {
       "HEADER": "New To Bitcoin?",
-      "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."
+      "HEADER_ETH": "New To Digital Currencies?",
+      "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
+      "SUB_TEXT_ETH": "Like paper money and gold before it, bitcoin and ether allow parties to exchange value. Unlike their predecessors, they are digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."
     },
     "GET_WORLDS_MOST_POPULAR_WALLET": "Get the world's most popular<br/>bitcoin wallet",
+    "GET_WORLDS_MOST_POPULAR_WALLET_ETH": "Get the world's most popular<br/>digital currency wallet",
     "" : ""
   },
   "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
@@ -1345,6 +1395,7 @@
   "INTERVIEWING": "Interviewing",
   "PRESS": "Press",
   "BLOG": "Blog",
+  "TRADE_COMPLETE": "Trade Complete",
   "FETCH_TRADE_ERROR": "We are currently experiencing issues getting your trades. Please check back later.",
   "FETCH_KYC_ERROR": "We are currently experiencing issues getting your KYC information. Please check back later.",
   "CLICK_TO_DELETE_ACCOUNT": "Delete bank account",
@@ -1400,7 +1451,7 @@
     "PLEASE_NOTE_BANK_POLICIES": "Please note: depending on your bank's transfer policies, you will see the funds reflected in your account within 1 - 2 business days from the transfer date.",
     "ENTER_DANISH_BANK": "Please enter your information for your Danish bank account.",
     "ENTER_BANK_INFO": "Please enter your bank information below.",
-    "TRADE_COMPLETE": "Trade Complete",
+    "TRADE_COMPLETE": "@:TRADE_COMPLETE",
     "SOLD": "Sold",
     "FIRST_CONFIRMATION": "The rate will be set after the first confirmation",
     "WAIT_FOR_TRADE_COMPLETE": "Trading is disabled until your pending trade is complete.",
@@ -1496,5 +1547,87 @@
     "IFSC": "IFSC"
   },
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
+  "YOUR_BALANCES": "YOUR BALANCES",
+  "BETA": "Beta",
+  "WELCOME_TO_ETHER": "Welcome to ether!",
+  "WHAT_IS_ETH_HEADER": "What is ether?",
+  "GET_STARTED_WITH_ETHER": "Get started with ether",
+  "GET_ETHER": "Get Ether",
+  "WHY_SHOULD_I_USE_ETHER_HEADER": "Why Should I Use It?",
+  "WHAT_IS_ETHER": "Ether is a digital currency. Like Bitcoin, it enables people around the world to transact, save, and hedge their way to a better financial future. In addition to sending value, ether also powers the Ethereum platform.",
+  "WHY_SHOULD_I_USE_ETHER": "As the Ethereum platform grows, more intelligent applications will be built on top of it. We want to give you the opportunity to start using ether now, so you'll be ready to use these products in the future. ",
+  "ETHER_DISABLE_SEND_TO_CONTRACT": "Sending to contract addresses is disabled.",
+  "MY_ETHER_WALLET": "My Ether Wallet",
+  "ETHER_SECPASS_REQUIRED": "You must enter your second password to initialize your ether wallet.",
+  "ETHER_SEND_RECEIVE": "Send & Receive Ether",
+  "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
+  "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
+  "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
+  "EXCHANGE_SIMPLE": "Exchange",
+  "EXCHANGE_RATE": "Exchange Rate",
+  "BTC_ETH_EXCHANGE": "Exchange Assets",
+  "BTC_ETH_EXCHANGE_WHATS_NEW": "You can now exchange your bitcoin for ether and vice versa directly from your Blockchain wallet.",
+  "NEW": "New",
+  "SHIFT": {
+    "WELCOME_INFO": "You can now exchange your bitcoin for ether and vice versa directly from your Blockchain wallet. In a few simple steps, your exchange will be in progress. Note: exchanges usually take between twenty minutes and two hours.",
+    "EXCHANGE_NOTICE": "In a few simple steps, your exchange will be in progress. Note: exchanges usually take between twenty minutes and two hours.",
+    "NO_EXCHANGES": "@:NO_TRADES",
+    "NO_EXCHANGES_EXPLAIN": "You haven't made any exchanges yet, <span class='primary'>click here to start</span>.",
+    "EXCHANGE_DETAILS": "Exchange Details",
+    "EXCHANGE_FROM": "Exchange From",
+    "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
+    "MIN_NEEDED_TO_SHIFT": "{{::min}} {{::curr}} needed to exchange.",
+    "BELOW_MIN_SHIFT_LIMIT": "Below the minimum limit. Use min",
+    "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
+    "CONFIRM_EXCHANGE": "Confirm Exchange Order",
+    "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
+    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::widthdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours, you can keep track of your Exchange progress in the Order History tab.",
+    "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
+    "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
+    "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
+    "OUTPUT_RECEIVED": "<span class='capitalize'>{{::output}}</span> Received",
+    "TX_FEE_EXPLAIN": "This fee is used to send funds from your wallet.",
+    "WITHDRAWAL_FEE": "ShapeShift Withdrawal Fee",
+    "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the withdrawal amount to your wallet.",
+    "ORDER_ID": "Order ID",
+    "EXPLAIN_QUOTE": "This quote may change depending on the market price at the time of your transaction.",
+    "ACCEPT_TERMS": "I agree to ShapeShift's <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>terms and conditions</a>.",
+    "NO_FUNDS_TO_EXCHANGE": "Not enough funds to exchange",
+    "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN": "Exchanges can take up to two hours, you can keep track of your exchange progress in the Order History tab. Once the trade is complete, your {{::output}} will arrive in your wallet.",
+    "ORDER_SUMMARY": "Order Summary",
+    "SENDING_FUNDS": "Sending Funds",
+    "FUNDS_SENT": "Funds Sent",
+    "SEE_YOUR_OUTPUT": "See Your <span class='capitalize'>{{::output}}</span>",
+    "TRADE": {
+      "complete": {
+        "HEADER": "Success! Your exchange has completed!",
+        "BODY": "Your exchange is completed. It may take a few minutes for the funds to show in your balance."
+      },
+      "received": {
+        "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      },
+      "no_deposits": {
+        "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+      },
+      "resolved": {
+        "HEADER": "Trade Refunded"
+      },
+      "failed": {
+        "HEADER": "Trade Failed",
+        "BODY": "This trade has failed. Any funds broadcast from your wallet, will be returned minus the transaction fee. Please return to the exchange tab to start a new trade"
+      }
+    }
+  },
+  "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
+  "WE_LISTENED": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
+  "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
+  "EXCHANGED": "Exchanged",
+  "TO_BE_RECEIVED": "To Be Received",
+  "resolved": "Refunded",
+  "VIEW_DETAILS": "View Details",
+  "no_deposits": "In Progress",
   "": ""
 }

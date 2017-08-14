@@ -1,14 +1,12 @@
-.dyk
-  .flex-between.flex-center.mbl
-    h5.mvn.type-h5.em-400(translate="DYK")
-    .hashtag.em-400.upper.flex-center(ng-class="dyk.type.toLowerCase()") 
-      | {{ dyk.type | translate }}
-  .widget
-    .flex-center.mbm
-      i.title.border-grey(ng-class="dyk.icon")
-      p.h3.em-300.mll.blue(ng-class="dyk.type.toLowerCase()") {{ dyk.title | translate }}
-    p.alt-font.f-16.em-300
-      | {{ dyk.text | translate }}
+.dyk.border.pal
+  .flex-between.flex-center.mb-10
+    h5.mvn.f-24.em-300.blue.upper(translate="DYK")
+  .flex-center
+    i.f-36.blue.pr-15(ng-class="dyk.icon")
+    h6.mvn.f-18.em-300.blue {{ dyk.title | translate }}
+  .mt-5
+    p.f-14.em-300
+      | {{ dyk.text | translate:textValues }}
       span(ng-if="dyk.state")
         a.mls(ui-sref="{{ dyk.state }}" ng-hide="dyk.external") {{ dyk.linkText | translate }}
         a.mls(href="{{ dyk.state }}" target="_blank" rel="noopener noreferrer" ng-show="dyk.external") {{ dyk.linkText | translate }}

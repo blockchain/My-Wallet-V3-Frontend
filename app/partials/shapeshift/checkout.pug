@@ -1,0 +1,64 @@
+.height-100.flex-column.flex-1(translate-namespace="SHIFT")
+  bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
+    .shift-logo.hidden-xs
+      span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
+      a(href="https://www.shapeshift.io/" target="_blank" rel="noopener noreferrer")
+        img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
+  .overflow-scroll.flex-1.pt-30.ph-30.no-padding-mobile
+    .flex-column.pbvl(ng-if="tabs.selectedTab === 'EXCHANGE'")
+      .flex-row(ng-if="vm.onStep('create')")
+        div.width-50.border-desktop.pv-30.mr-25.no-margin-mobile.no-padding-mobile(ng-controller="ShapeShiftCreateController")
+          shift-create(on-complete="onComplete(payment, fee, quote)" build-payment="buildPayment(quote, fee)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
+        div.width-50.ml-25.hidden-sm.hidden-xs
+          p.blue.f-18.em-600(translate="SIMPLE_SEAMLESS_SECURE")
+          p.f-16.em-300(translate="{{ vm.trades.length ? 'SHIFT.EXCHANGE_NOTICE' : 'SHIFT.WELCOME_INFO' }}")
+      div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('confirm')" ng-controller="ShapeShiftConfirmController")
+        shift-confirm(on-complete="onComplete(trade)" on-cancel="onCancel()" payment="vm.payment" fee="vm.fee" quote="vm.quote" handle-shift="shiftHandler(payment)")
+      div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('receipt')" ng-controller="ShapeShiftReceiptController")
+        shift-receipt(shift="trade" is-checkout="true" on-close="onClose()")
+      .flex-end.width-50.pt-10.pr-25
+        span(translate="NEED_HELP")
+        | &nbsp;
+        a.underline(href="https://support.blockchain.com/hc/en-us/requests/new" target="_blank" rel="noopener noreferrer" translate="CONTACT_SUPPORT")
+    .flex-column.pbvl(ng-if="tabs.selectedTab === 'ORDER_HISTORY'")
+      .flex-center.flex-justify.flex-column.mtvl(ng-hide="vm.trades.length")
+        .flex-column.mbl.border-bottom.black
+          .flex-center.flex-justify
+            i.ti-direction-alt.h3.mrm
+            h3.em-100(translate=".NO_EXCHANGES")
+          p.em-400.pointer(translate=".NO_EXCHANGES_EXPLAIN" ng-click="tabs.select('EXCHANGE')")
+      //- Pending Trades
+      .width-100.mb-30(ng-if="vm.pendingTrades()")
+        .shift-history.border.bg-footer-blue
+          .pvs
+            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+          .pvs
+            span.em-500(translate="DATE")
+          .pvs
+            span.em-500(translate="EXCHANGED")
+          .pvs
+            span.em-500(translate="TO_BE_RECEIVED")
+        exchange-trade(
+          ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
+          ng-if="trade.isProcessing || trade.isWaitingForDeposit"
+          view-details="vm.openTradeDetails(trade)"
+          ex-trade="trade"
+        )
+      //- Completed Trades
+      .width-100(ng-if="vm.completedTrades()")
+        span.f-16.em-600 Completed Exchanges
+        .shift-history.width-100.border.bg-footer-blue.mt-5
+          .pvs
+            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+          .pvs
+            span.em-500(translate="DATE")
+          .pvs
+            span.em-500(translate="EXCHANGED")
+          .pvs
+            span.em-500(translate="RECEIVED")
+        exchange-trade(
+          ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
+          ng-if="trade.isComplete || trade.isFailed || trade.isResolved"
+          view-details="vm.openTradeDetails(trade)"
+          ex-trade="trade"
+        )

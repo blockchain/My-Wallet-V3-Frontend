@@ -19,6 +19,9 @@ describe('buyStatus service', () => {
           coinify: {
             countries: ['NL']
           },
+          unocoin: {
+            countries: ['IN']
+          },
           sfox: sfoxOptions
         }
       }));
@@ -36,7 +39,7 @@ describe('buyStatus service', () => {
         }
       };
 
-      MyWalletHelpers.isEmailInvited = function (email, fraction) {
+      MyWalletHelpers.isStringHashInFraction = function (email, fraction) {
         if (email === 'a@b.com') {
           return fraction >= 0.98046875;
         } else if (email === 'a+16@b.com') {

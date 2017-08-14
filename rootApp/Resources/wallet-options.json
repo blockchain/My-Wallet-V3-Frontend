@@ -62,6 +62,14 @@
     "api": "REPLACED_BY_DEV_SERVER",
     "walletHelper": "REPLACED_BY_DEV_SERVER"
   },
+  "ethereum": {
+    "countries": ["US"],
+    "rolloutFraction": 1
+  },
+  "shapeshift": {
+    "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_1MuVnVEtWhiVIQl",
+                    "https://blockchain.co1.qualtrics.com/jfe/form/SV_3QV1OgysGUC0hXD"]
+  },
   "showMobileLogin": true,
   "network": "bitcoin"
 }

@@ -6,17 +6,16 @@ describe('Did You Know directive', () => {
   let DidYouKnow;
 
   beforeEach(module('walletDirectives'));
-  
+
   beforeEach(module('walletApp'));
 
-  beforeEach(inject(function (_$compile_, _$rootScope_, $injector) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     scope = $rootScope.$new();
     DidYouKnow = $injector.get('DidYouKnow');
-
-  })
-  );
+    $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+  }));
 
   // describe "without link", ->
 

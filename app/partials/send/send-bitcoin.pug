@@ -1,20 +1,15 @@
-.modal-header.flex-column.bc-modal-header(data-preflight-tag="Send")
-  .close-modal
-    i.ti-close.pointer(ng-click="close()")
-  .flex-center
-    h3
-      i.mr-10.icon-send
-      span(ng-show="!confirm", translate="SEND")
-      span(ng-show="confirm", translate="CONFIRM")
-#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}")
+#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" ng-controller="SendBitcoinController")
   .alert-in-app
     alerts(context="alerts")
-  div(ng-hide="confirm")
+  div(ng-hide="vm.confirm")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
       fieldset
-        .group
+        .group.inline
+          .item.width-30.width-50-mobile.mb-20.mr-20(ng-hide="vm.hideAssetSelect")
+            label.colon(translate="CURR")
+            asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
           //- From
-          .item.mb-20(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1")
+          .item.width-70.width-50-mobile.mb-20(ng-class="vm.hideAssetSelect ? 'width-100' : 'width-70'" ng-if="numberOfActiveAccountsAndLegacyAddresses() > 1")
             label.colon(translate="FROM")
             .flex-1(ng-class="{'has-error': (sendForm.from.$invalid && sendForm.destinations0.$touched) || (sendForm.priv.$invalid && sendForm.priv.$touched) }")
               p.form-control-static(ng-hide="originsLoaded")
@@ -44,6 +39,8 @@
                   qr-scan.form-control(on-scan="setPrivateKey")
               span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN")
               span.help-block.inprv(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
+
+        .group
           //- To
           .item
             label.colon(translate="TO")
@@ -166,7 +163,7 @@
               span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
-  div.overview(ng-show="confirm")
+  div.overview(ng-show="vm.confirm")
     .flex-column.f-16
       .flex-row
         label.colon.width-30.width-30-mobile(translate="FROM")
@@ -198,12 +195,12 @@
       tabindex="1"
       ng-disabled="sendForm.$invalid || failedToLoadUnspent || !amountsAreValid()"
       data-style="expand-left"
-      ng-hide="confirm")
+      ng-hide="vm.confirm")
     button.full.button-primary.upper(
       ladda-translate="{{ transaction.destination.type != 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN' }}"
       ui-ladda="sending"
       ng-click="send()"
       data-style="expand-left"
-      ng-show="confirm")
-    div.width-100.center.mt-10(ng-show="confirm")
-      a(ng-click="backToForm()" translate="GO_BACK")
+      ng-show="vm.confirm")
+    div.width-100.center.mt-10(ng-show="vm.confirm")
+      a(ng-click="vm.toSendView()" translate="GO_BACK")
