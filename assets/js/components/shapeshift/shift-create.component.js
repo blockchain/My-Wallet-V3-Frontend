@@ -14,10 +14,16 @@ angular
   });
 
 function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, buyStatus) {
+  let UPPER_LIMIT;
+  Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit);
+
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
+  $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
+  $scope.fromSatoshi = currency.convertFromSatoshi;
+  $scope.usd = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.dollars = Wallet.settings.displayCurrency;
@@ -90,13 +96,17 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
   };
 
   let getRate = () => {
+    let upperLimit = state.baseBTC
+                     ? $scope.fromSatoshi($scope.toSatoshi(UPPER_LIMIT, $scope.usd), $scope.bitcoin)
+                     : parseFloat(currency.formatCurrencyForView($scope.toEther(UPPER_LIMIT, $scope.usd), $scope.ether, false));
+
     $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
-      .then((rate) => { state.rate.min = rate.minimum; state.rate.max = rate.maxLimit; });
+      .then((rate) => { state.rate.min = rate.minimum; state.rate.max = rate.maxLimit < upperLimit ? rate.maxLimit : upperLimit; });
   };
 
   let getAvailableBalance = () => {
     let fetchSuccess = (balance, fee) => {
-      $scope.maxAvailable = state.baseBTC ? currency.convertFromSatoshi(balance.amount, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance.amount, $scope.ether, false));
+      $scope.maxAvailable = state.baseBTC ? $scope.fromSatoshi(balance.amount, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance.amount, $scope.ether, false));
       $scope.cachedFee = balance.fee;
       state.balanceFailed = false;
       state.error = null;
