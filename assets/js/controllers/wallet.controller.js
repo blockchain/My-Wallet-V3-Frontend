@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift) {
   let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
   $scope.goal = Wallet.goal;
@@ -44,19 +44,11 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
-  $scope.request = modals.openOnce(() => {
+  $scope.request = () => {
     Alerts.clear();
     isUsingRequestQuickCopyExperiment.recordA();
-    return $uibModal.open({
-      templateUrl: 'partials/request/request.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'RequestController',
-      controllerAs: 'vm',
-      resolve: {
-        destination: () => null
-      }
-    });
-  });
+    modals.openRequest();
+  };
 
   $scope.send = () => {
     Alerts.clear();
@@ -201,7 +193,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.firstTime = void 0;
       }
       if (!Wallet.goal.firstLogin) {
-        if (Ethereum.userHasAccess && !Ethereum.hasSeen) {
+        if (ShapeShift.userHasAccess && !Ethereum.hasSeen) {
           modals.openEthLogin();
           Ethereum.setHasSeen();
           return;

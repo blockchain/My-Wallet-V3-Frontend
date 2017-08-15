@@ -45,6 +45,19 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     }, options)
   );
 
+  service.openRequest = service.openOnce((destination = null, { asset = 'btc' } = {}) =>
+    open({
+      templateUrl: 'partials/request/request.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'RequestController',
+      controllerAs: 'vm',
+      resolve: {
+        asset: () => asset,
+        destination: () => destination
+      }
+    })
+  );
+
   service.openHelper = (helper) => open({
     controller ($scope) {
       let helperImages = {

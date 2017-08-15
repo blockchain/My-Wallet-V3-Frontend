@@ -2,10 +2,29 @@ angular
   .module('walletApp')
   .factory('ShapeShift', ShapeShift);
 
-function ShapeShift (Wallet, modals) {
+function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env) {
   const service = {
     get shapeshift () {
       return Wallet.my.wallet.shapeshift;
+    },
+    get isInBlacklistedCountry () {
+      let country = Wallet.my.wallet.accountInfo.countryCodeGuess;
+      return this.countries === '*' || this.countriesBlacklist.indexOf(country) > -1;
+    },
+    get isInRolloutGroup () {
+      return this.rolloutFraction === 1 || MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction);
+    },
+    get userHasAccess () {
+      if (Wallet.my.wallet == null) return false;
+      return Ethereum.userHasAccess && !this.isInBlacklistedCountry && this.isInRolloutGroup;
+    },
+    get userAccessReason () {
+      let reason;
+      if (!Ethereum.userHasAccess) reason = `they do not have access to Ethereum (${Ethereum.userAccessReason})`;
+      else if (this.isInBlacklistedCountry) reason = 'they are in a blacklisted country';
+      else if (!this.isInRolloutGroup) reason = 'they are not in the rollout group';
+      else reason = 'Ethereum is initialized, they are not in a blacklisted country, and are in the rollout group';
+      return `User can${this.userHasAccess ? '' : 'not'} see ShapeShift because ${reason}`;
     }
   };
 
@@ -49,6 +68,14 @@ function ShapeShift (Wallet, modals) {
   service.isWithdrawalTx = (hash) => {
     return service.shapeshift.isWithdrawalTx(hash);
   };
+
+  Env.then((options) => {
+    let { shapeshift } = options;
+    if (shapeshift && !isNaN(shapeshift.rolloutFraction)) {
+      service.countriesBlacklist = shapeshift.countriesBlacklist || [];
+      service.rolloutFraction = shapeshift.rolloutFraction || 0;
+    }
+  });
 
   return service;
 }
