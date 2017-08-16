@@ -15,7 +15,7 @@ angular
 
 function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, buyStatus) {
   let UPPER_LIMIT;
-  Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit);
+  Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit || 500);
 
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
