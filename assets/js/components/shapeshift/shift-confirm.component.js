@@ -14,7 +14,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q, $filter, currency) {
+function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q, $filter, currency, Env) {
   let now = new Date();
 
   $scope.fee = this.fee;
@@ -40,4 +40,5 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   };
 
   AngularHelper.installLock.call($scope);
+  Env.then(env => $scope.buySellDebug = env.buySellDebug);
 }
