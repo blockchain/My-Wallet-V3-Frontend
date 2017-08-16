@@ -1065,7 +1065,7 @@
     "DISAGREE": "Kesinlikle Katılmıyorum",
     "AGREE": "Kesinlikle Katılıyorum"
   },
-  "ACCEPT_TOS": " <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Hizmet Şartlarını</a> okudum ve kabul ediyorum",
+  "ACCEPT_TOS": " <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Hizmet Şartlarını</a> okudum ve kabul ediyorum",
   "SIMPLE_SECURE_SEAMLESS": "Basit. Güvenli. Sorunsuz.",
   "BUY_SIMPLE_STEPS": "Dünyanın en popüler bitcoin cüzdanı <br> şimdi 4 basit ve güvenli adımda bitcoin almanıza izin veriyor <br>.",
   "METADATA_DOWN_EXCHANGE": "Dönüştürme ayrıntılarını yükleme başarısız Lütfen sayfayı yenilemeyi deneyin.",
