@@ -9,6 +9,7 @@ function SendController ($uibModalInstance, paymentRequest, assetContext) {
   this.asset = { name: 'Bitcoin', code: 'btc', icon: 'icon-bitcoin' };
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;
+  this.hideAssetSelect = assetContext.hideAssetSelect;
 
   this.close = (result) => {
     $uibModalInstance.close(result);

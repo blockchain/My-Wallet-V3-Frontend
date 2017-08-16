@@ -40,7 +40,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       controllerAs: 'vm',
       resolve: {
         paymentRequest: () => paymentRequest,
-        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
+        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
+        _initialize ($q, Ethereum) {
+          return Ethereum.userHasAccess
+            ? Ethereum.initialize()
+            : $q.resolve();
+        }
       }
     }, options)
   );
@@ -53,7 +58,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       controllerAs: 'vm',
       resolve: {
         asset: () => asset,
-        destination: () => destination
+        destination: () => destination,
+        _initialize ($q, Ethereum) {
+          return Ethereum.userHasAccess
+            ? Ethereum.initialize()
+            : $q.resolve();
+        }
       }
     })
   );
