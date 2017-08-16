@@ -30,7 +30,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
-      return this.ethInititalized || (this.isInWhitelistedCountry && this.isInRolloutGroup);
+      return this.isInWhitelistedCountry && this.isInRolloutGroup;
     },
     get userAccessReason () {
       let reason;
