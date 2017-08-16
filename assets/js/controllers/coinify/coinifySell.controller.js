@@ -6,6 +6,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   $scope.fields = {};
   $scope.user = Wallet.user;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
+  $scope.priorityFee = currency.convertFromSatoshi(buySellOptions.priorityFee, currency.bitCurrencies[0]);
 
   this.user = Wallet.user;
   this.trade = trade;
@@ -13,7 +14,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.selectedBankAccount = null;
   this.accounts = accounts;
-  this.payment = payment;
+  this.finalPayment = payment;
   if (bankMedium) this.paymentAccount = bankMedium;
   this.message = 'SELL.QUOTE_EXPIRES';
   this.now = () => new Date().getTime();
@@ -103,7 +104,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     btc: this.trade.btc,
     fiat: this.trade.fiat,
     currency: { name: 'Euro', code: 'EUR' },
-    fee: { btc: null, fiat: null }
+    fee: { btc: $scope.priorityFee, fiat: null }
   };
 
   $scope.assignFiatCurrency = () => {
@@ -138,8 +139,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.startPayment = () => {
     if (this.trade.state) return;
-    this.finalPayment = Wallet.my.wallet.createPayment(this.payment);
-    this.transaction.fee.btc = currency.convertFromSatoshi(this.payment.finalFee, currency.bitCurrencies[0]);
     this.transaction.btcAfterFee = parseFloat((this.transaction.btc + this.transaction.fee.btc).toFixed(8));
     return {transaction: this.transaction};
   };

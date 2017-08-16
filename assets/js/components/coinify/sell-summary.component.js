@@ -79,6 +79,14 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
       .sign(passphrase).publish().payment;
   };
 
+  this.exchange._checkQA = () => {
+    if (this.exchange._customAddress && this.exchange._customAmount) {
+      console.log('QA - Address and Amount (in satoshi):', this.exchange._customAddress, this.exchange._customAmount);
+    } else {
+      console.warn('Oops, looks like something went wrong. Please try again.');
+    }
+  };
+
   const assignAndBuildPayment = (sellResult) => {
     let amount = currency.convertToSatoshi(sellResult.transferIn.sendAmount, currency.bitCurrencies[0]);
     this.payment.to(sellResult.transferIn.details.account);
