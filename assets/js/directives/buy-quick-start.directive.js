@@ -1,9 +1,9 @@
 angular.module('walletDirectives')
   .directive('buyQuickStart', buyQuickStart);
 
-buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals', 'Exchange'];
+buyQuickStart.$inject = ['$rootScope', 'currency', 'buySell', 'Alerts', '$interval', '$timeout', '$q', 'modals', 'Exchange', 'MyBlockchainApi'];
 
-function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals, Exchange) {
+function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeout, $q, modals, Exchange, MyBlockchainApi) {
   const directive = {
     restrict: 'E',
     replace: true,
@@ -124,10 +124,17 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
         .then(scope.limits = buySell.limits);
     };
 
+    scope.firstInput = true;
+    scope.recordData = (amount) => {
+      if (scope.firstInput) MyBlockchainApi.incrementBuyLimitCounter(amount);
+      scope.firstInput = false;
+    };
+
     let exchange = buySell.getExchange();
     scope.profile = exchange && exchange.profile ? exchange.profile : {profile: {}};
 
     scope.checkLimit = fiat => {
+      if (!scope.profile.level) return false;
       let levelLimits = scope.profile.level.limits;
       let limits = scope.limits;
 
@@ -144,8 +151,10 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       if (fiat > max) {
         scope.status.limitError = true;
         scope.dailyLimit = dailyMax;
+        scope.recordData('over');
       } else {
         scope.status.limitError = false;
+        scope.recordData('under');
       }
     };
 
