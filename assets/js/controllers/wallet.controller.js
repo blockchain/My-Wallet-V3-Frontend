@@ -191,6 +191,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         });
         Wallet.goal.firstLogin = true;
         Wallet.goal.firstTime = void 0;
+        Ethereum.setHasSeen();
       }
       if (!Wallet.goal.firstLogin) {
         if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
