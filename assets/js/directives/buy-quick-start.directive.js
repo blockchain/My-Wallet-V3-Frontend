@@ -130,8 +130,24 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.firstInput = false;
     };
 
-    let exchange = buySell.getExchange();
-    scope.profile = exchange && exchange.profile ? exchange.profile : {profile: {}};
+    scope.exchange = buySell.getExchange();
+    scope.profile = scope.exchange && scope.exchange.profile ? scope.exchange.profile : {profile: {}};
+
+    scope.handleLimitError = (amount) => {
+      scope.status.limitError = true;
+      let kycs = scope.exchange.kycs;
+
+      if (!kycs.length) {
+        scope.status.limitMessage = 'COINIFY_LIMITS.DAILY_LIMIT_IS';
+      }
+      if (kycs[0] && kycs[0].state === 'pending') {
+        scope.status.limitMessage = 'COINIFY_LIMITS.KYC_PENDING';
+      }
+      if (kycs[0] && kycs[0].state === 'rejected') {
+        scope.status.limitMessage = 'COINIFY_LIMITS.KYC_REJECTED';
+        scope.status.showKycLink = true;
+      }
+    };
 
     scope.checkLimit = fiat => {
       if (!scope.profile.level) return false;
@@ -145,12 +161,11 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       let dailyCardMax = levelLimits.card.inDaily;
 
       let max = limits.absoluteMax(curr);
-      let dailyMax = dailyBankMax > dailyCardMax ? dailyBankMax : dailyCardMax;
+      scope.dailyLimit = dailyBankMax > dailyCardMax ? dailyBankMax : dailyCardMax;
 
       console.log('checkLimit', fiat, max, bankMax[curr], cardMax[curr]);
       if (fiat > max) {
-        scope.status.limitError = true;
-        scope.dailyLimit = dailyMax;
+        scope.handleLimitError(fiat, max);
         scope.recordData('over');
       } else {
         scope.status.limitError = false;
@@ -163,6 +178,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
         buySell.triggerKYC().then(kyc => {
           modals.openBuyView(scope.quote, kyc).result.finally(scope.onCloseModal).catch(scope.onCloseModal);
         });
+      } else {
+        $q.resolve(buySell.getOpenKYC())
+          .then(kyc => modals.openBuyView(scope.quote, kyc));
       }
     };
 
