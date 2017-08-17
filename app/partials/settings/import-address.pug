@@ -9,17 +9,19 @@
       p(translate="IMPORT_BITCOIN_ADDRESS_EXPLAIN")
       .form-group(ng-class="{'has-error': importForm.privateKey.$invalid && fields.addressOrPrivateKey != '' }")
         label.control-label(for="address")
-        input.form-control(
-          ng-model="fields.addressOrPrivateKey"
-          ng-disabled="BIP38"
-          name="privateKey"
-          is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"
-          ng-change="importForm.privateKey.$setValidity('present', true); importForm.privateKey.$setValidity('check', true);"
-          on-enter="importForm.$valid && import()"
-          required
-          autocomplete="off"
-          autofocus
-        )
+        .input-group
+          input.form-control(
+            ng-model="fields.addressOrPrivateKey"
+            ng-disabled="BIP38"
+            name="privateKey"
+            is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"
+            ng-change="importForm.privateKey.$setValidity('present', true); importForm.privateKey.$setValidity('check', true);"
+            on-enter="importForm.$valid && import()"
+            required
+            autocomplete="off"
+            autofocus)
+          .input-group-btn
+            qr-scan(on-scan="onAddressScan")
         span.help-block
           span(translate="INPUT_NOT_RECOGNIZED" ng-show="importForm.privateKey.$error.isValid && fields.addressOrPrivateKey != ''")
           span(ng-show="importForm.privateKey.$error.check", translate="CHECK_PRIVATE_KEY")
@@ -37,8 +39,8 @@
           on-enter="importForm.$valid && import()"
         )
         div(ng-show="importForm.bipPassphrase.$dirty")
-          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong") 
-       
+          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong")
+
       p(ng-show="BIP38 && status.busy", translate="TAKES_A_WHILE")
 
   div(ng-show="step==2")
@@ -56,9 +58,7 @@
 
 .modal-footer.pal.flex-end
   button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-show="step == 1 && !status.busy")
-  span(ng-if="step == 1")
-    qr-scan(on-scan="onAddressScan")
-    button.btn.button-primary(ui-ladda="status.busy" ng-click="import()" ng-disabled="importForm.$invalid" ladda-translate="IMPORT" data-style="expand-left")
+  button.btn.button-primary(ng-if="step == 1" ui-ladda="status.busy" ng-click="import()" ng-disabled="importForm.$invalid" ladda-translate="IMPORT" data-style="expand-left")
   button.button-muted(ng-show="step == 2", ng-click="close()", translate="CLOSE")
   button.btn.button-primary(ng-show="step == 2 && !address.isWatchOnly && address.balance > 0" ng-click="goToTransfer()" translate="TRANSFER")
   span(ng-if="step == 3")

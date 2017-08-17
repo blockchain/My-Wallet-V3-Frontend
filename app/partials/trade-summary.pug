@@ -15,5 +15,5 @@
     span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
   .flex-row.flex-end.pt-20
     button(translate="CLOSE" ng-click="vm.cancel ? vm.cancel() : $close()" ng-class="vm.trade.bitcoinReceived ? 'button-muted' : 'button-primary'")
-    button.button-primary.mll(translate="SEE_BITCOIN" ng-show="!inMobileBuy && vm.trade.bitcoinReceived" ng-click="$close()" ui-sref="wallet.common.transactions")
+    button.button-primary.mll(translate="SEE_BITCOIN" ng-show="!inMobileBuy && vm.trade.bitcoinReceived" ng-click="$close()" ui-sref="wallet.common.btc.transactions")
     button.button-primary.mll(translate="SEE_BITCOIN" ng-show="inMobileBuy && vm.trade.bitcoinReceived" ng-click="exitToNativeTx()")

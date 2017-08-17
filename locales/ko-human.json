@@ -1066,7 +1066,7 @@
     "DISAGREE": "절대 그렇지 않습니다",
     "AGREE": "정말 그렇습니다"
   },
-  "ACCEPT_TOS": "<a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>사용 조건</a>을 읽었고 동의합니다.",
+  "ACCEPT_TOS": "<a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>사용 조건</a>을 읽었고 동의합니다.",
   "SIMPLE_SECURE_SEAMLESS": "간단합니다. 안전합니다. 매끄럽습니다.",
   "BUY_SIMPLE_STEPS": "세계에서 가장 인기 있는 비트코인 지갑이 이제 <br>귀하가 비트코인을 간단하고 안전한 4<br> 단계로 살 수 있게 해 드립니다.",
   "METADATA_DOWN_EXCHANGE": "귀하의 환전 상세를 로딩할 수 없습니다. 페이지 새로 고침을 해 보세요.",
