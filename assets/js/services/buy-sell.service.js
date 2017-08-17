@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals) {
+function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -68,7 +68,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     tradeStateIn,
     cancelTrade,
     states,
-    isPendingSellTrade
+    isPendingSellTrade,
+    incrementBuyDropoff
   };
 
   return service;
@@ -308,5 +309,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function submitFeedback (rating) {
     BrowserHelper.safeWindowOpen('https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating);
+  }
+
+  function incrementBuyDropoff (step) {
+    MyBlockchainApi.incrementBuyDropoff(step);
   }
 }
