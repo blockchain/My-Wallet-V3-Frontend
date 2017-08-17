@@ -15,6 +15,9 @@ angular
       getMobileOperatingSystem () {
         return 'unknown';
       },
+      isBitcoinAddress (addr) {
+        return addr === 'valid_btc_address';
+      },
       guidToGroup (uid) {
         if (uid[0] === 'a') { return 'a'; } else { return 'b'; }
       }

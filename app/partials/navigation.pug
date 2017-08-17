@@ -15,43 +15,22 @@
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item.hidden-xs(ng-hide="true")
           button.button-transparent.button-border.button(translate="SUBSCRIBE" ng-click="subscribe()")
-        li.item(ng-show="settings.btcCurrency")
-          a.flex-important.flex-column(href="/markets" target="_blank" rel="noopener noreferrer")
+        li.item.flex-important.flex-row.flex-center(ng-show="settings.btcCurrency")
+          a(href="/markets" target="_blank" rel="noopener noreferrer")
             span
               | 1 {{ settings.btcCurrency.code }} =&nbsp;
               fiat(btc="settings.btcCurrency.conversion")
-        li.dropdown.item.hidden-xs(uib-dropdown)
-          a.uib-dropdown-toggle(href="#" data-toggle="uib-dropdown" role="button" aria-expanded="false" uib-dropdown-toggle)
-            span(translate="EXPLORE")
-            i.ti-angle-down.mlm
-          ul.uib-dropdown-menu.dropdown-menu(role='menu')
-            li
-              a(href="{{rootURL}}", translate="HOME" target="_blank" rel="noopener noreferrer")
-            li
-              a(href="/charts", translate="CHARTS" target="_blank" rel="noopener noreferrer")
-            li
-              a(href="/stats", translate="STATS" target="_blank" rel="noopener noreferrer")
-            li
-              a(href="/markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
-            li
-              a(href="/api", translate="API" target="_blank" rel="noopener noreferrer")
-        li.item.visible-xs
-          a(href="{{rootURL}}", translate="HOME" target="_blank" rel="noopener noreferrer")
-        li.item.visible-xs
-          a(href="/charts", translate="CHARTS" target="_blank" rel="noopener noreferrer")
-        li.item.visible-xs
-          a(href="/stats", translate="STATS" target="_blank" rel="noopener noreferrer")
-        li.item.visible-xs
-          a(href="/api", translate="API" target="_blank" rel="noopener noreferrer")
-        li.item.visible-xs
-          a(href="/markets", translate="MARKETS" target="_blank" rel="noopener noreferrer")
+          .vertical-line.border-white(ng-show="showEthereum()")
+          span.white.pv-10.ph-15(ng-show="showEthereum()")
+            | 1 ETH =&nbsp;
+            fiat(eth="1")
         li.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
           a(uib-popover-template="::whatsNewTemplate"
             popover-class="whats-new-popover"
             popover-placement="bottom"
             popover-title="{{:: ('WHATS_NEW' | translate) + '?' }}"
             popover-trigger="outsideClick")
-            i.ti-gift
+            i.icon-bell
             span.whats-new-icon(ng-show="nLatestFeats > 0")
               span {{ nLatestFeats }}
         li.item
@@ -59,4 +38,4 @@
             img(src="img/refresh.svg" ng-show="getTheme().name !== 'dev'")
             img(src="img/refresh-dev.svg" ng-show="getTheme().name === 'dev'")
         li.item
-          a(ng-click="logout()", translate="SIGNOUT")
+          a.upper(ng-click="logout()", translate="SIGNOUT")

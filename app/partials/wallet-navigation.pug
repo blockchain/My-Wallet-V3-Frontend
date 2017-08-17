@@ -3,11 +3,23 @@
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
         i.icon-home
-        span(translate="HOME")
+        span(translate="DASHBOARD")
+    li.mv-10(ng-show="showEthereum()")
+      div
+        span.tx-divider.pos-rel.ml-10.em-200(translate="MY_TRANSACTIONS")
     li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
-      a(ui-sref="wallet.common.transactions")
-        i.icon-tx
-        span(translate="MY_TRANSACTIONS")
+      a(ui-sref="wallet.common.btc.transactions")
+        i.icon-bitcoin
+        span(ng-show="showEthereum()" translate="BITCOIN")
+        span(ng-hide="showEthereum()" translate="MY_TRANSACTIONS")
+    li.scroll-parent.header(ui-sref-active="current" ng-show="showEthereum()" ng-click="hideMenu()")
+      a(ui-sref="wallet.common.eth.transactions")
+        i.icon-ethereum
+        span.flex-row.flex-align-end
+          span ETHER
+          | &nbsp;
+          p.f-12.mbn.transform-none.em-300.blue(translate="BETA")
+    div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
@@ -20,13 +32,19 @@
       a(ng-hide="shouldShowInviteForm"
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
-        i.icon-bitcoin
-        span(translate="BUY_SELL_BITCOIN")
+        i.icon-buy-sell
+        span(translate="{{buyLink}}")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
-        i.icon-bitcoin
-        span(translate="BUY_SELL_BITCOIN")
-
+        i.icon-buy-sell
+        span(translate="BUY_AND_SELL_BITCOIN")
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift()")
+      a(ui-sref="wallet.common.shift")
+        i.icon-ExchangeTab
+        span.flex-row.flex-align-end
+          span(translate="EXCHANGE_SIMPLE")
+          | &nbsp;
+          p.f-12.mbn.transform-none.em-300.blue.exclaim(translate="NEW")
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(
         active-when="shouldShowSecurityWarning()"

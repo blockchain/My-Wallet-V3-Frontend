@@ -34,14 +34,38 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
   service.openSend = service.openOnce((paymentRequest = {}, options) =>
     open({
-      templateUrl: 'partials/send.pug',
+      templateUrl: 'partials/send/send.pug',
       windowClass: 'bc-modal initial',
-      controller: 'SendCtrl',
+      controller: 'SendController',
+      controllerAs: 'vm',
       resolve: {
         paymentRequest: () => paymentRequest,
-        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
+        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
+        _initialize ($q, Ethereum) {
+          return Ethereum.userHasAccess
+            ? Ethereum.initialize()
+            : $q.resolve();
+        }
       }
     }, options)
+  );
+
+  service.openRequest = service.openOnce((destination = null, { asset = 'btc' } = {}) =>
+    open({
+      templateUrl: 'partials/request/request.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'RequestController',
+      controllerAs: 'vm',
+      resolve: {
+        asset: () => asset,
+        destination: () => destination,
+        _initialize ($q, Ethereum) {
+          return Ethereum.userHasAccess
+            ? Ethereum.initialize()
+            : $q.resolve();
+        }
+      }
+    })
   );
 
   service.openHelper = (helper) => open({
@@ -136,11 +160,15 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     return openMobileCompatible({
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, trade, formatTrade, accounts, $uibModalInstance) {
+      controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance) {
+        let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
+
         $scope.vm = {
           trade: trade
         };
+
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
+        unocoin && trade.state === 'cancelled' && ($scope.formattedTrade.namespace = 'UNOCOIN_TX_ERROR_STATE');
       },
       resolve: {
         trade: () => trade,
@@ -193,6 +221,28 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         trade () { return trade; },
         paymentMediums () { return quote && quote.getPaymentMediums(); }
       }
+    });
+  });
+
+  service.openShiftTradeDetails = service.openOnce((trade) => {
+    return openMobileCompatible({
+      controllerAs: 'vm',
+      windowClass: 'buy',
+      template: `
+        <div class='pv-30'>
+          <shift-receipt shift='trade' on-close="onClose()"></shift-receipt>
+        </div>`,
+      controller: function ($scope, $uibModalInstance) {
+        $scope.trade = trade;
+        $scope.onClose = () => $uibModalInstance.dismiss();
+      }
+    });
+  });
+
+  service.openEthLogin = service.openOnce(() => {
+    return openMobileCompatible({
+      windowClass: 'bc-modal buy',
+      templateUrl: 'partials/first-login-modal-eth.pug'
     });
   });
 

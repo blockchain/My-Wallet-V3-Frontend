@@ -3,11 +3,12 @@ angular
   .module('walletApp')
   .factory('currency', currency);
 
-currency.$inject = ['$q', 'MyBlockchainApi'];
+currency.$inject = ['$q', 'MyBlockchainApi', 'MyWalletHelpers'];
 
-function currency ($q, MyBlockchainApi) {
+function currency ($q, MyBlockchainApi, MyWalletHelpers) {
   const SATOSHI = 100000000;
   const conversions = {};
+  const ethConversions = {};
   const fiatConversionCache = {};
 
   const coinifyCurrencyCodes = {
@@ -67,21 +68,34 @@ function currency ($q, MyBlockchainApi) {
     }
   ];
 
+  const ethCurrencies = [
+    {
+      code: 'ETH',
+      conversion: 1
+    }
+  ];
+
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
     coinifySellCurrencies: formatCurrencies(coinifySellCurrencyCodes),
     bitCurrencies,
+    ethCurrencies,
     conversions,
-
+    ethConversions,
     fetchExchangeRate,
+    fetchEthRate,
     updateCoinifyCurrencies,
     getFiatAtTime,
     isBitCurrency,
+    isEthCurrency,
     decimalPlacesForCurrency,
     convertToSatoshi,
     convertFromSatoshi,
+    convertToEther,
+    convertFromEther,
     formatCurrencyForView,
+    getCurrencyByCode: MyWalletHelpers.memoize(getCurrencyByCode),
     commaSeparate
   };
 
@@ -95,20 +109,26 @@ function currency ($q, MyBlockchainApi) {
     return Object.keys(currencies).map(currencyFormat);
   }
 
-  function fetchExchangeRate () {
+  function fetchExchangeRate (currency) {
+    let { code } = currency;
     let currencyFormat = info => ({
       symbol: info.symbol,
       conversion: parseInt(SATOSHI / info.last, 10)
     });
-    let success = result => {
-      Object.keys(result).forEach(code => {
-        conversions[code] = currencyFormat(result[code]);
+    return MyBlockchainApi.getExchangeRate(code, 'BTC').then((rate) => {
+      Object.keys(rate).forEach(key => {
+        conversions[key] = currencyFormat(rate[key]);
       });
-    };
-    let fail = error => {
-      console.log('Failed to load ticker: %s', error);
-    };
-    return MyBlockchainApi.getTicker().then(success).catch(fail);
+    });
+  }
+
+  function fetchEthRate (currency) {
+    let { code } = currency;
+    return MyBlockchainApi.getExchangeRate(code, 'ETH').then((rate) => {
+      Object.keys(rate).forEach(key => {
+        ethConversions[key] = rate[key];
+      });
+    });
   }
 
   function getFiatAtTime (time, amount, currencyCode) {
@@ -135,9 +155,15 @@ function currency ($q, MyBlockchainApi) {
     return bitCurrencies.map(c => c.code).indexOf(currency.code) > -1;
   }
 
+  function isEthCurrency (currency) {
+    if (currency == null) return null;
+    return ethCurrencies.map(c => c.code).indexOf(currency.code) > -1;
+  }
+
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalPlaces = ({ 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0 })[currency.code];
+    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8 };
+    let decimalPlaces = decimalMap[currency.code];
     return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
 
@@ -167,17 +193,50 @@ function currency ($q, MyBlockchainApi) {
     }
   }
 
+  function convertToEther (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBitCurrency(currency)) {
+      console.warn('do not try to convert bitcoin to ether');
+      return null;
+    } else if (ethConversions[currency.code] != null) {
+      return amount / ethConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
+  function convertFromEther (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBitCurrency(currency)) {
+      console.warn('do not try to convert bitcoin from ether');
+      return null;
+    } else if (isEthCurrency(currency)) {
+      return amount / currency.conversion;
+    } else if (ethConversions[currency.code] != null) {
+      return amount * ethConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
   function formatCurrencyForView (amount, currency, showCode = true) {
     if (amount == null || currency == null) return null;
     let decimalPlaces = decimalPlacesForCurrency(currency);
     let code = showCode ? (' ' + currency.code) : '';
-    if (isBitCurrency(currency)) {
+    amount = parseFloat(amount);
+    if (isBitCurrency(currency) || isEthCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
     } else {
       amount = parseFloat(amount).toFixed(decimalPlaces);
     }
     return commaSeparate(amount) + code;
+  }
+
+  function getCurrencyByCode (code) {
+    code = code.toUpperCase();
+    return service.currencies.concat(bitCurrencies).concat(ethCurrencies)
+      .find(curr => curr.code === code);
   }
 
   function commaSeparate (amount) {
