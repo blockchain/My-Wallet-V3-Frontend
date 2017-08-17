@@ -1,17 +1,29 @@
 .af-header {}
 .af-item {
-  height: calc(635px/8);
+  height: calc(450px/8);
   border-left: 1px solid #d2ced0;
   margin-left: 15px;
   &:last-child, &.af-fade {
     opacity: 0.5;
   }
+  &:first-child {
+    @extend .pos-rel;
+    &:before {
+      content: '';
+      left: -1px;
+      width: 1px;
+      height: 10px;
+      @extend .pos-abs;
+      background: white;
+    }
+  }
+}
+.af-type {
+  margin-left: -15px;
 }
 .af-empty-state {
-  height: 100%;
+  height: 55vh;
   width: 100%;
-  background: linear-gradient(rgba(247, 247, 247, 1), rgba(247, 247, 247, 1));
-  position: absolute;
   top: 35px;
   h2, h5 {
     padding: 0 5px;
@@ -22,11 +34,15 @@
   }
   button {
     min-height: 40px;
+    min-width: 220px;
+    border-radius: 25px;
+  }
+  img {
+    height: 77px;
+    width: 77px;
   }
 }
 .af-info {
-  border: 1px solid #d2ced0;
-  overflow-x: hidden;
   padding: .8em;
 }
 .af-date {
@@ -35,14 +51,15 @@
 }
 .af-marker {
   position: relative;
-  right: 15px;
-  top: 5px;
-  color: #ffffff;
+  right: 26px;
+  top: 0px;
+  color: #004a7c;
   i {
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    background-color: $blue;
+    background-color: white;
+    border: 1px solid #d2ced0;
     @extend .flex-center;
     @extend .flex-justify;
   }

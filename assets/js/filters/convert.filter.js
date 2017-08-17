@@ -13,15 +13,17 @@ function convertFilter (Wallet, currency) {
   // target => { 'primary' | 'secondary' | 'btc' | 'fiat' | currency }
   return function (amount, target = 'primary', showCode) {
     let fiat = Wallet.settings.currency;
+    let eth = currency.ethCurrencies[0];
     let btc = Wallet.settings.btcCurrency;
     let display = Wallet.settings.displayCurrency;
-    let curr;
+    let curr, conversion;
 
     if (typeof target === 'string') {
       curr = caseof(target, {
         'primary': display,
         'secondary': currency.isBitCurrency(display) ? fiat : btc,
         'btc': btc,
+        'eth': eth,
         'fiat': fiat
       });
     } else if (target.code) {
@@ -30,7 +32,8 @@ function convertFilter (Wallet, currency) {
       curr = display;
     }
 
-    let conversion = currency.convertFromSatoshi(amount, curr);
+    if (currency.isEthCurrency(curr)) conversion = currency.convertFromEther(amount, curr);
+    else conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr, showCode);
   };
 }

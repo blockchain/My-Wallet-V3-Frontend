@@ -1065,7 +1065,7 @@
     "DISAGREE": "强烈不同意",
     "AGREE": "强烈同意"
   },
-  "ACCEPT_TOS": "我已阅读并且同意 <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>服务条款</a>",
+  "ACCEPT_TOS": "我已阅读并且同意 <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>服务条款</a>",
   "SIMPLE_SECURE_SEAMLESS": "简单。安全。无缝。",
   "BUY_SIMPLE_STEPS": "现在，全球最受欢迎的比特币钱包<br>可以让您通过4个<br>简单安全的步骤购买比特币。 ",
   "METADATA_DOWN_EXCHANGE": "无法载入您的兑换详情。请尝试刷新页面。",

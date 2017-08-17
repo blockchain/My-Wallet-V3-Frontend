@@ -5,9 +5,11 @@ describe('Transaction Description Directive', () => {
   let isoScope;
   let Wallet;
   let html;
+  let $q;
+  let ShapeShift;
 
   beforeEach(module('walletDirectives'));
-  
+
   beforeEach(module('walletApp'));
 
   beforeEach(inject(function (_$compile_, _$rootScope_, $injector, $httpBackend) {
@@ -17,9 +19,13 @@ describe('Transaction Description Directive', () => {
 
     // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
     $httpBackend.whenGET('/Resources/wallet-options.json').respond();
-
+    $q = $injector.get('$q');
     Wallet = $injector.get('Wallet');
+    ShapeShift = $injector.get('ShapeShift');
     let MyWallet = $injector.get('MyWallet');
+
+    spyOn(ShapeShift, 'isDepositTx').and.returnValue($q.resolve('asdf'));
+    spyOn(ShapeShift, 'isWithdrawalTx').and.returnValue($q.resolve('asdf'));
 
     Wallet.my = {
       wallet: {

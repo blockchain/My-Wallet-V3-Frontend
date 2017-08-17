@@ -8,6 +8,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
   let isCountryWhitelisted = null;
   let isCoinifyCountry = null;
   let isSFOXCountry = null;
+  let isUnocoinCountry = null;
 
   let sfoxInviteFraction = 0;
 
@@ -19,6 +20,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     // Coinify countries are no longer invite-only
     isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
     isSFOXCountry = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isUnocoinCountry = accountInfo && env.partners.unocoin.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
     let whitelist = env.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
@@ -49,9 +51,17 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
       } else {
         if (!isSFOXCountry) { return false; }
         if (!accountInfo.email) { return false; }
-        return MyWalletHelpers.isEmailInvited(accountInfo.email, sfoxInviteFraction);
+        return MyWalletHelpers.isStringHashInFraction(accountInfo.email, sfoxInviteFraction);
       }
     });
+  };
+
+  service.buyLink = () => {
+    let buyLink = () => {
+      if (isCoinifyCountry) return 'BUY_AND_SELL_BITCOIN';
+      else return 'BUY_BITCOIN';
+    };
+    return Env.then(processEnv).then(buyLink);
   };
 
   // check to make sure this does not get called on home
