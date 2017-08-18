@@ -223,6 +223,15 @@ describe('shift-create.component', () => {
       spyOn(scope, 'refreshIfValid');
     });
 
+    describe('from', () => {
+      it('should getAvailableBalance when balance changes', () => {
+        spyOn(scope, 'getAvailableBalance');
+        scope.$ctrl.from.balance = 100;
+        scope.$digest();
+        expect(scope.getAvailableBalance).toHaveBeenCalled();
+      });
+    });
+
     describe('input', () => {
       it('should not refresh if base fiat', () => {
         scope.state.input = { curr: 'btc', amount: 20000 };
