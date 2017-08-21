@@ -45,20 +45,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
     amount: state.baseInput ? state.input.amount : state.output.amount
   });
 
-  $scope.cancelRefresh = () => {
-    $scope.refreshQuote.cancel();
-    $timeout.cancel($scope.refreshTimeout);
-  };
-
   $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
-    $scope.cancelRefresh();
-
     let fetchSuccess = (quote) => {
-      let now = new Date();
       $scope.quote = quote;
       state.error = null;
       state.loadFailed = false;
-      $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.expires - now);
       if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
       else state.input.amount = Number.parseFloat(quote.withdrawalAmount);
       AngularHelper.$safeApply();
@@ -75,8 +66,6 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
       $scope.quote = null;
       state.loadFailed = false;
       $scope.refreshQuote();
-    } else {
-      $scope.cancelRefresh();
     }
   };
 
@@ -128,6 +117,5 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $timeout
   $scope.$watch('state.input.curr', () => getAvailableBalance().then(getRate));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
-  $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
 }
