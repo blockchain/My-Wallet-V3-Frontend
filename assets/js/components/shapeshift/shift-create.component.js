@@ -41,8 +41,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   $scope.getQuoteArgs = (state) => ({
-    pair: state.baseInput ? state.input.curr + '_' + state.output.curr : state.output.curr + '_' + state.input.curr,
-    amount: state.baseInput ? state.input.amount : state.output.amount
+    pair: state.input.curr + '_' + state.output.curr,
+    amount: state.baseInput ? state.input.amount : -state.output.amount
   });
 
   $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
@@ -51,7 +51,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       state.error = null;
       state.loadFailed = false;
       if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
-      else state.input.amount = Number.parseFloat(quote.withdrawalAmount);
+      else state.input.amount = Number.parseFloat(quote.depositAmount);
       AngularHelper.$safeApply();
     };
 
