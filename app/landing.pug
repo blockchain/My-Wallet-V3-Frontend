@@ -86,9 +86,17 @@
   .footer.pt-30.pb-25.ph-10
     .container
       .row.upper
+        .col-md-3.col-sm-6.col-xs-6.float-right.right-align.visible-sm.visible-xs
+          li.dropup(uib-dropdown)
+            a(href="#" uib-dropdown-toggle)
+              span.upper.f-12 {{language}}
+              i.icon-down_arrow.f-8.ml-5
+            ul.languages_select(uib-dropdown-menu)
+              li(ng-repeat="lang in languages")
+                a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
         .col-md-2
           img(src="img/bc-name-and-logo-dark-blue.svg" width="150px")
-        .col-md-2.col-sm-6.col-xs-6.mr-40.no-margin-mobile
+        .col-md-3.col-sm-6.col-xs-6.mr-40.no-margin-mobile
           p.blue.uppercase.em-600.f-12.underline-blue.visible-lg.visible-md.visible-sm.hidden-xs(translate="PRODUCTS")
           p.blue.uppercase.em-600.f-12.hidden-lg.hidden-md.hidden-sm.visible-xs
             span.underline-blue Products
@@ -111,15 +119,7 @@
               a(href="{{rootURL}}markets" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Markets
             p
               a(href="{{rootURL}}stats" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Stats
-        .col-md-3.col-sm-6.col-xs-6.right-align.visible-sm.visible-xs
-          li.dropup(uib-dropdown)
-            a(href="#" uib-dropdown-toggle)
-              span.upper.f-12 {{language}}
-              i.icon-down_arrow.f-8.ml-5
-            ul.languages_select(uib-dropdown-menu)
-              li(ng-repeat="lang in languages")
-                a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
-        .col-md-2.col-sm-6.mr-40.no-margin-mobile
+        .col-md-3.col-sm-4.col-xs-6.mr-40.no-margin-mobile
           p.blue.uppercase.em-600.f-12.underline-blue.visible-lg.visible-md.visible-sm.hidden-xs Company
           p.blue.uppercase.em-600.f-12.hidden-lg.hidden-md.hidden-sm.visible-xs
             span.underline-blue Company
@@ -138,7 +138,7 @@
               a(href="https://www.blockchain.com/press" class="blue em-300 f-12 uppercase") Press
             p
               a(href="https://blog.blockchain.com/" class="blue em-300 f-12 uppercase") Blog
-        .col-md-2.col-sm-6
+        .col-md-2.col-sm-2.col-xs-6
           p.blue.uppercase.em-600.f-12.underline-blue.visible-lg.visible-md.visible-sm.hidden-xs  Support
           p.blue.uppercase.em-600.f-12.hidden-lg.hidden-md.hidden-sm.visible-xs
             span.underline-blue Support
@@ -148,7 +148,7 @@
             a(href="https://blog.blockchain.com/category/tutorials-and-guides/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="Tutorials")
           p
             a(href="https://blockchain.info/wallet/bitcoin-faq" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="Learning Portal")
-        .col-md-3.right-align.hidden-sm.hidden-xs
+        .col-md-1.right-align.hidden-sm.hidden-xs
           li.dropup(uib-dropdown)
             a(href="#" uib-dropdown-toggle)
               span.upper.f-12 {{language}}
