@@ -5,11 +5,6 @@ angular
 function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper, MyWallet, state, Env) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  Env.then(env => {
-    // this.blacklisted = env.shapeshift.statesBlacklist;
-    this.blacklisted = ['NY', 'NC'];
-  });
-
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'EXCHANGE',
     options: ['EXCHANGE', 'ORDER_HISTORY'],
@@ -28,14 +23,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
 
   let accountInfo = MyWallet.wallet.accountInfo;
   let codeGuess = accountInfo && accountInfo.countryCodeGuess;
-
-  this.onStateBlacklist = state => {
-    if (!state) return false;
-    return this.blacklisted.indexOf(state.Code) > -1;
-  };
-
-  this.saveState = () => ShapeShift.setUSAState(this.state);
-  let storedState = ShapeShift.getUSAState();
+  let storedState = ShapeShift.USAState;
 
   if (codeGuess === 'US' && !storedState) {
     this.states = state.stateCodes;
@@ -43,10 +31,4 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
   } else {
     this.goTo('create');
   }
-
-  this.signupForShift = () => {
-    let email = encodeURIComponent(this.email);
-    let state = this.state.Name;
-    ShapeShift.signupForShift(email, state);
-  };
 }

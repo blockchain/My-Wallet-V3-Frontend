@@ -25,6 +25,9 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
       else if (!this.isInRolloutGroup) reason = 'they are not in the rollout group';
       else reason = 'Ethereum is initialized, they are not in a blacklisted country, and are in the rollout group';
       return `User can${this.userHasAccess ? '' : 'not'} see ShapeShift because ${reason}`;
+    },
+    get USAState () {
+      return Wallet.my.wallet.shapeshift.USAState;
     }
   };
 
@@ -67,10 +70,6 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
 
   service.isWithdrawalTx = (hash) => {
     return service.shapeshift.isWithdrawalTx(hash);
-  };
-
-  service.getUSAState = () => {
-    return service.shapeshift.USAState;
   };
 
   service.setUSAState = (state) => {
