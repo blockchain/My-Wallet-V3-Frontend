@@ -106,6 +106,13 @@ describe('shift-create.component', () => {
       scope.$digest();
       expect(scope.locked).toEqual(false);
     });
+
+    it('should set the baseCurr to the input currency', () => {
+      scope.baseInput = 'eth';
+      scope.state.input.curr = 'btc';
+      scope.getSendAmount();
+      expect(scope.state.baseCurr).toBe('btc');
+    });
   });
 
   describe('.refreshIfValid()', () => {
