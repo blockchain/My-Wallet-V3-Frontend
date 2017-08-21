@@ -49,7 +49,7 @@
     },
     "HOW_TO_TRANSACT_ETH": {
       "Q": "How do I receive/send ether?",
-      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Ether’ in the left menu to access your ether dashboard. Once there, click on ‘Request’ to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ from the ether transactions tab, enter the recipient’s ether address in the ‘To’ field and how much you want to send."
+      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Request’ and select 'Ether' in the currency field to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ and select 'Ether' in the currency field, then enter the recipient’s ether address in the ‘To’ field along with how much you want to send."
     },
     "HOW_MUCH_TO_SEND": {
       "Q": "How much does it cost to send bitcoin{{showEthereum ? ' or ether' : ''}}?",
