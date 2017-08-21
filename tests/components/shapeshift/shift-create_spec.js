@@ -149,25 +149,8 @@ describe('shift-create.component', () => {
     });
   });
 
-  describe('.cancelRefresh()', () => {
-    beforeEach(() => scope = getControllerScope(handlers));
-
-    it('should cancel the refresh timeout', () => {
-      spyOn($timeout, 'cancel');
-      scope.refreshTimeout = 'TIMEOUT';
-      scope.cancelRefresh();
-      expect($timeout.cancel).toHaveBeenCalledWith(scope.refreshTimeout);
-    });
-  });
-
   describe('.refreshQuote()', () => {
     beforeEach(() => scope = getControllerScope(handlers));
-
-    it('should reset the refresh timeout', () => {
-      spyOn(scope, 'cancelRefresh');
-      scope.refreshQuote();
-      expect(scope.cancelRefresh).toHaveBeenCalled();
-    });
 
     describe('success', () => {
       let quote;
