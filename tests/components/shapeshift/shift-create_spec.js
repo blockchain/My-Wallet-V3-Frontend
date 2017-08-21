@@ -3,7 +3,6 @@ describe('shift-create.component', () => {
   let $compile;
   let $templateCache;
   let $componentController;
-  let $timeout;
   let $q;
   let scope;
   let Wallet;
@@ -72,7 +71,6 @@ describe('shift-create.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
 
-      $timeout = $injector.get('$timeout');
       $q = $injector.get('$q');
       Wallet = $injector.get('Wallet');
       let Exchange = $injector.get('Exchange');
