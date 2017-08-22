@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('TransactionsCtrl', TransactionsCtrl);
+  .controller('bitcoinTransactionsCtrl', bitcoinTransactionsCtrl);
 
-function TransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
+function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;

@@ -1,0 +1,44 @@
+form.bc-form(
+  name="forms.receiptForm"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500.pl-30.no-padding-mobile(translate=".TRADE.{{trade.status}}.HEADER")
+    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
+      .mv-20.ph-30.no-padding-mobile
+        shift-progress(shift="trade")
+      .f-13.mb-20
+        span(translate="{{ trade.error || 'SHIFT.TRADE.' + trade.status + '.BODY' }}"
+             ng-show="isCheckout || trade.isResolved || trade.isFailed"
+             translate-values="{output: human[output]}")
+        span(translate="{{ 'SHIFT.TRADE.' + trade.status + '.BODY' }}"
+             ng-show="trade.isComplete")
+      .f-16.em-500.mb-5
+        span(translate=".ORDER_SUMMARY")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+        li.pb-5.flex-between
+          span.em-500.colon(translate=".INPUT_DEPOSITED" translate-values="{input: human[input]}")
+          span.em-300.right-align {{ trade.depositAmount | format:input:true }}
+        li.pv-5.flex-between
+          span.em-500.colon(translate="{{ trade.isComplete ? 'SHIFT.OUTPUT_RECEIVED' : 'SHIFT.TO_RECEIVE'}}" translate-values="{output: human[output]}")
+          span.em-300.right-align(ng-class="{'mid-grey opacity-5': trade.isResolved}") {{ trade.withdrawalAmount | format:output:true }}
+        li.pv-5.flex-between
+          span.em-500.colon(translate="EXCHANGE_RATE")
+          span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
+        li.pv-5.flex-between
+          span.em-500
+            span.colon(translate=".WITHDRAWAL_FEE")
+            helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
+          span.em-300.right-align
+            span {{ trade.quote.minerFee | format:output:true }}
+        li.pt-5.flex-between
+          span.em-500
+            span.colon(translate=".ORDER_ID")
+          span.em-300.right-align
+            span {{ trade.quote.orderId }}
+      .flex-row.flex-end
+        button.button-muted.mr-15(ng-if="trade.isComplete" ng-click="$ctrl.onClose()" translate="CLOSE")
+        button.button-primary(ng-if="!trade.isComplete" ng-click="$ctrl.onClose()" translate="CLOSE")
+        button.button-primary(ng-if="trade.isComplete" ui-sref="{{ output === 'btc' ? 'wallet.common.btc.transactions' : 'wallet.common.eth.transactions' }}" translate=".SEE_YOUR_OUTPUT" translate-values="{output: human[output]}")  

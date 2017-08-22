@@ -44,7 +44,8 @@
             .mb-20.pos-rel
               label(translate="EXCHANGE.PAN_CARD")
               input(ng-model="$ctrl.profile.pancard" ng-change="$ctrl.clearInlineErrors('addressForm', 'pancard')" name="pancard" required)
-              span.error(translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
+              span.state-danger-text.mrs(ng-if="$ctrl.addressForm.pancard.$error.correct" translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
+              span.state-danger-text.mrs(ng-if="$ctrl.addressForm.pancard.$error.duplicate" translate="PAN_CARD_DUPLICATE")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('ssn')")
             .mb-20.pos-rel
               label.hidden-xs Social Security Number

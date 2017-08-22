@@ -1066,7 +1066,7 @@
     "DISAGREE": "Stimme überhaupt nicht zu",
     "AGREE": "Stimme dem rundum zu"
   },
-  "ACCEPT_TOS": "Ich habe die <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Servicebedingungen</a> gelesen und stimme ihnen zu",
+  "ACCEPT_TOS": "Ich habe die <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Servicebedingungen</a> gelesen und stimme ihnen zu",
   "SIMPLE_SECURE_SEAMLESS": "Einfach. Sicher. Problemlos.",
   "BUY_SIMPLE_STEPS": "Mit der weltweit beliebtesten Bitcoin-Wallet <br> kann man jetzt Bitcoin in 4 <br> einfachen und sicheren Schritten erwerben.",
   "METADATA_DOWN_EXCHANGE": "Die Angaben zum Wechselgeschäft können nicht geladen werden. Bitte versuchen Sie, die Seite zu aktualisieren.",

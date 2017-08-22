@@ -38,6 +38,8 @@ describe('Imported Address Directive', () => {
   beforeEach(inject((_$compile_, _$rootScope_, $injector) => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+    let Wallet = $injector.get('Wallet');
+    Wallet.my = $injector.get('MyWallet');
   }));
 
   beforeEach(function () {
@@ -84,7 +86,7 @@ describe('Imported Address Directive', () => {
   describe('showAddress', () =>
 
     it('should open a modal', inject(function ($uibModal) {
-      spyOn($uibModal, 'open');
+      spyOn($uibModal, 'open').and.callThrough();
       isoScope.showAddress();
       expect($uibModal.open).toHaveBeenCalled();
     })

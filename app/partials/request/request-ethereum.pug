@@ -1,0 +1,32 @@
+#receive.modal-body
+  form.bc-form
+    fieldset
+      .group.mb-20.inline
+        .item.width-30.width-50-mobile
+          label.colon(translate="CURR")
+          asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
+      .group.mb-20
+        .item
+          label.flex-between.flex-baseline
+            span
+              span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
+              helper-button(content="COPY_AND_SHARE_ADDRESS.ETH_HELPER")
+          .flex-row.flex-column-mobile
+            span.f-14.bg-grey.ph-10.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
+            span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel.center-mobile(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browser.canExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
+            span.f-14.ph-25.pv-10.upper.white.bg-success.center-mobile(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
+      .group.mb-20
+        .item
+          .or-horizontal Or
+  form.bc-form
+    fieldset
+      .group.mb-15
+        .item
+          label.flex-between.flex-justify
+            span
+              span.colon(translate="SCAN_QR_CODE.TITLE")
+              helper-button(content="SCAN_QR_CODE.ETH_HELPER")
+          .flex-justify.flex-center.flex-column.mv-20
+            qr(text="state.address" ng-if="state.address" size=150 image="true")
+  div
+    button.full.button-primary.upper(ng-click="$close()") Done

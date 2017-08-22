@@ -13,15 +13,7 @@ angular.module('walletDirectives').directive('importedAddress', (Wallet, $transl
       scope.settings = Wallet.settings;
 
       scope.showAddress = () => {
-        $uibModal.open({
-          templateUrl: 'partials/request.pug',
-          controller: 'RequestCtrl',
-          resolve: {
-            destination: () => scope.address,
-            focus: () => true
-          },
-          windowClass: 'bc-modal initial'
-        });
+        modals.openRequest(scope.address);
       };
 
       scope.archive = () => {

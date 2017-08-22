@@ -2,11 +2,20 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta, Ethereum, ShapeShift, Env, MyWallet) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
   $scope.userHasAccount = buyStatus.userHasAccount();
+  $scope.accountInfo = MyWallet.wallet.accountInfo;
+  $scope.showEthereum = () => Ethereum.userHasAccess;
+  $scope.showShift = () => ShapeShift.userHasAccess;
+
+  Env.then(env => {
+    let stateGuess = $scope.accountInfo.stateCodeGuess;
+    let whitelistedStates = env.shapeshift.statesWhitelist;
+    $scope.isInWhitelistedState = !stateGuess ? true : whitelistedStates.indexOf(stateGuess) > -1;
+  });
 
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
   $scope.setBuyCtaDismissed = cta.setBuyCtaDismissed;
@@ -48,6 +57,8 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
     'wallet.common.settings.accounts_addresses',
     'wallet.common.settings.imported_addresses'
   ].indexOf($state.current.name) > -1;
+
+  buyStatus.buyLink().then(res => $scope.buyLink = res);
 
   $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
 
