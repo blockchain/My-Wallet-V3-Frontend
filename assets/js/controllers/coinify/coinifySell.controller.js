@@ -16,12 +16,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.accounts = accounts;
   this.finalPayment = payment;
   if (bankMedium) this.paymentAccount = bankMedium;
-  this.message = 'SELL.QUOTE_EXPIRES';
   this.now = () => new Date().getTime();
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
-  this.refreshQuote = () => {
-    return $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
-  };
+  this.refreshQuote = () => $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
 
   const onRefreshQuote = (quote) => {
     this.quote = quote;
