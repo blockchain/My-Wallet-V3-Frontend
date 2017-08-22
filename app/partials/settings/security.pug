@@ -8,7 +8,7 @@
           label.type-h5.em-400.mbn(translate="WALLET_RECOVERY_PHRASE")
           span.label.label-warning(translate="UNCONFIRMED", ng-hide="status.didConfirmRecoveryPhrase ")
           span.label.label-success(translate="VERIFIED", ng-show="status.didConfirmRecoveryPhrase")
-        p.alt-font.f-16.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN")
+        p.alt-font.f-16.em-300.hidden-xs.hidden-sm(translate="RECOVERY_PHRASE_EXPLAIN" translate-values="phraseTranslateValues")
       .col-sm-12.col-md-6.setting-result
         confirm-recovery-phrase
 

@@ -1,0 +1,6 @@
+.modal-header.flex-row.flex-center.bc-modal-header.tabbed(data-preflight-tag="Send")
+  i.ti-close.close-modal(ng-click="$close()")
+  i.icon-send.f-20.pr-15
+  span.f-24(translate="Send")
+div(ng-if="vm.onTab('btc')" ng-include="'partials/send/send-bitcoin.pug'")
+div(ng-if="vm.onTab('eth')" ng-include="'partials/send/send-ethereum.pug'")

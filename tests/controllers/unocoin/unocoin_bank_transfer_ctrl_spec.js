@@ -1,49 +1,71 @@
 describe('UnocoinBankTransferController', () => {
-  let $controller;
-  let options;
-  let $rootScope;
-  let Alerts;
   let $q;
+  let $rootScope;
+  let $controller;
+  let $compile;
+  let $templateCache;
+  let Alerts;
+  let scope;
   let unocoin;
 
-  // let trade = {
-  //   addReferenceNumber (ref) { return $q.resolve({id: 1}); }
-  // };
   let formatTrade = {
-    initiated (trade) { return $q.resolve({id: 2}); }
+    initiated (trade) { return $q.resolve({ id: 2 }); }
   };
 
   beforeEach(angular.mock.module('walletApp'));
 
+  beforeEach(() => {
+    module(($provide) => {
+      $provide.factory('Env', ($q) => $q.resolve({
+        partners: {
+          unocoin: {
+            surveyTradeLinks: {}
+          }
+        }
+      }));
+    });
+  });
+
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$q_, _$rootScope_, _$controller_, $httpBackend) {
+    angular.mock.inject(function ($injector, _$q_, _$rootScope_, _$controller_, _$compile_, _$templateCache_, $httpBackend) {
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
+      $q = _$q_;
       $rootScope = _$rootScope_;
       $controller = _$controller_;
+      $compile = _$compile_;
+      $templateCache = _$templateCache_;
       Alerts = $injector.get('Alerts');
-      $q = _$q_;
       unocoin = $injector.get('unocoin');
-    }));
+    })
+  );
 
-  let getController = (profile, accounts, quote) =>
-    $controller('UnocoinBankTransferController', {
+  let getController = function (scope) {
+    return $controller("UnocoinBankTransferController", {
+      $scope: scope,
       $uibModalInstance: { close: (function () {})({dismiss () {}}) },
-      exchange: { profile },
-      quote: quote || {},
-      options: options || {},
-      accounts: accounts || [],
       trade: {
-        addReferenceNumber: function (ref) { return $q.resolve().then(this.formattedTrade = formatTrade.initiated()).then(() => this.goTo('initiated')); }
+        addReferenceNumber: (ref) => { return $q.resolve({}).then(() => {}).then(() => {}); }
       },
       bankAccount: {},
       formatTrade: {
         bankTransfer:
-          function (trade, bankAccount) { return true; }
-      },
-      formattedTrade: {}
-    })
-  ;
+          (trade, bankAccount) => { return 'trade'; },
+        initiated:
+          (trade) => { return true; }
+      }
+    });
+  };
+
+  let getControllerScope = () => {
+    scope = $rootScope.$new();
+
+    let template = $templateCache.get('partials/unocoin/bank-transfer.pug');
+    let controller = getController({}, {}, {}, scope);
+
+    $compile(template)(scope);
+    return scope;
+  };
 
   describe('onStep()', () => {
     it('should have onOrAfterStep correct', () => {
@@ -53,21 +75,29 @@ describe('UnocoinBankTransferController', () => {
   });
 
   describe('addReferenceNumber()', () => {
+    let ctrl;
+
     beforeEach(() => {
-      let ctrl;
+      scope = getControllerScope();
       ctrl = getController();
-      trade = {
-        addReferenceNumber () { return $q.resolve().then(ctrl.formattedTrade = formatTrade.initiated()).then(() => ctrl.goTo('initiated')); }
-      };
     });
 
     it('should call lock()', () => {
-      let ctrl = getController();
-      spyOn(trade, 'addReferenceNumber');
+      spyOn(ctrl, 'lock');
       ctrl.addReferenceNumber();
-      // $rootScope.$digest();
-      // expect(trade.addReferenceNumber).not.toHaveBeenCalled();
-      // $rootScope.$digest();
+      expect(ctrl.lock).toHaveBeenCalled();
+    });
+
+    it('should set formattedTrade', () => {
+      ctrl.addReferenceNumber();
+      expect(ctrl.formattedTrade).toBe('trade');
+    });
+
+    it('should goTo initiated', () => {
+      spyOn(ctrl, 'goTo');
+      ctrl.addReferenceNumber();
+      scope.$digest();
+      expect(ctrl.goTo).toHaveBeenCalledWith('initiated');
     });
   });
 });

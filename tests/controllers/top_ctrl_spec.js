@@ -21,7 +21,10 @@ describe('TopCtrl', () => {
         isUpgradedToHD: true,
         keys: [
           { address: '1asdf', archived: false }, { address: '1asdf', archived: true }
-        ]
+        ],
+        accountInfo: {
+          countryCodeGuess: 'US'
+        }
       };
 
       $controller('TopCtrl', {
