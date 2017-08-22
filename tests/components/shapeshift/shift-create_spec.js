@@ -78,7 +78,11 @@ describe('shift-create.component', () => {
       let buyStatus = $injector.get('buyStatus');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
-      MyWallet.wallet = {};
+      MyWallet.wallet = {
+        accountInfo: {
+          countryCodeGuess: 'US'
+        }
+      };
       Wallet.accounts = () => [];
       Wallet.getDefaultAccount = () => mockDefaultBTCWallet();
       MyWallet.wallet.eth = { defaultAccount: mockDefaultETHWallet() };
