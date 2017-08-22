@@ -11,8 +11,8 @@ function countdown ($interval) {
     scope: {
       timeToExpiration: '=',
       onExpiration: '&',
-      debug: '=',
-      message: '='
+      message: '=',
+      debug: '='
     },
     templateUrl: 'templates/countdown.pug',
     link: link
@@ -20,6 +20,7 @@ function countdown ($interval) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.message = scope.message || attrs.message;
     let timeToExpiration = scope.timeToExpiration();
     scope.expireCounter = () => timeToExpiration = 3000;
     scope.cancelCounter = () => $interval.cancel(scope.counter);
@@ -30,7 +31,7 @@ function countdown ($interval) {
       let minutes = parseInt(time, 10);
       let seconds = parseInt((time % 1) * 60, 10);
       if (seconds < 10) seconds = '0' + seconds;
-      if (time <= 0) scope.onExpiration().then(scope.resetTimeToExpiration);
+      if (time <= 0) scope.onExpiration() && scope.onExpiration().then(scope.resetTimeToExpiration);
 
       scope.count = timeToExpiration <= 0 ? '0:00' : minutes + ':' + seconds;
       timeToExpiration -= 1000;

@@ -41,7 +41,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
 
   this.close = (idx) => {
     if (idx > links.length - 1) { this.cancel(); return; }
-    Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
+    Alerts.surveyCloseConfirm('buy-survey-opened', links, idx).then(this.cancel);
   };
 
   this.state = {

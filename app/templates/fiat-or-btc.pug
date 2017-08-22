@@ -1,3 +1,3 @@
 span
-  fiat(btc="btc", ng-hide="isBitCurrency(currency)")
+  fiat(btc="btc" eth="eth" ng-hide="isBitCurrency(currency)")
   span(ng-show="isBitCurrency(currency)") {{ btc | toBitCurrency:currency }}
