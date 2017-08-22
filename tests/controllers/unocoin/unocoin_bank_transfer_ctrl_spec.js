@@ -1,4 +1,4 @@
-fdescribe('UnocoinBankTransferController', () => {
+describe('UnocoinBankTransferController', () => {
   let $q;
   let $rootScope;
   let $controller;
