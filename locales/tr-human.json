@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "En gelişkin bir Güvenlik Merkezi paranızı yetkisiz erişime karşı korumaya yardımcı eder. Adım adım bir rehber ile cüzdanınızı korumanıza yardımcı olacağız. Gelişmişi İki Faktörülü Kimlik Doğrulama Goggle Kimlik Tanıtıcı, SMS veya Yubikey üzerinden kötü adamları dışarıda tutar.",
   "DONT_TRANSFER": "Transfer Etme",
   "OK": "TAMAM",
-  "DESCRIPTION:": "Açıklama:",
+  "DESCRIPTION": "Açıklama",
   "COPY_HELPER": "Bu adresi kopyalayın ve e-posta, metin veya posta güverciniyle bunu gönderenle paylaşın.",
   "QR_HELPER": "Gönderenden bu QR kodunu taramasınız isteyin.",
   "CUSTOMIZE_HELPER": "Bu işlem için bir tutar ve açıklama belirleyin.",

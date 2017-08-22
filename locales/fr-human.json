@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Le centre de sécurité d'avant-garde protège vos fonds de tout accès non autorisé. Nous vous aiderons à sécuriser votre portefeuille, grâce à un guide étape par étape. L'authentification avancée à deux facteurs chasse les méchants en dehors du système par le biais de l'authentificateur Google, les SMS ou Yubikey.",
   "DONT_TRANSFER": "Ne pas transférer",
   "OK": "OK",
-  "DESCRIPTION:": "Description :",
+  "DESCRIPTION": "Description",
   "COPY_HELPER": "Copiez cette adresse et partagez-la avec votre expéditeur par e-mail, SMS ou par le biais d'un pigeon voyageur.",
   "QR_HELPER": "Demandez à votre expéditeur de scanner ce code QR.",
   "CUSTOMIZE_HELPER": "Spécifiez un montant et une description pour cette transaction.",

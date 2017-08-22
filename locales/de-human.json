@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Ein hochmodernes Sicherheitscenter trägt zum Schutz Ihrer Guthaben vor unberechtigten Zugriffen bei. Wir helfen Ihnen mit einer schrittweisen Anleitung, Ihre Wallet zu sichern. Eine erweiterte Zwei-Faktor-Authentifizierung sorgt mit Google Authenticator, SMS oder Yubikey dafür, dass Ganoven draußen bleiben.",
   "DONT_TRANSFER": "Nicht überweisen",
   "OK": "OK",
-  "DESCRIPTION:": "Beschreibung:",
+  "DESCRIPTION": "Beschreibung",
   "COPY_HELPER": "Kopieren Sie diese Adresse und teilen Sie sie per E-Mail, Text oder Brieftaube mit Ihrem Absender.",
   "QR_HELPER": "Bitten Sie Ihren Absender diesen QR-Code einzuscannen.",
   "CUSTOMIZE_HELPER": "Geben Sie für diese Transaktion einen Betrag und eine Beschreibung an.",

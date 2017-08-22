@@ -862,7 +862,7 @@
   "STATE_OF_THE_ART_SEC": "Trung tâm Bảo mật hiện đại giúp bảo vệ tiền của bạn khỏi các truy cập trái phép. Chúng tôi sẽ giúp bạn bảo vệ ví của mình bằng việc hướng dẫn từng bước một. Bảo mật hai lớp Cao cấp giúp ngăn chặn những kẻ xấu qua Google Authenticator, tin nhắn SMS, hoặc Yubikey.",
   "DONT_TRANSFER": "Đừng chuyển",
   "OK": "OK",
-  "DESCRIPTION:": "Mô tả:",
+  "DESCRIPTION": "Mô tả",
   "COPY_HELPER": "Sao chép địa chỉ này và chia sẻ với người gửi của bạn qua email, văn bản, hoặc thư tay.",
   "QR_HELPER": "Yêu cầu người gửi để quét mã QR này.",
   "CUSTOMIZE_HELPER": "Ghi rõ số tiền và mô tả cho giao dịch này.",
