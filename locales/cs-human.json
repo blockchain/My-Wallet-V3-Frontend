@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Moderní Centrum zabezpečení pomáhá chránit Vaše prostředky před neoprávněným přístupem. Pomůžeme Vám zabezpečit Vaši peněženku pomocí tohoto jednoduchého návodu. Pokročilá dvoufaktorová autentizace zabraňuje v přístupu přes Google Authenticator, SMS nebo Yubikey.",
   "DONT_TRANSFER": "Nepřevádět",
   "OK": "OK",
-  "DESCRIPTION:": "Popis:",
+  "DESCRIPTION": "Popis",
   "COPY_HELPER": "Zkopírujte tuto adresu a sdílejte ji s odesílatelem přes e-mail, text nebo třeba poštovního holuba.",
   "QR_HELPER": "Požádejte odesílatele o načtení tohoto QR kódu.",
   "CUSTOMIZE_HELPER": "Zadejte částku a popis této transakce.",

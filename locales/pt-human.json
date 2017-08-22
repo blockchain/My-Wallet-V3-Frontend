@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Uma Central de Segurança de última geração ajuda a proteger seus fundos contra acesso não autorizado. Ajudaremos você a proteger sua carteira com um guia passo a passo. A Autenticação de Dois Fatores Avançada mantém as ameaças longe através do Google Authenticator, SMS ou Yubikey.",
   "DONT_TRANSFER": "Não Transferir",
   "OK": "OK",
-  "DESCRIPTION:": "Descrição:",
+  "DESCRIPTION": "Descrição",
   "COPY_HELPER": "Copie este endereço e compartilhe-o com seu remetente por e-mail, mensagem de texto ou pombo-correio.",
   "QR_HELPER": "Peça a seu remetente para escanear este código QR.",
   "CUSTOMIZE_HELPER": "Especifique um valor e uma descrição para esta transação.",
