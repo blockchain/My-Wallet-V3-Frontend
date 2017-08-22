@@ -68,6 +68,7 @@
   },
   "shapeshift": {
     "countriesBlacklist": [],
+    "statesWhitelist": ["AR", "AZ", "CA", "CO", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "MI", "MN", "MO", "MT", "NE", "NV", "OK", "PA", "SC", "SD", "TN", "TX", "VA", "WI", "WV"],
     "rolloutFraction": 1,
     "upperLimit": 10,
     "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_1MuVnVEtWhiVIQl",

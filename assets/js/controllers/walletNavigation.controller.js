@@ -13,7 +13,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
 
   Env.then(env => {
     let stateGuess = $scope.accountInfo.stateCodeGuess;
-    let whitelistedStates = env.shapeshift.statesBlacklist;
+    let whitelistedStates = env.shapeshift.statesWhitelist;
     $scope.isInWhitelistedState = !stateGuess ? true : whitelistedStates.indexOf(stateGuess) > -1;
   });
 

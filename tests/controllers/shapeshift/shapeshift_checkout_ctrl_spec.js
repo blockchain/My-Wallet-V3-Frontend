@@ -40,9 +40,6 @@ describe('ShapeShiftCheckoutController', () => {
       },
       setUSAState (state) {
         return true;
-      },
-      signupForShift (email, state) {
-        return true;
       }
     };
   });
@@ -99,33 +96,6 @@ describe('ShapeShiftCheckoutController', () => {
   describe('pendingTrades()', () => {
     it('should return true if there are some pending trades', () => {
       expect(ctrl.pendingTrades()).toBe(true);
-    });
-  });
-
-  describe('signupForShift()', () => {
-    it('should call the service and pass email and state', () => {
-      ctrl.email = 'satoshi@blockchain.com';
-      ctrl.state = {Name: 'New York'};
-      spyOn(ShapeShift, 'signupForShift');
-      ctrl.signupForShift(ctrl.email, ctrl.state);
-      expect(ShapeShift.signupForShift).toHaveBeenCalledWith('satoshi%40blockchain.com', 'New York');
-    });
-  });
-
-  describe('onStateBlacklist()', () => {
-    it('should return true if state is on blacklist', () => {
-      let state = {Code: 'NC'};
-      ctrl.blacklisted = ['NC', 'NY'];
-      expect(ctrl.onStateBlacklist(state)).toBe(true);
-    });
-  });
-
-  describe('saveState()', () => {
-    it('should call the service with a state', () => {
-      let state = {Code: 'NY', Name: 'New York'};
-      spyOn(ShapeShift, 'setUSAState');
-      ctrl.saveState(state);
-      expect(ShapeShift.setUSAState).toHaveBeenCalled();
     });
   });
 });

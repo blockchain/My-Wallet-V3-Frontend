@@ -12,13 +12,12 @@ angular
 
 function shiftStateSelectController (MyWallet, Env, ShapeShift, state) {
   Env.then(env => {
-    // this.blacklisted = env.shapeshift.statesBlacklist;
-    this.blacklisted = ['NY', 'NC'];
+    this.whitelisted = env.shapeshift.statesWhitelist;
   });
 
-  this.onStateBlacklist = state => {
-    if (!state) return false;
-    return this.blacklisted.indexOf(state.Code) > -1;
+  this.onStateWhitelist = state => {
+    if (!state) return true;
+    return this.whitelisted.indexOf(state.Code) > -1;
   };
 
   this.saveState = () => ShapeShift.setUSAState(this.state);
