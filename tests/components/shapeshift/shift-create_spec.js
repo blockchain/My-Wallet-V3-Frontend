@@ -3,7 +3,6 @@ describe('shift-create.component', () => {
   let $compile;
   let $templateCache;
   let $componentController;
-  let $timeout;
   let $q;
   let scope;
   let Wallet;
@@ -72,7 +71,6 @@ describe('shift-create.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
 
-      $timeout = $injector.get('$timeout');
       $q = $injector.get('$q');
       Wallet = $injector.get('Wallet');
       let Exchange = $injector.get('Exchange');
@@ -105,6 +103,13 @@ describe('shift-create.component', () => {
       expect(scope.locked).toEqual(true);
       scope.$digest();
       expect(scope.locked).toEqual(false);
+    });
+
+    it('should set the baseCurr to the input currency', () => {
+      scope.baseInput = 'eth';
+      scope.state.input.curr = 'btc';
+      scope.getSendAmount();
+      expect(scope.state.baseCurr).toBe('btc');
     });
   });
 
@@ -142,25 +147,8 @@ describe('shift-create.component', () => {
     });
   });
 
-  describe('.cancelRefresh()', () => {
-    beforeEach(() => scope = getControllerScope(handlers));
-
-    it('should cancel the refresh timeout', () => {
-      spyOn($timeout, 'cancel');
-      scope.refreshTimeout = 'TIMEOUT';
-      scope.cancelRefresh();
-      expect($timeout.cancel).toHaveBeenCalledWith(scope.refreshTimeout);
-    });
-  });
-
   describe('.refreshQuote()', () => {
     beforeEach(() => scope = getControllerScope(handlers));
-
-    it('should reset the refresh timeout', () => {
-      spyOn(scope, 'cancelRefresh');
-      scope.refreshQuote();
-      expect(scope.cancelRefresh).toHaveBeenCalled();
-    });
 
     describe('success', () => {
       let quote;
