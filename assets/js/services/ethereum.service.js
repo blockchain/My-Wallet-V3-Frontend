@@ -72,7 +72,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   };
 
   service.recordLastTransaction = (hash) => {
-    service.lastTxHash = hash;
+    service.eth.setLastTx(hash);
   };
 
   service.setHasSeen = () => {
@@ -81,8 +81,8 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
 
   service.isWaitingOnTransaction = () => {
     return (
-      service.lastTxHash != null &&
-      service.defaultAccount.txs.find(tx => tx.hash === service.lastTxHash) == null
+      service.eth.lastTx != null &&
+      service.defaultAccount.txs.find(tx => tx.hash === service.eth.lastTx) == null
     );
   };
 
