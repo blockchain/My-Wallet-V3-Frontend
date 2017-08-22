@@ -46,6 +46,8 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     });
   };
 
+  $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
     let needsBackup = !Wallet.status.didConfirmRecoveryPhrase;
