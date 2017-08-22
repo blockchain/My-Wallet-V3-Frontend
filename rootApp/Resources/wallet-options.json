@@ -63,7 +63,7 @@
     "walletHelper": "REPLACED_BY_DEV_SERVER"
   },
   "ethereum": {
-    "countries": ["US"],
+    "countries": "*",
     "rolloutFraction": 1
   },
   "shapeshift": {
