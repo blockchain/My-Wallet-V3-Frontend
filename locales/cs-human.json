@@ -1066,7 +1066,7 @@
     "DISAGREE": "Nesouhlasím",
     "AGREE": "Souhlasím"
   },
-  "ACCEPT_TOS": "Přečetl/a jsem si <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Podmínky služby</a> a souhlasím",
+  "ACCEPT_TOS": "Přečetl/a jsem si <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Podmínky služby</a> a souhlasím",
   "SIMPLE_SECURE_SEAMLESS": "Jednoduše. Bezpečně. Bez problémů.",
   "BUY_SIMPLE_STEPS": "Díky nejpopulárnější bitcoinové peněžence <br> na světe můžete nyní nakupovat bitcoin ve 4 <br> snadných a bezpečných krocích.",
   "METADATA_DOWN_EXCHANGE": "Nepodařilo se načíst podrobnosti směny. Zkuste aktualizovat stránku.",

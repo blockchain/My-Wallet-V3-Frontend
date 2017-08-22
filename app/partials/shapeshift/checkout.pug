@@ -6,6 +6,8 @@
         img.mbs.tabs-partner-logo(src="img/shapeshift-logo.png")
   .overflow-scroll.flex-1.pt-30.ph-30.no-padding-mobile
     .flex-column.pbvl(ng-if="tabs.selectedTab === 'EXCHANGE'")
+      div.width-50.border-desktop.pv-30.no-padding-mobile(ng-if="vm.onStep('state-select')")
+        shift-state-select(next-step="vm.goTo('create')" states="vm.states")
       .flex-row(ng-if="vm.onStep('create')")
         div.width-50.border-desktop.pv-30.mr-25.no-margin-mobile.no-padding-mobile(ng-controller="ShapeShiftCreateController")
           shift-create(on-complete="onComplete(payment, fee, quote)" build-payment="buildPayment(quote, fee)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
@@ -42,6 +44,7 @@
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           ng-if="trade.isProcessing || trade.isWaitingForDeposit"
           view-details="vm.openTradeDetails(trade)"
+          namespace="'SHIFT'"
           ex-trade="trade"
         )
       //- Completed Trades
@@ -60,5 +63,6 @@
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           ng-if="trade.isComplete || trade.isFailed || trade.isResolved"
           view-details="vm.openTradeDetails(trade)"
+          namespace="'SHIFT'"
           ex-trade="trade"
         )

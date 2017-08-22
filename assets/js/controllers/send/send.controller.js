@@ -3,12 +3,17 @@ angular
   .controller('SendController', SendController);
 
 function SendController ($uibModalInstance, paymentRequest, assetContext) {
+  let code = assetContext.isViewingBtc() && 'btc' ||
+             assetContext.isViewingEth() && 'eth' ||
+             'btc';
+
   this.confirm = false;
   this.paymentRequest = paymentRequest;
 
-  this.asset = { name: 'Bitcoin', code: 'btc', icon: 'icon-bitcoin' };
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;
+  this.hideAssetSelect = assetContext.hideAssetSelect;
+  this.asset = assetContext.getAssets().filter((a) => a.code === code)[0];
 
   this.close = (result) => {
     $uibModalInstance.close(result);

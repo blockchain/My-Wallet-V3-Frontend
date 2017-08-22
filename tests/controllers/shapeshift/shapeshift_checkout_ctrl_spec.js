@@ -34,6 +34,12 @@ describe('ShapeShiftCheckoutController', () => {
     ShapeShift = {
       shapeshift: {
         trades: [mockTrade(true), mockTrade(false)]
+      },
+      getUSAState () {
+        return 'NY';
+      },
+      setUSAState (state) {
+        return true;
       }
     };
   });
@@ -67,7 +73,7 @@ describe('ShapeShiftCheckoutController', () => {
 
   describe('onStep()', () => {
     it('should check if on specific step', () => {
-      ctrl.step = 1;
+      ctrl.step = 2;
       expect(ctrl.onStep('confirm')).toBe(true);
       expect(ctrl.onStep('receipt')).toBe(false);
     });

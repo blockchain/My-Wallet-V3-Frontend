@@ -40,9 +40,31 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       controllerAs: 'vm',
       resolve: {
         paymentRequest: () => paymentRequest,
-        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader')
+        loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
+        _initialize ($q, Ethereum) {
+          return Ethereum.userHasAccess
+            ? Ethereum.initialize()
+            : $q.resolve();
+        }
       }
     }, options)
+  );
+
+  service.openRequest = service.openOnce((destination = null) =>
+    open({
+      templateUrl: 'partials/request/request.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'RequestController',
+      controllerAs: 'vm',
+      resolve: {
+        destination: () => destination,
+        _initialize ($q, Ethereum) {
+          return Ethereum.userHasAccess
+            ? Ethereum.initialize()
+            : $q.resolve();
+        }
+      }
+    })
   );
 
   service.openHelper = (helper) => open({

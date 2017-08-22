@@ -3,9 +3,14 @@ angular
   .controller('RequestController', RequestController);
 
 function RequestController ($scope, destination, assetContext) {
+  let code = assetContext.isViewingBtc() && 'btc' ||
+             assetContext.isViewingEth() && 'eth' ||
+             'btc';
+
   this.destination = destination;
 
-  this.asset = { name: 'Bitcoin', code: 'btc', icon: 'icon-bitcoin' };
+  this.hideAssetSelect = assetContext.hideAssetSelect;
+  this.asset = assetContext.getAssets().filter(a => a.code === code)[0];
 
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;

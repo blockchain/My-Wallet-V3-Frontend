@@ -38,7 +38,7 @@
         ng-click="showInviteForm()")
         i.icon-buy-sell
         span(translate="BUY_AND_SELL_BITCOIN")
-    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift()")
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift() && isInWhitelistedState")
       a(ui-sref="wallet.common.shift")
         i.icon-ExchangeTab
         span.flex-row.flex-align-end
@@ -86,7 +86,7 @@
     li.terms-policy
       ul.flex-center.flex-wrap.aside.em-300.type-sm
         li.pointer.mrm
-          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank" rel="noopener noreferrer")
+          a.text-color(href="https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf", translate="TOS" target="_blank" rel="noopener noreferrer")
         li.mrm.type-xs
           i.ti-control-record
         li.pointer.mrm

@@ -30,12 +30,12 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
-      return this.ethInititalized || (this.isInWhitelistedCountry && this.isInRolloutGroup);
+      return this.isInWhitelistedCountry && this.isInRolloutGroup;
     },
     get userAccessReason () {
       let reason;
       if (Wallet.my.wallet == null) reason = 'wallet is null';
-      else if (this.ethInititalized) reason = 'it is already initialized';
+      // else if (this.ethInititalized) reason = 'it is already initialized';
       else if (this.isInWhitelistedCountry && this.isInRolloutGroup) reason = 'they are in a whitelisted country and in the rollout group';
       else if (this.isInWhitelistedCountry) reason = 'they are in a whitelisted country but not in the rollout group';
       else if (this.isInRolloutGroup) reason = 'they are in the rollout group but not in a whitelisted country';

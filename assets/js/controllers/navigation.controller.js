@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env, Ethereum) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env, Ethereum, ShapeShift) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
 
@@ -45,6 +45,8 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
       controller: 'SubscribeCtrl'
     });
   };
+
+  $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
@@ -100,7 +102,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
       (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
       (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
-      (feat.title !== 'BTC_ETH_EXCHANGE' || Ethereum.userHasAccess)
+      (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess)
     );
     $scope.feats = whatsNew.filter(filterFeatures).filter(f => (now - f.date) < whatsNewDateCutoff);
   });
