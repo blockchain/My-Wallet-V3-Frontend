@@ -55,8 +55,9 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
   };
 
   service.buyLink = () => {
+    let coinify = MyWallet.wallet.external.coinify;
     let buyLink = () => {
-      if (isCoinifyCountry) return 'BUY_AND_SELL_BITCOIN';
+      if (isCoinifyCountry || coinify.user) return 'BUY_AND_SELL_BITCOIN';
       else return 'BUY_BITCOIN';
     };
     return Env.then(processEnv).then(buyLink);
