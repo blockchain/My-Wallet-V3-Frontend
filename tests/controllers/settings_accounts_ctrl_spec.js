@@ -11,7 +11,10 @@ describe('SettingsAccountsController', () => {
 
       Wallet.accounts = () => [{},{}];
       Wallet.my.wallet = {
-        addressBook: {}
+        addressBook: {},
+        accountInfo: {
+          countryCodeGuess: 'US'
+        }
       };
 
       Wallet.status.isLoggedIn = true;

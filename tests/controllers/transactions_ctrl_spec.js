@@ -1,4 +1,4 @@
-describe('TransactionsCtrl', () => {
+describe('bitcoinTransactionsCtrl', () => {
   let scope;
 
   beforeEach(angular.mock.module('walletApp'));
@@ -51,7 +51,7 @@ describe('TransactionsCtrl', () => {
         }
       };
 
-      $controller('TransactionsCtrl',
+      $controller('bitcoinTransactionsCtrl',
         {$scope: scope});
 
       scope.selectedAcountIndex = 1;

@@ -63,18 +63,12 @@ function DidYouKnow () {
       icon: 'ti-cloud-up'
     }, {
       id: 9,
-      title: 'DYK_HD_PRIVACY_TITLE',
-      type: 'EDUCATIONAL',
-      text: 'DYK_HD_PRIVACY',
-      icon: 'ti-check'
-    }, {
-      id: 10,
       title: 'DYK_DYNAMIC_FEES_TITLE',
       type: 'FEATURE',
       text: 'DYK_DYNAMIC_FEES',
       icon: 'ti-check'
     }, {
-      id: 11,
+      id: 10,
       title: 'DYK_OPEN_SOURCE_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_OPEN_SOURCE',

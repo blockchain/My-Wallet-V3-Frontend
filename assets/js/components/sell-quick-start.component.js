@@ -165,18 +165,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     }, 1000);
   };
 
-  $scope.request = modals.openOnce(() => {
+  $scope.request = () => {
     Alerts.clear();
-    return $uibModal.open({
-      templateUrl: 'partials/request.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'RequestCtrl',
-      resolve: {
-        destination: () => null,
-        focus: () => false
-      }
-    });
-  });
+    return modals.openRequest();
+  };
 
   $scope.checkForNoFee = () => {
     this.status.busy = true;
