@@ -44,6 +44,7 @@
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           ng-if="trade.isProcessing || trade.isWaitingForDeposit"
           view-details="vm.openTradeDetails(trade)"
+          namespace="'SHIFT'"
           ex-trade="trade"
         )
       //- Completed Trades
@@ -62,5 +63,6 @@
           ng-repeat="trade in vm.trades | orderBy:'-createdAt':false track by $index"
           ng-if="trade.isComplete || trade.isFailed || trade.isResolved"
           view-details="vm.openTradeDetails(trade)"
+          namespace="'SHIFT'"
           ex-trade="trade"
         )
