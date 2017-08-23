@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Pusat Keamanan mutakhir membantu melindungi dana Anda dari akses yang tidak sah. Kami akan membantu Anda mengamankan dompet Anda dengan panduan langkah-demi-langkah. Otentikasi Dua Faktor Canggih membuat orang-orang jahat keluar melalui Google Authenticator, SMS, atau Yubikey.",
   "DONT_TRANSFER": "Jangan Transfer",
   "OK": "OK",
-  "DESCRIPTION:": "Deskripsi:",
+  "DESCRIPTION": "Deskripsi",
   "COPY_HELPER": "Salin alamat ini dan bagi dengan pengirim melalui surel, teks, atau merpati pos.",
   "QR_HELPER": "Tanya pengirim untuk memindai kode QR ini.",
   "CUSTOMIZE_HELPER": "Tentukan jumlah dan keterangan untuk transaksi ini.",
@@ -1066,7 +1066,7 @@
     "DISAGREE": "Sangat Tidak Setuju",
     "AGREE": "Sangat Setuju"
   },
-  "ACCEPT_TOS": "Saya telah membaca dan setuju <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Syarat Layanan</a>",
+  "ACCEPT_TOS": "Saya telah membaca dan setuju <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Syarat Layanan</a>",
   "SIMPLE_SECURE_SEAMLESS": "Sederhana. Aman. Lancar.",
   "BUY_SIMPLE_STEPS": "Dompet bitcoin paling populer di dunia <br> sekarang memungkinkan Anda membeli bitcoin dalam 4 <br> langkah yang sederhana dan aman.",
   "METADATA_DOWN_EXCHANGE": "Tidak dapat memuat perincian penukaran Anda. Silakan segarkan halaman.",

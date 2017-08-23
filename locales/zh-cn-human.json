@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "先进的安全中心能够保护您的资金免遭未经授权的访问。我们会通过逐步式向导帮助您保护您的钱包安全。高级双重认证技术能够通过Google验证器、短信，或者Yubikey防止坏人。",
   "DONT_TRANSFER": "不转帐",
   "OK": "确定",
-  "DESCRIPTION:": "描述：",
+  "DESCRIPTION": "描述",
   "COPY_HELPER": "复制该地址并通过电子邮件、短信，或者信鸽与您的发送者分享。",
   "QR_HELPER": "要求您的发送者扫描这个二维码。",
   "CUSTOMIZE_HELPER": "为该交易指定一个金额及描述。",
@@ -1065,7 +1065,7 @@
     "DISAGREE": "强烈不同意",
     "AGREE": "强烈同意"
   },
-  "ACCEPT_TOS": "我已阅读并且同意 <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>服务条款</a>",
+  "ACCEPT_TOS": "我已阅读并且同意 <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>服务条款</a>",
   "SIMPLE_SECURE_SEAMLESS": "简单。安全。无缝。",
   "BUY_SIMPLE_STEPS": "现在，全球最受欢迎的比特币钱包<br>可以让您通过4个<br>简单安全的步骤购买比特币。 ",
   "METADATA_DOWN_EXCHANGE": "无法载入您的兑换详情。请尝试刷新页面。",

@@ -8,7 +8,6 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
   let isCountryWhitelisted = null;
   let isCoinifyCountry = null;
   let isSFOXCountry = null;
-  let isUnocoinCountry = null;
 
   let sfoxInviteFraction = 0;
 
@@ -20,7 +19,6 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     // Coinify countries are no longer invite-only
     isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
     isSFOXCountry = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-    isUnocoinCountry = accountInfo && env.partners.unocoin.countries.indexOf(accountInfo.countryCodeGuess) > -1;
 
     let whitelist = env.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
@@ -36,7 +34,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     // * they already have an account; or
     // * their IP is in a country supported by Coinify; or
     // * their IP is in a country supported by SFOX AND their email is invited; or
-    // * their IP is in a country supported by Unocoin AND their email is invited;
+    // * their IP is in a whitelisted country and their email is invited
     let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
 
     return Env.then(processEnv).then(canBuy);
@@ -57,8 +55,9 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
   };
 
   service.buyLink = () => {
+    let coinify = MyWallet.wallet.external.coinify;
     let buyLink = () => {
-      if (isCoinifyCountry) return 'BUY_AND_SELL_BITCOIN';
+      if (isCoinifyCountry || coinify.user) return 'BUY_AND_SELL_BITCOIN';
       else return 'BUY_BITCOIN';
     };
     return Env.then(processEnv).then(buyLink);
@@ -98,6 +97,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
 
     return external && (
       (external.coinify && external.coinify.hasAccount) ||
+      (external.unocoin && external.unocoin.hasAccount) ||
       (external.sfox && external.sfox.hasAccount)
     );
   };

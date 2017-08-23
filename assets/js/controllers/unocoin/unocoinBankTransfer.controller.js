@@ -7,7 +7,6 @@ let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env, localStorageService) {
   Env.then(env => {
     let links = env.partners.unocoin.surveyTradeLinks;
-
     this.close = () => {
       let survey = 'unocoin-trade-survey';
       let surveyCache = localStorageService.get(survey);
