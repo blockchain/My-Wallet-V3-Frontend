@@ -38,12 +38,23 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
     scope.isPendingSellTrade = () => buySell.isPendingSellTrade(scope.pendingTrade);
 
+    scope.setLimits = (quote, curr) => {
+      scope.limits = buySell.getLimits(quote, curr);
+    };
+
     scope.getInitialExchangeRate = () => {
       scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
-        scope.getMinLimits(quote);
+        // scope.getMinLimits(quote);
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
+        // console.log('here', quote, quote.paymentMediums)
+        quote.getPaymentMediums().then(paymentMediums => {
+          console.log('getPaymentMediums'. paymentMediums)
+          scope.setLimits(paymentMediums, scope.transaction.currency.code);
+        });
+        // scope.getLimits(quote.paymentMediums, scope.transaction.currency.code);
+        // scope.quote = quote;
       }, error).finally(scope.getQuote);
     };
 
@@ -86,7 +97,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     const success = (quote) => {
       scope.status = {};
       scope.quote = quote;
-      scope.getMinLimits(quote);
+      // scope.getMinLimits(quote);
       scope.exchangeRate.fiat = scope.getExchangeRate();
 
       if (quote.baseCurrency === 'BTC') {
@@ -119,10 +130,10 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.transaction.fiat = amount;
     };
 
-    scope.getMinLimits = (quote) => {
-      $q.resolve(buySell.getMinLimits(quote))
-        .then(scope.limits = buySell.limits);
-    };
+    // scope.getMinLimits = (quote) => {
+    //   $q.resolve(buySell.getMinLimits(quote))
+    //     .then(scope.limits = buySell.limits);
+    // };
 
     scope.firstInput = true;
     scope.recordData = (amount) => {
@@ -137,7 +148,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.status.limitError = true;
       let kycs = scope.exchange.kycs;
 
-      if (!kycs.length) {
+      if (!kycs.length || scope.profile.level === '2' || scope.profile.level === '3') {
         scope.status.limitMessage = 'COINIFY_LIMITS.DAILY_LIMIT_IS';
       }
       if (kycs[0] && kycs[0].state === 'pending') {
@@ -152,25 +163,21 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.checkLimit = fiat => {
       if (!scope.profile.level) return false;
       let levelLimits = scope.profile.level.limits;
-      let limits = scope.limits;
 
       let curr = scope.transaction.currency.code;
-      let bankMax = limits.bank.max;
-      let cardMax = limits.card.max;
       let dailyBankMax = levelLimits.bank.inDaily;
       let dailyCardMax = levelLimits.card.inDaily;
-
-      let max = limits.absoluteMax(curr);
-      scope.dailyLimit = dailyBankMax > dailyCardMax ? dailyBankMax : dailyCardMax;
-
-      console.log('checkLimit', fiat, max, bankMax[curr], cardMax[curr]);
-      if (fiat > max) {
-        scope.handleLimitError(fiat, max);
-        scope.recordData('over');
-      } else {
-        scope.status.limitError = false;
-        scope.recordData('under');
-      }
+      console.log('checkLimit', fiat, scope.limits);
+      // let max = scope.limits.absoluteMax(curr);
+      // scope.dailyLimit = dailyBankMax > dailyCardMax ? dailyBankMax : dailyCardMax;
+      //
+      // if (fiat > max) {
+      //   scope.handleLimitError(fiat, max);
+      //   scope.recordData('over');
+      // } else {
+      //   scope.status.limitError = false;
+      //   scope.recordData('under');
+      // }
     };
 
     scope.openKyc = () => {
@@ -185,5 +192,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     };
 
     scope.getInitialExchangeRate();
+
+    scope.$watch('kyc', () => {
+      buySell.fetchProfile().then(() => scope.profile = buySell.getExchange().profile);
+    });
   }
 }
