@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Najwyższej jakości Centrum Bezpieczeństwa pomaga Ci w ochronie Twoich środków przed nieautoryzowanym dostępem. Pomożemy Ci zabezpieczyć Twój portfel w prostym poradniku, krok po kroku. Zaawansowane Uwierzytelnianie Dwustopniowe trzyma złodziei z dala dzięki Google Authenticator, Yubikey lub kodom SMS.",
   "DONT_TRANSFER": "Nie przesyłaj",
   "OK": "OK",
-  "DESCRIPTION:": "Opis:",
+  "DESCRIPTION": "Opis",
   "COPY_HELPER": "Skopiuj ten adres i podaj go swojemu nadawcy e-mailem, smsem lub gołębiem pocztowym.",
   "QR_HELPER": "Poproś nadawcę o zeskanowanie kodu QR.",
   "CUSTOMIZE_HELPER": "Określ kwotę i podaj opis dla tej transakcji.",
