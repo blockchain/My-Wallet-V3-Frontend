@@ -19,7 +19,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
 
   $scope.fee = this.fee;
   $scope.quote = this.quote;
-  $scope.total = quote.depositAmount + this.fee;
+  $scope.total = this.quote.depositAmount + this.fee;
 
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.bitcoin = $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
