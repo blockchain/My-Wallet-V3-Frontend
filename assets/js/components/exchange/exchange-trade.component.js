@@ -3,6 +3,7 @@ angular
   .component('exchangeTrade', {
     bindings: {
       exTrade: '<',
+      namespace: '<',
       viewDetails: '&'
     },
     templateUrl: 'templates/exchange/trade.pug',

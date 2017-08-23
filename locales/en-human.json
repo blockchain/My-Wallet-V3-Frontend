@@ -831,7 +831,7 @@
   "NEW_EMAIL" : "Registered Email",
   "QUOTA_EXCEEDED": "You have reached the maximum number of allowed attempts, please try again later",
   "UNKNOWN_ERROR": "An unknown error occurred, please try again later",
-  "CONTINUE_TO_LOGIN": "continue to login",
+  "CONTINUE_TO_LOGIN": "Continue to Login",
   "RECOVER_FUNDS": "Recover Funds",
   "RECOVER_FUNDS_WARNING": "You should always pair or login if you have access to your Wallet ID and password. Recovering your funds will create a new Wallet ID.",
   "STEP_2_RECOVER": "Step 2 of 2: Create a new wallet",
@@ -925,7 +925,7 @@
   "OTHER_FEATURES": "Other features:",
   "DONT_TRANSFER": "Don't Transfer",
   "OK": "OK",
-  "DESCRIPTION:": "Description:",
+  "DESCRIPTION": "Description",
   "COPY_HELPER": "Copy this address and share it with your sender via email, text, or carrier pigeon.",
   "CUSTOMIZE_HELPER": "Specify an amount and a description for this transaction.",
   "SAVE_HELPER": "You’ll find this in Settings -> Addresses -> {{ label }} -> Manage Addresses.",
@@ -1599,25 +1599,32 @@
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
     "SEE_YOUR_OUTPUT": "See Your <span class='capitalize'>{{::output}}</span>",
+    "PARTNERED": "Blockchain has partnered with ShapeShift to give you the ability to exchange between bitcoin and ether. Currently, the service is only available to users in certain states.",
+    "STATE_NOT_SUPPORTED": "This service is not yet available in your state. If you would like to be notified when it is available, sign up below.",
     "TRADE": {
       "complete": {
         "HEADER": "Success! Your exchange has completed!",
-        "BODY": "Your exchange is completed. It may take a few minutes for the funds to show in your balance."
+        "BODY": "Your exchange is completed. It may take a few minutes for the funds to show in your balance.",
+        "STATE": "Complete"
       },
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
-        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "STATE": "Pending"
       },
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
-        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN"
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "STATE": "In Progress"
       },
       "resolved": {
-        "HEADER": "Trade Refunded"
+        "HEADER": "Trade Refunded",
+        "STATE": "Refunded"
       },
       "failed": {
         "HEADER": "Trade Failed",
-        "BODY": "This trade has failed. Any funds broadcast from your wallet, will be returned minus the transaction fee. Please return to the exchange tab to start a new trade"
+        "BODY": "This trade has failed. Any funds broadcast from your wallet, will be returned minus the transaction fee. Please return to the exchange tab to start a new trade",
+        "STATE": "Failed"
       }
     }
   },
@@ -1626,8 +1633,6 @@
   "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
-  "resolved": "Refunded",
   "VIEW_DETAILS": "View Details",
-  "no_deposits": "In Progress",
   "": ""
 }

@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "첨단 보안 센터가 귀하 자금을 불법 접근으로부터 보호해 드립니다. 단계 별 지침을 통해 귀하 지갑 보안을 도와 드립니다. 고급 2 단계 인증은 구글 인증 도구, 문자, Yubikey룰 통한 악당들 침입을 막아 줍니다.",
   "DONT_TRANSFER": "이체하지 마세요",
   "OK": "좋아요",
-  "DESCRIPTION:": "설명:",
+  "DESCRIPTION": "설명",
   "COPY_HELPER": "이 주소를 복사해서 보낸 사람과 이메일, 문자, 전서구(carrier pigeon)로 공유하세요.",
   "QR_HELPER": "보낸 사람이 이 QR 코드를 스캔 하도록 하세요.",
   "CUSTOMIZE_HELPER": "이 거래 금액과 설명을 입력하세요",

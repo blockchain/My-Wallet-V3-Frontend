@@ -37,8 +37,8 @@
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
         i.icon-buy-sell
-        span(translate="BUY_AND_SELL_BITCOIN")
-    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift()")
+        span(translate="BUY_BITCOIN")
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift() && isInWhitelistedState")
       a(ui-sref="wallet.common.shift")
         i.icon-ExchangeTab
         span.flex-row.flex-align-end
