@@ -155,7 +155,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
         { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
         mediums.bank,
         $scope.payment,
-        { sell: true, isSweepTransaction: $scope.isSweepTransaction }
+        { sell: true, isSweepTransaction: $scope.isSweepTransaction, priorityFee: $scope.priorityFee }
       );
     });
     this.status = {};
@@ -177,7 +177,9 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     let index = Wallet.getDefaultAccountIndex();
     $scope.payment = Wallet.my.wallet.createPayment();
     $scope.payment.from(index).amount(tradeInSatoshi);
+    $scope.payment.updateFeePerKb(this.priorityFee);
     $scope.payment.sideEffect(r => {
+      $scope.priorityFee = r.finalFee;
       if (r.finalFee === 0) {
         $scope.offerUseAll($scope.payment, r);
       } else {
@@ -194,11 +196,10 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.offerUseAll = (payment, paymentInfo) => {
     this.error['moreThanInWallet'] = true;
     this.status = { busy: true, fetching: false };
-    payment.updateFeePerKb(paymentInfo.fees.priority);
-    $scope.payment = Wallet.my.wallet.createPayment(payment);
-    $scope.maxSpendableAmount = paymentInfo.sweepAmount;
-    let maxSweepFee = paymentInfo.sweepFee;
-    $scope.payment.amount($scope.maxSpendableAmount).fee(maxSweepFee);
+    $scope.payment.updateFeePerKb(this.priorityFee);
+    $scope.maxSpendableAmount = paymentInfo.maxSpendableAmounts.priority;
+    $scope.payment.amount($scope.maxSpendableAmount);
+    $scope.payment.sideEffect(data => $scope.priorityFee = data.finalFee);
   };
 
   $scope.handleCurrencyClick = (curr) => {
@@ -230,5 +231,15 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     buySell.getMaxLimits(this.currency, 'outRemaining').then($scope.limits = buySell.limits);
   };
 
+  $scope.paymentOnUpdate = (data) => {
+    if (data) this.priorityFee = data.fees.priority;
+  };
+
+  $scope.setPaymentHandler = payment => {
+    payment.on('update', $scope.paymentOnUpdate);
+  };
+
   $scope.getInitialExchangeRate();
+  $scope.payment = Wallet.my.wallet.createPayment();
+  $scope.setPaymentHandler($scope.payment);
 }
