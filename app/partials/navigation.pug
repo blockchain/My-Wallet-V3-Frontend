@@ -29,6 +29,8 @@
             popover-class="whats-new-popover"
             popover-placement="bottom"
             popover-title="{{:: ('WHATS_NEW' | translate) + '?' }}"
+            popover-is-open="popover.isOpen"
+            ng-click="popover.isOpen = !popover.isOpen"
             popover-trigger="outsideClick")
             i.icon-bell
             span.whats-new-icon(ng-show="nLatestFeats > 0")
