@@ -39,12 +39,11 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.isPendingSellTrade = () => buySell.isPendingSellTrade(scope.pendingTrade);
 
     scope.setLimits = (mediums, curr) => {
-      console.log('scope.setLimits');
       scope.limits = buySell.getLimits(mediums, curr);
     };
 
     scope.getMediums = quote => {
-      return $q.resolve(quote.getPaymentMediums);
+      return $q.resolve(quote.getPaymentMediums());
     };
 
     scope.getInitialExchangeRate = () => {
@@ -79,7 +78,10 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.handleCurrencyClick = (curr) => {
       scope.changeCurrency(curr);
       scope.refreshSymbol();
-      scope.getMediums(scope.quote).then(mediums => scope.setLimits(mediums, curr.code));
+      scope.getMediums(scope.quote).then(mediums => {
+        scope.setLimits(mediums, curr.currency.code);
+        scope.checkLimit(scope.transaction.fiat);
+      });
     };
 
     scope.refreshSymbol = () => {
@@ -165,9 +167,9 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.checkLimit = fiat => {
       if (!scope.limits) return false;
 
-      console.log('checkLimit', fiat, scope.limits);
       scope.dailyLimit = scope.limits.max;
 
+      console.log('checkLimit', fiat, scope.limits.max);
       if (fiat > scope.limits.max) {
         scope.handleLimitError();
         scope.recordData('over');

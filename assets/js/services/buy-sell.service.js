@@ -114,7 +114,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getLimits (mediums, curr) {
-    console.log('buySell.getLimits', mediums, curr);
     if (mediums.card) {
       service.limits.card.max = mediums.card.limitInAmounts;
       service.limits.card.min = mediums.card.minimumInAmounts;
@@ -126,12 +125,11 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
     let card = service.limits.card;
     let bank = service.limits.bank;
-
+    console.log('in getLimits', card, bank, curr)
     service.limits.min = bank.min[curr] < card.min[curr] ? bank.min[curr] : card.min[curr];
     if (card.max) {
       service.limits.max = bank.max[curr] > card.max[curr] ? bank.max[curr] : card.max[curr];
     }
-    console.log('return service.limits', service.limits);
     return service.limits;
   }
 
@@ -267,6 +265,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }).result;
   }
 
+  // TODO can get rid of this - need to take care of how sell sets currency
   function getCurrency (trade, sellCheck) {
     if (trade && trade.inCurrency) return currency.currencies.filter(t => t.code === trade.inCurrency)[0];
     let coinifyCurrencies = !sellCheck ? currency.coinifyCurrencies : currency.coinifySellCurrencies;
