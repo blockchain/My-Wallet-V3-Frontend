@@ -61,10 +61,10 @@
           .mts.pos-rel(ng-hide="tradingDisabled")
             div(ng-show="status.limitError && !fiatForm.fiat.$error.min")
               div(ng-hide="profile.level.name === '1'")
-                span.type-sm.state-danger-text(translate="COINIFY_LIMITS.DAILY_LIMIT_IS" translate-values="{dailyLimit: dailyLimit, currency: profile.level.currency}")
+                span.type-sm.state-danger-text(translate="COINIFY_LIMITS.DAILY_LIMIT_IS" translate-values="{dailyLimit: dailyLimit, currency: transaction.currency.code}")
                 helper-button(ng-show="profile.level.name === '2'" content="COINIFY_LIMITS.HOW_LVL_3")
               div(ng-show="profile.level.name === '1'")
-                span.type-sm.state-danger-text(translate="{{ status.limitMessage }}" translate-values="{dailyLimit: dailyLimit, currency: profile.level.currency}")
+                span.type-sm.state-danger-text(translate="{{ status.limitMessage }}" translate-values="{dailyLimit: dailyLimit, currency: transaction.currency.code}")
                 | &nbsp;
                 a.type-sm(ng-show="profile.level.name && !kyc" ng-click="openKyc()") Increase limit
                 a.type-sm(ng-show="status.showKycLink" translate="CLICK_HERE" ng-click="openKyc()")

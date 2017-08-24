@@ -38,23 +38,24 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.isPendingTradeState = (state) => scope.pendingTrade && scope.pendingTrade.state === state && scope.pendingTrade.medium !== 'blockchain';
     scope.isPendingSellTrade = () => buySell.isPendingSellTrade(scope.pendingTrade);
 
-    scope.setLimits = (quote, curr) => {
-      scope.limits = buySell.getLimits(quote, curr);
+    scope.setLimits = (mediums, curr) => {
+      console.log('scope.setLimits');
+      scope.limits = buySell.getLimits(mediums, curr);
+    };
+
+    scope.getMediums = quote => {
+      return $q.resolve(quote.getPaymentMediums);
     };
 
     scope.getInitialExchangeRate = () => {
       scope.status.busy = true;
 
       buySell.getQuote(-1, 'BTC', scope.transaction.currency.code).then((quote) => {
-        // scope.getMinLimits(quote);
+        scope.quote = quote;
         scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
-        // console.log('here', quote, quote.paymentMediums)
         quote.getPaymentMediums().then(paymentMediums => {
-          console.log('getPaymentMediums'. paymentMediums)
           scope.setLimits(paymentMediums, scope.transaction.currency.code);
         });
-        // scope.getLimits(quote.paymentMediums, scope.transaction.currency.code);
-        // scope.quote = quote;
       }, error).finally(scope.getQuote);
     };
 
@@ -78,6 +79,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.handleCurrencyClick = (curr) => {
       scope.changeCurrency(curr);
       scope.refreshSymbol();
+      scope.getMediums(scope.quote).then(mediums => scope.setLimits(mediums, curr.code));
     };
 
     scope.refreshSymbol = () => {
@@ -97,7 +99,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     const success = (quote) => {
       scope.status = {};
       scope.quote = quote;
-      // scope.getMinLimits(quote);
+      scope.getMediums(quote).then(mediums => scope.setLimits(mediums, scope.transaction.currency.code));
       scope.exchangeRate.fiat = scope.getExchangeRate();
 
       if (quote.baseCurrency === 'BTC') {
@@ -144,7 +146,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     scope.exchange = buySell.getExchange();
     scope.profile = scope.exchange && scope.exchange.profile ? scope.exchange.profile : {profile: {}};
 
-    scope.handleLimitError = (amount) => {
+    scope.handleLimitError = () => {
       scope.status.limitError = true;
       let kycs = scope.exchange.kycs;
 
@@ -161,23 +163,18 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
     };
 
     scope.checkLimit = fiat => {
-      if (!scope.profile.level) return false;
-      let levelLimits = scope.profile.level.limits;
+      if (!scope.limits) return false;
 
-      let curr = scope.transaction.currency.code;
-      let dailyBankMax = levelLimits.bank.inDaily;
-      let dailyCardMax = levelLimits.card.inDaily;
       console.log('checkLimit', fiat, scope.limits);
-      // let max = scope.limits.absoluteMax(curr);
-      // scope.dailyLimit = dailyBankMax > dailyCardMax ? dailyBankMax : dailyCardMax;
-      //
-      // if (fiat > max) {
-      //   scope.handleLimitError(fiat, max);
-      //   scope.recordData('over');
-      // } else {
-      //   scope.status.limitError = false;
-      //   scope.recordData('under');
-      // }
+      scope.dailyLimit = scope.limits.max;
+
+      if (fiat > scope.limits.max) {
+        scope.handleLimitError();
+        scope.recordData('over');
+      } else {
+        scope.status.limitError = false;
+        scope.recordData('under');
+      }
     };
 
     scope.openKyc = () => {

@@ -217,8 +217,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         trades,
         exchange,
         quote () { return quote; },
-        trade () { return trade; },
-        paymentMediums () { return quote && quote.getPaymentMediums(); }
+        trade () { return trade; }
+        // paymentMediums () { return quote && quote.getPaymentMediums(); } // TODO this is an issue
       }
     });
   });

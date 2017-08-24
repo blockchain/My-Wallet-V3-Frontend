@@ -11,6 +11,17 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
     modalOpen: false
   };
 
+  $scope.setCurrency = () => {
+    if ($stateParams.countryCode) {
+      if ($stateParams.countryCode === 'DK') return currency.coinifyCurrencies.filter(c => c.code === 'DKK')[0];
+      else if ($stateParams.countryCode === 'GB') return currency.coinifyCurrencies.filter(c => c.code === 'GBP')[0];
+      else return currency.coinifyCurrencies.filter(c => c.code === 'EUR')[0];
+    }
+    return buySell.getExchange().profile.defaultCurrency;
+  };
+
+  $scope.setCurrency();
+
   $scope.walletStatus = Wallet.status;
   $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.buySellStatus().metaDataService;
 
@@ -23,8 +34,8 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
   $scope.initialize = () => {
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
-    $scope.transaction = { fiat: undefined, currency: buySell.getCurrency() };
-    $scope.sellTransaction = { fiat: undefined, currency: buySell.getCurrency(undefined, true) };
+    $scope.transaction = { fiat: undefined, currency: $scope.setCurrency() };
+    $scope.sellTransaction = { fiat: undefined, currency: $scope.setCurrency() };
     $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.sellLimits = {card: {}, bank: {}};
@@ -51,7 +62,7 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
     buySell.getExchange();
 
     $scope.$watch('settings.currency', () => {
-      $scope.transaction.currency = buySell.getCurrency();
+      $scope.transaction.currency = $scope.setCurrency();
       $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
     }, true);
 
@@ -68,10 +79,11 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
 
       buySell.fetchProfile().then(() => {
         let currency = buySell.getExchange().profile.defaultCurrency;
+        console.log('currency', currency);
         let getCurrencies = buySell.getExchange().getBuyCurrencies().then(currency.updateCoinifyCurrencies);
 
-        let getMaxLimits = buySell.getMaxLimits(currency).then($scope.limits = buySell.limits)
-                                                         .catch(() => $scope.fetchLimitsError = true);
+        // let getMaxLimits = buySell.getMaxLimits(currency).then($scope.limits = buySell.limits)
+        //                                                  .catch(() => $scope.fetchLimitsError = true);
 
         let getTrades = buySell.getTrades().then(() => {
           let pending = buySell.trades.pending;
@@ -100,7 +112,7 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
           $scope.fetchKYCError = true;
         });
 
-        $q.all([getTrades, getKYCs, getCurrencies, getMaxLimits]).then(() => {
+        $q.all([getTrades, getKYCs, getCurrencies]).then(() => {
           $scope.status.loading = false;
           $scope.status.disabled = false;
         });

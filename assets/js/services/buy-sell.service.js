@@ -52,8 +52,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getSellQuote,
     getKYCs,
     getRate,
-    getMaxLimits,
-    getMinLimits,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -115,63 +113,26 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(getRate);
   }
 
-  function getMaxLimits (defaultCurrency) {
-    const setMax = (rate, curr) => {
-      service.limits.bank.max[curr] = calculateMax(rate, 'bank', 'inRemaining');
-      service.limits.bank.maxOutRemaining[curr] = calculateMax(rate, 'bank', 'outRemaining');
-      service.limits.card.max[curr] = calculateMax(rate, 'card', 'inRemaining');
-      service.limits.bank.yearlyMax[curr] = calculateYearlyMax(rate, 'bank');
-      service.limits.card.yearlyMax[curr] = calculateYearlyMax(rate, 'card');
-      // service.limits.absoluteMax = (curr) => {
-      //   let cardMax = parseFloat(service.limits.card.max[curr], 0);
-      //   let bankMax = parseFloat(service.limits.bank.max[curr], 0);
-      //   return bankMax > cardMax ? bankMax : cardMax;
-      // };
-    };
-
-    let getMax = (c) => service.getRate(defaultCurrency, c).then(r => setMax(r, c));
-    return $q.all(['DKK', 'EUR', 'USD', 'GBP'].map(getMax));
-  }
-
-  function calculateMax (rate, medium, typeRemaining) {
-    let limit = service.getExchange().profile.currentLimits[medium][typeRemaining];
-    return (rate * limit).toFixed(2);
-  }
-
-  function calculateYearlyMax (rate, medium) {
-    let limit = service.getExchange().profile.level.limits[medium].inYearly;
-    return (rate * limit).toFixed(2);
-  }
-
   function getLimits (mediums, curr) {
-    console.log('setLimits', mediums, curr);
-
-    service.limits.card.max = mediums.card.limitInAmounts[curr];
-    service.limits.card.min = mediums.card.minimumInAmounts[curr];
-    service.limits.bank.max = mediums.bank.limitInAmounts[curr];
-    service.limits.bank.min = mediums.bank.minimumInAmounts[curr];
+    console.log('buySell.getLimits', mediums, curr);
+    if (mediums.card) {
+      service.limits.card.max = mediums.card.limitInAmounts;
+      service.limits.card.min = mediums.card.minimumInAmounts;
+    }
+    if (mediums.bank) {
+      service.limits.bank.max = mediums.bank.limitInAmounts;
+      service.limits.bank.min = mediums.bank.minimumInAmounts;
+    }
 
     let card = service.limits.card;
     let bank = service.limits.bank;
 
-    service.limits.min = bank.min < card.min ? bank.min : card.min;
-    service.limits.max = bank.max > card.max ? bank.max : card.max;
-
+    service.limits.min = bank.min[curr] < card.min[curr] ? bank.min[curr] : card.min[curr];
+    if (card.max) {
+      service.limits.max = bank.max[curr] > card.max[curr] ? bank.max[curr] : card.max[curr];
+    }
+    console.log('return service.limits', service.limits);
     return service.limits;
-  }
-
-  function getMinLimits (quote) {
-    const calculateMin = (mediums) => {
-      // service.limits.bank.min = mediums.bank ? Object.assign(service.limits.bank.min, mediums.bank.minimumInAmounts) : {};
-      // service.limits.card.min = mediums.card ? mediums.card.minimumInAmounts : {};
-      // service.limits.absoluteMin = (curr) => {
-      //   let cardMin = parseFloat(service.limits.card.min[curr], 0);
-      //   let bankMin = parseFloat(service.limits.bank.min[curr], 0);
-      //   return bankMin < cardMin ? bankMin : cardMin;
-      // };
-    };
-
-    return quote.getPaymentMediums();
   }
 
   function triggerKYC () {
