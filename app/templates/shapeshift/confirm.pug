@@ -31,7 +31,7 @@ form.bc-form(
             span.colon(translate="TX_FEE")
             helper-button(content="SHIFT.TX_FEE_EXPLAIN")
           span.em-300.right-align
-            span {{ fee | convert:quote.fromCurrency:true }}
+            span {{ fee | convert:fromCurrency:true }}
         li.pt-10.flex-between
           span.em-500
             span.colon(translate=".WITHDRAWAL_FEE")
