@@ -164,7 +164,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
       scope.dailyLimit = scope.limits.max;
 
-      console.log('checkLimit', fiat, scope.limits.max);
       if (fiat > scope.limits.max) {
         scope.handleLimitError();
         scope.recordData('over');

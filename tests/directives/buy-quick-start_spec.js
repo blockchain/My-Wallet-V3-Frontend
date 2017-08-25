@@ -77,6 +77,7 @@ describe('buyQuickStart', () => {
     buySell.cancelTrade = () => $q.resolve(trade);
     buySell.getQuote = () => $q.resolve(quote);
     buySell.fetchProfile = () => $q.resolve(true);
+    buySell.getLimits = () => $q.resolve(true)
 
     let mediums = {
       'card': {
