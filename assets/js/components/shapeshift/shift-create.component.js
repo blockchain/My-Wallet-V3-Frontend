@@ -118,6 +118,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     return $q.resolve(this.from.getAvailableBalance(state.baseBTC && 'priority')).then(fetchSuccess, fetchError);
   };
 
+  $scope.getWalletIcon = (label) => { return label === 'My Bitcoin Wallet' ? 'MY_BITCOIN_WALLET_ICON' : 'MY_ETHER_WALLET_ICON' };
+
   $scope.$watch('state.input.curr', () => $scope.getAvailableBalance().then(getRate));
   $scope.$watch('$ctrl.from.balance', (n, o) => n !== o && $scope.getAvailableBalance());
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));

@@ -15,13 +15,17 @@ form.bc-form(
             span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
           ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()")
             ui-select-match
+              i.pr-5(translate="{{getWalletIcon($ctrl.from.label)}}")
               span {{ $ctrl.from.label }}
             ui-select-choices(repeat="origin in $ctrl.origins")
+              i.pr-5(translate="{{getWalletIcon(origin.label)}}")
               span {{ origin.label }}
         .item.width-50.width-50-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate="TO")
-          input.form-control.bg-white(ng-disabled="true" ng-model="$ctrl.to.label")
+          .flex-center.border       
+            i.pl-5.mhm(translate="{{getWalletIcon($ctrl.to.label)}}")
+            input(ng-disabled="true" ng-model="$ctrl.to.label" style="border: none !important; padding: 0px !important; background-color: white !important")
       .group
         .item
           .flex-between.flex-baseline.mbs
