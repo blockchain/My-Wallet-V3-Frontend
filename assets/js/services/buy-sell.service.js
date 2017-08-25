@@ -60,7 +60,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     openSellView,
     pollKYC,
     pollUserLevel,
-    getCurrency,
     signupForAccess,
     submitFeedback,
     tradeStateIn,
@@ -68,7 +67,8 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     states,
     isPendingSellTrade,
     incrementBuyDropoff,
-    getLimits
+    getLimits,
+    getSellLimits
   };
 
   return service;
@@ -125,12 +125,18 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
     let card = service.limits.card;
     let bank = service.limits.bank;
-    console.log('in getLimits', card, bank, curr)
     service.limits.min = bank.min[curr] < card.min[curr] ? bank.min[curr] : card.min[curr];
     if (card.max) {
       service.limits.max = bank.max[curr] > card.max[curr] ? bank.max[curr] : card.max[curr];
     }
     return service.limits;
+  }
+
+  function getSellLimits (mediums) {
+    let min = mediums.bank.minimumInAmounts['BTC'];
+    let max = mediums.bank.limitInAmounts ? mediums.bank.limitInAmounts['BTC'] : undefined;
+    service.sellLimits = { min, max };
+    return service.sellLimits;
   }
 
   function triggerKYC () {
@@ -263,18 +269,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
         payment: () => payment || undefined
       }
     }).result;
-  }
-
-  // TODO can get rid of this - need to take care of how sell sets currency
-  function getCurrency (trade, sellCheck) {
-    if (trade && trade.inCurrency) return currency.currencies.filter(t => t.code === trade.inCurrency)[0];
-    let coinifyCurrencies = !sellCheck ? currency.coinifyCurrencies : currency.coinifySellCurrencies;
-    let walletCurrency = Wallet.settings.currency;
-    let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
-    let exchange = service.getExchange();
-    let coinifyCode = exchange && exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
-    if (sellCheck && coinifyCode === 'USD') coinifyCode = 'EUR';
-    return isCoinifyCompatible ? walletCurrency : coinifyCurrencies.filter(c => c.code === coinifyCode)[0];
   }
 
   function isPendingSellTrade (pendingTrade) {

@@ -35,8 +35,8 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
     $scope.currencies = currency.coinifyCurrencies;
     $scope.settings = Wallet.settings;
     $scope.transaction = { fiat: undefined, currency: { code: $scope.setCurrency() } };
-    $scope.sellTransaction = { fiat: undefined, currency: $scope.setCurrency() };
-    // $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
+    $scope.sellTransaction = { fiat: undefined, currency: { code: $scope.setCurrency() } };
+    $scope.sellCurrencySymbol = currency.conversions[$scope.sellTransaction.currency.code];
     $scope.limits = {card: {}, bank: {}};
     $scope.sellLimits = {card: {}, bank: {}};
     $scope.state = {buy: true};
@@ -63,13 +63,12 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
 
     $scope.$watch('settings.currency', () => {
       $scope.transaction.currency = $scope.setCurrency();
-      $scope.sellTransaction.currency = buySell.getCurrency(undefined, true);
+      $scope.sellTransaction.currency = $scope.setCurrency();
     }, true);
 
     $scope.$watch('sellTransaction.currency', (newVal, oldVal) => {
       let curr = $scope.sellTransaction.currency || null;
       $scope.sellCurrencySymbol = currency.conversions[curr.code];
-      // if (newVal !== oldVal) $scope.getMaxMin($scope.sellLimits, $scope.sellTransaction);
     });
 
     if (buySell.getStatus().metaDataService && buySell.getExchange().user) {
@@ -80,6 +79,7 @@ function BuySellCtrl ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wa
       buySell.fetchProfile().then(() => {
         let currency = buySell.getExchange().profile.defaultCurrency;
         $scope.transaction = { currency: { code: currency } };
+        $scope.sellTransaction = { currency: { code: currency } };
         let getCurrencies = buySell.getExchange().getBuyCurrencies().then(currency.updateCoinifyCurrencies);
 
         let getTrades = buySell.getTrades().then(() => {
