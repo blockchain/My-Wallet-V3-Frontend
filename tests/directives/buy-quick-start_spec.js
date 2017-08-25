@@ -1,4 +1,4 @@
-fdescribe('buyQuickStart', () => {
+describe('buyQuickStart', () => {
   let $q;
   let scope;
   let element;

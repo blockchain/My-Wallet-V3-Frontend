@@ -134,11 +134,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       scope.transaction.fiat = amount;
     };
 
-    // scope.getMinLimits = (quote) => {
-    //   $q.resolve(buySell.getMinLimits(quote))
-    //     .then(scope.limits = buySell.limits);
-    // };
-
     scope.firstInput = true;
     scope.recordData = (amount) => {
       if (scope.firstInput) MyBlockchainApi.incrementBuyLimitCounter(amount);
