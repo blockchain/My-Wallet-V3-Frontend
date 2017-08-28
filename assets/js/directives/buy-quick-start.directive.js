@@ -18,7 +18,6 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
       transaction: '=',
       changeCurrency: '&',
       getDays: '&',
-      openKyc: '&',
       kyc: '='
     },
     templateUrl: 'templates/buy-quick-start.pug',

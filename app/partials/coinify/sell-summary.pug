@@ -13,7 +13,7 @@
         span.colon( translate="SELL.BTC_TO_SELL")
         span {{ $ctrl.transaction.btc }} BTC
       .flex-end(ng-show="$ctrl.overMax()")
-        span.state-danger-text This amount is over the maximum of {{ $ctrl.sellLimits.max }} BTC. Please start over with a lower amount.
+        span.type-sm.state-danger-text(translate="SELL.AMOUNT_OVER" translate-values="{max: $ctrl.sellLimits.max}")
       .flex-row.flex-between.pam.pv-15
         span.colon(translate="SELL.BTC_TX_FEE")
         span {{ $ctrl.transaction.fee.btc }} BTC
