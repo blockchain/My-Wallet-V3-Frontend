@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Un centro de seguridad de vanguardia ayuda a proteger sus fondos de cualquier acceso no autorizado. Le ayudaremos a asegurar su billetera con una guía paso a paso. La autentificación avanzada de dos pasos mantiene lejos a los patos malos mediante Google Authenticator, SMS, o Yubikey.",
   "DONT_TRANSFER": "No transferir",
   "OK": "ACEPTAR",
-  "DESCRIPTION:": "Descripción:",
+  "DESCRIPTION": "Descripción",
   "COPY_HELPER": "Copie esta dirección y compártala con su remitente por email, mensaje de texto, o paloma mensajera.",
   "QR_HELPER": "Pídele a su remitente que escanee este código QR.",
   "CUSTOMIZE_HELPER": "Especifique un monto y deje una descripción para esta transacción.",
@@ -1066,7 +1066,7 @@
     "DISAGREE": "Muy en desacuerdo",
     "AGREE": "Totalmente de acuerdo"
   },
-  "ACCEPT_TOS": "He leído y estoy de acuerdo con <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>los Términos de servicio</a>",
+  "ACCEPT_TOS": "He leído y estoy de acuerdo con <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>los Términos de servicio</a>",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Seguro. Sin fisuras.",
   "BUY_SIMPLE_STEPS": "La billetera de bitcoins más popular del mundo<br> ahora le permite comprar bitcoins en 4<br> pasos simples y seguros.",
   "METADATA_DOWN_EXCHANGE": "No se pueden cargar los detalles del intercambio. Intente actualizar la página.",
@@ -1116,7 +1116,7 @@
   },
   "unocoin_address_ID": {
     "TITLE": "3. Prueba de dirección",
-    "COPY": "Suba o saque una foto de una prueba de su dirección. Puede subir uno de los siguientes documentos aprobados, que coincidan con el nombre y la dirección que proporcionó usted inicialmente.", 
+    "COPY": "Suba o saque una foto de una prueba de su dirección. Puede subir uno de los siguientes documentos aprobados, que coincidan con el nombre y la dirección que proporcionó usted inicialmente.",
     "UPLOAD_TITLE": "Prueba de dirección",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
     "OPTION1": "Tarjeta Aadhar (por delante y por detrás)",

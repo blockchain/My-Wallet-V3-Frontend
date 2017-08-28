@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Uma Central de Segurança de última geração ajuda a proteger seus fundos contra acesso não autorizado. Ajudaremos você a proteger sua carteira com um guia passo a passo. A Autenticação de Dois Fatores Avançada mantém as ameaças longe através do Google Authenticator, SMS ou Yubikey.",
   "DONT_TRANSFER": "Não Transferir",
   "OK": "OK",
-  "DESCRIPTION:": "Descrição:",
+  "DESCRIPTION": "Descrição",
   "COPY_HELPER": "Copie este endereço e compartilhe-o com seu remetente por e-mail, mensagem de texto ou pombo-correio.",
   "QR_HELPER": "Peça a seu remetente para escanear este código QR.",
   "CUSTOMIZE_HELPER": "Especifique um valor e uma descrição para esta transação.",
@@ -1066,7 +1066,7 @@
     "DISAGREE": "Discordo Completamente",
     "AGREE": "Concordo Completamente"
   },
-  "ACCEPT_TOS": "Li e aceito os <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Termos de Serviço</a>",
+  "ACCEPT_TOS": "Li e aceito os <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Termos de Serviço</a>",
   "SIMPLE_SECURE_SEAMLESS": "Simples. Seguro. Integrado.",
   "BUY_SIMPLE_STEPS": "A carteira bitcoin mais popular do mundo <br> agora permite que você compre bitcoins em 4 <br> passos simples e seguros.",
   "METADATA_DOWN_EXCHANGE": "Não foi possível carregar os detalhes de conversão. Por favor, tente atualizar a página.",

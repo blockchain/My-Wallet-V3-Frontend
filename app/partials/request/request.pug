@@ -1,0 +1,6 @@
+.modal-header.flex-row.flex-center.bc-modal-header(data-preflight-tag="Request")
+  i.icon-receive.f-20.pr-15
+  span.f-24(translate="Request")
+  i.ti-close.close-modal(ng-click="$close()")
+div(ng-if="vm.onTab('btc')" ng-include="'partials/request/request-bitcoin.pug'" ng-controller="RequestBitcoinController")
+div(ng-if="vm.onTab('eth')" ng-include="'partials/request/request-ethereum.pug'" ng-controller="RequestEthereumController")

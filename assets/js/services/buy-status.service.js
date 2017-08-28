@@ -34,7 +34,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     // * they already have an account; or
     // * their IP is in a country supported by Coinify; or
     // * their IP is in a country supported by SFOX AND their email is invited; or
-    // * their IP is in a country supported by Unocoin AND their email is invited;
+    // * their IP is in a whitelisted country and their email is invited
     let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
 
     return Env.then(processEnv).then(canBuy);
@@ -49,9 +49,18 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
       } else {
         if (!isSFOXCountry) { return false; }
         if (!accountInfo.email) { return false; }
-        return MyWalletHelpers.isEmailInvited(accountInfo.email, sfoxInviteFraction);
+        return MyWalletHelpers.isStringHashInFraction(accountInfo.email, sfoxInviteFraction);
       }
     });
+  };
+
+  service.buyLink = () => {
+    let coinify = MyWallet.wallet.external.coinify;
+    let buyLink = () => {
+      if (isCoinifyCountry || coinify.user) return 'BUY_AND_SELL_BITCOIN';
+      else return 'BUY_BITCOIN';
+    };
+    return Env.then(processEnv).then(buyLink);
   };
 
   // check to make sure this does not get called on home
@@ -88,6 +97,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
 
     return external && (
       (external.coinify && external.coinify.hasAccount) ||
+      (external.unocoin && external.unocoin.hasAccount) ||
       (external.sfox && external.sfox.hasAccount)
     );
   };

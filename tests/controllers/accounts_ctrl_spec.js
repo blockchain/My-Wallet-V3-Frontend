@@ -24,7 +24,12 @@ describe('WalletNavigationCtrl', () => {
         hdwallet: {
           accounts: [{ archived: false }, { archived: false }, { archived: true }]
         },
-        accountInfo: { invited: false, countryCodeGuess: 'US' }
+        accountInfo: { invited: false, countryCodeGuess: 'US' },
+        external: {
+          coinify: {
+            user: 1
+          }
+        }
       };
 
       Wallet.status.isLoggedIn = true;

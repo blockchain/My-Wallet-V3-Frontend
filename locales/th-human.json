@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "ศูนย์ความปลอดภัยที่ทันสมัยอย่างมากของเราช่วยปกป้องเงินของคุณจากการเข้าถึงที่ไม่ได้รับอนุญาต เราจะช่วยทำให้กระเป๋าเงินของคุณปลอดภัยด้วยคำแนะนำในแต่ละขั้นตอน การพิสูจน์ตัวตนสองชั้นช่วยป้องกันผู้ร้ายโดยผ่านทาง Google Authenticator SMS หรือ Yubikey",
   "DONT_TRANSFER": "อย่าโอน",
   "OK": "ตกลง",
-  "DESCRIPTION:": "คำอธิบาย:",
+  "DESCRIPTION": "คำอธิบาย",
   "COPY_HELPER": "คัดลอกที่อยู่นี้และแชร์มันกับผู้ส่งผ่านทางอีเมล ข้อความหรือนกพิราบสื่อสาร",
   "QR_HELPER": "ขอให้ผู้ส่งสแกนรหัส QR นี้",
   "CUSTOMIZE_HELPER": "ระบุจำนวนและคำอธิบายสำหรับธุรกรรมนี้",
@@ -1066,7 +1066,7 @@
     "DISAGREE": "ไม่เห็นด้วยอย่างยิ่ง",
     "AGREE": "เห็นด้วยอย่างยิ่ง"
   },
-  "ACCEPT_TOS": "ฉันได้อ่านและยินยอมต่อ <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>ข้อตกลงของบริการ</a>",
+  "ACCEPT_TOS": "ฉันได้อ่านและยินยอมต่อ <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>ข้อตกลงของบริการ</a>",
   "SIMPLE_SECURE_SEAMLESS": "ง่าย ปลอดภัย ลื่นไหล",
   "BUY_SIMPLE_STEPS": "ตอนนี้ กระเป๋าเงิน bitcoin ที่โด่งดังที่สุดในโลก <br> ช่วยให้คุณซื้อ bitcoin ได้ด้วย 4 <br>ขั้นตอนที่ง่ายและปลอดภัย",
   "METADATA_DOWN_EXCHANGE": "ไม่สามารถโหลดรายละเอียดการแลกเปลี่ยนของคุณได้ โปรดลองรีเฟรชหน้า",

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift) {
   let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
   $scope.goal = Wallet.goal;
@@ -44,24 +44,29 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
-  $scope.request = modals.openOnce(() => {
+  $scope.request = () => {
     Alerts.clear();
     isUsingRequestQuickCopyExperiment.recordA();
-    return $uibModal.open({
-      templateUrl: 'partials/request.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'RequestCtrl',
-      resolve: {
-        destination: () => null,
-        focus: () => false
-      }
-    });
-  });
+    modals.openRequest();
+  };
 
   $scope.send = () => {
     Alerts.clear();
     modals.openSend({ address: '', amount: '' });
   };
+
+  $scope.$on('requireMainPassword', (notification, defer) => {
+    const modalInstance = $uibModal.open({
+      templateUrl: 'partials/main-password.pug',
+      controller: 'MainPasswordCtrl',
+      windowClass: 'bc-modal',
+      keyboard: false,
+      resolve: {
+        defer: () => defer
+      }
+    });
+    modalInstance.result.then(() => {}, () => defer.reject());
+  });
 
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
@@ -135,7 +140,13 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.refresh = () => {
     $scope.refreshing = true;
-    $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
+    let tasks = [
+      MyWallet.wallet.getHistory(),
+      currency.fetchExchangeRate(Wallet.settings.currency),
+      currency.fetchEthRate(Wallet.settings.currency),
+      Ethereum.fetchHistory()
+    ];
+    $q.all(tasks)
       .catch(() => console.log('error refreshing'))
       .finally(() => {
         $scope.$broadcast('refresh');
@@ -180,13 +191,20 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         });
         Wallet.goal.firstLogin = true;
         Wallet.goal.firstTime = void 0;
+        Ethereum.setHasSeen();
       }
       if (!Wallet.goal.firstLogin) {
-        buyStatus.canBuy().then((canBuy) => {
-          if (buyStatus.shouldShowBuyReminder() &&
-              !buyStatus.userHasAccount() &&
-              canBuy) buyStatus.showBuyReminder();
-        });
+        if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
+          modals.openEthLogin();
+          Ethereum.setHasSeen();
+          return;
+        } else {
+          buyStatus.canBuy().then((canBuy) => {
+            if (buyStatus.shouldShowBuyReminder() &&
+                !buyStatus.userHasAccount() &&
+                canBuy) buyStatus.showBuyReminder();
+          });
+        }
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         if (Wallet.goal.send != null) {

@@ -58,16 +58,21 @@
 }
 
 //override settings
-.activity-feed { .settings { padding: 0; margin: 0; } }
+.activity-feed { .settings { padding: 0; } }
 
 .account-balances {
-  border: 1px solid #d2ced0;
-  padding: 10px;
+  @extend .ph-10;
+  @extend .mbn;
   li {
-    padding: .6em 0;
-    font-size: 14px;
+    @extend .pv-10;
+  }
+  > li {
     &:first-of-type {
       border-top: none;
+    }
+    &:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0px;
     }
   }
   > ul {

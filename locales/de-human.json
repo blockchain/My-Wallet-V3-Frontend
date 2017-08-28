@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Ein hochmodernes Sicherheitscenter trägt zum Schutz Ihrer Guthaben vor unberechtigten Zugriffen bei. Wir helfen Ihnen mit einer schrittweisen Anleitung, Ihre Wallet zu sichern. Eine erweiterte Zwei-Faktor-Authentifizierung sorgt mit Google Authenticator, SMS oder Yubikey dafür, dass Ganoven draußen bleiben.",
   "DONT_TRANSFER": "Nicht überweisen",
   "OK": "OK",
-  "DESCRIPTION:": "Beschreibung:",
+  "DESCRIPTION": "Beschreibung",
   "COPY_HELPER": "Kopieren Sie diese Adresse und teilen Sie sie per E-Mail, Text oder Brieftaube mit Ihrem Absender.",
   "QR_HELPER": "Bitten Sie Ihren Absender diesen QR-Code einzuscannen.",
   "CUSTOMIZE_HELPER": "Geben Sie für diese Transaktion einen Betrag und eine Beschreibung an.",
@@ -1066,7 +1066,7 @@
     "DISAGREE": "Stimme überhaupt nicht zu",
     "AGREE": "Stimme dem rundum zu"
   },
-  "ACCEPT_TOS": "Ich habe die <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Servicebedingungen</a> gelesen und stimme ihnen zu",
+  "ACCEPT_TOS": "Ich habe die <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Servicebedingungen</a> gelesen und stimme ihnen zu",
   "SIMPLE_SECURE_SEAMLESS": "Einfach. Sicher. Problemlos.",
   "BUY_SIMPLE_STEPS": "Mit der weltweit beliebtesten Bitcoin-Wallet <br> kann man jetzt Bitcoin in 4 <br> einfachen und sicheren Schritten erwerben.",
   "METADATA_DOWN_EXCHANGE": "Die Angaben zum Wechselgeschäft können nicht geladen werden. Bitte versuchen Sie, die Seite zu aktualisieren.",

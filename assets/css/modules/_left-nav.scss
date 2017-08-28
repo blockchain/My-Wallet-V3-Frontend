@@ -64,6 +64,17 @@ ul.aside {
       }
     }
   }
+  li {
+    span.tx-divider:after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      background-color: grey;
+      width: 9.8em;
+      margin-left: 10px;
+      top: 50%;
+    }
+  }
   ul.aside-list{
     list-style: none;
     font-size: 1em;
@@ -161,4 +172,8 @@ li.action-bar{
 
 @media (max-width: 480px) {
   .wallet-footer { margin: 0; }
+}
+
+.border-solid {
+  border-bottom: 1px solid grey;
 }

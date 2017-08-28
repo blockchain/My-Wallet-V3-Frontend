@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Moderní Centrum zabezpečení pomáhá chránit Vaše prostředky před neoprávněným přístupem. Pomůžeme Vám zabezpečit Vaši peněženku pomocí tohoto jednoduchého návodu. Pokročilá dvoufaktorová autentizace zabraňuje v přístupu přes Google Authenticator, SMS nebo Yubikey.",
   "DONT_TRANSFER": "Nepřevádět",
   "OK": "OK",
-  "DESCRIPTION:": "Popis:",
+  "DESCRIPTION": "Popis",
   "COPY_HELPER": "Zkopírujte tuto adresu a sdílejte ji s odesílatelem přes e-mail, text nebo třeba poštovního holuba.",
   "QR_HELPER": "Požádejte odesílatele o načtení tohoto QR kódu.",
   "CUSTOMIZE_HELPER": "Zadejte částku a popis této transakce.",
@@ -1066,7 +1066,7 @@
     "DISAGREE": "Nesouhlasím",
     "AGREE": "Souhlasím"
   },
-  "ACCEPT_TOS": "Přečetl/a jsem si <a href='https://blockchain.info/Resources/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Podmínky služby</a> a souhlasím",
+  "ACCEPT_TOS": "Přečetl/a jsem si <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Podmínky služby</a> a souhlasím",
   "SIMPLE_SECURE_SEAMLESS": "Jednoduše. Bezpečně. Bez problémů.",
   "BUY_SIMPLE_STEPS": "Díky nejpopulárnější bitcoinové peněžence <br> na světe můžete nyní nakupovat bitcoin ve 4 <br> snadných a bezpečných krocích.",
   "METADATA_DOWN_EXCHANGE": "Nepodařilo se načíst podrobnosti směny. Zkuste aktualizovat stránku.",

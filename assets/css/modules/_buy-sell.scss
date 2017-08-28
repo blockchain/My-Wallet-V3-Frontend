@@ -429,3 +429,29 @@ input[type="radio"]:checked + label {
 .primary { color: $iris; }
 
 .tabs-partner-logo { max-width: 60px; }
+
+.shift-history {
+  display: grid;
+  grid-template-columns: 40% 20% 20% 20%;
+}
+
+.exchange-trade {
+  display: grid;
+  grid-template-columns: 40% 20% 20% 20%;
+}
+
+.exchange-status {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+@media(max-width: 768px) {
+  .exchange-status {
+    grid-template-columns: 100%;
+  }
+  .shift-history {
+    grid-template-columns: 25% 15% 30% 30%;
+  }
+  .exchange-trade {
+    grid-template-columns: 25% 15% 30% 30%;
+  }
+}
