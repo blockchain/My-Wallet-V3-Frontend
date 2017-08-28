@@ -67,7 +67,7 @@ form.bc-form(
                 fiat(eth="state.output.amount" ng-if="state.output.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
                 fiat(btc="toSatoshi(state.output.amount, bitcoin)" ng-if="state.output.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
           .pos-rel.f-12.mts.state-danger-text(ng-show="forms.shiftForm.input.$error")
-            span.pos-abs(ng-show="maxAvailable < state.rate.min")
+            span.pos-abs(ng-show="maxAvailable < state.rate.min && state.rate.max > state.rate.min")
               span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
               | &nbsp;
               a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
