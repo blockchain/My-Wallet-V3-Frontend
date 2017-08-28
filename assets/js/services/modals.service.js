@@ -245,5 +245,15 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openEthLegacyTransition = service.openOnce(() => {
+    open({
+      templateUrl: 'partials/eth-legacy-transition.pug',
+      controller: 'EthLegacyTransitionController',
+      windowClass: 'bc-modal initial',
+      backdrop: 'static',
+      keyboard: false
+    });
+  });
+
   return service;
 }

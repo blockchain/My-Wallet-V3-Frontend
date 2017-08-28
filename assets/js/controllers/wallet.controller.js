@@ -207,7 +207,9 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         }
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
-        if (Wallet.goal.send != null) {
+        if (Ethereum.needsLegacyTransition) {
+          modals.openEthLegacyTransition();
+        } else if (Wallet.goal.send != null) {
           modals.openSend(Wallet.goal.send);
           Wallet.goal.send = void 0;
         }

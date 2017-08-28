@@ -123,6 +123,11 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     MyBlockchainApi.incrementBtcEthUsageStats(btcBalance, ethBalance);
   };
 
+  service.needsLegacyTransition = () => {
+    return true;
+    // return service.eth.needsLegacyTransition();
+  };
+
   Env.then((options) => {
     let { ethereum } = options;
     if (ethereum && !isNaN(ethereum.rolloutFraction)) {
