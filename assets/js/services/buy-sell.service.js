@@ -43,7 +43,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     kycs: [],
     mediums: [],
     accounts: [],
-    limits: { bank: { max: {}, maxOutRemaining: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {}, min: {} } },
+    limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {}, min: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
@@ -51,7 +51,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getQuote,
     getSellQuote,
     getKYCs,
-    getRate,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -106,11 +105,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       service.kycs = kycs.sort((k0, k1) => k1.createdAt > k0.createdAt);
       return service.kycs;
     });
-  }
-
-  function getRate (base, quote) {
-    let getRate = service.getExchange().exchangeRate.get(base, quote);
-    return $q.resolve(getRate);
   }
 
   function getLimits (mediums, curr) {

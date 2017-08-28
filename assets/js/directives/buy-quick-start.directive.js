@@ -129,9 +129,7 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
         .finally(() => scope.disabled = false);
     };
 
-    scope.setFiat = (amount) => {
-      scope.transaction.fiat = amount;
-    };
+    scope.setFiat = amount => scope.transaction.fiat = amount;
 
     scope.firstInput = true;
     scope.recordData = (amount) => {
@@ -174,9 +172,10 @@ function buyQuickStart ($rootScope, currency, buySell, Alerts, $interval, $timeo
 
     scope.openKyc = () => {
       if (!scope.kyc) {
-        buySell.triggerKYC().then(kyc => {
-          modals.openBuyView(scope.quote, kyc).result.finally(scope.onCloseModal).catch(scope.onCloseModal);
-        });
+        buySell.triggerKYC()
+          .then(kyc => {
+            modals.openBuyView(scope.quote, kyc).result.finally(scope.onCloseModal).catch(scope.onCloseModal);
+          });
       } else {
         $q.resolve(buySell.getOpenKYC())
           .then(kyc => modals.openBuyView(scope.quote, kyc));
