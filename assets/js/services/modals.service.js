@@ -245,5 +245,19 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openBitcoinCash = service.openOnce(step => {
+    return openMobileCompatible({
+      templateUrl: 'partials/bitcoin-cash-modal.pug',
+      controller: 'BitcoinCashController',
+      controllerAs: 'vm',
+      windowClass: 'bc-modal buy',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        step () { return step; }
+      }
+    });
+  });
+
   return service;
 }

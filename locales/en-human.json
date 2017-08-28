@@ -1634,5 +1634,21 @@
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
+  "GENERAL": "General",
+  "BITCOIN_CASH": {
+    "SEE_BALANCE": "See Bitcoin Cash Balance",
+    "ABOUT_1": "1. What is Bitcoin Cash?",
+    "ABOUT_1_ANSWER": "Bitcoin Cash was created on 1st august 2017 after a hard fork in the Bitcoin blockchain. All bitcoin holders as of block 478558 are now owners of Bitcoin Cash.",
+    "ABOUT_2": "2. What do I need to know about Bitcoin Cash?",
+    "ABOUT_2_ANSWER": "Bitcoin (BTC) and Bitcoin Cash (BCC) are 2 different currencies. However, the addresses used for trading (sending and receiving BTC nad BCC) look exactly the same.  It is important to always make sure you are using the right currency address when transacting BTC/BCC",
+    "ABOUT_3": "3. What can you do with your Bitcoin Cash?",
+    "ABOUT_3_ANSWER": "You can use BCC like any other crypto currency. From your blockchain wallet, you can send all your funds to a BCC wallet, exchange it for Bitcoin and Ether, or just do nothing and keep your BCC here",
+    "ABOUT_4": "4. What if you want to keep your Bitcoin Cash in the Blockchain Wallet?",
+    "ABOUT_4_ANSWER": "You can keep your BCC here in your Blockchain wallet. We’ll hold it for you and you can see your balance in the settings area.",
+    "KEEP": "Keep Bitcoin Cash",
+    "EXCHANGE": "Exchange Bitcoin Cash",
+    "SEND": "Send Bitcoin Cash"
+  },
+  "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such a BTC or ETH, or just keep it in your Blockchain wallet.",
   "": ""
 }

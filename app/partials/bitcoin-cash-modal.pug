@@ -1,0 +1,33 @@
+.modal-header.bc-modal-header
+  .flex-row.flex-between
+    .flex-column.flex-justify
+      h3.f-24.blue(translate="About Bitcoin Cash")
+    div
+      i.pointer.ti-close.f-12(ng-click="vm.dismiss()")
+div(translate-namespace="BITCOIN_CASH")
+  .flex-column.ph-35(ng-if="vm.onStep('about')")
+    .flex-column.mt-30
+      span.blue.f-14(translate=".ABOUT_1")
+      span.text.f-14.pt-10(translate=".ABOUT_1_ANSWER")
+    .flex-column.mt-30
+      span.blue.f-14(translate=".ABOUT_2")
+      span.text.f-14.pt-10(translate=".ABOUT_2_ANSWER")
+    .flex-column.mt-30
+      span.blue.f-14(translate=".ABOUT_3")
+      span.text.f-14.pt-10(translate=".ABOUT_3_ANSWER")
+    .flex-column.mt-30
+      span.blue.f-14(translate=".ABOUT_4")
+      span.text.f-14.pt-10(translate=".ABOUT_4_ANSWER")
+    .flex-row.flex-justify.pt-40.pb-30
+      button.button-primary(translate=".SEE_BALANCE" ng-click="vm.goTo('balance')")
+  .flex-column.ph-35(ng-if="vm.onStep('balance')")  
+    .flex-column.flex-center.bg-grey.mv-30.pv-20
+      span.f-16(translate="TOTAL")
+      span.f-24.em-600.pv-10 0.0025144 BCC
+      span.f-16 25.00 USD
+    .flex-row.flex-between.mb-30
+      a.f-14(translate=".KEEP" ng-click="vm.dismiss()")
+      a.f-14(translate=".EXCHANGE")
+      a.f-14(translate=".SEND")
+        
+      
