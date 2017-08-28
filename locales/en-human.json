@@ -49,7 +49,7 @@
     },
     "HOW_TO_TRANSACT_ETH": {
       "Q": "How do I receive/send ether?",
-      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Ether’ in the left menu to access your ether dashboard. Once there, click on ‘Request’ to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ from the ether transactions tab, enter the recipient’s ether address in the ‘To’ field and how much you want to send."
+      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Request’ and select 'Ether' in the currency field to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ and select 'Ether' in the currency field, then enter the recipient’s ether address in the ‘To’ field along with how much you want to send."
     },
     "HOW_MUCH_TO_SEND": {
       "Q": "How much does it cost to send bitcoin{{showEthereum ? ' or ether' : ''}}?",
@@ -1581,7 +1581,7 @@
     "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
-    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::widthdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours, you can keep track of your Exchange progress in the Order History tab.",
+    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours, you can keep track of your Exchange progress in the Order History tab.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
