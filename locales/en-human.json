@@ -1647,7 +1647,9 @@
     "ABOUT_4_ANSWER": "You can keep your BCC here in your Blockchain wallet. We’ll hold it for you and you can see your balance in the settings area.",
     "KEEP": "Keep Bitcoin Cash",
     "EXCHANGE": "Exchange Bitcoin Cash",
-    "SEND": "Send Bitcoin Cash"
+    "SEND": "Send Bitcoin Cash",
+    "ADDRESSES": "Bitcoin Cash addresses looks exactly as Bitcoin addresses. If by mistake you send your Bitcoin Cash to a Bitcoin address your funds will be lost.<br><br>Are you sure the address below is a Bitcoin Cash address?",
+    "YES_IT_IS": "Yes, it is"
   },
   "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such a BTC or ETH, or just keep it in your Blockchain wallet.",
   "": ""

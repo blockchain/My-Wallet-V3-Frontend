@@ -7,7 +7,7 @@
     span 0.2134235 BCC ($150)
   .flex
     .flex-column.flex-justify(ng-if="$ctrl.showingBalance")
-      button.button-default(translate="Exchange Bitcoin Cash" ng-click="$ctrl.openToExchange()")
-      button.button-default.mt-15(translate="Send Bitcoin Cash" ng-click="$ctrl.openToSend()")
+      button.button-default(translate="Exchange Bitcoin Cash" ng-click="$ctrl.openWithStep('exchange')")
+      button.button-default.mt-15(translate="Send Bitcoin Cash" ng-click="$ctrl.openWithStep('send')")
     .flex-column.flex-justify(ng-if="!$ctrl.showingBalance")
       button.button-primary(translate="Show Bitcoin Cash Balance" ng-click="$ctrl.showBalance()")

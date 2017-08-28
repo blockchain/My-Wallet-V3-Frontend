@@ -6,18 +6,10 @@
       i.pointer.ti-close.f-12(ng-click="vm.dismiss()")
 div(translate-namespace="BITCOIN_CASH")
   .flex-column.ph-35(ng-if="vm.onStep('about')")
-    .flex-column.mt-30
-      span.blue.f-14(translate=".ABOUT_1")
-      span.text.f-14.pt-10(translate=".ABOUT_1_ANSWER")
-    .flex-column.mt-30
-      span.blue.f-14(translate=".ABOUT_2")
-      span.text.f-14.pt-10(translate=".ABOUT_2_ANSWER")
-    .flex-column.mt-30
-      span.blue.f-14(translate=".ABOUT_3")
-      span.text.f-14.pt-10(translate=".ABOUT_3_ANSWER")
-    .flex-column.mt-30
-      span.blue.f-14(translate=".ABOUT_4")
-      span.text.f-14.pt-10(translate=".ABOUT_4_ANSWER")
+    .flex-column(ng-repeat="i in [1,2,3,4]")
+      .flex-column.mt-30
+        span.blue.f-14(translate=".ABOUT_{{i}}")
+        span.text.f-14.pt-10(translate=".ABOUT_{{i}}_ANSWER")
     .flex-row.flex-justify.pt-40.pb-30
       button.button-primary(translate=".SEE_BALANCE" ng-click="vm.goTo('balance')")
   .flex-column.ph-35(ng-if="vm.onStep('balance')")  
@@ -28,6 +20,12 @@ div(translate-namespace="BITCOIN_CASH")
     .flex-row.flex-between.mb-30
       a.f-14(translate=".KEEP" ng-click="vm.dismiss()")
       a.f-14(translate=".EXCHANGE")
-      a.f-14(translate=".SEND")
+      a.f-14(translate=".SEND" ng-click="vm.goTo('send-confirm-address')")
+  .flex-column.ph-35.pv-35(ng-if="vm.onStep('send-confirm-address')")
+    span.f-14.em-300.pb-25(translate=".ADDRESSES")
+    .flex-justify.bg-grey.ph-50.pv-15.mb-30
+      //- address here
+      span 19GWtbD5VfbZ2zdcUdFBr32qjFk5kkM8Th
+    button.button-primary.upper(translate=".YES_IT_IS" ng-click="vm.goTo('send-confirm')")
         
       
