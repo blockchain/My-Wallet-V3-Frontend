@@ -1650,7 +1650,7 @@
     "SEND": "Send Bitcoin Cash",
     "ADDRESSES": "Bitcoin Cash addresses looks exactly as Bitcoin addresses. If by mistake you send your Bitcoin Cash to a Bitcoin address your funds will be lost.<br><br>Are you sure the address below is a Bitcoin Cash address?",
     "YES_IT_IS": "Yes, it is",
-    "SENDING_ALL": "All your BCC will be sent to the chosen address in one single transaction. Make sure you are using a BCC address, sending your BCC to a BTC address will result on the permanent loss of your BCC funds."
+    "SENDING_ALL": "All your BCC will be sent to the chosen address in a single transaction. Make sure you are using a BCC address. Sending your BCC to a BTC address will result in the permanent loss of your BCC funds."
   },
   "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such a BTC or ETH, or just keep it in your Blockchain wallet.",
   "": ""

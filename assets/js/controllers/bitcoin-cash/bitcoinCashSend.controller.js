@@ -5,8 +5,10 @@ angular
 function BitcoinCashSendController ($scope) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  $scope.state = {
-    destination: null
+  $scope.transaction = {
+    destination: null,
+    amount: null,
+    fee: null
   };
 
   $scope.steps = enumify('send-cash', 'send-address', 'send-confirm');
@@ -14,5 +16,13 @@ function BitcoinCashSendController ($scope) {
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
 
   $scope.goTo('send-cash');
-  $scope.onAddressChange = (addr) => $scope.state.destination = addr;
+  $scope.onAddressChange = (addr) => $scope.transaction.destination = addr;
+  $scope.getTransactionTotal = (includeFee) => {
+    let tx = $scope.transaction;
+    let fee = includeFee ? tx.fee : 0;
+    return parseInt(tx.amount, 10) + parseInt(fee, 10);
+  };
+  $scope.send = () => {
+    console.log('send', $scope.transaction);
+  };
 }

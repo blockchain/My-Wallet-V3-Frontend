@@ -28,11 +28,32 @@ div(translate-namespace="BITCOIN_CASH")
     .flex-column(ng-if="onStep('send-address')")
       span.f-14.em-300.pb-25(translate=".ADDRESSES")
       .flex-justify.bg-grey.ph-50.pv-15.mb-30
-        //- address here
-        span {{ state.destination }}
+        span {{ transaction.destination }}
       button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
     
-    .flex-column(ng-if="vm.onStep('send-confirm')")
-      span SEND CONFIRM
+    .flex-column.width-100(ng-if="onStep('send-confirm')")
+      .flex-column.f-16
+        .flex-row
+          label.colon.width-30.width-30-mobile(translate="FROM")
+          .width-70.width-70-mobile My Bitcoin Cash Wallet
+        .flex-row.mt-10
+          label.colon.width-30.width-30-mobile(translate="TO")
+          .width-70.width-70-mobile
+            span(translate="no") {{ transaction.destination }}
+        .flex-row.mt-10
+          label.colon.width-30.width-30-mobile(translate="PAYMENT")
+          .width-70.width-70-mobile
+            span.mr-10 {{transaction.amount | convert:'btc':true}} ({{transaction.amount | convert:'fiat':true}})
+        .flex-row.mt-10
+          label.colon.width-30.width-30-mobile(translate="FEE")
+          .width-70.width-70-mobile
+            span.mr-10 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+        .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
+          span.mb-10(translate="TOTAL")
+          span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
+          span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}
+        .mv-30
+          button.button-primary.width-100(translate="SEND" ng-click="send(); vm.dismiss();")
+            
   .flex.ph-35.pv-35(ng-if="vm.onStep('exchange')")
     span EXCHANGE

@@ -70,4 +70,4 @@
             .item.right-align.width-40.width-40-mobile
               span.f-14 {{ $ctrl.transaction.fee | convert:'btc':true }} ({{ $ctrl.transaction.fee | convert:'fiat':true }})
         .group.mt-25
-          button.button-primary(translate="CONTINUE" ng-click="$ctrl.onContinue()")
+          button.button-primary(translate="CONTINUE" ng-click="$ctrl.onContinue()" ng-disabled="!$ctrl.transaction.destination")
