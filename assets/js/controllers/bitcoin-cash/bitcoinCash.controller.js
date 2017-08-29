@@ -11,7 +11,8 @@ function BitcoinCashController ($uibModalInstance, step) {
 
   this.dismiss = () => $uibModalInstance.dismiss();
 
-  let hasNotSeenAbout = true;
-  if (hasNotSeenAbout) this.goTo('about');
+  let hasSeenCashAbout = false;
+  if (!hasSeenCashAbout) this.goTo('about');
   else if (step) this.goTo(step);
+  this.setHasSeenCashAbout = () => hasSeenCashAbout = true;
 }
