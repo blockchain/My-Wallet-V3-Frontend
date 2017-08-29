@@ -8,8 +8,6 @@ function RequestController ($scope, destination, assetContext) {
              'btc';
 
   this.destination = destination;
-
-  this.hideAssetSelect = assetContext.hideAssetSelect;
   this.asset = assetContext.getAssets().filter(a => a.code === code)[0];
 
   this.showTab = (asset) => this.asset = asset;

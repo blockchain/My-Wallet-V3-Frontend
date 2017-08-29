@@ -12,7 +12,6 @@ function SendController ($uibModalInstance, paymentRequest, assetContext) {
 
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;
-  this.hideAssetSelect = assetContext.hideAssetSelect;
   this.asset = assetContext.getAssets().filter((a) => a.code === code)[0];
 
   this.close = (result) => {
