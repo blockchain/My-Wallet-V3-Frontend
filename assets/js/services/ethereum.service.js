@@ -134,8 +134,10 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   };
 
   service.sweepLegacyAccount = () => {
-    return Wallet.askForSecondPasswordIfNeeded()
-      .then(secPass => service.eth.sweepLegacyAccount(secPass));
+    return Wallet.askForSecondPasswordIfNeeded().then(
+      (secPass) => service.eth.sweepLegacyAccount(secPass),
+      () => $q.reject({ message: 'SECOND_PASSWORD_CANCEL' })
+    );
   };
 
   Env.then((options) => {
