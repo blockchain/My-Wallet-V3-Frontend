@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('EthLegacyTransitionController', EthLegacyTransitionController);
 
-function EthLegacyTransitionController ($scope, $uibModalInstance, Alerts, Ethereum) {
+function EthLegacyTransitionController ($scope, $uibModalInstance, AngularHelper, Alerts, Ethereum) {
   $scope.initialized = () => {
     $scope.from = Ethereum.legacyAccount.address;
     $scope.to = Ethereum.defaultAccount ? Ethereum.defaultAccount.address : 'My Ether Wallet';
@@ -13,12 +13,14 @@ function EthLegacyTransitionController ($scope, $uibModalInstance, Alerts, Ether
   };
 
   $scope.confirm = () => {
+    $scope.lock();
     Ethereum.sweepLegacyAccount().then(({ txHash }) => {
       $uibModalInstance.close();
       console.log('sent ether:', txHash);
       Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
       Ethereum.recordLastTransaction(txHash);
     }).catch(({ message }) => {
+      $scope.free();
       Alerts.displayError(message);
     });
   };
@@ -27,4 +29,6 @@ function EthLegacyTransitionController ($scope, $uibModalInstance, Alerts, Ether
     () => Ethereum.legacyAccount != null,
     (init) => init && $scope.initialized()
   );
+
+  AngularHelper.installLock.call($scope);
 }
