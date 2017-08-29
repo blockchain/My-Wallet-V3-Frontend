@@ -19,13 +19,20 @@ div(translate-namespace="BITCOIN_CASH")
       span.f-16 25.00 USD
     .flex-row.flex-between.mb-30
       a.f-14(translate=".KEEP" ng-click="vm.dismiss()")
-      a.f-14(translate=".EXCHANGE")
-      a.f-14(translate=".SEND" ng-click="vm.goTo('send-confirm-address')")
-  .flex-column.ph-35.pv-35(ng-if="vm.onStep('send-confirm-address')")
-    span.f-14.em-300.pb-25(translate=".ADDRESSES")
-    .flex-justify.bg-grey.ph-50.pv-15.mb-30
-      //- address here
-      span 19GWtbD5VfbZ2zdcUdFBr32qjFk5kkM8Th
-    button.button-primary.upper(translate=".YES_IT_IS" ng-click="vm.goTo('send-confirm')")
+      a.f-14(translate=".EXCHANGE" ng-click="vm.goTo('exchange')")
+      a.f-14(translate=".SEND" ng-click="vm.goTo('send')")
         
-      
+  .flex.ph-35.pv-35(ng-if="vm.onStep('send')" ng-controller="BitcoinCashSendController")
+    .flex(ng-if="onStep('send-cash')")
+      bitcoin-cash-send(on-continue="goTo('send-address')" on-address-change="onAddressChange(addr)")
+    .flex-column(ng-if="onStep('send-address')")
+      span.f-14.em-300.pb-25(translate=".ADDRESSES")
+      .flex-justify.bg-grey.ph-50.pv-15.mb-30
+        //- address here
+        span {{ state.destination }}
+      button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
+    
+    .flex-column(ng-if="vm.onStep('send-confirm')")
+      span SEND CONFIRM
+  .flex.ph-35.pv-35(ng-if="vm.onStep('exchange')")
+    span EXCHANGE

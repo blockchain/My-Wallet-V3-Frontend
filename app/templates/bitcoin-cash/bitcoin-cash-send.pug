@@ -1,0 +1,73 @@
+#send
+  div
+    form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
+      fieldset
+        .group.mb-30
+          span(translate="BITCOIN_CASH.SENDING_ALL")
+        .group
+          //- To
+          .item
+            label.colon(translate="TO")
+            div
+              .flex-column
+                div(ng-class="{'has-error': sendForm.destination.$invalid && sendForm.destination.$touched && transaction.destination.address !== ''}")
+                  .input-group(ng-click="focus()" ng-hide="selectOpen")
+                    input#address-field.form-control(
+                      type="text"
+                      tabindex="1"
+                      autocomplete="off"
+                      placeholder="Paste or scan a Bitcoin Cash address"
+                      ng-model="$ctrl.transaction.destination"
+                      ng-change="$ctrl.transaction.destination && $ctrl.onAddressChange({addr: $ctrl.transaction.destination})"
+                      autofocus)
+                    .input-group-btn
+                      qr-scan(on-scan="$ctrl.onAddressScan")
+                .has-error
+                  span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValidAddress && sendForm.destination.$touched && transaction.destination.address !== ''")
+                  span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm.destination.$error.isNotEqual")
+          //- Amount
+          .item.mt-25
+            label.colon(translate="AMOUNT")
+            .flex-center
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="$ctrl.transaction.amount"
+                  name="amount"
+                  tabindex="1"
+                  transform-currency="btcCurrency"
+                  required
+                  disabled
+                )
+                span.mhm BCC
+              i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="$ctrl.transaction.amount"
+                  name="fiatAmount"
+                  tabindex="1"
+                  transform-currency="fiatCurrency"
+                  placeholder="0"
+                  required
+                )
+                span.mhm {{ fiatCurrency.code }}
+            .has-error
+              span.state-danger-text(
+                ng-click="useAll()"
+                ng-class="{'pointer': transaction.destinations.length === 1}"
+                ng-show="transaction.maxAvailable > 0 && transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
+                span.type-sm(translate="USE_TOTAL")
+                | :&nbsp;
+                span.type-sm.pointer {{ transaction.maxAvailable | convert:'btc' }}
+              span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
+                span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
+        .group(ng-if="!advanced")
+          .group.inline.flex-center.mt-20
+            .item.width-60.width-60-mobile
+              label.mbn.colon(translate="TX_FEE")
+              span Estimated confirmation time 1+ hour
+            .item.right-align.width-40.width-40-mobile
+              span.f-14 {{ $ctrl.transaction.fee | convert:'btc':true }} ({{ $ctrl.transaction.fee | convert:'fiat':true }})
+        .group.mt-25
+          button.button-primary(translate="CONTINUE" ng-click="$ctrl.onContinue()")

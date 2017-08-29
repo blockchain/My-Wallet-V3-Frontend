@@ -4,7 +4,7 @@ angular
     bindings: {
 
     },
-    templateUrl: 'templates/bitcoin-cash.pug',
+    templateUrl: 'templates/bitcoin-cash/bitcoin-cash.pug',
     controller: bitcoinCashController,
     controllerAs: '$ctrl'
   });
