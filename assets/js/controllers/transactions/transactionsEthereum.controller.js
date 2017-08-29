@@ -6,11 +6,12 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
   $scope.loading = true;
   $scope.ethTransactions = [];
   $scope.$watch(
-    () => Ethereum.defaultAccount.txs,
+    () => Ethereum.txs,
     (txs) => {
       $scope.ethTransactions = txs;
       $scope.loading = false;
-    }
+    },
+    true
   );
 
   $scope.txLimit = 10;
@@ -87,9 +88,9 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
       case $scope.filterTypes[0]:
         return true;
       case $scope.filterTypes[1]:
-        return tx.getTxType($scope.account) === 'sent';
+        return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'sent';
       case $scope.filterTypes[2]:
-        return tx.getTxType($scope.account) === 'received';
+        return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'received';
     }
     return false;
   };
