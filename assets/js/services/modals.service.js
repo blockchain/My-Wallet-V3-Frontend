@@ -249,7 +249,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     open({
       templateUrl: 'partials/eth-legacy-transition.pug',
       controller: 'EthLegacyTransitionController',
-      windowClass: 'bc-modal initial',
+      windowClass: 'bc-modal prio initial',
       backdrop: 'static',
       keyboard: false
     })
