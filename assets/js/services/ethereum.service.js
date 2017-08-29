@@ -24,7 +24,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
       return this.eth.defaults;
     },
     get ethInititalized () {
-      return Wallet.my.wallet && this.eth && this.eth.defaultAccount && true;
+      return Wallet.my.wallet && this.eth && (this.eth.defaultAccount || this.eth.legacyAccount) && true;
     },
     countries: [],
     rolloutFraction: 0,
@@ -124,7 +124,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
 
   service.recordStats = () => {
     let btcBalance = Wallet.total();
-    let ethBalance = service.ethInititalized ? parseFloat(service.defaultAccount.balance) : 0;
+    let ethBalance = service.ethInititalized ? parseFloat(service.balance) : 0;
     console.log(JSON.stringify({ btcBalance, ethBalance }));
     MyBlockchainApi.incrementBtcEthUsageStats(btcBalance, ethBalance);
   };
@@ -133,12 +133,9 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     return service.eth.needsTransitionFromLegacy();
   };
 
-  service.transitionFromLegacy = () => {
-    return service.eth.transitionFromLegacy();
-  };
-
   service.sweepLegacyAccount = () => {
-    return service.eth.sweepLegacyAccount();
+    return Wallet.askForSecondPasswordIfNeeded()
+      .then(secPass => service.eth.sweepLegacyAccount(secPass));
   };
 
   Env.then((options) => {

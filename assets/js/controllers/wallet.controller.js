@@ -196,12 +196,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       if (!Wallet.goal.firstLogin) {
         let { needsTransitionFromLegacy } = Wallet.goal;
         if (needsTransitionFromLegacy) {
-          if (needsTransitionFromLegacy.shouldSweep) {
-            modals.openEthLegacyTransition();
-          } else if (needsTransitionFromLegacy.needsTransition) {
-            Ethereum.transitionFromLegacy();
-          }
-          Wallet.goal.needsTransitionFromLegacy = null;
+          modals.openEthLegacyTransition();
         } else if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
           modals.openEthLogin();
           Ethereum.setHasSeen();

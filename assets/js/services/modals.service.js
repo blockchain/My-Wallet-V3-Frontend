@@ -245,21 +245,15 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openEthLegacyTransition = service.openOnce(() => {
+  service.openEthLegacyTransition = service.openOnce(() =>
     open({
       templateUrl: 'partials/eth-legacy-transition.pug',
       controller: 'EthLegacyTransitionController',
       windowClass: 'bc-modal initial',
       backdrop: 'static',
-      keyboard: false,
-      resolve: {
-        maxAvailable ($q, Ethereum) {
-          let account = Ethereum.defaultAccount.isCorrect ? Ethereum.legacyAccount : Ethereum.defaultAccount;
-          return $q.resolve(account.getAvailableBalance());
-        }
-      }
-    });
-  });
+      keyboard: false
+    })
+  );
 
   return service;
 }

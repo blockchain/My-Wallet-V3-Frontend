@@ -28,7 +28,7 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
     account: undefined
   };
 
-  $scope.ethTotal = Ethereum.defaultAccount.balance;
+  $scope.ethTotal = Ethereum.balance;
 
   $scope.hideEtherWelcome = () => localStorageService.get('hideEtherWelcome');
   $scope.dismissWelcome = () => localStorageService.set('hideEtherWelcome', true);
