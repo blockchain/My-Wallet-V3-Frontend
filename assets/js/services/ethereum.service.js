@@ -11,8 +11,14 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     get balance () {
       return this.ethInititalized ? this.eth.getApproximateBalance(8) : null;
     },
+    get txs () {
+      return this.ethInititalized ? this.eth.txs : [];
+    },
     get defaultAccount () {
       return this.ethInititalized ? this.eth.defaultAccount : null;
+    },
+    get legacyAccount () {
+      return this.ethInititalized ? this.eth.legacyAccount : null;
     },
     get defaults () {
       return this.eth.defaults;

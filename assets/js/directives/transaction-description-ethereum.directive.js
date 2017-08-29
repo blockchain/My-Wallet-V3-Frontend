@@ -32,16 +32,18 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum,
       Ethereum.setTxNote(scope.tx.hash, note);
     };
 
-    scope.txType = scope.tx.getTxType(Ethereum.defaultAccount);
+    scope.txType = scope.tx.getTxType([Ethereum.defaultAccount, Ethereum.legacyAccount]);
 
     scope.getTxDirection = (type) => {
       if (type === 'sent') return 'SENT';
       if (type === 'received') return 'RECEIVED_BITCOIN_FROM';
+      if (type === 'transfer') return 'MOVED_BITCOIN_TO';
     };
 
-    scope.getTxClass = (txType) => {
-      if (scope.txType === 'sent') return 'outgoing_tx';
-      if (scope.txType === 'received') return 'incoming_tx';
+    scope.getTxClass = (type) => {
+      if (type === 'sent') return 'outgoing_tx';
+      if (type === 'received') return 'incoming_tx';
+      if (type === 'transfer') return 'local_tx';
     };
 
     scope.settings = Wallet.settings;
