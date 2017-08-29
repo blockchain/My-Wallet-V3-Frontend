@@ -194,7 +194,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Ethereum.setHasSeen();
       }
       if (!Wallet.goal.firstLogin) {
-        if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
+        let { needsTransitionFromLegacy } = Wallet.goal;
+        if (needsTransitionFromLegacy.shouldSweep) {
+          modals.openEthLegacyTransition();
+        } else if (needsTransitionFromLegacy.needsTransition) {
+          Ethereum.transitionFromLegacy();
+        } else if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
           modals.openEthLogin();
           Ethereum.setHasSeen();
           return;
@@ -207,9 +212,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         }
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
-        if (Ethereum.needsLegacyTransition) {
-          modals.openEthLegacyTransition();
-        } else if (Wallet.goal.send != null) {
+        if (Wallet.goal.send != null) {
           modals.openSend(Wallet.goal.send);
           Wallet.goal.send = void 0;
         }

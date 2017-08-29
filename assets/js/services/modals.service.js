@@ -251,7 +251,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       controller: 'EthLegacyTransitionController',
       windowClass: 'bc-modal initial',
       backdrop: 'static',
-      keyboard: false
+      keyboard: false,
+      resolve: {
+        maxAvailable ($q, Ethereum) {
+          return $q.resolve(Ethereum.defaultAccount.getAvailableBalance());
+        }
+      }
     });
   });
 

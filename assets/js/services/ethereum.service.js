@@ -123,9 +123,16 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     MyBlockchainApi.incrementBtcEthUsageStats(btcBalance, ethBalance);
   };
 
-  service.needsLegacyTransition = () => {
-    return true;
-    // return service.eth.needsLegacyTransition();
+  service.needsTransitionFromLegacy = () => {
+    return service.eth.needsTransitionFromLegacy();
+  };
+
+  service.transitionFromLegacy = () => {
+    return service.eth.transitionFromLegacy();
+  };
+
+  service.sweepLegacyAccount = () => {
+    return service.eth.sweepLegacyAccount();
   };
 
   Env.then((options) => {
