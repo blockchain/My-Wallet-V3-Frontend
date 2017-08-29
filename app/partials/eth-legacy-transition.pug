@@ -5,10 +5,10 @@
   .flex-column.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
     .pb-5.flex-between
       span.em-500.colon(translate="Send ETH From")
-      span.em-300.right-align {{ address }}
+      span.em-300.right-align {{ from }}
     .pv-5.flex-between
       span.em-500.colon(translate="To")
-      span.em-300.right-align My Ether Wallet
+      span.em-300.right-align {{ to }}
     .pv-5.flex-between
       span.em-500.colon(translate="Amount")
       span.em-300.right-align {{ amount | format:'eth':true }}

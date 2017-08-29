@@ -254,7 +254,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       keyboard: false,
       resolve: {
         maxAvailable ($q, Ethereum) {
-          return $q.resolve(Ethereum.defaultAccount.getAvailableBalance());
+          let account = Ethereum.defaultAccount.isCorrect ? Ethereum.legacyAccount : Ethereum.defaultAccount;
+          return $q.resolve(account.getAvailableBalance());
         }
       }
     });

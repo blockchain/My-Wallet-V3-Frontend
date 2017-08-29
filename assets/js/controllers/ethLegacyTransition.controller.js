@@ -3,7 +3,8 @@ angular
   .controller('EthLegacyTransitionController', EthLegacyTransitionController);
 
 function EthLegacyTransitionController ($scope, $uibModalInstance, Alerts, Ethereum, maxAvailable) {
-  $scope.address = Ethereum.defaultAccount.address;
+  $scope.from = Ethereum.defaultAccount.isCorrect ? Ethereum.legacyAccount.address : Ethereum.defaultAccount.address;
+  $scope.to = Ethereum.defaultAccount.isCorrect ? Ethereum.defaultAccount.address : 'My Ether Wallet';
   $scope.amount = maxAvailable.amount;
   $scope.fee = maxAvailable.fee;
 
