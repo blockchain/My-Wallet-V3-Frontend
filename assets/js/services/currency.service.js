@@ -9,6 +9,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
   const SATOSHI = 100000000;
   const conversions = {};
   const ethConversions = {};
+  const bchConversions = {};
   const fiatConversionCache = {};
 
   const coinifyCurrencyCodes = {
@@ -85,6 +86,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     ethConversions,
     fetchExchangeRate,
     fetchEthRate,
+    fetchBchRate,
+    fetchAllRates,
     updateCoinifyCurrencies,
     getFiatAtTime,
     isBitCurrency,
@@ -129,6 +132,21 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
         ethConversions[key] = rate[key];
       });
     });
+  }
+
+  function fetchBchRate (currency) {
+    let { code } = currency;
+    return MyBlockchainApi.getExchangeRate(code, 'BCH').then((rate) => {
+      Object.keys(rate).forEach(key => {
+        bchConversions[key] = rate[key];
+      });
+    });
+  }
+
+  function fetchAllRates (currency) {
+    service.fetchExchangeRate(currency);
+    service.fetchEthRate(currency);
+    service.fetchBchRate(currency);
   }
 
   function getFiatAtTime (time, amount, currencyCode) {

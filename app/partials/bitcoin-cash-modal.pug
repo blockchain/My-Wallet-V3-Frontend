@@ -3,7 +3,7 @@
     .flex-column.flex-justify
       h3.f-24.blue(translate="About Bitcoin Cash")
     div
-      i.pointer.ti-close.f-12(ng-click="vm.dismiss()")
+      i.pointer.ti-close.f-16(ng-click="vm.dismiss()")
 div(translate-namespace="BITCOIN_CASH")
   .flex-column.ph-35(ng-if="vm.onStep('about')")
     .flex-column(ng-repeat="i in [1,2,3,4]")
@@ -18,7 +18,7 @@ div(translate-namespace="BITCOIN_CASH")
       span.f-24.em-600.pv-10 0.0025144 BCC
       span.f-16 25.00 USD
     .flex-row.flex-between.mb-30
-      a.f-14(translate=".KEEP" ng-click="vm.dismiss()")
+      a.f-14(translate=".KEEP" ng-click="vm.dismiss(); vm.setHasSeenCashAbout()")
       a.f-14(translate=".EXCHANGE" ng-click="vm.goTo('exchange')")
       a.f-14(translate=".SEND" ng-click="vm.goTo('send')")
         

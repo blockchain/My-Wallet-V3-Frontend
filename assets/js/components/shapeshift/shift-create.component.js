@@ -20,7 +20,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit || 500);
 
   this.to = Ethereum.defaultAccount;
-  this.from = this.isBitcoinCashExchange ? { label: 'My Bitcoin Cash Wallet' } : Wallet.getDefaultAccount();
+  this.from = Wallet.getDefaultAccount();
+  // this.from = this.isBitcoinCashExchange ? { label: 'My Bitcoin Cash Wallet' } : Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
@@ -44,6 +45,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     get baseBTC () { return state.input.curr === 'btc'; },
     get baseInput () { return this.baseCurr === state.input.curr; }
   };
+
+  if (this.isBitcoinCashExchange) state.input.curr = 'bch';
 
   $scope.getQuoteArgs = (state) => ({
     pair: state.input.curr + '_' + state.output.curr,
