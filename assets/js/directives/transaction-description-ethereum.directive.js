@@ -19,11 +19,23 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum,
     let currentYear = new Date().getFullYear();
     let isCurrentYear = currentYear === new Date(scope.tx.time * 1000).getFullYear();
     scope.year = isCurrentYear ? '' : 'yyyy';
-    scope.acct = Ethereum.defaultAccount.label;
-    scope.addr = Ethereum.defaultAccount.address;
+
+    let def = Ethereum.defaultAccount;
+    let legacy = Ethereum.legacyAccount;
+
+    scope.toAccount = scope.tx.isToAccount(def)
+      ? def
+      : legacy && scope.tx.isToAccount(legacy)
+        ? legacy
+        : false;
+
+    scope.fromAccount = scope.tx.isFromAccount(def)
+      ? def
+      : legacy && scope.tx.isFromAccount(legacy)
+        ? legacy
+        : false;
+
     scope.note = Ethereum.getTxNote(scope.tx.hash);
-    scope.isToAccount = scope.tx.isToAccount(Ethereum.defaultAccount);
-    scope.isFromAccount = scope.tx.isFromAccount(Ethereum.defaultAccount);
 
     scope.isDepositTx = ShapeShift.isDepositTx;
     scope.isWithdrawalTx = ShapeShift.isWithdrawalTx;
