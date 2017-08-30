@@ -11,14 +11,20 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     get balance () {
       return this.ethInititalized ? this.eth.getApproximateBalance(8) : null;
     },
+    get txs () {
+      return this.ethInititalized ? this.eth.txs : [];
+    },
     get defaultAccount () {
       return this.ethInititalized ? this.eth.defaultAccount : null;
+    },
+    get legacyAccount () {
+      return this.ethInititalized ? this.eth.legacyAccount : null;
     },
     get defaults () {
       return this.eth.defaults;
     },
     get ethInititalized () {
-      return Wallet.my.wallet && this.eth && this.eth.defaultAccount && true;
+      return Wallet.my.wallet && this.eth && (this.eth.defaultAccount || this.eth.legacyAccount) && true;
     },
     countries: [],
     rolloutFraction: 0,
@@ -118,9 +124,20 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
 
   service.recordStats = () => {
     let btcBalance = Wallet.total();
-    let ethBalance = service.ethInititalized ? parseFloat(service.defaultAccount.balance) : 0;
+    let ethBalance = service.ethInititalized ? parseFloat(service.balance) : 0;
     console.log(JSON.stringify({ btcBalance, ethBalance }));
     MyBlockchainApi.incrementBtcEthUsageStats(btcBalance, ethBalance);
+  };
+
+  service.needsTransitionFromLegacy = () => {
+    return service.eth.needsTransitionFromLegacy();
+  };
+
+  service.sweepLegacyAccount = () => {
+    return Wallet.askForSecondPasswordIfNeeded().then(
+      (secPass) => service.eth.sweepLegacyAccount(secPass),
+      () => $q.reject({ message: 'SECOND_PASSWORD_CANCEL' })
+    );
   };
 
   Env.then((options) => {

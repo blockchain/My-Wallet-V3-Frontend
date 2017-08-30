@@ -47,7 +47,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule
+        loadWalletModule,
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+          return Ethereum && Ethereum.needsTransitionFromLegacy().then((res) => Wallet.goal.needsTransitionFromLegacy = res);
+        }
       }
     })
     .state('wallet.common', {

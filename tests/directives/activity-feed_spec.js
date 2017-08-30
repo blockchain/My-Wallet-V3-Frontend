@@ -28,7 +28,8 @@ describe('Activity Feed directive', () => {
       eth: {
         defaultAccount: {
           txs: []
-        }
+        },
+        txs: []
       }
     };
 
