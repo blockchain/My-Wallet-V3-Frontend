@@ -1066,7 +1066,7 @@
     "DISAGREE": "Sangat Tidak Setuju",
     "AGREE": "Sangat Setuju"
   },
-  "ACCEPT_TOS": "Saya telah membaca dan setuju <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Syarat Layanan</a>",
+  "ACCEPT_TOS": "Saya telah membaca dan setuju <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Syarat Layanan</a>",
   "SIMPLE_SECURE_SEAMLESS": "Sederhana. Aman. Lancar.",
   "BUY_SIMPLE_STEPS": "Dompet bitcoin paling populer di dunia <br> sekarang memungkinkan Anda membeli bitcoin dalam 4 <br> langkah yang sederhana dan aman.",
   "METADATA_DOWN_EXCHANGE": "Tidak dapat memuat perincian penukaran Anda. Silakan segarkan halaman.",
