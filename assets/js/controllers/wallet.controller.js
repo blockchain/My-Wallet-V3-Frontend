@@ -74,7 +74,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       controller: 'SecondPasswordCtrl',
       backdrop: insist ? 'static' : null,
       keyboard: insist,
-      windowClass: 'bc-modal',
+      windowClass: 'bc-modal second-password',
       resolve: {
         insist: () => insist,
         defer: () => defer
