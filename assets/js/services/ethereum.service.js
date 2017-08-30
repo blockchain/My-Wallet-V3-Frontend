@@ -88,7 +88,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   service.isWaitingOnTransaction = () => {
     return (
       service.eth.lastTx != null &&
-      service.defaultAccount.txs.find(tx => tx.hash === service.eth.lastTx) == null
+      service.txs.find(tx => tx.hash === service.eth.lastTx) == null
     );
   };
 
