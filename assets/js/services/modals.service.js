@@ -250,6 +250,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/eth-legacy-transition.pug',
       controller: 'EthLegacyTransitionController',
       windowClass: 'bc-modal prio initial',
+      controllerAs: 'vm',
       backdrop: 'static',
       keyboard: false
     })

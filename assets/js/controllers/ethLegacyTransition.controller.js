@@ -3,32 +3,32 @@ angular
   .controller('EthLegacyTransitionController', EthLegacyTransitionController);
 
 function EthLegacyTransitionController ($scope, $uibModalInstance, AngularHelper, Alerts, Ethereum) {
-  $scope.initialized = () => {
-    $scope.from = Ethereum.legacyAccount.address;
-    $scope.to = Ethereum.defaultAccount ? Ethereum.defaultAccount.address : 'My Ether Wallet';
+  this.initialized = () => {
+    this.from = Ethereum.legacyAccount.address;
+    this.to = Ethereum.defaultAccount ? Ethereum.defaultAccount.address : 'My Ether Wallet';
     Ethereum.legacyAccount.getAvailableBalance().then(maxAvailable => {
-      $scope.amount = maxAvailable.amount;
-      $scope.fee = maxAvailable.fee;
+      this.amount = maxAvailable.amount;
+      this.fee = maxAvailable.fee;
     });
   };
 
-  $scope.confirm = () => {
-    $scope.lock();
+  this.confirm = () => {
+    this.lock();
     Ethereum.sweepLegacyAccount().then(({ txHash }) => {
       $uibModalInstance.close();
       console.log('sent ether:', txHash);
       Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
       Ethereum.recordLastTransaction(txHash);
     }).catch(({ message }) => {
-      $scope.free();
+      this.free();
       Alerts.displayError(message);
     });
   };
 
   $scope.$watch(
     () => Ethereum.legacyAccount != null,
-    (init) => init && $scope.initialized()
+    (init) => init && this.initialized()
   );
 
-  AngularHelper.installLock.call($scope);
+  AngularHelper.installLock.call(this);
 }

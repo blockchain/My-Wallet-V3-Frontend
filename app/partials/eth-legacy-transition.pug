@@ -5,14 +5,14 @@
   .flex-column.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
     .pb-5.flex-between
       span.em-500.colon(translate="Send ETH From")
-      span.em-300.right-align {{ from }}
+      span.em-300.right-align {{ vm.from }}
     .pv-5.flex-between
       span.em-500.colon(translate="To")
-      span.em-300.right-align {{ to }}
+      span.em-300.right-align {{ vm.to }}
     .pv-5.flex-between
       span.em-500.colon(translate="Amount")
-      span.em-300.right-align {{ amount | format:'eth':true }}
+      span.em-300.right-align {{ vm.amount | format:'eth':true }}
     .pt-5.flex-between
       span.em-500.colon(translate="Transaction Fee")
-      span.em-300.right-align {{ fee | convert:'eth':true }}
-  button.button-primary.upper.full-width.mb-5(ng-click="confirm()") Confirm
+      span.em-300.right-align {{ vm.fee | convert:'eth':true }}
+  button.button-primary.upper.full-width.mb-5(ng-click="vm.confirm()" ng-disabled="vm.locked") Confirm
