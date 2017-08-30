@@ -44,7 +44,7 @@ function transactionDescriptionEthereum ($translate, Wallet, MyWallet, Ethereum,
       Ethereum.setTxNote(scope.tx.hash, note);
     };
 
-    scope.txType = scope.tx.getTxType([Ethereum.defaultAccount, Ethereum.legacyAccount]);
+    scope.txType = scope.tx.getTxType(Ethereum.eth.activeAccountsWithLegacy);
 
     scope.getTxDirection = (type) => {
       if (type === 'sent') return 'SENT';
