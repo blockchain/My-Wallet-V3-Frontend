@@ -58,7 +58,6 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   }
 
   function updateEthTxActivities () {
-    if (!Ethereum.defaultAccount) return;
     activity.ethTransactions = Ethereum.txs
       .slice(0, activity.limit)
       .map(ethTxFactory);
