@@ -33,7 +33,7 @@ function countdown ($interval) {
       let seconds = parseInt((time % 1) * 60, 10);
 
       if (seconds < 10) seconds = '0' + seconds;
-      if (minutes === 0 && seconds <= 10 && scope.$parent.forms.confirmForm) { scope.isCounterExpiringSoon = true; }
+      if (minutes === 0 && seconds <= 10) { scope.isCounterExpiringSoon = true; }
       if (time <= 0) scope.onExpiration() && scope.onExpiration().then(scope.resetTimeToExpiration);
 
       scope.count = timeToExpiration <= 0 ? '0:00' : minutes + ':' + seconds;
