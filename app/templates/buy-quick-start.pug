@@ -59,7 +59,7 @@
               span.state-danger-text(translate="TRADING_SERVICE_IS_DISABLED")
         div(ng-show="!serviceSuspended")
           .mts.pos-rel(ng-hide="tradingDisabled")
-            div(ng-show="status.limitError && !fiatForm.fiat.$error.min")
+            .pos-abs(ng-show="status.limitError && !fiatForm.fiat.$error.min")
               div(ng-hide="profile.level.name === '1'")
                 span.type-sm.state-danger-text(translate="COINIFY_LIMITS.DAILY_LIMIT_IS" translate-values="{dailyLimit: dailyLimit, currency: transaction.currency.code}")
                 helper-button(ng-show="profile.level.name === '2'" content="COINIFY_LIMITS.HOW_LVL_3")
