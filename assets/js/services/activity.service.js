@@ -97,7 +97,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   }
 
   function ethTxFactory (obj) {
-    let txType = obj.getTxType([Ethereum.defaultAccount, Ethereum.legacyAccount]);
+    let txType = obj.getTxType(Ethereum.eth.activeAccountsWithLegacy);
     return angular.merge(txFactory(obj), {
       message: getTxMessage(obj.hash, txType, 'eth'),
       labelClass: txType,
