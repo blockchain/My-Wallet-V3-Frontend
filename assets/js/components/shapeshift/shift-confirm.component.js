@@ -6,6 +6,7 @@ angular
       quote: '<',
       payment: '<',
       onCancel: '&',
+      onExpire: '&',
       onComplete: '&',
       handleShift: '&'
     },
@@ -26,7 +27,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   $scope.to = $scope.quote.toCurrency === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
   $scope.fromCurrency = $scope.quote.fromCurrency === 'btc' ? $scope.bitcoin : $scope.ether;
   $scope.total = parseFloat($scope.quote.depositAmount) + parseFloat($filter('convert')(this.fee, $scope.fromCurrency, false));
-  $scope.onExpiration = () => $scope.lock();
+  $scope.onExpiration = () => { this.onExpire(); $scope.lock(); };
   $scope.getTimeToExpiration = () => $scope.quote.expires - now;
 
   $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether'};
