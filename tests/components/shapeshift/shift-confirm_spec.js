@@ -27,6 +27,7 @@ describe('shift-confirm.component', () => {
     handleShift () { return $q.resolve(mockPayment()); },
     onComplete () { return $q.resolve(); },
     onCancel () { return $q.resolve(); },
+    onExpire () { return $q.resolve(); },
     payment () { return mockPayment(); },
     quote () { return mockQuote(); },
     fee: 0.0002
