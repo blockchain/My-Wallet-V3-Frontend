@@ -49,7 +49,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
       return `User can${this.userHasAccess ? '' : 'not'} see Ethereum because ${reason}`;
     },
     get hasSeen () {
-      return this.eth.hasSeen;
+      return this.eth && this.eth.hasSeen;
     }
   };
 
@@ -130,7 +130,9 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   };
 
   service.needsTransitionFromLegacy = () => {
-    return service.eth.needsTransitionFromLegacy();
+    return service.eth
+      ? service.eth.needsTransitionFromLegacy()
+      : Promise.resolve(false);
   };
 
   service.sweepLegacyAccount = () => {
