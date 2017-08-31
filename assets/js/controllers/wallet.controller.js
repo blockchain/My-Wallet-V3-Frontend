@@ -197,7 +197,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
           modals.openEthLogin();
           Ethereum.setHasSeen();
-          return;
         } else {
           buyStatus.canBuy().then((canBuy) => {
             if (buyStatus.shouldShowBuyReminder() &&
