@@ -13,7 +13,7 @@ angular
 function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency, Ethereum) {
   this.tx = this.transaction;
   this.showFiat = true;
-  this.txType = this.tx.getTxType([Ethereum.defaultAccount, Ethereum.legacyAccount]);
+  this.txType = this.tx.getTxType(Ethereum.eth.activeAccountsWithLegacy);
 
   this.settings = Wallet.settings;
   this.isBitCurrency = currency.isBitCurrency;
