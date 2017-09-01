@@ -1,34 +1,41 @@
 blocket-loading(loading="!isWalletInitialized()")
 .home.width-100(data-preflight-tag="Home")
-  .mtl.row.pl-15.pr-15
+  .col-md-5.col-sm-12.col-xs-12.col-home.flex-column.pb-50
+    .section.mb-15.border.pal
+      h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
+      ul.pln.account-balances
+        li.flex-row.flex-justify.border-bottom-light
+          fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
+        li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
+          span.f-16.em-300.flex-center {{::account.label}}
+          .flex-column.flex-align-end
+            span.f-16.em-300 {{ account.balance | toBitCurrency:BTCCurrency }}
+            fiat.f-12.em-300(btc="account.balance")
+        li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
+          span.f-16.em-300.flex-center {{::account.label}}
+          .flex-column.flex-align-end
+            span.f-16.em-300 {{ getTotal() | toBitCurrency:BTCCurrency }}
+            fiat.f-12.em-300(btc="account.balance")
+        li.flex-between.border-bottom-light.mid-grey(ng-if="activeLegacyAddresses().length > 0")
+          span.f-16.em-300.flex-center(translate="IMPORTED_ADDRESSES")
+          .flex-column.flex-align-end
+            span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
+            fiat(btc="getLegacyTotal()")
+        li.flex-between.border-bottom-light(ng-if="showEthereum()")
+          span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
+          .flex-column.flex-align-end
+            span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH
+            fiat.f-12.em-300(eth="getEthTotal()")
     activity-feed(data-preflight-tag="ActivityFeed")
-    .col-md-6.col-sm-12.col-xs-12.col-home.flex-column.pb-50
-      .section.mb-15.border.pal
-        h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
-        ul.pln.account-balances
-          li.flex-row.flex-justify.border-bottom-light
-            fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
-          li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-300.flex-center {{::account.label}}
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ account.balance | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-300(btc="account.balance")
-          li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-300.flex-center {{::account.label}}
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ getTotal() | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-300(btc="account.balance")
-          li.flex-between.border-bottom-light.mid-grey(ng-if="activeLegacyAddresses().length > 0")
-            span.f-16.em-300.flex-center(translate="IMPORTED_ADDRESSES")
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
-              fiat(btc="getLegacyTotal()")
-          li.flex-between.border-bottom-light(ng-if="showEthereum()")
-            span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH
-              fiat.f-12.em-300(eth="getEthTotal()")
-      .section(ng-show="showMobileConversion()")
-        web-to-mobile-conversion()
-      .section(ng-hide="showMobileConversion()")
-        did-you-know(data-preflight-tag="DidYouKnow")
+  .col-md-7
+    .border.flex-column.pal(ng-controller="PriceChartController")
+      .flex-row.f-24.blue.em-300.pb-25
+        span BTC =&nbsp;
+        fiat(btc="BTCCurrency.conversion")
+        span.ml-15 ETH =&nbsp;
+        fiat(eth="1")
+      chart(ng-if="options" options="options")
+    .section(ng-show="showMobileConversion()")
+      web-to-mobile-conversion()
+    .section(ng-hide="showMobileConversion()")
+      did-you-know(data-preflight-tag="DidYouKnow")
