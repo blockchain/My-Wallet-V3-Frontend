@@ -22,7 +22,7 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
 
-  let all = { label: $translate.instant('ALL_WALLETS'), index: '', type: 'Accounts' };
+  let all = { label: $translate.instant('ALL_BITCOIN_WALLETS'), index: '', type: 'Accounts' };
   $scope.accounts = smartAccount.getOptions();
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
