@@ -74,7 +74,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       controller: 'SecondPasswordCtrl',
       backdrop: insist ? 'static' : null,
       keyboard: insist,
-      windowClass: 'bc-modal',
+      windowClass: 'bc-modal second-password',
       resolve: {
         insist: () => insist,
         defer: () => defer
@@ -193,11 +193,10 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.firstTime = void 0;
         Ethereum.setHasSeen();
       }
-      if (!Wallet.goal.firstLogin) {
+      if (!Wallet.goal.firstLogin && Wallet.status.didUpgradeToHd) {
         if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
           modals.openEthLogin();
           Ethereum.setHasSeen();
-          return;
         } else {
           buyStatus.canBuy().then((canBuy) => {
             if (buyStatus.shouldShowBuyReminder() &&
@@ -207,8 +206,11 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         }
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
-        if (Wallet.goal.send != null) {
-          modals.openSend(Wallet.goal.send);
+        let { send, needsTransitionFromLegacy } = Wallet.goal;
+        if (needsTransitionFromLegacy && !Ethereum.isWaitingOnTransaction()) {
+          modals.openEthLegacyTransition();
+        } else if (send != null) {
+          modals.openSend(send);
           Wallet.goal.send = void 0;
         }
       } else {

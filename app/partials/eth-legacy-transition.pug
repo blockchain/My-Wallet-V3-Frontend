@@ -1,0 +1,18 @@
+.border-bottom.pv-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+  span.f-16.em-500.pl-30.no-padding-mobile Your Ether Address
+.modal-body
+  p.mb-20 As we leave our beta program we want to make sure your backup phrase is compatible with other ether wallets. Because of this, we've updated your ether address and are requiring a transfer of your funds. Don't worry, your old address is still valid.
+  .flex-column.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+    .pb-5.flex-between
+      span.em-500.colon(translate="Send ETH From")
+      span.em-300.right-align {{ vm.from }}
+    .pv-5.flex-between
+      span.em-500.colon(translate="To")
+      span.em-300.right-align {{ vm.to }}
+    .pv-5.flex-between
+      span.em-500.colon(translate="Amount")
+      span.em-300.right-align {{ vm.amount | format:'eth':true }}
+    .pt-5.flex-between
+      span.em-500.colon(translate="Transaction Fee")
+      span.em-300.right-align {{ vm.fee | convert:'eth':true }}
+  button.button-primary.upper.full-width.mb-5(ng-click="vm.confirm()" ng-disabled="vm.locked") Confirm

@@ -13,7 +13,7 @@ angular
 function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency, Ethereum) {
   this.tx = this.transaction;
   this.showFiat = true;
-  this.account = Ethereum.defaultAccount;
+  this.txType = this.tx.getTxType(Ethereum.eth.activeAccountsWithLegacy);
 
   this.settings = Wallet.settings;
   this.isBitCurrency = currency.isBitCurrency;
@@ -21,7 +21,7 @@ function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency,
   this.toggle = Wallet.toggleDisplayCurrency;
   this.absolute = (value) => Math.abs(value);
 
-  this.transaction.isFromAccount(this.account)
+  this.txType === 'sent'
     ? this.totalAmount = parseFloat(this.tx.fee) + parseFloat(this.tx.amount)
     : this.totalAmount = parseFloat(this.tx.amount);
 }

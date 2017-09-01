@@ -29,7 +29,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
 
   setTxSub();
   $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
-  $rootScope.$watch(() => Ethereum.defaultAccount && Ethereum.defaultAccount.txs, activity.updateEthTxActivities);
+  $rootScope.$watch(() => Ethereum.txs, activity.updateEthTxActivities, true);
   return activity;
 
   // Wait for wallet to be defined before subscribing to tx updates
@@ -58,8 +58,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   }
 
   function updateEthTxActivities () {
-    if (!Ethereum.defaultAccount) return;
-    activity.ethTransactions = Ethereum.defaultAccount.txs
+    activity.ethTransactions = Ethereum.txs
       .slice(0, activity.limit)
       .map(ethTxFactory);
     combineAll();
@@ -97,7 +96,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   }
 
   function ethTxFactory (obj) {
-    let txType = obj.isFromAccount(Ethereum.defaultAccount) ? 'sent' : 'received';
+    let txType = obj.getTxType(Ethereum.eth.activeAccountsWithLegacy);
     return angular.merge(txFactory(obj), {
       message: getTxMessage(obj.hash, txType, 'eth'),
       labelClass: txType,

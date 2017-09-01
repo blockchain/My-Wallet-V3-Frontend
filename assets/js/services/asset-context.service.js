@@ -10,7 +10,6 @@ function AssetContextService ($state, Wallet, Ethereum) {
     { name: 'Ether', code: 'eth', icon: 'icon-ethereum' }
   ];
 
-  service.hideAssetSelect = !Ethereum.userHasAccess;
   service.hasBtcBalance = () => Wallet.total() > 0;
   service.hasEthBalance = () => Ethereum.balance > 0;
 
