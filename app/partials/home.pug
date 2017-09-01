@@ -7,7 +7,7 @@ blocket-loading(loading="!isWalletInitialized()")
         h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
         ul.pln.account-balances
           li.flex-row.flex-justify.border-bottom-light
-            fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
+            fiat.f-28.em-300(btc="getTotal()" eth="eth.total()")
           li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
             span.f-16.em-300.flex-center {{::account.label}}
             .flex-column.flex-align-end
@@ -23,11 +23,11 @@ blocket-loading(loading="!isWalletInitialized()")
             .flex-column.flex-align-end
               span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
               fiat(btc="getLegacyTotal()")
-          li.flex-between.border-bottom-light(ng-if="showEthereum()")
-            span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
+          li.flex-between.border-bottom-light
+            span.f-16.em-300.flex-center {{ eth.defaultAccount.label }}
             .flex-column.flex-align-end
-              span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH
-              fiat.f-12.em-300(eth="getEthTotal()")
+              span.f-16.em-300 {{ eth.total() | format:'eth' }} ETH
+              fiat.f-12.em-300(eth="eth.total()")
       .section(ng-show="showMobileConversion()")
         web-to-mobile-conversion()
       .section(ng-hide="showMobileConversion()")
