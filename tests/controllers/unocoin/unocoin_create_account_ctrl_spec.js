@@ -18,7 +18,11 @@ describe('UnocoinCreateAccountController', () => {
   let getControllerScope = function (params) {
     if (params == null) { params = {}; }
     scope = $rootScope.$new();
-    scope.vm = {exchange: 'Unocoin'};
+    scope.vm = {
+      exchange: 'Unocoin',
+      goTo: (step) => step,
+      close: (skip) => skip
+    };
     $controller('UnocoinCreateAccountController',
       {$scope: scope});
     return scope;
@@ -35,4 +39,19 @@ describe('UnocoinCreateAccountController', () => {
     });
   });
 
+  describe('.createAccount', () => {
+    it('should goTo signup step if verification is still required', () => {
+      spyOn(scope.vm, 'goTo');
+      scope.exchange = { profile: { level: 1 } };
+      scope.createAccount();
+      expect(scope.vm.goTo).toHaveBeenCalledWith('verify');
+    });
+
+    it('should close the signup modal if verification is not required', () => {
+      spyOn(scope.vm, 'close');
+      scope.exchange = { profile: { level: 3 } };
+      scope.createAccount();
+      expect(scope.vm.close).toHaveBeenCalledWith(true);
+    });
+  });
 });
