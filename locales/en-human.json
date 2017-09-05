@@ -1525,6 +1525,7 @@
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
     "VERIFY_EMAIL": "Verify Email Address",
     "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
+    "VERIFY_EMAIL_EXPLAIN_2": "<b>Already have a {{::exchange}} account?</b> Make sure your {{::exchange}} email is {{::email}}. If it's not you can change it ",
     "CHANGE_EMAIL": "Change Email",
     "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
     "CHANGE_EMAIL_FAILED": "Sorry, this email is already registered with {{::exchange}}.",
@@ -1633,5 +1634,6 @@
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
+  "HERE": "here",
   "": ""
 }

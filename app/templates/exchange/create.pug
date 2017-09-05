@@ -5,9 +5,13 @@
         h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CREATE_ACCOUNT" translate-values="{exchange: $ctrl.name}")
         span.f-16(translate="EXCHANGE.CREATE_ACCOUNT_EXPLAIN" translate-values="{exchange: $ctrl.name}")
       div.mbl(ng-show="$ctrl.viewing('email')")
-        div(ng-show="$ctrl.state.sentEmailCode")
+        div.mb-10(ng-show="$ctrl.state.sentEmailCode")
           h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.VERIFY_EMAIL")
           span.f-16(translate="EXCHANGE.VERIFY_EMAIL_EXPLAIN" translate-values="{exchange: $ctrl.name}")
+          p.f-12.mt-10
+            span(translate="EXCHANGE.VERIFY_EMAIL_EXPLAIN_2" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
+            | 
+            a.period(ng-click="$ctrl.state.sentEmailCode = false" translate="HERE")
         div(ng-hide="$ctrl.state.sentEmailCode")
           h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CHANGE_EMAIL")
           span.f-16(translate="EXCHANGE.CHANGE_EMAIL_EXPLAIN")
