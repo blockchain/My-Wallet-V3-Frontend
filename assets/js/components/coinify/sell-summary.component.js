@@ -12,7 +12,8 @@ angular
       close: '&',
       dismiss: '&',
       onSuccess: '&',
-      quote: '<'
+      quote: '<',
+      sellLimits: '<'
     },
     templateUrl: 'partials/coinify/sell-summary.pug',
     controller: CoinifySellSummaryController,
@@ -29,6 +30,8 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
       return true;
     }
   };
+
+  this.overMax = () => this.transaction.btc > this.sellLimits.max;
 
   this.isDisabled = () => {
     if (!this.fields) true;

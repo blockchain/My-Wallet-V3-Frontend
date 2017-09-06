@@ -4,11 +4,13 @@ angular
 
 function HomeCtrl ($scope, Wallet, $uibModal, buyStatus, localStorageService, Ethereum, currency) {
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-
-  $scope.getTotal = () => Wallet.total('');
-  $scope.getEthTotal = () => Ethereum.balance;
   $scope.getLegacyTotal = () => Wallet.total('imported');
-  $scope.showEthereum = () => Ethereum.userHasAccess && Ethereum.ethInititalized;
+  $scope.getTotal = () => Wallet.total('');
+
+  $scope.eth = {
+    total: () => Ethereum.balance,
+    defaultAccount: Ethereum.defaultAccount
+  };
 
   $scope.isWalletInitialized = () => {
     let { isLoggedIn, didLoadSettings, didLoadTransactions } = Wallet.status;

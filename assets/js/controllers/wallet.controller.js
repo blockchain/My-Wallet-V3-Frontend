@@ -193,18 +193,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.firstTime = void 0;
         Ethereum.setHasSeen();
       }
-      if (!Wallet.goal.firstLogin && Wallet.status.didUpgradeToHd) {
-        if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
-          modals.openEthLogin();
-          Ethereum.setHasSeen();
-        } else {
-          buyStatus.canBuy().then((canBuy) => {
-            if (buyStatus.shouldShowBuyReminder() &&
-                !buyStatus.userHasAccount() &&
-                canBuy) buyStatus.showBuyReminder();
-          });
-        }
-      }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
         let { send, needsTransitionFromLegacy } = Wallet.goal;
         if (needsTransitionFromLegacy && !Ethereum.isWaitingOnTransaction()) {
@@ -212,6 +200,17 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         } else if (send != null) {
           modals.openSend(send);
           Wallet.goal.send = void 0;
+        } else if (!Wallet.goal.firstLogin && Wallet.status.didUpgradeToHd) {
+          if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
+            modals.openEthLogin();
+            Ethereum.setHasSeen();
+          } else {
+            buyStatus.canBuy().then((canBuy) => {
+              if (buyStatus.shouldShowBuyReminder() &&
+                  !buyStatus.userHasAccount() &&
+                  canBuy) buyStatus.showBuyReminder();
+            });
+          }
         }
       } else {
         $timeout($scope.checkGoals, 100);
