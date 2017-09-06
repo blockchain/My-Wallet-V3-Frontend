@@ -12,6 +12,8 @@
       .flex-row.flex-between.pam.pos-rel.pv-15
         span.colon( translate="SELL.BTC_TO_SELL")
         span {{ $ctrl.transaction.btc }} BTC
+      .flex-end(ng-show="$ctrl.overMax()")
+        span.type-sm.state-danger-text(translate="SELL.AMOUNT_OVER" translate-values="{max: $ctrl.sellLimits.max}")
       .flex-row.flex-between.pam.pv-15
         span.colon(translate="SELL.BTC_TX_FEE")
         span {{ $ctrl.transaction.fee.btc }} BTC
@@ -36,4 +38,4 @@
       data-style="expand-left"
       ui-ladda="$ctrl.waiting"
       ng-hide="$ctrl.err"
-      ng-disabled="$ctrl.isDisabled()")
+      ng-disabled="$ctrl.isDisabled() || $ctrl.overMax()")

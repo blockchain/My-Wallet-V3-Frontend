@@ -203,49 +203,4 @@ describe('buySell service', () => {
       expect(result).toEqual(true);
     });
   });
-
-  describe('getCurrency', () => {
-    let trade;
-    let sellCheck;
-    exchange = undefined;
-    beforeEach(function () {
-      exchange = buySell.getExchange();
-      trade = makeTrade('processing');
-      trade.inCurrency = 'EUR';
-      trade = null;
-      sellCheck = true;
-    });
-
-    it('should return EUR', () => {
-      let result = buySell.getCurrency(trade, sellCheck);
-      expect(result).toEqual({code: 'EUR'});
-    });
-  });
-
-  describe('getMinLimits', () => {
-    it('should set bank and card min limits', () => {
-      let quote = {
-        getPaymentMediums: () => Promise.resolve({
-          bank: {
-            minimumInAmounts: {
-              'USD': 50,
-              'EUR': 45
-            }
-          },
-          card: {
-            minimumInAmounts: {
-              'USD': 10,
-              'EUR': 10
-            }
-          }
-        })
-      };
-      buySell.getMinLimits(quote).then(() => {
-        expect(buySell.limits.bank.min['EUR']).toBe(45);
-        expect(buySell.limits.bank.min['USD']).toBe(50);
-        expect(buySell.limits.card.min['EUR']).toBe(10);
-        expect(buySell.limits.card.min['USD']).toBe(10);
-      });
-    });
-  });
 });
