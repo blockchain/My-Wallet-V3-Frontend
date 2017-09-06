@@ -17,7 +17,10 @@ function chart (Wallet, currency, $timeout) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.currency = Wallet.settings.currency.code;
+    scope.symbol = currency.conversions[scope.currency]['symbol'];
     scope.width = elem[0].clientWidth;
+
     Highcharts.setOptions({
       lang: {
         thousandsSep: ','
@@ -36,7 +39,7 @@ function chart (Wallet, currency, $timeout) {
         },
         labels: {
           formatter: function () {
-            return '$' + this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return scope.symbol + this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
           }
         },
         lineWidth: 1,
@@ -62,7 +65,7 @@ function chart (Wallet, currency, $timeout) {
         }
       },
       tooltip: {
-        pointFormat: '{series.name}: ${point.y}'
+        pointFormat: '{series.name}(' + scope.currency + '): {point.y}'
       },
       credits: {
         enabled: false

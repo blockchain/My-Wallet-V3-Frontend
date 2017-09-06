@@ -4,64 +4,97 @@ angular
 
 function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localStorageService, $timeout) {
   const DAY = 24 * 3600 * 1000;
+  const HOUR = 3600 * 1000;
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
-  $scope.state = {
-    currency: 'btc',
-    time: '1months'
+  $scope.settings = Wallet.settings;
+
+  const getInitialStartTime = () => {
+    let d = new Date();
+    return d.setMonth(d.getMonth() - 1) / 1000 | 0;
   };
 
-  $scope.setCurrency = curr => $scope.state.currency = curr;
+  $scope.state = {
+    base: 'btc',
+    quote: $scope.settings.currency.code,
+    time: '1month',
+    start: getInitialStartTime(),
+    scale: 'HOUR',
+    scalen: 12
+  };
+
+  $scope.timeHelpers = {
+    'all': { interval: DAY * 4, scalen: 4, scale: 'DAY' },
+    '1year': { interval: DAY, scalen: 1, scale: 'DAY' },
+    '1month': { interval: DAY / 2, scalen: 12, scale: 'HOUR' },
+    '1week': { interval: DAY / 4, scalen: 6, scale: 'HOUR' },
+    '1day': { interval: HOUR / 4, scalen: 15, scale: 'MIN' }
+  };
+
+  $scope.setCurrency = curr => $scope.state.base = curr;
   $scope.setTime = time => $scope.state.time = time;
 
   $scope.isTime = time => $scope.state.time === time;
-  $scope.isCurrency = curr => $scope.state.currency === curr;
+  $scope.isCurrency = curr => $scope.state.base === curr;
 
   const handleChart = (chartData) => {
     $scope.options = {};
 
-    $scope.options.data = chartData.values.map(data => data.y);
-    let date = new Date(chartData.values[0]['x'] * 1000);
+    $scope.options.data = chartData.map(data => parseFloat(data.price.toFixed(2)));
+
+    let date = new Date(chartData[0]['timestamp'] * 1000);
 
     $scope.options.year = date.getUTCFullYear();
     $scope.options.month = date.getUTCMonth();
     $scope.options.day = date.getUTCDate();
-    $scope.options.interval = DAY;
+    $scope.options.interval = $scope.timeHelpers[$scope.state.time]['interval'];
 
     $scope.options.timeFetched = Date.now();
     $scope.options.state = $scope.state;
 
-    localStorageService.set('chart', $scope.options);
+    // localStorageService.set('chart', $scope.options);
   };
 
-  const fetchChart = (time) => {
-    console.log('fetching chart data');
-    MyBlockchainApi.getBtcChartData(time).then(handleChart);
-  };
+  const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then(handleChart);
 
-  let hasBeenLessThan15Minutes = time => {
-    if (!time) return false;
-    let fetched = new Date(time);
-    let now = new Date();
+  // let hasBeenLessThan15Minutes = time => {
+  //   if (!time) return false;
+  //   let fetched = new Date(time);
+  //   let now = new Date();
+  //
+  //   let minutes = (now - fetched) / 60000;
+  //   return minutes < 15;
+  // };
 
-    let minutes = (now - fetched) / 60000;
-    return minutes < 15;
-  };
+  $scope.getStartDate = () => {
+    let d = new Date();
 
-  $scope.$watchGroup(['state.currency', 'state.time'], (next, prev) => {
-    let cachedChart = localStorageService.get('chart');
-    /*
-    simulate the delay of an http request so
-    the chart fully fills its parent container when it is drawn
-    */
-    if (next[1] === cachedChart.state.time && hasBeenLessThan15Minutes(cachedChart.timeFetched)) {
-      $scope.options = null;
-      $timeout(() => {
-        $scope.options = cachedChart;
-      }, 50);
-    } else {
-      fetchChart(next[1]);
+    switch ($scope.state.time) {
+      case '1month':
+        return d.setMonth(d.getMonth() - 1) / 1000 | 0;
+      case '1week':
+        return d.setDate(d.getDate() - 7) / 1000 | 0;
+      case '1day':
+        return d.setDate(d.getDate() - 1) / 1000 | 0;
+      case '1year':
+        return d.setFullYear(d.getFullYear() - 1) / 1000 | 0;
+      default:
     }
+  };
+
+  $scope.mapStateToReq = time => {
+    let startDate = $scope.getStartDate();
+    $scope.state.start = startDate;
+
+    return Object.assign({}, $scope.state, $scope.timeHelpers[time], {start: startDate});
+  };
+
+  $scope.$watch('state.base', next => fetchChart($scope.state));
+
+  $scope.$watch('state.time', next => {
+    $scope.state.scale = $scope.timeHelpers[next]['scale'];
+    $scope.state.scalen = $scope.timeHelpers[next]['scalen'];
+    fetchChart($scope.mapStateToReq(next));
   });
 }

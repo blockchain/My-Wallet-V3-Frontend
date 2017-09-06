@@ -27,7 +27,6 @@ blocket-loading(loading="!isWalletInitialized()")
             span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH
             fiat.f-12.em-300(eth="getEthTotal()")
     activity-feed(data-preflight-tag="ActivityFeed")
-<<<<<<< HEAD
   .col-md-7
     .border.flex-column.pal.mb-15(ng-controller="PriceChartController")
       .flex-row.f-24.blue.em-300.pb-15
@@ -43,43 +42,11 @@ blocket-loading(loading="!isWalletInitialized()")
       .flex-row.flex-around.width-60.margin-0-auto.mt-10
         a.blue.opacity-5(ng-click="setTime('all')" ng-class="{'opacity-10 underline-blue': isTime('all')}") All Time
         a.blue.opacity-5(ng-click="setTime('1year')" ng-class="{'opacity-10 underline-blue': isTime('1year')}") 1 Year
-        a.blue.opacity-5(ng-click="setTime('6months')" ng-class="{'opacity-10 underline-blue': isTime('6months')}") 6 Months
-        a.blue.opacity-5(ng-click="setTime('1months')" ng-class="{'opacity-10 underline-blue': isTime('1months')}") 1 Month
+        //- a.blue.opacity-5(ng-click="setTime('6months')" ng-class="{'opacity-10 underline-blue': isTime('6months')}") 6 Months
+        a.blue.opacity-5(ng-click="setTime('1month')" ng-class="{'opacity-10 underline-blue': isTime('1month')}") 1 Month
         a.blue.opacity-5(ng-click="setTime('1week')" ng-class="{'opacity-10 underline-blue': isTime('1week')}") 1 Week
-        //- a.blue.opacity-5(ng-click="setTime('day')" ng-class="{'opacity-10': isTime('day')}") Day
+        a.blue.opacity-5(ng-click="setTime('1day')" ng-class="{'opacity-10 underline-blue': isTime('1day')}") 1 Day
     .section(ng-show="showMobileConversion()")
       web-to-mobile-conversion()
     .section(ng-hide="showMobileConversion()")
       did-you-know(data-preflight-tag="DidYouKnow")
-=======
-    .col-md-6.col-sm-12.col-xs-12.col-home.flex-column.pb-50
-      .section.mb-15.border.pal
-        h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
-        ul.pln.account-balances
-          li.flex-row.flex-justify.border-bottom-light
-            fiat.f-28.em-300(btc="getTotal()" eth="eth.total()")
-          li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-300.flex-center {{::account.label}}
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ account.balance | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-300(btc="account.balance")
-          li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
-            span.f-16.em-300.flex-center {{::account.label}}
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ getTotal() | toBitCurrency:BTCCurrency }}
-              fiat.f-12.em-300(btc="account.balance")
-          li.flex-between.border-bottom-light.mid-grey(ng-if="activeLegacyAddresses().length > 0")
-            span.f-16.em-300.flex-center(translate="IMPORTED_ADDRESSES")
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
-              fiat(btc="getLegacyTotal()")
-          li.flex-between.border-bottom-light
-            span.f-16.em-300.flex-center {{ eth.defaultAccount.label }}
-            .flex-column.flex-align-end
-              span.f-16.em-300 {{ eth.total() | format:'eth' }} ETH
-              fiat.f-12.em-300(eth="eth.total()")
-      .section(ng-show="showMobileConversion()")
-        web-to-mobile-conversion()
-      .section(ng-hide="showMobileConversion()")
-        did-you-know(data-preflight-tag="DidYouKnow")
->>>>>>> v1.24-release
