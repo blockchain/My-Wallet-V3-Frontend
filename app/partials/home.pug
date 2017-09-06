@@ -28,7 +28,7 @@ blocket-loading(loading="!isWalletInitialized()")
             fiat.f-12.em-300(eth="getEthTotal()")
     activity-feed(data-preflight-tag="ActivityFeed")
   .col-md-7
-    .border.flex-column.pal.mb-15(ng-controller="PriceChartController")
+    .border.flex-column.pal.chart-control(ng-controller="PriceChartController")
       .flex-row.f-24.blue.em-300.pb-15
         a.blue.opacity-5(ng-click="setCurrency('btc')" ng-class="{'opacity-10': isCurrency('btc')}")
           span BTC =&nbsp;
@@ -40,13 +40,12 @@ blocket-loading(loading="!isWalletInitialized()")
         <img src="img/spinner.gif" width="35" />
       chart(ng-if="options" options="options")
       .flex-row.flex-around.width-60.margin-0-auto.mt-10
-        a.blue.opacity-5(ng-click="setTime('all')" ng-class="{'opacity-10 underline-blue': isTime('all')}") All Time
-        a.blue.opacity-5(ng-click="setTime('1year')" ng-class="{'opacity-10 underline-blue': isTime('1year')}") 1 Year
-        //- a.blue.opacity-5(ng-click="setTime('6months')" ng-class="{'opacity-10 underline-blue': isTime('6months')}") 6 Months
-        a.blue.opacity-5(ng-click="setTime('1month')" ng-class="{'opacity-10 underline-blue': isTime('1month')}") 1 Month
-        a.blue.opacity-5(ng-click="setTime('1week')" ng-class="{'opacity-10 underline-blue': isTime('1week')}") 1 Week
         a.blue.opacity-5(ng-click="setTime('1day')" ng-class="{'opacity-10 underline-blue': isTime('1day')}") 1 Day
-    .section(ng-show="showMobileConversion()")
+        a.blue.opacity-5(ng-click="setTime('1week')" ng-class="{'opacity-10 underline-blue': isTime('1week')}") 1 Week
+        a.blue.opacity-5(ng-click="setTime('1month')" ng-class="{'opacity-10 underline-blue': isTime('1month')}") 1 Month
+        a.blue.opacity-5(ng-click="setTime('1year')" ng-class="{'opacity-10 underline-blue': isTime('1year')}") 1 Year
+        a.blue.opacity-5(ng-click="setTime('all')" ng-class="{'opacity-10 underline-blue': isTime('all')}") All Time
+    .section.mt-15(ng-show="showMobileConversion()")
       web-to-mobile-conversion()
-    .section(ng-hide="showMobileConversion()")
+    .section.mt-15(ng-hide="showMobileConversion()")
       did-you-know(data-preflight-tag="DidYouKnow")

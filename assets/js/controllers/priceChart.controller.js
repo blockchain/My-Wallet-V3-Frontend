@@ -21,14 +21,14 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     time: '1month',
     start: getInitialStartTime(),
     scale: 'HOUR',
-    scalen: 12
+    scalen: 8
   };
 
   $scope.timeHelpers = {
     'all': { interval: DAY * 4, scalen: 4, scale: 'DAY' },
     '1year': { interval: DAY, scalen: 1, scale: 'DAY' },
-    '1month': { interval: DAY / 2, scalen: 12, scale: 'HOUR' },
-    '1week': { interval: DAY / 4, scalen: 6, scale: 'HOUR' },
+    '1month': { interval: DAY / 3, scalen: 8, scale: 'HOUR' },
+    '1week': { interval: DAY / 8, scalen: 3, scale: 'HOUR' },
     '1day': { interval: HOUR / 4, scalen: 15, scale: 'MIN' }
   };
 
