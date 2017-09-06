@@ -8,14 +8,14 @@
         div.mb-10(ng-show="$ctrl.state.sentEmailCode")
           h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.VERIFY_EMAIL")
           span.f-16(translate="EXCHANGE.VERIFY_EMAIL_EXPLAIN" translate-values="{exchange: $ctrl.name}")
-          p.f-12.mt-10
-            span(translate="EXCHANGE.VERIFY_EMAIL_EXPLAIN_2" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
-            | 
-            a.period(ng-click="$ctrl.state.sentEmailCode = false" translate="HERE")
-        div(ng-hide="$ctrl.state.sentEmailCode")
+        div.f-12(ng-show="$ctrl.state.sentEmailCode && $ctrl.state.needsEmailReminder")
+          span(translate="EXCHANGE.VERIFY_EMAIL_REMINDER" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
+          | 
+          a.period(ng-click="$ctrl.state.sentEmailCode = false; $ctrl.state.needsEmailReminder = false;" translate="HERE")
+        div.mb-10(ng-hide="$ctrl.state.sentEmailCode")
           h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CHANGE_EMAIL")
-          span.f-16(translate="EXCHANGE.CHANGE_EMAIL_EXPLAIN")
-
+          span.f-16(ng-if="!$ctrl.state.verifiedError" translate="EXCHANGE.CHANGE_EMAIL_EXPLAIN")
+          span.f-16(ng-if="$ctrl.state.verifiedError"  translate="EXCHANGE.VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
       div.mbl(ng-show="$ctrl.viewing('mobile')")
         h4.f-20.em-500.mvn.mb-10(translate="Verify Phone Number")
         span.f-16(ng-hide="$ctrl.state.sentMobileCode" translate="Please add your phone number to create your {{$ctrl.name}} exchange account.")

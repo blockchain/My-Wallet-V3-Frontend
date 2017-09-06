@@ -9,6 +9,7 @@ angular
       exchange: '<',
       initialStep: '<',
       onVerify: '&',
+      onRestart: '&',
       onSetProfile: '&',
       onSetBankInfo: '&',
       mobilePreferred: '@'

@@ -4,12 +4,13 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
+function UnocoinVerifyController (MyWallet, AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
   });
 
   $scope.openHelper = modals.openHelper;
+  let external = MyWallet.wallet.external;
   let exchange = $scope.exchange = $scope.vm.exchange;
 
   $scope.error = $scope.vm.error;
@@ -18,6 +19,12 @@ function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.initialStep = exchange.profile.identityComplete ? 'info' : 'address';
 
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
+
+  $scope.handleRestart = () => {
+    external.wipe();
+    $scope.vm.goTo('create');
+    $scope.vm.verifiedError = true;
+  };
 
   $scope.setProfile = () => {
     let profile = $scope.exchange.profile;
