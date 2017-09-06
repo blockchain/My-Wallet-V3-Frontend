@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "先进的安全中心能够保护您的资金免遭未经授权的访问。我们会通过逐步式向导帮助您保护您的钱包安全。高级双重认证技术能够通过Google验证器、短信，或者Yubikey防止坏人。",
   "DONT_TRANSFER": "不转帐",
   "OK": "确定",
-  "DESCRIPTION:": "描述：",
+  "DESCRIPTION": "描述",
   "COPY_HELPER": "复制该地址并通过电子邮件、短信，或者信鸽与您的发送者分享。",
   "QR_HELPER": "要求您的发送者扫描这个二维码。",
   "CUSTOMIZE_HELPER": "为该交易指定一个金额及描述。",

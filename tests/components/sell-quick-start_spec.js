@@ -132,13 +132,16 @@ describe('sell-quick-start.component', () => {
         sweepFee: 1,
         fees: {
           priority: 1
+        },
+        maxSpendableAmounts: {
+          priority: 100
         }
       };
       let payment = {
         updateFeePerKb: () => {}
       };
       scope.offerUseAll(payment, paymentInfo);
-      expect(scope.maxSpendableAmount).toEqual(1);
+      expect(scope.maxSpendableAmount).toEqual(100);
     });
 
     describe('useAll()', () => {

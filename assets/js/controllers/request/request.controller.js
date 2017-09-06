@@ -2,12 +2,13 @@ angular
   .module('walletApp')
   .controller('RequestController', RequestController);
 
-function RequestController ($scope, destination, asset, assetContext) {
-  this.destination = destination;
+function RequestController ($scope, destination, assetContext) {
+  let code = assetContext.isViewingBtc() && 'btc' ||
+             assetContext.isViewingEth() && 'eth' ||
+             'btc';
 
-  let assetCode = (asset && ['btc', 'eth'].indexOf(asset)) ? asset : 'btc';
-  this.asset = assetContext.getAssets().filter(a => a.code === assetCode)[0];
-  this.hideAssetSelect = assetContext.hideAssetSelect;
+  this.destination = destination;
+  this.asset = assetContext.getAssets().filter(a => a.code === code)[0];
 
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;

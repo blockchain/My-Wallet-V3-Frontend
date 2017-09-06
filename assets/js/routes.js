@@ -47,21 +47,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule
+        loadWalletModule,
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+          return Ethereum && Ethereum.needsTransitionFromLegacy().then((res) => Wallet.goal.needsTransitionFromLegacy = res);
+        }
       }
     })
     .state('wallet.common', {
-      views: commonViews,
-      resolve: {
-        _authenticate ($q, $state, $injector, $timeout) {
-          if (isAuthenticated($injector)) {
-            return $q.resolve();
-          } else {
-            $timeout(() => $state.go('public.login-no-uid'));
-            return $q.reject();
-          }
-        }
-      }
+      views: commonViews
     });
 
   $stateProvider
@@ -342,14 +337,14 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        _initialize ($injector, $q, Wallet) {
-          return Wallet.status.isLoggedIn
-            ? $injector.get('Ethereum').initialize()
-            : $q.resolve();
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
         }
       },
-      onEnter ($state, Ethereum, ShapeShift) {
-        if (!Ethereum.userHasAccess) $state.transition = null;
+      onEnter ($injector, $state) {
+        let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+        if (!Ethereum) $state.transition = null;
       }
     })
     .state('wallet.common.eth.transactions', {
@@ -369,15 +364,14 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        _initialize ($injector, $q, Wallet) {
-          return Wallet.status.isLoggedIn
-            ? $injector.get('Ethereum').initialize()
-            : $q.resolve();
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
         }
       },
-      onEnter ($state, ShapeShift) {
-        if (!ShapeShift.userHasAccess) $state.transition = null;
-        else ShapeShift.fetchFullTrades();
+      onEnter ($injector, $state) {
+        let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
+        ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
       }
     });
 

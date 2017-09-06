@@ -861,7 +861,7 @@
   "STATE_OF_THE_ART_SEC": "Un Centro sicurezza all'avanguardia che contribuisce a proteggere i suoi fondi contro accessi non autorizzati. Noi l'aiuteremo a proteggere il suo portafoglio offrendole una guida step-by-step. L'avanzata autenticazione a due fattori tiene al largo i malintenzionati tramite Google Authenticator, SMS o Yubikey.",
   "DONT_TRANSFER": "Non trasferire",
   "OK": "OK",
-  "DESCRIPTION:": "Descrizione:",
+  "DESCRIPTION": "Descrizione",
   "COPY_HELPER": "copi questo indirizzo e lo comunichi al suo mittente via email, messaggio testuale o piccione viaggiatore.",
   "QR_HELPER": "Chieda al suo mittente di scansionare questo codice QR.",
   "CUSTOMIZE_HELPER": "Specifichi un importo e fornisca una descrizione di questa transazione.",

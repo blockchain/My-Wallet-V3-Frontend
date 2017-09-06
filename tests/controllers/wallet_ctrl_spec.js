@@ -130,6 +130,7 @@ describe('WalletCtrl', () => {
       $httpBackend.expectGET('/Resources/wallet-options.json').respond({showBuySellTab: true});
 
       Wallet.status.isLoggedIn = true;
+      Wallet.status.didUpgradeToHd = true;
       Wallet.goal.firstTime = true;
 
       $rootScope.$digest();

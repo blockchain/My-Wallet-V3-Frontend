@@ -50,14 +50,13 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     }, options)
   );
 
-  service.openRequest = service.openOnce((destination = null, { asset = 'btc' } = {}) =>
+  service.openRequest = service.openOnce((destination = null) =>
     open({
       templateUrl: 'partials/request/request.pug',
       windowClass: 'bc-modal initial',
       controller: 'RequestController',
       controllerAs: 'vm',
       resolve: {
-        asset: () => asset,
         destination: () => destination,
         _initialize ($q, Ethereum) {
           return Ethereum.userHasAccess
@@ -245,6 +244,17 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/first-login-modal-eth.pug'
     });
   });
+
+  service.openEthLegacyTransition = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/eth-legacy-transition.pug',
+      controller: 'EthLegacyTransitionController',
+      windowClass: 'bc-modal prio initial',
+      controllerAs: 'vm',
+      backdrop: 'static',
+      keyboard: false
+    })
+  );
 
   return service;
 }

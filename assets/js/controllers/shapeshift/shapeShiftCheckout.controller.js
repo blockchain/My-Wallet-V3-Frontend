@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ShapeShiftCheckoutController', ShapeShiftCheckoutController);
 
-function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper) {
+function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper, MyWallet, state, Env) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
   $scope.tabs = {
@@ -12,7 +12,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
   };
 
   this.human = {'BTC': 'bitcoin', 'ETH': 'ether'};
-  this.steps = enumify('create', 'confirm', 'receipt');
+  this.steps = enumify('state-select', 'create', 'confirm', 'receipt');
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => this.step = this.steps[s];
 
@@ -21,5 +21,14 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
   this.completedTrades = () => this.trades.some(t => t.isComplete || t.isFailed || t.isResolved);
   this.pendingTrades = () => this.trades.some(t => t.isProcessing || t.isWaitingForDeposit);
 
-  this.goTo('create');
+  let accountInfo = MyWallet.wallet.accountInfo;
+  let codeGuess = accountInfo && accountInfo.countryCodeGuess;
+  let storedState = ShapeShift.USAState;
+
+  if (codeGuess === 'US' && !storedState) {
+    this.states = state.stateCodes;
+    this.goTo('state-select');
+  } else {
+    this.goTo('create');
+  }
 }

@@ -78,7 +78,11 @@ describe('shift-create.component', () => {
       let buyStatus = $injector.get('buyStatus');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
-      MyWallet.wallet = {};
+      MyWallet.wallet = {
+        accountInfo: {
+          countryCodeGuess: 'US'
+        }
+      };
       Wallet.accounts = () => [];
       Wallet.getDefaultAccount = () => mockDefaultBTCWallet();
       MyWallet.wallet.eth = { defaultAccount: mockDefaultETHWallet() };
@@ -202,6 +206,15 @@ describe('shift-create.component', () => {
       scope = getControllerScope(handlers);
       scope.$digest();
       spyOn(scope, 'refreshIfValid');
+    });
+
+    describe('from', () => {
+      it('should getAvailableBalance when balance changes', () => {
+        spyOn(scope, 'getAvailableBalance');
+        scope.$ctrl.from.balance = 100;
+        scope.$digest();
+        expect(scope.getAvailableBalance).toHaveBeenCalled();
+      });
     });
 
     describe('input', () => {
