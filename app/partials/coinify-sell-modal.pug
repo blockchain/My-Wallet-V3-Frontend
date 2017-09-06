@@ -57,7 +57,8 @@
       payment="vm.finalPayment"
       on-success="vm.onSellSuccess(trade)"
       on-complete="vm.goTo('trade-complete')"
-      quote="vm.quote")
+      quote="vm.quote"
+      sell-limits="vm.sellLimits")
   sell-trade-finished(
       ng-if="vm.onStep('trade-complete')"
       sell-trade="vm.sellTrade"

@@ -42,6 +42,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.close = (idx) => {
     if (idx > links.length - 1) { this.cancel(); return; }
     Alerts.surveyCloseConfirm('buy-survey-opened', links, idx).then(this.cancel);
+    buySell.incrementBuyDropoff(this.currentStep());
   };
 
   this.state = {
@@ -59,9 +60,16 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
 
   this.onSignupComplete = () => {
     return $q.resolve(exchange.fetchProfile())
-             .then((p) => buySell.getMaxLimits(p.defaultCurrency))
-             .then(this.refreshQuote).then((q) => this.quote = q)
-             .then(() => this.goTo('select-payment-medium'));
+             .then(this.refreshQuote).then((q) => {
+               this.quote = q;
+               return q;
+             })
+             .then((quote) => {
+               $q.resolve(quote.getPaymentMediums()).then(mediums => {
+                 buySell.getLimits(mediums, this.fiatCurrency());
+               })
+               .then(() => this.goTo('select-payment-medium'));
+             });
   };
 
   $scope.exitToNativeTx = () => {

@@ -20,5 +20,8 @@ angular
     },
     createExperiment () {
       return { recordA: () => {}, recordB: () => {} };
+    },
+    incrementBuyLimitCounter () {
+      return true;
     }
   }));
