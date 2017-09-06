@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('PriceChartController', PriceChartController);
 
-function PriceChartController ($scope, MyBlockchainApi, Wallet, currency) {
+function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localStorageService) {
   const DAY = 24 * 3600 * 1000;
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
@@ -29,14 +29,36 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency) {
     $scope.options.month = date.getUTCMonth();
     $scope.options.day = date.getUTCDate();
     $scope.options.interval = DAY;
+
+    $scope.options.timeFetched = Date.now();
+    $scope.options.state = $scope.state;
+
+    localStorageService.set('chart', $scope.options);
   };
 
   const fetchChart = (time) => {
+    console.log('fetching chart data');
     MyBlockchainApi.getBtcChartData(time).then(handleChart);
   };
-  fetchChart($scope.state.time);
+  // fetchChart($scope.state.time);
+
+  let hasBeenLessThan15Minutes = time => {
+    if (!time) return false;
+    let fetched = new Date(time);
+    let now = new Date();
+
+    let minutes = (now - fetched) / 60000;
+    console.log('hasBeen15Minutes', minutes);
+    return minutes < 15;
+  };
 
   $scope.$watchGroup(['state.currency', 'state.time'], (next, prev) => {
-    fetchChart(next[1]);
+    let cachedChart = localStorageService.get('chart');
+
+    if (next[1] === cachedChart.state.time && hasBeenLessThan15Minutes(cachedChart.timeFetched)) {
+      $scope.options = cachedChart;
+    } else {
+      fetchChart(next[1]);
+    }
   });
 }

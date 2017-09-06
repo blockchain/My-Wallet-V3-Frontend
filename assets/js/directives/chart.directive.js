@@ -17,8 +17,7 @@ function chart ($timeout, Wallet, currency) {
   return directive;
 
   function link (scope, elem, attrs) {
-    console.log('chart directive', scope.options);
-
+    console.log('chart directive', scope);
     Highcharts.setOptions({
       lang: {
         thousandsSep: ','
@@ -38,13 +37,13 @@ function chart ($timeout, Wallet, currency) {
             return '$' + this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
           }
         },
-        lineWidth: 1
+        lineWidth: 1,
+        gridLineWidth: 0
       },
       xAxis: {
         type: 'datetime',
         tickWidth: 0,
         labels: {
-          rotation: 65,
           style: {
             color: 'gray'
           }
@@ -81,7 +80,6 @@ function chart ($timeout, Wallet, currency) {
     });
 
     scope.$watch('options', o => {
-      console.log('watching options', o);
       chart.update({
         series: [
           {
@@ -92,6 +90,10 @@ function chart ($timeout, Wallet, currency) {
           }
         ]
       });
+      console.log('chart redraw and reflow')
+      chart.redraw();
+      chart.reflow();
+      // chart.setSize(600)
     });
   }
 }
