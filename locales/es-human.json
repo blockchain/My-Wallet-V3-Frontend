@@ -1066,7 +1066,7 @@
     "DISAGREE": "Muy en desacuerdo",
     "AGREE": "Totalmente de acuerdo"
   },
-  "ACCEPT_TOS": "He leído y estoy de acuerdo con <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>los Términos de servicio</a>",
+  "ACCEPT_TOS": "He leído y estoy de acuerdo con <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>los Términos de servicio</a>",
   "SIMPLE_SECURE_SEAMLESS": "Simple. Seguro. Sin fisuras.",
   "BUY_SIMPLE_STEPS": "La billetera de bitcoins más popular del mundo<br> ahora le permite comprar bitcoins en 4<br> pasos simples y seguros.",
   "METADATA_DOWN_EXCHANGE": "No se pueden cargar los detalles del intercambio. Intente actualizar la página.",

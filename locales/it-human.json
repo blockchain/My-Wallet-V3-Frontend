@@ -1066,7 +1066,7 @@
     "DISAGREE": "Non sono d'accordo",
     "AGREE": "Sono d'accordo"
   },
-  "ACCEPT_TOS": "Ho letto ed accetti i <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>termini del servizio</a>",
+  "ACCEPT_TOS": "Ho letto ed accetti i <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>termini del servizio</a>",
   "SIMPLE_SECURE_SEAMLESS": "Semplice. Sicuro. Libero.",
   "BUY_SIMPLE_STEPS": "Il più conosciuto portafoglio bitcoin del mondo <br> ora le permette di acquistare bitcoin in 4 <br> fasi semplici e sicure.",
   "METADATA_DOWN_EXCHANGE": "Impossibile caricare i suoi dettagli di cambio. Provi ad aggiornare la pagina.",

@@ -1067,7 +1067,7 @@
     "DISAGREE": "Hoàn toàn không đồng ý",
     "AGREE": "Hoàn toàn đồng ý"
   },
-  "ACCEPT_TOS": "Tôi đã đọc và đồng ý với <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Điều khoản dịch vụ</a>",
+  "ACCEPT_TOS": "Tôi đã đọc và đồng ý với <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Điều khoản dịch vụ</a>",
   "SIMPLE_SECURE_SEAMLESS": "Đơn giản. An toàn. Liền mạch.",
   "BUY_SIMPLE_STEPS": "Ví bitcoin phổ biến nhất trên thế giới <br> cho phép bạn mua bitcoin trong 4 <br> bước đơn giản và an toàn.",
   "METADATA_DOWN_EXCHANGE": "Không thể tải chi tiết chuyển đổi tiền tệ của bạn. Hãy thử làm mới trang.",

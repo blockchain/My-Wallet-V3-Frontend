@@ -1066,7 +1066,7 @@
     "DISAGREE": "全く同意しない",
     "AGREE": "強く同意する"
   },
-  "ACCEPT_TOS": "<a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>利用規約</a>を読了し、同意します",
+  "ACCEPT_TOS": "<a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>利用規約</a>を読了し、同意します",
   "SIMPLE_SECURE_SEAMLESS": "シンプル。安全。スムーズ。",
   "BUY_SIMPLE_STEPS": "世界で最も人気のビットコインウォレット<br>で、4つの<br>シンプルで安全なステップでビットコインを購入できるようになりました。",
   "METADATA_DOWN_EXCHANGE": "取引履歴をロードできません。ページを更新してみてください。",

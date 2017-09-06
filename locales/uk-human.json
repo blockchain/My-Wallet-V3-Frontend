@@ -1066,7 +1066,7 @@
     "DISAGREE": "Цілком не згідний (-а)",
     "AGREE": "Цілком згідний (-а)"
   },
-  "ACCEPT_TOS": "Я прочитав (-ла) і згоден (-а) з <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Умовами надання послуг</a>",
+  "ACCEPT_TOS": "Я прочитав (-ла) і згоден (-а) з <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Умовами надання послуг</a>",
   "SIMPLE_SECURE_SEAMLESS": "Просто. Безпечно. Легко.",
   "BUY_SIMPLE_STEPS": "Найвідоміший у світі bitcoin-гаманець <br> дозволяє тепер купити bitcoin у 4 <br> прості та безпечні етапи.",
   "METADATA_DOWN_EXCHANGE": "Неможливо завантажити інформацію про вашу обмінну операцію. Будь ласка, оновіть цю сторінку.",
