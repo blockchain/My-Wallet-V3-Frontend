@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('PriceChartController', PriceChartController);
 
-function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localStorageService) {
+function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localStorageService, $timeout) {
   const DAY = 24 * 3600 * 1000;
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
@@ -19,7 +19,6 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   $scope.isCurrency = curr => $scope.state.currency === curr;
 
   const handleChart = (chartData) => {
-    console.log('handleChart', chartData);
     $scope.options = {};
 
     $scope.options.data = chartData.values.map(data => data.y);
@@ -40,7 +39,6 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     console.log('fetching chart data');
     MyBlockchainApi.getBtcChartData(time).then(handleChart);
   };
-  // fetchChart($scope.state.time);
 
   let hasBeenLessThan15Minutes = time => {
     if (!time) return false;
@@ -48,15 +46,20 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     let now = new Date();
 
     let minutes = (now - fetched) / 60000;
-    console.log('hasBeen15Minutes', minutes);
     return minutes < 15;
   };
 
   $scope.$watchGroup(['state.currency', 'state.time'], (next, prev) => {
     let cachedChart = localStorageService.get('chart');
-
+    /*
+    simulate the delay of an http request so
+    the chart fully fills its parent container when it is drawn
+    */
     if (next[1] === cachedChart.state.time && hasBeenLessThan15Minutes(cachedChart.timeFetched)) {
-      $scope.options = cachedChart;
+      $scope.options = null;
+      $timeout(() => {
+        $scope.options = cachedChart;
+      }, 50);
     } else {
       fetchChart(next[1]);
     }

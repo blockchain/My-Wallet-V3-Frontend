@@ -36,6 +36,8 @@ blocket-loading(loading="!isWalletInitialized()")
         a.blue.opacity-5(ng-click="setCurrency('eth')" ng-class="{'opacity-10': isCurrency('eth')}")
           span.ml-15 ETH =&nbsp;
           fiat(eth="1")
+      .flex-column.flex-center.flex-justify(ng-if="!options")
+        <img src="img/spinner.gif" width="35" />
       chart(ng-if="options" options="options")
       .flex-row.flex-around.width-60.margin-0-auto.mt-10
         a.blue.opacity-5(ng-click="setTime('all')" ng-class="{'opacity-10': isTime('all')}") All Time

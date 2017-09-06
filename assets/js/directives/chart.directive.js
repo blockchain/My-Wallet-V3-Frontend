@@ -2,9 +2,9 @@ angular
   .module('walletDirectives')
   .directive('chart', chart);
 
-chart.$inject = ['Wallet', 'currency'];
+chart.$inject = ['Wallet', 'currency', '$timeout'];
 
-function chart ($timeout, Wallet, currency) {
+function chart (Wallet, currency, $timeout) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -17,14 +17,16 @@ function chart ($timeout, Wallet, currency) {
   return directive;
 
   function link (scope, elem, attrs) {
-    console.log('chart directive', scope);
+    scope.width = elem[0].clientWidth;
     Highcharts.setOptions({
       lang: {
         thousandsSep: ','
       }
     });
-
     let chart = Highcharts.chart('chart', {
+      chart: {
+        width: scope.width
+      },
       title: {
         text: null
       },
@@ -90,10 +92,6 @@ function chart ($timeout, Wallet, currency) {
           }
         ]
       });
-      console.log('chart redraw and reflow')
-      chart.redraw();
-      chart.reflow();
-      // chart.setSize(600)
     });
   }
 }
