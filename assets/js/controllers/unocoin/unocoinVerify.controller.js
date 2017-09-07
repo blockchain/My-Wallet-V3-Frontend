@@ -10,10 +10,11 @@ function UnocoinVerifyController (MyWallet, AngularHelper, Env, $scope, $q, stat
   });
 
   $scope.openHelper = modals.openHelper;
+  $scope.verificationError = $scope.vm.verificationError;
+
   let external = MyWallet.wallet.external;
   let exchange = $scope.exchange = $scope.vm.exchange;
 
-  $scope.error = $scope.vm.error;
   $scope.steps = enumify('address', 'info');
   $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
   $scope.initialStep = exchange.profile.identityComplete ? 'info' : 'address';
@@ -21,9 +22,8 @@ function UnocoinVerifyController (MyWallet, AngularHelper, Env, $scope, $q, stat
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
   $scope.handleRestart = () => {
-    external.wipe();
     $scope.vm.goTo('create');
-    $scope.vm.verifiedError = true;
+    external.wipe();
   };
 
   $scope.setProfile = () => {

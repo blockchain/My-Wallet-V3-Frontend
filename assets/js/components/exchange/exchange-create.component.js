@@ -4,8 +4,9 @@ angular
     bindings: {
       views: '<',
       exchange: '<',
-      verifiedError: '<',
+      verificationError: '<',
       onCreate: '&',
+      clearVerificationError: '&',
       termsOfService: '@',
       privacyAgreement: '@'
     },
@@ -22,7 +23,7 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
 
   const resolveView = (state) => {
     let i;
-    if (this.verifiedError) {
+    if (this.verificationError) {
       i = 0;
     } else if (this.views.indexOf('mobile') > -1) {
       i = !state.verifiedEmail ? 0 : !state.verifiedMobile ? 1 : 2;
@@ -41,7 +42,7 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
   this.setState = () => {
     this.state.email = this.user.email;
     this.state.mobile = this.user.mobileNumber;
-    this.state.verifiedError = this.verifiedError;
+    this.state.verificationError = this.verificationError;
     this.state.verifiedEmail = this.user.isEmailVerified;
     this.state.verifiedMobile = this.user.isMobileVerified;
     this.state.sentEmailCode = !this.state.verifiedEmail && this.state.sentEmailCode;
@@ -65,9 +66,6 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
       case 'Could not verify mobile number.':
         mobileForm.mobileCode.$setValidity('correct', false);
         break;
-      case 'email_already_used':
-        accountForm.email.$setValidity('registered', false);
-        break;
       default:
         Exchange.displayError(error);
     }
@@ -85,7 +83,7 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
   this.changeEmail = () => {
     this.lock();
     this.clearInlineErrors();
-    this.verifiedError = false;
+    this.clearVerificationError();
     $q(Wallet.changeEmail.bind(null, this.state.email))
       .then(() => $q(Wallet.sendConfirmationCode))
       .then(this.emailCodeSent).then($scope.setState, Exchange.displayError).finally(this.free);
