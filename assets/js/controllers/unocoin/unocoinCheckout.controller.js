@@ -64,6 +64,4 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
     return false;
   };
-
-  // $scope.isTradingDisabled = () => { return $scope.trades[$scope.trades.length - 1]._state === 'awaiting_reference_number'; };
 }
