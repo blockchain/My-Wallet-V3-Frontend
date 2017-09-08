@@ -4,7 +4,7 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env, localStorageService) {
+function UnocoinBankTransferController ($rootScope, trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env, localStorageService) {
   Env.then(env => {
     let links = env.partners.unocoin.surveyTradeLinks;
     this.close = () => {
@@ -33,6 +33,7 @@ function UnocoinBankTransferController (trade, bankAccount, $uibModalInstance, f
         this.formattedTrade = formatTrade.initiated(trade);
       })
       .then(() => {
+        $rootScope.tradingDisabled = false;
         this.goTo('initiated');
       })
       .catch((err) => { console.log(err); }).finally(this.free);

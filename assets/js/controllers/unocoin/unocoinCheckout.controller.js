@@ -54,4 +54,16 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.buyError = () => {
     Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
+
+  $scope.isTradingDisabled = () => {
+    for (let i = 0; i < $scope.trades.length; i++) {
+      if ($scope.trades[i]._state === 'awaiting_reference_number') {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  // $scope.isTradingDisabled = () => { return $scope.trades[$scope.trades.length - 1]._state === 'awaiting_reference_number'; };
 }

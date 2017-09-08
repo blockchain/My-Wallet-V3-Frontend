@@ -15,14 +15,16 @@ angular
       handleBuy: '&',
       handleQuote: '&',
       buySuccess: '&',
-      buyError: '&'
+      buyError: '&',
+      trades: '<',
+      isTradingDisabled: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -31,6 +33,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
+  $scope.buySuccess = this.buySuccess;
+  $scope.trades = this.trades;
+
+  $rootScope.tradingDisabled = this.isTradingDisabled();
 
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
@@ -129,6 +135,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
     if (this.buyAccount || this.buyEnabled) {
       this.handleBuy({account: this.buyAccount, quote: quote})
         .then(trade => {
+          $rootScope.tradingDisabled = true;
           this.buySuccess({trade});
         })
         .catch((err) => {
@@ -137,10 +144,13 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
+      $rootScope.tradingDisabled = true;
       this.buySuccess({quote});
       $q.resolve().finally($scope.resetFields).finally($scope.free);
     }
   };
+
+  $scope.openBankTransferForLastTrade = () => modals.openBankTransfer($scope.trades[$scope.trades.length - 1]);
 
   $scope.$watch('state.rate', (rate) => {
     if (!rate) return;
