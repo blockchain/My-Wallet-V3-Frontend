@@ -78,7 +78,7 @@ function chart (Wallet, currency, $timeout) {
         {
           name: 'Price',
           data: scope.options.data,
-          pointStart: Date.UTC(scope.options.year, scope.options.month, scope.options.day),
+          pointStart: Date.UTC(scope.options.year, scope.options.month, scope.options.day, scope.options.hour),
           pointInterval: scope.options.interval
         }
       ]
@@ -90,7 +90,7 @@ function chart (Wallet, currency, $timeout) {
           {
             name: 'Price',
             data: o.data,
-            pointStart: Date.UTC(scope.options.year, scope.options.month, scope.options.day),
+            pointStart: Date.UTC(scope.options.year, scope.options.month, scope.options.day, scope.options.hour),
             pointInterval: scope.options.interval
           }
         ]

@@ -3,8 +3,12 @@ angular
   .controller('PriceChartController', PriceChartController);
 
 function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localStorageService, $timeout) {
-  const DAY = 24 * 3600 * 1000;
-  const HOUR = 3600 * 1000;
+  // scale is in seconds
+  const FIFTEENMIN = 15 * 60;
+  const HOUR = 60 * 60;
+  const TWOHOUR = 2 * 60 * 60;
+  const DAY = 24 * 60 * 60;
+  const FIVEDAY = 5 * 24 * 60 * 60;
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
@@ -20,23 +24,29 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     quote: $scope.settings.currency.code,
     time: '1month',
     start: getInitialStartTime(),
-    scale: 'HOUR',
-    scalen: 8
+    scale: TWOHOUR
+  };
+
+  const intervals = {
+    day: 24 * 3600 * 1000,
+    hour: 3600 * 1000
   };
 
   $scope.timeHelpers = {
-    'all': { interval: DAY * 4, scalen: 4, scale: 'DAY' },
-    '1year': { interval: DAY, scalen: 1, scale: 'DAY' },
-    '1month': { interval: DAY / 3, scalen: 8, scale: 'HOUR' },
-    '1week': { interval: DAY / 8, scalen: 3, scale: 'HOUR' },
-    '1day': { interval: HOUR / 4, scalen: 15, scale: 'MIN' }
+    'all': { interval: intervals.day * 5, scale: FIVEDAY },
+    '1year': { interval: intervals.day, scale: DAY },
+    '1month': { interval: intervals.day / 12, scale: TWOHOUR },
+    '1week': { interval: intervals.day / 24, scale: HOUR },
+    '1day': { interval: intervals.hour / 4, scale: FIFTEENMIN }
   };
 
   $scope.setCurrency = curr => $scope.state.base = curr;
   $scope.setTime = time => $scope.state.time = time;
+  $scope.setScale = range => $scope.state.scale = $scope.timeHelpers[range]['scale'];
 
   $scope.isTime = time => $scope.state.time === time;
   $scope.isCurrency = curr => $scope.state.base === curr;
+
 
   const handleChart = (chartData) => {
     $scope.options = {};
@@ -48,6 +58,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     $scope.options.year = date.getUTCFullYear();
     $scope.options.month = date.getUTCMonth();
     $scope.options.day = date.getUTCDate();
+    $scope.options.hour = date.getUTCHours();
     $scope.options.interval = $scope.timeHelpers[$scope.state.time]['interval'];
 
     $scope.options.timeFetched = Date.now();
@@ -93,8 +104,8 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   $scope.$watch('state.base', next => fetchChart($scope.state));
 
   $scope.$watch('state.time', next => {
-    $scope.state.scale = $scope.timeHelpers[next]['scale'];
-    $scope.state.scalen = $scope.timeHelpers[next]['scalen'];
+    // $scope.state.scale = $scope.timeHelpers[next]['scale'];
+    $scope.setScale(next);
     fetchChart($scope.mapStateToReq(next));
   });
 }
