@@ -139,6 +139,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     if (this.trade.state) return;
     this.finalPayment = Wallet.my.wallet.createPayment(this.finalPayment);
     this.transaction.btcAfterFee = parseFloat((this.transaction.btc + this.transaction.fee.btc).toFixed(8));
+    this.finalPayment.updateFeePerKb(10);
+    console.log('start payment', buySellOptions.feePerByte);
+    this.finalPayment.sideEffect(console.log);
     return {transaction: this.transaction};
   };
 
