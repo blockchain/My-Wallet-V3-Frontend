@@ -1632,7 +1632,7 @@
     "DAILY_LIMIT_IS": "Your daily limit is {{:: dailyLimit}} {{:: currency}}.",
     "KYC_PENDING": "While your identification verification is processing, your daily limit is {{ ::dailyLimit }} {{ ::currency }}",
     "KYC_REJECTED": "Your daily limit is {{ ::dailyLimit }} {{ ::currency }}. To try and verify your identification again, click here",
-    "HOW_LVL_3": "To increase your daily limit further, you must complete a transaction of at least 1,000 EUR. 14 days after the transaction completes, your daily limit will increase and your yearly limit will be uncapped."
+    "HOW_LVL_3": "To increase your daily limit further, your transaction history must total at least 1,000 EUR. 14 days after this total is reached, your daily limit will increase and your yearly limit will be uncapped."
   },
   "WE_LISTENED": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
   "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
