@@ -54,7 +54,7 @@ form.bc-form(
             span.mhm {{bitcoin.code}}
         .f-12.mts(ng-show="pendingTrade")
           span.state-danger-text Trading is disabled until you 
-          a.primary.pointer(ng-click="openPendingTrade(pendingTrade);") finish the payment process for the previous order. 
+          a.primary.pointer(ng-click="openPendingTrade(pendingTrade)") finish the payment process for the previous order. 
         .f-12.mts
           span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
             | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.

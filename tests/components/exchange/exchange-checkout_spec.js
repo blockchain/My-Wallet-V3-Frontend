@@ -40,7 +40,8 @@ describe('exchange-checkout.component', () => {
     quote () { return mockQuote(); },
     limits: { min: {}, max: {} },
     dollars: {code: 'USD'},
-    trades: []
+    pendingTrade () { return $q.resolve(); },
+    openPendingTrade () { return $q.resolve(); }
   };
 
   let getControllerScope = function (bindings) {

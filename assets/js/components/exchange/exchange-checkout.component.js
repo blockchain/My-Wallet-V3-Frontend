@@ -16,7 +16,9 @@ angular
       handleQuote: '&',
       buySuccess: '&',
       buyError: '&',
-      trades: '<'
+      trades: '<',
+      pendingTrade: '&',
+      openPendingTrade: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
@@ -33,9 +35,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
   $scope.buySuccess = this.buySuccess;
-  $scope.trades = this.trades;
-  $scope.pendingTrade = unocoin.getPendingTrade($scope.trades);
-  $scope.openPendingTrade = unocoin.openPendingTrade;
+  $scope.trades = this.trades || [];
+  $scope.pendingTrade = this.pendingTrade($scope.trades);
+  $scope.openPendingTrade = this.openPendingTrade($scope.pendingTrade);
 
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
