@@ -25,9 +25,9 @@ describe('shift-confirm.component', () => {
 
   let handlers = {
     handleShift () { return $q.resolve(mockPayment()); },
+    onExpiration () { return $q.resolve(); },
     onComplete () { return $q.resolve(); },
     onCancel () { return $q.resolve(); },
-    onExpire () { return $q.resolve(); },
     payment () { return mockPayment(); },
     quote () { return mockQuote(); },
     fee: 0.0002
@@ -73,19 +73,6 @@ describe('shift-confirm.component', () => {
       expect(scope.locked).toEqual(true);
       scope.$digest();
       expect(scope.locked).toEqual(false);
-    });
-  });
-
-  describe('.onExpiration()', () => {
-    beforeEach(function () {
-      scope = getControllerScope(handlers);
-    });
-
-    it('should call onExpire', () => {
-      let ctrl = getController(handlers);
-      spyOn(ctrl, 'onExpire');
-      scope.onExpiration();
-      expect(ctrl.onExpire).toHaveBeenCalled();
     });
   });
 
