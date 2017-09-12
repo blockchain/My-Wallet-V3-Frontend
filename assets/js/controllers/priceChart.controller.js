@@ -13,7 +13,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   const ETHSTART = 1438992000;
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-
+  $scope.cachedState = localStorageService.get('chart');
   $scope.settings = Wallet.settings;
 
   const getInitialStartTime = () => {
@@ -21,7 +21,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     return d.setMonth(d.getMonth() - 1) / 1000 | 0;
   };
 
-  $scope.state = {
+  $scope.state = $scope.cachedState || {
     base: 'btc',
     quote: $scope.settings.currency.code,
     time: '1month',
@@ -65,7 +65,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     $scope.options.timeFetched = Date.now();
     $scope.options.state = $scope.state;
 
-    // localStorageService.set('chart', $scope.options);
+    localStorageService.set('chart', $scope.state);
   };
 
   const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then(handleChart);
