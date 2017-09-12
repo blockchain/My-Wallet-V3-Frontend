@@ -3,12 +3,14 @@ angular
   .controller('PriceChartController', PriceChartController);
 
 function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localStorageService, $timeout) {
-  // scale is in seconds
+  // scale in seconds
   const FIFTEENMIN = 15 * 60;
   const HOUR = 60 * 60;
   const TWOHOUR = 2 * 60 * 60;
   const DAY = 24 * 60 * 60;
   const FIVEDAY = 5 * 24 * 60 * 60;
+  const BTCSTART = 1282089600;
+  const ETHSTART = 1438992000;
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
@@ -46,7 +48,6 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
 
   $scope.isTime = time => $scope.state.time === time;
   $scope.isCurrency = curr => $scope.state.base === curr;
-
 
   const handleChart = (chartData) => {
     $scope.options = {};
@@ -90,7 +91,9 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
         return d.setDate(d.getDate() - 1) / 1000 | 0;
       case '1year':
         return d.setFullYear(d.getFullYear() - 1) / 1000 | 0;
-      default:
+      case 'all':
+        if ($scope.state.base === 'btc') return BTCSTART;
+        if ($scope.state.base === 'eth') return ETHSTART;
     }
   };
 
@@ -104,7 +107,6 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   $scope.$watch('state.base', next => fetchChart($scope.state));
 
   $scope.$watch('state.time', next => {
-    // $scope.state.scale = $scope.timeHelpers[next]['scale'];
     $scope.setScale(next);
     fetchChart($scope.mapStateToReq(next));
   });
