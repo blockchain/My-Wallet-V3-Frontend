@@ -70,15 +70,6 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
 
   const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then(handleChart);
 
-  // let hasBeenLessThan15Minutes = time => {
-  //   if (!time) return false;
-  //   let fetched = new Date(time);
-  //   let now = new Date();
-  //
-  //   let minutes = (now - fetched) / 60000;
-  //   return minutes < 15;
-  // };
-
   $scope.getStartDate = () => {
     let d = new Date();
 
