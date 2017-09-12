@@ -21,11 +21,11 @@ blocket-loading(loading="!isWalletInitialized()")
           .flex-column.flex-align-end
             span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
             fiat(btc="getLegacyTotal()")
-        li.flex-between.border-bottom-light(ng-if="showEthereum()")
-          span.f-16.em-300.flex-center(translate="MY_ETHER_WALLET")
+        li.flex-between.border-bottom-light
+          span.f-16.em-300.flex-center {{ eth.defaultAccount.label }}
           .flex-column.flex-align-end
-            span.f-16.em-300 {{ getEthTotal() | format:'eth' }} ETH
-            fiat.f-12.em-300(eth="getEthTotal()")
+            span.f-16.em-300 {{ eth.total() | format:'eth' }} ETH
+            fiat.f-12.em-300(eth="eth.total()")
     activity-feed(data-preflight-tag="ActivityFeed")
   .col-md-7.col-sm-12.col-xs-12.col-home
     .border.flex-column.pal.chart-control(ng-controller="PriceChartController")
