@@ -5,7 +5,6 @@
   }
 }
 .col-home {
-  &:first-of-type { margin-bottom: 35px; }
   padding-left: 0;
   padding-right: 0;
 }
@@ -19,7 +18,7 @@
 @media (min-width: 992px) {
   .col-home {
     &:last-of-type {
-      // padding-left: 15px;
+      padding-left: 15px;
       padding-right: 0;
     }
   }
