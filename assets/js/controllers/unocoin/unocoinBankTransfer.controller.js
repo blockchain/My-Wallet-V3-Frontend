@@ -30,10 +30,10 @@ function UnocoinBankTransferController ($rootScope, trade, bankAccount, $uibModa
     this.lock();
     $q.resolve(trade.addReferenceNumber(this.state.reference))
       .then((trade) => {
+        $rootScope.$emit('cancelPendingTrade');
         this.formattedTrade = formatTrade.initiated(trade);
       })
       .then(() => {
-        $rootScope.tradingDisabled = false;
         this.goTo('initiated');
       })
       .catch((err) => { console.log(err); }).finally(this.free);

@@ -16,15 +16,14 @@ angular
       handleQuote: '&',
       buySuccess: '&',
       buyError: '&',
-      trades: '<',
-      isTradingDisabled: '&'
+      trades: '<'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange, unocoin) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -35,8 +34,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.siftScienceEnabled = false;
   $scope.buySuccess = this.buySuccess;
   $scope.trades = this.trades;
-
-  $rootScope.tradingDisabled = this.isTradingDisabled();
+  $scope.pendingTrade = unocoin.getPendingTrade($scope.trades);
+  $scope.openPendingTrade = unocoin.openPendingTrade;
 
   Env.then(env => {
     $scope.buySellDebug = env.buySellDebug;
@@ -135,7 +134,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     if (this.buyAccount || this.buyEnabled) {
       this.handleBuy({account: this.buyAccount, quote: quote})
         .then(trade => {
-          $rootScope.tradingDisabled = true;
           this.buySuccess({trade});
         })
         .catch((err) => {
@@ -144,13 +142,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      $rootScope.tradingDisabled = true;
       this.buySuccess({quote});
       $q.resolve().finally($scope.resetFields).finally($scope.free);
     }
   };
-
-  $scope.openBankTransferForLastTrade = () => modals.openBankTransfer($scope.trades[$scope.trades.length - 1]);
 
   $scope.$watch('state.rate', (rate) => {
     if (!rate) return;
@@ -160,7 +155,11 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   });
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
+  $scope.$watchCollection('trades', (newTrades, oldTrades) => { $scope.pendingTrade = unocoin.getPendingTrade(newTrades); }, true);
+
   $scope.$on('$destroy', $scope.cancelRefresh);
+  $rootScope.$on('cancelPendingTrade', () => { $scope.pendingTrade = unocoin.getPendingTrade($scope.trades); });
+
   AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }
