@@ -39,7 +39,6 @@ blocket-loading(loading="!isWalletInitialized()")
       .flex-column.flex-center.flex-justify(ng-if="!options")
         <img src="img/spinner.gif" width="35" />
       chart(ng-if="options" options="options")
-      //- .flex-row.flex-around.width-60.margin-0-auto.mt-10
       .flex-row.flex-justify.mt-10
         a.blue.opacity-5.mr-10(ng-click="setTime('1day')" ng-class="{'opacity-10 underline-blue': isTime('1day')}") 1 Day
         a.blue.opacity-5.mr-10(ng-click="setTime('1week')" ng-class="{'opacity-10 underline-blue': isTime('1week')}") 1 Week
