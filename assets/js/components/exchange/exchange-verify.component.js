@@ -3,12 +3,13 @@ angular
   .component('exchangeVerify', {
     bindings: {
       steps: '<',
-      error: '<',
       fields: '<',
       nextStep: '<',
       exchange: '<',
       initialStep: '<',
+      verificationError: '<',
       onVerify: '&',
+      onRestart: '&',
       onSetProfile: '&',
       onSetBankInfo: '&',
       mobilePreferred: '@'
@@ -92,7 +93,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     this.onSetBankInfo();
   };
 
-  this.error && this.displayInlineError(this.error);
+  this.verificationError && this.displayInlineError(this.verificationError);
 
   // QA Tools
   this.qa = () => {
