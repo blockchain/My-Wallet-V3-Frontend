@@ -39,7 +39,8 @@ describe('exchange-checkout.component', () => {
     buyError () { return $q.resolve(); },
     quote () { return mockQuote(); },
     limits: { min: {}, max: {} },
-    dollars: {code: 'USD'}
+    dollars: {code: 'USD'},
+    trades: []
   };
 
   let getControllerScope = function (bindings) {
