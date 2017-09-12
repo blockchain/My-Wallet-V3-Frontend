@@ -17,8 +17,4 @@ function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageSe
   $scope.onCancel = () => {
     Alerts.surveyCloseConfirm('shift-trade-survey', links, 0).then(() => { $scope.vm.goTo('create'); });
   };
-
-  $scope.onExpire = () => {
-    $scope.vm.goTo('create');
-  };
 }
