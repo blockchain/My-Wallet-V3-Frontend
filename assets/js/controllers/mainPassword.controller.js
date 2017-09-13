@@ -23,4 +23,12 @@ function MainPasswordCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate
       $scope.isPasswordSubmissionDisabled = true;
     }
   };
+
+  $scope.handleKeyUp = (event) => {
+    if (event.keyCode !== 13) {
+      $scope.isPasswordSubmissionDisabled = false;
+    }
+
+    return;
+  };
 }
