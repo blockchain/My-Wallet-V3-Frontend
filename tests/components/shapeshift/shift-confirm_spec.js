@@ -25,6 +25,7 @@ describe('shift-confirm.component', () => {
 
   let handlers = {
     handleShift () { return $q.resolve(mockPayment()); },
+    onExpiration () { return $q.resolve(); },
     onComplete () { return $q.resolve(); },
     onCancel () { return $q.resolve(); },
     payment () { return mockPayment(); },
@@ -38,6 +39,14 @@ describe('shift-confirm.component', () => {
     let template = $templateCache.get('templates/shapeshift/confirm.pug');
     $compile(template)(scope);
     return scope;
+  };
+
+  let getController = function (bindings) {
+    scope = $rootScope.$new();
+    let ctrl = $componentController('shiftConfirm', {$scope: scope}, bindings);
+    let template = $templateCache.get('templates/shapeshift/confirm.pug');
+    $compile(template)(scope);
+    return ctrl;
   };
 
   beforeEach(module('walletApp'));
@@ -64,17 +73,6 @@ describe('shift-confirm.component', () => {
       expect(scope.locked).toEqual(true);
       scope.$digest();
       expect(scope.locked).toEqual(false);
-    });
-  });
-
-  describe('.onExpiration()', () => {
-    beforeEach(function () {
-      scope = getControllerScope(handlers);
-    });
-
-    it('should lock the scope', () => {
-      scope.onExpiration();
-      expect(scope.locked).toEqual(true);
     });
   });
 
