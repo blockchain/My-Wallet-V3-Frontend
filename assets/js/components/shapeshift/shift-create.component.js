@@ -122,5 +122,16 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.$watch('$ctrl.from.balance', (n, o) => n !== o && $scope.getAvailableBalance());
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
+
+  // Stat: how often do users see the "max limit" error?
+  let sawMaxLimit = false;
+  Wallet.api.incrementShapeshiftStat();
+  $scope.$watch('forms.shiftForm.input.$error.max && maxAvailable >= state.rate.max', (errorShown) => {
+    if (errorShown && !sawMaxLimit) {
+      sawMaxLimit = true;
+      Wallet.api.incrementShapeshiftStat({ maxLimitError: true });
+    }
+  });
+
   AngularHelper.installLock.call($scope);
 }
