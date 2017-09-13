@@ -56,10 +56,10 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
 
     let date = new Date(chartData[0]['timestamp'] * 1000);
 
-    $scope.options.year = date.getUTCFullYear();
-    $scope.options.month = date.getUTCMonth();
-    $scope.options.day = date.getUTCDate();
-    $scope.options.hour = date.getUTCHours();
+    $scope.options.year = date.getFullYear();
+    $scope.options.month = date.getMonth();
+    $scope.options.day = date.getDate();
+    $scope.options.hour = date.getHours();
     $scope.options.interval = $scope.timeHelpers[$scope.state.time]['interval'];
 
     $scope.options.timeFetched = Date.now();
