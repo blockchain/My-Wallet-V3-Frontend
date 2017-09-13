@@ -217,8 +217,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         trades,
         exchange,
         quote () { return quote; },
-        trade () { return trade; },
-        paymentMediums () { return quote && quote.getPaymentMediums(); }
+        trade () { return trade; }
       }
     });
   });
@@ -244,6 +243,17 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/first-login-modal-eth.pug'
     });
   });
+
+  service.openEthLegacyTransition = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/eth-legacy-transition.pug',
+      controller: 'EthLegacyTransitionController',
+      windowClass: 'bc-modal prio initial',
+      controllerAs: 'vm',
+      backdrop: 'static',
+      keyboard: false
+    })
+  );
 
   return service;
 }

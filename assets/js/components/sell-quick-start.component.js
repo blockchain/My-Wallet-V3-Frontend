@@ -42,6 +42,17 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.hideIncreaseLimit = this.exchange.profile.level.name > 1;
   }
 
+  this.setLimits = (mediums) => {
+    this.sellLimits = buySell.getSellLimits(mediums);
+    let min = currency.convertFromSatoshi((this.sellLimits.min * 100000000), this.transaction.currency).toFixed(2);
+    let max = currency.convertFromSatoshi((this.sellLimits.max * 100000000), this.transaction.currency).toFixed(2);
+    this.sellLimits.fiat = { min, max };
+  };
+
+  this.getMediums = quote => {
+    return $q.resolve(quote.getPayoutMediums());
+  };
+
   $scope.isPendingTradeState = (state) => this.pendingTrade && this.pendingTrade.state === state && this.pendingTrade.medium !== 'blockchain';
   $scope.isPendingSellTrade = () => buySell.isPendingSellTrade(this.pendingTrade);
 
@@ -77,7 +88,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   $scope.getInitialExchangeRate = () => {
     buySell.getQuote(-1, 'BTC', this.transaction.currency.code)
       .then(quote => {
-        $scope.getMinLimits(quote);
+        this.getMediums(quote).then(this.setLimits);
         $scope.exchangeRate.fiat = (-quote.quoteAmount / 100).toFixed(2);
       }, error);
   };
@@ -114,7 +125,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
 
   const success = (quote) => {
     $scope.quote = quote;
-    $scope.getMinLimits(quote);
+    this.getMediums(quote).then(this.setLimits);
     $scope.exchangeRate.fiat = $scope.getExchangeRate();
 
     if (quote.quoteCurrency === 'BTC') {
@@ -155,7 +166,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
         { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
         mediums.bank,
         $scope.payment,
-        { sell: true, isSweepTransaction: $scope.isSweepTransaction, priorityFee: $scope.priorityFee }
+        { sell: true, isSweepTransaction: $scope.isSweepTransaction, priorityFee: this.priorityFee }
       );
     });
     this.status = {};
@@ -222,14 +233,6 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
     $scope.tradingDisabled = true;
     $scope.showZeroBalance = true;
   }
-
-  $scope.getMinLimits = (quote) => {
-    buySell.getMinLimits(quote).then($scope.limits = buySell.limits);
-  };
-
-  $scope.getMaxLimits = () => {
-    buySell.getMaxLimits(this.currency, 'outRemaining').then($scope.limits = buySell.limits);
-  };
 
   $scope.paymentOnUpdate = (data) => {
     if (data) this.priorityFee = data.fees.priority;

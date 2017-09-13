@@ -5,12 +5,14 @@ angular
 function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, localStorageService, $q, ShapeShift, modals) {
   $scope.loading = true;
   $scope.ethTransactions = [];
+  $scope.legacyAccount = Ethereum.legacyAccount;
   $scope.$watch(
-    () => Ethereum.defaultAccount.txs,
+    () => Ethereum.txs,
     (txs) => {
       $scope.ethTransactions = txs;
       $scope.loading = false;
-    }
+    },
+    true
   );
 
   $scope.txLimit = 10;
@@ -27,7 +29,7 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
     account: undefined
   };
 
-  $scope.ethTotal = Ethereum.defaultAccount.balance;
+  $scope.ethTotal = Ethereum.balance;
 
   $scope.hideEtherWelcome = () => localStorageService.get('hideEtherWelcome');
   $scope.dismissWelcome = () => localStorageService.set('hideEtherWelcome', true);
@@ -43,18 +45,23 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
     }
   };
 
-  $scope.exportEthPriv = () => $uibModal.open({
+  $scope.exportEthPriv = (opts) => $uibModal.open({
     templateUrl: 'partials/show-private-key-ethereum.pug',
     controllerAs: '$ctrl',
     windowClass: 'bc-modal',
     controller (Ethereum, MyWallet) {
-      this.accessAllowed = false;
-      this.address = Ethereum.defaultAccount.address;
-      this.balance = Ethereum.defaultAccount.balance;
+      let account = opts.legacy ? Ethereum.legacyAccount : Ethereum.defaultAccount;
+      let getPrivateKey = opts.legacy ? Ethereum.getPrivateKeyForLegacyAccount : Ethereum.getPrivateKeyForAccount;
       let requestAccessP = MyWallet.wallet.isDoubleEncrypted ? Wallet.askForSecondPasswordIfNeeded : Wallet.askForMainPassword;
+
+      this.accessAllowed = false;
+      this.address = account.address;
+      this.balance = account.balance;
       this.requestAccess = () => requestAccessP().then(secPass => {
+        let key = opts.legacy ? getPrivateKey(secPass) : getPrivateKey(account, secPass);
+
         this.accessAllowed = true;
-        this.key = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass).toString('hex');
+        this.key = key.toString('hex');
       });
     }
   });
@@ -87,9 +94,9 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
       case $scope.filterTypes[0]:
         return true;
       case $scope.filterTypes[1]:
-        return tx.getTxType($scope.account) === 'sent';
+        return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'sent';
       case $scope.filterTypes[2]:
-        return tx.getTxType($scope.account) === 'received';
+        return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'received';
     }
     return false;
   };

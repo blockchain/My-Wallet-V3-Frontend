@@ -17,8 +17,6 @@
         i.icon-ethereum
         span.flex-row.flex-align-end
           span ETHER
-          | &nbsp;
-          p.f-12.mbn.transform-none.em-300.blue(translate="BETA")
     div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
     // Don't forget to update controllers/buySell.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
@@ -86,11 +84,11 @@
     li.terms-policy
       ul.flex-center.flex-wrap.aside.em-300.type-sm
         li.pointer.mrm
-          a.text-color(href="https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf", translate="TOS" target="_blank" rel="noopener noreferrer")
+          a.text-color(href="https://www.blockchain.com/terms", translate="TOS" target="_blank" rel="noopener noreferrer")
         li.mrm.type-xs
           i.ti-control-record
         li.pointer.mrm
-          a.text-color(href="https://www.blockchain.com/assets/pdf/Blockchain_PrivacyPolicy.pdf", translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+          a.text-color(href="https://www.blockchain.com/privacy", translate="PRIVACY" target="_blank" rel="noopener noreferrer")
         li.mrm.type-xs
           i.ti-control-record
         li.pointer

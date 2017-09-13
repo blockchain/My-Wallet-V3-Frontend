@@ -11,7 +11,7 @@
             span {{ getTotal() | toBitCurrency:settings.btcCurrency }}
           span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(btc="getTotal()")
-        .flex-row.flex-center
+        .flex-row.flex-center(ng-hide="getEthTotal() === null")
           .vertical-line.mh-15.hidden-sm.hidden-xs
           i.icon-ethereum.f-20.mrs
           span(ng-show="isBitCurrency(settings.displayCurrency)")
