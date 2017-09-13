@@ -15,7 +15,7 @@ angular
 
 function ExchangeUploadController (Env, $scope, modals) {
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   this.openHelper = modals.openHelper;

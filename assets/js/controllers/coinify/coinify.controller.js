@@ -4,7 +4,7 @@ angular
 
 function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, buyMobile, Env) {
   Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
+    this.qaDebugger = env.qaDebugger;
   });
 
   let exchange = buySell.getExchange();
