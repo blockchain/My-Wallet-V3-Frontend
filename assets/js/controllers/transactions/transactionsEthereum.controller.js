@@ -5,6 +5,7 @@ angular
 function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, localStorageService, $q, ShapeShift, modals) {
   $scope.loading = true;
   $scope.ethTransactions = [];
+  $scope.legacyAccount = Ethereum.legacyAccount;
   $scope.$watch(
     () => Ethereum.txs,
     (txs) => {
@@ -44,18 +45,23 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
     }
   };
 
-  $scope.exportEthPriv = () => $uibModal.open({
+  $scope.exportEthPriv = (opts) => $uibModal.open({
     templateUrl: 'partials/show-private-key-ethereum.pug',
     controllerAs: '$ctrl',
     windowClass: 'bc-modal',
     controller (Ethereum, MyWallet) {
-      this.accessAllowed = false;
-      this.address = Ethereum.defaultAccount.address;
-      this.balance = Ethereum.defaultAccount.balance;
+      let account = opts.legacy ? Ethereum.legacyAccount : Ethereum.defaultAccount;
+      let getPrivateKey = opts.legacy ? Ethereum.getPrivateKeyForLegacyAccount : Ethereum.getPrivateKeyForAccount;
       let requestAccessP = MyWallet.wallet.isDoubleEncrypted ? Wallet.askForSecondPasswordIfNeeded : Wallet.askForMainPassword;
+
+      this.accessAllowed = false;
+      this.address = account.address;
+      this.balance = account.balance;
       this.requestAccess = () => requestAccessP().then(secPass => {
+        let key = opts.legacy ? getPrivateKey(secPass) : getPrivateKey(account, secPass);
+
         this.accessAllowed = true;
-        this.key = Ethereum.getPrivateKeyForAccount(Ethereum.defaultAccount, secPass).toString('hex');
+        this.key = key.toString('hex');
       });
     }
   });

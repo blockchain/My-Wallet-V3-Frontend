@@ -166,7 +166,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
         { fiat: this.transaction.fiat, btc: this.transaction.btc, quote: $scope.quote },
         mediums.bank,
         $scope.payment,
-        { sell: true, isSweepTransaction: $scope.isSweepTransaction, priorityFee: $scope.priorityFee }
+        { sell: true, isSweepTransaction: $scope.isSweepTransaction, priorityFee: this.priorityFee }
       );
     });
     this.status = {};
