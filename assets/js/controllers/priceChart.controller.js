@@ -52,7 +52,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   const handleChart = (chartData) => {
     $scope.options = {};
 
-    $scope.options.data = chartData.map(data => parseFloat(data.price.toFixed(2)));
+    $scope.options.data = chartData.map(data => parseFloat(data.price));
 
     let date = new Date(chartData[0]['timestamp'] * 1000);
 
