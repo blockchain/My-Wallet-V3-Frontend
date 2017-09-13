@@ -41,14 +41,6 @@ describe('shift-confirm.component', () => {
     return scope;
   };
 
-  let getController = function (bindings) {
-    scope = $rootScope.$new();
-    let ctrl = $componentController('shiftConfirm', {$scope: scope}, bindings);
-    let template = $templateCache.get('templates/shapeshift/confirm.pug');
-    $compile(template)(scope);
-    return ctrl;
-  };
-
   beforeEach(module('walletApp'));
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend) {
