@@ -5,7 +5,7 @@ blocket-loading(loading="!isWalletInitialized()")
       h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
       ul.pln.account-balances
         li.flex-row.flex-justify.border-bottom-light
-          fiat.f-28.em-300(btc="getTotal()" eth="getEthTotal()")
+          fiat.f-28.em-300(btc="getTotal()" eth="eth.total()")
         li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
           span.f-16.em-300.flex-center {{::account.label}}
           .flex-column.flex-align-end

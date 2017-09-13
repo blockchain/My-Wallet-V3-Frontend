@@ -77,6 +77,10 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     return service.eth.getPrivateKeyForAccount(account, secPass);
   };
 
+  service.getPrivateKeyForLegacyAccount = (secPass) => {
+    return service.eth.getPrivateKeyForLegacyAccount(secPass);
+  };
+
   service.recordLastTransaction = (hash) => {
     service.eth.setLastTx(hash);
   };
