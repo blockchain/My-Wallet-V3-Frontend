@@ -25,7 +25,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       buy-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)"
       buy-error="buyError()"
       trades="trades"
-      pending-trade="pendingTrade"
+      pending-trade="pendingTrade(trades)"
       open-pending-trade="openPendingTrade")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
