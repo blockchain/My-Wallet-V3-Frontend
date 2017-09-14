@@ -227,4 +227,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.transaction.btc = null;
     this.transaction.fiat = null;
   };
+
+  if (!this.sellLimits) this.sellLimits = buySell.getSellLimits;
 }
