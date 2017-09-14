@@ -26,10 +26,10 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     labelsForCurrency
   };
 
-  let buySellDebug;
+  let qaDebugger;
 
   Env.then(env => {
-    buySellDebug = env.buySellDebug;
+    qaDebugger = env.qaDebugger;
   });
 
   let errorStates = {
@@ -64,7 +64,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(wholeNumber(trade) ? trade.sendAmount : trade.sendAmount / 100, { code: trade.inCurrency })
     };
-    if (buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    if (qaDebugger) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     return transaction;
   };
 

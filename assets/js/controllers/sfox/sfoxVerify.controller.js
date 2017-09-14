@@ -6,7 +6,7 @@ let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
 function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   $scope.exchange = $scope.vm.exchange;

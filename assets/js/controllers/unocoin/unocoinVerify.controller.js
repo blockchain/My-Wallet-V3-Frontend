@@ -6,7 +6,7 @@ let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
 function UnocoinVerifyController (MyWallet, AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   $scope.openHelper = modals.openHelper;

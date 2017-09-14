@@ -29,7 +29,7 @@ function SfoxBuyController ($scope, Wallet, Alerts, sfox, formatTrade, buyMobile
     $scope.trade = formatTrade.initiated(trade, [$scope.account]);
     buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-    if ($scope.buySellDebug) {
+    if ($scope.qaDebugger) {
       console.info('Load Sift Science iframe');
     }
     $scope.tradeId = trade.id;

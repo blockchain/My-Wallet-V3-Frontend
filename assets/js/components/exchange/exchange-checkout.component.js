@@ -40,7 +40,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.openPendingTrade = this.openPendingTrade($scope.pendingTrade);
 
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   let state = $scope.state = {
