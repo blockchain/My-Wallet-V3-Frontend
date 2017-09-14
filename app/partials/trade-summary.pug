@@ -10,7 +10,7 @@
           span.em-300.colon(translate="{{prop}}" ng-class="{'em-500': prop === 'TOTAL_COST'}")
           span.em-300.right-align.capitalize(ng-bind="val" ng-class="{'em-500': prop === 'TOTAL_COST', 'capitalize' : prop !== 'RECEIVING_ADDRESS'}")
           span.security-red.plm(ng-if="$last && isPendingBankTransfer()" translate="ORDER_ID_REFERENCE")
-  p.security-red.pointer.ng-hide(ng-show="vm.buySellDebug && vm.trade.bankAccount && vm.trade.state === 'awaiting_transfer_in'")
+  p.security-red.pointer.ng-hide(ng-show="vm.qaDebugger && vm.trade.bankAccount && vm.trade.state === 'awaiting_transfer_in'")
     i.ti-search.mrm
     span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
   .flex-row.flex-end.pt-20

@@ -86,6 +86,16 @@
 
 .chart-control {
   max-height: 425px;
+  .disabled {
+    cursor: not-allowed;
+    .underline-blue.disabled {
+      border-bottom: 1px solid #AAAAAA;
+    }
+  }
+  a.disabled {
+    pointer-events: none;
+    color: #AAAAAA;
+  }
 }
 #chart {
   max-height: 300px;

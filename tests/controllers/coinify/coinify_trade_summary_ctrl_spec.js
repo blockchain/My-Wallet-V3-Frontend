@@ -10,9 +10,9 @@ describe('CoinifyTradeSummaryController', () => {
     state: 'completed',
     inCurrency: 'USD',
     outCurrency: 'BTC',
-    refresh() { return $q.resolve(trade); },
-    watchAddress() { return $q.resolve(); },
-    fakeBankTransfer() { return $q.resolve(); }
+    refresh () { return $q.resolve(trade); },
+    watchAddress () { return $q.resolve(); },
+    fakeBankTransfer () { return $q.resolve(); }
   };
 
   beforeEach(angular.mock.module('walletApp'));
@@ -39,10 +39,10 @@ describe('CoinifyTradeSummaryController', () => {
     scope = $rootScope.$new();
     scope.vm = {
       trade,
-      buySellDebug: true
+      qaDebugger: true
     };
 
-    $controller("CoinifyTradeSummaryController",
+    $controller('CoinifyTradeSummaryController',
       {$scope: scope});
     return scope;
   };
@@ -53,7 +53,6 @@ describe('CoinifyTradeSummaryController', () => {
   });
 
   describe('.fakeBankTransfer()', function () {
-
     it('should fake a bank transfer', () => {
       spyOn(scope.vm.trade, 'fakeBankTransfer');
       scope.fakeBankTransfer();

@@ -40,5 +40,5 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   };
 
   AngularHelper.installLock.call($scope);
-  Env.then(env => $scope.buySellDebug = env.buySellDebug);
+  Env.then(env => $scope.qaDebugger = env.qaDebugger);
 }

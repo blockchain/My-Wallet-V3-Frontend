@@ -74,7 +74,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     if ($window.location.hostname === 'localhost' || !env.isProduction) {
       const KEY = 'qa-tools-enabled';
-      env.buySellDebug = localStorageService.get(KEY);
+      env.qaDebugger = localStorageService.get(KEY);
       let reloadWithDebug = (debug) => { localStorageService.set(KEY, debug); $window.location.reload(); };
       $window.enableQA = () => reloadWithDebug(true);
       $window.disableQA = () => reloadWithDebug(false);

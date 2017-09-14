@@ -1,6 +1,6 @@
 {
   "name": "angular-blockchain-wallet",
-  "version": "1.19.6",
+  "version": "1.24.2",
   "description": "AngularJS front-end to My-Wallet-V3.",
   "dependencies": {
     "@uirouter/angularjs": "^1.0.3",
