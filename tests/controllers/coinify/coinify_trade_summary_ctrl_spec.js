@@ -39,7 +39,7 @@ describe('CoinifyTradeSummaryController', () => {
     scope = $rootScope.$new();
     scope.vm = {
       trade,
-      buySellDebug: true
+      qaDebugger: true
     };
 
     $controller("CoinifyTradeSummaryController",

@@ -38,7 +38,7 @@ function siftScience ($sce, Env, AngularHelper, $window) {
       let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
       scope.url = $sce.trustAsResourceUrl(url);
 
-      if (env.buySellDebug) {
+      if (env.qaDebugger) {
         console.info(url);
       }
     };
@@ -54,7 +54,7 @@ function siftScience ($sce, Env, AngularHelper, $window) {
         switch (e.data.command) {
           case 'done':
             // Remove Sift Science iframe:
-            if (env.buySellDebug) {
+            if (env.qaDebugger) {
               console.info('Dismiss Sift Science iframe');
             }
             scope.enabled = false;

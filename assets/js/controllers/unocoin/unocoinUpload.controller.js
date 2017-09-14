@@ -4,7 +4,7 @@ angular
 
 function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA) {
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   let exchange = $scope.vm.exchange;
