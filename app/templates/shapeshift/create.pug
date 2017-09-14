@@ -18,7 +18,7 @@ form.bc-form(
               i.pr-5(ng-class="state.baseBTC ? 'icon-bitcoin' : 'icon-ethereum'")
               span {{ $ctrl.from.label }}
             ui-select-choices(repeat="origin in $ctrl.origins")
-              i.pr-5(ng-class="origin.label === 'My Bitcoin Wallet' ? 'icon-bitcoin' : 'icon-ethereum'")
+              i.pr-5(ng-class="origin.label === 'My Ether Wallet' ? 'icon-ethereum' : 'icon-bitcoin'")
               span {{ origin.label }}
         .item.width-50.width-50-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
