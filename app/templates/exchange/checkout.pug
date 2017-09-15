@@ -24,7 +24,7 @@ form.bc-form(
         .flex-center
           .flex-1.flex-center.border
             input.form-control.no-border(
-              ng-disabled="pendingTrade"
+              ng-disabled="pendingTrade()"
               type="number"
               name="fiat"
               ng-model="state.fiat"
@@ -40,7 +40,7 @@ form.bc-form(
           i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
           .flex-1.flex-center.border
             input.form-control.no-border(
-              ng-disabled="pendingTrade"
+              ng-disabled="pendingTrade()"
               type="number"
               name="btc"
               ng-model="state.btc"
@@ -52,11 +52,11 @@ form.bc-form(
               ng-model-options="{debounce: 250}"
               required)
             span.mhm {{bitcoin.code}}
-        .f-12.mts(ng-show="pendingTrade")
+        .f-12.mts(ng-show="pendingTrade()")
           span.state-danger-text Trading is disabled until you 
-          a.primary.pointer(ng-click="openPendingTrade(pendingTrade)") finish the payment process for the previous order. 
+          a.primary.pointer(ng-click="openPendingTrade(pendingTrade())") finish the payment process for the previous order. 
         .f-12.mts
-          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+          span(ng-show="!pendingTrade()" ng-class="{'state-danger-text':checkoutForm.$error.max}")
             | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
             | &nbsp;
           span.primary.pointer(popup

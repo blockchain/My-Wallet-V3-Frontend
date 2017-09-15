@@ -36,7 +36,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.siftScienceEnabled = false;
   $scope.buySuccess = this.buySuccess;
   $scope.trades = this.trades || [];
-  $scope.pendingTrade = this.pendingTrade($scope.trades);
+  $scope.pendingTrade = () => this.pendingTrade($scope.trades);
   $scope.openPendingTrade = this.openPendingTrade($scope.pendingTrade);
 
   Env.then(env => {
@@ -157,11 +157,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   });
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
-  $scope.$watchCollection('trades', (newTrades, oldTrades) => { $scope.pendingTrade = this.pendingTrade({trades: newTrades}); }, true);
 
   $scope.$on('$destroy', $scope.cancelRefresh);
-  $rootScope.$on('cancelPendingTrade', () => { $scope.pendingTrade = this.pendingTrade({trades: $scope.trades}); });
-
   AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();
 }
