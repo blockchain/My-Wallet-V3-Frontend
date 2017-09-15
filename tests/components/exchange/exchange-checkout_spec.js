@@ -40,7 +40,7 @@ describe('exchange-checkout.component', () => {
     quote () { return mockQuote(); },
     limits: { min: {}, max: {} },
     dollars: {code: 'USD'},
-    pendingTrade () { return $q.resolve(); },
+    pendingTrade () { () => { return $q.resolve(); }; },
     openPendingTrade () { return $q.resolve(); }
   };
 
