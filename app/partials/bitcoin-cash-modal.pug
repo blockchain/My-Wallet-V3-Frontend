@@ -1,9 +1,8 @@
 .modal-header.bc-modal-header
+  i.ti-close.close-modal(ng-click="vm.dismiss()")
   .flex-row.flex-between
     .flex-column.flex-justify
       h3.f-24.blue(translate="About Bitcoin Cash")
-    div
-      i.pointer.ti-close.f-16(ng-click="vm.dismiss()")
 div(translate-namespace="BITCOIN_CASH")
   .flex-column.ph-35(ng-if="vm.onStep('about')")
     .flex-column(ng-repeat="i in [1,2,3,4]")
@@ -55,8 +54,8 @@ div(translate-namespace="BITCOIN_CASH")
         .mv-30
           button.button-primary.width-100(translate="SEND" ng-click="send(); vm.dismiss();")
             
-  .flex.ph-35.pv-35(ng-if="vm.onStep('exchange')" ng-controller="BitcoinCashExchangeController")
-    div(ng-if="onStep('exchange-create')")
+  .flex.pb-30(ng-if="vm.onStep('exchange')" ng-controller="BitcoinCashExchangeController")
+    .width-100(ng-if="onStep('exchange-create')")
       shift-create(on-complete="onComplete(payment, fee, quote)" 
                    build-payment="buildPayment(quote, fee)" 
                    handle-approximate-quote="approximateQuoteHandler(pair, amount)" 
