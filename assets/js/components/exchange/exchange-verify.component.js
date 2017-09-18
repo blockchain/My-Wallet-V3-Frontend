@@ -21,7 +21,7 @@ angular
 
 function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, state, $q, $timeout, Exchange, AngularHelper) {
   Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
+    this.qaDebugger = env.qaDebugger;
     let states = env.partners.sfox.states;
     this.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
   });

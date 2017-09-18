@@ -12,7 +12,7 @@ form.bc-form(
       .f-13.mv-20
         span(translate=".CONFIRM_DEPOSIT_AMOUNT" translate-values="{deposit: total, withdrawal: quote.withdrawalAmount, input: quote.fromCurrency, output: quote.toCurrency, from: from.label, to: to.label}")
       .flex-end.mb-5
-        countdown(time-to-expiration="getTimeToExpiration" on-expiration="onExpiration()" debug="buySellDebug" message="QUOTE_EXPIRES_IN")
+        countdown(time-to-expiration="getTimeToExpiration" on-expiration="$ctrl.onExpiration()" debug="qaDebugger" message="QUOTE_EXPIRES_IN")
         helper-button(content="SHIFT.QUOTE_EXPIRES_IN_HELPER")
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.pb-10.border-bottom-light.flex-between

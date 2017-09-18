@@ -27,7 +27,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, false);
       Env.then(env => {
-        _buySellMyWallet.debug = env.buySellDebug;
+        _buySellMyWallet.debug = env.qaDebugger;
       });
     }
     return _buySellMyWallet;

@@ -13,7 +13,6 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   $scope.lastViewedWhatsNew = null;
 
   $rootScope.isSubscribed = localStorageService.get('subscribed');
-  $scope.showEthereum = () => Ethereum.userHasAccess;
   $scope.getTheme = () => $scope.settings.theme;
 
   let asyncAssert = (value) => value ? $q.resolve(value) : $q.reject();
@@ -46,8 +45,6 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
       controller: 'SubscribeCtrl'
     });
   };
-
-  $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();

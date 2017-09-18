@@ -25,6 +25,7 @@ describe('shift-confirm.component', () => {
 
   let handlers = {
     handleShift () { return $q.resolve(mockPayment()); },
+    onExpiration () { return $q.resolve(); },
     onComplete () { return $q.resolve(); },
     onCancel () { return $q.resolve(); },
     payment () { return mockPayment(); },
@@ -64,17 +65,6 @@ describe('shift-confirm.component', () => {
       expect(scope.locked).toEqual(true);
       scope.$digest();
       expect(scope.locked).toEqual(false);
-    });
-  });
-
-  describe('.onExpiration()', () => {
-    beforeEach(function () {
-      scope = getControllerScope(handlers);
-    });
-
-    it('should lock the scope', () => {
-      scope.onExpiration();
-      expect(scope.locked).toEqual(true);
     });
   });
 
