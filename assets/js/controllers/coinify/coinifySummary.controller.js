@@ -2,10 +2,10 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, buySell, currency, Alerts, buyMobile) {
+function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, coinify, currency, Alerts, buyMobile) {
   let medium = $scope.vm.medium;
   let fiatCurrency = $scope.vm.fiatCurrency;
-  let limits = $scope.limits = buySell.limits;
+  let limits = $scope.limits = coinify.limits;
   let max = parseFloat(limits[medium].max[fiatCurrency()], 0);
   let min = parseFloat(limits[medium].min[fiatCurrency()], 0);
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
@@ -42,7 +42,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   $scope.state.editAmount = $scope.trade.fiatAmount > max || $scope.trade.fiatAmount < min;
 
   let getQuote = () => {
-    return buySell.getQuote($scope.tempTrade.fiatAmount, $scope.tempTrade.fiatCurrency);
+    return coinify.getQuote($scope.tempTrade.fiatAmount, $scope.tempTrade.fiatCurrency);
   };
 
   $scope.commitValues = () => {
@@ -51,7 +51,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     getQuote().then((q) => $scope.vm.quote = q)
               .then((q) => q.getPaymentMediums())
               .then((mediums) => mediums[medium].getAccounts())
-              .then((accounts) => buySell.accounts = accounts)
+              .then((accounts) => coinify.accounts = accounts)
               .then(setTrade).then($scope.free)
               .finally(() => $scope.state.editAmount = false);
   };

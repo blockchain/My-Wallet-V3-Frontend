@@ -1,7 +1,7 @@
-describe('buySell service', () => {
+describe('coinify service', () => {
   let Wallet;
   let MyWallet;
-  let buySell;
+  let coinify;
   let $rootScope;
   let $q;
   let exchange;
@@ -38,7 +38,7 @@ describe('buySell service', () => {
         }
       };
 
-      buySell = $injector.get('buySell');
+      coinify = $injector.get('coinify');
 
       Wallet.settings.currency = {code: 'EUR'};
       Wallet.status.isLoggedIn = true;
@@ -57,7 +57,7 @@ describe('buySell service', () => {
   ;
 
   beforeEach(function () {
-    exchange = buySell.getExchange();
+    exchange = coinify.getExchange();
 
     let trades = ['processing', 'completed', 'completed_test', 'cancelled'].map(makeTrade);
 
@@ -67,24 +67,24 @@ describe('buySell service', () => {
   });
 
   describe('getTrades', () => {
-    beforeEach(() => spyOn(buySell, 'watchAddress').and.returnValue($q.resolve()));
+    beforeEach(() => spyOn(coinify, 'watchAddress').and.returnValue($q.resolve()));
 
     it('should call exchange.getTrades', () => {
-      buySell.getTrades();
+      coinify.getTrades();
       expect(exchange.getTrades).toHaveBeenCalled();
     });
 
     it('should sort the trades into pending and completed arrays', () => {
-      buySell.getTrades();
+      coinify.getTrades();
       $rootScope.$digest();
-      expect(buySell.trades.pending.length).toEqual(1);
-      expect(buySell.trades.completed.length).toEqual(3);
+      expect(coinify.trades.pending.length).toEqual(1);
+      expect(coinify.trades.completed.length).toEqual(3);
     });
 
     it('should watch completed trades and be initialized', () => {
-      buySell.getTrades();
+      coinify.getTrades();
       $rootScope.$digest();
-      expect(buySell.watchAddress).toHaveBeenCalledTimes(1);
+      expect(coinify.watchAddress).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -97,13 +97,13 @@ describe('buySell service', () => {
     });
 
     it('should watch if bitcoin has not been received', () => {
-      buySell.watchAddress(trades.pending);
+      coinify.watchAddress(trades.pending);
       expect(trades.pending.watchAddress).toHaveBeenCalled();
     });
 
     it('should open the buy modal when bitcoin is received', inject(function (modals) {
       spyOn(modals, 'openBuyView');
-      buySell.watchAddress(trades.pending);
+      coinify.watchAddress(trades.pending);
       $rootScope.$digest();
       expect(modals.openBuyView).toHaveBeenCalled();
     })
@@ -115,25 +115,25 @@ describe('buySell service', () => {
     let fetchFailWith;
 
     beforeEach(function () {
-      exchange = buySell.getExchange();
+      exchange = coinify.getExchange();
       spyOn(exchange, 'fetchProfile').and.callFake(function () {
         if (fetchFailWith != null) { return $q.reject(fetchFailWith); } else { return $q.resolve(); }
       });
-      return spyOn(buySell, 'getTrades').and.callThrough();
+      return spyOn(coinify, 'getTrades').and.callThrough();
     });
 
     it('should reject with the error if there is one', () => {
       fetchFailWith = JSON.stringify({error: 'some_err'});
-      buySell.fetchProfile().catch(e => expect(e).toEqual('SOME_ERR'));
+      coinify.fetchProfile().catch(e => expect(e).toEqual('SOME_ERR'));
       $rootScope.$digest();
-      expect(buySell.getTrades).not.toHaveBeenCalled();
+      expect(coinify.getTrades).not.toHaveBeenCalled();
     });
 
     it('should reject default error if error is not json', () => {
       fetchFailWith = 'unknown_err';
-      buySell.fetchProfile().catch(e => expect(e).toEqual('INVALID_REQUEST'));
+      coinify.fetchProfile().catch(e => expect(e).toEqual('INVALID_REQUEST'));
       $rootScope.$digest();
-      expect(buySell.getTrades).not.toHaveBeenCalled();
+      expect(coinify.getTrades).not.toHaveBeenCalled();
     });
   });
 
@@ -146,14 +146,14 @@ describe('buySell service', () => {
 
     it('should confirm before canceling', () => {
       spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
-      buySell.cancelTrade(trade);
+      coinify.cancelTrade(trade);
       expect(Alerts.confirm).toHaveBeenCalled();
     });
 
     it('should not cancel if confirm was rejected', () => {
       spyOn(trade, 'cancel').and.returnValue($q.resolve());
       spyOn(Alerts, 'confirm').and.returnValue($q.reject());
-      buySell.cancelTrade(trade);
+      coinify.cancelTrade(trade);
       $rootScope.$digest();
       expect(trade.cancel).not.toHaveBeenCalled();
     });
@@ -161,7 +161,7 @@ describe('buySell service', () => {
     it('should show an error if the cancel fails', () => {
       spyOn(trade, 'cancel').and.returnValue($q.reject('ERROR_TRADE_CANCEL'));
       spyOn(Alerts, 'confirm').and.returnValue($q.resolve());
-      buySell.cancelTrade(trade);
+      coinify.cancelTrade(trade);
       $rootScope.$digest();
       expect(Alerts.displayError).toHaveBeenCalledWith('ERROR_TRADE_CANCEL');
     });
@@ -177,12 +177,12 @@ describe('buySell service', () => {
         getBankAccounts () { return $q.resolve('something'); }
       };
       payment = { fee: 1 };
-      exchange = buySell.getExchange();
+      exchange = coinify.getExchange();
       exchange.profile = { user: 1 };
     });
 
     it('should call getExchange', () => {
-      buySell.openSellView(trade, bankMedium, payment);
+      coinify.openSellView(trade, bankMedium, payment);
     });
   });
       // expect(result).toEqual
@@ -191,7 +191,7 @@ describe('buySell service', () => {
     let pendingTrade;
     exchange = undefined;
     beforeEach(function () {
-      exchange = buySell.getExchange();
+      exchange = coinify.getExchange();
       pendingTrade = {
         state: 'awaiting_transfer_in',
         medium: 'blockchain'
@@ -199,7 +199,7 @@ describe('buySell service', () => {
     });
 
     it('should return true', () => {
-      let result = buySell.isPendingSellTrade(pendingTrade);
+      let result = coinify.isPendingSellTrade(pendingTrade);
       expect(result).toEqual(true);
     });
   });

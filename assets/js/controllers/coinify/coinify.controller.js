@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, buyMobile, Env) {
+function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, coinify, $state, buyMobile, Env) {
   Env.then(env => {
     this.qaDebugger = env.qaDebugger;
   });
 
-  let exchange = buySell.getExchange();
+  let exchange = coinify.getExchange();
 
   this.quote = quote;
   this.trade = trade;
@@ -21,8 +21,8 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
   this.refreshQuote = () => {
-    if (this.baseFiat()) return $q.resolve(buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency)).then((q) => this.quote = q);
-    else return $q.resolve(buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
+    if (this.baseFiat()) return $q.resolve(coinify.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency)).then((q) => this.quote = q);
+    else return $q.resolve(coinify.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
   };
   this.expireTrade = () => {
     return $q.resolve(this.state.trade.expired = true);
@@ -31,7 +31,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.cancel = () => {
     $uibModalInstance.dismiss('');
     $rootScope.$broadcast('fetchExchangeProfile');
-    this.trade && this.trade.sendAmount && buySell.getTrades().then($scope.goToOrderHistory());
+    this.trade && this.trade.sendAmount && coinify.getTrades().then($scope.goToOrderHistory());
   };
 
   let links;
@@ -42,7 +42,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.close = (idx) => {
     if (idx > links.length - 1) { this.cancel(); return; }
     Alerts.surveyCloseConfirm('buy-survey-opened', links, idx).then(this.cancel);
-    buySell.incrementBuyDropoff(this.currentStep());
+    coinify.incrementBuyDropoff(this.currentStep());
   };
 
   this.state = {
@@ -66,7 +66,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
              })
              .then((quote) => {
                $q.resolve(quote.getPaymentMediums()).then(mediums => {
-                 buySell.getLimits(mediums, this.fiatCurrency());
+                 coinify.getLimits(mediums, this.fiatCurrency());
                })
                .then(() => this.goTo('select-payment-medium'));
              });
@@ -107,7 +107,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.goTo('signup');
   } else if (!this.trade) {
     this.goTo('select-payment-medium');
-  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
+  } else if (!coinify.tradeStateIn(coinify.states.completed)(this.trade) && this.trade.medium !== 'bank') {
     this.goTo('isx');
   } else {
     this.goTo('trade-complete');

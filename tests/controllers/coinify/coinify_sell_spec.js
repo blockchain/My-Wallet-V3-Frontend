@@ -2,7 +2,7 @@ describe('CoinifySellController', () => {
   let $rootScope;
   let $controller;
   let options;
-  let buySell;
+  let coinify;
   let buySellOptions;
   let $scope;
   let accounts;
@@ -29,7 +29,7 @@ describe('CoinifySellController', () => {
       let Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
       let currency = $injector.get('currency');
-      buySell = $injector.get('buySell');
+      coinify = $injector.get('coinify');
       let MyWalletPayment = $injector.get('MyWalletPayment');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
@@ -63,7 +63,7 @@ describe('CoinifySellController', () => {
 
       currency.conversions["EUR"] = { conversion: 1 };
 
-      buySell.getExchange = () => ({
+      coinify.getExchange = () => ({
         getTrades() { return $q.resolve(); },
         getKYCs() { return $q.resolve(); },
         trades: {
@@ -92,7 +92,7 @@ describe('CoinifySellController', () => {
         sweepFee: 50
       };
       return {
-        buySell: {
+        coinify: {
           getQuote(quote) { return $q.resolve(quote).then(); }
         }
       };}));
@@ -250,7 +250,7 @@ describe('CoinifySellController', () => {
     it('should refresh the quote', () => {
       let onRefreshQuote = q => true;
       let ctrl = getController(quote, trade);
-      spyOn(buySell, 'getSellQuote');
+      spyOn(coinify, 'getSellQuote');
       return ctrl.refreshQuote().then(onRefreshQuote);
     });
   });

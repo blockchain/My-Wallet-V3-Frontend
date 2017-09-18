@@ -51,7 +51,7 @@ form.bc-form(
               required)
             span.mhm {{bitcoin.code}}
         .f-12.mts
-          span(ng-class="{'state-danger-text':checkoutForm.$error.max}")
+          span(ng-class="{'state-danger-text':checkoutForm.$error.max}" ng-show="$ctrl.limits")
             | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
             | &nbsp;
           span.primary.pointer(popup

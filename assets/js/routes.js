@@ -393,9 +393,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'BuySellSelectPartnerController'
     })
     .state('wallet.common.buy-sell.coinify', {
-      templateUrl: 'partials/buy-sell.pug',
-      controller: 'BuySellCtrl',
-      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' }
+      templateUrl: 'partials/coinify/checkout.pug',
+      controller: 'CoinifyCheckoutController',
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
+      resolve: {
+        _loadExchangeData ($q, MyWallet, Exchange) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && !exchange.profile
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
+            : $q.resolve();
+        }
+      }
     })
     .state('wallet.common.buy-sell.unocoin', {
       templateUrl: 'partials/unocoin/checkout.pug',

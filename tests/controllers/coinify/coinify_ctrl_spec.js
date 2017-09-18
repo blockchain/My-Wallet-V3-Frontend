@@ -1,7 +1,7 @@
 describe('CoinifyController', () => {
   let $rootScope;
   let $controller;
-  let buySell;
+  let coinify;
   let $q;
 
   let quote = {
@@ -30,7 +30,7 @@ describe('CoinifyController', () => {
       $httpBackend.whenGET('/Resources/wallet-options.json').respond(options);
 
       let MyWallet = $injector.get('MyWallet');
-      buySell = $injector.get('buySell');
+      coinify = $injector.get('coinify');
 
       MyWallet.wallet = {
         hdwallet: {
@@ -41,7 +41,7 @@ describe('CoinifyController', () => {
         }
       };
       return {
-        buySell: {
+        coinify: {
           getQuote (quote) { return $q.resolve(quote); }
         }
       };
@@ -120,19 +120,19 @@ describe('CoinifyController', () => {
     beforeEach(() => ctrl = getController(quote));
 
     it('should refresh a quote from fiat', () => {
-      spyOn(buySell, 'getQuote');
+      spyOn(coinify, 'getQuote');
       ctrl.refreshQuote();
       $rootScope.$digest();
-      return expect(buySell.getQuote).toHaveBeenCalledWith(1, 'USD');
+      return expect(coinify.getQuote).toHaveBeenCalledWith(1, 'USD');
     });
 
     it('should refresh a quote form BTC', () => {
-      spyOn(buySell, 'getQuote');
+      spyOn(coinify, 'getQuote');
       ctrl.quote.baseCurrency = 'BTC';
       ctrl.quote.quoteCurrency = 'USD';
       ctrl.refreshQuote();
       $rootScope.$digest();
-      return expect(buySell.getQuote).toHaveBeenCalledWith(0.000001, 'BTC', 'USD');
+      return expect(coinify.getQuote).toHaveBeenCalledWith(0.000001, 'BTC', 'USD');
     });
   });
 
@@ -170,7 +170,7 @@ describe('CoinifyController', () => {
   describe('initial state', function () {
     it('should ask user to verify email', inject(function (Wallet) {
       Wallet.user.isEmailVerified = false;
-      buySell.getExchange = () => ({ profile: {} });
+      coinify.getExchange = () => ({ profile: {} });
       let ctrl = getController();
       expect(ctrl.currentStep()).toBe('email');
     }));
@@ -183,14 +183,14 @@ describe('CoinifyController', () => {
 
     it('should ask user to select payment medium', inject(function (Wallet) {
       Wallet.user.isEmailVerified = true;
-      buySell.getExchange = () => ({ profile: {}, user: 1 });
+      coinify.getExchange = () => ({ profile: {}, user: 1 });
       let ctrl = getController(quote, null);
       expect(ctrl.currentStep()).toBe('select-payment-medium');
     }));
 
     it('should ask user to complete isx after a trade is created', inject(function (Wallet) {
       Wallet.user.isEmailVerified = true;
-      buySell.getExchange = () => ({ profile: {}, user: 1 });
+      coinify.getExchange = () => ({ profile: {}, user: 1 });
       let ctrl = getController(null, {});
       expect(ctrl.currentStep()).toBe('isx');
     }));
@@ -198,7 +198,7 @@ describe('CoinifyController', () => {
     it('should show a completed trade summary', inject(function (Wallet) {
       let trade = { state: 'completed' };
       Wallet.user.isEmailVerified = true;
-      buySell.getExchange = () => ({ profile: {}, user: 1 });
+      coinify.getExchange = () => ({ profile: {}, user: 1 });
       let ctrl = getController(null, trade);
       expect(ctrl.currentStep()).toBe('trade-complete');
     }));

@@ -7,7 +7,7 @@ angular
       onTrigger: '&'
     },
     templateUrl: 'templates/kyc-status.pug',
-    controller: function (buySell) {
+    controller: function (coinify) {
       this.stateMap = {
         'pending': { ns: 'KYC_PENDING', i: 'ti-alert' },
         'updateRequested': { ns: 'KYC_UPDATES_REQUESTED', i: 'ti-alert' },
@@ -17,11 +17,11 @@ angular
 
       this.getState = () => this.stateMap[this.state];
 
-      this.profile = buySell.getExchange().profile;
+      this.profile = coinify.getExchange().profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
       this.getCardMax = () => {
-        if (buySell.limits.card.max) return this.currency && buySell.limits.card.max[this.currency.code] + ' ' + this.currency.code;
+        if (coinify.limits.card.max) return this.currency && coinify.limits.card.max[this.currency.code] + ' ' + this.currency.code;
       };
     }
   });

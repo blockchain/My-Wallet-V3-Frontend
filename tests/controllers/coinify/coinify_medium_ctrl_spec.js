@@ -3,7 +3,7 @@ describe('CoinifyMediumController', () => {
   let scope;
   let $rootScope;
   let $controller;
-  let buySell;
+  let coinify;
 
   let mediums = {
     'card': {
@@ -48,17 +48,17 @@ describe('CoinifyMediumController', () => {
       $controller = _$controller_;
       $q = _$q_;
 
-      buySell = $injector.get('buySell');
+      coinify = $injector.get('coinify');
 
-      buySell.kycs = [kyc];
+      coinify.kycs = [kyc];
 
-      buySell.getExchange = () => ({
+      coinify.getExchange = () => ({
         profile: profile,
         getBuyQuote () {},
         fetchProfile () { return $q.resolve(profile); }
       });
 
-      buySell.limits = {
+      coinify.limits = {
         bank: {
           min: {
             'EUR': 300
@@ -127,11 +127,11 @@ describe('CoinifyMediumController', () => {
   describe('.openKYC()', () =>
 
     it('should get open KYC and go to isx step', () => {
-      spyOn(buySell, 'getOpenKYC');
+      spyOn(coinify, 'getOpenKYC');
       spyOn(scope.vm, 'goTo');
       scope.openKYC();
       scope.$digest();
-      expect(buySell.getOpenKYC).toHaveBeenCalled();
+      expect(coinify.getOpenKYC).toHaveBeenCalled();
       return expect(scope.vm.goTo).toHaveBeenCalledWith('isx');
     })
   );

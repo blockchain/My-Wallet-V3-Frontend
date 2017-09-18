@@ -2,10 +2,10 @@ angular
   .module('walletApp')
   .controller('CoinifyMediumController', CoinifyMediumController);
 
-function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelper, Alerts, buySell) {
+function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelper, Alerts, coinify) {
   AngularHelper.installLock.call($scope);
   $scope.$timeout = $timeout;
-  $scope.limits = buySell.limits;
+  $scope.limits = coinify.limits;
   let { quote, baseFiat, fiatCurrency } = $scope.vm;
 
   let tryParse = (json) => {
@@ -22,8 +22,8 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   // $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
   // i.e bank max is 0 and buy amount is 100
   $scope.isBank = () => $scope.vm.medium === 'bank';
-  $scope.needsKYC = () => +buySell.getExchange().profile.level.name < 2;
-  $scope.pendingKYC = () => buySell.kycs[0] && buySell.tradeStateIn(buySell.states.pending)(buySell.kycs[0]);
+  $scope.needsKYC = () => +coinify.getExchange().profile.level.name < 2;
+  $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]);
 
   $scope.vm.medium = $scope.belowCardMax || $rootScope.inMobileBuy ? 'card' : 'bank';
 
@@ -34,7 +34,7 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
     // cache accounts in My-Wallet-V3 instead
     $q.resolve(quote.getPaymentMediums())
       .then((mediums) => mediums[medium].getAccounts())
-      .then((accounts) => buySell.accounts = accounts)
+      .then((accounts) => coinify.accounts = accounts)
       .then(() => $scope.vm.goTo('summary'))
       .then($scope.free).catch((err) => console.log(err));
   };
@@ -42,7 +42,7 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   $scope.openKYC = () => {
     $scope.lock();
 
-    $q.resolve(buySell.getOpenKYC())
+    $q.resolve(coinify.getOpenKYC())
       .then((kyc) => $scope.vm.trade = kyc)
       .then(() => $scope.vm.quote = null)
       .then(() => $scope.vm.goTo('isx'))

@@ -5,7 +5,7 @@ describe('CoinifySignupComponentController', () => {
   let Wallet;
   let $rootScope;
   let $componentController;
-  let buySell;
+  let coinify;
 
   let func = jasmine.any(Function);
 
@@ -39,8 +39,8 @@ describe('CoinifySignupComponentController', () => {
       Wallet.changeEmail = (email, succ, err) => succ();
       Wallet.resendEmailConfirmation = () => $q.resolve();
 
-      buySell = $injector.get('buySell');
-      return buySell.getExchange = () => ({
+      coinify = $injector.get('coinify');
+      return coinify.getExchange = () => ({
         signup() { if (ctrl.validEmail) { return $q.resolve(); } else { return $q.reject({error: 'EMAIL_ADDRESS_IN_USE'}); } }
       }) ;}));
 

@@ -12,10 +12,11 @@ angular
       buyAccount: '<',
       conversion: '<',
       collapseSummary: '<',
+      buyError: '&',
       handleBuy: '&',
-      handleQuote: '&',
       buySuccess: '&',
-      buyError: '&'
+      handleQuote: '&',
+      handleMediums: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
@@ -97,7 +98,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   $scope.getInitialQuote = () => {
     let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = quote.quoteAmount; });
+    quoteP.then(quote => { $scope.state.rate = quote.quoteAmount; this.handleMediums({quote: quote}); });
   };
 
   $scope.refreshIfValid = (field) => {

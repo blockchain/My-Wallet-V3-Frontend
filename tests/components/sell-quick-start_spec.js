@@ -6,7 +6,7 @@ describe('sell-quick-start.component', () => {
   let $q;
   let scope;
   let Wallet;
-  let buySell = {};
+  let coinify = {};
 
   let transaction = {
     currency: {
@@ -53,7 +53,7 @@ describe('sell-quick-start.component', () => {
       let MyWallet = $injector.get('MyWallet');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
       let MyWalletPayment = $injector.get('MyWalletPayment');
-      buySell = $injector.get('buySell');
+      coinify = $injector.get('coinify');
       let currency = $injector.get('currency');
 
       MyWallet.wallet = {};
@@ -71,11 +71,11 @@ describe('sell-quick-start.component', () => {
 
       currency.conversions['EUR'] = { conversion: 1 };
 
-      buySell.getQuote = () => $q.resolve(quote);
+      coinify.getQuote = () => $q.resolve(quote);
 
-      buySell.getSellQuote = (amount, curr, quoteCurr) => $q.resolve(quote).then();
+      coinify.getSellQuote = (amount, curr, quoteCurr) => $q.resolve(quote).then();
 
-      buySell.getExchange = () => ({
+      coinify.getExchange = () => ({
         getTrades () { return $q.resolve(); },
         getKYCs () { return $q.resolve(); },
         trades: {

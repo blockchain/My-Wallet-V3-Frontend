@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .factory('buySell', buySell);
+  .factory('coinify', coinify);
 
-function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi) {
+function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -84,9 +84,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function getQuote (amt, curr, quoteCurr) {
     if (curr === 'BTC') {
-      amt = Math.trunc(amt * 100000000);
+      amt = Math.trunc(-amt);
     } else {
-      amt = Math.trunc(amt * 100);
+      amt = Math.trunc(amt);
     }
     return $q.resolve(service.getExchange().getBuyQuote(amt, curr, quoteCurr));
   }

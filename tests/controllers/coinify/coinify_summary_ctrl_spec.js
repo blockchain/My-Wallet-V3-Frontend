@@ -4,16 +4,16 @@ describe('CoinifySummaryController', () => {
   let Wallet;
   let $rootScope;
   let $controller;
-  let buySell;
+  let coinify;
   let Alerts;
   let validBuy = true;
 
   let mediums = {
     'card': {
-      getAccounts() { return $q.resolve(buySell.accounts); }
+      getAccounts() { return $q.resolve(coinify.accounts); }
     },
     'bank': {
-      getAccounts() { return $q.resolve(buySell.accounts); }
+      getAccounts() { return $q.resolve(coinify.accounts); }
     }
   };
 
@@ -50,7 +50,7 @@ describe('CoinifySummaryController', () => {
       let MyWallet = $injector.get('MyWallet');
       Wallet = $injector.get('Wallet');
       Alerts = $injector.get('Alerts');
-      buySell = $injector.get('buySell');
+      coinify = $injector.get('coinify');
 
       MyWallet.wallet = {
         hdwallet: {
@@ -59,7 +59,7 @@ describe('CoinifySummaryController', () => {
         }
       };
 
-      buySell.limits = {
+      coinify.limits = {
         bank: {
           min: {
             'EUR': 10
@@ -78,13 +78,13 @@ describe('CoinifySummaryController', () => {
         }
       };
 
-      buySell.getExchange = () => ({
+      coinify.getExchange = () => ({
         getBuyQuote() {}
       });
 
-      buySell.getQuote = () => $q.resolve(quote);
+      coinify.getQuote = () => $q.resolve(quote);
 
-      return buySell.accounts = [
+      return coinify.accounts = [
         {
           buy() { if (validBuy) { return $q.resolve(trade); } else { return $q.reject({error_description: 'Error'}); } }
         }
@@ -132,10 +132,10 @@ describe('CoinifySummaryController', () => {
   describe('.buy()', function () {
 
     it('should call buy', () => {
-      spyOn(buySell.accounts[0], 'buy');
+      spyOn(coinify.accounts[0], 'buy');
       scope.buy();
       scope.$digest();
-      return expect(buySell.accounts[0].buy).toHaveBeenCalled();
+      return expect(coinify.accounts[0].buy).toHaveBeenCalled();
     });
 
     it('should reset the quote and set the trade', () => {

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, buySell, $q, $rootScope, accounts, $state, $stateParams, bankMedium, payment, Env) {
+function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, coinify, $q, $rootScope, accounts, $state, $stateParams, bankMedium, payment, Env) {
   $scope.fields = {};
   $scope.user = Wallet.user;
   $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
@@ -18,7 +18,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
   this.message = 'SELL.QUOTE_EXPIRES';
   this.now = () => new Date().getTime();
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
-  this.refreshQuote = () => $q.resolve(buySell.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
+  this.refreshQuote = () => $q.resolve(coinify.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
 
   const onRefreshQuote = (quote) => {
     this.quote = quote;
@@ -119,7 +119,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.assignFiatCurrency();
 
-  let exchange = buySell.getExchange();
+  let exchange = coinify.getExchange();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.country = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
   this.fiat = () => this.transaction.currency.code;
@@ -150,7 +150,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     $uibModalInstance.dismiss('');
     this.reset();
     this.trade = null;
-    buySell.getTrades().then(() => {
+    coinify.getTrades().then(() => {
       this.goToOrderHistory();
     });
   };
@@ -191,7 +191,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.refreshQuote();
     this.quote.getPayoutMediums().then(mediums => {
       this.paymentAccount = mediums.bank;
-      this.sellLimits = buySell.getSellLimits(mediums);
+      this.sellLimits = coinify.getSellLimits(mediums);
       mediums.bank.getBankAccounts().then(bankAccounts => {
         this.accounts = bankAccounts;
         this.goTo('account');
@@ -228,5 +228,5 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     this.transaction.fiat = null;
   };
 
-  if (!this.sellLimits) this.sellLimits = buySell.getSellLimits;
+  if (!this.sellLimits) this.sellLimits = coinify.getSellLimits;
 }
