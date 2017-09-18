@@ -42,13 +42,13 @@ describe('sell-summary.component', () => {
     sell (bankId) { return $q.resolve(sellTrade); },
     updateQuote (quote) { return $q.resolve('something'); },
     quote: {
-      paymentMediums: ['bank'],
       expiresAt: 1493928203205
     }
   };
 
   let quote = {
-    expiresAt: 1494028203205
+    expiresAt: 1494028203205,
+    paymentMediums: {'bank': {'outPercentageFee': 3}}
   };
 
   let handlers = {
