@@ -57,9 +57,17 @@ describe('buyQuickStart', () => {
 
     buySell.getExchange = () =>
       ({
-        profile: {},
+        profile: {
+          level: {
+            limits: {
+              bank: { inDaily: 0 },
+              card: { inDaily: 300 }
+            }
+          }
+        },
         user: {},
-        getBuyQuote () { return $q.resolve([]); }
+        getBuyQuote () { return $q.resolve([]); },
+        kycs: [{ id: 1 }]
       })
     ;
 
@@ -68,6 +76,8 @@ describe('buyQuickStart', () => {
     buySell.getMinLimits = () => $q.resolve(limits);
     buySell.cancelTrade = () => $q.resolve(trade);
     buySell.getQuote = () => $q.resolve(quote);
+    buySell.fetchProfile = () => $q.resolve(true);
+    buySell.getLimits = () => $q.resolve(true)
 
     let mediums = {
       'card': {
@@ -129,4 +139,23 @@ describe('buyQuickStart', () => {
       expect(isoScope.disabled).toBe(false);
     })
   );
+
+  describe('.handleLimitError()', () =>
+
+    it('should set the limit error message', () => {
+      isoScope.handleLimitError();
+      expect(isoScope.status.limitError).toBe(true);
+      isoScope.profile.level = '2';
+      isoScope.handleLimitError();
+      expect(isoScope.status.limitMessage).toBe('COINIFY_LIMITS.DAILY_LIMIT_IS');
+      isoScope.profile.level = '1';
+      isoScope.exchange.kycs = [{ id: 2, state: 'pending' }];
+      isoScope.handleLimitError();
+      expect(isoScope.status.limitMessage).toBe('COINIFY_LIMITS.KYC_PENDING');
+      isoScope.exchange.kycs = [{ id: 3, state: 'rejected' }];
+      isoScope.handleLimitError();
+      expect(isoScope.status.limitMessage).toBe('COINIFY_LIMITS.KYC_REJECTED');
+    })
+  );
+
 });

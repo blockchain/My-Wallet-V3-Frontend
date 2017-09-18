@@ -61,7 +61,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     exchange.fetchProfile().then($scope.setState);
     buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-    if ($scope.buySellDebug) {
+    if ($scope.qaDebugger) {
       console.info('Load Sift Science iframe');
     }
     $scope.tradeId = trade.id;

@@ -25,7 +25,7 @@ function Env ($rootScope, $location, $q, $http) {
 
   $http.get(url)
     .success((res) => {
-      env.buySellDebug = $rootScope.buySellDebug;
+      env.qaDebugger = $rootScope.qaDebugger;
 
       env.partners = res.partners;
       env.showBuySellTab = res.showBuySellTab;
@@ -36,7 +36,7 @@ function Env ($rootScope, $location, $q, $http) {
       env.showMobileLogin = !!res.showMobileLogin;
 
       env.isProduction = env.rootURL === 'https://blockchain.info/' || env.rootURL === '/';
-      env.buySellDebug = false;
+      env.qaDebugger = false;
 
       console.info(
         'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',

@@ -130,6 +130,7 @@ module.exports = (grunt) => {
           'bower_components/qrcode/lib/qrcode.js',
           'bower_components/angular-qr/src/angular-qr.js',
           'bower_components/compare-versions/index.js',
+          'bower_components/highcharts/highcharts.js',
           'build/js/wallet-lazy-load.module.js'
         ],
 

@@ -11,18 +11,24 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
       let country = Wallet.my.wallet.accountInfo.countryCodeGuess;
       return this.countries === '*' || this.countriesBlacklist.indexOf(country) > -1;
     },
+    get isInWhitelistedState () {
+      let state = Wallet.my.wallet.accountInfo.stateCodeGuess;
+      return this.statesWhitelist === [] || this.statesWhitelist.indexOf(state) > -1;
+    },
     get isInRolloutGroup () {
       return this.rolloutFraction === 1 || MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction);
     },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
-      return Ethereum.userHasAccess && !this.isInBlacklistedCountry && this.isInRolloutGroup;
+      return this.qaDebugger || Ethereum.userHasAccess && !this.isInBlacklistedCountry && this.isInWhitelistedState && this.isInRolloutGroup;
     },
     get userAccessReason () {
       let reason;
       if (!Ethereum.userHasAccess) reason = `they do not have access to Ethereum (${Ethereum.userAccessReason})`;
       else if (this.isInBlacklistedCountry) reason = 'they are in a blacklisted country';
+      else if (!this.isInWhitelistedState) reason = 'they are not in a whitelisted state';
       else if (!this.isInRolloutGroup) reason = 'they are not in the rollout group';
+      else if (this.qaDebugger) reason = 'they have qa debugging enabled';
       else reason = 'Ethereum is initialized, they are not in a blacklisted country, and are in the rollout group';
       return `User can${this.userHasAccess ? '' : 'not'} see ShapeShift because ${reason}`;
     },
@@ -81,10 +87,12 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
   };
 
   Env.then((options) => {
-    let { shapeshift } = options;
+    let { shapeshift, qaDebugger } = options;
     if (shapeshift && !isNaN(shapeshift.rolloutFraction)) {
       service.countriesBlacklist = shapeshift.countriesBlacklist || [];
+      service.statesWhitelist = shapeshift.statesWhitelist || [];
       service.rolloutFraction = shapeshift.rolloutFraction || 0;
+      service.qaDebugger = qaDebugger;
     }
   });
 

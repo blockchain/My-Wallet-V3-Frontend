@@ -49,7 +49,7 @@
     },
     "HOW_TO_TRANSACT_ETH": {
       "Q": "How do I receive/send ether?",
-      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Ether’ in the left menu to access your ether dashboard. Once there, click on ‘Request’ to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ from the ether transactions tab, enter the recipient’s ether address in the ‘To’ field and how much you want to send."
+      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Request’ and select 'Ether' in the currency field to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ and select 'Ether' in the currency field, then enter the recipient’s ether address in the ‘To’ field along with how much you want to send."
     },
     "HOW_MUCH_TO_SEND": {
       "Q": "How much does it cost to send bitcoin{{showEthereum ? ' or ether' : ''}}?",
@@ -226,7 +226,7 @@
   "CANT_USE_EMAIL" : "You can't use your email as your password",
   "CANT_USE_HINT" : "You can't use your password hint as your password",
   "CANT_USE_CURRENT" : "You can't use your current password as your new password",
-  "CANT_USE_MAIN" : "You can't use your main password",
+  "CANT_USE_MAIN" : "You can't use your main password as your second password",
   "ADD_PASSWORD_HINT" : "Create Password Hint",
   "PASSWORD_HINT" : "Password Hint",
   "PASSWORD_HINT_EXPLAIN" : "Your Blockchain Wallet never communicates your password to our servers. This means we have no idea what your password is and we cannot reset it if you forget it. Create a memorable password hint that we can send to your verified email address in case you forget your password.",
@@ -449,7 +449,7 @@
   "ADDRESS_VALID" : "The Bitcoin address is valid",
   "ADDRESS_FOR_PRIVATE_KEY" : "The Bitcoin address associated with this Private Key is",
   "PRIVATE_KEY_WARNING" : "<b>WARNING:</b> Granting others  access to this Private Key gives them the ability to send bitcoin from this address. Exposing your Private Key to others is a security risk that may result in lost bitcoin. Do you wish to continue?",
-  "PRIVATE_KEY_WARNING_ETH" : "<b class='state-danger-text'><i class='icon-alert'></i> WARNING:</b> Granting others  access to this Private Key gives them the ability to send ether from this address. Exposing your Private Key to others is a security risk that may result in lost ether. <b>You will be asked for you main password in order to continue.</b>",
+  "PRIVATE_KEY_WARNING_ETH" : "<b class='state-danger-text'><i class='icon-alert'></i> WARNING:</b> Granting others  access to this Private Key gives them the ability to send ether from this address. Exposing your Private Key to others is a security risk that may result in lost ether. <b>You will be asked for your main password in order to continue.</b>",
   "BALANCE_FOR_ADDRESS": "The balance of this address is",
   "INPUT_NOT_RECOGNIZED" : "The value you entered does not appear to be a valid Private Key or bitcoin address",
   "ALREADY_IN_WALLET" : "This address is already present in the wallet",
@@ -703,7 +703,7 @@
   "MOBILE_NUMBER_TOOLTIP" : "@:MOBILE_NUMBER_EXPLAIN",
   "2FA_TOOLTIP" : "2-Step Verification helps prevent unauthorized access to your wallet by requiring a one-time password after every login attempt.",
   "BLOCK_TOR_TOOLTIP" : "Prevent IP addresses that are known to be part of the Tor anonymizing network from accessing your wallet.",
-  "ALL_WALLETS" : "All Wallets",
+  "ALL_BITCOIN_WALLETS" : "All Bitcoin Wallets",
   "ALL_TRANSACTIONS": "All Transactions",
   "NOTE_LC" : "Note:",
   "SECURE_WALLET_MSG_1" : "We’re thrilled you’re using your Blockchain wallet! But it looks like you’re still not as secure as you could be. Securing your wallet can help keep funds safe.",
@@ -989,7 +989,7 @@
   "SENT_CONFIRMATION_CODE": "We just sent a confirmation code to <span class='em-500'>{{::email}}</span>. Enter the code below to continue.",
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<a>Click here.</a>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin transaction. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
-  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept our <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
+  "ACCEPT_PARTNER_TOS_PRIVACY": "Accept our <a href='https://www.blockchain.com/terms' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
   "METHOD": "Method",
@@ -1176,7 +1176,7 @@
     "AGREE": "Strongly Agree"
   },
   "SPEND_IMPORTED_ADDRESS": "Spend",
-  "ACCEPT_TOS": "I have read and agree to the <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
+  "ACCEPT_TOS": "I have read and agree to the <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SEAMLESS_SECURE": "Simple. Seamless. Secure.",
   "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
@@ -1470,6 +1470,7 @@
     "QUOTE_EXPIRES": "Quote Expires: {{::count}}",
     "LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} yearly limit. To increase your limit, click",
     "LEVEL_2_LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} daily limit",
+    "AMOUNT_OVER": "This amount is over the maximum of {{ ::max }} BTC. Please start over with a lower amount.",
     "ISX": {
       "REVIEWING": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!",
       "REJECTED": "There was an issue verifying your identity. Please try again. Increasing your limit is unavailable until we can successfully verify your identity.",
@@ -1518,13 +1519,17 @@
   "PIN_CODE_INCORRECT": "Pin Code incorrect",
   "PAN_CARD_REQUIRED": "Pan Card required",
   "PAN_CARD_INCORRECT": "Pan Card incorrect",
-  "PAN_CARD_DUPLICATE": "PAN already registered",
+  "PAN_CARD_DUPLICATE": "PAN already registered.",
+  "CLICK_HERE_TO_RESTART": "Click here to restart.",
+  "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
   "EXCHANGE": {
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
     "VERIFY_EMAIL": "Verify Email Address",
     "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
+    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your Unocoin and Blockchain accounts. If it's not, you can update your Blockchain email ",
+    "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "Hey 👋! We noticed your Blockchain email is different than your {{::exchange}} email. Make sure you use the same email address.",
     "CHANGE_EMAIL": "Change Email",
     "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
     "CHANGE_EMAIL_FAILED": "Sorry, this email is already registered with {{::exchange}}.",
@@ -1556,7 +1561,6 @@
   "WHAT_IS_ETHER": "Ether is a digital currency. Like Bitcoin, it enables people around the world to transact, save, and hedge their way to a better financial future. In addition to sending value, ether also powers the Ethereum platform.",
   "WHY_SHOULD_I_USE_ETHER": "As the Ethereum platform grows, more intelligent applications will be built on top of it. We want to give you the opportunity to start using ether now, so you'll be ready to use these products in the future. ",
   "ETHER_DISABLE_SEND_TO_CONTRACT": "Sending to contract addresses is disabled.",
-  "MY_ETHER_WALLET": "My Ether Wallet",
   "ETHER_SECPASS_REQUIRED": "You must enter your second password to initialize your ether wallet.",
   "ETHER_SEND_RECEIVE": "Send & Receive Ether",
   "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
@@ -1580,7 +1584,7 @@
     "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
-    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::widthdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours, you can keep track of your Exchange progress in the Order History tab.",
+    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Order History tab.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
@@ -1628,10 +1632,17 @@
     }
   },
   "UNOCOIN_AFTER_TRANSFER": "After you have transferred funds to Unocoin, please enter your IMPS/NEFT/RTGS/CHEQUE reference number",
+  "COINIFY_LIMITS": {
+    "DAILY_LIMIT_IS": "Your daily limit is {{:: dailyLimit}} {{:: currency}}.",
+    "KYC_PENDING": "While your identification verification is processing, your daily limit is {{ ::dailyLimit }} {{ ::currency }}",
+    "KYC_REJECTED": "Your daily limit is {{ ::dailyLimit }} {{ ::currency }}. To try and verify your identification again, click here",
+    "HOW_LVL_3": "To increase your daily limit further, you must complete a transaction of at least 1,000 EUR. 14 days after the transaction completes, your daily limit will increase and your yearly limit will be uncapped."
+  },
   "WE_LISTENED": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
   "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
+  "HERE": "here",
   "": ""
 }

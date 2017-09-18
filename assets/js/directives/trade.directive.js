@@ -26,7 +26,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
 
   function link (scope, elem, attrs) {
     Env.then(env => {
-      scope.buySellDebug = env.buySellDebug;
+      scope.qaDebugger = env.qaDebugger;
     });
 
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';

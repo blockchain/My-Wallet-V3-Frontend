@@ -33,7 +33,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   $scope.siftScienceEnabled = false;
 
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   let state = $scope.state = {
