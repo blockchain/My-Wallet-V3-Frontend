@@ -8,6 +8,7 @@ angular
       onCancel: '&',
       onComplete: '&',
       handleShift: '&',
+      onExpiring: '&',
       onExpiration: '&'
     },
     templateUrl: 'templates/shapeshift/confirm.pug',

@@ -1352,6 +1352,10 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
   },
+  "expiring-exchange-helper": {
+    "TITLE": "Confirm Exchange Order",
+    "COPY": "Your exchange order is expiring soon. To confirm your exchange order at the current exchange rate, click on 'Close'."
+  },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
