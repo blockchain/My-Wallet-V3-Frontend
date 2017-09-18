@@ -42,6 +42,7 @@ describe('sell-summary.component', () => {
     sell (bankId) { return $q.resolve(sellTrade); },
     updateQuote (quote) { return $q.resolve('something'); },
     quote: {
+      paymentMediums: ['bank'],
       expiresAt: 1493928203205
     }
   };

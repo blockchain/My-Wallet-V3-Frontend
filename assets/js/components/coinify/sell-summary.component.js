@@ -31,6 +31,10 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
     }
   };
 
+  this.trade = {
+    fee: (this.quote.paymentMediums.bank.outPercentageFee / 100).toFixed(2)
+  };
+
   this.overMax = () => this.transaction.btc > this.sellLimits.max;
 
   this.isDisabled = () => {
