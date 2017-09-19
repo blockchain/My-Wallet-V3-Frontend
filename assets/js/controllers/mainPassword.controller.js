@@ -7,6 +7,7 @@ function MainPasswordCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate
   $scope.busy = false;
   $scope.mainPassword = '';
   $scope.isCorrectMainPassword = Wallet.isCorrectMainPassword;
+  $scope.isPasswordSubmissionDisabled = false;
 
   $scope.cancel = () => {
     defer.reject($translate.instant('MAIN_PASSWORD_CANCEL'));
@@ -15,7 +16,19 @@ function MainPasswordCtrl ($scope, Wallet, Alerts, $uibModalInstance, $translate
   };
 
   $scope.submit = () => {
-    $uibModalInstance.dismiss('');
-    defer.resolve();
+    if ($scope.isCorrectMainPassword($scope.mainPassword)) {
+      $uibModalInstance.dismiss('');
+      defer.resolve();
+    } else {
+      $scope.isPasswordSubmissionDisabled = true;
+    }
+  };
+
+  $scope.handleKeyUp = (event) => {
+    if (event.keyCode !== 13) {
+      $scope.isPasswordSubmissionDisabled = false;
+    }
+
+    return;
   };
 }
