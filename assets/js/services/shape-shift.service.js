@@ -12,8 +12,9 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
       return this.countries === '*' || this.countriesBlacklist.indexOf(country) > -1;
     },
     get isInWhitelistedState () {
+      // state is undefined if user is outside US
       let state = Wallet.my.wallet.accountInfo.stateCodeGuess;
-      return this.statesWhitelist === [] || this.statesWhitelist.indexOf(state) > -1;
+      return !state || this.statesWhitelist === '*' || this.statesWhitelist.indexOf(state) > -1;
     },
     get isInRolloutGroup () {
       return this.rolloutFraction === 1 || MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction);
