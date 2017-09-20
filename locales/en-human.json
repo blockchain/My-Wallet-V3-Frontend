@@ -1087,7 +1087,7 @@
   "BANK": "Bank Transfer",
   "CARD_TRANSFER": {
     "COPY1": "Receive bitcoin instantly",
-    "COPY2": "3% convenience fee",
+    "COPY2": "{{::fee}}% convenience fee",
     "COPY3": "Visa or Mastercard",
     "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
     "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
@@ -1096,6 +1096,7 @@
     "COPY1": "One time ID Verification",
     "COPY2": "Receive bitcoin in 2-3 days",
     "COPY3": "No payment fees",
+    "COPY4": "{{::fee}}% payment fee",
     "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card.",
     "PAY_VIA": "I want to pay via bank transfer",
     "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase."
