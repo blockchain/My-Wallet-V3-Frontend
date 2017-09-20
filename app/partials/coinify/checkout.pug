@@ -10,13 +10,11 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       exchange-checkout(
         dollars="fiat"
         conversion="100"
-        buy-enabled="true"
         limits="limits"
         collapse-summary="true"
+        buy-success="buyHandler(quote)"
         handle-mediums="mediumsHandler(quote)"
-        handle-buy="buyHandler(account, quote)"
         handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
-        buy-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)"
         buy-error="buyError()")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(state="kyc.state" on-trigger="openKyc()" currency="transaction.currency")
