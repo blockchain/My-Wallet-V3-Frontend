@@ -53,8 +53,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         user-action-required="trade.state === 'awaiting_transfer_in'"
         disabled="status.disabled"
         conversion="100"
+        buy="buyHandler"
         trade="trade"
-        buy="buy"
         sell="sell")
 
     .flex-row.flex-between.flex-center.mtl
@@ -76,8 +76,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:$render.limit"
         disabled="status.disabled"
         conversion="100"
+        buy="buyHandler"
         trade="trade"
-        buy="buy"
         sell="sell"
         in-view="$last && !$root.size.xs && $render.next()")
       tr.border.center(ng-show="$root.size.xs && trades.completed.length > $render.limit")
