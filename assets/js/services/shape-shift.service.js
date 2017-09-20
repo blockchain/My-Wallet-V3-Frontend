@@ -2,32 +2,36 @@ angular
   .module('walletApp')
   .factory('ShapeShift', ShapeShift);
 
-function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelper) {
+function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelper, Condition) {
+  const qaDebuggerCond = Condition.of(() => ({
+    passed: service.qaDebugger,
+    reason: [`qa debug is ${service.qaDebugger ? '' : 'not '}enabled`]
+  }));
+
+  const accessCondition = Condition.empty()
+    .is(qaDebuggerCond)
+    .or(Condition.empty()
+      .is(Ethereum.accessCondition)
+      .is(Condition.inStateWhitelist)
+      .isNot(Condition.inCountryBlacklist)
+    );
+
   const service = {
     get shapeshift () {
       return Wallet.my.wallet.shapeshift;
     },
-    get isInBlacklistedCountry () {
-      let country = Wallet.my.wallet.accountInfo.countryCodeGuess;
-      return this.countries === '*' || this.countriesBlacklist.indexOf(country) > -1;
-    },
-    get isInWhitelistedState () {
-      // state is undefined if user is outside US
-      let state = Wallet.my.wallet.accountInfo.stateCodeGuess;
-      return !state || this.statesWhitelist === '*' || this.statesWhitelist.indexOf(state) > -1;
+    options: {},
+    get conditionEnv () {
+      let { accountInfo } = Wallet.my.wallet;
+      return { accountInfo, options: this.options };
     },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
-      return this.qaDebugger || Ethereum.userHasAccess && !this.isInBlacklistedCountry && this.isInWhitelistedState;
+      return accessCondition.test(this.conditionEnv).passed;
     },
     get userAccessReason () {
-      let reason;
-      if (!Ethereum.userHasAccess) reason = `they do not have access to Ethereum (${Ethereum.userAccessReason})`;
-      else if (this.isInBlacklistedCountry) reason = 'they are in a blacklisted country';
-      else if (!this.isInWhitelistedState) reason = 'they are not in a whitelisted state';
-      else if (this.qaDebugger) reason = 'they have qa debugging enabled';
-      else reason = 'Ethereum is initialized, they are not in a blacklisted country, and are in the rollout group';
-      return `User can${this.userHasAccess ? '' : 'not'} see ShapeShift because ${reason}`;
+      if (Wallet.my.wallet == null) return '';
+      return Condition.format('ShapeShift', accessCondition.test(this.conditionEnv));
     },
     get USAState () {
       return Wallet.my.wallet.shapeshift.USAState;
@@ -85,13 +89,11 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
 
   Env.then((options) => {
     let { shapeshift, qaDebugger } = options;
-    if (shapeshift && !isNaN(shapeshift.rolloutFraction)) {
-      service.countriesBlacklist = shapeshift.countriesBlacklist || [];
-      service.statesWhitelist = shapeshift.statesWhitelist || [];
-      service.rolloutFraction = shapeshift.rolloutFraction || 0;
-      service.qaDebugger = qaDebugger;
-    }
+    service.options = shapeshift;
+    service.qaDebugger = qaDebugger;
   });
+
+  window.ShapeShift = service;
 
   return service;
 }

@@ -37,6 +37,13 @@ angular
         })
       }
 
+      bindEnv (env, reason) {
+        return Condition.of(() => {
+          let { passed } = this.test(env())
+          return { passed, reason: reason(passed) }
+        })
+      }
+
       static empty () {
         return Condition.of(() => ({
           passed: true,
@@ -71,6 +78,7 @@ angular
     Condition.inStateWhitelist = Condition.of(({ accountInfo, options }) => {
       let passed = (
         accountInfo.stateCodeGuess == null ||
+        options.statesWhitelist === '*' ||
         options.statesWhitelist.indexOf(accountInfo.stateCodeGuess) > -1
       )
       return {
@@ -82,6 +90,7 @@ angular
     Condition.inCountryWhitelist = Condition.of(({ accountInfo, options }) => {
       let passed = (
         accountInfo.countryCodeGuess == null ||
+        options.countries === '*' ||
         options.countries.indexOf(accountInfo.countryCodeGuess) > -1
       )
       return {

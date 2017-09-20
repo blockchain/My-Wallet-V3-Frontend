@@ -3,13 +3,13 @@ angular
   .factory('Ethereum', Ethereum);
 
 function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env, Condition) {
-  const ethInititalized = Condition.of(() => ({
-    passed: service.ethInititalized,
-    reason: [`Ethereum is ${service.ethInititalized ? '' : 'not '}initialized`]
+  const ethInititalizedCond = Condition.of(() => ({
+    passed: this.ethInititalized,
+    reason: [`Ethereum is ${this.ethInititalized ? '' : 'not '}initialized`]
   }));
 
   const accessCondition = Condition.empty()
-    .is(ethInititalized)
+    .is(ethInititalizedCond)
     .or(Condition.empty()
       .is(Condition.inCountryWhitelist)
       .is(Condition.inRolloutGroup)
@@ -43,13 +43,19 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env, Condition)
       let { guid, accountInfo } = Wallet.my.wallet;
       return { guid, accountInfo, options: this.options };
     },
+    get accessCondition () {
+      return accessCondition.bindEnv(
+        () => this.conditionEnv,
+        (passed) => `they ${passed ? '' : 'do not '}have access to Ethereum`
+      );
+    },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
       return accessCondition.test(this.conditionEnv).passed;
     },
     get userAccessReason () {
       if (Wallet.my.wallet == null) return '';
-      return Condition.format('ethereum', accessCondition.test(this.conditionEnv));
+      return Condition.format('Ethereum', accessCondition.test(this.conditionEnv));
     },
     get hasSeen () {
       return this.eth && this.eth.hasSeen;
