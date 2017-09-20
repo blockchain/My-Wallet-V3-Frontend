@@ -2,7 +2,19 @@ angular
   .module('walletApp')
   .factory('Ethereum', Ethereum);
 
-function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
+function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env, Condition) {
+  const ethInititalized = Condition.of(() => ({
+    passed: service.ethInititalized,
+    reason: [`Ethereum is ${service.ethInititalized ? '' : 'not '}initialized`]
+  }));
+
+  const accessCondition = Condition.empty()
+    .is(ethInititalized)
+    .or(Condition.empty()
+      .is(Condition.inCountryWhitelist)
+      .is(Condition.inRolloutGroup)
+    );
+
   const service = {
     lastTxHash: null,
     get eth () {
@@ -26,27 +38,18 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     get ethInititalized () {
       return Wallet.my.wallet && this.eth && (this.eth.defaultAccount || this.eth.legacyAccount) && true;
     },
-    countries: [],
-    rolloutFraction: 0,
-    get isInWhitelistedCountry () {
-      return this.countries === '*' || this.countries.indexOf(Wallet.my.wallet.accountInfo.countryCodeGuess) > -1;
-    },
-    get isInRolloutGroup () {
-      return MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction);
+    options: {},
+    get conditionEnv () {
+      let { guid, accountInfo } = Wallet.my.wallet;
+      return { guid, accountInfo, options: this.options };
     },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
-      return this.isInWhitelistedCountry && this.isInRolloutGroup;
+      return accessCondition.test(this.conditionEnv).passed;
     },
     get userAccessReason () {
-      let reason;
-      if (Wallet.my.wallet == null) reason = 'wallet is null';
-      // else if (this.ethInititalized) reason = 'it is already initialized';
-      else if (this.isInWhitelistedCountry && this.isInRolloutGroup) reason = 'they are in a whitelisted country and in the rollout group';
-      else if (this.isInWhitelistedCountry) reason = 'they are in a whitelisted country but not in the rollout group';
-      else if (this.isInRolloutGroup) reason = 'they are in the rollout group but not in a whitelisted country';
-      else reason = 'they are not in a whitelisted country or the rollout group';
-      return `User can${this.userHasAccess ? '' : 'not'} see Ethereum because ${reason}`;
+      if (Wallet.my.wallet == null) return '';
+      return Condition.format('ethereum', accessCondition.test(this.conditionEnv));
     },
     get hasSeen () {
       return this.eth && this.eth.hasSeen;
@@ -147,11 +150,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
   };
 
   Env.then((options) => {
-    let { ethereum } = options;
-    if (ethereum && !isNaN(ethereum.rolloutFraction)) {
-      service.countries = ethereum.countries || [];
-      service.rolloutFraction = ethereum.rolloutFraction;
-    }
+    service.options = options.ethereum;
   });
 
   return service;
