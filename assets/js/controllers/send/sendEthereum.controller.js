@@ -86,11 +86,10 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
       Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
       Ethereum.recordLastTransaction(txHash);
       if (this.tx.note) Ethereum.setTxNote(txHash, this.tx.note);
+      if (!localStorageService.get('ethereum-survey')) Alerts.surveyCloseConfirm('ethereum-survey', links, 0);
     }).catch(({ message }) => {
       Alerts.displayError(message);
     });
-
-    !localStorageService.get('ethereum-survey') && Alerts.surveyCloseConfirm('ethereum-survey', links, 0);
   };
 
   this.getTransactionTotal = () => {
