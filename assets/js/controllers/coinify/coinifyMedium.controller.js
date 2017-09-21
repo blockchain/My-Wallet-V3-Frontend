@@ -12,7 +12,7 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
     try { return JSON.parse(json); } catch (e) { return json; }
   };
 
-  let fiatAmount = baseFiat() ? -quote.baseAmount / 100 : -quote.quoteAmount / 100;
+  let fiatAmount = baseFiat() ? quote.baseAmount : quote.quoteAmount;
   $scope.belowCardMax = fiatAmount <= parseFloat($scope.limits.card.max[fiatCurrency()]);
   // i.e card max is 300 and buy amount is 500
   // $scope.belowCardMax = false;
