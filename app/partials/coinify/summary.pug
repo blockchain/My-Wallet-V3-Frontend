@@ -18,13 +18,8 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
         span(translate="{{isBank ? 'BTC_APPROX_RATE' : 'BTC:'}}")
         span.success(ng-class="{tilda: isBank}" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
       .flex-row.flex-between.pam.pos-rel
-        span.colon(ng-hide="state.editAmount" translate="AMOUNT")
+        span.colon(translate="AMOUNT")
         span(ng-hide="state.editAmount") {{ format(trade.fiatAmount, dollars, true) }}
-        span.type-sm.blue.underline.pointer(
-          ng-show="state.editAmount"
-          ng-class="{'o-3': summaryForm.fiat.$invalid || locked}"
-          ng-click="!locked && summaryForm.fiat.$valid && commitValues()"
-          translate="UPDATE")
         div.input-group.width-50.flex-row.flex-center.amount-input(ng-if="state.editAmount")
           div.flex-row.flex-center.width-100
             input.form-control(
@@ -60,5 +55,5 @@ form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="form" ng
       div
         label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
     .flex-row.flex-between.pt-20
-      button.button-muted(ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
-      button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="CONFIRM")
+      button.button-muted(type="button" ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
+      button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="{{state.editAmount ? 'UPDATE' : 'CONFIRM'}}")

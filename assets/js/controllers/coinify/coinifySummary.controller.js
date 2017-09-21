@@ -42,7 +42,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   $scope.state.editAmount = $scope.trade.fiatAmount > max || $scope.trade.fiatAmount < min;
 
   let getQuote = () => {
-    return coinify.getQuote($scope.tempTrade.fiatAmount, $scope.tempTrade.fiatCurrency);
+    return coinify.getQuote($scope.tempTrade.fiatAmount * 100, $scope.tempTrade.fiatCurrency);
   };
 
   $scope.commitValues = () => {
