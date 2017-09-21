@@ -1258,9 +1258,37 @@
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "SURVEY_PROMPT": {
+  "GENERAL_SURVEY_PROMPT": {
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
+  },
+  "BUY_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SELL_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SFOX_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SHIFT_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "ETHEREUM_SURVEY_PROMPT": {
+    "TITLE": "Before you continue...",
+    "BODY": "Would you like to provide feedback regarding your Ethereum wallet experience today?"
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
