@@ -28,7 +28,7 @@ function RequestEthereumController ($scope, AngularHelper, browser, Env, Ethereu
 
   $scope.promptEthereumSurvey = () => {
     if (!localStorageService.get('ethereum-survey') && !localStorageService.get('copied-ethereum-address') && $scope.etherBalance === '0') {
-      Alerts.surveyCloseConfirm('ethereum-survey', links, 1, 'ETHEREUM_SURVEY_PROMPT');
+      Alerts.surveyCloseConfirm('ethereum-survey', links, 1);
     }
   };
 

@@ -90,7 +90,7 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
       Alerts.displayError(message);
     });
 
-    !localStorageService.get('ethereum-survey') && Alerts.surveyCloseConfirm('ethereum-survey', links, 0, 'ETHEREUM_SURVEY_PROMPT');
+    !localStorageService.get('ethereum-survey') && Alerts.surveyCloseConfirm('ethereum-survey', links, 0);
   };
 
   this.getTransactionTotal = () => {

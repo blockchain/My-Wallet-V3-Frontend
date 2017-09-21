@@ -71,7 +71,7 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
     });
   }
 
-  function surveyCloseConfirm (survey, links, index, customSurveyPrompt) {
+  function surveyCloseConfirm (survey, links, index) {
     let link = links[index];
     let surveyOpened = localStorageService.get(survey);
     let namespace = survey.split('-').join('_').toUpperCase();
@@ -82,9 +82,7 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
     } else {
       localStorageService.set(survey, {index: index});
       let openSurvey = () => BrowserHelper.safeWindowOpen(link);
-      let surveyPrompt = 'SURVEY_PROMPT';
-
-      if (customSurveyPrompt) surveyPrompt = customSurveyPrompt;
+      let surveyPrompt = namespace + '_PROMPT';
 
       return service.confirm(surveyPrompt, {action: 'TAKE_SURVEY', friendly: true, cancel: 'NO_THANKS'})
                     .then(openSurvey)
