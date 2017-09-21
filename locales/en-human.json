@@ -1380,6 +1380,10 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
   },
+  "expiring-exchange-helper": {
+    "TITLE": "👋 Confirm Exchange Order!",
+    "COPY": "Did you forget about your exchange order? Exchange rates are only valid for 10 minutes, and once a rate expires, you'll have to start over."
+  },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
