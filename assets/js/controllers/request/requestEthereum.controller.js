@@ -4,6 +4,7 @@ angular
 
 function RequestEthereumController ($scope, AngularHelper, browser, Env, Ethereum, localStorageService, Alerts) {
   let links;
+  let copiedEthereumAddress = false;
 
   Env.then(env => {
     links = env.ethereum.surveyLinks;
@@ -23,11 +24,11 @@ function RequestEthereumController ($scope, AngularHelper, browser, Env, Ethereu
 
   $scope.copyEthereumAddress = () => {
     $scope.state.isAddressCopied = true;
-    localStorageService.set('copied-ethereum-address', true);
+    copiedEthereumAddress = true;
   };
 
   $scope.promptEthereumSurvey = () => {
-    if (!localStorageService.get('ethereum-survey') && !localStorageService.get('copied-ethereum-address') && $scope.etherBalance === '0') {
+    if (!localStorageService.get('ethereum-survey') && !copiedEthereumAddress && $scope.etherBalance === '0') {
       Alerts.surveyCloseConfirm('ethereum-survey', links, 1);
     }
   };
