@@ -3,6 +3,7 @@ angular
   .module('walletApp')
   .component('exchangeCheckout', {
     bindings: {
+      type: '<',
       quote: '<',
       limits: '<',
       trades: '<',
@@ -88,11 +89,11 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       this.collapseSummary = true;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       if (state.baseFiat) {
-        state.btc = $scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin);
-        state.rate = (1 / (quote.quoteAmount / 1e8)) * Math.abs(quote.baseAmount);
+        state.btc = Math.abs($scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin));
+        state.rate = (1 / (Math.abs(quote.quoteAmount) / 1e8)) * Math.abs(quote.baseAmount);
       } else {
-        state.fiat = quote.quoteAmount;
-        state.rate = (1 / (Math.abs(quote.baseAmount) / 1e8)) * (quote.quoteAmount);
+        state.fiat = Math.abs(quote.quoteAmount);
+        state.rate = (1 / (Math.abs(quote.baseAmount) / 1e8)) * Math.abs(quote.quoteAmount);
       }
     };
 
@@ -105,7 +106,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.getInitialQuote = () => {
     let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = quote.quoteAmount; this.handleMediums({quote: quote}); });
+    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount); this.handleMediums({quote: quote}); });
   };
 
   $scope.refreshIfValid = (field) => {

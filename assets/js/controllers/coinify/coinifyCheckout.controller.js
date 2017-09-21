@@ -6,11 +6,15 @@ function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $sta
   let exchange = MyWallet.wallet.external.coinify;
 
   $scope.trades = coinify.trades;
-  $scope.buyHandler = modals.openBuyView;
-  $scope.quoteHandler = coinify.getQuote;
   $scope.coinifyStatus = coinify.getStatus;
   $scope.fiatOptions = currency.coinifyCurrencies;
   $scope.mediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.limits = coinify.getLimits(mediums, $scope.fiat.code));
+
+  $scope.buyHandler = modals.openBuyView;
+  $scope.buyQuoteHandler = coinify.getQuote;
+
+  $scope.sellHandler = modals.openSellView;
+  $scope.sellQuoteHandler = coinify.getSellQuote;
 
   if (exchange.profile) {
     $scope.fiat = currency.currencies.filter(c => c.code === exchange.profile.defaultCurrency)[0];
@@ -30,15 +34,6 @@ function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $sta
 
   $scope.initialize = () => {
     $scope.settings = Wallet.settings;
-
-    $scope.sell = (trade, bankMedium, payment, options) => {
-      if (!$scope.status.modalOpen) {
-        $scope.status.modalOpen = true;
-        coinify.openSellView(trade, bankMedium, payment, options).finally(() => {
-          $scope.onCloseModal();
-        });
-      }
-    };
 
     $scope.openKyc = () => {
       $q.resolve(coinify.getOpenKYC())

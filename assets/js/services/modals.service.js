@@ -222,6 +222,33 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openSellView = service.openOnce((trade, bankMedium, payment, buySellOptions = { sell: true }) => {
+    let exchange = service.getExchange();
+    return $uibModal.open({
+      templateUrl: 'partials/coinify-sell-modal.pug',
+      windowClass: 'bc-modal buy',
+      controller: 'CoinifySellController',
+      controllerAs: 'vm',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        trade: () => trade,
+        bankMedium: () => {
+          if (exchange.profile && !trade.state) return bankMedium;
+        },
+        accounts: () => {
+          if (exchange.profile && !trade.state) {
+            return bankMedium.getBankAccounts().then(bankAccounts => {
+              return bankAccounts;
+            });
+          }
+        },
+        buySellOptions: () => buySellOptions,
+        payment: () => payment || undefined
+      }
+    }).result;
+  });
+
   service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
       controllerAs: 'vm',

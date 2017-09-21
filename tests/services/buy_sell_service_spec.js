@@ -167,26 +167,6 @@ describe('coinify service', () => {
     });
   });
 
-  describe('openSellView', () => {
-    let trade;
-    let bankMedium;
-    let payment;
-    beforeEach(function () {
-      trade = { btc: 1, fiat: 100 };
-      bankMedium = {
-        getBankAccounts () { return $q.resolve('something'); }
-      };
-      payment = { fee: 1 };
-      exchange = coinify.getExchange();
-      exchange.profile = { user: 1 };
-    });
-
-    it('should call getExchange', () => {
-      coinify.openSellView(trade, bankMedium, payment);
-    });
-  });
-      // expect(result).toEqual
-
   describe('isPendingSellTrade()', () => {
     let pendingTrade;
     exchange = undefined;

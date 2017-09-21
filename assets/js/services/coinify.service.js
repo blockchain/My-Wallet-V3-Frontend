@@ -56,7 +56,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getTrades,
     watchAddress,
     fetchProfile,
-    openSellView,
     pollKYC,
     pollUserLevel,
     signupForAccess,
@@ -93,9 +92,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function getSellQuote (amt, curr, quoteCurr) {
     if (curr === 'BTC') {
-      amt = Math.trunc(amt * 100000000);
+      amt = Math.trunc(-amt);
     } else {
-      amt = Math.trunc(amt * 100);
+      amt = Math.trunc(amt);
     }
     return $q.resolve(service.getExchange().getSellQuote(amt, curr, quoteCurr));
   }
@@ -236,33 +235,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     };
 
     return $q.resolve(service.getExchange().fetchProfile()).then(() => {}, error);
-  }
-
-  function openSellView (trade, bankMedium, payment, buySellOptions = { sell: true }) {
-    let exchange = service.getExchange();
-    return $uibModal.open({
-      templateUrl: 'partials/coinify-sell-modal.pug',
-      windowClass: 'bc-modal buy',
-      controller: 'CoinifySellController',
-      controllerAs: 'vm',
-      backdrop: 'static',
-      keyboard: false,
-      resolve: {
-        trade: () => trade,
-        bankMedium: () => {
-          if (exchange.profile && !trade.state) return bankMedium;
-        },
-        accounts: () => {
-          if (exchange.profile && !trade.state) {
-            return bankMedium.getBankAccounts().then(bankAccounts => {
-              return bankAccounts;
-            });
-          }
-        },
-        buySellOptions: () => buySellOptions,
-        payment: () => payment || undefined
-      }
-    }).result;
   }
 
   function isPendingSellTrade (pendingTrade) {
