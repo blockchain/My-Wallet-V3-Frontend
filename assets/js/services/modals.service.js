@@ -77,7 +77,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
         'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
         'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png',
-        'expiring-exchange-helper': 'img/expiring-exchange-helper.png'
+        'expiring-exchange-helper': 'img/expiring-exchange-helper.gif'
       };
 
       $scope.helper = helper;
