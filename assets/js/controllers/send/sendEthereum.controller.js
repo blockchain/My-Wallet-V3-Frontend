@@ -2,13 +2,16 @@ angular
   .module('walletApp')
   .controller('SendEthereumController', SendEthereumController);
 
-function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum, Wallet) {
+function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum, Wallet, Env, localStorageService) {
   const txTemplate = {
     to: null,
     amount: null,
     amountFiat: null,
     note: null
   };
+
+  let links;
+  Env.then(env => links = env.ethereum.surveyLinks);
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
@@ -86,6 +89,8 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
     }).catch(({ message }) => {
       Alerts.displayError(message);
     });
+
+    !localStorageService.get('ethereum-survey') && Alerts.surveyCloseConfirm('ethereum-survey', links, 0);
   };
 
   this.getTransactionTotal = () => {
