@@ -19,7 +19,6 @@ var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://st
 var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
 var sfoxProduction = parseInt(process.env.SFOX_USE_PRODUCTION, 10) === 1;
 var unocoinProduction = parseInt(process.env.UNOCOIN_USE_PRODUCTION, 10) === 1;
-var testnet = process.env.NETWORK === 'testnet';
 
 // App configuration
 var rootApp = express();
@@ -63,7 +62,7 @@ app.use(function (req, res, next) {
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
         'https://shapeshift.io',
-        `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
+        `https://app-api.${!production ? 'sandbox.' : ''}coinify.com`,
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`,

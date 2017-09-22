@@ -36,7 +36,7 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
   td.type-lbl
     span(ng-hide="status.gettingQuote")
       span.em-600(ng-hide="trade.medium === 'blockchain'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
-      span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.outAmountExpected / conversion) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
+      span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.transferOut.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
       span.hidden-xs
         i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel && trade.medium !== 'blockchain'" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
         i.ti-trash.fade(ng-hide="canCancel")

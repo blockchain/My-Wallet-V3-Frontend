@@ -47,7 +47,8 @@ describe('sell-summary.component', () => {
   };
 
   let quote = {
-    expiresAt: 1494028203205
+    expiresAt: 1494028203205,
+    paymentMediums: {'bank': {'outPercentageFee': 3}}
   };
 
   let handlers = {
