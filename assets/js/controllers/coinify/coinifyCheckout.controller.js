@@ -3,8 +3,6 @@ angular
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
 function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wallet, currency, coinify, MyWallet, $q, $stateParams, modals) {
-  const ONE_DAY_MS = 86400000;
-
   let exchange = MyWallet.wallet.external.coinify;
 
   $scope.buying = {};
@@ -79,28 +77,14 @@ function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $sta
     });
   }
 
-  // Trading Disabled Logic
-  Env.then(env => {
-    let profile = exchange && exchange.profile;
-    let canTrade = profile && profile.canTrade;
-    let disabled = env.partners.coinify.disabled;
-    let isDisabledReason = profile && profile.cannotTradeReason;
-    let isDisabledUntil = profile && isNaN(profile.canTradeAfter) ? 1 : Math.ceil((profile.canTradeAfter - Date.now()) / ONE_DAY_MS);
-
-    if (disabled || !canTrade) {
-      $scope.selling = $scope.buying;
-      $scope.buying.isDisabled = true;
-      $scope.buying.isDisabledUntil = isDisabledUntil;
-      $scope.buying.isDisabledReason = isDisabledReason || 'disabled';
-      $scope.buying.launchOption = coinify.openPendingTrade;
-    }
-  });
-
   $scope.setSellLimits = () => {
     if ($scope.exchange._profile) {
       $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
     }
   };
+
+  $scope.buying = coinify.buying;
+  $scope.selling = coinify.selling;
 
   let email = MyWallet.wallet.accountInfo.email;
   Env.then(env => {

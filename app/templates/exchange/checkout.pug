@@ -3,7 +3,7 @@ form.bc-form(
   ng-submit="$ctrl.buyAccount ? enableBuy(): buy();"
   novalidate
   autocomplete="off")
-  fieldset(ng-disabled="locked || $ctrl.trading.isDisabled")
+  fieldset(ng-disabled="locked || trading().isDisabled")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -50,11 +50,11 @@ form.bc-form(
               ng-model-options="{debounce: 250}"
               required)
             span.mhm {{bitcoin.code}}
-        .f-12.mts(ng-show="$ctrl.trading.isDisabled")
-          span.state-danger-text(translate="{{ provider + '.' + $ctrl.trading.isDisabledReason + '.EXPLAIN'}}")
+        .f-12.mts(ng-show="trading().isDisabled")
+          span.state-danger-text(translate="{{ provider + '.' + trading().isDisabledReason + '.EXPLAIN'}}")
           | &nbsp;
-          a(ng-click="$ctrl.trading.launchOption()" translate="{{ provider + '.' + $ctrl.trading.isDisabledReason + '.OPTION'}}")
-        .f-12.mts(ng-show="!$ctrl.trading.isDisabled")
+          a(ng-click="trading().launchOption()" translate="{{ provider + '.' + trading().isDisabledReason + '.OPTION'}}")
+        .f-12.mts(ng-show="!trading().isDisabled")
           span(ng-hide="$ctrl.limits.max") &nbsp;
           span(ng-show="$ctrl.limits.max" ng-class="{'state-danger-text':checkoutForm.$error.max}")
             | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.

@@ -47,7 +47,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify) {
     scope.cancel = () => {
       if (!scope.canCancel) return;
       scope.disabled = true;
-      coinify.cancelTrade(scope.trade).finally(() => scope.disabled = false);
+      coinify.cancelTrade(scope.trade).then(() => coinify.fetchProfile()).finally(() => scope.disabled = false);
     };
 
     scope.triggerBuy = () => {

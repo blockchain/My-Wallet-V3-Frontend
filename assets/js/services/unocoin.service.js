@@ -9,6 +9,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
     },
     buy,
     init,
+    buying,
     getTxMethod,
     determineStep,
     getPendingTrade,
@@ -28,6 +29,18 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
       if (unocoin.trades) service.watchTrades(unocoin.trades);
       unocoin.monitorPayments();
     });
+  }
+
+  function buying () {
+    let pendingTrade = service.getPendingTrade();
+
+    if (pendingTrade) {
+      return {
+        isDisabled: true,
+        launchOption: service.openPendingTrade,
+        isDisabledReason: 'awaiting_first_trade_completion'
+      };
+    }
   }
 
   function determineStep () {

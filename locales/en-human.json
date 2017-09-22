@@ -1490,10 +1490,6 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
-  "UNOCOIN": {
-    "PENDING": "Identity Verification Pending",
-    "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!"
-  },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
   "SHOW_QR_CODE": "Show QR Code",
@@ -1530,6 +1526,8 @@
     }
   },
   "UNOCOIN": {
+    "PENDING": "Identity Verification Pending",
+    "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!",
     "awaiting_first_trade_completion": {
       "EXPLAIN": "@:COINIFY.awaiting_first_trade_completion.EXPLAIN",
       "OPTION": "@:COINIFY.awaiting_first_trade_completion.OPTION"

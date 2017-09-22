@@ -3,6 +3,8 @@ angular
   .factory('coinify', coinify);
 
 function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi) {
+  const ONE_DAY_MS = 86400000;
+
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -47,6 +49,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
     init,
+    buying,
+    selling,
     getQuote,
     getSellQuote,
     getKYCs,
@@ -80,6 +84,35 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       coinify.monitorPayments();
       initialized.resolve();
     });
+  }
+
+  function buying () {
+    let profile = service.exchange && service.exchange.profile;
+    let canTrade = profile && profile.canTrade;
+    let isDisabledReason = profile && profile.cannotTradeReason;
+    let isDisabledUntil = profile && Math.ceil((profile.canTradeAfter - Date.now()) / ONE_DAY_MS);
+
+    if (!profile) {
+      return {
+        isDisabled: false
+      };
+    } else if (!canTrade) {
+      return {
+        isDisabled: true,
+        isDisabledUntil: isDisabledUntil,
+        isDisabledReason: isDisabledReason,
+        launchOption: service.openPendingTrade
+      };
+    }
+  }
+
+  function selling () {
+    let profile = coinify && coinify.profile;
+    let canTrade = profile && profile.canTrade;
+
+    if (!canTrade) {
+      return service.buying();
+    }
   }
 
   function getQuote (amt, curr, quoteCurr) {

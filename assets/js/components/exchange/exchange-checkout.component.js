@@ -26,20 +26,18 @@ angular
   });
 
 function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
-  $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
+  $scope.format = currency.formatCurrencyForView;
   $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.dollars = this.dollars;
+  $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
-  $scope.btcAccount = Wallet.getDefaultAccount();
+
+  $scope.trading = this.trading;
+  $scope.dollars = this.dollars;
   $scope.siftScienceEnabled = false;
   $scope.buySuccess = this.buySuccess;
   $scope.provider = this.provider.toUpperCase();
-
-  Env.then(env => {
-    $scope.qaDebugger = env.qaDebugger;
-  });
 
   let state = $scope.state = {
     btc: null,
@@ -155,6 +153,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
 
+  Env.then(env => $scope.qaDebugger = env.qaDebugger);
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();

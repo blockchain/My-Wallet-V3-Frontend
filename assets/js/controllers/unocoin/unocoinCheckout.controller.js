@@ -2,10 +2,10 @@ angular
   .module('walletApp')
   .controller('UnocoinCheckoutController', UnocoinCheckoutController);
 
-function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, exchangeRate, mediums, $rootScope, showCheckout, buyMobile) {
+function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelpers, AngularHelper, Alerts, currency, modals, unocoin, exchangeRate, mediums, showCheckout) {
   let exchange = $scope.vm.external.unocoin;
 
-  $scope.buying = {};
+  $scope.buying = unocoin.buying;
   $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
 
   $scope.openUnocoinSignup = (quote) => {
@@ -55,12 +55,4 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.buyError = () => {
     Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
-
-  let pendingTrade = unocoin.getPendingTrade();
-
-  if (pendingTrade) {
-    $scope.buying.isDisabled = true;
-    $scope.buying.isDisabledReason = 'awaiting_first_trade_completion';
-    $scope.buying.launchOption = unocoin.openPendingTrade;
-  }
 }
