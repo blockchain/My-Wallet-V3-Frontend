@@ -52,7 +52,7 @@ describe('CoinifyMediumController', () => {
 
       coinify.kycs = [kyc];
 
-      coinify.getExchange = () => ({
+      coinify.exchange = () => ({
         profile: profile,
         getBuyQuote () {},
         fetchProfile () { return $q.resolve(profile); }

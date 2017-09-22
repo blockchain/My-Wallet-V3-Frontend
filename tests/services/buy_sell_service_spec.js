@@ -57,7 +57,7 @@ describe('coinify service', () => {
   ;
 
   beforeEach(function () {
-    exchange = coinify.getExchange();
+    exchange = coinify.exchange;
 
     let trades = ['processing', 'completed', 'completed_test', 'cancelled'].map(makeTrade);
 
@@ -115,7 +115,7 @@ describe('coinify service', () => {
     let fetchFailWith;
 
     beforeEach(function () {
-      exchange = coinify.getExchange();
+      exchange = coinify.exchange;
       spyOn(exchange, 'fetchProfile').and.callFake(function () {
         if (fetchFailWith != null) { return $q.reject(fetchFailWith); } else { return $q.resolve(); }
       });
@@ -171,7 +171,7 @@ describe('coinify service', () => {
     let pendingTrade;
     exchange = undefined;
     beforeEach(function () {
-      exchange = coinify.getExchange();
+      exchange = coinify.exchange;
       pendingTrade = {
         state: 'awaiting_transfer_in',
         medium: 'blockchain'

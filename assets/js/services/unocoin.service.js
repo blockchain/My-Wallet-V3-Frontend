@@ -2,8 +2,11 @@ angular
   .module('walletApp')
   .factory('unocoin', unocoin);
 
-function unocoin ($q, Alerts, modals, Env, Exchange) {
+function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
   const service = {
+    get exchange () {
+      return MyWallet.wallet.external.unocoin;
+    },
     buy,
     init,
     getTxMethod,
@@ -27,8 +30,8 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
     });
   }
 
-  function determineStep (exchange) {
-    let profile = exchange.profile;
+  function determineStep () {
+    let profile = service.exchange.profile;
     if (!profile) {
       return 'create';
     } else {
@@ -58,12 +61,12 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
     return profile.level < 2;
   }
 
-  function getPendingTrade (trades) {
-    return trades.filter((trade) => trade._state === 'awaiting_reference_number')[0];
+  function getPendingTrade () {
+    return service.exchange.trades.filter((trade) => trade._state === 'awaiting_reference_number')[0];
   }
 
-  function openPendingTrade (pendingTrade) {
-    return modals.openBankTransfer(pendingTrade);
+  function openPendingTrade () {
+    return modals.openBankTransfer(service.getPendingTrade());
   }
 
   return service;

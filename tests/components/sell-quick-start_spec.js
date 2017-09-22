@@ -75,7 +75,7 @@ describe('sell-quick-start.component', () => {
 
       coinify.getSellQuote = (amount, curr, quoteCurr) => $q.resolve(quote).then();
 
-      coinify.getExchange = () => ({
+      coinify.exchange = () => ({
         getTrades () { return $q.resolve(); },
         getKYCs () { return $q.resolve(); },
         trades: {

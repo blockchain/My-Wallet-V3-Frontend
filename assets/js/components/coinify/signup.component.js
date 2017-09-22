@@ -15,7 +15,7 @@ angular
   });
 
 function CoinifySignupController ($q, $stateParams, Wallet, coinify, AngularHelper) {
-  let exchange = coinify.getExchange();
+  let exchange = coinify.exchange;
 
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }

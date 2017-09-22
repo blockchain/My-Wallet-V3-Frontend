@@ -1523,6 +1523,18 @@
   "CLICK_HERE_TO_RESTART": "Click here to restart.",
   "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
+  "COINIFY": {
+    "awaiting_first_trade_completion": {
+      "EXPLAIN": "Trading is disabled until your pending trade is complete.",
+      "OPTION": "Finish trade."
+    }
+  },
+  "UNOCOIN": {
+    "awaiting_first_trade_completion": {
+      "EXPLAIN": "@:COINIFY.awaiting_first_trade_completion.EXPLAIN",
+      "OPTION": "@:COINIFY.awaiting_first_trade_completion.OPTION"
+    }
+  },
   "EXCHANGE": {
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",

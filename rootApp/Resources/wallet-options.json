@@ -17,7 +17,7 @@
                     "MC", "NL", "NO", "PL", "PT", "RE", "BL", "MF", "PM", "SM",
                     "SK", "SI", "ES", "SE", "CH"
                   ],
-      "partnerId": 24,
+      "partnerId": 18,
       "iSignThisDomain": "https://stage-verify.isignthis.com",
       "surveyLinks": ["https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_205rqJvYy7mRxnn",

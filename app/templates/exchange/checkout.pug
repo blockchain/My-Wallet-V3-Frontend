@@ -3,7 +3,7 @@ form.bc-form(
   ng-submit="$ctrl.buyAccount ? enableBuy(): buy();"
   novalidate
   autocomplete="off")
-  fieldset(ng-disabled="locked")
+  fieldset(ng-disabled="locked || $ctrl.trading.isDisabled")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -24,7 +24,6 @@ form.bc-form(
         .flex-center
           .flex-1.flex-center.border
             input.form-control.no-border(
-              ng-disabled="pendingTrade()"
               type="number"
               name="fiat"
               ng-model="state.fiat"
@@ -40,7 +39,6 @@ form.bc-form(
           i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
           .flex-1.flex-center.border
             input.form-control.no-border(
-              ng-disabled="pendingTrade()"
               type="number"
               name="btc"
               ng-model="state.btc"
@@ -52,19 +50,15 @@ form.bc-form(
               ng-model-options="{debounce: 250}"
               required)
             span.mhm {{bitcoin.code}}
-        .f-12.mts(ng-show="pendingTrade()")
-          span.state-danger-text Trading is disabled until you 
-          a.primary.pointer(ng-click="openPendingTrade(pendingTrade())") finish the payment process for the previous order. 
-        .f-12.mts
+        .f-12.mts(ng-show="$ctrl.trading.isDisabled")
+          span.state-danger-text(translate="{{ provider + '.' + $ctrl.trading.isDisabledReason + '.EXPLAIN'}}")
+          | &nbsp;
+          a(ng-click="$ctrl.trading.launchOption()" translate="{{ provider + '.' + $ctrl.trading.isDisabledReason + '.OPTION'}}")
+        .f-12.mts(ng-show="!$ctrl.trading.isDisabled")
           span(ng-hide="$ctrl.limits.max") &nbsp;
-          span(ng-show="$ctrl.limits.max && !pendingTrade()" ng-class="{'state-danger-text':checkoutForm.$error.max}")
+          span(ng-show="$ctrl.limits.max" ng-class="{'state-danger-text':checkoutForm.$error.max}")
             | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
-            | &nbsp;
-          span.primary.pointer(popup
-                               popup-name="sfox-identity"
-                               ng-if="$ctrl.buyLevel === 'pending'"
-                               translate="WHY")
-    .group.mtl(ng-show="$ctrl.collapseSummary && ($ctrl.buyAccount || $ctrl.buyEnabled)")
+    .group.mtl
       .item
         .mbm
           span.f-16.em-500.colon Order Summary
@@ -85,5 +79,5 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(state.total || 0, dollars, true) }}
-    .group.mtl(ng-show="$ctrl.collapseSummary")
+    .group.mtl
       button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin

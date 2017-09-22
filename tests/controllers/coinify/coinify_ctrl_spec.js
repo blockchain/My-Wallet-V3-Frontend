@@ -170,7 +170,7 @@ describe('CoinifyController', () => {
   describe('initial state', function () {
     it('should ask user to verify email', inject(function (Wallet) {
       Wallet.user.isEmailVerified = false;
-      coinify.getExchange = () => ({ profile: {} });
+      coinify.exchange = () => ({ profile: {} });
       let ctrl = getController();
       expect(ctrl.currentStep()).toBe('email');
     }));
@@ -183,14 +183,14 @@ describe('CoinifyController', () => {
 
     it('should ask user to select payment medium', inject(function (Wallet) {
       Wallet.user.isEmailVerified = true;
-      coinify.getExchange = () => ({ profile: {}, user: 1 });
+      coinify.exchange = () => ({ profile: {}, user: 1 });
       let ctrl = getController(quote, null);
       expect(ctrl.currentStep()).toBe('select-payment-medium');
     }));
 
     it('should ask user to complete isx after a trade is created', inject(function (Wallet) {
       Wallet.user.isEmailVerified = true;
-      coinify.getExchange = () => ({ profile: {}, user: 1 });
+      coinify.exchange = () => ({ profile: {}, user: 1 });
       let ctrl = getController(null, {});
       expect(ctrl.currentStep()).toBe('isx');
     }));
@@ -198,7 +198,7 @@ describe('CoinifyController', () => {
     it('should show a completed trade summary', inject(function (Wallet) {
       let trade = { state: 'completed' };
       Wallet.user.isEmailVerified = true;
-      coinify.getExchange = () => ({ profile: {}, user: 1 });
+      coinify.exchange = () => ({ profile: {}, user: 1 });
       let ctrl = getController(null, trade);
       expect(ctrl.currentStep()).toBe('trade-complete');
     }));

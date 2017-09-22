@@ -22,7 +22,7 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   // $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
   // i.e bank max is 0 and buy amount is 100
   $scope.isBank = () => $scope.vm.medium === 'bank';
-  $scope.needsKYC = () => +coinify.getExchange().profile.level.name < 2;
+  $scope.needsKYC = () => +coinify.exchange.profile.level.name < 2;
   $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]);
 
   $scope.vm.medium = $scope.belowCardMax || $rootScope.inMobileBuy ? 'card' : 'bank';

@@ -3,8 +3,12 @@ angular
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
 function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wallet, currency, coinify, MyWallet, $q, $stateParams, modals) {
+  const ONE_DAY_MS = 86400000;
+
   let exchange = MyWallet.wallet.external.coinify;
 
+  $scope.buying = {};
+  $scope.selling = {};
   $scope.trades = coinify.trades;
   $scope.coinifyStatus = coinify.getStatus;
   $scope.fiatOptions = currency.coinifyCurrencies;
@@ -75,39 +79,27 @@ function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $sta
     });
   }
 
-  let disabled;
-
+  // Trading Disabled Logic
   Env.then(env => {
-    disabled = env.partners.coinify.disabled;
-  });
-
-  $scope.getIsTradingDisabled = () => {
-    let profile = $scope.exchange && $scope.exchange.profile;
+    let profile = exchange && exchange.profile;
     let canTrade = profile && profile.canTrade;
+    let disabled = env.partners.coinify.disabled;
+    let isDisabledReason = profile && profile.cannotTradeReason;
+    let isDisabledUntil = profile && isNaN(profile.canTradeAfter) ? 1 : Math.ceil((profile.canTradeAfter - Date.now()) / ONE_DAY_MS);
 
-    return canTrade === false || disabled;
-  };
-
-  $scope.getIsTradingDisabledReason = () => {
-    let profile = $scope.exchange && $scope.exchange.profile;
-    let cannotTradeReason = profile && profile.cannotTradeReason;
-
-    if (disabled) cannotTradeReason = 'disabled';
-    return cannotTradeReason;
-  };
+    if (disabled || !canTrade) {
+      $scope.selling = $scope.buying;
+      $scope.buying.isDisabled = true;
+      $scope.buying.isDisabledUntil = isDisabledUntil;
+      $scope.buying.isDisabledReason = isDisabledReason || 'disabled';
+      $scope.buying.launchOption = coinify.openPendingTrade;
+    }
+  });
 
   $scope.setSellLimits = () => {
     if ($scope.exchange._profile) {
       $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
     }
-  };
-
-  const ONE_DAY_MS = 86400000;
-
-  $scope.getDays = () => {
-    let profile = coinify.getExchange().profile;
-    let verifyDate = profile && profile.canTradeAfter;
-    return isNaN(verifyDate) ? 1 : Math.ceil((verifyDate - Date.now()) / ONE_DAY_MS);
   };
 
   let email = MyWallet.wallet.accountInfo.email;

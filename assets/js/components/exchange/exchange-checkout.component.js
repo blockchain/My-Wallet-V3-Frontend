@@ -6,21 +6,19 @@ angular
       type: '<',
       quote: '<',
       limits: '<',
-      trades: '<',
       userId: '<',
       dollars: '<',
+      trading: '<',
+      provider: '<',
       buyLevel: '<',
       buyEnabled: '<',
       buyAccount: '<',
       conversion: '<',
-      collapseSummary: '<',
       buyError: '&',
       handleBuy: '&',
       buySuccess: '&',
       handleQuote: '&',
-      pendingTrade: '&',
-      handleMediums: '&',
-      openPendingTrade: '&'
+      handleMediums: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
@@ -37,9 +35,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
   $scope.buySuccess = this.buySuccess;
-  $scope.trades = this.trades || [];
-  $scope.pendingTrade = () => this.pendingTrade($scope.trades);
-  $scope.openPendingTrade = this.openPendingTrade($scope.pendingTrade);
+  $scope.provider = this.provider.toUpperCase();
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;
@@ -86,7 +82,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       $scope.quote = quote;
       state.error = null;
       state.loadFailed = false;
-      this.collapseSummary = true;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       if (state.baseFiat) {
         state.btc = Math.abs($scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin));

@@ -78,7 +78,7 @@ describe('CoinifySummaryController', () => {
         }
       };
 
-      coinify.getExchange = () => ({
+      coinify.exchange = () => ({
         getBuyQuote() {}
       });
 

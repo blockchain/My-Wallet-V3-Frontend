@@ -63,7 +63,7 @@ describe('CoinifySellController', () => {
 
       currency.conversions["EUR"] = { conversion: 1 };
 
-      coinify.getExchange = () => ({
+      coinify.exchange = () => ({
         getTrades() { return $q.resolve(); },
         getKYCs() { return $q.resolve(); },
         trades: {

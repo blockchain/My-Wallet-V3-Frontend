@@ -7,7 +7,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.qaDebugger = env.qaDebugger;
   });
 
-  let exchange = coinify.getExchange();
+  let exchange = coinify.exchange;
 
   this.quote = quote;
   this.trade = trade;

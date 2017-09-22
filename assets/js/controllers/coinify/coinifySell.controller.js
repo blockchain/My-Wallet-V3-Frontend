@@ -119,7 +119,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
 
   $scope.assignFiatCurrency();
 
-  let exchange = coinify.getExchange();
+  let exchange = coinify.exchange;
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.country = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
   this.fiat = () => this.transaction.currency.code;

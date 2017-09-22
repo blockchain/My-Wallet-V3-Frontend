@@ -17,7 +17,7 @@ angular
 
       this.getState = () => this.stateMap[this.state];
 
-      this.profile = coinify.getExchange().profile;
+      this.profile = coinify.exchange.profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
       this.getCardMax = () => {

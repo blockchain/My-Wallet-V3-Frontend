@@ -12,7 +12,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         dollars="fiat"
         conversion="100"
         limits="limits"
-        collapse-summary="true"
+        trading="buying"
+        provider="'Coinify'"
         buy-success="buyHandler(quote)"
         handle-mediums="mediumsHandler(quote)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
@@ -26,7 +27,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         dollars="fiat"
         conversion="100"
         limits="limits"
-        collapse-summary="true"
+        trading="selling"
+        provider="'Coinify'"
         buy-success="sellHandler(quote)"
         handle-mediums="mediumsHandler(quote)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")

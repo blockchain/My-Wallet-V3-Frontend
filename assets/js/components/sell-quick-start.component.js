@@ -32,7 +32,7 @@ function sellQuickStartController ($scope, $rootScope, currency, coinify, Alerts
   $scope.transaction = this.transaction;
   $scope.format = currency.formatCurrencyForView;
 
-  let exchange = coinify.getExchange();
+  let exchange = coinify.exchange;
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.exchangeCountry = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
   this.currency = exchange.profile ? exchange.profile.defaultCurrency : 'EUR';

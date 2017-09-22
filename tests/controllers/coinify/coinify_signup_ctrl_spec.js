@@ -40,7 +40,7 @@ describe('CoinifySignupComponentController', () => {
       Wallet.resendEmailConfirmation = () => $q.resolve();
 
       coinify = $injector.get('coinify');
-      return coinify.getExchange = () => ({
+      return coinify.exchange = () => ({
         signup() { if (ctrl.validEmail) { return $q.resolve(); } else { return $q.reject({error: 'EMAIL_ADDRESS_IN_USE'}); } }
       }) ;}));
 
