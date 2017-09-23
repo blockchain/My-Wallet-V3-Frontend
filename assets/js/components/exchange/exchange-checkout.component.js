@@ -31,7 +31,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-  $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
 
   $scope.trading = this.trading;
   $scope.dollars = this.dollars;

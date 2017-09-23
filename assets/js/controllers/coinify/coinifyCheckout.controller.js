@@ -2,21 +2,22 @@ angular
   .module('walletApp')
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
-function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $state, Alerts, Wallet, currency, coinify, MyWallet, $q, $stateParams, modals) {
+function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, AngularHelper, MyWallet, $state, Alerts, Wallet, currency, coinify, modals, balance) {
   let exchange = MyWallet.wallet.external.coinify;
 
-  $scope.buying = {};
-  $scope.selling = {};
   $scope.trades = coinify.trades;
   $scope.coinifyStatus = coinify.getStatus;
   $scope.fiatOptions = currency.coinifyCurrencies;
-  $scope.mediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.limits = coinify.getLimits(mediums, $scope.fiat.code));
 
+  $scope.buying = coinify.buying;
   $scope.buyHandler = modals.openBuyView;
   $scope.buyQuoteHandler = coinify.getQuote;
+  $scope.buyMediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.buyLimits = coinify.getLimits(mediums, $scope.fiat.code));
 
+  $scope.selling = coinify.selling;
   $scope.sellHandler = modals.openSellView;
   $scope.sellQuoteHandler = coinify.getSellQuote;
+  $scope.sellMediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.sellLimits = coinify.getSellLimits(mediums, balance.amount / 1e8));
 
   if (exchange.profile) {
     $scope.fiat = currency.currencies.filter(c => c.code === exchange.profile.defaultCurrency)[0];
@@ -25,66 +26,6 @@ function CoinifyCheckoutController ($rootScope, Env, AngularHelper, $scope, $sta
     else if ($stateParams.countryCode === 'GB') $scope.fiat = currency.currencies.filter(c => c.code === 'GBP')[0];
     else $scope.fiat = currency.currencies.filter(c => c.code === 'EUR')[0];
   }
-
-  $scope.walletStatus = Wallet.status;
-  $scope.status.metaDataDown = $scope.walletStatus.isLoggedIn && !$scope.coinifyStatus().metaDataService;
-
-  $scope.onCloseModal = () => {
-    $scope.kyc = coinify.kycs[0];
-    coinify.pollKYC();
-  };
-
-  $scope.initialize = () => {
-    $scope.settings = Wallet.settings;
-
-    $scope.openKyc = () => {
-      $q.resolve(coinify.getOpenKYC())
-        .then((kyc) => $scope.buy(null, kyc));
-    };
-
-    $scope.openSellKyc = () => {
-      if (!$scope.kyc) {
-        coinify.triggerKYC().then(kyc => $scope.sell(kyc));
-      } else {
-        $scope.sell($scope.kyc);
-      }
-    };
-
-    $scope.changeCurrency = (curr) => {
-      if (curr && $scope.currencies.some(c => c.code === curr.code)) {
-        $scope.transaction.currency = curr;
-      }
-    };
-
-    $scope.changeSellCurrency = (curr) => {
-      if (curr && $scope.currencies.some(c => c.code === curr.code)) {
-        $scope.sellTransaction.currency = curr;
-        $scope.sellCurrencySymbol = currency.conversions[curr.code];
-      }
-    };
-  };
-
-  let watchLogin;
-
-  if (Wallet.status.isLoggedIn) {
-    $scope.initialize();
-  } else {
-    watchLogin = $scope.$watch('status.isLoggedIn', (isLoggedIn) => {
-      if (isLoggedIn) {
-        $scope.initialize();
-        watchLogin();
-      }
-    });
-  }
-
-  $scope.setSellLimits = () => {
-    if ($scope.exchange._profile) {
-      $scope.sellLimits = $scope.exchange._profile._currentLimits._bank._outRemaining;
-    }
-  };
-
-  $scope.buying = coinify.buying;
-  $scope.selling = coinify.selling;
 
   let email = MyWallet.wallet.accountInfo.email;
   Env.then(env => {

@@ -223,7 +223,13 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openSellView = service.openOnce((trade, bankMedium, payment, buySellOptions = { sell: true }) => {
-    let exchange = service.getExchange();
+    let accounts = ($q, MyWallet) => {
+      let coinify = MyWallet.wallet.external.coinify;
+      return coinify.profile && !trade.state
+        ? bankMedium.getBankAccounts()
+        : $q.resolve([]);
+    };
+
     return $uibModal.open({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal buy',
@@ -232,16 +238,11 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        trade: () => trade,
-        bankMedium: () => {
-          if (exchange.profile && !trade.state) return bankMedium;
-        },
-        accounts: () => {
-          if (exchange.profile && !trade.state) {
-            return bankMedium.getBankAccounts().then(bankAccounts => {
-              return bankAccounts;
-            });
-          }
+        trade,
+        accounts,
+        bankMedium: (MyWallet) => {
+          let coinify = MyWallet.wallet.external.coinify;
+          if (coinify.profile && !trade.state) return bankMedium;
         },
         buySellOptions: () => buySellOptions,
         payment: () => payment || undefined

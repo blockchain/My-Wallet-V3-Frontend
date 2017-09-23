@@ -63,11 +63,6 @@ form.bc-form(
         .mbm
           span.f-16.em-500.colon Order Summary
         .border.flex-column.bg-grey
-          div(ng-show="hasMultipleAccounts")
-            .flex-between.flex-center.form-control.bg-grey.no-border
-              span.colon Send To
-              span {{ btcAccount.label }}
-            .border-bottom.mhm
           .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon BTC Order
             span {{ format(state.btc || 0, bitcoin, true) }}

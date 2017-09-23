@@ -159,9 +159,12 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return service.limits;
   }
 
-  function getSellLimits (mediums) {
+  function getSellLimits (mediums, balanceAvailable) {
+    let transferMax = mediums.bank.limitInAmounts ? mediums.bank.limitInAmounts['BTC'] : undefined;
+
     let min = mediums.bank.minimumInAmounts['BTC'];
-    let max = mediums.bank.limitInAmounts ? mediums.bank.limitInAmounts['BTC'] : undefined;
+    let max = balanceAvailable < transferMax || !transferMax ? balanceAvailable : transferMax;
+
     service.sellLimits = { min, max };
     return service.sellLimits;
   }

@@ -402,6 +402,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           return exchange.user && !exchange.profile
             ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
+        },
+        balance (MyWallet) {
+          return MyWallet.wallet.hdwallet.defaultAccount.getAvailableBalance('priority');
         }
       }
     })

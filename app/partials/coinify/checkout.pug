@@ -11,11 +11,11 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         type="'Buy'"
         dollars="fiat"
         conversion="100"
-        limits="limits"
         trading="buying"
+        limits="buyLimits"
         provider="'Coinify'"
         buy-success="buyHandler(quote)"
-        handle-mediums="mediumsHandler(quote)"
+        handle-mediums="buyMediumsHandler(quote)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(state="kyc.state" on-trigger="openKyc()" currency="transaction.currency")
@@ -26,26 +26,12 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         type="'Sell'"
         dollars="fiat"
         conversion="100"
-        limits="limits"
         trading="selling"
+        limits="sellLimits"
         provider="'Coinify'"
         buy-success="sellHandler(quote)"
-        handle-mediums="mediumsHandler(quote)"
+        handle-mediums="sellMediumsHandler(quote)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
-    //- sell-quick-start(transaction="sellTransaction"
-    //-                  disabled="status.disabled"
-    //-                  sell-currency-symbol="sellCurrencySymbol"
-    //-                  exchange-country="exchangeCountry"
-    //-                  modal-open="status.modalOpen"
-    //-                  change-currency="changeSellCurrency(currency)"
-    //-                  trading-disabled="getIsTradingDisabled()"
-    //-                  trading-disabled-reason="getIsTradingDisabledReason()"
-    //-                  on-trigger="openSellKyc()"
-    //-                  select-tab="tabs.select(tab)"
-    //-                  pending-trade="pendingTrade"
-    //-                  open-pending-trade="buy(pendingTrade)"
-    //-                  get-days="getDays()"
-    //-                  sell="sell(null, {quote: quote, btc: btc, fiat: fiat, currency: transaction.currency})")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(state="kyc.state" on-trigger="openSellKyc()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
