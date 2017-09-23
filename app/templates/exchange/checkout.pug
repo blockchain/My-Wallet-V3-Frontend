@@ -20,7 +20,7 @@ form.bc-form(
               span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
             .state-danger-text.f-12(ng-show="!state.loadFailed && checkoutForm.$error.min")
               i.ti-alert
-              span.mls Please enter an amount greater than {{ format($ctrl.limits.min, dollars, false) }} {{ dollars.code }}
+              span.mls Please enter an amount greater than {{ format($ctrl.limits.min, displayCurrency, false) }} {{ displayCurrency.code }}
         .flex-center
           .flex-1.flex-center.border
             input.form-control.no-border(
@@ -51,13 +51,13 @@ form.bc-form(
               required)
             span.mhm {{bitcoin.code}}
         .f-12.mts(ng-show="trading().isDisabled")
-          span.state-danger-text(translate="{{ provider + '.' + trading().isDisabledReason + '.EXPLAIN'}}")
+          span.state-danger-text(translate="{{ provider + '.' + trading().reason + '.EXPLAIN'}}")
           | &nbsp;
-          a(ng-click="trading().launchOption()" translate="{{ provider + '.' + trading().isDisabledReason + '.OPTION'}}")
+          a(ng-click="trading().launchOption()" translate="{{ provider + '.' + trading().reason + '.OPTION'}}")
         .f-12.mts(ng-show="!trading().isDisabled")
           span(ng-hide="$ctrl.limits.max") &nbsp;
           span(ng-show="$ctrl.limits.max" ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | Your remaining daily buy limit is {{ format($ctrl.limits.max, dollars, false) }} {{ dollars.code }}.
+            | {{ provider + '.' + trading().reason + '.EXPLAIN' | translate }} {{ format($ctrl.limits.max, displayCurrency, false) }} {{ displayCurrency.code }}.
     .group.mtl
       .item
         .mbm

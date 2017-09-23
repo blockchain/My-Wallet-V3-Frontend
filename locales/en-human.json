@@ -1520,9 +1520,23 @@
   "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
   "COINIFY": {
+    "loading_data": {
+      "EXPLAIN": "Loading data...",
+      "OPTION": ""
+    },
+    "has_remaining_buy_limit": {
+      "EXPLAIN": "Your remaining daily buy limit is "
+    },
+    "not_enough_funds_to_sell": {
+      "EXPLAIN": "You do not have enough funds to sell",
+      "OPTION": "Request"
+    },
+    "can_sell_remaining_balance": {
+      "EXPLAIN": "You can sell up to "
+    },
     "awaiting_first_trade_completion": {
       "EXPLAIN": "Trading is disabled until your pending trade is complete.",
-      "OPTION": "Finish trade."
+      "OPTION": "Finish trade"
     }
   },
   "UNOCOIN": {

@@ -37,6 +37,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.siftScienceEnabled = false;
   $scope.buySuccess = this.buySuccess;
   $scope.provider = this.provider.toUpperCase();
+  $scope.baseConstant = $scope.displayCurrency = this.type === 'Buy' ? $scope.dollars : $scope.bitcoin;
 
   let state = $scope.state = {
     btc: null,
@@ -146,8 +147,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.$watch('state.rate', (rate) => {
     if (!rate) return;
     let limits = this.limits;
-    $scope.min = { fiat: limits.min, btc: limits.min / rate };
-    $scope.max = { fiat: limits.max, btc: limits.max / rate };
+    let baseFiat = !currency.isBitCurrency($scope.baseConstant);
+    $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
+    $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
   });
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));

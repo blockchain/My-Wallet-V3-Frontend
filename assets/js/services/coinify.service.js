@@ -39,6 +39,46 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get exchange () {
       return MyWallet.wallet.external.coinify;
     },
+    get userCanTrade () {
+      return !service.exchange.profile || service.exchange.profile.canTrade;
+    },
+    get balanceAboveMin () {
+      return service.sellMax && service.sellMax > service.sellLimits.min;
+    },
+    get userCanBuy () {
+      return service.userCanTrade;
+    },
+    get userCanSell () {
+      return service.sellLimits && service.userCanTrade && service.balanceAboveMin;
+    },
+    get disabledUntil () {
+      return service.exchange.profile && Math.ceil((service.exchange.profile.canTradeAfter - Date.now()) / ONE_DAY_MS);
+    },
+    get buyReason () {
+      let reason;
+      let { profile } = service.exchange;
+
+      if (!profile) reason = 'has_remaining_buy_limit';
+      else if (!profile.canTrade) reason = profile.cannotTradeReason;
+      else reason = 'user_can_trade';
+
+      return reason;
+    },
+    get sellReason () {
+      let reason;
+      let { sellLimits } = service;
+      let { profile } = service.exchange;
+
+      if (!sellLimits) reason = 'loading_data';
+      else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
+      else if (!sellLimits.max || service.balanceAboveMin) reason = 'can_sell_remaining_balance';
+      else if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
+      else if (!profile) reason = 'user_needs_account';
+      else reason = 'user_can_trade';
+
+      return reason;
+    },
+    setSellMax: (balance) => service.sellMax = balance,
     getStatus: () => buySellMyWallet() && buySellMyWallet().status,
     trades: { completed: [], pending: [] },
     kycs: [],
@@ -87,32 +127,21 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function buying () {
-    let profile = service.exchange && service.exchange.profile;
-    let canTrade = profile && profile.canTrade;
-    let isDisabledReason = profile && profile.cannotTradeReason;
-    let isDisabledUntil = profile && Math.ceil((profile.canTradeAfter - Date.now()) / ONE_DAY_MS);
-
-    if (!profile) {
-      return {
-        isDisabled: false
-      };
-    } else if (!canTrade) {
-      return {
-        isDisabled: true,
-        isDisabledUntil: isDisabledUntil,
-        isDisabledReason: isDisabledReason,
-        launchOption: service.openPendingTrade
-      };
-    }
+    return {
+      reason: service.buyReason,
+      isDisabled: !service.userCanBuy,
+      isDisabledUntil: service.isDisabledUntil,
+      launchOption: service.openPendingTrade
+    };
   }
 
   function selling () {
-    let profile = coinify && coinify.profile;
-    let canTrade = profile && profile.canTrade;
-
-    if (!canTrade) {
-      return service.buying();
-    }
+    return {
+      reason: service.sellReason,
+      isDisabled: !service.userCanSell,
+      isDisabledUntil: service.isDisabledUntil,
+      launchOption: service.openPendingTrade
+    };
   }
 
   function getQuote (amt, curr, quoteCurr) {
@@ -159,11 +188,12 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return service.limits;
   }
 
-  function getSellLimits (mediums, balanceAvailable) {
-    let transferMax = mediums.bank.limitInAmounts ? mediums.bank.limitInAmounts['BTC'] : undefined;
+  function getSellLimits (mediums, balance) {
+    service.setSellMax(balance / 1e8);
 
     let min = mediums.bank.minimumInAmounts['BTC'];
-    let max = balanceAvailable < transferMax || !transferMax ? balanceAvailable : transferMax;
+    let max = mediums.bank.limitInAmounts && mediums.bank.limitInAmounts['BTC'];
+    max = max && service.sellMax > max ? max : service.sellMax;
 
     service.sellLimits = { min, max };
     return service.sellLimits;

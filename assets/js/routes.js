@@ -403,8 +403,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
-        balance (MyWallet) {
-          return MyWallet.wallet.hdwallet.defaultAccount.getAvailableBalance('priority');
+        balance ($q, MyWallet) {
+          let defaultAccount = MyWallet.wallet.hdwallet.defaultAccount;
+
+          return defaultAccount.getAvailableBalance('priority')
+            .then((balance) => balance)
+            .catch(() => { return {amount: 0}; });
         }
       }
     })
