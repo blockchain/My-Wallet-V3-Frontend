@@ -140,7 +140,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         .finally($scope.resetFields).finally($scope.free);
     } else {
       this.buySuccess({quote});
-      $q.resolve().finally($scope.resetFields).finally($scope.free);
+      $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };
 

@@ -56,10 +56,12 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get buyReason () {
       let reason;
+      let { limits } = service;
       let { profile } = service.exchange;
 
-      if (!profile) reason = 'has_remaining_buy_limit';
+      if (!profile) reason = 'user_has_no_profile';
       else if (!profile.canTrade) reason = profile.cannotTradeReason;
+      else if (limits && limits.max) reason = 'has_remaining_buy_limit';
       else reason = 'user_can_trade';
 
       return reason;
@@ -188,11 +190,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return service.limits;
   }
 
-  function getSellLimits (mediums, balance) {
-    service.setSellMax(balance / 1e8);
-
+  function getSellLimits (mediums) {
     let min = mediums.bank.minimumInAmounts['BTC'];
     let max = mediums.bank.limitInAmounts && mediums.bank.limitInAmounts['BTC'];
+
     max = max && service.sellMax > max ? max : service.sellMax;
 
     service.sellLimits = { min, max };

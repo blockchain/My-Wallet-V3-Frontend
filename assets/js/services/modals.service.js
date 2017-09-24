@@ -222,15 +222,15 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openSellView = service.openOnce((trade, bankMedium, payment, buySellOptions = { sell: true }) => {
+  service.openSellView = service.openOnce((quote, trade) => {
     let accounts = ($q, MyWallet) => {
       let coinify = MyWallet.wallet.external.coinify;
-      return coinify.profile && !trade.state
-        ? bankMedium.getBankAccounts()
+      return coinify.profile && quote
+        ? quote.getPaymentMediums().then((medium) => medium.bank.getBankAccounts())
         : $q.resolve([]);
     };
 
-    return $uibModal.open({
+    return openMobileCompatible({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal buy',
       controller: 'CoinifySellController',
@@ -238,16 +238,11 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        trade,
         accounts,
-        bankMedium: (MyWallet) => {
-          let coinify = MyWallet.wallet.external.coinify;
-          if (coinify.profile && !trade.state) return bankMedium;
-        },
-        buySellOptions: () => buySellOptions,
-        payment: () => payment || undefined
+        quote () { return quote; },
+        trade () { return trade; }
       }
-    }).result;
+    });
   });
 
   service.openShiftTradeDetails = service.openOnce((trade) => {

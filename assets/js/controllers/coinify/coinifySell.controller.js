@@ -2,30 +2,29 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInstance, trade, buySellOptions, coinify, $q, $rootScope, accounts, $state, $stateParams, bankMedium, payment, Env) {
+function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModalInstance, $q, $rootScope, accounts, $state, $stateParams, quote, trade, coinify) {
   $scope.fields = {};
   $scope.user = Wallet.user;
-  $scope.isSweepTransaction = buySellOptions.isSweepTransaction;
 
-  this.user = Wallet.user;
   this.trade = trade;
-  this.quote = trade.quote;
-  this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
-  this.selectedBankAccount = null;
+  this.quote = quote;
+  this.user = Wallet.user;
   this.accounts = accounts;
-  this.finalPayment = payment;
-  if (bankMedium) this.paymentAccount = bankMedium;
+  this.selectedBankAccount = null;
   this.message = 'SELL.QUOTE_EXPIRES';
   this.now = () => new Date().getTime();
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
-  this.refreshQuote = () => $q.resolve(coinify.getSellQuote(-this.transaction.btc, 'BTC', this.transaction.currency.code)).then(onRefreshQuote);
+
+  this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
+  this.BTCAmount = () => !this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
+  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
+  this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
+  this.refreshQuote = () => $q.resolve(coinify.getSellQuote(this.BTCAmount(), 'BTC', this.fiatCurrency())).then(onRefreshQuote);
 
   const onRefreshQuote = (quote) => {
     this.quote = quote;
-    this.transaction.fiat = quote.quoteAmount / 100;
-    if (this.selectedBankAccount) {
-      this.selectedBankAccount.updateQuote(quote);
-    }
+    this.selectedBankAccount && this.selectedBankAccount.updateQuote(quote);
   };
 
   this.steps = {
@@ -68,7 +67,7 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
       this.goTo('isx');
       return;
     }
-    if ((this.trade.state && !this.trade.iSignThisID) && this.exchange.profile) {
+    if ((this.trade && !this.trade.iSignThisID) && this.exchange.profile) {
       this.sellTrade = this.trade;
       this.goTo('trade-complete');
       return;
@@ -92,37 +91,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     else return 'SELL.QUOTE_WILL_EXPIRE';
   };
 
-  if (!this.trade.btc && !this.trade.fiat) {
-    this.isKYC = this.trade && this.trade.constructor.name === 'CoinifyKYC';
-    this.isKYC ? this.nextStep() : '';
-  }
-
-  this.transaction = {
-    btc: this.trade.btc,
-    fiat: this.trade.fiat,
-    currency: { name: 'Euro', code: 'EUR' },
-    fee: { btc: null }
-  };
-
-  $scope.assignFiatCurrency = () => {
-    if (this.trade.state) return;
-    if (this.trade.quote.quoteCurrency === 'BTC') {
-      $scope.assignFiatHelper('baseCurrency');
-    } else {
-      $scope.assignFiatHelper('quoteCurrency');
-    }
-  };
-  $scope.assignFiatHelper = (currencyType) => {
-    this.transaction.currency.code = this.trade.quote[currencyType];
-    this.transaction.currency.symbol = currency.conversions[this.trade.quote[currencyType]]['symbol'];
-  };
-
-  $scope.assignFiatCurrency();
-
   let exchange = coinify.exchange;
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.country = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
-  this.fiat = () => this.transaction.currency.code;
 
   $scope.fields = { email: $scope.user.email };
 
@@ -134,21 +105,9 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     }
   };
 
-  $scope.startPayment = () => {
-    if (this.trade.state) return;
-    this.finalPayment = Wallet.my.wallet.createPayment(this.finalPayment);
-    this.finalPayment.updateFeePerKb(buySellOptions.priorityFee);
-    this.finalPayment.sideEffect(res => {
-      this.transaction.fee.btc = currency.convertFromSatoshi(res.finalFee, currency.bitCurrencies[0]);
-      this.transaction.btcAfterFee = parseFloat((this.transaction.btc + this.transaction.fee.btc).toFixed(8));
-    });
-    return {transaction: this.transaction};
-  };
-
   this.cancel = () => {
     $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
-    this.reset();
     this.trade = null;
     coinify.getTrades().then(() => {
       this.goToOrderHistory();
@@ -168,9 +127,6 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     else if (this.onStep('summary')) index = 2;
     Alerts.surveyCloseConfirm('sell-survey-opened', links, index).then(this.cancel);
   };
-
-  let startedPayment = $scope.startPayment();
-  if (startedPayment) this.transaction = Object.assign(this.transaction, startedPayment.transaction);
 
   if (!this.step) this.nextStep();
 
@@ -217,15 +173,10 @@ function CoinifySellController ($scope, Wallet, Alerts, currency, $uibModalInsta
     let holder = { holder: {} };
     Object.assign(holder.holder, userObj);
     let obj = Object.assign(bankObj, holder);
-    obj.account.currency = this.transaction.currency.code;
+    obj.account.currency = this.fiatCurrency();
     $q.resolve(this.paymentAccount.addBankAccount(obj))
       .then(this.onCreateBankSuccess)
       .catch(handleError);
-  };
-
-  this.reset = () => {
-    this.transaction.btc = null;
-    this.transaction.fiat = null;
   };
 
   if (!this.sellLimits) this.sellLimits = coinify.getSellLimits;
