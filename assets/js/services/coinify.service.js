@@ -121,7 +121,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   function init (coinify) {
     return Env.then(env => {
       coinify.partnerId = env.partners.coinify.partnerId;
-      coinify.api.testnet = env.network === 'testnet';
+      coinify.api.sandbox = !env.isProduction;
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();

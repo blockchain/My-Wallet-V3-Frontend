@@ -10,6 +10,7 @@ function countdown ($interval) {
     replace: true,
     scope: {
       timeToExpiration: '=',
+      onExpiring: '&',
       onExpiration: '&',
       message: '=',
       debug: '='
@@ -31,6 +32,7 @@ function countdown ($interval) {
       scope.minutes = parseInt(scope.time, 10);
       scope.seconds = parseInt((scope.time % 1) * 60, 10);
 
+      if (scope.minutes === 5 && scope.seconds === 0) scope.onExpiring();
       if (scope.seconds < 10) scope.seconds = '0' + scope.seconds;
       if (scope.time <= 0) scope.onExpiration() && scope.onExpiration().then(scope.resetTimeToExpiration);
 

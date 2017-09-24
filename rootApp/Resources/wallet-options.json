@@ -64,7 +64,9 @@
   },
   "ethereum": {
     "countries": "*",
-    "rolloutFraction": 1
+    "rolloutFraction": 1,
+    "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_7Q987NPvIT4f6xn",
+                    "https://blockchain.co1.qualtrics.com/jfe/form/SV_b8A9pKaGE30Qb9X"]
   },
   "shapeshift": {
     "countriesBlacklist": [],

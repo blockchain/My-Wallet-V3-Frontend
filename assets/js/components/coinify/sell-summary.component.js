@@ -33,6 +33,10 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   this.payment.updateFeePerKb(coinify.sellFee);
   this.payment.sideEffect((p) => this.fee = p.finalFee);
 
+  this.trade = {
+    get fee () { return (this.quote.paymentMediums.bank.fee / 100).toFixed(2); },
+  };
+
   this.isDisabled = () => {
     if (!this.fields) true;
     if (!this.sellRateForm.$valid) return true;

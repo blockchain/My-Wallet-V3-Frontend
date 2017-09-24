@@ -144,13 +144,14 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   };
 
   this.onSignupComplete = () => {
-    this.refreshQuote();
-    this.quote.getPayoutMediums().then(mediums => {
-      this.paymentAccount = mediums.bank;
-      this.sellLimits = coinify.getSellLimits(mediums);
-      mediums.bank.getBankAccounts().then(bankAccounts => {
-        this.accounts = bankAccounts;
-        this.goTo('account');
+    this.refreshQuote().then(() => {
+      this.quote.getPayoutMediums().then(mediums => {
+        this.paymentAccount = mediums.bank;
+        this.sellLimits = coinify.getSellLimits(mediums);
+        mediums.bank.getBankAccounts().then(bankAccounts => {
+          this.accounts = bankAccounts;
+          this.goTo('account');
+        });
       });
     });
   };
