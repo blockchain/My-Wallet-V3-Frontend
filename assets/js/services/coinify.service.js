@@ -73,8 +73,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
       if (!sellLimits) reason = 'loading_data';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else if (!sellLimits.max || service.balanceAboveMin) reason = 'can_sell_remaining_balance';
       else if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
+      else if (!sellLimits.max || service.balanceAboveMin) reason = 'can_sell_remaining_balance';
       else if (!profile) reason = 'user_needs_account';
       else reason = 'user_can_trade';
 
