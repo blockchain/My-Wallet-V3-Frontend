@@ -55,8 +55,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify) {
     };
 
     scope.triggerSell = () => {
-      let t = scope.trade;
-      scope.sell(t);
+      scope.sell(null, scope.trade);
     };
 
     scope.updateBTCExpected = () => {

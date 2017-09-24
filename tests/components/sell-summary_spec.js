@@ -82,15 +82,6 @@ describe('sell-summary.component', () => {
     })
   );
 
-  describe('.insufficientFunds()', () => {
-    it('should be true if the wallet does not have enough funds', () => {
-      let ctrl = getController(handlers);
-      ctrl.totalBalance = 0.001;
-      let result = ctrl.insufficientFunds();
-      expect(result).toEqual(true);
-    });
-  });
-
   describe('.isDisabled()', () => {
     it('should be disabled if insufficient funds', () => {
       let ctrl = getController(handlers);

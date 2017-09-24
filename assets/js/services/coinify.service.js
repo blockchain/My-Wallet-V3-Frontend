@@ -80,7 +80,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
       return reason;
     },
-    setSellMax: (balance) => service.sellMax = balance,
     getStatus: () => buySellMyWallet() && buySellMyWallet().status,
     trades: { completed: [], pending: [] },
     kycs: [],
@@ -90,6 +89,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
+    setSellMax: (balance) => { service.sellMax = balance.amount / 1e8; service.sellFee = balance.fee; },
     init,
     buying,
     selling,

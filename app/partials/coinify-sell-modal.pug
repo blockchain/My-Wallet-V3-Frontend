@@ -7,11 +7,11 @@
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top")
           .flex-row.f-16.em-300
-            span(ng-if="vm.quote") {{ vm.BTCAmount() / 100000000 }} BTC
-            span(ng-if="vm.trade") {{ vm.trade }} BTC
+            span(ng-if="vm.quote") {{ vm.BTCAmount() | convert:'btc' }}
+            span(ng-if="vm.trade") {{ vm.trade.transferIn.receiveAmount }} BTC
             | &nbsp;
             span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
-            span(ng-if="vm.trade") ({{ vm.trade }} {{ vm.trade.inCurrency }})
+            span(ng-if="vm.trade") ({{ vm.trade._transferOut.receiveAmount }} {{ vm.trade.inCurrency }})
           countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="false")
   coinify-email(
       ng-if="vm.onStep('email')"

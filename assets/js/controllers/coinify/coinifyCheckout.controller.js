@@ -3,7 +3,6 @@ angular
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
 function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, AngularHelper, MyWallet, $state, Alerts, Wallet, currency, coinify, modals, balance) {
-  console.log(balance);
   let exchange = MyWallet.wallet.external.coinify;
 
   $scope.trades = coinify.trades;
@@ -19,8 +18,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, A
   $scope.sellHandler = modals.openSellView;
   $scope.sellQuoteHandler = coinify.getSellQuote;
   $scope.sellMediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.sellLimits = coinify.getSellLimits(mediums));
-
-  coinify.setSellMax(balance.amount / 1e8);
 
   if (exchange.profile) {
     $scope.fiat = currency.currencies.filter(c => c.code === exchange.profile.defaultCurrency)[0];
@@ -46,5 +43,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, A
     };
   });
 
+  coinify.setSellMax(balance);
   AngularHelper.installLock.call($scope);
 }

@@ -2,40 +2,40 @@ angular
   .module('walletApp')
   .component('sellSummary', {
     bindings: {
-      transaction: '<',
-      sellTrade: '<',
-      totalBalance: '<',
+      quote: '<',
       exchange: '<',
-      payment: '<',
+      sellTrade: '<',
+      sellLimits: '<',
+      totalBalance: '<',
       bankAccount: '<',
       onComplete: '&',
-      close: '&',
-      dismiss: '&',
       onSuccess: '&',
-      quote: '<',
-      sellLimits: '<'
+      dismiss: '&',
+      close: '&'
     },
     templateUrl: 'partials/coinify/sell-summary.pug',
     controller: CoinifySellSummaryController,
     controllerAs: '$ctrl'
   });
 
-function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
+function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, coinify) {
   this.sellRateForm;
 
-  this.insufficientFunds = () => {
-    const tx = this.transaction;
-    const combined = tx.btc + tx.fee.btc;
-    if (combined > this.totalBalance) {
-      return true;
-    }
-  };
+  this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
+  this.BTCAmount = () => !this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
+  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
+  this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.overMax = () => this.BTCAmount() > this.sellLimits.max;
 
-  this.overMax = () => this.transaction.btc > this.sellLimits.max;
+  this.payment = Wallet.my.wallet.createPayment();
+  this.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
+  this.payment.amount(this.BTCAmount());
+  this.payment.updateFeePerKb(coinify.sellFee);
+  this.payment.sideEffect((p) => this.fee = p.finalFee);
 
   this.isDisabled = () => {
     if (!this.fields) true;
-    if (this.insufficientFunds() === true || !this.sellRateForm.$valid) return true;
+    if (!this.sellRateForm.$valid) return true;
     if (this.sellTrade) {
       if (!this.sellTrade.quote) true;
     }
@@ -83,9 +83,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
   };
 
   const assignAndBuildPayment = (sellResult) => {
-    let amount = currency.convertToSatoshi(sellResult.transferIn.sendAmount, currency.bitCurrencies[0]);
-    this.payment.to(sellResult.transferIn.details.account);
-    this.payment.amount(amount);
+    this.payment.to('16rVM9kaJKGXaNgaxgKhwyQ5pdnRsnYEy3');
     // QA tool
     if (this.exchange._customAddress && this.exchange._customAmount) {
       console.log('QA - Address and Amount (in satoshi):', this.exchange._customAddress, this.exchange._customAmount);
