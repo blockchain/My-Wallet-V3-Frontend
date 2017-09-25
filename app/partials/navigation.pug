@@ -15,20 +15,13 @@
       ul.nav.navbar-nav.navbar-right(ng-show="status.isLoggedIn")
         li.item.hidden-xs(ng-hide="true")
           button.button-transparent.button-border.button(translate="SUBSCRIBE" ng-click="subscribe()")
-        li.item.flex-important.flex-row.flex-center(ng-show="settings.btcCurrency")
-          a(href="/markets" target="_blank" rel="noopener noreferrer")
-            span
-              | 1 BTC =&nbsp;
-              fiat(btc="BTCCurrency.conversion")
-          .vertical-line.border-white(ng-show="showEthereum()")
-          span.white.pv-10.ph-15(ng-show="showEthereum()")
-            | 1 ETH =&nbsp;
-            fiat(eth="1")
         li.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
           a(uib-popover-template="::whatsNewTemplate"
             popover-class="whats-new-popover"
             popover-placement="bottom"
             popover-title="{{:: ('WHATS_NEW' | translate) + '?' }}"
+            popover-is-open="popover.isOpen"
+            ng-click="popover.isOpen = !popover.isOpen"
             popover-trigger="outsideClick")
             i.icon-bell
             span.whats-new-icon(ng-show="nLatestFeats > 0")

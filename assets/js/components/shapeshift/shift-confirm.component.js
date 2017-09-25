@@ -7,7 +7,9 @@ angular
       payment: '<',
       onCancel: '&',
       onComplete: '&',
-      handleShift: '&'
+      handleShift: '&',
+      onExpiring: '&',
+      onExpiration: '&'
     },
     templateUrl: 'templates/shapeshift/confirm.pug',
     controller: ShiftConfirmController,
@@ -19,14 +21,13 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
 
   $scope.fee = this.fee;
   $scope.quote = this.quote;
-  $scope.total = parseFloat($scope.quote.depositAmount) + parseFloat($filter('convert')(this.fee, $scope.quote.fromCurrency, false));
-
   $scope.toSatoshi = currency.convertToSatoshi;
-  $scope.bitcoin = $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+  $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
+  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.from = $scope.quote.fromCurrency === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
   $scope.to = $scope.quote.toCurrency === 'btc' ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
-
-  $scope.onExpiration = () => $scope.lock();
+  $scope.fromCurrency = $scope.quote.fromCurrency === 'btc' ? $scope.bitcoin : $scope.ether;
+  $scope.total = parseFloat($scope.quote.depositAmount) + parseFloat($filter('convert')(this.fee, $scope.fromCurrency, false));
   $scope.getTimeToExpiration = () => $scope.quote.expires - now;
 
   $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether'};
@@ -40,5 +41,5 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   };
 
   AngularHelper.installLock.call($scope);
-  Env.then(env => $scope.buySellDebug = env.buySellDebug);
+  Env.then(env => $scope.qaDebugger = env.qaDebugger);
 }

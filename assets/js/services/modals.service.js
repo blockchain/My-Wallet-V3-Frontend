@@ -76,7 +76,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         'id-id-helper': 'img/id-id-helper.png',
         'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
         'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
-        'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png'
+        'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png',
+        'expiring-exchange-helper': null
       };
 
       $scope.helper = helper;
@@ -217,8 +218,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         trades,
         exchange,
         quote () { return quote; },
-        trade () { return trade; },
-        paymentMediums () { return quote && quote.getPaymentMediums(); }
+        trade () { return trade; }
       }
     });
   });
@@ -258,6 +258,17 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       }
     });
   });
+
+  service.openEthLegacyTransition = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/eth-legacy-transition.pug',
+      controller: 'EthLegacyTransitionController',
+      windowClass: 'bc-modal prio initial',
+      controllerAs: 'vm',
+      backdrop: 'static',
+      keyboard: false
+    })
+  );
 
   return service;
 }

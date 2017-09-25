@@ -4,7 +4,7 @@ angular
 
 function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA) {
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   let exchange = $scope.vm.exchange;
@@ -39,14 +39,14 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
 
     return $q.resolve(profile.verify())
              .then(() => $scope.vm.goTo('pending'))
-             .catch((err) => { $scope.vm.error = err; $scope.vm.goTo('verify'); }).finally($scope.free);
+             .catch((err) => { $scope.vm.verificationError = err; $scope.vm.goTo('verify'); }).finally($scope.free);
   };
 
   AngularHelper.installLock.call($scope);
 
   // QA Tool
   $scope.autoFill = () => {
-    ['id', 'pancard', 'photo', 'address'].forEach((idType) => exchange.profile.addPhoto(idType, QA.base64DataUrl()));
+    ['pancard', 'photo', 'address'].forEach((idType) => exchange.profile.addPhoto(idType, QA.base64DataUrl()));
     $scope.verify();
   };
 }

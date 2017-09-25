@@ -1,0 +1,18 @@
+.bc-modal {
+  &.prio {
+    z-index: 1100 !important;
+    & ~ {
+      .modal-backdrop {
+        z-index: 1099 !important;
+      }
+    }
+  }
+  &.second-password {
+    z-index: 1101 !important;
+    & ~ {
+      .modal-backdrop {
+        z-index: 1100 !important;
+      }
+    }
+  }
+}

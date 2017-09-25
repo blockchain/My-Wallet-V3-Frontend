@@ -7,7 +7,10 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
     buy,
     init,
     getTxMethod,
-    determineStep
+    determineStep,
+    getPendingTrade,
+    openPendingTrade,
+    verificationRequired
   };
 
   angular.extend(service, Exchange);
@@ -24,12 +27,12 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
     });
   }
 
-  function determineStep (exchange, accounts) {
+  function determineStep (exchange) {
     let profile = exchange.profile;
     if (!profile) {
       return 'create';
     } else {
-      if (profile.level < 2) {
+      if (service.verificationRequired(profile)) {
         if (profile.identityComplete && profile.bankInfoComplete) {
           return 'upload';
         } else {
@@ -49,6 +52,18 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
   function getTxMethod (unocoin, hash) {
     let trade = unocoin.trades.filter((t) => t.txHash === hash)[0];
     return trade && (trade.isBuy ? 'buy' : 'sell');
+  }
+
+  function verificationRequired (profile) {
+    return profile.level < 2;
+  }
+
+  function getPendingTrade (trades) {
+    return trades.filter((trade) => trade._state === 'awaiting_reference_number')[0];
+  }
+
+  function openPendingTrade (pendingTrade) {
+    return modals.openBankTransfer(pendingTrade);
   }
 
   return service;

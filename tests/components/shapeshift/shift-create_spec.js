@@ -84,6 +84,7 @@ describe('shift-create.component', () => {
         }
       };
       Wallet.accounts = () => [];
+      Wallet.api.incrementShapeshiftStat = () => {};
       Wallet.getDefaultAccount = () => mockDefaultBTCWallet();
       MyWallet.wallet.eth = { defaultAccount: mockDefaultETHWallet() };
       Exchange.interpretError = (err) => err;

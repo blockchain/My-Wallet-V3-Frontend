@@ -54,4 +54,7 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.buyError = () => {
     Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
+
+  $scope.pendingTrade = (trades) => unocoin.getPendingTrade(trades);
+  $scope.openPendingTrade = (pendingTrade) => unocoin.openPendingTrade(pendingTrade);
 }

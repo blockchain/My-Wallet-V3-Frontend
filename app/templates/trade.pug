@@ -3,7 +3,7 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
     i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
     i.ti-trash.fade(ng-hide="canCancel")
   td.type-lbl.paml
-    span.mrm(ng-if="buySellDebug" uib-dropdown)
+    span.mrm(ng-if="qaDebugger" uib-dropdown)
       i.ti-search.pointer.blue(uib-dropdown-toggle)
       ul.dropdown-menu(uib-dropdown-menu)
         li.pointer.pas(ng-click="logDetails(trade)") Log Trade Details
@@ -27,7 +27,7 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
   td.type-lbl.pvml.hidden-xs
     span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
       span.display-inline-block.left-align
-      span(ng-if="buySellDebug")
+      span(ng-if="qaDebugger")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
@@ -36,7 +36,7 @@ tr.border(ng-click="$root.size.xs && triggerBuy()")
   td.type-lbl
     span(ng-hide="status.gettingQuote")
       span.em-600(ng-hide="trade.medium === 'blockchain'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
-      span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.outAmountExpected / conversion) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
+      span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.transferOut.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
       span.hidden-xs
         i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel && trade.medium !== 'blockchain'" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
         i.ti-trash.fade(ng-hide="canCancel")

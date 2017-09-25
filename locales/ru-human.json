@@ -1067,7 +1067,7 @@
     "DISAGREE": "Совсем не согласен(-а)",
     "AGREE": "Абсолютно согласен(-а)"
   },
-  "ACCEPT_TOS": "Я прочитал(-а) и согласен(-а) с <a href='https://www.blockchain.com/assets/pdf/TermsofServicePolicy.pdf', target='_blank' rel='noopener noreferrer'>Условиями предоставления услуг</a>",
+  "ACCEPT_TOS": "Я прочитал(-а) и согласен(-а) с <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Условиями предоставления услуг</a>",
   "SIMPLE_SECURE_SEAMLESS": "Простой. Безопасный. Бесперебойный.",
   "BUY_SIMPLE_STEPS": "Самый популярный в мире кошелек bitcoin <br> теперь дает вам возможность купить биткоины надежным способом, выполнив 4 <br> простых шага.",
   "METADATA_DOWN_EXCHANGE": "Не удалось загрузить ваши данные обмена. Попробуйте перезагрузить страницу.",

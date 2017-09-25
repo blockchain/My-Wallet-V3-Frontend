@@ -6,7 +6,8 @@ angular
         countryCodeGuess: 'US'
       },
       eth: {
-        balance: 0
+        balance: 0,
+        setHasSeen () {}
       }
     }
   }));

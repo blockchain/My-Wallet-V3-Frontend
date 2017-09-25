@@ -1,8 +1,8 @@
 div.ethAmountTotal.em-400.amount.flex-center.flex-justify(
   ng-class="{\
-    'button-transferred': $ctrl.tx.getTxType($ctrl.account) === 'transfer',\
-    'button-received'    : $ctrl.tx.getTxType($ctrl.account) === 'received',\
-    'button-sent'       : $ctrl.tx.getTxType($ctrl.account) === 'sent',\
+    'button-transferred': $ctrl.txType === 'transfer',\
+    'button-received'   : $ctrl.txType === 'received',\
+    'button-sent'       : $ctrl.txType === 'sent',\
     'unconfirmed' : $ctrl.tx.confirmations < $ctrl.confirmationsNeeded \
   }" ng-click="$ctrl.toggle()")
   span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")

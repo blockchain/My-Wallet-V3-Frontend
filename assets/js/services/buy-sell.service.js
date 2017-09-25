@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('buySell', buySell);
 
-function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals) {
+function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi) {
   let states = {
     error: ['expired', 'rejected', 'cancelled'],
     success: ['completed', 'completed_test'],
@@ -27,7 +27,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     if (!_buySellMyWallet) {
       _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, false);
       Env.then(env => {
-        _buySellMyWallet.debug = env.buySellDebug;
+        _buySellMyWallet.debug = env.qaDebugger;
       });
     }
     return _buySellMyWallet;
@@ -43,7 +43,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     kycs: [],
     mediums: [],
     accounts: [],
-    limits: { bank: { max: {}, maxOutRemaining: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {} } },
+    limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {}, min: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
@@ -51,9 +51,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getQuote,
     getSellQuote,
     getKYCs,
-    getRate,
-    getMaxLimits,
-    getMinLimits,
     triggerKYC,
     getOpenKYC,
     getTrades,
@@ -62,13 +59,15 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     openSellView,
     pollKYC,
     pollUserLevel,
-    getCurrency,
     signupForAccess,
     submitFeedback,
     tradeStateIn,
     cancelTrade,
     states,
-    isPendingSellTrade
+    isPendingSellTrade,
+    incrementBuyDropoff,
+    getLimits,
+    getSellLimits
   };
 
   return service;
@@ -76,7 +75,7 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   function init (coinify) {
     return Env.then(env => {
       coinify.partnerId = env.partners.coinify.partnerId;
-      coinify.api.testnet = env.network === 'testnet';
+      coinify.api.sandbox = !env.isProduction;
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
       initialized.resolve();
@@ -108,51 +107,30 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     });
   }
 
-  function getRate (base, quote) {
-    let getRate = service.getExchange().exchangeRate.get(base, quote);
-    return $q.resolve(getRate);
+  function getLimits (mediums, curr) {
+    if (mediums.card) {
+      service.limits.card.max = mediums.card.limitInAmounts;
+      service.limits.card.min = mediums.card.minimumInAmounts;
+    }
+    if (mediums.bank) {
+      service.limits.bank.max = mediums.bank.limitInAmounts;
+      service.limits.bank.min = mediums.bank.minimumInAmounts;
+    }
+
+    let card = service.limits.card;
+    let bank = service.limits.bank;
+    service.limits.min = bank.min[curr] < card.min[curr] ? bank.min[curr] : card.min[curr];
+    if (card.max) {
+      service.limits.max = bank.max[curr] > card.max[curr] ? bank.max[curr] : card.max[curr];
+    }
+    return service.limits;
   }
 
-  function getMaxLimits (defaultCurrency) {
-    const setMax = (rate, curr) => {
-      service.limits.bank.max[curr] = calculateMax(rate, 'bank', 'inRemaining');
-      service.limits.bank.maxOutRemaining[curr] = calculateMax(rate, 'bank', 'outRemaining');
-      service.limits.card.max[curr] = calculateMax(rate, 'card', 'inRemaining');
-      service.limits.bank.yearlyMax[curr] = calculateYearlyMax(rate, 'bank');
-      service.limits.card.yearlyMax[curr] = calculateYearlyMax(rate, 'card');
-      service.limits.absoluteMax = (curr) => {
-        let cardMax = parseFloat(service.limits.card.max[curr], 0);
-        let bankMax = parseFloat(service.limits.bank.max[curr], 0);
-        return bankMax > cardMax ? bankMax : cardMax;
-      };
-    };
-
-    let getMax = (c) => service.getRate(defaultCurrency, c).then(r => setMax(r, c));
-    return $q.all(['DKK', 'EUR', 'USD', 'GBP'].map(getMax));
-  }
-
-  function calculateMax (rate, medium, typeRemaining) {
-    let limit = service.getExchange().profile.currentLimits[medium][typeRemaining];
-    return (rate * limit).toFixed(2);
-  }
-
-  function calculateYearlyMax (rate, medium) {
-    let limit = service.getExchange().profile.level.limits[medium].inYearly;
-    return (rate * limit).toFixed(2);
-  }
-
-  function getMinLimits (quote) {
-    const calculateMin = (mediums) => {
-      service.limits.bank.min = mediums.bank ? Object.assign(service.limits.bank.min, mediums.bank.minimumInAmounts) : {};
-      service.limits.card.min = mediums.card ? mediums.card.minimumInAmounts : {};
-      service.limits.absoluteMin = (curr) => {
-        let cardMin = parseFloat(service.limits.card.min[curr], 0);
-        let bankMin = parseFloat(service.limits.bank.min[curr], 0);
-        return bankMin < cardMin ? bankMin : cardMin;
-      };
-    };
-
-    return quote.getPaymentMediums().then(calculateMin);
+  function getSellLimits (mediums) {
+    let min = mediums.bank.minimumInAmounts['BTC'];
+    let max = mediums.bank.limitInAmounts ? mediums.bank.limitInAmounts['BTC'] : undefined;
+    service.sellLimits = { min, max };
+    return service.sellLimits;
   }
 
   function triggerKYC () {
@@ -287,17 +265,6 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }).result;
   }
 
-  function getCurrency (trade, sellCheck) {
-    if (trade && trade.inCurrency) return currency.currencies.filter(t => t.code === trade.inCurrency)[0];
-    let coinifyCurrencies = !sellCheck ? currency.coinifyCurrencies : currency.coinifySellCurrencies;
-    let walletCurrency = Wallet.settings.currency;
-    let isCoinifyCompatible = coinifyCurrencies.some(c => c.code === walletCurrency.code);
-    let exchange = service.getExchange();
-    let coinifyCode = exchange && exchange.profile ? exchange.profile.defaultCurrency : 'EUR';
-    if (sellCheck && coinifyCode === 'USD') coinifyCode = 'EUR';
-    return isCoinifyCompatible ? walletCurrency : coinifyCurrencies.filter(c => c.code === coinifyCode)[0];
-  }
-
   function isPendingSellTrade (pendingTrade) {
     return (pendingTrade && (pendingTrade.state === 'awaiting_transfer_in' || pendingTrade.state === 'processing')) && (pendingTrade.medium === 'blockchain');
   }
@@ -308,5 +275,9 @@ function buySell (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function submitFeedback (rating) {
     BrowserHelper.safeWindowOpen('https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating);
+  }
+
+  function incrementBuyDropoff (step) {
+    MyBlockchainApi.incrementBuyDropoff(step);
   }
 }
