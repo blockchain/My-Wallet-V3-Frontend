@@ -9,8 +9,19 @@ angular
     controllerAs: '$ctrl'
   });
 
-function bitcoinCashController (modals) {
+function bitcoinCashController (modals, MyWallet) {
+  this.transactionViewOpen = false;
   this.hasBalance = () => true;
+  this.hasTransactions = () => true;
+  this.toggleTransactionView = () => {
+    console.log('toggleTransactionView', this.transactionViewOpen);
+    this.transactionViewOpen = true;
+  };
+
+  let txList = MyWallet.wallet.txList;
+  this.bcashTransactions = txList.transactions();
+  console.log('tx list', txList, this.bcashTransactions);
+
   this.showingBalance = false;
   this.showBalance = () => {
     modals.openBitcoinCash().closed.then(() => this.showingBalance = true);

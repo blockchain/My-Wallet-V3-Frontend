@@ -1,13 +1,37 @@
-.flex-row.flex-between
-  .flex-column.width-50
+//- .flex-row.flex-between
+//-   .flex-column.width-50
+//-     label.em-400.type-h5(translate="Bitcoin Cash")
+//-     p.alt-font.f-16.em-300(translate="BITCOIN_CASH_INFO")
+//-   .flex-column(ng-if="$ctrl.showingBalance")
+//-     label.em-400.type-h5(translate="Bitcoin Cash Balance")
+//-     span 0.2134235 BCC ($150)
+//-   .flex
+//-     .flex-column.flex-justify(ng-if="$ctrl.showingBalance")
+//-       button.button-default(translate="Exchange Bitcoin Cash" ng-click="$ctrl.openWithStep('exchange')")
+//-       button.button-default.mt-15(translate="Send Bitcoin Cash" ng-click="$ctrl.openWithStep('send')")
+//-     .flex-column.flex-justify(ng-if="!$ctrl.showingBalance")
+//-       button.button-primary(translate="Show Bitcoin Cash Balance" ng-click="$ctrl.showBalance()")
+.flex-column
+  .flex-column.width-100.mb-15
     label.em-400.type-h5(translate="Bitcoin Cash")
     p.alt-font.f-16.em-300(translate="BITCOIN_CASH_INFO")
-  .flex-column(ng-if="$ctrl.showingBalance")
-    label.em-400.type-h5(translate="Bitcoin Cash Balance")
-    span 0.2134235 BCC ($150)
-  .flex
-    .flex-column.flex-justify(ng-if="$ctrl.showingBalance")
-      button.button-default(translate="Exchange Bitcoin Cash" ng-click="$ctrl.openWithStep('exchange')")
-      button.button-default.mt-15(translate="Send Bitcoin Cash" ng-click="$ctrl.openWithStep('send')")
-    .flex-column.flex-justify(ng-if="!$ctrl.showingBalance")
-      button.button-primary(translate="Show Bitcoin Cash Balance" ng-click="$ctrl.showBalance()")
+  .flex-column.border.pv-25.ph-25
+    .width-100.flex-row
+      .flex-column.width-30
+          span.f-14.em-400 Wallet Name
+          span.f-12 Bitcoin Cash
+          a.em-300.f-14.pt-5(ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") View transactions
+          a.em-300.f-14.pt-5(ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") Hide transactions
+      .flex-column.width-40.flex-center
+          span.f-14.em-400.pb-15 Bitcoin Cash Balance
+          span.f-14.em-300 0.2934235 ($150.26)
+      .flex-column.width-30.flex-align-end
+          a.pb-15(ng-click="$ctrl.openWithStep('exchange')") Exchange Bitcoin Cash
+          a(ng-click="$ctrl.openWithStep('send')") Send Bitcoin Cash
+    .width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
+      .transaction.flex-row(ng-repeat="tx in $ctrl.bcashTransactions")
+        .tx-toggle.pointer.hidden-xs.flex-center(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
+          i.icon-down_arrow
+        .tx-details.width-100.mll.mvm
+          span
+            transaction-description-bcash(transaction="tx" account="account")
