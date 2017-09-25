@@ -66,6 +66,10 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
       code: 'bits',
       conversion: 100,
       btcValue: '0.000001 BTC'
+    }, {
+      serverCode: 'BCH',
+      code: 'BCH',
+      conversion: 100000000
     }
   ];
 
@@ -76,12 +80,20 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     }
   ];
 
+  const bchCurrencies = [
+    {
+      code: 'BCH',
+      conversion: 100000000
+    }
+  ];
+
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
     coinifySellCurrencies: formatCurrencies(coinifySellCurrencyCodes),
     bitCurrencies,
     ethCurrencies,
+    bchCurrencies,
     conversions,
     ethConversions,
     fetchExchangeRate,
@@ -97,6 +109,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     convertFromSatoshi,
     convertToEther,
     convertFromEther,
+    convertFromBitcoinCash,
     formatCurrencyForView,
     getCurrencyByCode: MyWalletHelpers.memoize(getCurrencyByCode),
     commaSeparate
@@ -180,7 +193,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8 };
+    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8, 'BCH': 8 };
     let decimalPlaces = decimalMap[currency.code];
     return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
@@ -237,6 +250,15 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     }
   }
 
+  function convertFromBitcoinCash (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (bchConversions[currency.code] != null) {
+      return amount * bchConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
   function formatCurrencyForView (amount, currency, showCode = true) {
     if (amount == null || currency == null) return null;
     let decimalPlaces = decimalPlacesForCurrency(currency);
@@ -253,7 +275,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function getCurrencyByCode (code) {
     code = code.toUpperCase();
-    return service.currencies.concat(bitCurrencies).concat(ethCurrencies)
+    return service.currencies.concat(bitCurrencies).concat(ethCurrencies).concat(bchCurrencies)
       .find(curr => curr.code === code);
   }
 

@@ -23,9 +23,17 @@ form.bc-form(
         .item.width-50.width-50-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate="TO")
-          .flex-center.border       
+          .flex-center.border(ng-hide="$ctrl.isBitcoinCashExchange")       
             i.ph-5.ml-5(ng-class="!state.baseBTC ? 'icon-bitcoin' : 'icon-ethereum'")
             input(ng-disabled="true" ng-model="$ctrl.to.label" style="border: none !important; padding: 0px !important; background-color: white !important")
+          .flex-center(ng-show="$ctrl.isBitcoinCashExchange")
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="setBchTo()")
+              ui-select-match
+                i.pr-5(ng-class="state.baseBTC ? 'icon-bitcoin' : 'icon-ethereum'")
+                span {{ $ctrl.to.label }}
+              ui-select-choices(repeat="origin in $ctrl.origins")
+                i.pr-5(ng-class="origin.constructor.name === 'HDAccount' ? 'icon-bitcoin' : 'icon-ethereum'")
+                span {{ origin.label }}
       .group
         .item
           .flex-between.flex-baseline.mbs
@@ -52,8 +60,9 @@ form.bc-form(
                 span.mhm.upper {{state.input.curr}}
               .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
                 fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
-                fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
                 fiat(btc="toSatoshi(state.input.amount, bitcoin)" ng-if="state.input.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
+                fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
+                fiat(bch="state.input.amount" ng-if="state.input.curr === 'bch' && !forms.shiftForm.$invalid")
             i.icon-skinny-arrow-right.f-12.border-grey.ph-10.hidden-xs
             .flex-column.flex-1.border
               .flex-center

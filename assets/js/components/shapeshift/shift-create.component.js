@@ -40,13 +40,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let state = $scope.state = {
     baseCurr: null,
     rate: { min: null, max: null },
-    input: { amount: null, curr: 'btc' },
+    input: { amount: null, curr: !this.isBitcoinCashExchange ? 'btc' : 'bch' },
     output: { amount: null, curr: 'eth' },
     get baseBTC () { return state.input.curr === 'btc'; },
     get baseInput () { return this.baseCurr === state.input.curr; }
   };
 
-  if (this.isBitcoinCashExchange) state.input.curr = 'bch';
+  // if (this.isBitcoinCashExchange) state.input.curr = 'bch';
 
   $scope.getQuoteArgs = (state) => ({
     pair: state.input.curr + '_' + state.output.curr,
@@ -89,6 +89,17 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     state.baseCurr = state.output.curr;
     state.output = state.input; state.input = output;
     this.to = this.origins.find((o) => o.label !== this.from.label);
+  };
+
+  $scope.setBchTo = () => {
+    if (state.output.curr === 'eth') {
+      state.output.curr = 'btc';
+      this.to = Wallet.getDefaultAccount();
+    } else {
+      state.output.curr = 'eth';
+      this.to = Ethereum.defaultAccount;
+    }
+    $scope.refreshIfValid('output');
   };
 
   let getRate = () => {

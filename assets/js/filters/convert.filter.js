@@ -14,6 +14,7 @@ function convertFilter (Wallet, currency) {
   return function (amount, target = 'primary', showCode) {
     let fiat = Wallet.settings.currency;
     let eth = currency.ethCurrencies[0];
+    let bch = currency.bchCurrencies[0];
     let btc = Wallet.settings.btcCurrency;
     let display = Wallet.settings.displayCurrency;
     let curr, conversion;
@@ -24,6 +25,7 @@ function convertFilter (Wallet, currency) {
         'secondary': currency.isBitCurrency(display) ? fiat : btc,
         'btc': btc,
         'eth': eth,
+        'bch': bch,
         'fiat': fiat
       });
     } else if (target.code) {

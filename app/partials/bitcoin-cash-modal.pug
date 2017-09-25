@@ -56,11 +56,20 @@ div(translate-namespace="BITCOIN_CASH")
             
   .flex.pb-30(ng-if="vm.onStep('exchange')" ng-controller="BitcoinCashExchangeController")
     .width-100(ng-if="onStep('exchange-create')")
-      shift-create(on-complete="onComplete(payment, fee, quote)" 
+      shift-create(on-complete="onCreateComplete(payment, fee, quote)" 
                    build-payment="buildPayment(quote, fee)" 
                    handle-approximate-quote="approximateQuoteHandler(pair, amount)" 
                    handle-quote="quoteHandler(pair, amount)" 
                    handle-rate="rateHandler(rate)"
                    hide-header="true"
                    is-bitcoin-cash-exchange="true")
+    .width-100(ng-if="onStep('exchange-confirm')")
+      shift-confirm(on-complete="onConfirmComplete(trade)" 
+                    on-cancel="onCancel()" 
+                    on-expiring="openHelper('expiring-exchange-helper')" 
+                    on-expiration="onExpiration()" 
+                    payment="payment" 
+                    fee="fee" 
+                    quote="quote" 
+                    handle-shift="shiftHandler(payment)")
     
