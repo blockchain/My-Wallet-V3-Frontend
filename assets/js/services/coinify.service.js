@@ -108,7 +108,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     tradeStateIn,
     cancelTrade,
     states,
-    isPendingSellTrade,
     incrementBuyDropoff,
     getLimits,
     getSellLimits
@@ -264,10 +263,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     };
 
     return $q.resolve(service.exchange.fetchProfile()).then(() => {}, error);
-  }
-
-  function isPendingSellTrade (pendingTrade) {
-    return (pendingTrade && (pendingTrade.state === 'awaiting_transfer_in' || pendingTrade.state === 'processing')) && (pendingTrade.medium === 'blockchain');
   }
 
   function signupForAccess (email, country, state) {
