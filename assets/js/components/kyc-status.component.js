@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .component('kycStatus', {
     bindings: {
-      state: '<',
+      kyc: '<',
       currency: '<',
       onTrigger: '&'
     },
@@ -15,7 +15,7 @@ angular
         'rejected': { ns: 'KYC_REJECTED', i: 'ti-na' }
       };
 
-      this.getState = () => this.stateMap[this.state];
+      this.getState = () => this.stateMap[this.kyc.state];
 
       this.profile = coinify.exchange.profile;
       this.level = this.profile ? +this.profile.level.name : null;

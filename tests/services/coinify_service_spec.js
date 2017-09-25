@@ -63,7 +63,6 @@ describe('coinify service', () => {
 
     spyOn(exchange, 'getBuyCurrencies').and.returnValue($q.resolve(['USD', 'EUR']));
     spyOn(exchange, 'getTrades').and.returnValue($q.resolve(trades));
-    return spyOn(exchange, 'getKYCs').and.returnValue($q.resolve([]));
   });
 
   describe('getTrades', () => {

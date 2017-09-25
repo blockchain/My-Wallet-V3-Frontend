@@ -65,7 +65,6 @@ describe('CoinifySellController', () => {
 
       coinify.exchange = () => ({
         getTrades() { return $q.resolve(); },
-        getKYCs() { return $q.resolve(); },
         trades: {
           pending: {}
         },

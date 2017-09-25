@@ -403,6 +403,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
+        _loadKYCs ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getKYCs();
+        },
         balance ($q, MyWallet) {
           let defaultAccount = MyWallet.wallet.hdwallet.defaultAccount;
 

@@ -22,7 +22,7 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
-  this.refreshQuote = () => $q.resolve(coinify.getSellQuote(this.BTCAmount(), 'BTC', this.fiatCurrency())).then(onRefreshQuote);
+  this.refreshQuote = () => $q.resolve(coinify.getSellQuote(this.BTCAmount(), 'BTC', this.fiatCurrency()).then(onRefreshQuote));
 
   const onRefreshQuote = (quote) => {
     this.quote = quote;

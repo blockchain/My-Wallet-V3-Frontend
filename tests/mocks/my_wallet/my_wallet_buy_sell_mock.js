@@ -6,7 +6,6 @@ angular.module('walletApp.core').factory('MyWalletBuySell', () =>
           api: {},
           getTrades () {},
           fetchProfile () {},
-          getKYCs () {},
           getBuyCurrencies () {},
           monitorPayments () {}
         },

@@ -4,7 +4,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
       img(src="img/coinify-logo.svg")
 .buy-sell.mbvl.mh-15
-  div(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
+  .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
     //- BUY
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
       exchange-checkout(
@@ -18,8 +18,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         handle-mediums="buyMediumsHandler(quote)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
-      kyc-status(state="kyc.state" on-trigger="openKyc()" currency="transaction.currency")
-  div(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
+      kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="fiat.code")
+  .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     //- SELL
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
       exchange-checkout(
@@ -33,7 +33,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         handle-mediums="sellMediumsHandler(quote)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
-      kyc-status(state="kyc.state" on-trigger="openSellKyc()")
+      kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-row.flex-between.flex-center.mtl(ng-show="trades.pending.length")
       h4.type-h5 Pending Orders ({{trades.pending.length}})

@@ -19,6 +19,9 @@ function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, A
   $scope.sellQuoteHandler = coinify.getSellQuote;
   $scope.sellMediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.sellLimits = coinify.getSellLimits(mediums));
 
+  $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());
+  $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]) && coinify.kycs[0];
+
   if (exchange.profile) {
     $scope.fiat = currency.currencies.filter(c => c.code === exchange.profile.defaultCurrency)[0];
   } else {

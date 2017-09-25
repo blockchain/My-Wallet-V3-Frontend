@@ -17,27 +17,12 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   let watching = {};
   let initialized = $q.defer();
 
-  let poll;
-  let maxPollTime = 30000;
-
-  let _buySellMyWallet;
-
-  let buySellMyWallet = () => {
-    if (!Wallet.status.isLoggedIn) {
-      return null;
-    }
-    if (!_buySellMyWallet) {
-      _buySellMyWallet = new MyWalletBuySell(MyWallet.wallet, false);
-      Env.then(env => {
-        _buySellMyWallet.debug = env.qaDebugger;
-      });
-    }
-    return _buySellMyWallet;
-  };
-
   const service = {
     get exchange () {
       return MyWallet.wallet.external.coinify;
+    },
+    get kycs () {
+      return service.exchange.kycs;
     },
     get userCanTrade () {
       return !service.exchange.profile || service.exchange.profile.canTrade;
@@ -80,11 +65,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
       return reason;
     },
-    getStatus: () => buySellMyWallet() && buySellMyWallet().status,
     trades: { completed: [], pending: [] },
-    kycs: [],
-    mediums: [],
-    accounts: [],
     limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {}, min: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
@@ -95,7 +76,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     selling,
     getQuote,
     getSellQuote,
-    getKYCs,
     triggerKYC,
     getOpenKYC,
     getPendingTrade,
@@ -103,8 +83,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getTrades,
     watchAddress,
     fetchProfile,
-    pollKYC,
-    pollUserLevel,
     signupForAccess,
     submitFeedback,
     tradeStateIn,
@@ -156,13 +134,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.exchange.getSellQuote(Math.trunc(amt), curr, quoteCurr));
   }
 
-  function getKYCs () {
-    return $q.resolve(service.exchange.getKYCs()).then(kycs => {
-      service.kycs = kycs.sort((k0, k1) => k1.createdAt > k0.createdAt);
-      return service.kycs;
-    });
-  }
-
   function getLimits (mediums, curr) {
     if (mediums.card) {
       service.limits.card.max = mediums.card.limitInAmounts;
@@ -192,27 +163,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return service.sellLimits;
   }
 
-  function triggerKYC () {
-    return $q.resolve(service.exchange.triggerKYC()).then(kyc => {
-      service.kycs.unshift(kyc);
-      return kyc;
-    });
-  }
-
-  function pollKYC () {
-    let kyc = service.kycs[0];
-
-    if (kyc && kyc.state !== 'pending') { return; }
-    if (poll && poll.$$state.status === 0) { return; }
-
-    poll = service.pollUserLevel(kyc).result
-      .then(() => Alerts.displaySuccess('KYC_APPROVED', true))
-      .then(() => {
-        $state.go('wallet.common.buy-sell');
-        $uibModalStack.dismissAll();
-      });
-  }
-
   function cancelTrade (trade) {
     let msg = 'CONFIRM_CANCEL_TRADE';
     if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
@@ -227,25 +177,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
-  function pollUserLevel (kyc) {
-    let stop;
-    let profile = service.exchange.profile;
-
-    let pollUntil = (action, test) => $q((resolve) => {
-      let exit = () => { stop(); resolve(); };
-      let check = () => action().then(() => test() && exit());
-      stop = MyWalletHelpers.exponentialBackoff(check, maxPollTime);
-    });
-
-    let pollKyc = () => pollUntil(() => kyc && kyc.refresh(), () => kyc.state === 'completed');
-    let pollProfile = () => pollUntil(() => profile.fetch(), () => +profile.level.name === 2);
-
-    return {
-      cancel: () => stop && stop(),
-      result: $q.resolve(pollKyc().then(pollProfile))
-    };
-  }
-
   function getOpenKYC () {
     if (service.kycs.length) {
       let kyc = service.kycs[0];
@@ -253,6 +184,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     } else {
       return service.triggerKYC();
     }
+  }
+
+  function triggerKYC () {
+    return $q.resolve(service.exchange.triggerKYC());
   }
 
   function getPendingTrade () {
