@@ -83,30 +83,6 @@ describe('sell-summary.component', () => {
     })
   );
 
-  describe('.isDisabled()', () => {
-    it('should be disabled if insufficient funds', () => {
-      let ctrl = getController(handlers);
-      ctrl.totalBalance = 0.001;
-      let result = ctrl.isDisabled();
-      expect(result).toEqual(true);
-    });
-
-    it('should disable if the form is invalid', () => {
-      let ctrl = getController(handlers);
-      ctrl.sellRateForm.$valid = false;
-      let result = ctrl.isDisabled();
-      expect(result).toEqual(true);
-    });
-
-    it('should disable if there is no quote attached to sell Trade', () => {
-      let ctrl = getController(handlers);
-      ctrl.totalBalane = 1;
-      ctrl.sellRateForm.$valid = true;
-      let result = ctrl.isDisabled();
-      expect(result).toEqual(undefined);
-    });
-  });
-
   describe('.sell()', () => {
     it('should set waiting to true', () => {
       let ctrl = getController(handlers);

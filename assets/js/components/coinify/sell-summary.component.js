@@ -4,9 +4,6 @@ angular
     bindings: {
       quote: '<',
       exchange: '<',
-      sellTrade: '<',
-      sellLimits: '<',
-      totalBalance: '<',
       bankAccount: '<',
       onComplete: '&',
       onSuccess: '&',
@@ -22,28 +19,17 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   this.sellRateForm;
 
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
-  this.BTCAmount = () => !this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
-  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
-  this.overMax = () => this.BTCAmount() > this.sellLimits.max;
+  this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
+  this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
+  this.overMax = () => this.BTCAmount() / 1e8 > coinify.sellLimits.max;
 
   this.payment = Wallet.my.wallet.createPayment();
   this.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
   this.payment.amount(this.BTCAmount());
   this.payment.updateFeePerKb(coinify.sellFee);
   this.payment.sideEffect((p) => this.fee = p.finalFee);
-
-  this.trade = {
-    get fee () { return (this.quote.paymentMediums.bank.fee / 100).toFixed(2); },
-  };
-
-  this.isDisabled = () => {
-    if (!this.fields) true;
-    if (!this.sellRateForm.$valid) return true;
-    if (this.sellTrade) {
-      if (!this.sellTrade.quote) true;
-    }
-  };
+  this.paymentFee = (this.quote.paymentMediums.bank.fee / 100).toFixed(2);
 
   this.checkForUpdatedQuote = () => {
     let updated = new Date(this.quote.expiresAt).getTime();
@@ -87,6 +73,8 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   };
 
   const assignAndBuildPayment = (sellResult) => {
+    // this.payment.to(sellResult.transferIn.details.account);
+    // Debugging
     this.payment.to('16rVM9kaJKGXaNgaxgKhwyQ5pdnRsnYEy3');
     // QA tool
     if (this.exchange._customAddress && this.exchange._customAmount) {

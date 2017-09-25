@@ -3,9 +3,7 @@ angular
   .controller('CoinifyController', CoinifyController);
 
 function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, coinify, $state, buyMobile, Env) {
-  Env.then(env => {
-    this.qaDebugger = env.qaDebugger;
-  });
+  Env.then(env => this.qaDebugger = env.qaDebugger);
 
   let exchange = coinify.exchange;
 
@@ -16,13 +14,13 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.message = 'RATE_GUARANTEED';
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
-  this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
-  this.fiatAmount = () => this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
+  this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
   this.refreshQuote = () => {
-    if (this.baseFiat()) return $q.resolve(coinify.getQuote(this.quote.baseAmount * 100, this.quote.baseCurrency)).then((q) => this.quote = q);
-    else return $q.resolve(coinify.getQuote(this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
+    if (this.baseFiat()) return $q.resolve(coinify.getQuote(this.fiatAmount() * 100, this.quote.baseCurrency)).then((q) => this.quote = q);
+    else return $q.resolve(coinify.getQuote(this.BTCAmount() / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
   };
   this.expireTrade = () => {
     return $q.resolve(this.state.trade.expired = true);

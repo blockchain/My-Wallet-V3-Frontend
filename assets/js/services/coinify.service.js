@@ -147,21 +147,13 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   }
 
   function getQuote (amt, curr, quoteCurr) {
-    if (curr === 'BTC') {
-      amt = Math.trunc(-amt);
-    } else {
-      amt = Math.trunc(amt);
-    }
-    return $q.resolve(service.exchange.getBuyQuote(amt, curr, quoteCurr));
+    if (curr === 'BTC') amt = -amt;
+    return $q.resolve(service.exchange.getBuyQuote(Math.trunc(amt), curr, quoteCurr));
   }
 
   function getSellQuote (amt, curr, quoteCurr) {
-    if (curr === 'BTC') {
-      amt = Math.trunc(-amt);
-    } else {
-      amt = Math.trunc(amt);
-    }
-    return $q.resolve(service.exchange.getSellQuote(amt, curr, quoteCurr));
+    if (curr === 'BTC') amt = -amt;
+    return $q.resolve(service.exchange.getSellQuote(Math.trunc(amt), curr, quoteCurr));
   }
 
   function getKYCs () {

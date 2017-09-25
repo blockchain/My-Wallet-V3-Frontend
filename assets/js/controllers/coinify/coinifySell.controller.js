@@ -3,6 +3,8 @@ angular
   .controller('CoinifySellController', CoinifySellController);
 
 function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModalInstance, $q, $rootScope, accounts, $state, $stateParams, quote, trade, coinify) {
+  Env.then(env => this.qaDebugger = env.qaDebugger);
+
   $scope.fields = {};
   $scope.user = Wallet.user;
 
@@ -16,9 +18,9 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
 
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
-  this.BTCAmount = () => !this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
-  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount : -this.quote.quoteAmount;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
+  this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.totalBalance = currency.convertFromSatoshi(Wallet.my.wallet.balanceActiveAccounts, currency.bitCurrencies[0]);
   this.refreshQuote = () => $q.resolve(coinify.getSellQuote(this.BTCAmount(), 'BTC', this.fiatCurrency())).then(onRefreshQuote);
 
@@ -145,9 +147,8 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
 
   this.onSignupComplete = () => {
     this.refreshQuote().then(() => {
-      this.quote.getPayoutMediums().then(mediums => {
-        this.paymentAccount = mediums.bank;
-        this.sellLimits = coinify.getSellLimits(mediums);
+      this.quote.getPaymentMediums().then(mediums => {
+        coinify.getSellLimits(mediums);
         mediums.bank.getBankAccounts().then(bankAccounts => {
           this.accounts = bankAccounts;
           this.goTo('account');
@@ -175,7 +176,7 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
     Object.assign(holder.holder, userObj);
     let obj = Object.assign(bankObj, holder);
     obj.account.currency = this.fiatCurrency();
-    $q.resolve(this.paymentAccount.addBankAccount(obj))
+    $q.resolve(this.quote.paymentMediums.bank.addBankAccount(obj))
       .then(this.onCreateBankSuccess)
       .catch(handleError);
   };
