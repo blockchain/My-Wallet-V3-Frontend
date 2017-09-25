@@ -50,14 +50,13 @@ form.bc-form(
               ng-model-options="{debounce: 250}"
               required)
             span.mhm {{bitcoin.code}}
-        .f-12.mts(ng-show="trading().isDisabled")
-          span.state-danger-text(translate="{{ provider + '.' + trading().reason + '.EXPLAIN'}}")
+        .f-12.mts
+          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: $ctrl.limits.max, curr: displayCurrency.code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}")
           | &nbsp;
-          a(ng-click="trading().launchOption()" translate="{{ provider + '.' + trading().reason + '.OPTION'}}")
-        .f-12.mts(ng-show="!trading().isDisabled")
-          span(ng-hide="$ctrl.limits.max") &nbsp;
-          span(ng-show="$ctrl.limits.max" ng-class="{'state-danger-text':checkoutForm.$error.max}")
-            | {{ provider + '.' + trading().reason + '.EXPLAIN' | translate }} {{ format($ctrl.limits.max, displayCurrency, false) }} {{ displayCurrency.code }}.
+          span(ng-repeat="(option, action) in trading().launchOptions")
+            a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
+            | 
+            span(ng-if="!$last") or 
     .group.mtl(ng-if="$ctrl.collapseSummary")
       .item
         .mbm

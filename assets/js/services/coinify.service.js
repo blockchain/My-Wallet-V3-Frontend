@@ -30,6 +30,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get balanceAboveMin () {
       return service.sellMax && service.sellMax > service.sellLimits.min;
     },
+    get balanceAboveMax () {
+      return service.sellMax && service.sellMax > service.sellLimits.max;
+    },
     get userCanBuy () {
       return service.userCanTrade;
     },
@@ -44,9 +47,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let { limits } = service;
       let { profile } = service.exchange;
 
-      if (!profile) reason = 'user_has_no_profile';
-      else if (!profile.canTrade) reason = profile.cannotTradeReason;
+      if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
       else if (limits && limits.max) reason = 'has_remaining_buy_limit';
+      else if (!profile) reason = 'user_needs_account';
       else reason = 'user_can_trade';
 
       return reason;
@@ -57,6 +60,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let { profile } = service.exchange;
 
       if (!sellLimits) reason = 'loading_data';
+      else if (service.balanceAboveMax) reason = 'can_sell_max';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
       else if (!sellLimits.max || service.balanceAboveMin) reason = 'can_sell_remaining_balance';
@@ -65,11 +69,25 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
       return reason;
     },
+    get buyLaunchOptions () {
+      let reason = service.buyReason;
+      let { profile } = service.exchange;
+
+      if (reason === 'has_remaining_buy_limit' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+    },
+    get sellLaunchOptions () {
+      let reason = service.sellReason;
+      let { profile } = service.exchange;
+
+      if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
+      else if (reason === 'can_sell_max' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+    },
     trades: { completed: [], pending: [] },
     limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {}, min: {} } },
     getTxMethod: (hash) => txHashes[hash] || null,
     initialized: () => initialized.promise,
     login: () => initialized.promise.finally(service.fetchProfile),
+    goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'}),
     setSellMax: (balance) => { service.sellMax = balance.amount / 1e8; service.sellFee = balance.fee; },
     init,
     buying,
@@ -78,6 +96,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getSellQuote,
     triggerKYC,
     getOpenKYC,
+    openPendingKYC,
     getPendingTrade,
     openPendingTrade,
     getTrades,
@@ -111,7 +130,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       reason: service.buyReason,
       isDisabled: !service.userCanBuy,
       isDisabledUntil: service.isDisabledUntil,
-      launchOption: service.openPendingTrade
+      launchOptions: service.buyLaunchOptions
     };
   }
 
@@ -120,7 +139,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       reason: service.sellReason,
       isDisabled: !service.userCanSell,
       isDisabledUntil: service.isDisabledUntil,
-      launchOption: service.openPendingTrade
+      launchOptions: service.sellLaunchOptions
     };
   }
 
@@ -188,6 +207,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function triggerKYC () {
     return $q.resolve(service.exchange.triggerKYC());
+  }
+
+  function openPendingKYC () {
+    modals.openBuyView(null, service.getOpenKYC());
   }
 
   function getPendingTrade () {

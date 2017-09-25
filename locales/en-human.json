@@ -1476,7 +1476,6 @@
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
-    "ZERO_BALANCE": "Unfortunately, you don't have any bitcoin to sell. To get bitcoin in your wallet,",
     "WHO_OWNS": "Who owns this bank account? This information should match the holder's bank statement.",
     "PLEASE_ADD_ACCOUNT": "You don't have any bank accounts stored. Please add an account where you would like your funds sent.",
     "MAX_DAILY": "Maximum daily sell amount is",
@@ -1553,19 +1552,31 @@
   "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
   "COINIFY": {
+    "user_needs_account": {
+      "EXPLAIN": ""
+    },
+    "user_can_trade": {
+      "EXPLAIN": ""
+    },
     "loading_data": {
       "EXPLAIN": "Loading data...",
       "OPTION": ""
     },
     "has_remaining_buy_limit": {
-      "EXPLAIN": "Your remaining daily buy limit is "
+      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}.",
+      "KYC": "Increase your limit."
     },
     "not_enough_funds_to_sell": {
-      "EXPLAIN": "You do not have enough funds to sell",
-      "OPTION": "Request"
+      "EXPLAIN": "😢 Unfortunately, you do not have enough funds to sell.",
+      "REQUEST": "@:REQUEST",
+      "BUY": "@:BUY"
+    },
+    "can_sell_max": {
+      "EXPLAIN": "You can sell up to {{::max}} {{::curr}}.",
+      "KYC": "Increase your limit."
     },
     "can_sell_remaining_balance": {
-      "EXPLAIN": "You can sell up to "
+      "EXPLAIN": "You can sell up to {{::max}} {{::curr}}"
     },
     "awaiting_first_trade_completion": {
       "EXPLAIN": "Trading is disabled until your pending trade is complete.",

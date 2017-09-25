@@ -3,11 +3,12 @@ angular
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
 function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, AngularHelper, MyWallet, $state, Alerts, Wallet, currency, coinify, modals, balance) {
-  let exchange = MyWallet.wallet.external.coinify;
+  let exchange = coinify.exchange;
 
   $scope.trades = coinify.trades;
   $scope.coinifyStatus = coinify.getStatus;
   $scope.fiatOptions = currency.coinifyCurrencies;
+  let walletCurrencyMatch = $scope.fiatOptions.filter(c => c.code === (exchange.profile ? exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
 
   $scope.buying = coinify.buying;
   $scope.buyHandler = modals.openBuyView;
@@ -22,13 +23,8 @@ function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, A
   $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());
   $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]) && coinify.kycs[0];
 
-  if (exchange.profile) {
-    $scope.fiat = currency.currencies.filter(c => c.code === exchange.profile.defaultCurrency)[0];
-  } else {
-    if ($stateParams.countryCode === 'DK') $scope.fiat = currency.currencies.filter(c => c.code === 'DKK')[0];
-    else if ($stateParams.countryCode === 'GB') $scope.fiat = currency.currencies.filter(c => c.code === 'GBP')[0];
-    else $scope.fiat = currency.currencies.filter(c => c.code === 'EUR')[0];
-  }
+  console.log(walletCurrencyMatch);
+  $scope.fiat = walletCurrencyMatch || $scope.fiatOptions.filter(c => c.code === 'EUR')[0];
 
   let email = MyWallet.wallet.accountInfo.email;
   Env.then(env => {
