@@ -20,7 +20,7 @@
         | &nbsp;
         span.overflow-scroll.f-14.em-300(ng-bind-html="fromAccount ? fromAccount.label : tx.from | escapeHtml | highlight:search")
     .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
-      transaction-note(transaction="tx" note="note" search="search" set-note="setNote(note)" delete-note="setNote('')")
+      transaction-note(transaction="tx" note="note" search="search" set-note="setNote(note)" delete-note="setNote('')" edit-note="editNote")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       asset-transaction-pending(tx-type="txType" tx-confirmations="tx.confirmations" confirmations="12" show-tooltip="false")
     .flex-1.width-20.amount.flex-end
@@ -28,7 +28,7 @@
         ethereum-transaction-amount(transaction="tx" confirmations-needed="12")
   //- toggled and mobile
   .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
-    transaction-note(transaction="tx" note="note" set-note="setNote(note)" delete-note="setNote('')")
+    transaction-note(transaction="tx" note="note" set-note="setNote(note)" delete-note="setNote('')" edit-note="editNote")
   .dest-oflow.hidden-md.hidden-lg.flex-start.flex-column.mvm(ng-show="tx.toggled")
     .flex-row
       span.f-12.em-300 To:
@@ -40,12 +40,12 @@
       span.overflow-scroll.f-12.em-300(ng-bind-html="tx.from | escapeHtml | highlight:search")
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
-      transaction-status(transaction="tx" confirmations="12")
+      transaction-status(transaction="tx" confirmations="12" edit-note="editNote")
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
     .flex-1.hidden-sm.hidden-xs.pointer(ng-click="tx.toggled = !tx.toggled")
       div
-    .flex-2.flex-column.flex-align-end.f-12.mtvl(ng-if=":: tx.confirmations > 5")
+    .flex-2.flex-column.flex-align-end.f-12(ng-if=":: tx.confirmations > 5" ng-class="{'mtl': !editNote}")
       .flex-row.fee(ng-if=":: txType !== 'received'")
         helper-button(content="{{ 'TX_FEE_EXPLAINATION_ETH' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
