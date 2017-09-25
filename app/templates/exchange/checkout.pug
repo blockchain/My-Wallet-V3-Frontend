@@ -58,11 +58,11 @@ form.bc-form(
           span(ng-hide="$ctrl.limits.max") &nbsp;
           span(ng-show="$ctrl.limits.max" ng-class="{'state-danger-text':checkoutForm.$error.max}")
             | {{ provider + '.' + trading().reason + '.EXPLAIN' | translate }} {{ format($ctrl.limits.max, displayCurrency, false) }} {{ displayCurrency.code }}.
-    .group.mtl
+    .group.mtl(ng-if="$ctrl.collapseSummary")
       .item
         .mbm
           span.f-16.em-500.colon Order Summary
-        .border.flex-column.bg-grey(ng-if="$ctrl.type === 'Buy'")
+        .border.flex-column.bg-grey
           .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon BTC Order
             span {{ format(state.btc || 0, bitcoin, true) }}
@@ -73,14 +73,6 @@ form.bc-form(
           .border-bottom.mhm
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
-            span {{ format(state.total || 0, dollars, true) }}
-        .border.flex-column.bg-grey(ng-if="$ctrl.type === 'Sell'")
-          .flex-between.flex-center.form-control.bg-grey.no-border
-            span.colon Total Cost
-            span {{ format(state.btc || 0, bitcoin, true) }}
-          .border-bottom.mhm
-          .flex-between.flex-center.form-control.bg-grey.no-border.em-500
-            span.colon {{ dollars.code }} Order
             span {{ format(state.total || 0, dollars, true) }}
     .group.mtl
       button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin

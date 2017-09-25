@@ -14,6 +14,7 @@ angular
       buyEnabled: '<',
       buyAccount: '<',
       conversion: '<',
+      collapseSummary: '<',
       buyError: '&',
       handleBuy: '&',
       buySuccess: '&',
