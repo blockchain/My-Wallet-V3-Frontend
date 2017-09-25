@@ -23,7 +23,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, A
   $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());
   $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]) && coinify.kycs[0];
 
-  console.log(walletCurrencyMatch);
   $scope.fiat = walletCurrencyMatch || $scope.fiatOptions.filter(c => c.code === 'EUR')[0];
 
   let email = MyWallet.wallet.accountInfo.email;

@@ -74,13 +74,15 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let { profile } = service.exchange;
 
       if (reason === 'has_remaining_buy_limit' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+      else if (reason === 'awaiting_first_trade_completion') return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
     },
     get sellLaunchOptions () {
       let reason = service.sellReason;
       let { profile } = service.exchange;
 
-      if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
-      else if (reason === 'can_sell_max' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+      if (reason === 'can_sell_max' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+      else if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
+      else if (reason === 'awaiting_first_trade_completion') return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
     },
     trades: { completed: [], pending: [] },
     limits: { bank: { max: {}, yearlyMax: {}, min: {} }, card: { max: {}, yearlyMax: {}, min: {} } },
@@ -103,7 +105,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     watchAddress,
     fetchProfile,
     signupForAccess,
-    submitFeedback,
     tradeStateIn,
     cancelTrade,
     states,
@@ -184,6 +185,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function cancelTrade (trade) {
     let msg = 'CONFIRM_CANCEL_TRADE';
+    if (!trade) trade = service.getPendingTrade();
     if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
 
     return Alerts.confirm(msg, {
@@ -270,10 +272,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function signupForAccess (email, country, state) {
     BrowserHelper.safeWindowOpen('https://docs.google.com/forms/d/e/1FAIpQLSeYiTe7YsqEIvaQ-P1NScFLCSPlxRh24zv06FFpNcxY_Hs0Ow/viewform?entry.1192956638=' + email + '&entry.644018680=' + country + '&entry.387129390=' + state);
-  }
-
-  function submitFeedback (rating) {
-    BrowserHelper.safeWindowOpen('https://docs.google.com/a/blockchain.com/forms/d/e/1FAIpQLSeKRzLKn0jsR19vkN6Bw4jK0QW-2pH6Ptb-LbFSaOqxOnbO-Q/viewform?entry.1125242796=' + rating);
   }
 
   function incrementBuyDropoff (step) {

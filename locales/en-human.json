@@ -1580,7 +1580,8 @@
     },
     "awaiting_first_trade_completion": {
       "EXPLAIN": "Trading is disabled until your pending trade is complete.",
-      "OPTION": "Finish trade"
+      "FINISH": "Finish",
+      "CANCEL": "Cancel"
     }
   },
   "UNOCOIN": {
