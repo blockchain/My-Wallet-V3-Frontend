@@ -2,6 +2,7 @@ angular
   .module('walletApp')
   .component('bitcoinCashSend', {
     bindings: {
+      wallet: '<',
       onContinue: '&',
       onAddressChange: '&'
     },
@@ -10,12 +11,10 @@ angular
     controllerAs: '$ctrl'
   });
 
-function bitcoinCashSendController (modals, Wallet, format) {
-  this.transaction = {
-    destination: null,
-    amount: null,
-    fee: null
-  };
+function bitcoinCashSendController (Wallet, format, currency) {
+  this.bchCurrency = currency.bchCurrencies[0];
+  this.fiatCurrency = Wallet.settings.currency;
+  this.bchAmount = currency.convertFromSatoshi(this.wallet.balance, this.bchCurrency);
 
   this.onAddressScan = (result) => {
     let address = Wallet.parsePaymentRequest(result);

@@ -14,7 +14,7 @@
           fiat.f-14.em-300(bch="$ctrl.balance")
           | )
     .flex-column.width-30.flex-align-end
-        a.pb-15(ng-click="$ctrl.openWithStep('exchange')") Exchange Bitcoin Cash
-        a(ng-click="$ctrl.openWithStep('send')") Send Bitcoin Cash
+        a.pb-15(ng-click="$ctrl.openExchange()") Exchange Bitcoin Cash
+        a(ng-click="$ctrl.openSend()") Send Bitcoin Cash
   .width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
     bitcoin-cash-history()
