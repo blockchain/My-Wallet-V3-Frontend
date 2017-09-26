@@ -32,13 +32,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     };
   };
 
-  service.openSend = service.openOnce((paymentRequest = {}, options) =>
+  service.openSend = service.openOnce((paymentRequest = {}, altcoin = {}, options) =>
     open({
       templateUrl: 'partials/send/send.pug',
       windowClass: 'bc-modal initial',
       controller: 'SendController',
       controllerAs: 'vm',
       resolve: {
+        altcoin: () => altcoin,
         paymentRequest: () => paymentRequest,
         loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
         _initialize ($q, Ethereum) {
@@ -245,10 +246,21 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openBitcoinCash = service.openOnce(step => {
+  service.openBitcoinCashAbout = service.openOnce(step => {
     return openMobileCompatible({
       templateUrl: 'partials/bitcoin-cash-about-modal.pug',
       controller: 'BitcoinCashAboutController',
+      controllerAs: 'vm',
+      windowClass: 'bc-modal buy',
+      backdrop: 'static',
+      keyboard: false
+    });
+  });
+
+  service.openBitcoinCashExchange = service.openOnce(() => {
+    return openMobileCompatible({
+      templateUrl: 'partials/bitcoin-cash/exchange.pug',
+      controller: 'BitcoinCashExchangeController',
       controllerAs: 'vm',
       windowClass: 'bc-modal buy',
       backdrop: 'static',

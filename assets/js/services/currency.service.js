@@ -66,10 +66,6 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
       code: 'bits',
       conversion: 100,
       btcValue: '0.000001 BTC'
-    }, {
-      serverCode: 'BCH',
-      code: 'BCH',
-      conversion: 100000000
     }
   ];
 
@@ -104,6 +100,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     getFiatAtTime,
     isBitCurrency,
     isEthCurrency,
+    isBchCurrency,
     decimalPlacesForCurrency,
     convertToSatoshi,
     convertFromSatoshi,
@@ -191,6 +188,11 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     return ethCurrencies.map(c => c.code).indexOf(currency.code) > -1;
   }
 
+  function isBchCurrency (currency) {
+    if (currency == null) return null;
+    return bchCurrencies.map(c => c.code).indexOf(currency.code) > -1;
+  }
+
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
     let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8, 'BCH': 8 };
@@ -213,7 +215,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function convertFromSatoshi (amount, currency) {
     if (amount == null || currency == null) return null;
-    if (isBitCurrency(currency)) {
+    if (isBitCurrency(currency) || isBchCurrency(currency)) {
       return amount / currency.conversion;
     } else if (conversions[currency.code] != null) {
       return amount / conversions[currency.code].conversion;
