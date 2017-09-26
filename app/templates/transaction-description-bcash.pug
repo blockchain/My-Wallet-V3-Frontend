@@ -18,14 +18,14 @@
       .flex-row
         span.f-14.em-300 From:
         | &nbsp;
-        span.overflow-scroll.f-14.em-300(ng-bind-html="fromAccount ? fromAccount.label : tx.from | escapeHtml | highlight:search")
+        span.overflow-scroll.f-14.em-300 My Bitcoin Cash Wallet
     //- .flex-2.width-30.hidden-sm.hidden-xs.main-font.f-12.em-300
     //-   transaction-note(transaction="tx" note="note" search="search" set-note="setNote(note)" delete-note="setNote('')")
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       asset-transaction-pending(tx-type="txType" tx-confirmations="tx.confirmations" confirmations="12" show-tooltip="false")
     .flex-1.width-20.amount.flex-end
       span
-        amount(transaction="tx" confirmations-needed="6")
+        bcash-transaction-amount(transaction="tx" confirmations-needed="6")
   //- toggled and mobile
   //- .hidden-md.hidden-lg.mtl.mbs(ng-show="tx.toggled")
   //-   transaction-note(transaction="tx" note="note" set-note="setNote(note)" delete-note="setNote('')")

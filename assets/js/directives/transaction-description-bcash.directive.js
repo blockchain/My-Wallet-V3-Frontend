@@ -59,7 +59,7 @@ function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, Sh
 
     scope.settings = Wallet.settings;
 
-    scope.txDirection = scope.getTxDirection(scope.txType);
-    scope.txClass = scope.getTxClass(scope.txType);
+    // scope.txDirection = scope.getTxDirection(scope.txType);
+    // scope.txClass = scope.getTxClass(scope.txType);
   }
 }

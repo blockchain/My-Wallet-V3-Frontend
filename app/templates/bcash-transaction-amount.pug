@@ -1,0 +1,4 @@
+div.amountTotal.em-400.amount.flex-center.flex-justify.button-sent(ng-click="$ctrl.toggle()")
+  span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")
+  fiat(bch="$ctrl.totalAmount / 100000000" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
+  span(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.totalAmount | convert:'bch':true }}
