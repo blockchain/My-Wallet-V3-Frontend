@@ -14,7 +14,7 @@
       .flex-row
         span.f-14.em-300 To:
         | &nbsp;
-        span.overflow-scroll.f-14.em-300(ng-bind-html="toAccount ? toAccount.label : tx.to | escapeHtml | highlight:search")
+        span.overflow-scroll.f-14.em-300 {{tx.to[0].address}}
       .flex-row
         span.f-14.em-300 From:
         | &nbsp;

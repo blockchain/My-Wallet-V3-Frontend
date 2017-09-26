@@ -72,4 +72,8 @@ div(translate-namespace="BITCOIN_CASH")
                     fee="fee" 
                     quote="quote" 
                     handle-shift="shiftHandler(payment)")
+    .width-100(ng-if="onStep('exchange-receipt')")
+      shift-receipt(shift="trade"
+                    is-checkout="true"
+                    on-close="onClose()")
     

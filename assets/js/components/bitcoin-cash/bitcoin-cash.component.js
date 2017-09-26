@@ -9,18 +9,18 @@ angular
     controllerAs: '$ctrl'
   });
 
-function bitcoinCashController (modals, MyWallet, Wallet) {
+function bitcoinCashController (modals, MyWallet, Wallet, ShapeShift) {
+  ShapeShift.fetchFullTrades();
+
   this.transactionViewOpen = false;
   this.hasBalance = () => true;
   this.hasTransactions = () => true;
   this.toggleTransactionView = () => {
-    console.log('toggleTransactionView', this.transactionViewOpen);
-    this.transactionViewOpen = true;
+    this.transactionViewOpen = !this.transactionViewOpen;
   };
 
   let txList = MyWallet.wallet.txList;
   this.bcashTransactions = txList.transactions();
-  console.log('tx list', txList, this.bcashTransactions);
 
   this.showingBalance = false;
   this.showBalance = () => {
@@ -28,5 +28,10 @@ function bitcoinCashController (modals, MyWallet, Wallet) {
   };
   this.openWithStep = step => modals.openBitcoinCash(step);
 
-  console.log('bch wallet', Wallet.my.wallet, Wallet.my.wallet.bch, Wallet.my.wallet.bch.getBalances());
+  this.trades = ShapeShift.shapeshift.trades;
+  this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
+  this.completedTrades = () => this.trades.some(t => t.isComplete || t.isFailed || t.isResolved);
+  this.pendingTrades = () => this.trades.some(t => t.isProcessing || t.isWaitingForDeposit);
+
+  console.log('bch wallet', Wallet.my.wallet.bch);
 }

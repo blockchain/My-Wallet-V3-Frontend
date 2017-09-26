@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BitcoinCashExchangeController', BitcoinCashExchangeController);
 
-function BitcoinCashExchangeController ($scope, ShapeShift, Env, modals, Alerts, $uibModalStack) {
+function BitcoinCashExchangeController ($scope, ShapeShift, Env, modals, Alerts, $uibModalStack, localStorageService) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
   $scope.steps = enumify('exchange-create', 'exchange-confirm', 'exchange-receipt');
@@ -31,7 +31,7 @@ function BitcoinCashExchangeController ($scope, ShapeShift, Env, modals, Alerts,
 
   $scope.onConfirmComplete = (trade) => {
     $scope.vm.trade = trade;
-    $scope.vm.goTo('exchange-receipt');
+    $scope.goTo('exchange-receipt');
     ShapeShift.watchTradeForCompletion(trade).then(modals.openShiftTradeDetails);
   };
 
@@ -42,5 +42,15 @@ function BitcoinCashExchangeController ($scope, ShapeShift, Env, modals, Alerts,
   $scope.onExpiration = () => {
     $uibModalStack.dismissAll();
     $scope.vm.goTo('exchange-create');
+  };
+
+  $scope.trade = $scope.vm.trade;
+
+  $scope.onClose = () => {
+    let survey = 'shift-trade-survey';
+    let surveyCache = localStorageService.get(survey);
+    let shouldClose = surveyCache && surveyCache.index === links.length - 1;
+    if (shouldClose) $scope.vm.goTo('create');
+    else Alerts.surveyCloseConfirm(survey, links, 1).then(() => { $scope.vm.goTo('create'); });
   };
 }

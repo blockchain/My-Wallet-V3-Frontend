@@ -35,3 +35,20 @@
         .tx-details.width-100.mll.mvm
           span
             transaction-description-bcash(transaction="tx" account="account")
+      .pt-25
+        .width-100(ng-if="$ctrl.completedTrades() || $ctrl.pendingTrades()")
+          .shift-history.width-100.border.bg-footer-blue.mt-5.f-14
+            .pvs
+              span.em-500.pl-25.ph-10-mobile(translate="EXCHANGE_STATUS")
+            .pvs
+              span.em-500(translate="DATE")
+            .pvs
+              span.em-500(translate="EXCHANGED")
+            .pvs
+              span.em-500(translate="RECEIVED")
+          exchange-trade.f-12(
+            ng-repeat="trade in $ctrl.trades | orderBy:'-createdAt':false track by $index"
+            view-details="$ctrl.openTradeDetails(trade)"
+            namespace="'SHIFT'"
+            ex-trade="trade"
+          )
