@@ -243,6 +243,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           resolve: {
             loadBcPhoneNumber: ($ocLazyLoad) => {
               return $ocLazyLoad.load('bcPhoneNumber');
+            },
+            loadShiftTrades: ($injector) => {
+              let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
+              ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
             }
           }
         }
