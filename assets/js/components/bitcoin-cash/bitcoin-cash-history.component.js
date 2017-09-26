@@ -9,8 +9,6 @@ angular
   });
 
 function bitcoinCashHistoryController (modals, ShapeShift, MyWallet) {
-  ShapeShift.fetchFullTrades();
-
   let txList = MyWallet.wallet.txList;
   this.bcashTransactions = txList.transactions();
 

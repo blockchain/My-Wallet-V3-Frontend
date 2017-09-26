@@ -9,8 +9,9 @@ angular
     controllerAs: '$ctrl'
   });
 
-function bitcoinCashController (modals, MyWallet, Wallet, localStorageService) {
+function bitcoinCashController (modals, MyWallet, Wallet, localStorageService, ShapeShift) {
   this.showBitcoinCashAbout = modals.openBitcoinCash;
   this.openWithStep = step => modals.openBitcoinCash(step);
   this.showWallets = () => localStorageService.get('bcash-about') || false;
+  this.activeWallets = Wallet.accounts().filter(a => !a.archived);
 }

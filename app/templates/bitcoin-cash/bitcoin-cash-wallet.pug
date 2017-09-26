@@ -1,0 +1,20 @@
+.width-100.flex-column.border-right.border-left.border-top.pv-20.ph-25(ng-class="{'border-bottom': $last}")
+  .flex-row
+    .flex-column.width-30
+        span.f-14.em-400 {{$ctrl.wallet.label}}
+        span.f-12 Bitcoin Cash
+        a.em-300.f-14.pt-5(ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") View transactions
+        a.em-300.f-14.pt-5(ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") Hide transactions
+    .flex-column.width-40.flex-center
+        span.f-14.em-400.pb-15 Bitcoin Cash Balance
+        .flex-row
+          span.f-14.em-300 {{ $ctrl.balance | format:'bch':true }}
+          | &nbsp;
+          | (
+          fiat.f-14.em-300(bch="$ctrl.balance")
+          | )
+    .flex-column.width-30.flex-align-end
+        a.pb-15(ng-click="$ctrl.openWithStep('exchange')") Exchange Bitcoin Cash
+        a(ng-click="$ctrl.openWithStep('send')") Send Bitcoin Cash
+  .width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
+    bitcoin-cash-history()

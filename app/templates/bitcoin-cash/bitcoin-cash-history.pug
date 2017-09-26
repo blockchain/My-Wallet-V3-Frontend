@@ -1,4 +1,4 @@
-.width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
+.width-100.flex-column.pt-15.transactions
   .transaction.flex-row(ng-repeat="tx in $ctrl.bcashTransactions")
     .tx-toggle.pointer.hidden-xs.flex-center(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
       i.icon-down_arrow
