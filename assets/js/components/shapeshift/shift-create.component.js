@@ -6,9 +6,7 @@ angular
       handleRate: '&',
       handleQuote: '&',
       buildPayment: '&',
-      handleApproximateQuote: '&',
-      hideHeader: '<',
-      isBitcoinCashExchange: '<'
+      handleApproximateQuote: '&'
     },
     templateUrl: 'templates/shapeshift/create.pug',
     controller: ShiftCreateController,
@@ -21,7 +19,6 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
   this.to = Ethereum.defaultAccount;
   this.from = Wallet.getDefaultAccount();
-  // this.from = this.isBitcoinCashExchange ? { label: 'My Bitcoin Cash Wallet' } : Wallet.getDefaultAccount();
   this.origins = [this.from, this.to];
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
@@ -40,8 +37,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let state = $scope.state = {
     baseCurr: null,
     rate: { min: null, max: null },
-    input: { amount: null, curr: !this.isBitcoinCashExchange ? 'btc' : 'bch' },
     output: { amount: null, curr: 'eth' },
+    input: { amount: null, curr: this.asset || 'btc' },
     get baseBTC () { return state.input.curr === 'btc'; },
     get baseInput () { return this.baseCurr === state.input.curr; }
   };
