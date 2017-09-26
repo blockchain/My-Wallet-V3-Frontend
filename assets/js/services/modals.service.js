@@ -247,15 +247,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
   service.openBitcoinCash = service.openOnce(step => {
     return openMobileCompatible({
-      templateUrl: 'partials/bitcoin-cash-modal.pug',
-      controller: 'BitcoinCashController',
+      templateUrl: 'partials/bitcoin-cash-about-modal.pug',
+      controller: 'BitcoinCashAboutController',
       controllerAs: 'vm',
       windowClass: 'bc-modal buy',
       backdrop: 'static',
-      keyboard: false,
-      resolve: {
-        step () { return step; }
-      }
+      keyboard: false
     });
   });
 
