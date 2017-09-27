@@ -18,7 +18,7 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
   this.openExchange = () => modals.openExchange({ code: 'bch', index: this.wallet.index });
 
   let txList = MyWallet.wallet.txList;
-  this.bchTransactions = txList.transactions(this.wallet.index);
+  this.bchTransactions = txList.transactions(this.wallet.index).filter(tx => tx.block_height > 478558);
 
   this.trades = ShapeShift.shapeshift.trades;
   this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
@@ -28,4 +28,5 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
   });
 
   this.hasTransactions = () => this.bchTransactions.length > 0 || this.shiftTrades.length > 0;
+  console.log('bitcoin-cash-wallet', this.wallet, Wallet.my.wallet.bch);
 }

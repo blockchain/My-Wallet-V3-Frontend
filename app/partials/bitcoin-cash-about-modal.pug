@@ -10,7 +10,7 @@ div(translate-namespace="BITCOIN_CASH")
         span.blue.f-14(translate=".ABOUT_{{i}}")
         span.text.f-14.pt-10(translate=".ABOUT_{{i}}_ANSWER")
     .flex-row.flex-justify.pt-40.pb-30
-      button.button-primary(translate=".SEE_BALANCE" ng-click="vm.goTo('balance'); vm.setHasSeenCashAbout();")
+      button.button-primary(translate=".SEE_BALANCE" ng-click="vm.activeWallets.length > 1 ? vm.dismiss() : vm.goTo('balance'); vm.setHasSeenCashAbout();")
   .flex-column.ph-35(ng-if="vm.onStep('balance')")  
     .flex-column.flex-center.bg-grey.mv-30.pv-20
       span.f-16(translate="TOTAL")
