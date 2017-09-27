@@ -3,7 +3,7 @@ angular
   .controller('SendController', SendController);
 
 function SendController ($uibModalInstance, paymentRequest, altcoin, assetContext) {
-  let code = altcoin && altcoin.code ||
+  let code = altcoin.code ||
              assetContext.isViewingBtc() && 'btc' ||
              assetContext.isViewingEth() && 'eth' ||
              'btc';
@@ -13,7 +13,7 @@ function SendController ($uibModalInstance, paymentRequest, altcoin, assetContex
 
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;
-  this.asset = altcoin || assetContext.getAssets().filter((a) => a.code === code)[0];
+  this.asset = altcoin.code ? altcoin : assetContext.getAssets().filter((a) => a.code === code)[0];
 
   this.close = (result) => {
     $uibModalInstance.close(result);
