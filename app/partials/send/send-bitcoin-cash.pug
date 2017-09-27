@@ -1,9 +1,9 @@
-#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" ng-controller="SendBitcoinCashController")
+#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" ng-controller="SendBitcoinCashController" translate-namespace="BITCOIN_CASH")
   .flex(ng-if="onStep('send-cash')")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
       fieldset
         .group.mb-30
-          span(translate="BITCOIN_CASH.SENDING_ALL")
+          span(translate=".SENDING_ALL")
         .group
           //- To
           .item
@@ -20,7 +20,7 @@
                       ng-model="transaction.destination"
                       is-valid="isValidAddress(transaction.destination)"
                       placeholder="Paste or scan a Bitcoin Cash address"
-                      autofocus)
+                      focus-when="true")
                     .input-group-btn
                       qr-scan(on-scan="onAddressScan")
                 .has-error
@@ -53,8 +53,9 @@
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-address')" ng-disabled="sendForm.$invalid")
   .flex-column(ng-if="onStep('send-address')")
     span.f-14.em-300.pb-25(translate=".ADDRESSES")
-    .flex-justify.bg-grey.ph-50.pv-15.mb-30
+    .f-16.center.bg-grey.ph-20.pv-15.mb-30
       span {{ transaction.destination }}
+      i.pointer.icon-pencil.pull-right(ng-click="goTo('send-cash')")
     button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
 
   .flex-column.width-100(ng-if="onStep('send-confirm')")
