@@ -16,6 +16,6 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
   this.hasTransactions = () => true;
   this.balance = this.wallet.balance / 100000000;
 
-  this.openExchange = modals.openBitcoinCashExchange;
   this.openSend = () => modals.openSend(null, { code: 'bch', index: this.wallet.index });
+  this.openExchange = () => modals.openExchange({ code: 'bch', index: this.wallet.index });
 }

@@ -1,8 +1,0 @@
-.pv-30
-  i.ti-close.close-modal.alt.pos-abs.pointer(ng-click="$close()")
-  .width-100(ng-if="onStep('exchange-create')")
-    shift-create(on-complete="onCreateComplete(payment, fee, quote)" build-payment="buildPayment(quote, fee)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
-  .width-100(ng-if="onStep('exchange-confirm')")
-    shift-confirm(on-complete="onConfirmComplete(trade)" on-cancel="onCancel()" on-expiring="openHelper('expiring-exchange-helper')" on-expiration="onExpiration()" payment="payment" fee="fee" quote="quote" handle-shift="shiftHandler(payment)")
-  .width-100(ng-if="onStep('exchange-receipt')")
-    shift-receipt(shift="trade" is-checkout="true" on-close="onClose()")

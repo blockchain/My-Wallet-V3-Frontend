@@ -224,6 +224,20 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
+  service.openExchange = service.openOnce((coin) => {
+    return openMobileCompatible({
+      templateUrl: 'partials/shapeshift/modal.pug',
+      controller: 'ShapeShiftModalController',
+      controllerAs: 'vm',
+      windowClass: 'bc-modal buy',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        coin: coin
+      }
+    });
+  });
+
   service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
       controllerAs: 'vm',
@@ -250,17 +264,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     return openMobileCompatible({
       templateUrl: 'partials/bitcoin-cash-about-modal.pug',
       controller: 'BitcoinCashAboutController',
-      controllerAs: 'vm',
-      windowClass: 'bc-modal buy',
-      backdrop: 'static',
-      keyboard: false
-    });
-  });
-
-  service.openBitcoinCashExchange = service.openOnce(() => {
-    return openMobileCompatible({
-      templateUrl: 'partials/bitcoin-cash/exchange.pug',
-      controller: 'BitcoinCashExchangeController',
       controllerAs: 'vm',
       windowClass: 'bc-modal buy',
       backdrop: 'static',

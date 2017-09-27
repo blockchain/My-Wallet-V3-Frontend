@@ -2,6 +2,8 @@ angular
   .module('walletApp')
   .component('shiftCreate', {
     bindings: {
+      asset: '<',
+      altcoin: '<',
       onComplete: '&',
       handleRate: '&',
       handleQuote: '&',
@@ -17,9 +19,12 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let UPPER_LIMIT;
   Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit || 500);
 
-  this.to = Ethereum.defaultAccount;
-  this.from = Wallet.getDefaultAccount();
-  this.origins = [this.from, this.to];
+  this.from = this.altcoin || Wallet.getDefaultAccount();
+  this.to = this.altcoin ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+
+  this.origins = this.altcoin ? [this.altcoin] : [this.from, this.to];
+  this.destinations = this.altcoin ? [Wallet.getDefaultAccount(), Ethereum.defaultAccount] : [this.to];
+
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -37,8 +42,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let state = $scope.state = {
     baseCurr: null,
     rate: { min: null, max: null },
-    output: { amount: null, curr: 'eth' },
     input: { amount: null, curr: this.asset || 'btc' },
+    output: { amount: null, curr: this.asset ? 'btc' : 'eth' },
     get baseBTC () { return state.input.curr === 'btc'; },
     get baseInput () { return this.baseCurr === state.input.curr; }
   };
@@ -79,22 +84,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     }).then(($scope.free));
   };
 
-  $scope.setTo = () => {
+  $scope.setTo = (to) => {
     let output = state.output;
     state.baseCurr = state.output.curr;
     state.output = state.input; state.input = output;
     this.to = this.origins.find((o) => o.label !== this.from.label);
-  };
-
-  $scope.setBchTo = () => {
-    if (state.output.curr === 'eth') {
-      state.output.curr = 'btc';
-      this.to = Wallet.getDefaultAccount();
-    } else {
-      state.output.curr = 'eth';
-      this.to = Ethereum.defaultAccount;
-    }
-    $scope.refreshIfValid('output');
   };
 
   let getRate = () => {
@@ -142,6 +136,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       Wallet.api.incrementShapeshiftStat({ maxLimitError: true });
     }
   });
+
+  this.currencyHelper = (obj) => {
+    return {
+      name: obj.constructor.name === 'HDAccount' ? 'btc' : 'eth',
+      icon: obj.constructor.name === 'HDAccount' ? 'icon-bitcoin' : 'icon-ethereum'
+    };
+  };
 
   AngularHelper.installLock.call($scope);
 }
