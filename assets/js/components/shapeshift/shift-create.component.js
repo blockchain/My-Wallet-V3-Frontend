@@ -19,7 +19,9 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let UPPER_LIMIT;
   Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit || 500);
 
-  this.from = this.altcoin || Wallet.getDefaultAccount();
+  this.disabled = this.altcoin;
+
+  this.from = this.disabled ? this.altcoin : Wallet.getDefaultAccount();
   this.to = this.altcoin ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
   this.origins = this.altcoin ? [this.altcoin] : [this.from, this.to];
@@ -40,12 +42,12 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   buyStatus.canBuy().then((res) => $scope.canBuy = res);
 
   let state = $scope.state = {
-    baseCurr: null,
+    baseCurr: this.asset || null,
     rate: { min: null, max: null },
     input: { amount: null, curr: this.asset || 'btc' },
     output: { amount: null, curr: this.asset ? 'btc' : 'eth' },
-    get baseBTC () { return state.input.curr === 'btc'; },
-    get baseInput () { return this.baseCurr === state.input.curr; }
+    get baseInput () { return this.baseCurr === state.input.curr; },
+    get baseBTC () { return ['btc', 'bch'].indexOf(state.input.curr) > -1; }
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -84,7 +86,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     }).then(($scope.free));
   };
 
-  $scope.setTo = (to) => {
+  $scope.setTo = () => {
     let output = state.output;
     state.baseCurr = state.output.curr;
     state.output = state.input; state.input = output;
@@ -104,8 +106,10 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     let fetchSuccess = (balance, fee) => {
       $scope.maxAvailable = state.baseBTC ? $scope.fromSatoshi(balance.amount, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance.amount, $scope.ether, false));
       $scope.cachedFee = balance.fee;
-      state.balanceFailed = false;
+
       state.error = null;
+      state.balanceFailed = false;
+      state.input.amount = this.disabled ? $scope.maxAvailable : state.input.amount;
     };
 
     let fetchError = (err) => {
@@ -124,8 +128,16 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
   $scope.$watch('state.input.curr', () => $scope.getAvailableBalance().then(getRate));
   $scope.$watch('$ctrl.from.balance', (n, o) => n !== o && $scope.getAvailableBalance());
+  $scope.$watch('state.output.curr', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
+
+  this.currencyHelper = (obj) => {
+    return {
+      name: obj.constructor.name === 'HDAccount' ? 'btc' : 'eth',
+      icon: obj.constructor.name === 'HDAccount' ? 'icon-bitcoin' : 'icon-ethereum'
+    };
+  };
 
   // Stat: how often do users see the "max limit" error?
   let sawMaxLimit = false;
@@ -136,13 +148,6 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       Wallet.api.incrementShapeshiftStat({ maxLimitError: true });
     }
   });
-
-  this.currencyHelper = (obj) => {
-    return {
-      name: obj.constructor.name === 'HDAccount' ? 'btc' : 'eth',
-      icon: obj.constructor.name === 'HDAccount' ? 'icon-bitcoin' : 'icon-ethereum'
-    };
-  };
 
   AngularHelper.installLock.call($scope);
 }

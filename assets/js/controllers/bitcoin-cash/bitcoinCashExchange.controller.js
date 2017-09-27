@@ -3,9 +3,10 @@ angular
   .controller('BitcoinCashExchangeController', BitcoinCashExchangeController);
 
 function BitcoinCashExchangeController ($scope, ShapeShift, MyWallet, modals, Alerts, $uibModalStack) {
+  let index = $scope.vm.asset.index;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  $scope.wallet = MyWallet.wallet.hdwallet.accounts[$scope.vm.asset.index];
+  $scope.wallet = MyWallet.wallet.hdwallet.accounts[index];
   $scope.steps = enumify('exchange-create', 'exchange-confirm', 'exchange-receipt');
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
@@ -13,9 +14,9 @@ function BitcoinCashExchangeController ($scope, ShapeShift, MyWallet, modals, Al
   $scope.goTo('exchange-create');
 
   $scope.rateHandler = ShapeShift.getRate;
-  $scope.quoteHandler = ShapeShift.getQuote;
   $scope.buildPayment = ShapeShift.buildPayment;
   $scope.approximateQuoteHandler = ShapeShift.getApproximateQuote;
+  $scope.quoteHandler = (pair, amount) => ShapeShift.getQuote(pair, amount, index);
 
   $scope.onCreateComplete = (payment, fee, quote) => {
     $scope.fee = fee;
