@@ -266,7 +266,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     let decimalPlaces = decimalPlacesForCurrency(currency);
     let code = showCode ? (' ' + currency.code) : '';
     amount = parseFloat(amount);
-    if (isBitCurrency(currency) || isEthCurrency(currency)) {
+    if (isBitCurrency(currency) || isEthCurrency(currency) || isBchCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
     } else {
