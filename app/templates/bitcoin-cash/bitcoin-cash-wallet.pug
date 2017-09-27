@@ -17,4 +17,26 @@
         a.pb-15(ng-click="$ctrl.openExchange()") Exchange Bitcoin Cash
         a(ng-click="$ctrl.openSend()") Send Bitcoin Cash
   .width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
-    bitcoin-cash-history()
+    .transaction.flex-row(ng-repeat="tx in $ctrl.bcashTransactions")
+      .tx-toggle.pointer.hidden-xs.flex-center(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
+        i.icon-down_arrow
+      .tx-details.width-100.mll.mvm
+        span
+          transaction-description-bcash(transaction="tx" account="account")
+    .pt-25
+      .width-100(ng-if="$ctrl.trades")
+        .shift-history.width-100.border.bg-footer-blue.mt-5.f-14
+          .pvs
+            span.em-500.pl-25.ph-10-mobile(translate="EXCHANGE_STATUS")
+          .pvs
+            span.em-500(translate="DATE")
+          .pvs
+            span.em-500(translate="EXCHANGED")
+          .pvs
+            span.em-500(translate="RECEIVED")
+        exchange-trade.f-12(
+          ng-repeat="trade in $ctrl.trades | orderBy:'-createdAt':false track by $index"
+          view-details="$ctrl.openTradeDetails(trade)"
+          namespace="'SHIFT'"
+          ex-trade="trade"
+        )

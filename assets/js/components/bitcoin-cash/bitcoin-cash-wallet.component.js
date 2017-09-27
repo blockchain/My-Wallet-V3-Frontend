@@ -10,7 +10,6 @@ angular
   });
 
 function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
-  console.log('wallet', this.wallet);
   this.transactionViewOpen = false;
   this.toggleTransactionView = () => this.transactionViewOpen = !this.transactionViewOpen;
   this.hasTransactions = () => true;
@@ -18,4 +17,10 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
 
   this.openSend = () => modals.openSend(null, { code: 'bch', index: this.wallet.index });
   this.openExchange = () => modals.openExchange({ code: 'bch', index: this.wallet.index });
+
+  let txList = MyWallet.wallet.txList;
+  this.bcashTransactions = txList.transactions(this.wallet.index);
+
+  this.trades = ShapeShift.shapeshift.trades;
+  this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
 }
