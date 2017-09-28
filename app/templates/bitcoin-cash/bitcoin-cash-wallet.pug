@@ -8,7 +8,7 @@
     .flex-column.width-40.flex-center
         span.f-14.em-400.pb-15 Bitcoin Cash Balance
         .flex-row
-          span.f-14.em-300 {{ $ctrl.balance | format:'bch':true }}
+          span.f-14.em-300 {{ $ctrl.balance | convert:'bch':true }}
           | &nbsp;
           | (
           fiat.f-14.em-300(bch="$ctrl.balance")

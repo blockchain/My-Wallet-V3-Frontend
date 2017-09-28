@@ -32,12 +32,12 @@
             .flex-center
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
-                  span {{ transaction.amount }}
+                  span {{ transaction.amount | convert:'bch':true }}
                 span.mhm BCH
               i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
-                  fiat(bch="transaction.amount")
+                  span {{ transaction.amount | convert:'fiat':false:'bch' }}
                 span.mhm {{ fiatCurrency.code }}
             .has-error
               span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
@@ -48,7 +48,7 @@
               label.mbn.colon(translate="TX_FEE")
               span Estimated confirmation time 1+ hour
             .item.right-align.width-40.width-40-mobile
-              span.f-14 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
+              span.f-14 {{ transaction.fee | convert:'bch':true }} ({{ transaction.fee | convert:'fiat':true:'bch' }})
         .group.mt-25
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-address')" ng-disabled="sendForm.$invalid")
   .flex-column(ng-if="onStep('send-address')")

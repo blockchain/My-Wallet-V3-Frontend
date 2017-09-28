@@ -12,7 +12,7 @@ angular
 function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
   this.transactionViewOpen = false;
   this.toggleTransactionView = () => this.transactionViewOpen = !this.transactionViewOpen;
-  this.balance = this.wallet.balance / 100000000;
+  this.balance = this.wallet.balance;
 
   this.openSend = () => modals.openSend(null, { code: 'bch', index: this.wallet.index });
   this.openExchange = () => modals.openExchange({ code: 'bch', index: this.wallet.index });
