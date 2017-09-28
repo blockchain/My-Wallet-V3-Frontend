@@ -1,0 +1,38 @@
+.flex-column.f-16
+  .flex-row
+    label.colon(ng-class="$ctrl.asset === 'ETH' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="FROM")
+    .width-70.width-70-mobile {{ $ctrl.tx.from.label || $ctrl.tx.from.address || $ctrl.tx.label }}
+  .flex-row.mt-10
+    label.colon(ng-class="$ctrl.asset === 'ETH' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="TO")
+    .width-70.width-70-mobile
+      span(translate="no") {{ $ctrl.tx.destination.label || $ctrl.tx.destination.address || $ctrl.tx.destination || $ctrl.tx.to }}
+  .flex-row.mt-10(ng-show="$ctrl.tx.note.length")
+    label.colon(ng-class="$ctrl.asset === 'ETH' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="DESCRIPTION")
+    .width-70.width-70-mobile {{ $ctrl.tx.note }}
+  .flex-row.mt-10
+    label.colon(ng-class="$ctrl.asset === 'ETH' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="PAYMENT")
+    .width-70.width-70-mobile
+      span {{$ctrl.tx.amount | convert:$ctrl.asset:true}}
+      | &nbsp;
+      span() ({{$ctrl.tx.amount | convert:'fiat':true}})
+  .flex-row.mt-10
+    label.colon(ng-class="$ctrl.asset === 'ETH' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="FEE")
+    .width-70.width-70-mobile
+      span {{ $ctrl.tx.fee | convert:$ctrl.asset:true }}
+      | &nbsp;
+      span() ({{ $ctrl.tx.fee | convert:'fiat':true }})
+  .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="($ctrl.tx.destination.type != 'External') ? 'transfer' : 'sent'")
+    span.mb-10(translate="TOTAL")
+    span.f-28.mb-10.em-600 {{$ctrl.getTransactionTotal(true) | convert:$ctrl.asset:true}}
+    span.f-20.em-300
+      fiat(ng-if="$ctrl.asset === 'ETH'" eth="$ctrl.getTransactionTotal(true)")
+      fiat(ng-if="$ctrl.asset === 'BTC'" btc="$ctrl.getTransactionTotal(true)")
+      fiat(ng-if="$ctrl.asset === 'BCH'" bch="$ctrl.getTransactionTotal(true)")
+  .mv-30
+    button.full.button-primary.upper(
+      ladda-translate="{{$ctrl.getButtonContent()}}"
+      ui-ladda="sending"
+      ng-click="$ctrl.onSend()"
+      data-style="expand-left")
+    div.width-100.center.mt-10(ng-show="$ctrl.canGoBack()")
+      a(ng-click="$ctrl.onGoBack()" translate="GO_BACK")

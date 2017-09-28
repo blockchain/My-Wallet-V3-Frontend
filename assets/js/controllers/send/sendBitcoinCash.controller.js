@@ -10,13 +10,15 @@ function SendBitcoinCashController ($scope, MyWallet, Wallet, currency, format) 
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
   $scope.goTo('send-cash');
 
-  $scope.transaction = {};
+  $scope.transaction = { from: { label: 'My Bitcoin Cash Wallet' } };
+
   $scope.isValidAddress = Wallet.isValidAddress;
   $scope.wallet = MyWallet.wallet.hdwallet.accounts[$scope.vm.asset.index];
 
   $scope.bchCurrency = currency.bchCurrencies[0];
   $scope.fiatCurrency = Wallet.settings.currency;
-  $scope.bchAmount = currency.convertFromSatoshi($scope.wallet.balance, $scope.bchCurrency);
+  $scope.transaction.amount = currency.convertFromSatoshi($scope.wallet.balance, $scope.bchCurrency);
+  $scope.transaction.fee = 0.000321; // TODO remove placeholder
 
   $scope.onAddressScan = (result) => {
     let address = Wallet.parsePaymentRequest(result);
@@ -28,13 +30,8 @@ function SendBitcoinCashController ($scope, MyWallet, Wallet, currency, format) 
     }
   };
 
-  $scope.getTransactionTotal = (includeFee) => {
-    let tx = $scope.transaction;
-    let fee = includeFee ? tx.fee : 0;
-    return parseInt(tx.amount, 10) + parseInt(fee, 10);
-  };
-
   $scope.send = () => {
     console.log('send', $scope.transaction);
   };
+  console.log('send bch ctrl', $scope);
 }

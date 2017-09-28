@@ -32,12 +32,12 @@
             .flex-center
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
-                  span {{ bchAmount }}
-                span.mhm BCC
+                  span {{ transaction.amount }}
+                span.mhm BCH
               i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
-                  fiat(bch="bchAmount")
+                  fiat(bch="transaction.amount")
                 span.mhm {{ fiatCurrency.code }}
             .has-error
               span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
@@ -59,25 +59,4 @@
     button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
 
   .flex-column.width-100(ng-if="onStep('send-confirm')")
-    .flex-column.f-16
-      .flex-row
-        label.colon.width-30.width-30-mobile(translate="FROM")
-        .width-70.width-70-mobile My Bitcoin Cash Wallet
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="TO")
-        .width-70.width-70-mobile
-          span(translate="no") {{ transaction.destination }}
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="PAYMENT")
-        .width-70.width-70-mobile
-          span.mr-10 {{transaction.amount | convert:'btc':true}} ({{transaction.amount | convert:'fiat':true}})
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="FEE")
-        .width-70.width-70-mobile
-          span.mr-10 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
-      .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
-        span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
-        span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}
-      .mv-30
-        button.button-primary.width-100(translate="SEND" ng-click="send(); vm.dismiss();")
+    send-confirm(tx="transaction" on-send="send()" asset="'BCH'" on-go-back="null")

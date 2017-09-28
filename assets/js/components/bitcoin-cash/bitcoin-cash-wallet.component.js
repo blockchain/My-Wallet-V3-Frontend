@@ -28,5 +28,4 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet) {
   });
 
   this.hasTransactions = () => this.bchTransactions.length > 0 || this.shiftTrades.length > 0;
-  console.log('bitcoin-cash-wallet', this.wallet, Wallet.my.wallet.bch);
 }

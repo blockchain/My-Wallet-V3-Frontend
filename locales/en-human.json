@@ -1696,5 +1696,7 @@
   },
   "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such a BTC or ETH, or just keep it in your Blockchain wallet.",
   "EXCHANGE_STATUS": "Exchange Status",
+  "SEND_ETHER": "Send Ether",
+  "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
   "": ""
 }
