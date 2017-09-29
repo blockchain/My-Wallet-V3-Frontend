@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, coinify, currency, Alerts, buyMobile) {
+function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, coinify, currency, Alerts, Exchange, buyMobile) {
   let { exchange, medium, fiatCurrency } = $scope.vm;
 
   let limits = $scope.limits = exchange.profile.limits;
@@ -68,7 +68,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     $q.resolve($scope.vm.quote.getPaymentMediums())
       .then((mediums) => mediums[medium].getAccounts())
       .then((accounts) => accounts[0].buy()).then(success)
-      .then(() => coinify.fetchProfile())
+      .then(() => Exchange.fetchProfile(exchange))
       .then(() => $scope.vm.goTo('isx'))
       .then(() => $scope.vm.trade && $scope.vm.trade.watchAddress())
       .catch((err) => {

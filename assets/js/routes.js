@@ -399,7 +399,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       resolve: {
         _loadExchangeData ($q, MyWallet, Exchange) {
           let exchange = MyWallet.wallet.external.coinify;
-          return Exchange.fetchExchangeData(exchange);
+          return exchange.user
+            ? Exchange.fetchExchangeData(exchange)
+            : Exchange.fetchProfile(exchange);
         },
         _loadKYCs ($q, MyWallet) {
           let exchange = MyWallet.wallet.external.coinify;

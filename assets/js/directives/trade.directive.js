@@ -2,9 +2,9 @@ angular
   .module('walletDirectives')
   .directive('trade', trade);
 
-trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'coinify'];
+trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'coinify', 'Exchange'];
 
-function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify) {
+function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -47,7 +47,8 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify) {
     scope.cancel = () => {
       if (!scope.canCancel) return;
       scope.disabled = true;
-      coinify.cancelTrade(scope.trade).then(() => coinify.fetchProfile()).finally(() => scope.disabled = false);
+      let exchange = MyWallet.wallet.external.coinify;
+      coinify.cancelTrade(scope.trade).then(() => Exchange.fetchProfile(exchange)).finally(() => scope.disabled = false);
     };
 
     scope.triggerBuy = () => {

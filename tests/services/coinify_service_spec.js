@@ -79,61 +79,6 @@ describe('coinify service', () => {
       expect(coinify.trades.pending.length).toEqual(1);
       expect(coinify.trades.completed.length).toEqual(3);
     });
-
-    it('should watch completed trades and be initialized', () => {
-      coinify.getTrades();
-      $rootScope.$digest();
-      expect(coinify.watchAddress).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('watchAddress', () => {
-    let trades = {};
-
-    beforeEach(function () {
-      trades = {pending: makeTrade('processing'), completed: makeTrade('completed')};
-      return Object.keys(trades).forEach(t => spyOn(trades[t], 'watchAddress').and.callThrough());
-    });
-
-    it('should watch if bitcoin has not been received', () => {
-      coinify.watchAddress(trades.pending);
-      expect(trades.pending.watchAddress).toHaveBeenCalled();
-    });
-
-    it('should open the buy modal when bitcoin is received', inject(function (modals) {
-      spyOn(modals, 'openBuyView');
-      coinify.watchAddress(trades.pending);
-      $rootScope.$digest();
-      expect(modals.openBuyView).toHaveBeenCalled();
-    })
-    );
-  });
-
-  describe('fetchProfile', () => {
-    exchange = undefined;
-    let fetchFailWith;
-
-    beforeEach(function () {
-      exchange = coinify.exchange;
-      spyOn(exchange, 'fetchProfile').and.callFake(function () {
-        if (fetchFailWith != null) { return $q.reject(fetchFailWith); } else { return $q.resolve(); }
-      });
-      return spyOn(coinify, 'getTrades').and.callThrough();
-    });
-
-    it('should reject with the error if there is one', () => {
-      fetchFailWith = JSON.stringify({error: 'some_err'});
-      coinify.fetchProfile().catch(e => expect(e).toEqual('SOME_ERR'));
-      $rootScope.$digest();
-      expect(coinify.getTrades).not.toHaveBeenCalled();
-    });
-
-    it('should reject default error if error is not json', () => {
-      fetchFailWith = 'unknown_err';
-      coinify.fetchProfile().catch(e => expect(e).toEqual('INVALID_REQUEST'));
-      $rootScope.$digest();
-      expect(coinify.getTrades).not.toHaveBeenCalled();
-    });
   });
 
   describe('cancelTrade', () => {

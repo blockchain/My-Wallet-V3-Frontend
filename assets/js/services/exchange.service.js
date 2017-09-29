@@ -8,9 +8,9 @@ function Exchange ($q, Alerts, modals, Env) {
   const service = {
     interpretError,
     displayError,
+    fetchProfile,
     fetchExchangeData,
     fetchQuote,
-    fetchTrades,
     watchTrades,
     watchTrade
   };
@@ -33,12 +33,13 @@ function Exchange ($q, Alerts, modals, Env) {
     Alerts.displayError(service.interpretError(error));
   }
 
-  function fetchExchangeData (exchange) {
+  function fetchProfile (exchange) {
     return $q.resolve(exchange.fetchProfile());
   }
 
-  function fetchTrades (exchange) {
-    return $q.resolve(exchange.getTrades())
+  function fetchExchangeData (exchange) {
+    return $q.resolve(service.fetchProfile(exchange))
+      .then(() => exchange.getTrades())
       .then((trades) => service.trades = trades)
       .then(service.watchTrades);
   }

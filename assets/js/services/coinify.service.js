@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('coinify', coinify);
 
-function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi) {
+function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModalStack, Wallet, MyWallet, MyWalletHelpers, Alerts, currency, MyWalletBuySell, BlockchainConstants, modals, MyBlockchainApi, Exchange) {
   const ONE_DAY_MS = 86400000;
 
   let states = {
@@ -15,7 +15,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   let txHashes = {};
   let watching = {};
-  let initialized = $q.defer();
 
   const service = {
     get exchange () {
@@ -90,8 +89,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     trades: { completed: [], pending: [] },
     getTxMethod: (hash) => txHashes[hash] || null,
-    initialized: () => initialized.promise,
-    login: () => initialized.promise.finally(service.fetchProfile),
     goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'}),
     setSellMax: (balance) => { service.sellMax = balance.amount / 1e8; service.sellFee = balance.fee; },
     init,
@@ -105,8 +102,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getPendingTrade,
     openPendingTrade,
     getTrades,
-    watchAddress,
-    fetchProfile,
     signupForAccess,
     tradeStateIn,
     cancelTrade,
@@ -122,7 +117,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       coinify.api.sandbox = !env.isProduction;
       if (coinify.trades) setTrades(coinify.trades);
       coinify.monitorPayments();
-      initialized.resolve();
     });
   }
 
@@ -162,7 +156,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
-    }).then(() => trade.cancel().then(() => service.fetchProfile()).then(() => {
+    }).then(() => trade.cancel().then(() => Exchange.fetchProfile(service.exchange)).then(() => {
       // so when a trade is cancelled it moves to the completed table
       service.getTrades();
     }), () => {})
@@ -217,24 +211,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     });
 
     return service.trades;
-  }
-
-  function watchAddress (trade) {
-    watching[trade.receiveAddress] = true;
-    trade.watchAddress().then(() => {
-      if (trade.txHash && trade.isBuy) { txHashes[trade.txHash] = 'buy'; }
-      modals.openBuyView(null, trade, { bitcoinReceived: true });
-    });
-  }
-
-  function fetchProfile () {
-    let error = (err) => {
-      let msg;
-      try { msg = JSON.parse(err).error.toUpperCase(); } catch (e) { msg = 'INVALID_REQUEST'; }
-      return $q.reject(msg);
-    };
-
-    return $q.resolve(service.exchange.fetchProfile()).then(() => {}, error);
   }
 
   function signupForAccess (email, country, state) {
