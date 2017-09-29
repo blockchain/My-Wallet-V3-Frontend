@@ -17,9 +17,7 @@ function SendBitcoinCashController ($scope, MyWallet, Wallet, currency, format) 
 
   $scope.bchCurrency = currency.bchCurrencies[0];
   $scope.fiatCurrency = Wallet.settings.currency;
-  // $scope.transaction.amount = currency.convertFromSatoshi($scope.wallet.balance, $scope.bchCurrency);
   $scope.transaction.amount = $scope.wallet.balance;
-  $scope.transaction.fee = 321555; // TODO remove
 
   $scope.onAddressScan = (result) => {
     let address = Wallet.parsePaymentRequest(result);
@@ -34,5 +32,4 @@ function SendBitcoinCashController ($scope, MyWallet, Wallet, currency, format) 
   $scope.send = () => {
     console.log('send', $scope.transaction);
   };
-  console.log('send bch ctrl', $scope);
 }
