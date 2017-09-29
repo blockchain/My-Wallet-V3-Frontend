@@ -163,7 +163,7 @@
               span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
-  div.overview(ng-show="vm.confirm")
+  div.overview(ng-if="vm.confirm")
     send-confirm(tx="transaction" on-send="send()" asset="'BTC'" on-go-back="vm.toSendView()")
   .mt-25
     button.full.button-primary.upper(

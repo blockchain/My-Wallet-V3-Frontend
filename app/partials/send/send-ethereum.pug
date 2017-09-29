@@ -80,10 +80,7 @@
             label
               span(translate="TX_FEE")
             .flex-1.f-16
-              span {{ $ctrl.payment.fee }} ETH
-              | &nbsp;(
-              fiat(eth="$ctrl.payment.fee")
-              | )
+              span {{ $ctrl.payment.fee }} ETH ({{$ctrl.payment.fee | convert:'fiat':true:'eth'}})
 
   //- Step 2 (confirm)
   .overview(ng-if="vm.confirm")

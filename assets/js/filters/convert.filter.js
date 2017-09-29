@@ -36,11 +36,8 @@ function convertFilter (Wallet, currency) {
     } else {
       curr = display;
     }
-
-    if (currency.isEthCurrency(curr)) conversion = currency.convertFromEther(amount, curr);
-    if (currency.isBchCurrency(curr) || (fiatTarget && coin === 'bch')) {
-      conversion = currency.convertFromBitcoinCash(amount, curr);
-    }
+    if (currency.isEthCurrency(curr) || (fiatTarget && coin === 'eth')) conversion = currency.convertFromEther(amount, curr);
+    else if (currency.isBchCurrency(curr) || (fiatTarget && coin === 'bch')) conversion = currency.convertFromBitcoinCash(amount, curr);
     else conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr, showCode);
   };
