@@ -12,7 +12,6 @@ function convertFilter (Wallet, currency) {
 
   // target => { 'primary' | 'secondary' | 'btc' | 'fiat' | currency }
   return function (amount, target = 'primary', showCode, coin) {
-    target = target.toLowerCase();
     if (coin) coin = coin.toLowerCase();
     let fiatTarget = target === 'fiat';
     let fiat = Wallet.settings.currency;
@@ -23,7 +22,7 @@ function convertFilter (Wallet, currency) {
     let curr, conversion;
 
     if (typeof target === 'string') {
-      curr = caseof(target, {
+      curr = caseof(target.toLowerCase(), {
         'primary': display,
         'secondary': currency.isBitCurrency(display) ? fiat : btc,
         'btc': btc,
