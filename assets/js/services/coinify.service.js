@@ -34,8 +34,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return service.sellMax && service.sellMax > service.limits.blockchain.minimumInAmounts['BTC'];
     },
     get balanceAboveMax () {
-      let { hasAccount } = service.exchange.api;
-      return service.sellMax && service.sellMax && hasAccount ? service.limits.blockchain.outRemaining['BTC'] : false;
+      return service.sellMax && service.sellMax > service.limits.blockchain.outRemaining['BTC'];
     },
     get buyLimitRemaining () {
       let { limits } = service;
@@ -66,10 +65,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let reason;
       let { profile } = service.exchange;
 
-      if (service.balanceAboveMax) reason = 'can_sell_max';
+      if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
+      else if (service.balanceAboveMax) reason = 'can_sell_max';
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
       else reason = 'user_can_trade';
 
       return reason;
@@ -83,9 +82,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get sellLaunchOptions () {
       let reason = service.sellReason;
-      let { profile } = service.exchange;
+      let { user, profile } = service.exchange;
 
-      if (reason === 'can_sell_max' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+      if (reason === 'can_sell_max' && user && profile.level && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
       else if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
       else if (reason === 'awaiting_first_trade_completion') return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
     },

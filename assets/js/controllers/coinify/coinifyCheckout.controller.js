@@ -4,7 +4,6 @@ angular
 
 function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, modals, balance) {
   let exchange = coinify.exchange;
-  let hasAccount = coinify.exchange.api.hasAccount;
 
   $scope.trades = coinify.trades;
 
@@ -17,7 +16,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.buyQuoteHandler = coinify.getQuote;
   $scope.buyLimits = () => ({
     min: Math.min(coinify.limits.bank.minimumInAmounts[$scope.fiat.code], coinify.limits.card.minimumInAmounts[$scope.fiat.code]),
-    max: hasAccount ? Math.max(coinify.limits.bank.inRemaining[$scope.fiat.code], coinify.limits.card.inRemaining[$scope.fiat.code]) : Infinity
+    max: Math.max(coinify.limits.bank.inRemaining[$scope.fiat.code], coinify.limits.card.inRemaining[$scope.fiat.code])
   });
 
   $scope.selling = coinify.selling;
@@ -25,7 +24,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.sellQuoteHandler = coinify.getSellQuote;
   $scope.sellLimits = () => ({
     min: coinify.limits.blockchain.minimumInAmounts['BTC'],
-    max: hasAccount ? Math.max(coinify.limits.blockchain.outRemaining['BTC'], coinify.sellMax) : coinify.sellMax
+    max: Math.min(coinify.limits.blockchain.outRemaining['BTC'], coinify.sellMax)
   });
 
   $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());

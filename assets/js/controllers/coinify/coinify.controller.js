@@ -19,7 +19,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
   this.refreshQuote = () => {
     if (this.baseFiat()) return $q.resolve(coinify.getQuote(this.fiatAmount() * 100, this.quote.baseCurrency)).then((q) => this.quote = q);
-    else return $q.resolve(coinify.getQuote(this.BTCAmount() / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
+    else return $q.resolve(coinify.getQuote(this.BTCAmount(), this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
   };
   this.expireTrade = () => {
     return $q.resolve(this.state.trade.expired = true);
