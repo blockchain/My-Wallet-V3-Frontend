@@ -2,28 +2,34 @@ angular
   .module('walletApp')
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
-function CoinifyCheckoutController ($scope, $rootScope, $q, $stateParams, Env, AngularHelper, MyWallet, $state, Alerts, Wallet, currency, coinify, modals, balance) {
+function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, modals, balance) {
   let exchange = coinify.exchange;
+  let hasAccount = coinify.exchange.api.hasAccount;
 
   $scope.trades = coinify.trades;
-  $scope.coinifyStatus = coinify.getStatus;
+
   $scope.fiatOptions = currency.coinifyCurrencies;
   let walletCurrencyMatch = $scope.fiatOptions.filter(c => c.code === (exchange.profile ? exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
+  $scope.fiat = walletCurrencyMatch || $scope.fiatOptions.filter(c => c.code === 'EUR')[0];
 
   $scope.buying = coinify.buying;
   $scope.buyHandler = modals.openBuyView;
   $scope.buyQuoteHandler = coinify.getQuote;
-  $scope.buyMediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.buyLimits = coinify.getLimits(mediums, $scope.fiat.code));
+  $scope.buyLimits = () => ({
+    min: Math.min(coinify.limits.bank.minimumInAmounts[$scope.fiat.code], coinify.limits.card.minimumInAmounts[$scope.fiat.code]),
+    max: hasAccount ? Math.max(coinify.limits.bank.inRemaining[$scope.fiat.code], coinify.limits.card.inRemaining[$scope.fiat.code]) : Infinity
+  });
 
   $scope.selling = coinify.selling;
   $scope.sellHandler = modals.openSellView;
   $scope.sellQuoteHandler = coinify.getSellQuote;
-  $scope.sellMediumsHandler = (quote) => quote.getPaymentMediums().then((mediums) => $scope.sellLimits = coinify.getSellLimits(mediums));
+  $scope.sellLimits = () => ({
+    min: coinify.limits.blockchain.minimumInAmounts['BTC'],
+    max: hasAccount ? Math.max(coinify.limits.blockchain.outRemaining['BTC'], coinify.sellMax) : coinify.sellMax
+  });
 
   $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());
   $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]) && coinify.kycs[0];
-
-  $scope.fiat = walletCurrencyMatch || $scope.fiatOptions.filter(c => c.code === 'EUR')[0];
 
   let email = MyWallet.wallet.accountInfo.email;
   Env.then(env => {

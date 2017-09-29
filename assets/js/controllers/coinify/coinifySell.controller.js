@@ -13,7 +13,6 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   this.user = Wallet.user;
   this.accounts = accounts;
   this.selectedBankAccount = null;
-  this.message = 'SELL.QUOTE_EXPIRES';
   this.now = () => new Date().getTime();
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : '';
 

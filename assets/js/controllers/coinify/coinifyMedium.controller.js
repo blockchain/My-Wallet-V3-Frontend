@@ -6,17 +6,20 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   AngularHelper.installLock.call($scope);
   $scope.$timeout = $timeout;
   $scope.limits = coinify.limits;
-  let { quote, baseFiat, fiatCurrency } = $scope.vm;
+  let { quote, baseFiat, fiatCurrency, exchange } = $scope.vm;
 
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }
   };
 
+  fiatCurrency = fiatCurrency();
+  let { limits } = exchange.profile;
   let fiatAmount = baseFiat() ? Math.abs(quote.baseAmount) : Math.abs(quote.quoteAmount);
-  $scope.belowCardMax = fiatAmount <= parseFloat($scope.limits.card.max[fiatCurrency()]);
+
+  $scope.belowCardMax = fiatAmount <= limits.card.inRemaining[fiatCurrency];
   // i.e card max is 300 and buy amount is 500
   // $scope.belowCardMax = false;
-  $scope.aboveBankMin = fiatAmount >= parseFloat($scope.limits.bank.min[fiatCurrency()]);
+  $scope.aboveBankMin = fiatAmount >= limits.bank.minimumInAmounts[fiatCurrency];
   // i.e bank min is 50 and buy amount is 30
   // $scope.aboveBankMin = false;
   // $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);

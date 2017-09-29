@@ -12,7 +12,7 @@
             | &nbsp;
             span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
             span(ng-if="vm.trade") ({{ vm.trade._transferOut.receiveAmount }} {{ vm.trade.inCurrency }})
-          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="vm.qaDebugger")
+          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="'SELL.QUOTE_EXPIRES'" debug="vm.qaDebugger")
   coinify-email(
       ng-if="vm.onStep('email')"
       on-complete="vm.goTo('accept-terms')"

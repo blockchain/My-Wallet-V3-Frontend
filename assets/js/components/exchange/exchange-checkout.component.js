@@ -147,9 +147,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
 
   $scope.$watch('state.rate', (rate) => {
     if (!rate) return;
-    if (!this.limits) return;
+    if (!this.limits()) return;
 
-    let limits = this.limits;
+    let limits = this.limits();
     let baseFiat = !currency.isBitCurrency($scope.baseConstant);
     $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
     $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
