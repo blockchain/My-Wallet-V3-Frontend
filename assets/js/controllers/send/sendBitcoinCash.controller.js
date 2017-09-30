@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendBitcoinCashController', SendBitcoinCashController);
 
-function SendBitcoinCashController ($scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format) {
+function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format) {
   let feePerByte;
   let bch = MyWallet.wallet.bch;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
@@ -39,7 +39,7 @@ function SendBitcoinCashController ($scope, AngularHelper, Env, MyWallet, Wallet
   };
 
   const transactionSucceeded = (tx) => {
-    MyWallet.wallet.bch.getHistory();
+    $rootScope.scheduleRefresh();
     $scope.free();
     Wallet.beep();
     Alerts.displaySentBitcoin('BITCOIN_CASH_SENT');
