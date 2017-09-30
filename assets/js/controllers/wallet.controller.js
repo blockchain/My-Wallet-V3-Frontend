@@ -142,6 +142,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $scope.refreshing = true;
     let tasks = [
       MyWallet.wallet.getHistory(),
+      MyWallet.wallet.bch.getHistory(),
       currency.fetchAllRates(Wallet.settings.currency),
       Ethereum.fetchHistory()
     ];
