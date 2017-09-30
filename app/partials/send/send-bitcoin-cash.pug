@@ -49,9 +49,9 @@
               span Estimated confirmation time 1+ hour
             .flex-row.flex-end.width-40.width-40-mobile
               span.f-14 {{ transaction.fee | convert:'bch':true }}
-              | 
+              | &nbsp;
               span (
-              fiat(bch="fromSatoshi(transaction.fee, bchCurrency)")
+              fiat.f-14(bch="fromSatoshi(transaction.fee, bchCurrency)")
               span )
         .group.mt-25
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-address')" ng-disabled="sendForm.$invalid")

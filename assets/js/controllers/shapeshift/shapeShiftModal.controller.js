@@ -2,6 +2,6 @@ angular
   .module('walletApp')
   .controller('ShapeShiftModalController', ShapeShiftModalController);
 
-function ShapeShiftModalController ($scope, coin) {
+function ShapeShiftModalController ($scope, Env, coin) {
   this.asset = coin;
 }

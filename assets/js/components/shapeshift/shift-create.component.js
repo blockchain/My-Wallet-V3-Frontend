@@ -2,6 +2,7 @@ angular
   .module('walletApp')
   .component('shiftCreate', {
     bindings: {
+      fees: '<',
       asset: '<',
       altcoin: '<',
       onComplete: '&',
@@ -122,8 +123,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       }
     };
 
-    let feeType = state.baseBTC ? 'priority' : undefined;
-    return $q.resolve(this.from.getAvailableBalance(feeType)).then(fetchSuccess, fetchError);
+    let fee = this.fees[state.baseCurr];
+    return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
 
   $scope.$watch('state.input.curr', () => $scope.getAvailableBalance().then(getRate));
