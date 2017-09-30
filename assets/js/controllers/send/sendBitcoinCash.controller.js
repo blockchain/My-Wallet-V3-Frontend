@@ -39,7 +39,7 @@ function SendBitcoinCashController ($scope, AngularHelper, Env, MyWallet, Wallet
   };
 
   const transactionSucceeded = (tx) => {
-    $scope.refresh();
+    MyWallet.wallet.bch.getHistory();
     $scope.free();
     Wallet.beep();
     Alerts.displaySentBitcoin('BITCOIN_CASH_SENT');
