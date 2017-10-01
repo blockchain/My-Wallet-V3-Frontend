@@ -15,10 +15,10 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
 
   $scope.state = {
     trades: exchange.trades,
-    limits: {
+    limits: () => ({
       min: mediums && mediums.bank.minimumInAmounts[$scope.rupees.code],
       max: mediums && mediums.bank.limitInAmounts['BTC'] * exchangeRate.quoteAmount
-    }
+    })
   };
 
   $scope.stepDescription = () => {

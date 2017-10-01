@@ -7,6 +7,22 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
     get exchange () {
       return MyWallet.wallet.external.unocoin;
     },
+    get userCanTrade () {
+      return !service.getPendingTrade();
+    },
+    get buyReason () {
+      let reason;
+
+      if (!service.userCanTrade) reason = 'awaiting_trade_completion';
+      else reason = 'user_can_trade';
+
+      return reason;
+    },
+    get buyLaunchOptions () {
+      let reason = service.buyReason;
+
+      if (reason === 'awaiting_trade_completion') return { 'FINISH': service.openPendingTrade };
+    },
     buy,
     init,
     buying,
@@ -32,15 +48,11 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
   }
 
   function buying () {
-    let pendingTrade = service.getPendingTrade();
-
-    if (pendingTrade) {
-      return {
-        isDisabled: true,
-        launchOption: service.openPendingTrade,
-        isDisabledReason: 'awaiting_first_trade_completion'
-      };
-    }
+    return {
+      reason: service.buyReason,
+      isDisabled: !service.userCanTrade,
+      launchOptions: service.buyLaunchOptions
+    };
   }
 
   function determineStep () {
