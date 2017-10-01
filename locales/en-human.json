@@ -1555,8 +1555,8 @@
     "user_needs_account": {
       "EXPLAIN": ""
     },
-    "user_can_trade": {
-      "EXPLAIN": ""
+    "user_cant_trade": {
+      "EXPLAIN": "Something went wrong. Please try again later."
     },
     "loading_data": {
       "EXPLAIN": "Loading data...",

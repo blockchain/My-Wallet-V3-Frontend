@@ -55,20 +55,19 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
       if (!user) reason = 'user_needs_account';
       else if (!profile.canTrade) reason = profile.cannotTradeReason;
-      else if (service.buyLimitRemaining) reason = 'has_remaining_buy_limit';
-      else reason = 'user_can_trade';
+      else reason = 'has_remaining_buy_limit';
 
       return reason;
     },
     get sellReason () {
       let reason;
-      let { profile } = service.exchange;
+      let { profile, user } = service.exchange;
 
-      if (profile && !profile.canTrade) reason = profile.cannotTradeReason;
-      else if (service.balanceAboveMax) reason = 'can_sell_max';
+      if (user && !profile.canTrade) reason = profile.cannotTradeReason;
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else reason = 'user_can_trade';
+      else if (service.balanceAboveMax) reason = 'can_sell_max';
+      else reason = 'has_remaining_sell_limit';
 
       return reason;
     },
