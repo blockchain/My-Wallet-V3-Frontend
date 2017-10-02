@@ -24,6 +24,8 @@ function transactionStatus (BrowserHelper, Env) {
         });
       } else if (scope.transaction.constructor.name === 'EthWalletTx') {
         BrowserHelper.safeWindowOpen(`https://etherscan.io/tx/${scope.transaction.hash}`);
+      } else if (scope.transaction.coinCode === 'bch') {
+        BrowserHelper.safeWindowOpen(`https://blockchair.com/bitcoin-cash/transaction/${scope.transaction.hash}`);
       }
     };
 

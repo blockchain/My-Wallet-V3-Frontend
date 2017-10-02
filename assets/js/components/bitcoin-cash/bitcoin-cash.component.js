@@ -13,4 +13,5 @@ function bitcoinCashController (modals, MyWallet, Wallet, localStorageService, S
   this.showBitcoinCashAbout = modals.openBitcoinCashAbout;
   this.showWallets = () => localStorageService.get('bcash-about') || false;
   this.activeWallets = MyWallet.wallet.bch.accounts.filter(a => !a.archived);
+  this.imported = MyWallet.wallet.bch.importedAddresses.addresses;
 }

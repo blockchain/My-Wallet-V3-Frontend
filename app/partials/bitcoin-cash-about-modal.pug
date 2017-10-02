@@ -5,12 +5,13 @@
       h3.f-24.blue(translate="About Bitcoin Cash")
 div(translate-namespace="BITCOIN_CASH")
   .flex-column.ph-35(ng-if="vm.onStep('about')")
-    .flex-column(ng-repeat="i in [1,2,3,4]")
+    .flex-column(ng-repeat="i in [1,2,3,4,5]")
       .flex-column.mt-30
         span.blue.f-14(translate=".ABOUT_{{i}}")
         span.text.f-14.pt-10(translate=".ABOUT_{{i}}_ANSWER")
     .flex-row.flex-justify.pt-40.pb-30
-      button.button-primary(translate=".SEE_BALANCE" ng-click="vm.activeWallets.length > 1 ? vm.dismiss() : vm.goTo('balance'); vm.setHasSeenCashAbout();")
+      button.button-primary(ng-if="!vm.onFaq()" translate=".SEE_BALANCE" ng-click="vm.activeWallets.length > 1 ? vm.dismiss() : vm.goTo('balance'); vm.setHasSeenCashAbout();")
+      a.button-primary(ng-if="vm.onFaq()" translate=".SEE_BALANCE" ng-click="vm.setHasSeenCashAbout()" ui-sref="wallet.common.settings.info")
   .flex-column.ph-35(ng-if="vm.onStep('balance')")  
     .flex-column.flex-center.bg-grey.mv-30.pv-20
       span.f-16(translate="TOTAL")

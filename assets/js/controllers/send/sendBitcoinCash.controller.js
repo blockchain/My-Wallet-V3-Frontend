@@ -13,6 +13,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     $scope.wallet.getAvailableBalance(feePerByte).then((balance) => {
       $scope.transaction.amount = balance.amount;
       $scope.transaction.fee = balance.fee;
+      console.log('send bcash', $scope.transaction);
     });
   });
 
