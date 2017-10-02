@@ -1,20 +1,40 @@
 describe('CoinifySummaryController', () => {
   let $q;
   let scope;
-  let Wallet;
   let $rootScope;
   let $controller;
-  let coinify;
   let Alerts;
   let validBuy = true;
 
+  let accounts = [
+    {
+      buy () { if (validBuy) { return $q.resolve(trade); } else { return $q.reject({error_description: 'Error'}); } }
+    }
+  ];
+
   let mediums = {
     'card': {
-      getAccounts() { return $q.resolve(coinify.accounts); }
+      'fee': 1,
+      'total': 101,
+      getAccounts () { return $q.resolve(accounts); }
     },
     'bank': {
-      getAccounts() { return $q.resolve(coinify.accounts); }
+      getAccounts () { return $q.resolve(accounts); }
     }
+  };
+
+  let exchange = {
+    profile: {
+      limits: {
+        'card': {
+          'inRemaining': 100,
+          'minimumInAmounts': { 'EUR': 100 }
+        }
+      }
+    },
+    accounts: accounts,
+    fetchProfile: () => $q.resolve(),
+    getBuyQuote: () => $q.resolve(quote)
   };
 
   let quote = {
@@ -22,14 +42,14 @@ describe('CoinifySummaryController', () => {
     baseAmount: -100,
     baseCurrency: 'USD',
     paymentMediums: mediums,
-    getPaymentMediums() { return $q.resolve(mediums); }
+    getPaymentMediums () { return $q.resolve(mediums); }
   };
 
   let trade = {
     state: 'awaiting_transfer_in',
     inCurrency: 'USD',
     outCurrency: 'BTC',
-    watchAddress() { return $q.resolve(); }
+    watchAddress () { return $q.resolve(); }
   };
 
   beforeEach(angular.mock.module('walletApp'));
@@ -48,47 +68,19 @@ describe('CoinifySummaryController', () => {
       $q = _$q_;
 
       let MyWallet = $injector.get('MyWallet');
-      Wallet = $injector.get('Wallet');
       Alerts = $injector.get('Alerts');
-      coinify = $injector.get('coinify');
 
       MyWallet.wallet = {
         hdwallet: {
           defaultAccount: {index: 0},
           accounts: [{label: 'Phil'}]
-        }
-      };
-
-      coinify.limits = {
-        bank: {
-          min: {
-            'EUR': 10
-          },
-          max: {
-            'EUR': 1000
-          }
         },
-        card: {
-          min: {
-            'EUR': 10
-          },
-          max: {
-            'EUR': 1000
-          }
+        external: {
+          coinify: exchange
         }
       };
-
-      coinify.exchange = () => ({
-        getBuyQuote() {}
-      });
-
-      coinify.getQuote = () => $q.resolve(quote);
-
-      return coinify.accounts = [
-        {
-          buy() { if (validBuy) { return $q.resolve(trade); } else { return $q.reject({error_description: 'Error'}); } }
-        }
-      ];}));
+    })
+  );
 
   let getControllerScope = function (params) {
     if (params == null) { params = {}; }
@@ -96,15 +88,16 @@ describe('CoinifySummaryController', () => {
     scope.vm = {
       quote,
       medium: 'card',
-      baseFiat() { return true; },
-      watchAddress() {},
-      fiatCurrency() { return 'USD'; },
-      fiatAmount() { return -100; },
-      BTCAmount() { return 1; },
-      goTo(state) {}
+      exchange: exchange,
+      baseFiat () { return true; },
+      watchAddress () {},
+      fiatCurrency () { return 'USD'; },
+      fiatAmount () { return -100; },
+      BTCAmount () { return 1; },
+      goTo (state) {}
     };
 
-    $controller("CoinifySummaryController",
+    $controller('CoinifySummaryController',
       {$scope: scope});
     return scope;
   };
@@ -115,7 +108,6 @@ describe('CoinifySummaryController', () => {
   });
 
   describe('.commitValues()', function () {
-
     it('should disable the form', () => {
       spyOn(scope, 'lock');
       scope.commitValues();
@@ -130,14 +122,6 @@ describe('CoinifySummaryController', () => {
   });
 
   describe('.buy()', function () {
-
-    it('should call buy', () => {
-      spyOn(coinify.accounts[0], 'buy');
-      scope.buy();
-      scope.$digest();
-      return expect(coinify.accounts[0].buy).toHaveBeenCalled();
-    });
-
     it('should reset the quote and set the trade', () => {
       scope.buy();
       scope.$digest();

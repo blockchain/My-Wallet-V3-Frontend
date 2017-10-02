@@ -38,11 +38,11 @@ describe('CoinifyController', () => {
             index: 0
           },
           accounts: [{label: ''}]
-        }
-      };
-      return {
-        coinify: {
-          getQuote (quote) { return $q.resolve(quote); }
+        },
+        external: {
+          coinify: {
+            getQuote (quote) { return $q.resolve(quote); }
+          }
         }
       };
     }));
@@ -87,7 +87,7 @@ describe('CoinifyController', () => {
     let ctrl;
     beforeEach(() => ctrl = getController(quote));
 
-    it('should return fiat amount', () => expect(ctrl.fiatAmount()).toBe(1));
+    it('should return fiat amount', () => expect(ctrl.fiatAmount()).toBe(100));
   });
 
   describe('.fiatCurrency()', function () {
@@ -123,7 +123,7 @@ describe('CoinifyController', () => {
       spyOn(coinify, 'getQuote');
       ctrl.refreshQuote();
       $rootScope.$digest();
-      return expect(coinify.getQuote).toHaveBeenCalledWith(1, 'USD');
+      return expect(coinify.getQuote).toHaveBeenCalledWith(10000, 'USD');
     });
 
     it('should refresh a quote form BTC', () => {
@@ -132,7 +132,7 @@ describe('CoinifyController', () => {
       ctrl.quote.quoteCurrency = 'USD';
       ctrl.refreshQuote();
       $rootScope.$digest();
-      return expect(coinify.getQuote).toHaveBeenCalledWith(0.000001, 'BTC', 'USD');
+      return expect(coinify.getQuote).toHaveBeenCalledWith(100, 'BTC', 'USD');
     });
   });
 
@@ -168,37 +168,37 @@ describe('CoinifyController', () => {
   });
 
   describe('initial state', function () {
-    it('should ask user to verify email', inject(function (Wallet) {
+    it('should ask user to verify email', inject(function (Wallet, MyWallet) {
       Wallet.user.isEmailVerified = false;
-      coinify.exchange = () => ({ profile: {} });
+      MyWallet.wallet.external.coinify = ({ profile: {} });
       let ctrl = getController();
       expect(ctrl.currentStep()).toBe('email');
     }));
 
-    it('should ask user to signup if email is verified', inject(function (Wallet) {
+    it('should ask user to signup if email is verified', inject(function (Wallet, MyWallet) {
       Wallet.user.isEmailVerified = true;
       let ctrl = getController();
       expect(ctrl.currentStep()).toBe('signup');
     }));
 
-    it('should ask user to select payment medium', inject(function (Wallet) {
+    it('should ask user to select payment medium', inject(function (Wallet, MyWallet) {
       Wallet.user.isEmailVerified = true;
-      coinify.exchange = () => ({ profile: {}, user: 1 });
+      MyWallet.wallet.external.coinify = ({ profile: {}, user: 1 });
       let ctrl = getController(quote, null);
       expect(ctrl.currentStep()).toBe('select-payment-medium');
     }));
 
-    it('should ask user to complete isx after a trade is created', inject(function (Wallet) {
+    it('should ask user to complete isx after a trade is created', inject(function (Wallet, MyWallet) {
       Wallet.user.isEmailVerified = true;
-      coinify.exchange = () => ({ profile: {}, user: 1 });
+      MyWallet.wallet.external.coinify = ({ profile: {}, user: 1 });
       let ctrl = getController(null, {});
       expect(ctrl.currentStep()).toBe('isx');
     }));
 
-    it('should show a completed trade summary', inject(function (Wallet) {
+    it('should show a completed trade summary', inject(function (Wallet, MyWallet) {
       let trade = { state: 'completed' };
       Wallet.user.isEmailVerified = true;
-      coinify.exchange = () => ({ profile: {}, user: 1 });
+      MyWallet.wallet.external.coinify = ({ profile: {}, user: 1 });
       let ctrl = getController(null, trade);
       expect(ctrl.currentStep()).toBe('trade-complete');
     }));
