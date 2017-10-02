@@ -25,11 +25,11 @@
     span.mb-10(translate="TOTAL")
     span.f-28.mb-10.em-600 {{$ctrl.getTransactionTotal(true) | convert:$ctrl.asset:true}}
     span.f-20.em-300 {{ $ctrl.getTransactionTotal(true) | convert:'fiat':true:$ctrl.asset }}
-  .mv-30
+  .mt-30
     button.full.button-primary.upper(
       ladda-translate="{{$ctrl.getButtonContent()}}"
       ui-ladda="sending"
       ng-click="$ctrl.onSend()"
       data-style="expand-left")
     div.width-100.center.mt-10
-      a(ng-click="$ctrl.onGoBack()" translate="GO_BACK")
+      a.f-14(ng-click="$ctrl.onGoBack()" translate="GO_BACK")
