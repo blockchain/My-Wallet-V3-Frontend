@@ -77,7 +77,7 @@
                     "https://blockchain.co1.qualtrics.com/jfe/form/SV_3QV1OgysGUC0hXD"]
   },
   "bcash": {
-    "feePerByte": 50
+    "feePerByte": 75
   },
   "showMobileLogin": true,
   "network": "bitcoin"

@@ -23,7 +23,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.goBack = () => $scope.onStep('send-confirm') ? $scope.goTo('send-address') : $scope.goTo('send-cash');
 
   $scope.isValidAddress = Wallet.isValidAddress;
-  $scope.wallet = bch.accounts[$scope.vm.asset.index];
+  $scope.wallet = bch.accounts[$scope.vm.asset.index] || $scope.vm.asset.index;
 
   $scope.transaction = {};
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -53,11 +53,10 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   $scope.send = () => {
     let tx = $scope.transaction;
-    let payment = bch.createPayment();
+    let payment = $scope.wallet.createPayment();
 
     $scope.lock();
 
-    payment.from($scope.vm.asset.index);
     payment.to(tx.destination);
     payment.amount(tx.amount);
     payment.feePerByte(feePerByte);

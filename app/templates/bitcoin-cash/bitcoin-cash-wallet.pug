@@ -1,10 +1,13 @@
 .width-100.flex-column.border-right.border-left.border-top.pv-20.ph-25(ng-class="{'border-bottom': $last}")
   .flex-row
     .flex-column.width-30
+      .flex-row
         span.f-14.em-400 {{$ctrl.wallet.label}}
-        span.f-12 Bitcoin Cash
-        a.em-300.f-14.pt-5(ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") View transactions
-        a.em-300.f-14.pt-5(ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") Hide transactions
+        |
+        span.label.label-primary.upper(ng-if="$ctrl.wallet.label === 'Imported Addresses'") all addresses
+      span.f-12 Bitcoin Cash
+      a.em-300.f-14.pt-5(ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") View transactions
+      a.em-300.f-14.pt-5(ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") Hide transactions
     .flex-column.width-40.flex-center
         span.f-14.em-400.pb-15 Bitcoin Cash Balance
         .flex-row
