@@ -46,8 +46,8 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     $scope.vm.close();
   };
 
-  const transactionFailed = (err) => {
-    Alerts.displayError(err);
+  const transactionFailed = (error) => {
+    Alerts.displayError(error.error || error.message);
   };
 
   $scope.send = () => {
@@ -63,7 +63,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     payment.build();
 
     const signAndPublish = (passphrase) => {
-      return payment.sign(passphrase).publish().payment;
+      return payment.sign(passphrase).publish();
     };
 
     Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
