@@ -37,7 +37,7 @@
               i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
-                  fiat(bch="fromSatoshi(transaction.amount, bchCurrency)")
+                  fiat(bch="transaction.amount")
                 span.mhm {{ fiatCurrency.code }}
             .has-error
               span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
@@ -50,9 +50,7 @@
             .flex-row.flex-end.width-40.width-40-mobile
               span.f-14 {{ transaction.fee | convert:'bch':true }}
               | &nbsp;
-              span (
-              fiat.f-14(bch="fromSatoshi(transaction.fee, bchCurrency)")
-              span )
+              span.f-14 ({{ transaction.fee | convert:'fiat':true:'bch' }})
         .group.mt-25
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-address')" ng-disabled="sendForm.$invalid")
   .flex-column(ng-if="onStep('send-address')")
@@ -60,35 +58,8 @@
     .f-16.center.bg-grey.ph-20.pv-15.mb-30
       span {{ transaction.destination }}
       i.pointer.icon-pencil.pull-right(ng-click="goTo('send-cash')")
-    button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
-
+    button.button-primary(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
+    div.width-100.center.mt-10
+      a(ng-click="goBack()" translate="GO_BACK")
   .flex-column.width-100(ng-if="onStep('send-confirm')")
-    .flex-column.f-16
-      .flex-row
-        label.colon.width-30.width-30-mobile(translate="FROM")
-        .width-70.width-70-mobile My Bitcoin Cash Wallet
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="TO")
-        .width-70.width-70-mobile
-          span(translate="no") {{ transaction.destination }}
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="PAYMENT")
-        .width-70.width-70-mobile
-          span.mr-10 {{transaction.amount | convert:'bch':true}}
-          span (
-          fiat(bch="fromSatoshi(transaction.amount, bchCurrency)")
-          span )
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="FEE")
-        .width-70.width-70-mobile
-          span.mr-10 {{ transaction.fee | convert:'bch':true }}
-          span (
-          fiat(bch="fromSatoshi(transaction.fee, bchCurrency)")
-          span )
-      .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
-        span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600
-          fiat(bch="fromSatoshi((transaction.amount + transactionfromSatoshi), bchCurrency)")
-        span.f-20.em-300 {{ transaction.amount + transaction.fee | convert:'bch':true }}
-      .mv-30
-        button.button-primary.width-100(translate="SEND" ng-click="send();" ng-disabled="locked")
+    send-confirm(tx="transaction" on-send="send()" asset="'BCH'" on-go-back="goBack()")

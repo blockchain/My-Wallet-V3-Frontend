@@ -163,30 +163,8 @@
               span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
-  div.overview(ng-show="vm.confirm")
-    .flex-column.f-16
-      .flex-row
-        label.colon.width-30.width-30-mobile(translate="FROM")
-        .width-70.width-70-mobile {{ transaction.from.label || transaction.from.address }}
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="TO")
-        .width-70.width-70-mobile
-          span(translate="no") {{ transaction.destination.label || transaction.destination.address }}
-      .flex-row.mt-10(ng-show="transaction.note.length")
-        label.colon.width-30.width-30-mobile(translate="DESCRIPTION")
-        .width-70.width-70-mobile {{ transaction.note }}
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="PAYMENT")
-        .width-70.width-70-mobile
-          span.mr-10 {{transaction.amount | convert:'btc':true}} ({{transaction.amount | convert:'fiat':true}})
-      .flex-row.mt-10
-        label.colon.width-30.width-30-mobile(translate="FEE")
-        .width-70.width-70-mobile
-          span.mr-10 {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
-      .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="(transaction.destination.type != 'External') ? 'transfer' : 'sent'")
-        span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{getTransactionTotal(true) | convert:'btc':true}}
-        span.f-20.em-300 {{getTransactionTotal(true) | convert:'fiat':true}}
+  div.overview(ng-if="vm.confirm")
+    send-confirm(tx="transaction" on-send="send()" asset="'BTC'" on-go-back="vm.toSendView()")
   .mt-25
     button.full.button-primary.upper(
       ladda-translate="CONTINUE"
@@ -196,11 +174,3 @@
       ng-disabled="sendForm.$invalid || failedToLoadUnspent || !amountsAreValid()"
       data-style="expand-left"
       ng-hide="vm.confirm")
-    button.full.button-primary.upper(
-      ladda-translate="{{ transaction.destination.type != 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN' }}"
-      ui-ladda="sending"
-      ng-click="send()"
-      data-style="expand-left"
-      ng-show="vm.confirm")
-    div.width-100.center.mt-10(ng-show="vm.confirm")
-      a(ng-click="vm.toSendView()" translate="GO_BACK")

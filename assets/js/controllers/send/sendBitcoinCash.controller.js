@@ -20,6 +20,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
   $scope.goTo('send-cash');
+  $scope.goBack = () => $scope.onStep('send-confirm') ? $scope.goTo('send-address') : $scope.goTo('send-cash');
 
   $scope.isValidAddress = Wallet.isValidAddress;
   $scope.wallet = bch.accounts[$scope.vm.asset.index];
