@@ -26,6 +26,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.wallet = bch.accounts[$scope.vm.asset.index] || $scope.vm.asset.index;
 
   $scope.transaction = {};
+  $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.bchCurrency = currency.bchCurrencies[0];
   $scope.fiatCurrency = Wallet.settings.currency;
