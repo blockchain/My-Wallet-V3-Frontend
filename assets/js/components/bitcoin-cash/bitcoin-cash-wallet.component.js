@@ -36,7 +36,7 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, curr
   this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
 
   this.shiftTrades = this.trades.filter(ss => {
-    return this.bchTransactions.some(tx => tx.hash === ss.depositHash);
+    return this.txList().some(tx => tx.hash === ss.depositHash);
   });
 
   this.hasTransactions = () => this.txList().length > 0 || this.shiftTrades.length > 0;

@@ -135,8 +135,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
   this.currencyHelper = (obj) => {
     return {
-      name: obj.constructor.name === 'HDAccount' ? 'btc' : 'eth',
-      icon: obj.constructor.name === 'HDAccount' ? 'icon-bitcoin' : 'icon-ethereum'
+      name: obj.wei ? 'eth' : 'btc',
+      icon: obj.wei ? 'icon-ethereum' : 'icon-bitcoin'
     };
   };
 

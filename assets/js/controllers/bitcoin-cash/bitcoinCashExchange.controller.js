@@ -31,15 +31,13 @@ function BitcoinCashExchangeController ($scope, Env, ShapeShift, MyWallet, modal
   $scope.openHelper = modals.openHelper;
 
   $scope.onConfirmComplete = (trade) => {
-    $scope.vm.trade = trade;
+    $scope.trade = trade;
     $scope.goTo('exchange-receipt');
     ShapeShift.watchTradeForCompletion(trade).then(modals.openShiftTradeDetails);
   };
 
   $scope.onExpiration = () => {
     $uibModalStack.dismissAll();
-    $scope.vm.goTo('exchange-create');
+    $scope.goTo('exchange-create');
   };
-
-  $scope.trade = $scope.vm.trade;
 }
