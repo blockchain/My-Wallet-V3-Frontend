@@ -13,7 +13,6 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     $scope.wallet.getAvailableBalance(feePerByte).then((balance) => {
       $scope.transaction.amount = balance.amount;
       $scope.transaction.fee = balance.fee;
-      console.log('send bcash', $scope.transaction);
     });
   });
 
@@ -21,6 +20,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
   $scope.goTo('send-cash');
+  $scope.goBack = () => $scope.onStep('send-confirm') ? $scope.goTo('send-address') : $scope.goTo('send-cash');
 
   $scope.isValidAddress = Wallet.isValidAddress;
   $scope.wallet = bch.accounts[$scope.vm.asset.index];

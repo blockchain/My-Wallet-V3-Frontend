@@ -59,5 +59,7 @@
       span {{ transaction.destination }}
       i.pointer.icon-pencil.pull-right(ng-click="goTo('send-cash')")
     button.button-primary(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
+    div.width-100.center.mt-10
+      a(ng-click="goBack()" translate="GO_BACK")
   .flex-column.width-100(ng-if="onStep('send-confirm')")
-    send-confirm(tx="transaction" on-send="send()" asset="'BCH'")
+    send-confirm(tx="transaction" on-send="send()" asset="'BCH'" on-go-back="goBack()")

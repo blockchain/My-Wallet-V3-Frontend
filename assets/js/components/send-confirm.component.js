@@ -18,8 +18,6 @@ function SendConfirmController (Wallet, currency) {
     return tx.amount + fee;
   };
 
-  this.canGoBack = () => this.asset !== 'BCH';
-
   this.getButtonContent = () => {
     if (this.asset === 'BCH') return 'SEND_BITCOIN_CASH';
     if (this.asset === 'ETH') return 'SEND_ETHER';
