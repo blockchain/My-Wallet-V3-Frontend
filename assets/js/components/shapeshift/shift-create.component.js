@@ -4,7 +4,7 @@ angular
     bindings: {
       fees: '<',
       asset: '<',
-      altcoin: '<',
+      wallet: '<',
       onComplete: '&',
       handleRate: '&',
       handleQuote: '&',
@@ -20,13 +20,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let UPPER_LIMIT;
   Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit || 500);
 
-  this.disabled = this.altcoin;
+  this.disabled = this.wallet;
 
-  this.from = this.disabled ? this.altcoin : Wallet.getDefaultAccount();
-  this.to = this.altcoin ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+  this.from = this.disabled ? this.wallet : Wallet.getDefaultAccount();
+  this.to = this.wallet ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
-  this.origins = this.altcoin ? [this.altcoin] : [this.from, this.to];
-  this.destinations = this.altcoin ? [Wallet.getDefaultAccount(), Ethereum.defaultAccount] : [this.to];
+  this.origins = this.wallet ? [this.wallet] : [this.from, this.to];
+  this.destinations = this.wallet ? [Wallet.getDefaultAccount(), Ethereum.defaultAccount] : [this.to];
 
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
@@ -82,9 +82,9 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     $scope.lock();
     state.baseCurr = state.input.curr;
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
-      let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee});
+      let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee, from: this.from});
       payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
-    }).then(($scope.free));
+    }).then($scope.free);
   };
 
   $scope.setTo = () => {
