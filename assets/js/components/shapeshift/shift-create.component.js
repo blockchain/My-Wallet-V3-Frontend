@@ -43,12 +43,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   buyStatus.canBuy().then((res) => $scope.canBuy = res);
 
   let state = $scope.state = {
-    baseCurr: this.asset || null,
+    baseCurr: this.asset || 'btc',
     rate: { min: null, max: null },
     input: { amount: null, curr: this.asset || 'btc' },
     output: { amount: null, curr: this.asset ? 'btc' : 'eth' },
     get baseInput () { return this.baseCurr === state.input.curr; },
-    get baseBTC () { return ['btc', 'bch'].indexOf(state.input.curr) > -1; }
+    get baseBTC () { return this.baseCurr === 'btc'; },
+    get baseBCH () { return this.baseCurr === 'bch'; }
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -95,7 +96,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   let getRate = () => {
-    let upperLimit = state.baseBTC
+    let upperLimit = state.baseBTC || state.baseBCH
                      ? $scope.fromSatoshi($scope.toSatoshi(UPPER_LIMIT, $scope.fiat), $scope.bitcoin)
                      : parseFloat(currency.formatCurrencyForView($scope.toEther(UPPER_LIMIT, $scope.fiat), $scope.ether, false));
 
@@ -105,7 +106,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
   $scope.getAvailableBalance = () => {
     let fetchSuccess = (balance, fee) => {
-      $scope.maxAvailable = state.baseBTC ? $scope.fromSatoshi(balance.amount, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance.amount, $scope.ether, false));
+      $scope.maxAvailable = state.baseBTC || state.baseBCH ? $scope.fromSatoshi(balance.amount, $scope.bitcoin) : parseFloat(currency.formatCurrencyForView(balance.amount, $scope.ether, false));
       $scope.cachedFee = balance.fee;
 
       state.error = null;
