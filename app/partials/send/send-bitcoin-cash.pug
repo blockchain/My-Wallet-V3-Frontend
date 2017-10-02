@@ -33,11 +33,11 @@
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
                   span {{ transaction.amount | convert:'bch':false }}
-                span.mhm BCC
+                span.mhm BCH
               i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
               .flex-1.flex-center.border.bg-grey
                 .flex-1.flex-center.pv-10.ph-10.f-14
-                  fiat(bch="transaction.amount")
+                  fiat(bch="fromSatoshi(transaction.amount, bchCurrency)")
                 span.mhm {{ fiatCurrency.code }}
             .has-error
               span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
@@ -50,7 +50,7 @@
             .flex-row.flex-end.width-40.width-40-mobile
               span.f-14 {{ transaction.fee | convert:'bch':true }}
               | &nbsp;
-              span.f-14 ({{ transaction.fee | convert:'fiat':true:'bch' }})
+              fiat.f-14(bch="fromSatoshi(transaction.fee, bchCurrency)" parens="true")
         .group.mt-25
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-address')" ng-disabled="sendForm.$invalid")
   .flex-column(ng-if="onStep('send-address')")

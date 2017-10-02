@@ -8,9 +8,9 @@
     .flex-column.width-40.flex-center
         span.f-14.em-400.pb-15 Bitcoin Cash Balance
         .flex-row
-          span.f-14.em-300 {{ $ctrl.balance() | format:'bch':true }}
+          span.f-14.em-300 {{ $ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency) | format:'bch':true }}
           | &nbsp;
-          span.f-14 ({{ $ctrl.toSatoshi($ctrl.balance(), $ctrl.bchCurrency) | convert:'fiat':true:'bch' }})
+          fiat(bch="$ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency)" parens="true")
     .flex-column.width-30.flex-align-end(ng-if="$ctrl.balance() > 0")
         a.pb-15(ng-click="$ctrl.openSend()") Send Bitcoin Cash
         a(ng-if="$ctrl.showShift() && $ctrl.isInWhitelistedState" ng-click="$ctrl.openExchange()") Exchange Bitcoin Cash

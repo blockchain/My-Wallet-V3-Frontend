@@ -20,8 +20,9 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, curr
 
   this.transactionViewOpen = false;
   this.toggleTransactionView = () => this.transactionViewOpen = !this.transactionViewOpen;
-  this.balance = () => this.wallet.balance / 1e8;
+  this.balance = () => this.wallet.balance;
   this.bchCurrency = currency.bchCurrencies[0];
+  this.fromSatoshi = currency.convertFromSatoshi;
   this.toSatoshi = currency.convertToSatoshi;
 
   this.showShift = () => ShapeShift.userHasAccess;
