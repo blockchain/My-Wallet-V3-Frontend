@@ -2,11 +2,13 @@ angular
   .module('walletApp')
   .controller('BitcoinCashExchangeController', BitcoinCashExchangeController);
 
-function BitcoinCashExchangeController ($scope, ShapeShift, MyWallet, modals, Alerts, $uibModalStack) {
-  let index = $scope.vm.asset.index;
+function BitcoinCashExchangeController ($scope, Env, ShapeShift, MyWallet, modals, Alerts, $uibModalStack) {
+  let { index, code } = $scope.vm.asset;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  $scope.wallet = MyWallet.wallet.hdwallet.accounts[index];
+  Env.then((res) => $scope.fees = { [code]: res.bcash.feePerByte });
+
+  $scope.wallet = MyWallet.wallet.bch.accounts[index];
   $scope.steps = enumify('exchange-create', 'exchange-confirm', 'exchange-receipt');
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => $scope.step = $scope.steps[s];

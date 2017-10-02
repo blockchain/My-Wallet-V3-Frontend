@@ -49,7 +49,8 @@ describe('shift-create.component', () => {
     handleQuote () { return $q.resolve(mockQuote()); },
     buildPayment () { return mockPayment(); },
     handleRate () { return $q.resolve(mockRate()); },
-    onComplete () { return $q.resolve(); }
+    onComplete () { return $q.resolve(); },
+    fees: {'btc': 'priority'}
   };
 
   let getControllerScope = function (bindings) {
