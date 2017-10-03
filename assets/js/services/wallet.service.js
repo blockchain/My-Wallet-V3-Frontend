@@ -267,6 +267,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           }
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
+          $rootScope.showBch = wallet.my.wallet.bch.balance > 0 || wallet.my.wallet.bch.txs.length > 0;
           Ethereum.recordStats();
           AngularHelper.$safeApply();
         };
