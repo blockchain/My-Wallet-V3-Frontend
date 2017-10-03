@@ -28,7 +28,6 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, curr
   this.showShift = () => ShapeShift.userHasAccess;
 
   this.openSend = () => modals.openSend(null, { code: 'bch', index: this.wallet });
-
   this.openExchange = () => modals.openExchange({ code: 'bch', index: this.wallet.index });
 
   let txs = Blockchain.MyWallet.wallet.bch.txs;

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BitcoinCashAboutController', BitcoinCashAboutController);
 
-function BitcoinCashAboutController ($uibModalInstance, localStorageService, MyWallet, Wallet, currency, $state) {
+function BitcoinCashAboutController ($uibModalInstance, localStorageService, MyWallet, Wallet, modals, currency, $state) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
   this.steps = enumify('about', 'balance');
@@ -14,8 +14,12 @@ function BitcoinCashAboutController ($uibModalInstance, localStorageService, MyW
   this.fromSatoshi = currency.convertFromSatoshi;
 
   this.goTo('about');
-  this.dismiss = () => $uibModalInstance.dismiss();
-  this.setHasSeenCashAbout = () => localStorageService.set('bcash-about', true);
   this.activeWallets = Wallet.accounts().filter(a => !a.archived);
   this.onFaq = () => $state.current.name === 'wallet.common.faq';
+
+  this.openSend = () => modals.openSend(null, { code: 'bch', index: this.activeWallets[0] });
+  this.openExchange = () => modals.openExchange({ code: 'bch', index: 0 });
+
+  this.setHasSeenCashAbout = () => localStorageService.set('bcash-about', true);
+  this.dismiss = () => { this.setHasSeenCashAbout(); $uibModalInstance.dismiss(); };
 }
