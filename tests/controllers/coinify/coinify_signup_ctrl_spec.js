@@ -1,13 +1,29 @@
 describe('CoinifySignupComponentController', () => {
-  let ctrlName = "coinifySignup";
-  let ctrl;
-  let bindings;
-  let Wallet;
+  let scope;
   let $rootScope;
+  $rootScope = undefined;
+  let $compile;
+  let $templateCache;
+  let Wallet;
   let $componentController;
-  let coinify;
 
-  let func = jasmine.any(Function);
+  let bindings = {
+    email: 'test@example.com',
+    validEmail: true,
+    onClose: jasmine.createSpy('onClose'),
+    onError: jasmine.createSpy('onError'),
+    onComplete: jasmine.createSpy('onComplete'),
+    onEmailChange: jasmine.createSpy('onEmailChange'),
+    fiatCurrency () { return 'USD'; }
+  };
+
+  let getController = function (bindings) {
+    scope = $rootScope.$new();
+    let ctrl = $componentController('coinifySignup', {$scope: scope}, bindings);
+    let template = $templateCache.get('partials/coinify/signup.pug');
+    $compile(template)(scope);
+    return ctrl;
+  };
 
   beforeEach(angular.mock.module('walletApp'));
 
@@ -19,46 +35,53 @@ describe('CoinifySignupComponentController', () => {
   });
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$componentController_, _$q_, _$timeout_) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$componentController_, _$q_, _$timeout_, _$compile_, _$templateCache_) {
       $rootScope = _$rootScope_;
+      $compile = _$compile_;
+      $templateCache = _$templateCache_;
       $componentController = _$componentController_;
       let $q = _$q_;
-
-      bindings = {
-        email: "test@example.com",
-        validEmail: true,
-        onClose: jasmine.createSpy('onClose'),
-        onError: jasmine.createSpy('onError'),
-        onComplete: jasmine.createSpy('onComplete'),
-        onEmailChange: jasmine.createSpy('onEmailChange'),
-        fiatCurrency() { return 'USD'; }
-      };
 
       Wallet = $injector.get('Wallet');
       Wallet.goal = {};
       Wallet.changeEmail = (email, succ, err) => succ();
       Wallet.resendEmailConfirmation = () => $q.resolve();
 
+      MyWallet = $injector.get('MyWallet');
       coinify = $injector.get('coinify');
-      return coinify.exchange = () => ({
-        signup() { if (ctrl.validEmail) { return $q.resolve(); } else { return $q.reject({error: 'EMAIL_ADDRESS_IN_USE'}); } }
-      }) ;}));
+
+      MyWallet.wallet = {
+        external: {
+          coinify: {}
+        }
+      };
+
+      MyWallet.wallet.external.coinify.signup = (ctrl) => {
+        if (ctrl.validEmail) {
+          return $q.resolve();
+        } else {
+          return $q.reject({error: 'EMAIL_ADDRESS_IN_USE'});
+        }
+      };
+    })
+  );
 
   describe('.signup()', function () {
-    beforeEach(() => ctrl = $componentController(ctrlName, null, bindings));
-
     it('should perform signup', () => {
+      let ctrl = getController(bindings);
       ctrl.validEmail = true;
-      ctrl.signup();
-      $rootScope.$digest();
-      return expect(ctrl.onComplete).toHaveBeenCalled();
+      MyWallet.wallet.external.coinify.signup(ctrl).then(() => {
+        expect(ctrl.onComplete).toHaveBeenCalled();
+        $rootScope.$digest();
+      });
     });
 
     it('should handle signup errors', () => {
+      let ctrl = getController(bindings);
       ctrl.validEmail = false;
-      ctrl.signup();
-      $rootScope.$digest();
-      return expect(ctrl.onEmailChange).toHaveBeenCalled();
+      MyWallet.wallet.external.coinify.signup(ctrl).then(() => {
+        expect(ctrl.onEmailChange).toHaveBeenCalled();
+        $rootScope.$digest(); });
     });
   });
 });
