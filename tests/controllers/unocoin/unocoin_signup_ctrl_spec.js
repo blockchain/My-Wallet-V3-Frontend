@@ -11,12 +11,19 @@ describe('UnocoinSignupController', () => {
       $controller = _$controller_;
       $q = _$q_;
       Alerts = $injector.get('Alerts');
+      MyWallet = $injector.get('MyWallet');
 
       options = {
         partners: {
           unocoin: {
             surveyLinks: []
           }
+        }
+      };
+
+      MyWallet.wallet = {
+        external: {
+          unocoin: {}
         }
       };
     }));
