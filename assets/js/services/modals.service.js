@@ -32,14 +32,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     };
   };
 
-  service.openSend = service.openOnce((paymentRequest = {}, altcoin = {}, options) =>
+  service.openSend = service.openOnce((paymentRequest = {}, asset = {}, options) =>
     open({
       templateUrl: 'partials/send/send.pug',
       windowClass: 'bc-modal initial',
       controller: 'SendController',
       controllerAs: 'vm',
       resolve: {
-        altcoin: () => altcoin,
+        asset: () => asset,
         paymentRequest: () => paymentRequest,
         loadBcQrReader: () => $ocLazyLoad.load('bcQrReader'),
         _initialize ($q, Ethereum) {
@@ -224,7 +224,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openExchange = service.openOnce((coin) => {
+  service.openExchange = service.openOnce((asset) => {
     return openMobileCompatible({
       templateUrl: 'partials/shapeshift/modal.pug',
       controller: 'ShapeShiftModalController',
@@ -233,7 +233,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        coin: coin
+        asset: () => asset
       }
     });
   });
