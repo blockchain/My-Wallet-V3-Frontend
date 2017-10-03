@@ -1561,7 +1561,7 @@
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
     "VERIFY_EMAIL": "Verify Email Address",
     "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
-    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your Unocoin and Blockchain accounts. If it's not, you can update your Blockchain email ",
+    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your {{::exchange}} and Blockchain accounts. If it's not, you can update your Blockchain email ",
     "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "Hey 👋! We noticed your Blockchain email is different than your {{::exchange}} email. Make sure you use the same email address.",
     "CHANGE_EMAIL": "Change Email",
     "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
