@@ -17,6 +17,8 @@ function bcashTransactionAmountController (MyBlockchainApi, Wallet, currency, Et
   this.isBitCurrency = currency.isBitCurrency;
   this.toggle = Wallet.toggleDisplayCurrency;
   this.absolute = (num) => Math.abs(num);
+  this.fromSatoshi = currency.convertFromSatoshi;
+  this.bchCurrency = currency.bchCurrencies[0];
 
   this.totalAmount = parseFloat(this.tx.fee) + parseFloat(this.tx.amount);
 }
