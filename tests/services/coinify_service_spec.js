@@ -35,6 +35,12 @@ describe('coinify service', () => {
         hdwallet: {
           accounts: [{label: ''}, {label: '2nd account'}],
           defaultAccount: {index: 0}
+        },
+        external: {
+          coinify: {
+            getBuyCurrencies: () => {},
+            getTrades: () => {}
+          }
         }
       };
 
@@ -108,23 +114,6 @@ describe('coinify service', () => {
       coinify.cancelTrade(trade);
       $rootScope.$digest();
       expect(Alerts.displayError).toHaveBeenCalledWith('ERROR_TRADE_CANCEL');
-    });
-  });
-
-  describe('isPendingSellTrade()', () => {
-    let pendingTrade;
-    exchange = undefined;
-    beforeEach(function () {
-      exchange = coinify.exchange;
-      pendingTrade = {
-        state: 'awaiting_transfer_in',
-        medium: 'blockchain'
-      };
-    });
-
-    it('should return true', () => {
-      let result = coinify.isPendingSellTrade(pendingTrade);
-      expect(result).toEqual(true);
     });
   });
 });
