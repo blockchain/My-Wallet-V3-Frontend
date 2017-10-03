@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsInfoCtrl', SettingsInfoCtrl);
 
-function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
+function SettingsInfoCtrl ($scope, $q, Wallet, Alerts, MyWallet) {
   angular.extend($scope, Wallet.user);
   $scope.loading = {};
   $scope.pairingCode = null;
@@ -33,4 +33,6 @@ function SettingsInfoCtrl ($scope, $q, Wallet, Alerts) {
       .then(success, error)
       .then(() => $scope.loading.code = false);
   };
+
+  $scope.showBch = MyWallet.wallet.bch.balance || MyWallet.wallet.bch.txs.length;
 }
