@@ -1,4 +1,4 @@
-fdescribe('CoinifySellController', () => {
+describe('CoinifySellController', () => {
   let $rootScope;
   let $controller;
   let options;
