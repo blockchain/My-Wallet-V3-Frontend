@@ -66,6 +66,10 @@
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
       "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+    },
+    "BITCOIN_CASH_ABOUT": {
+      "Q": "How can I access Bitcoin Cash?",
+      "A": "If you had Bitcoin in your wallet prior to the fork on August 1, 2017, you can access your Bitcoin Cash in Settings > General. "
     }
   },
   "SETTINGS": "Settings",
@@ -573,6 +577,7 @@
   "COPY_SUCCESS": "Successfully copied to your clipboard!",
   "BITCOIN_SENT" : "Your transaction is being confirmed!",
   "BITCOIN_SENT_TOR" : "You've successfully sent bitcoin. Please refresh your TOR browser to see it.",
+  "BITCOIN_CASH_SENT" : "Your bitcoin cash transaction is being confirmed!.",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
@@ -695,6 +700,7 @@
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
   "VERIFY_ON_ETHERSCAN": "Verify on Etherscan.io",
+  "VERIFY_ON_BLOCKCHAIR": "Verify on Blockchair.com",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
   "ACCOUNT_NAME_TAKEN" : "That name is already in use",
   "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send payment alerts when you receive funds.",
@@ -1676,6 +1682,32 @@
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
-  "HERE": "here",
+  "GENERAL": "General",
+  "BITCOIN_CASH": {
+    "SEE_BALANCE": "See Bitcoin Cash Balance",
+    "ABOUT_1": "What is Bitcoin Cash?",
+    "ABOUT_1_ANSWER": "Bitcoin Cash was created on 1st august 2017 after a hard fork in the Bitcoin blockchain. All bitcoin holders as of block 478558 are now owners of Bitcoin Cash.",
+    "ABOUT_2": "How is Bitcoin Cash different from Bitcoin?",
+    "ABOUT_2_ANSWER": "Bitcoin (BTC) and Bitcoin Cash (BCH) are 2 different currencies. However, the addresses used for trading (sending and receiving BTC nad BCH) look exactly the same.  It is important to always make sure you are using the right currency address when transacting BTC/BCH",
+    "ABOUT_3": "What can I do with your Bitcoin Cash?",
+    "ABOUT_3_ANSWER": "You can use BCH like any other cryptocurrency. You can use your Blockchain wallet to store your BCH, send all of your funds to a BCH wallet, or exchange it for bitcoin and/or ether.",
+    "ABOUT_4": "Where can I see my Bitcoin Cash balance",
+    "ABOUT_4_ANSWER": "You can see your balance at: Settings > General",
+    "ABOUT_5": "WIll Bitcoin Cash affect my Bitcoin balance?",
+    "ABOUT_5_ANSWER": "No, Bitcoin and Bitcoin Cash are two separate currencies, completely independent of each other. You can send or exchange your Bitcoin Cash without changing your Bitcoin balance.",
+    "KEEP": "Keep Bitcoin Cash",
+    "EXCHANGE": "Exchange Bitcoin Cash",
+    "SEND": "Send Bitcoin Cash",
+    "ADDRESSES": "Bitcoin Cash addresses looks exactly as Bitcoin addresses. If by mistake you send your Bitcoin Cash to a Bitcoin address your funds will be lost.<br><br>Are you sure the address below is a Bitcoin Cash address?",
+    "YES_IT_IS": "Yes, it is",
+    "SENDING_ALL": "All your BCH will be sent to the chosen address in a single transaction. Make sure you are using a BCH address. Sending your BCH to a BTC address will result in the permanent loss of your BCH funds.",
+    "FAQ_GET_STARTED": "Or click here to see the about and get started.",
+    "BCH_IN_WALLET": "Bitcoin Cash",
+    "BCH_WHATS_NEW": "If you had Bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General."
+  },
+  "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such a BTC or ETH, or just keep it in your Blockchain wallet.",
+  "EXCHANGE_STATUS": "Exchange Status",
+  "SEND_ETHER": "Send Ether",
+  "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
   "": ""
 }

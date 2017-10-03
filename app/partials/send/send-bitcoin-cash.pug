@@ -1,0 +1,65 @@
+#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" ng-controller="SendBitcoinCashController" translate-namespace="BITCOIN_CASH")
+  .flex(ng-if="onStep('send-cash')")
+    form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
+      fieldset
+        .group.mb-30
+          span(translate=".SENDING_ALL")
+        .group
+          //- To
+          .item
+            label.colon(translate="TO")
+            div
+              .flex-column
+                div(ng-class="{'has-error': sendForm.destination.$invalid && sendForm.destination.$touched && transaction.destination.address !== ''}")
+                  .input-group(ng-click="focus()" ng-hide="selectOpen")
+                    input#address-field.form-control(
+                      type="text"
+                      tabindex="1"
+                      name="destination"
+                      autocomplete="off"
+                      ng-model="transaction.destination"
+                      is-valid="isValidAddress(transaction.destination)"
+                      placeholder="Paste or scan a Bitcoin Cash address"
+                      focus-when="true")
+                    .input-group-btn
+                      qr-scan(on-scan="onAddressScan")
+                .has-error
+                  span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValid && sendForm.destination.$touched")
+                  span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm.destination.$error.isNotEqual")
+          //- Amount
+          .item.mt-25
+            label.colon(translate="AMOUNT")
+            .flex-center
+              .flex-1.flex-center.border.bg-grey
+                .flex-1.flex-center.pv-10.ph-10.f-14
+                  span {{ transaction.amount | convert:'bch':false }}
+                span.mhm BCH
+              i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+              .flex-1.flex-center.border.bg-grey
+                .flex-1.flex-center.pv-10.ph-10.f-14
+                  fiat(bch="fromSatoshi(transaction.amount, bchCurrency)")
+                span.mhm {{ fiatCurrency.code }}
+            .has-error
+              span.help-block(ng-show="failedToLoadUnspent" ng-click="reopenModal()")
+                span.type-sm.pointer(translate="ERR_FETCH_UNSPENT_RETRY")
+        .group
+          .group.inline.flex-center.mt-20
+            .item.width-60.width-60-mobile
+              label.mbn.colon(translate="TX_FEE")
+              span Estimated confirmation time 1+ hour
+            .flex-row.flex-end.width-40.width-40-mobile
+              span.f-14 {{ transaction.fee | convert:'bch':true }}
+              | &nbsp;
+              fiat.f-14(bch="fromSatoshi(transaction.fee, bchCurrency)" parens="true")
+        .group.mt-25
+          button.button-primary(translate="CONTINUE" ng-click="goTo('send-address')" ng-disabled="sendForm.$invalid")
+  .flex-column(ng-if="onStep('send-address')")
+    span.f-14.em-300.pb-25(translate=".ADDRESSES")
+    .f-16.center.bg-grey.ph-20.pv-15.mb-30
+      span {{ transaction.destination }}
+      i.pointer.icon-pencil.pull-right(ng-click="goTo('send-cash')")
+    button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
+    div.width-100.center.mt-10
+      a(ng-click="goBack()" translate="GO_BACK")
+  .flex-column.width-100(ng-if="onStep('send-confirm')")
+    send-confirm(tx="transaction" on-send="send()" asset="'bch'" on-go-back="goBack()")

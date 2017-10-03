@@ -13,19 +13,24 @@ form.bc-form(
         .item.width-50.width-50-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
-          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.disabled")
             ui-select-match
-              i.pr-5(ng-class="state.baseBTC ? 'icon-bitcoin' : 'icon-ethereum'")
+              i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.from).icon")
               span {{ $ctrl.from.label }}
             ui-select-choices(repeat="origin in $ctrl.origins")
-              i.pr-5(ng-class="origin.constructor.name === 'HDAccount' ? 'icon-bitcoin' : 'icon-ethereum'")
+              i.pr-5(ng-class="currencyHelper(origin).icon")
               span {{ origin.label }}
         .item.width-50.width-50-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate="TO")
-          .flex-center.border       
-            i.ph-5.ml-5(ng-class="!state.baseBTC ? 'icon-bitcoin' : 'icon-ethereum'")
-            input(ng-disabled="true" ng-model="$ctrl.to.label" style="border: none !important; padding: 0px !important; background-color: white !important")
+          .flex-center
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="state.output.amount = 0; state.output.curr = $ctrl.currencyHelper($ctrl.to).name" ng-disabled="!$ctrl.disabled")
+              ui-select-match
+                i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.to).icon")
+                span {{ $ctrl.to.label }}
+              ui-select-choices(repeat="destination in $ctrl.destinations")
+                i.pr-5(ng-class="currencyHelper(destination).icon")
+                span {{ destination.label }}
       .group
         .item
           .flex-between.flex-baseline.mbs
@@ -37,29 +42,32 @@ form.bc-form(
               helper-button(content="SHIFT.EXPLAIN_QUOTE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
           .flex-center
             .flex-column.flex-1.border
-              .flex-center
+              .flex-center(class="{{$ctrl.disabled && 'disabled'}}")
                 input.form-control.no-border(
                   type="number"
                   name="input"
+                  ng-disabled="$ctrl.disabled"
                   ng-model="state.input.amount"
                   ng-min="state.rate.min < maxAvailable ? state.rate.min : maxAvailable"
                   ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
                   ng-change="state.baseCurr = state.input.curr"
-                  step="0.01"
                   prevent-event="mousewheel"
                   focus-when="true"
+                  step="0.01"
                   required)
                 span.mhm.upper {{state.input.curr}}
               .flex-center.border-top.pv-10.ph-10.bg-grey.f-14
                 fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
-                fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
                 fiat(btc="toSatoshi(state.input.amount, bitcoin)" ng-if="state.input.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
+                fiat(eth="state.input.amount" ng-if="state.input.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
+                fiat(bch="state.input.amount" ng-if="state.input.curr === 'bch' && !forms.shiftForm.$invalid")
             i.icon-skinny-arrow-right.f-12.border-grey.ph-10.hidden-xs
             .flex-column.flex-1.border
-              .flex-center
+              .flex-center(class="{{$ctrl.disabled && 'disabled'}}")
                 input.form-control.no-border(
                   type="number"
                   name="output"
+                  ng-disabled="$ctrl.disabled"
                   ng-model="state.output.amount"
                   ng-change="state.baseCurr = state.output.curr"
                   prevent-event="mousewheel"

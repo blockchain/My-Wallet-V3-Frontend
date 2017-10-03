@@ -80,50 +80,14 @@
             label
               span(translate="TX_FEE")
             .flex-1.f-16
-              span {{ $ctrl.payment.fee }} ETH
-              | &nbsp;(
-              fiat(eth="$ctrl.payment.fee")
-              | )
+              span {{ $ctrl.payment.fee }} ETH ({{$ctrl.payment.fee | convert:'fiat':true:'eth'}})
 
   //- Step 2 (confirm)
-  .overview(ng-show="vm.confirm")
-    .flex-column.f-16
-      .flex-row
-        label.colon.width-20.width-20-mobile(translate="FROM")
-        .width-80.width-80-mobile {{ $ctrl.account.label }}
-      .flex-row.mt-10
-        label.colon.width-20.width-20-mobile(translate="TO")
-        .width-80.width-80-mobile
-          span(translate="no") {{ $ctrl.tx.to }}
-      .flex-row.mt-10(ng-show="$ctrl.tx.note")
-        label.colon.width-20.width-20-mobile(translate="FOR")
-        .width-80.width-80-mobile {{ $ctrl.tx.note }}
-      .flex-row.mt-10
-        label.colon.width-20.width-20-mobile(translate="PAYMENT")
-        .width-80.width-80-mobile
-          span.mr-10 {{ $ctrl.payment.amount | format:'eth' }} ETH
-      .flex-row.mt-10
-        label.colon.width-20.width-20-mobile(translate="FEE")
-        .width-80.width-80-mobile
-          span.mr-10 {{ $ctrl.payment.fee }} ETH
-      .bg-grey.pv-20.ph-60.flex-column.mt-10.center.sent
-        span.mb-10(translate="TOTAL")
-        span.f-28.mb-10.em-600 {{ $ctrl.getTransactionTotal() | format:'eth' }} ETH
-        span.f-20.em-300
-          fiat(eth="$ctrl.getTransactionTotal()")
-
-  .mt-25
+  .overview(ng-if="vm.confirm")
+    send-confirm(tx="$ctrl.transaction" on-send="$ctrl.send()" on-go-back="vm.toSendView()" asset="'eth'")
+  .mt-25(ng-if="!vm.confirm")
     button.full.button-primary.upper(
       translate="CONTINUE"
       ng-click="$ctrl.nextStep()"
       tabindex="5"
-      ng-disabled="sendForm.$pending || sendForm.$invalid"
-      ng-hide="vm.confirm")
-    button.full.button-primary.upper(
-      ladda-translate="Send Ether"
-      ui-ladda="sending"
-      ng-click="$ctrl.send()"
-      data-style="expand-left"
-      ng-show="vm.confirm")
-    div.width-100.center.mt-10(ng-show="vm.confirm")
-      a(ng-click="vm.toSendView()" translate="GO_BACK")
+      ng-disabled="sendForm.$pending || sendForm.$invalid")

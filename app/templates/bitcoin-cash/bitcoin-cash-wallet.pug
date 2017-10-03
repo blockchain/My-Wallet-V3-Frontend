@@ -1,0 +1,43 @@
+.width-100.flex-column.border-right.border-left.border-top.pv-20.ph-25(ng-class="{'border-bottom': $last}")
+  .flex-row
+    .flex-column.width-30
+      .flex-row
+        span.f-14.em-400 {{$ctrl.wallet.label}}
+        |
+        span.label.label-primary.upper(ng-if="$ctrl.wallet.label === 'Imported Addresses'") all addresses
+      span.f-12 Bitcoin Cash
+      a.em-300.f-14.pt-5(ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") View transactions
+      a.em-300.f-14.pt-5(ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") Hide transactions
+    .flex-column.width-40.flex-center
+        span.f-14.em-400.pb-15 Bitcoin Cash Balance
+        .flex-row
+          span.f-14.em-300 {{ $ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency) | format:'bch':true }}
+          | &nbsp;
+          fiat(bch="$ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency)" parens="true")
+    .flex-column.width-30.flex-align-end(ng-if="$ctrl.balance() > 0")
+        a.pb-15(ng-click="$ctrl.openSend()") Send Bitcoin Cash
+        a(ng-if="$ctrl.showShift() && $ctrl.isInWhitelistedState" ng-click="$ctrl.openExchange()") Exchange Bitcoin Cash
+  .width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
+    .transaction.flex-row(ng-repeat="tx in $ctrl.txList()")
+      .tx-toggle.pointer.hidden-xs.flex-center(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
+        i.icon-down_arrow
+      .tx-details.width-100.mll.mvm
+        span
+          transaction-description-bcash(transaction="tx" account="account")
+    .pt-25(ng-show="$ctrl.shiftTrades.length > 0")
+      .width-100
+        .shift-history.width-100.border.bg-footer-blue.mt-5.f-14
+          .pvs
+            span.em-500.pl-25.ph-10-mobile(translate="EXCHANGE_STATUS")
+          .pvs
+            span.em-500(translate="DATE")
+          .pvs
+            span.em-500(translate="EXCHANGED")
+          .pvs
+            span.em-500(translate="RECEIVED")
+        exchange-trade.f-12(
+          ng-repeat="trade in $ctrl.shiftTrades | orderBy:'-createdAt':false track by $index"
+          view-details="$ctrl.openTradeDetails(trade)"
+          namespace="'SHIFT'"
+          ex-trade="trade"
+        )
