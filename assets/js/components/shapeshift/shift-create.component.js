@@ -111,7 +111,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
       state.error = null;
       state.balanceFailed = false;
-      state.input.amount = this.disabled ? 0.022 : state.input.amount;
+      state.input.amount = this.disabled ? $scope.maxAvailable : state.input.amount;
     };
 
     let fetchError = (err) => {
