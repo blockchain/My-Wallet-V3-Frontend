@@ -49,6 +49,8 @@ function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin,
       Wallet.setNote(scope.tx, note);
     };
 
+    scope.editNote = false;
+
     scope.getTxDirection = (txType) => {
       if (txType === 'sent') return 'SENT';
       if (txType === 'received') return 'RECEIVED_BITCOIN_FROM';

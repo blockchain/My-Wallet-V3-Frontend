@@ -14,7 +14,8 @@ function transactionNote ($translate, $rootScope, Wallet) {
       account: '=',
       search: '=',
       label: '=',
-      note: '='
+      note: '=',
+      editNote: '='
     },
     templateUrl: 'templates/transaction-note.pug',
     link: link
@@ -22,8 +23,6 @@ function transactionNote ($translate, $rootScope, Wallet) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.editNote = false;
-
     scope.cancelEditNote = () => {
       scope.draftNote = '';
       scope.editNote = false;

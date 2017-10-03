@@ -9,7 +9,8 @@ function transactionStatus (BrowserHelper, Env) {
     replace: false,
     scope: {
       transaction: '=',
-      confirmations: '='
+      confirmations: '=',
+      editNote: '<'
     },
     templateUrl: 'templates/transaction-status.pug',
     link: link

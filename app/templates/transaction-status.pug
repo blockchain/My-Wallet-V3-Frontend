@@ -15,7 +15,7 @@
 
 .success.flex-column(ng-if="complete")
   transaction-warning(transaction="transaction")
-  .flex-row.flex-center(ng-click="verify()")
+  .flex-row.flex-center(ng-click="verify()" ng-class="{'mtl': !editNote}")
     i.pointer.ti-new-window.blue.mrs(ng-show="!forEth" uib-tooltip="{{'VERIFY_ON_BCI' | translate}}" tooltip-append-to-body="true")
     i.pointer.ti-new-window.blue.mrs(ng-show="forEth" uib-tooltip="{{'VERIFY_ON_ETHERSCAN' | translate}}" tooltip-append-to-body="true")
     span.mrs.mbn.em-300.f-12(translate="TRANSACTION_COMPLETE")
