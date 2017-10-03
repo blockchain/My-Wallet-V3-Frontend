@@ -12,6 +12,7 @@ describe('ShapeShiftCheckoutController', () => {
   let mockTrade = (complete) =>
     ({
       pair: 'btc_eth',
+      fromCurrency: 'btc',
       isComplete: complete,
       isProcessing: !complete
     });
