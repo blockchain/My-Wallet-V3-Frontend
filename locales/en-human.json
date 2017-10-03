@@ -1701,7 +1701,9 @@
     "ADDRESSES": "Bitcoin Cash addresses looks exactly as Bitcoin addresses. If by mistake you send your Bitcoin Cash to a Bitcoin address your funds will be lost.<br><br>Are you sure the address below is a Bitcoin Cash address?",
     "YES_IT_IS": "Yes, it is",
     "SENDING_ALL": "All your BCH will be sent to the chosen address in a single transaction. Make sure you are using a BCH address. Sending your BCH to a BTC address will result in the permanent loss of your BCH funds.",
-    "FAQ_GET_STARTED": "Or click here to see the about and get started."
+    "FAQ_GET_STARTED": "Or click here to see the about and get started.",
+    "BCH_IN_WALLET": "Bitcoin Cash",
+    "BCH_WHATS_NEW": "If you had Bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General"
   },
   "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such a BTC or ETH, or just keep it in your Blockchain wallet.",
   "EXCHANGE_STATUS": "Exchange Status",
