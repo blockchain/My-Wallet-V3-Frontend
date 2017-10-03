@@ -31,7 +31,7 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, curr
   this.openExchange = () => modals.openExchange({ code: 'bch', account: this.wallet });
 
   let txs = Blockchain.MyWallet.wallet.bch.txs;
-  this.txList = () => txs.filter((tx) => tx.belongsTo(this.wallet.index));
+  this.txList = () => txs.filter((tx) => tx.belongsTo(this.wallet.index || 'imported'));
 
   this.trades = ShapeShift.shapeshift.trades;
   this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
