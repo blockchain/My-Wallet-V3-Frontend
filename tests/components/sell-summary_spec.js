@@ -80,6 +80,20 @@ describe('sell-summary.component', () => {
 
       let askForSecondPassword = $q.defer();
       Wallet.askForSecondPasswordIfNeeded = () => askForSecondPassword.promise;
+
+      Wallet.my.wallet = {
+        hdwallet: {
+          defaultAccount: {index: 0}
+        },
+        createPayment: () => {
+          return {
+            from: () => {},
+            amount: () => {},
+            updateFeePerKb: () => {},
+            sideEffect: () => {}
+          };
+        }
+      };
     })
   );
 
