@@ -4,7 +4,6 @@ angular
 
 function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format) {
   let feePerByte;
-  let bch = MyWallet.wallet.bch;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
   Env.then((res) => {
