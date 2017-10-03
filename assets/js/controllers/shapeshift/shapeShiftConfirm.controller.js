@@ -7,6 +7,7 @@ function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageSe
   Env.then(env => links = env.shapeshift.surveyLinks);
 
   $scope.shiftHandler = ShapeShift.shift;
+  $scope.openHelper = modals.openHelper;
 
   $scope.onComplete = (trade) => {
     $scope.vm.trade = trade;
@@ -16,5 +17,10 @@ function ShapeShiftConfirmController ($scope, ShapeShift, Alerts, localStorageSe
 
   $scope.onCancel = () => {
     Alerts.surveyCloseConfirm('shift-trade-survey', links, 0).then(() => { $scope.vm.goTo('create'); });
+  };
+
+  $scope.onExpiration = () => {
+    $uibModalStack.dismissAll();
+    $scope.vm.goTo('create');
   };
 }

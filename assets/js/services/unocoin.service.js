@@ -8,6 +8,8 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
     init,
     getTxMethod,
     determineStep,
+    getPendingTrade,
+    openPendingTrade,
     verificationRequired
   };
 
@@ -54,6 +56,14 @@ function unocoin ($q, Alerts, modals, Env, Exchange) {
 
   function verificationRequired (profile) {
     return profile.level < 2;
+  }
+
+  function getPendingTrade (trades) {
+    return trades.filter((trade) => trade._state === 'awaiting_reference_number')[0];
+  }
+
+  function openPendingTrade (pendingTrade) {
+    return modals.openBankTransfer(pendingTrade);
   }
 
   return service;

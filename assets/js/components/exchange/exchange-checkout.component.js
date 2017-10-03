@@ -15,14 +15,17 @@ angular
       handleBuy: '&',
       handleQuote: '&',
       buySuccess: '&',
-      buyError: '&'
+      buyError: '&',
+      trades: '<',
+      pendingTrade: '&',
+      openPendingTrade: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
@@ -31,6 +34,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
   $scope.siftScienceEnabled = false;
+  $scope.buySuccess = this.buySuccess;
+  $scope.trades = this.trades || [];
+  $scope.pendingTrade = () => this.pendingTrade($scope.trades);
+  $scope.openPendingTrade = this.openPendingTrade($scope.pendingTrade);
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;
@@ -150,6 +157,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $timeout, $q, c
   });
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
+
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
   $scope.getInitialQuote();

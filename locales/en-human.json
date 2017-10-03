@@ -1087,7 +1087,7 @@
   "BANK": "Bank Transfer",
   "CARD_TRANSFER": {
     "COPY1": "Receive bitcoin instantly",
-    "COPY2": "3% convenience fee",
+    "COPY2": "{{::fee}}% convenience fee",
     "COPY3": "Visa or Mastercard",
     "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
     "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
@@ -1096,6 +1096,7 @@
     "COPY1": "One time ID Verification",
     "COPY2": "Receive bitcoin in 2-3 days",
     "COPY3": "No payment fees",
+    "COPY4": "{{::fee}}% payment fee",
     "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card.",
     "PAY_VIA": "I want to pay via bank transfer",
     "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase."
@@ -1258,9 +1259,37 @@
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "SURVEY_PROMPT": {
+  "GENERAL_SURVEY_PROMPT": {
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
+  },
+  "BUY_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SELL_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SFOX_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SHIFT_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "ETHEREUM_SURVEY_PROMPT": {
+    "TITLE": "Before you continue...",
+    "BODY": "Would you like to provide feedback regarding your Ethereum wallet experience today?"
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
@@ -1351,6 +1380,10 @@
   "unocoin_address-id-helper": {
     "TITLE": "Acceptable Proof of Address",
     "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+  },
+  "expiring-exchange-helper": {
+    "TITLE": "👋 Confirm Exchange Order!",
+    "COPY": "Did you forget about your exchange order? Exchange rates are only valid for 10 minutes, and once a rate expires, you'll have to start over."
   },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",

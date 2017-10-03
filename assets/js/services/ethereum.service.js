@@ -34,14 +34,18 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
     get isInRolloutGroup () {
       return MyWalletHelpers.isStringHashInFraction(Wallet.my.wallet.guid, this.rolloutFraction);
     },
+    get isTestnet () {
+      return service.network === 'testnet';
+    },
     get userHasAccess () {
       if (Wallet.my.wallet == null) return false;
-      return this.isInWhitelistedCountry && this.isInRolloutGroup;
+      return this.isInWhitelistedCountry && this.isInRolloutGroup && !this.isTestnet;
     },
     get userAccessReason () {
       let reason;
       if (Wallet.my.wallet == null) reason = 'wallet is null';
       // else if (this.ethInititalized) reason = 'it is already initialized';
+      else if (this.isTestnet) reason = 'they are using testnet';
       else if (this.isInWhitelistedCountry && this.isInRolloutGroup) reason = 'they are in a whitelisted country and in the rollout group';
       else if (this.isInWhitelistedCountry) reason = 'they are in a whitelisted country but not in the rollout group';
       else if (this.isInRolloutGroup) reason = 'they are in the rollout group but not in a whitelisted country';
@@ -148,6 +152,7 @@ function Ethereum ($q, Wallet, MyBlockchainApi, MyWalletHelpers, Env) {
 
   Env.then((options) => {
     let { ethereum } = options;
+    service.network = options.network;
     if (ethereum && !isNaN(ethereum.rolloutFraction)) {
       service.countries = ethereum.countries || [];
       service.rolloutFraction = ethereum.rolloutFraction;

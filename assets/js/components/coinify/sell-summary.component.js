@@ -20,8 +20,11 @@ angular
     controllerAs: '$ctrl'
   });
 
-function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
+function CoinifySellSummaryController ($scope, $q, Wallet, currency, Alerts, $timeout) {
   this.sellRateForm;
+
+  $scope.quote = this.quote;
+  $scope.transaction = this.transaction;
 
   this.insufficientFunds = () => {
     const tx = this.transaction;
@@ -29,6 +32,11 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout) {
     if (combined > this.totalBalance) {
       return true;
     }
+  };
+
+  this.trade = {
+    get fee () { return ($scope.quote.paymentMediums.bank.fee / 100).toFixed(2); },
+    get total () { return ($scope.transaction.fiat - parseFloat(this.fee)).toFixed(2); }
   };
 
   this.overMax = () => this.transaction.btc > this.sellLimits.max;

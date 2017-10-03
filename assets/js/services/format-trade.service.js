@@ -220,7 +220,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       values: {
         label: getLabel(trade),
         curr: trade.inCurrency,
-        amt: trade.inAmount / 100
+        amt: trade.sendAmount / 100
       }
     };
   }
