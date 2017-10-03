@@ -101,12 +101,12 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
       (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
       (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
-      (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess)
+      (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess) &&
+      (feat.title !== 'BITCOIN_CASH.BCH_IN_WALLET' || $scope.hasBch())
     );
 
     $scope.filterByDate = (f) => {
-      if (f.title === 'BITCOIN_CASH.BCH_IN_WALLET' && !$scope.hasBch()) return false;
-      else return (now - f.date) < whatsNewDateCutoff;
+      return (now - f.date) < whatsNewDateCutoff;
     };
 
     $scope.feats = whatsNew.filter($scope.filterFeatures).filter($scope.filterByDate);
