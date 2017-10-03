@@ -165,12 +165,11 @@
   //- Step 2 (confirm)
   div.overview(ng-if="vm.confirm")
     send-confirm(tx="transaction" on-send="send()" asset="'btc'" on-go-back="vm.toSendView()")
-  .mt-25
+  .mt-25(ng-if="!vm.confirm")
     button.full.button-primary.upper(
       ladda-translate="CONTINUE"
       ui-ladda="building"
       ng-click="goToConfirmation()"
       tabindex="1"
       ng-disabled="sendForm.$invalid || failedToLoadUnspent || !amountsAreValid()"
-      data-style="expand-left"
-      ng-hide="vm.confirm")
+      data-style="expand-left")

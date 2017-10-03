@@ -25,12 +25,12 @@
       fiat(btc="$ctrl.tx.fee" ng-if="$ctrl.asset === 'btc'" parens="true")
       fiat(eth="$ctrl.tx.fee" ng-if="$ctrl.asset === 'eth'" parens="true")
       fiat(bch="$ctrl.fromSatoshi($ctrl.tx.fee, $ctrl.bchCurr)" ng-if="$ctrl.asset === 'bch'" parens="true")
-  .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="($ctrl.tx.destination.type != 'External') ? 'transfer' : 'sent'")
+  .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="($ctrl.tx.destination.type && $ctrl.tx.destination.type != 'External') ? 'transfer' : 'sent'")
     span.mb-10(translate="TOTAL")
     span.f-28.mb-10.em-600 {{$ctrl.getTransactionTotal(true) | convert:$ctrl.asset:true}}
-    fiat(btc="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'btc'")
-    fiat(eth="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'eth'")
-    fiat(bch="$ctrl.fromSatoshi($ctrl.getTransactionTotal(true), $ctrl.bchCurr)" ng-if="$ctrl.asset === 'bch'")
+    fiat.f-20(btc="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'btc'")
+    fiat.f-20(eth="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'eth'")
+    fiat.f-20(bch="$ctrl.fromSatoshi($ctrl.getTransactionTotal(true), $ctrl.bchCurr)" ng-if="$ctrl.asset === 'bch'")
   .mt-30
     button.full.button-primary.upper(
       ladda-translate="{{$ctrl.getButtonContent()}}"

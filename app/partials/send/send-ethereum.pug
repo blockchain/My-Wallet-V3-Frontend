@@ -85,10 +85,9 @@
   //- Step 2 (confirm)
   .overview(ng-if="vm.confirm")
     send-confirm(tx="$ctrl.transaction" on-send="$ctrl.send()" on-go-back="vm.toSendView()" asset="'eth'")
-  .mt-25
+  .mt-25(ng-if="!vm.confirm")
     button.full.button-primary.upper(
       translate="CONTINUE"
       ng-click="$ctrl.nextStep()"
       tabindex="5"
-      ng-disabled="sendForm.$pending || sendForm.$invalid"
-      ng-hide="vm.confirm")
+      ng-disabled="sendForm.$pending || sendForm.$invalid")
