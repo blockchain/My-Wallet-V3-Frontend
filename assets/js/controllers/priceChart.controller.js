@@ -105,8 +105,8 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     return Object.assign({}, $scope.state, $scope.timeHelpers[time], {start: startDate});
   };
 
-  $scope.$watch('settings.currency', next => $scope.state.quote = next.code);
   $scope.$watch('state.base', next => fetchChart($scope.state));
+
   $scope.$watch('state.time', next => {
     $scope.setScale(next);
     fetchChart($scope.mapStateToReq(next));
