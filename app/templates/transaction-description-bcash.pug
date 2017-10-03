@@ -45,5 +45,6 @@
       .flex-row.fee(ng-if=":: txType !== 'received'")
         helper-button(content="{{ 'TX_FEE_EXPLAINATION_ETH' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
-        | :&nbsp;
-        fiat-or-btc.em-600(btc=":: tx.fee")
+        | &nbsp;
+        fiat.em-600(bch="fromSatoshi(tx.fee, bchCurrency)" ng-hide="isBitCurrency(settings.displayCurrency)")
+        span.em-600(ng-show="isBitCurrency(settings.displayCurrency)") {{ tx.fee | convert:'bch':true }}

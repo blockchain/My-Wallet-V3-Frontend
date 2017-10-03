@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescriptionBcash', transactionDescriptionBcash);
 
-function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, ShapeShift) {
+function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, ShapeShift, currency) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -36,6 +36,10 @@ function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, Sh
 
     scope.isDepositTx = ShapeShift.isDepositTx;
     scope.isWithdrawalTx = ShapeShift.isWithdrawalTx;
+
+    scope.isBitCurrency = currency.isBitCurrency;
+    scope.fromSatoshi = currency.convertFromSatoshi;
+    scope.bchCurrency = currency.bchCurrencies[0];
 
     scope.settings = Wallet.settings;
   }
