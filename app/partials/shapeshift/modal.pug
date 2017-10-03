@@ -6,4 +6,4 @@
     .width-100(ng-if="onStep('exchange-confirm')")
       shift-confirm(on-complete="onConfirmComplete(trade)" on-cancel="goTo('exchange-create')" on-expiring="openHelper('expiring-exchange-helper')" on-expiration="onExpiration()" payment="payment" fee="fee" quote="quote" handle-shift="shiftHandler(payment)")
     .width-100(ng-if="onStep('exchange-receipt')")
-      shift-receipt(shift="trade" is-checkout="true" on-close="onClose()")
+      shift-receipt(shift="trade" is-checkout="true" on-close="$close()")
