@@ -10,6 +10,8 @@ function LandingCtrl ($scope, $state, $sce, languages, Env, walletStats) {
     email: undefined
   };
 
+  $scope.posY = 0;
+
   $scope.languages = languages.languages;
 
   $scope.txsCount = walletStats.transactionsCountMillions;
