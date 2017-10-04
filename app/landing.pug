@@ -1,12 +1,12 @@
-.landing-page(translate-namespace="LANDING")
-  public-header(i18n-loaded='i18nLoaded')
+.landing-page(scroll pos-y="posY" id="landing-page")
+  public-header(i18n-loaded='i18nLoaded' pos-y="posY")
   .banner(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
       div.width-100
-        h1.f-42.em-200.width-100.man.mb-15(translate=".HEADER")
-        p.width-60.f-16.em-300.man.mb-15(translate="{{showEth ? '.SUB_HEADER_ETH' : '.SUB_HEADER'}}")
+        h1.f-42.em-200.width-100.man.mb-15(translate="LANDING.HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate="{{showEth ? 'LANDING.SUB_HEADER_ETH' : 'LANDING.SUB_HEADER'}}")
         a.f-16.em-500.upper.flex-center(ui-sref="public.signup")
-          span(translate=".GET_STARTED_NOW")
+          span(translate="LANDING.GET_STARTED_NOW")
           i.icon-right_arrow.ml-5
   .stats.upper.clearfix
     .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-mariner
@@ -16,51 +16,51 @@
     .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-primary
       span.em-300.f-24.em-300.white(translate="WALLETS_AMT" translate-values="{count: walletCount}")
   .container.mt-90.mb-70
-    h2.upper.f-36.em-200.mvn.center(translate=".WHY_BLOCKCHAIN")
-    p.f-16.em-300.mt-10.mbn.center(translate=".LOVED_BY_ALL")
+    h2.upper.f-36.em-200.mvn.center(translate="LANDING.WHY_BLOCKCHAIN")
+    p.f-16.em-300.mt-10.mbn.center(translate="LANDING.LOVED_BY_ALL")
     uib-carousel.mt-50(active="active" interval="0")
       uib-slide(index="0")
         .clearfix
           .col-md-4
             i.f-60.icon-simple.blue
-            p.f-18.em-300.upper(translate=".SIMPLE.TITLE")
-            p.f-14.em-200.left-align(translate="{{showEth ? '.SIMPLE.COPY_ETH' : '.SIMPLE.COPY'}}")
+            p.f-18.em-300.upper(translate="LANDING.SIMPLE.TITLE")
+            p.f-14.em-200.left-align(translate="{{showEth ? 'LANDING.SIMPLE.COPY_ETH' : 'LANDING.SIMPLE.COPY'}}")
           .col-md-4
             i.f-60.icon-safe-secure.blue
-            p.f-18.em-300.upper(translate=".SAFE_AND_SECURE.TITLE")
-            p.f-14.em-200.left-align(translate=".SAFE_AND_SECURE.COPY")
+            p.f-18.em-300.upper(translate="LANDING.SAFE_AND_SECURE.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.SAFE_AND_SECURE.COPY")
           .col-md-4
             i.f-60.icon-buy-sell.blue
-            p.f-18.em-300.upper(translate=".BUY_AND_SELL.TITLE")
-            p.f-14.em-200.left-align(translate=".BUY_AND_SELL.COPY")
+            p.f-18.em-300.upper(translate="LANDING.BUY_AND_SELL.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.BUY_AND_SELL.COPY")
       uib-slide(index="1")
         .clearfix
           .col-md-4
             i.f-60
               img(height="50px;" src="img/sophisticated.svg")
-            p.f-18.em-300.upper.mt-5(translate=".SOPHISTICATED.TITLE")
-            p.f-14.em-200.left-align(translate=".SOPHISTICATED.COPY")
+            p.f-18.em-300.upper.mt-5(translate="LANDING.SOPHISTICATED.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.SOPHISTICATED.COPY")
           .col-md-4
             i.f-60.icon-global.blue
-            p.f-18.em-300.upper(translate=".GLOBAL.TITLE")
-            p.f-14.em-200.left-align(translate=".GLOBAL.COPY")
+            p.f-18.em-300.upper(translate="LANDING.GLOBAL.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.GLOBAL.COPY")
           .col-md-4
             i.f-60.icon-always-supported.blue
-            p.f-18.em-300.upper(translate=".SUPPORTED.TITLE")
-            p.f-14.em-200.left-align(translate=".SUPPORTED.COPY")
+            p.f-18.em-300.upper(translate="LANDING.SUPPORTED.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.SUPPORTED.COPY")
   .banner.sm(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
       div.width-100
-        h2.f-42.em-200.width-100.man.mb-15(translate=".BITCOIN_ON_ALL_DEVICES.HEADER")
-        p.width-60.f-16.em-300.man.mb-15(translate=".BITCOIN_ON_ALL_DEVICES.SUB_TEXT")
+        h2.f-42.em-200.width-100.man.mb-15(translate="LANDING.BITCOIN_ON_ALL_DEVICES.HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate="LANDING.BITCOIN_ON_ALL_DEVICES.SUB_TEXT")
         a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank" rel="noopener noreferrer")
           img.app-store-badge(src="img/app-store-badge.svg")
         a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank" rel="noopener noreferrer")
           img.play-store-badge(src="img/google-play-badge.png")
   .container.flex-center.hidden-xs.hidden-sm.mv-70
     .col-md-6
-      h2.upper.f-36.em-200.mvn(translate="{{showEth ? '.NEW_TO_BITCOIN.HEADER_ETH' : '.NEW_TO_BITCOIN.HEADER'}}")
-      p.f-16.em-300.mt-10.mb-15(translate="{{showEth ? '.NEW_TO_BITCOIN.SUB_TEXT_ETH' : '.NEW_TO_BITCOIN.SUB_TEXT'}}")
+      h2.upper.f-36.em-200.mvn(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.HEADER_ETH' : 'LANDING.NEW_TO_BITCOIN.HEADER'}}")
+      p.f-16.em-300.mt-10.mb-15(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.SUB_TEXT_ETH' : 'LANDING.NEW_TO_BITCOIN.SUB_TEXT'}}")
       a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
         span(translate="LEARN_MORE")
         i.icon-right_arrow.primary.ml-5
@@ -68,8 +68,8 @@
       img.width-80(src="img/bitcoin-network.svg")
   .container.visible-xs.visible-sm.mv-30
     .col-md-6
-      h2.upper.f-36.em-200.mvn(translate="{{showEth ? '.NEW_TO_BITCOIN.HEADER_ETH' : '.NEW_TO_BITCOIN.HEADER'}}")
-      p.f-16.em-300.mt-10.mb-15(translate="{{showEth ? '.NEW_TO_BITCOIN.SUB_TEXT_ETH' : '.NEW_TO_BITCOIN.SUB_TEXT'}}")
+      h2.upper.f-36.em-200.mvn(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.HEADER_ETH' : 'LANDING.NEW_TO_BITCOIN.HEADER'}}")
+      p.f-16.em-300.mt-10.mb-15(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.SUB_TEXT_ETH' : 'LANDING.NEW_TO_BITCOIN.SUB_TEXT'}}")
       a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
         span(translate="LEARN_MORE")
         i.icon-right_arrow.primary.ml-5
@@ -77,9 +77,9 @@
       img.width-80(src="img/bitcoin-network.svg")
   .pv-70.flex-center.flex-justify.bg-grey
     .flex-column.flex-center
-      p.f-24.em-200.center.pt-10.mbn.upper(translate="{{showEth ? '.GET_WORLDS_MOST_POPULAR_WALLET_ETH' : '.GET_WORLDS_MOST_POPULAR_WALLET'}}")
+      p.f-24.em-200.center.pt-10.mbn.upper(translate="{{showEth ? 'LANDING.GET_WORLDS_MOST_POPULAR_WALLET_ETH' : 'LANDING.GET_WORLDS_MOST_POPULAR_WALLET'}}")
       p.mv-15
-        button.button-primary.round.upper(translate=".GET_STARTED_NOW" ui-sref="public.signup")
+        button.button-primary.round.upper(translate="LANDING.GET_STARTED_NOW" ui-sref="public.signup")
       p.f-14.em-300.upper
         | or&nbsp;
         a(translate="LOGIN" ui-sref="public.login-no-uid")
