@@ -9,7 +9,7 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
     restrict: 'E',
     replace: true,
     template: `
-    <div class="wrapper" data-preflight-tag="PublicHeader">
+    <div class="wrapper" data-preflight-tag="PublicHeader" ng-mouseleave="collapseHeader()">
       <nav role="navigation" ng-class="{'open': state.open, 'searching': state.searching, 'scrolling': state.scrolling}">
         <ul class="igation">
           <li>
@@ -21,13 +21,13 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
     				</button>
     				<button class="search-button" type="button" ng-click="handleSearch()"></button>
           </li>
-          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader()">
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
             <a href="{{rootURL}}wallet" id="wallet-link">Wallet</a>
             <ul>
               <li><a href="{{rootURL}}wallet/#/login">Login</a></li>
             </ul>
           </li>
-          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader()">
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
             <a href="https://blockchain.info">Data</a>
             <ul>
               <li><a href="{{rootURL}}charts">Charts</a></li>
@@ -35,13 +35,13 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
               <li><a href="{{rootURL}}markets">Markets</a></li>
             </ul>
           </li>
-          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader()">
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
             <a href="{{rootURL}}api">API</a>
             <ul>
               <li><a href="https://www.blockchain.com/enterprise">Business</a></li>
             </ul>
           </li>
-          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader()">
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
             <a href="https://www.blockchain.com/about">About</a>
             <ul>
               <li><a href="https://www.blockchain.com/team">Team</a></li>
@@ -93,11 +93,16 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
       }
     };
 
-    scope.collapseHeader = () => {
+    scope.collapseHeader = ($event) => {
+      let toElement = $event && $event.toElement;
       if (scope.size().mobile) {
 
       } else {
-        scope.state.open = false;
+        if (!toElement) {
+          scope.state.open = false;
+        } else if (toElement.getAttribute('class') === 'igation') {
+          scope.state.open = false;
+        }
       }
     };
 
