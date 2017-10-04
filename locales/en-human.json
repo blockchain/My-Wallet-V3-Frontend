@@ -1624,6 +1624,7 @@
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
     "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Order History tab.",
+    "CONFIRM_DEPOSIT_AMOUNT_BCH": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Bitcoin Cash area of Settings.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
