@@ -13,7 +13,7 @@
         .flex-row
           span.f-14.em-300 {{ $ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency) | format:'bch':true }}
           | &nbsp;
-          fiat(bch="$ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency)" parens="true")
+          fiat.f-14(bch="$ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency)" parens="true")
     .flex-column.width-30.flex-align-end(ng-if="$ctrl.balance() > 0")
         a.pb-15(translate="BITCOIN_CASH.SEND" ng-click="$ctrl.openSend()")
         a(translate="BITCOIN_CASH.EXCHANGE" ng-if="$ctrl.showShift() && $ctrl.isInWhitelistedState" ng-click="$ctrl.openExchange()")
