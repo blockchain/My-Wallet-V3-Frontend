@@ -49,7 +49,7 @@ describe('CoinifyMediumController', () => {
   };
 
   beforeEach(angular.mock.module('walletApp'));
-
+  
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$q_, _$timeout_, $httpBackend) {
       // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
@@ -63,27 +63,26 @@ describe('CoinifyMediumController', () => {
       MyWallet = $injector.get('MyWallet');
 
       MyWallet.wallet = {
-        external: {
-          coinify: exchange
-        }
+        external: { coinify: exchange }
       };
     })
   );
 
   let getControllerScope = function (params) {
     if (params == null) { params = {}; }
+
     scope = $rootScope.$new();
     scope.vm = {
       quote,
+      exchange,
       medium: 'card',
-      exchange: exchange,
       baseFiat () { return true; },
       fiatCurrency () { return 'EUR'; },
       goTo (state) {}
     };
 
-    $controller('CoinifyMediumController',
-      {$scope: scope});
+    $controller('CoinifyMediumController', {$scope: scope});
+
     return scope;
   };
 

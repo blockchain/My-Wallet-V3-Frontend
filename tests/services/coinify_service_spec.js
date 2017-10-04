@@ -1,9 +1,9 @@
 describe('coinify service', () => {
+  let $rootScope;
+  let $q;
   let Wallet;
   let MyWallet;
   let coinify;
-  let $rootScope;
-  let $q;
   let exchange;
   let Alerts;
 
@@ -14,9 +14,7 @@ describe('coinify service', () => {
       $provide.value('Env', Promise.resolve({
         showBuySellTab: ['US'],
         partners: {
-          coinify: {
-            countries: ['US']
-          }
+          coinify: { countries: ['US'] }
         }
       }));
     });
@@ -27,6 +25,7 @@ describe('coinify service', () => {
       Wallet = $injector.get('Wallet');
       MyWallet = $injector.get('MyWallet');
       Alerts = $injector.get('Alerts');
+      coinify = $injector.get('coinify');
 
       MyWallet.wallet = {
         accountInfo: {
@@ -44,23 +43,19 @@ describe('coinify service', () => {
         }
       };
 
-      coinify = $injector.get('coinify');
-
       Wallet.settings.currency = {code: 'EUR'};
       Wallet.status.isLoggedIn = true;
     });
   });
 
-  let makeTrade = state =>
-    ({
-      state,
-      accountIndex: 0,
-      inCurrency: 'USD',
-      bitcoinReceived: state === 'completed',
-      watchAddress () { return $q.resolve(); },
-      refresh () { return $q.resolve(); }
-    })
-  ;
+  let makeTrade = state => ({
+    state,
+    accountIndex: 0,
+    inCurrency: 'USD',
+    bitcoinReceived: state === 'completed',
+    watchAddress () { return $q.resolve(); },
+    refresh () { return $q.resolve(); }
+  });
 
   beforeEach(function () {
     exchange = coinify.exchange;

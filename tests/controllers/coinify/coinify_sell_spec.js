@@ -29,9 +29,7 @@ describe('CoinifySellController', () => {
       let MyWalletPayment = $injector.get('MyWalletPayment');
 
       options = {
-        partners: {
-          coinify: {}
-        }
+        partners: { coinify: {} }
       };
 
       accounts = [{id: 123}, {id: 456}];

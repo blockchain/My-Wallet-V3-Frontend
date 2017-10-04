@@ -1,8 +1,8 @@
 describe('UnocoinSignupController', () => {
   let $controller;
+  let $q;
   let options;
   let Alerts;
-  let $q;
 
   beforeEach(angular.mock.module('walletApp'));
 
@@ -15,9 +15,7 @@ describe('UnocoinSignupController', () => {
 
       options = {
         partners: {
-          unocoin: {
-            surveyLinks: []
-          }
+          unocoin: { surveyLinks: [] }
         }
       };
 

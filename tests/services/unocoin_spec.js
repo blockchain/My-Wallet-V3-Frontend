@@ -9,9 +9,7 @@ describe('unocoin service', () => {
       $provide.value('Env', Promise.resolve({
         showBuySellTab: ['US'],
         partners: {
-          coinify: {
-            countries: ['US']
-          }
+          coinify: { countries: ['US'] }
         }
       }));
     });
@@ -51,6 +49,7 @@ describe('unocoin service', () => {
           expect(step).toBe('verify');
         });
       });
+
       describe('identity and bank info complete', () => {
         it('should return upload', () => {
           MyWallet.wallet.external.unocoin.profile = { level: 1, identityComplete: true, bankInfoComplete: true };

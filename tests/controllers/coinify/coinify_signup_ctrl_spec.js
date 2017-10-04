@@ -1,11 +1,11 @@
 describe('CoinifySignupComponentController', () => {
-  let scope;
   let $rootScope;
   $rootScope = undefined;
   let $compile;
   let $templateCache;
-  let Wallet;
   let $componentController;
+  let scope;
+  let Wallet;
 
   let bindings = {
     email: 'test@example.com',
@@ -27,15 +27,11 @@ describe('CoinifySignupComponentController', () => {
 
   beforeEach(angular.mock.module('walletApp'));
 
-  beforeEach(() => {
-    angular.mock.inject(($httpBackend) => {
+  beforeEach(() =>
+    angular.mock.inject(function ($injector, _$rootScope_, _$componentController_, _$q_, _$timeout_, _$compile_, _$templateCache_, $httpBackend) {
       // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();
-    });
-  });
 
-  beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$componentController_, _$q_, _$timeout_, _$compile_, _$templateCache_) {
       $rootScope = _$rootScope_;
       $compile = _$compile_;
       $templateCache = _$templateCache_;
@@ -67,8 +63,10 @@ describe('CoinifySignupComponentController', () => {
   );
 
   describe('.signup()', function () {
+    let ctrl;
+    beforeEach(() => ctrl = getController(bindings));
+
     it('should perform signup', () => {
-      let ctrl = getController(bindings);
       ctrl.validEmail = true;
       MyWallet.wallet.external.coinify.signup(ctrl).then(() => {
         expect(ctrl.onComplete).toHaveBeenCalled();
@@ -77,7 +75,6 @@ describe('CoinifySignupComponentController', () => {
     });
 
     it('should handle signup errors', () => {
-      let ctrl = getController(bindings);
       ctrl.validEmail = false;
       MyWallet.wallet.external.coinify.signup(ctrl).then(() => {
         expect(ctrl.onEmailChange).toHaveBeenCalled();
