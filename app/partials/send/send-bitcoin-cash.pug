@@ -24,7 +24,7 @@
                     .input-group-btn
                       qr-scan(on-scan="onAddressScan")
                 .has-error
-                  span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValid && sendForm.destination.$touched")
+                  span.help-block.type-sm(translate="BCH_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValid && sendForm.destination.$touched")
                   span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm.destination.$error.isNotEqual")
           //- Amount
           .item.mt-25
