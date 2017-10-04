@@ -9,32 +9,58 @@ function publicHeader ($location, Env, languages) {
     restrict: 'E',
     replace: true,
     template: `
-    <div role="navigation" class="navbar navbar-default navbar-inverse bc-header bc-public-header" data-preflight-tag="PublicHeader">
-      <div class="container-fluid container">
-        <div class="navbar-header flex-between"><a href="{{rootURL}}" class="navbar-brand"><img id="logo" src="img/blockchain-vector.svg" alt="Blockchain"/></a>
-          <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div ng-class="{'in bg-blue' : !navCollapsed}" ng-click="navCollapsed=true" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-left" ng-show="i18nLoaded">
-            <li class="item active"><a href="#" translate="WALLET" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}charts" translate="CHARTS" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}stats" translate="STATS" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}markets" translate="MARKETS" class="upper"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="upper"></a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right hidden-sm flex-center flex-justify-mobile">
-            <li>
-              <button ui-sref="public.login-no-uid" class="round button-white-inverse upper mr-20">Log In</button>
-              <button ui-sref="public.signup" class="round button-primary upper">Sign Up</button>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="wrapper" data-preflight-tag="PublicHeader">
+      <nav role="navigation">
+        <ul class="igation">
+          <li>
+            <a class="bc-logo" href="{{rootURL}}">
+              <img src="img/white-blockchain.svg" alt="Blockchain" />
+            </a>
+            <button class="menu-button">
+    					<span></span>
+    				</button>
+    				<button class="search-button" type="button"></button>
+          </li>
+          <li class="with-children">
+            <a href="{{rootURL}}wallet" id="wallet-link">Wallet</a>
+            <ul>
+              <li><a href="{{rootURL}}wallet/#/login">Login</a></li>
+            </ul>
+          </li>
+          <li class="with-children">
+            <a href="https://blockchain.info">Data</a>
+            <ul>
+              <li><a href="{{rootURL}}charts">Charts</a></li>
+              <li><a href="{{rootURL}}stats">Stats</a></li>
+              <li><a href="{{rootURL}}markets">Markets</a></li>
+            </ul>
+          </li>
+          <li class="with-children">
+            <a href="{{rootURL}}api">API</a>
+            <ul>
+              <li><a href="https://www.blockchain.com/enterprise">Business</a></li>
+            </ul>
+          </li>
+          <li class="with-children">
+            <a href="https://www.blockchain.com/about">About</a>
+            <ul>
+              <li><a href="https://www.blockchain.com/team">Team</a></li>
+              <li><a href="https://www.blockchain.com/careers">Careers</a></li>
+              <li><a href="https://www.blockchain.com/press">Press</a></li>
+              <li><a href="https://blog.blockchain.com">Blog</a></li>
+            </ul>
+          </li>
+          <li class="flex-space"></li>
+          <li>
+            <form action="https://blockchain.info/search" class="search-form" method="GET">
+              <input class="search-bar" name="search" placeholder="block, hash, transaction, etc..." type="text" />
+            </form>
+          </li>
+          <li>
+            <a class="wallet-button" href="{{rootURL}}wallet/#/signup" target="_blank">Get A Free Wallet</a>
+          </li>
+        </ul>
+      </nav>
     </div>
     `,
     scope: {
