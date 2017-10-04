@@ -4,19 +4,20 @@
       .flex-row
         span.f-14.em-400 {{$ctrl.wallet.label}}
         |
-        span.label.label-primary.upper(ng-if="$ctrl.wallet.label === 'Imported Addresses'") all addresses
+        span.label.label-primary.upper(translate="ALL_ADDRESSES" ng-if="$ctrl.wallet.label === 'Imported Addresses'")
+        span.label.label-primary.upper(translate="DEFAULT", ng-if="$ctrl.isDefault($ctrl.wallet)")
       span.f-12 Bitcoin Cash
-      a.em-300.f-14.pt-5(ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") View transactions
-      a.em-300.f-14.pt-5(ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()") Hide transactions
+      a.em-300.f-14.pt-5(translate="VIEW_TXS" ng-if="$ctrl.hasTransactions() && !$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()")
+      a.em-300.f-14.pt-5(translate="HIDE_TXS" ng-if="$ctrl.transactionViewOpen" ng-click="$ctrl.toggleTransactionView()")
     .flex-column.width-40.flex-center
-        span.f-14.em-400.pb-15 Bitcoin Cash Balance
+        span.f-14.em-400.pb-15(translate="BITCOIN_CASH.BCH_BALANCE")
         .flex-row
           span.f-14.em-300 {{ $ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency) | format:'bch':true }}
           | &nbsp;
           fiat(bch="$ctrl.fromSatoshi($ctrl.balance(), $ctrl.bchCurrency)" parens="true")
     .flex-column.width-30.flex-align-end(ng-if="$ctrl.balance() > 0")
-        a.pb-15(ng-click="$ctrl.openSend()") Send Bitcoin Cash
-        a(ng-if="$ctrl.showShift() && $ctrl.isInWhitelistedState" ng-click="$ctrl.openExchange()") Exchange Bitcoin Cash
+        a.pb-15(translate="BITCOIN_CASH.SEND" ng-click="$ctrl.openSend()")
+        a(translate="BITCOIN_CASH.EXCHANGE" ng-if="$ctrl.showShift() && $ctrl.isInWhitelistedState" ng-click="$ctrl.openExchange()")
   .width-100.flex-column.pt-15.transactions(ng-show="$ctrl.transactionViewOpen")
     .transaction.flex-row(ng-repeat="tx in $ctrl.txList()")
       .tx-toggle.pointer.hidden-xs.flex-center(ng-click="tx.toggled = !tx.toggled" ng-class="{rotated: !tx.toggled}")
