@@ -281,8 +281,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         let ShapeShift = $injector.get('ShapeShift');
         if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
 
-        if (wallet.my.wallet.bch) history.push(wallet.my.wallet.bch.getHistory());
-
         $q.all(history).then(didFetchTransactions);
       }
 
