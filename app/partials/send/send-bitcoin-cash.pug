@@ -1,4 +1,8 @@
-#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" ng-controller="SendBitcoinCashController" translate-namespace="BITCOIN_CASH")
+.modal-header.flex-row.flex-center.bc-modal-header.tabbed(translate-namespace="BITCOIN_CASH")
+  i.ti-close.close-modal(ng-click="$close()")
+  i.icon-send.f-20.pr-15
+  span.f-24(translate="{{onStep('send-cash') ? '.SEND' : onStep('send-address') ? '.CONFIRM_ADDRESS' : '.CONFIRMED' }}")
+#send.modal-body(ng-class="{'sm': numberOfActiveAccountsAndLegacyAddresses() <= 1}" translate-namespace="BITCOIN_CASH")
   .flex(ng-if="onStep('send-cash')")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
       fieldset
