@@ -1,5 +1,5 @@
 .pv-30
-  i.ti-close.close-modal.alt.pos-abs.pointer(ng-click="$close()")
+  i.ti-close.close-modal.alt.low.pos-abs.pointer(ng-click="$close()")
   div(ng-if="vm.asset.code === 'bch'" ng-controller="BitcoinCashExchangeController")
     .width-100(ng-if="onStep('exchange-create') && fees")
       shift-create(on-complete="onCreateComplete(payment, fee, quote)" asset="'bch'" fees="fees" wallet="wallet" build-payment="buildPayment(quote, fee, from)" handle-approximate-quote="approximateQuoteHandler(pair, amount)" handle-quote="quoteHandler(pair, amount)" handle-rate="rateHandler(rate)")
