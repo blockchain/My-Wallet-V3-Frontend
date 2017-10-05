@@ -6,8 +6,8 @@
           img(src="img/white-blockchain.svg" alt="Blockchain")
         button(class="menu-button" ng-click="toggleMenu()")
           span
-      li.hidden-md.hidden-sm.hidden-xs.flex-space
-      li.hidden-md.hidden-sm.hidden-xs.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
+      li.hidden-sm.hidden-xs.flex-space
+      li.hidden-sm.hidden-xs.whats-new.item.hidden-xs(uib-dropdown uib-dropdown-toggle ng-if="status.didUpgradeToHd" on-toggle="open && viewedWhatsNew()")
         a(uib-popover-template="::whatsNewTemplate"
           popover-class="whats-new-popover"
           popover-placement="bottom"
@@ -19,9 +19,9 @@
           i.icon-bell
           span.whats-new-icon(ng-show="nLatestFeats > 0")
             span {{ nLatestFeats }}
-      li.hidden-md.hidden-sm.hidden-xs.ml-25.item
+      li.hidden-sm.hidden-xs.ml-25.item
         a(ng-click="refresh()" ng-class="{'rotating': refreshing}").refresh
           img(src="img/refresh.svg" ng-show="getTheme().name !== 'dev'")
           img(src="img/refresh-dev.svg" ng-show="getTheme().name === 'dev'")
-      li.ml-25.item
+      li.hidden-sm.hidden-xs.ml-25.item
         a.upper(ng-click="logout()", translate="SIGNOUT")

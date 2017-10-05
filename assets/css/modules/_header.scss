@@ -63,6 +63,11 @@ nav.short {
       padding: 0px 5px;
     }
   }
+  @media (max-width: 1024px) {
+    .hidden-sm.hidden-xs {
+      display: none !important;
+    }
+  }
 }
 
 nav.logo {
