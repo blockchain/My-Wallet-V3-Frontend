@@ -8,6 +8,11 @@
       right: -3px;
     }
   }
+  @media (max-width: 1024px) {
+    .visible-xs.visible-sm {
+      display: block !important;
+    }
+  }
 }
 
 .tray ~ .wallet-container {

@@ -46,7 +46,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     });
   };
 
-  $scope.logout = () => {
+  $rootScope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
     let needsBackup = !Wallet.status.didConfirmRecoveryPhrase;
 
