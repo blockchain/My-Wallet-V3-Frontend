@@ -2,13 +2,14 @@ angular
   .module('shared')
   .directive('scroll', scroll);
 
-scroll.$inject = ['AngularHelper'];
+scroll.$inject = ['AngularHelper', '$document'];
 
-function scroll (AngularHelper) {
+function scroll (AngularHelper, $document) {
   const directive = {
     restrict: 'A',
     scope: {
-      posY: '='
+      posY: '=',
+      elemId: '='
     },
     link: link
   };
@@ -16,7 +17,7 @@ function scroll (AngularHelper) {
 
   function link (scope, elem, attrs) {
     angular.element(elem).bind('scroll', () => {
-      scope.posY = document.getElementById(attrs.id).scrollTop;
+      scope.posY = $document[0].getElementById(attrs.elemId).scrollTop;
       AngularHelper.$safeApply();
     });
   }
