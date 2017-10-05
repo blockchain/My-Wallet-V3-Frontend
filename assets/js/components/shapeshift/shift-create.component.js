@@ -135,10 +135,22 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
 
   this.currencyHelper = (obj) => {
-    return {
-      name: obj.wei ? 'eth' : 'btc',
-      icon: obj.wei ? 'icon-ethereum' : 'icon-bitcoin'
-    };
+    if (obj.wei) {
+      return {
+        name: 'eth',
+        icon: 'icon-ethereum'
+      };
+    } else if (obj.keyRing) {
+      return {
+        name: 'btc',
+        icon: 'icon-bitcoin'
+      };
+    } else {
+      return {
+        name: 'bch',
+        icon: 'icon-bitcoin-cash'
+      };
+    }
   };
 
   // Stat: how often do users see the "max limit" error?

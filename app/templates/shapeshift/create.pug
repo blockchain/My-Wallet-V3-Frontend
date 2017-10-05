@@ -48,7 +48,7 @@ form.bc-form(
                   name="input"
                   ng-disabled="$ctrl.disabled"
                   ng-model="state.input.amount"
-                  ng-min="state.rate.min < maxAvailable ? state.rate.min : maxAvailable"
+                  ng-min="state.rate.min"
                   ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
                   ng-change="state.baseCurr = state.input.curr"
                   prevent-event="mousewheel"
