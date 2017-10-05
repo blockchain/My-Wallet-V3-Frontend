@@ -13,7 +13,7 @@ form.bc-form(
         .item.width-50.width-50-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
-          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.disabled || $ctrl.wallet")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.wallet")
             ui-select-match
               i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.from).icon")
               span {{ $ctrl.from.label }}
@@ -24,7 +24,7 @@ form.bc-form(
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate="TO")
           .flex-center
-            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="state.output.amount = 0; state.output.curr = $ctrl.currencyHelper($ctrl.to).name" ng-disabled="!$ctrl.disabled")
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="state.output.amount = 0; state.output.curr = $ctrl.currencyHelper($ctrl.to).name" ng-disabled="true")
               ui-select-match
                 i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.to).icon")
                 span {{ $ctrl.to.label }}
@@ -42,11 +42,10 @@ form.bc-form(
               helper-button(content="SHIFT.EXPLAIN_QUOTE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
           .flex-center
             .flex-column.flex-1.border
-              .flex-center(class="{{$ctrl.disabled && 'disabled'}}")
+              .flex-center
                 input.form-control.no-border(
                   type="number"
                   name="input"
-                  ng-disabled="$ctrl.disabled"
                   ng-model="state.input.amount"
                   ng-min="state.rate.min < maxAvailable ? state.rate.min : maxAvailable"
                   ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
@@ -63,11 +62,10 @@ form.bc-form(
                 fiat(bch="state.input.amount" ng-if="state.input.curr === 'bch' && !forms.shiftForm.$invalid")
             i.icon-skinny-arrow-right.f-12.border-grey.ph-10.hidden-xs
             .flex-column.flex-1.border
-              .flex-center(class="{{$ctrl.disabled && 'disabled'}}")
+              .flex-center
                 input.form-control.no-border(
                   type="number"
                   name="output"
-                  ng-disabled="$ctrl.disabled"
                   ng-model="state.output.amount"
                   ng-change="state.baseCurr = state.output.curr"
                   prevent-event="mousewheel"
