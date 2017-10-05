@@ -1711,7 +1711,8 @@
     "BCH_WHATS_NEW": "If you had Bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General.",
     "BCH_BALANCE": "Bitcoin Cash Balance",
     "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address",
-    "CONFIRMED": "Confirmed"
+    "CONFIRMED": "Confirmed",
+    "BCH_WALLET": "Bitcoin Cash - {{ ::wallet }}"
   },
   "BITCOIN_CASH_INFO": "You can see your Bitcoin Cash balance, exchange it for other currencies such as BTC or ETH, or just keep it in your Blockchain wallet.",
   "EXCHANGE_STATUS": "Exchange Status",
