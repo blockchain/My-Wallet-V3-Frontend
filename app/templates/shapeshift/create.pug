@@ -13,7 +13,7 @@ form.bc-form(
         .item.width-50.width-50-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
-          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.disabled")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.disabled || $ctrl.wallet")
             ui-select-match
               i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.from).icon")
               span {{ $ctrl.from.label }}
