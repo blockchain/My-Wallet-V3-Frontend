@@ -109,7 +109,9 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
       state.error = null;
       state.balanceFailed = false;
-      state.input.amount = Math.min(state.rate.max, $scope.maxAvailable);
+      if (this.wallet) {
+        state.input.amount = Math.min(state.rate.max, $scope.maxAvailable);
+      }
     };
 
     let fetchError = (err) => {
