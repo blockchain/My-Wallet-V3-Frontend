@@ -51,6 +51,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
     let payment = this.payment;
     this.handleShift({payment})
         .then(trade => this.onComplete({trade}))
+        .then(() => $scope.$root.scheduleRefresh())
         .catch(() => {}).finally($scope.free);
   };
 
