@@ -5,6 +5,7 @@ angular
       fee: '<',
       quote: '<',
       payment: '<',
+      wallet: '<',
       onCancel: '&',
       onComplete: '&',
       handleShift: '&',
@@ -26,8 +27,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
       case 'eth':
         return Ethereum.defaultAccount;
       case 'bch':
-        // TODO change to bitcoin cash
-        return Wallet.getDefaultAccount();
+        return this.wallet;
     }
   };
 

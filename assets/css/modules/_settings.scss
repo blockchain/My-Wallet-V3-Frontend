@@ -16,6 +16,7 @@
   .label-primary {
     @extend .btn-xs;
     display: inline-block;
+    max-height: 20px;
   }
   h2 {
     font-size: 12pt;

@@ -41,4 +41,6 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, curr
   });
 
   this.hasTransactions = () => this.txList().length > 0 || this.shiftTrades.length > 0;
+
+  this.isDefault = (account) => Wallet.isDefaultAccount(account);
 }

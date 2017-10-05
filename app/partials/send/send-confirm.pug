@@ -1,25 +1,25 @@
 .flex-column.f-16
   .flex-row(ng-hide="$ctrl.asset === 'bch'")
-    label.colon(ng-class="$ctrl.asset === 'eth' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="FROM")
-    .width-70.width-70-mobile {{ $ctrl.tx.from.label || $ctrl.tx.from.address || $ctrl.tx.label }}
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20 ' : 'width-30'" translate="FROM")
+    .width-70.width-70-mobile.f-12-mobile {{ $ctrl.tx.from.label || $ctrl.tx.from.address || $ctrl.tx.label }}
   .flex-row.mt-10
-    label.colon(ng-class="$ctrl.asset === 'eth' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="TO")
-    .width-70.width-70-mobile
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="TO")
+    .width-70.width-70-mobile.f-12-mobile
       span(translate="no") {{ $ctrl.tx.destination.label || $ctrl.tx.destination.address || $ctrl.tx.destination || $ctrl.tx.to }}
   .flex-row.mt-10(ng-show="$ctrl.tx.note.length")
-    label.colon(ng-class="$ctrl.asset === 'eth' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="DESCRIPTION")
-    .width-70.width-70-mobile {{ $ctrl.tx.note }}
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="{{$ctrl.size.xs ? 'NOTE' : 'DESCRIPTION'}}")
+    .width-70.width-70-mobile.f-12-mobile {{ $ctrl.tx.note }}
   .flex-row.mt-10
-    label.colon(ng-class="$ctrl.asset === 'eth' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="PAYMENT")
-    .width-70.width-70-mobile
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="PAYMENT")
+    .width-70.width-70-mobile.f-12-mobile
       span {{$ctrl.tx.amount | convert:$ctrl.asset:true}}
       | &nbsp;
       fiat(btc="$ctrl.tx.amount" ng-if="$ctrl.asset === 'btc'" parens="true")
       fiat(eth="$ctrl.tx.amount" ng-if="$ctrl.asset === 'eth'" parens="true")
       fiat(bch="$ctrl.fromSatoshi($ctrl.tx.amount, $ctrl.bchCurr)" ng-if="$ctrl.asset === 'bch'" parens="true")
   .flex-row.mt-10
-    label.colon(ng-class="$ctrl.asset === 'eth' ? 'width-20 width-20-mobile' : 'width-30 width-30-mobile'" translate="FEE")
-    .width-70.width-70-mobile
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="FEE")
+    .width-70.width-70-mobile.f-12-mobile
       span {{ $ctrl.tx.fee | convert:$ctrl.asset:true }}
       | &nbsp;
       fiat(btc="$ctrl.tx.fee" ng-if="$ctrl.asset === 'btc'" parens="true")
