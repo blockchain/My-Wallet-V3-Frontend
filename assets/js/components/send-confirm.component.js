@@ -11,7 +11,7 @@ angular
     controller: SendConfirmController
   });
 
-function SendConfirmController (Wallet, currency) {
+function SendConfirmController (Wallet, currency, $rootScope) {
   this.getTransactionTotal = (includeFee) => {
     let tx = this.tx;
     let fee = includeFee ? tx.fee : 0;
@@ -28,4 +28,6 @@ function SendConfirmController (Wallet, currency) {
     if (this.asset === 'eth') return 'SEND_ETHER';
     if (this.asset === 'btc') return this.tx.destination.type !== 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN';
   };
+
+  this.size = $rootScope.size;
 }

@@ -60,7 +60,7 @@
   .flex-column(ng-if="onStep('send-address')")
     span.f-14.em-300.pb-25(translate=".ADDRESSES")
     .f-16.center.bg-grey.ph-20.pv-15.mb-30
-      span {{ transaction.destination }}
+      span.f-12-mobile {{ transaction.destination }}
       i.pointer.icon-pencil.pull-right(ng-click="goTo('send-cash')")
     button.button-primary.upper(translate=".YES_IT_IS" ng-click="goTo('send-confirm')")
     div.width-100.center.mt-10

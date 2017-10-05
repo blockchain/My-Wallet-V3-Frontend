@@ -280,7 +280,7 @@
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
-  "NOTE" : "Note:",
+  "NOTE" : "Note",
   "CREATE" : "Create",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
