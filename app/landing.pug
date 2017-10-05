@@ -5,9 +5,8 @@
       div.width-100
         h1.f-42.em-200.width-100.man.mb-15(translate="LANDING.HEADER")
         p.width-60.f-16.em-300.man.mb-15(translate="{{showEth ? 'LANDING.SUB_HEADER_ETH' : 'LANDING.SUB_HEADER'}}")
-        a.f-16.em-500.upper.flex-center(ui-sref="public.signup")
-          span(translate="LANDING.GET_STARTED_NOW")
-          i.icon-right_arrow.ml-5
+        button.header.round.button-white-inverse.upper.mr-20(translate="Log In" ui-sref="public.login-no-uid")
+        button.header.round.button-primary.upper(translate="Sign Up" ui-sref="public.signup")
   .stats.upper.clearfix
     .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-mariner
       span.em-300.f-24.em-300.white(translate="{{showEth ? 'NUMBER_1_DIGITAL_WALLET' : 'NUMBER_1_WALLET'}}")
