@@ -1,7 +1,8 @@
-.wrapper
-  nav.logo.opaque(role="navigation")
-    ul.igation
-      li
-        a(class="bc-logo" href="{{rootURL}}")
-          img(src="img/white-blockchain.svg" alt="Blockchain")
-      li.flex-space
+.wrapper.bg-blue
+  .container
+    nav.logo.opaque(role="navigation" ng-class="{'display-block': isUIOverflow}")
+      ul.igation
+        li
+          a(class="bc-logo" href="{{rootURL}}")
+            img(src="img/white-blockchain.svg" alt="Blockchain")
+        li.flex-space

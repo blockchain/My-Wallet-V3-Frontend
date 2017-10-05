@@ -13,7 +13,7 @@ div.login-form {
   position: relative;
   background-color: $blue;
   height: calc(100% + 50px); //offset margin from bootstrap
-  .navbar {
+  nav {
     position: fixed;
     width: 100%;
     left: 0;
@@ -26,9 +26,10 @@ div.login-form {
 
 @mixin block-login {
   height: 100%;
+  overflow: auto !important;
   display: block !important;
-  .navbar {
-    position: relative;
+  nav {
+    position: relative !important;
   }
   .bc-logo-footer {
     position: relative;
@@ -41,9 +42,17 @@ div.login-form {
   }
 }
 
-.login-pg {
-  &.display-block {
-    @include block-login;
+body {
+  .login-pg {
+    &.display-block {
+      @include block-login;
+    }
+    @media (max-height: 700px) {
+      @include block-login;
+    }
+    @media (max-width: 767px) {
+      @include block-login;
+    }
   }
   @media (max-height: 700px) {
     @include block-login;

@@ -71,6 +71,9 @@ nav.short {
 }
 
 nav.logo {
+  .display-block {
+    display: block !important;
+  }
   @media (max-width: 767px) {
     position: relative;
   }
