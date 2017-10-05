@@ -24,7 +24,7 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
           <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
             <a href="{{rootURL}}wallet" id="wallet-link">Wallet</a>
             <ul>
-              <li><a href="{{rootURL}}wallet/#/login">Login</a></li>
+              <li><a ui-sref="public.login-no-uid">Login</a></li>
             </ul>
           </li>
           <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
@@ -57,7 +57,7 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
             </form>
           </li>
           <li>
-            <a class="wallet-button" href="{{rootURL}}wallet/#/signup" target="_blank">Get A Free Wallet</a>
+            <a class="wallet-button" ui-sref="public.signup" target="_blank">Get A Free Wallet</a>
           </li>
         </ul>
       </nav>
