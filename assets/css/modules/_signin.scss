@@ -10,9 +10,9 @@ div.login-form {
 }
 
 .login-pg {
+  height: 100%;
   position: relative;
   background-color: $blue;
-  height: calc(100% + 50px); //offset margin from bootstrap
   nav {
     position: fixed;
     width: 100%;
@@ -30,6 +30,9 @@ div.login-form {
   display: block !important;
   nav {
     position: relative !important;
+  }
+  > div {
+    display: block !important;
   }
   .bc-logo-footer {
     position: relative;
@@ -54,18 +57,10 @@ body {
       @include block-login;
     }
   }
-  @media (max-height: 700px) {
-    @include block-login;
-  }
-  @media (max-width: 767px) {
-    @include block-login;
-  }
 }
 
-@media (max-height: 700px) {
-  html, body {
-    position: relative;
-  }
+html, body {
+  position: relative;
 }
 
 .login-box {
