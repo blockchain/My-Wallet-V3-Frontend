@@ -62,6 +62,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       $scope.quote = quote; state.error = null; state.loadFailed = false;
       if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
       else state.input.amount = Number.parseFloat(quote.depositAmount);
+
+      if (state.input.amount < state.rate.min) $scope.forms.shiftForm.$setValidity('min', false);
       AngularHelper.$safeApply();
     };
 
