@@ -20,9 +20,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   let UPPER_LIMIT;
   Env.then(env => UPPER_LIMIT = env.shapeshift.upperLimit || 500);
 
-  this.disabled = this.wallet;
-
-  this.from = this.disabled ? this.wallet : Wallet.getDefaultAccount();
+  this.from = this.wallet || Wallet.getDefaultAccount();
   this.to = this.wallet ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
   this.origins = this.wallet ? [this.wallet] : [this.from, this.to];
@@ -100,7 +98,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
                      ? $scope.fromSatoshi($scope.toSatoshi(UPPER_LIMIT, $scope.fiat), $scope.bitcoin)
                      : parseFloat(currency.formatCurrencyForView($scope.toEther(UPPER_LIMIT, $scope.fiat), $scope.ether, false));
 
-    $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
+    return $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
       .then((rate) => { state.rate.min = rate.minimum; state.rate.max = rate.maxLimit < upperLimit ? rate.maxLimit : upperLimit; });
   };
 
@@ -111,7 +109,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
       state.error = null;
       state.balanceFailed = false;
-      state.input.amount = this.disabled ? $scope.maxAvailable : state.input.amount;
+      state.input.amount = Math.min(state.rate.max, $scope.maxAvailable);
     };
 
     let fetchError = (err) => {
@@ -128,7 +126,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
 
-  $scope.$watch('state.input.curr', () => $scope.getAvailableBalance().then(getRate));
+  $scope.$watch('state.input.curr', () => getRate().then($scope.getAvailableBalance));
   $scope.$watch('$ctrl.from.balance', (n, o) => n !== o && $scope.getAvailableBalance());
   $scope.$watch('state.output.curr', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
