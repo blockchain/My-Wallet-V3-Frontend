@@ -33,7 +33,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.onAddressScan = (result) => {
     let address = Wallet.parsePaymentRequest(result);
     if (Wallet.isValidAddress(address.address)) {
-      $scope.transaction.destination = format.destination(address, 'External');
+      $scope.transaction.destination = format.destination(address, 'External')['address'];
     } else {
       throw new Error('BITCOIN_ADDRESS_INVALID');
     }
