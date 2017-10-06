@@ -57,7 +57,7 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
             </form>
           </li>
           <li>
-            <a class="wallet-button" ui-sref="public.signup" target="_blank">Get A Free Wallet</a>
+            <a class="wallet-button" ui-sref="public.signup">Get A Free Wallet</a>
           </li>
         </ul>
       </nav>
