@@ -106,6 +106,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     convertFromSatoshi,
     convertToEther,
     convertFromEther,
+    convertToBitcoinCash,
     convertFromBitcoinCash,
     formatCurrencyForView,
     getCurrencyByCode: MyWalletHelpers.memoize(getCurrencyByCode),
@@ -247,6 +248,15 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
       return amount / currency.conversion;
     } else if (ethConversions[currency.code] != null) {
       return amount * ethConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
+  function convertToBitcoinCash (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (conversions[currency.code] != null) {
+      return Math.ceil(amount * parseInt(SATOSHI / bchConversions[currency.code].last, 10));
     } else {
       return null;
     }

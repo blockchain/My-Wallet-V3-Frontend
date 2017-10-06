@@ -29,12 +29,15 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
+  $scope.toBitcoinCash = currency.convertToBitcoinCash;
+  $scope.fromBitcoinCash = currency.convertFromBitcoinCash;
   $scope.country = MyWallet.wallet.accountInfo.countryCodeGuess;
   $scope.fiat = $scope.country === 'US'
     ? currency.currencies.filter(c => c.code === 'USD')[0]
     : currency.currencies.filter(c => c.code === 'EUR')[0];
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+  $scope.bitcoinCash = currency.bchCurrencies.filter(c => c.code === 'BCH')[0];
   $scope.dollars = Wallet.settings.displayCurrency;
   $scope.forms = $scope.state = {};
 
@@ -94,9 +97,10 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   let getRate = () => {
-    let upperLimit = state.baseBTC || state.baseBCH
-                     ? $scope.fromSatoshi($scope.toSatoshi(UPPER_LIMIT, $scope.fiat), $scope.bitcoin)
-                     : parseFloat(currency.formatCurrencyForView($scope.toEther(UPPER_LIMIT, $scope.fiat), $scope.ether, false));
+    let upperLimit = !state.baseBTC && !state.baseBCH
+                     ? parseFloat(currency.formatCurrencyForView($scope.toEther(UPPER_LIMIT, $scope.fiat), $scope.ether, false))
+                     : state.baseBTC ? $scope.fromSatoshi($scope.toSatoshi(UPPER_LIMIT, $scope.fiat), $scope.bitcoin)
+                                     : $scope.fromBitcoinCash($scope.toBitcoinCash(UPPER_LIMIT, $scope.fiat), $scope.bitcoinCash);
 
     return $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
       .then((rate) => { state.rate.min = rate.minimum; state.rate.max = rate.maxLimit < upperLimit ? rate.maxLimit : upperLimit; });
