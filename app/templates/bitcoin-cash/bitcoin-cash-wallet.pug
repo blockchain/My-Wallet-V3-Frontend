@@ -26,7 +26,7 @@
       .tx-details.width-100.mll.mvm
         span
           transaction-description-bcash(transaction="tx" account="account")
-    .pt-25(ng-show="$ctrl.shiftTrades.length > 0")
+    div(ng-show="$ctrl.shiftTrades.length > 0")
       .width-100
         .shift-history.width-100.border.bg-footer-blue.mt-5.f-14.f-12-mobile
           .pvs
