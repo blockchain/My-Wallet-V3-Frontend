@@ -133,6 +133,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   $scope.$watch('state.input.curr', () => getRate().then($scope.getAvailableBalance));
+  $scope.$watch('state.output.curr', () => getRate().then($scope.getAvailableBalance));
   $scope.$watch('$ctrl.from.balance', (n, o) => n !== o && $scope.getAvailableBalance());
   $scope.$watch('state.output.curr', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
