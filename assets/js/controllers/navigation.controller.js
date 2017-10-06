@@ -95,31 +95,21 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   $q.all([Env, buyStatus.canBuy()]).then(([env, canBuy]) => {
     let now = Date.now();
-    $scope.hasBch = () => MyWallet.wallet.bch.balance > 0 || MyWallet.wallet.bch.txs.length > 0;
 
     $scope.filterFeatures = (feat) => (
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
       (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
       (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
-      (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess) &&
-      (feat.title !== 'BITCOIN_CASH.BCH_IN_WALLET' || $scope.hasBch())
+      (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess)
     );
 
-    $scope.filterByDate = (f) => {
-      return (now - f.date) < whatsNewDateCutoff;
-    };
-
+    $scope.filterByDate = (f) => (now - f.date) < whatsNewDateCutoff;
     $scope.feats = whatsNew.filter($scope.filterFeatures).filter($scope.filterByDate);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {
     $scope.nLatestFeats = $scope.getNLatestFeats($scope.feats, lastViewed);
   }));
-
-  $rootScope.$watch('showBch', () => {
-    $scope.feats = whatsNew.filter($scope.filterFeatures).filter($scope.filterByDate);
-    $scope.getNLatestFeats();
-  });
 
   $scope.goTo = (ref) => { $state.go(ref); $scope.popover.isOpen = false; };
 }

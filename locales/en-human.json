@@ -69,7 +69,7 @@
     },
     "BITCOIN_CASH_ABOUT": {
       "Q": "How can I access Bitcoin Cash?",
-      "A": "If you had Bitcoin in your wallet prior to the fork on August 1, 2017, you can access your Bitcoin Cash in Settings > General. "
+      "A": "If you had Bitcoin in your wallet prior to the fork on August 1, 2017, you can access your Bitcoin Cash in Settings > General. If not, ignore this message. "
     }
   },
   "SETTINGS": "Settings",
