@@ -1,10 +1,10 @@
 angular
   .module('shared')
-  .directive('scroll', scroll);
+  .directive('scroller', scroller);
 
-scroll.$inject = ['AngularHelper', '$document'];
+scroller.$inject = ['AngularHelper', '$document'];
 
-function scroll (AngularHelper, $document) {
+function scroller (AngularHelper, $document) {
   const directive = {
     restrict: 'A',
     scope: {
