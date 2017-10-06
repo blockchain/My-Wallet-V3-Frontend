@@ -13,7 +13,7 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
       <nav role="navigation" ng-class="{'open': state.open, 'searching': state.searching, 'scrolling': state.scrolling}">
         <ul class="igation">
           <li>
-            <a class="bc-logo" href="{{rootURL}}">
+            <a class="bc-logo" href="https://blockchain.com">
               <img src="img/white-blockchain.svg" alt="Blockchain" />
             </a>
             <button class="menu-button" ng-click="expandHeader()" ng-class="{'is-active': state.open}">
@@ -28,7 +28,7 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
             </ul>
           </li>
           <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
-            <a href="https://blockchain.info">Data</a>
+            <a href="{{rootURL}}">Data</a>
             <ul>
               <li><a href="{{rootURL}}charts">Charts</a></li>
               <li><a href="{{rootURL}}stats">Stats</a></li>
