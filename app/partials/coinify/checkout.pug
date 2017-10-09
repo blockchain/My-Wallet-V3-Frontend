@@ -8,13 +8,15 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     //- BUY
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
       exchange-checkout(
+        fiat="fiat"
         type="'Buy'"
-        dollars="fiat"
         conversion="100"
         trading="buying"
         limits="buyLimits"
         provider="'Coinify'"
+        fiat-options="fiatOptions"
         buy-success="buyHandler(quote)"
+        fiat-change="fiatHandler(currency)"
         handle-mediums="buyMediumsHandler(quote)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
@@ -23,13 +25,15 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     //- SELL
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
       exchange-checkout(
+        fiat="fiat"
         type="'Sell'"
-        dollars="fiat"
         conversion="100"
         trading="selling"
         limits="sellLimits"
         provider="'Coinify'"
+        fiat-options="fiatOptions"
         buy-success="sellHandler(quote)"
+        fiat-change="fiatHandler(currency)"
         handle-mediums="sellMediumsHandler(quote)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn

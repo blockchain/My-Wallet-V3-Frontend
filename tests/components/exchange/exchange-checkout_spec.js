@@ -39,7 +39,7 @@ describe('exchange-checkout.component', () => {
     buySuccess () { return $q.resolve(); },
     buyError () { return $q.resolve(); },
     provider: 'unocoin',
-    dollars: {code: 'USD'},
+    fiat: {code: 'USD'},
     quote () { return mockQuote(); },
     limits () { return { min: {}, max: {} }; },
     openPendingTrade () { return $q.resolve(); },
@@ -124,7 +124,7 @@ describe('exchange-checkout.component', () => {
     beforeEach(() => scope = getControllerScope(handlers));
 
     // it('should get args for a USD->BTC quote', () => {
-    //   scope.state.baseCurr = scope.dollars;
+    //   scope.state.baseCurr = scope.fiat;
     //   scope.state.fiat = 150;
     //   expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([7500, 'USD', 'BTC']));
     // });
@@ -136,7 +136,7 @@ describe('exchange-checkout.component', () => {
     });
 
     // it('should get the correct fiat arg with a number js has trouble with', () => {
-    //   scope.state.baseCurr = scope.dollars;
+    //   scope.state.baseCurr = scope.fiat;
     //   scope.state.fiat = 2.2;
     //   expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([110, 'USD', 'BTC']));
     // });
@@ -197,7 +197,7 @@ describe('exchange-checkout.component', () => {
       });
 
       it('should set state.btc to quoteAmount if in baseFiat', () => {
-        scope.state.baseCurr = scope.dollars;
+        scope.state.baseCurr = scope.fiat;
         scope.$digest();
         expect(scope.state.btc).toEqual(0.0000015);
       });
@@ -232,7 +232,7 @@ describe('exchange-checkout.component', () => {
     describe('fiat', () => {
       it('should refresh if base fiat', () => {
         scope.state.fiat = 20;
-        scope.state.baseCurr = scope.dollars;
+        scope.state.baseCurr = scope.fiat;
         scope.$digest();
         expect(scope.refreshIfValid).toHaveBeenCalled();
       });
@@ -248,7 +248,7 @@ describe('exchange-checkout.component', () => {
     describe('btc', () => {
       it('should not refresh if base fiat', () => {
         scope.state.btc = 200000;
-        scope.state.baseCurr = scope.dollars;
+        scope.state.baseCurr = scope.fiat;
         scope.$digest();
         expect(scope.refreshIfValid).not.toHaveBeenCalled();
       });

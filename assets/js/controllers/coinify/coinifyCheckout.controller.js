@@ -10,6 +10,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.fiatOptions = currency.coinifyCurrencies;
   let walletCurrencyMatch = $scope.fiatOptions.filter(c => c.code === (exchange.profile ? exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
   $scope.fiat = walletCurrencyMatch || $scope.fiatOptions.filter(c => c.code === 'EUR')[0];
+  $scope.fiatHandler = (currency) => $scope.fiat = currency;
 
   $scope.buying = coinify.buying;
   $scope.buyHandler = modals.openBuyView;

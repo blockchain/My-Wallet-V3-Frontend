@@ -32,7 +32,6 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
   };
 
   $scope.userId = exchange.user;
-  $scope.siftScienceEnabled = false;
 
   $scope.signupCompleted = exchange.profile.level > 2;
   $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);

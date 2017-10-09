@@ -4,7 +4,6 @@ describe('SfoxCheckoutController', () => {
   let $compile;
   let $templateCache;
   let $q;
-  let $timeout;
   let scope;
   let modals;
   let Wallet;
@@ -41,13 +40,10 @@ describe('SfoxCheckoutController', () => {
       $templateCache = _$templateCache_;
 
       $q = $injector.get('$q');
-      $timeout = $injector.get('$timeout');
       modals = $injector.get('modals');
-      Alerts = $injector.get('Alerts');
       Wallet = $injector.get('Wallet');
       MyWallet = $injector.get('MyWallet');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
-      sfox = $injector.get('sfox');
 
       MyWallet.wallet = {};
       Wallet.accounts = () => [];

@@ -15,8 +15,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
   .flex-column.pbvl(ng-show="showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
     exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
       type="'Buy'"
+      fiat="rupees"
       user-id="userId"
-      dollars="rupees"
       conversion="1"
       trading="buying"
       buy-enabled="true"
