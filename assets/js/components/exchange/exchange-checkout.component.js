@@ -50,7 +50,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     baseCurr: $scope.fiat,
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.fiat; },
     get baseFiat () { return this.baseCurr === $scope.fiat; },
-    get total () { return $scope.fiat; }
+    get total () { return this.fiat; }
   };
 
   // cached quote from checkout first
@@ -159,7 +159,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   });
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
-  $scope.$watch('$ctrl.fiat', (fiat) => ($scope.fiat = this.fiat) && $scope.getRate());
+  $scope.$watch('$ctrl.fiat', () => ($scope.fiat = this.fiat) && $scope.resetFields() && $scope.getRate());
 
   Env.then(env => $scope.qaDebugger = env.qaDebugger);
   $scope.$on('$destroy', $scope.cancelRefresh);
