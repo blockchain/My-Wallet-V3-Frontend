@@ -69,6 +69,9 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
   };
 
   this.nextStep = () => {
+    this.transaction = Object.assign(this.payment, this.account, this.transaction);
+    this.transaction.note = this.tx.note;
+    this.transaction.to = this.tx.to;
     $scope.vm.toConfirmView();
   };
 
@@ -90,10 +93,6 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
     }).catch(({ message }) => {
       Alerts.displayError(message);
     });
-  };
-
-  this.getTransactionTotal = () => {
-    return this.payment.amount + this.payment.fee;
   };
 
   this.convertFromEther = (eth) => {

@@ -94,9 +94,13 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
       case $scope.filterTypes[0]:
         return true;
       case $scope.filterTypes[1]:
-        return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'sent';
+        if (Ethereum.legacyAccount) return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'sent';
+        else return tx.getTxType([$scope.account]) === 'sent';
+        break;
       case $scope.filterTypes[2]:
-        return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'received';
+        if (Ethereum.legacyAccount) return tx.getTxType([$scope.account, Ethereum.legacyAccount]) === 'received';
+        else return tx.getTxType([$scope.account]) === 'received';
+        break;
     }
     return false;
   };

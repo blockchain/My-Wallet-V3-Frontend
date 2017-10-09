@@ -10,6 +10,7 @@
     @extend .btn-xs;
     font-weight: normal;
     display: inline-block;
+    margin-left: 0px;
   }
   .transaction-feed {
     position: relative;
@@ -62,6 +63,7 @@
       }
     }
     transaction-description-ethereum,
+    transaction-description-bcash,
     transaction-description {
       .progress {
         @extend .mbn;

@@ -11,19 +11,23 @@ function convertFilter (Wallet, currency) {
   };
 
   // target => { 'primary' | 'secondary' | 'btc' | 'fiat' | currency }
-  return function (amount, target = 'primary', showCode) {
+  return function (amount, target = 'primary', showCode, coin) {
+    if (coin) coin = coin.toLowerCase();
+    let fiatTarget = target === 'fiat';
     let fiat = Wallet.settings.currency;
     let eth = currency.ethCurrencies[0];
+    let bch = currency.bchCurrencies[0];
     let btc = Wallet.settings.btcCurrency;
     let display = Wallet.settings.displayCurrency;
     let curr, conversion;
 
     if (typeof target === 'string') {
-      curr = caseof(target, {
+      curr = caseof(target.toLowerCase(), {
         'primary': display,
         'secondary': currency.isBitCurrency(display) ? fiat : btc,
         'btc': btc,
         'eth': eth,
+        'bch': bch,
         'fiat': fiat
       });
     } else if (target.code) {
@@ -31,8 +35,8 @@ function convertFilter (Wallet, currency) {
     } else {
       curr = display;
     }
-
-    if (currency.isEthCurrency(curr)) conversion = currency.convertFromEther(amount, curr);
+    if (currency.isEthCurrency(curr) || (fiatTarget && coin === 'eth')) conversion = currency.convertFromEther(amount, curr);
+    else if (currency.isBchCurrency(curr) || (fiatTarget && coin === 'bch')) conversion = currency.convertFromBitcoinCash(amount, curr);
     else conversion = currency.convertFromSatoshi(amount, curr);
     return currency.formatCurrencyForView(conversion, curr, showCode);
   };

@@ -10,6 +10,7 @@ function AngularHelper ($rootScope, $window) {
     size.xs = width < 768;
     size.sm = width >= 768 && width < 992;
     size.md = width >= 992 && width < 1200;
+    size.mobile = width <= 1024;
     size.lg = width >= 1200;
     $safeApply();
   };

@@ -243,6 +243,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           resolve: {
             loadBcPhoneNumber: ($ocLazyLoad) => {
               return $ocLazyLoad.load('bcPhoneNumber');
+            },
+            loadShiftTrades: ($injector) => {
+              let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
+              ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
             }
           }
         }
@@ -294,6 +298,14 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         right: {
           controller: 'SettingsCtrl',
           templateUrl: 'partials/settings/settings.pug'
+        }
+      },
+      resolve: {
+        _loadBCH ($q, $injector) {
+          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+          return MyWallet && MyWallet.wallet.bch
+            ? MyWallet.wallet.bch.getHistory()
+            : $q.resolve();
         }
       }
     })

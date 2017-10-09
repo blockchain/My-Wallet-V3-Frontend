@@ -55,8 +55,8 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
     return service.shapeshift.watchTradeForCompletion(trade);
   };
 
-  service.buildPayment = (quote, fee) => {
-    return service.shapeshift.buildPayment(quote, fee);
+  service.buildPayment = (quote, fee, from) => {
+    return service.shapeshift.buildPayment(quote, fee, from);
   };
 
   service.checkForCompletedTrades = () => {
