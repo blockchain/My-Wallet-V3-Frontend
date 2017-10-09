@@ -55,8 +55,8 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
     };
   }
 
-  function determineStep () {
-    let profile = service.exchange.profile;
+  function determineStep (exchange = {}) {
+    let profile = exchange.profile || service.exchange.profile;
     if (!profile) {
       return 'create';
     } else {

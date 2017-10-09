@@ -2,22 +2,18 @@ describe('CoinifySellController', () => {
   let $rootScope;
   let $controller;
   let options;
-  let coinify;
   let buySellOptions;
-  let $scope;
   let accounts;
   let bankMedium;
   let payment;
   let trade;
-  let exchange;
   let user;
 
   let quote = {
     quoteAmount: 1,
     baseAmount: -100,
     baseCurrency: 'EUR',
-    expiresAt: 100000000,
-    getPayoutMediums() { return $q.resolve(); }
+    expiresAt: 100000000
   };
 
   beforeEach(angular.mock.module('walletApp'));
@@ -29,17 +25,15 @@ describe('CoinifySellController', () => {
       let Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
       let currency = $injector.get('currency');
-      coinify = $injector.get('coinify');
+      let coinify = $injector.get('coinify');
       let MyWalletPayment = $injector.get('MyWalletPayment');
-      let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
       options = {
-        partners: {
-          coinify: {}
-        }
+        partners: { coinify: {} }
       };
 
       accounts = [{id: 123}, {id: 456}];
+
       trade = {
         quote: {
           quoteCurrency: 'EUR',
@@ -47,59 +41,36 @@ describe('CoinifySellController', () => {
           baseAmount: -100,
           baseCurrency: 'EUR',
           expiresAt: 100000000,
-          getPayoutMediums() { return $q.resolve(); }
+          getPayoutMediums () { return $q.resolve(); }
         }
       };
 
       MyWallet.wallet = {
         hdwallet: {
-          defaultAccount: {
-            index: 0
-          },
+          defaultAccount: { index: 0 },
           accounts: [{label: ''}]
         },
-        createPayment(p, shouldFail, failWith) { return new MyWalletPayment(MyWallet.wallet, p, shouldFail, failWith); }
-      };
-
-      currency.conversions["EUR"] = { conversion: 1 };
-
-      coinify.exchange = () => ({
-        getTrades() { return $q.resolve(); },
-        trades: {
-          pending: {}
-        },
-        user: 1,
-        profile: {
-          country: 'FR',
-          level: {
-            limits: {
-              'card': {
-                in: 300
-              },
-              'bank': {
-                in: 0
-              }
-            }
+        external: {
+          coinify: {
+            getTrades: () => {},
+            getSellQuote: () => {}
           }
         }
-      }) ;
+      };
+
+      currency.conversions['EUR'] = { conversion: 1 };
 
       payment = {
-        fees: {
-          priority: 100
-        },
+        fees: { priority: 100 },
         sweepFee: 50
       };
-      return {
-        coinify: {
-          getQuote(quote) { return $q.resolve(quote).then(); }
-        }
-      };}));
+    })
+  );
 
   let getController = function (quote, trade, exchange) {
     let scope = $rootScope.$new();
 
-    return $controller("CoinifySellController", {
+    return $controller('CoinifySellController', {
       $scope: scope,
       trade: trade || {},
       user: user || {},
@@ -109,17 +80,11 @@ describe('CoinifySellController', () => {
       accounts: accounts || [],
       bankMedium: bankMedium || {},
       payment: payment || {},
-      exchange,
-      $uibModalInstance: { close() {}, dismiss() {} }
+      $uibModalInstance: { close () {}, dismiss () {} }
     });
   };
 
   describe('.selectAccount()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = getController(quote, trade);
-    });
-
     it('should set the bank account', () => {
       let ctrl = getController(quote, trade);
       ctrl.selectAccount({id: 12345});
@@ -128,11 +93,6 @@ describe('CoinifySellController', () => {
   });
 
   describe('.goTo()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should go to account step', () => {
       let ctrl = getController(quote, trade);
       ctrl.goTo('account');
@@ -140,26 +100,7 @@ describe('CoinifySellController', () => {
     });
   });
 
-  describe('.reset()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
-    it('should reset transaction amounts', () => {
-      let ctrl = getController(quote, trade);
-      ctrl.reset();
-      expect(ctrl.transaction.btc).toEqual(null);
-      return expect(ctrl.transaction.fiat).toEqual(null);
-    });
-  });
-
   describe('.onCreateBankSuccess()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should set the bankId', () => {
       let ctrl = getController(quote, trade);
       ctrl.onCreateBankSuccess({id: 123456});
@@ -168,11 +109,6 @@ describe('CoinifySellController', () => {
   });
 
   describe('.onSellSuccess()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should set the bankId', () => {
       let ctrl = getController(quote, trade);
       ctrl.onSellSuccess({id: 123});
@@ -181,46 +117,34 @@ describe('CoinifySellController', () => {
   });
 
   describe('.cancel()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should reset the transaction', () => {
       let ctrl = getController(quote, trade);
-      spyOn(ctrl, 'reset');
       ctrl.cancel();
-      return expect(ctrl.reset).toHaveBeenCalled();
+      return expect(ctrl.trade).toEqual(null);
     });
   });
 
   describe('.setTitle()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
+    let ctrl;
+    beforeEach(() => ctrl = getController(quote, trade));
 
     it('should set the title for bank link', () => {
-      let ctrl = getController(quote, trade);
       ctrl.setTitle('bank-link');
       return expect(ctrl.title).toEqual('SELL.LINKED_ACCOUNTS');
     });
 
     it('should set the title for summary', () => {
-      let ctrl = getController(quote, trade);
       ctrl.setTitle('summary');
       return expect(ctrl.title).toEqual('SELL.CONFIRM_SELL_ORDER');
     });
 
     it('should set the title for trade-complete', () => {
-      let ctrl = getController(quote, trade);
       ctrl.setTitle('trade-complete');
       return expect(ctrl.title).toEqual('SELL.SELL_BITCOIN');
     });
   });
 
   describe('.now()', () =>
-
     it('should get the time', () => {
       let ctrl = getController(quote, trade);
       return ctrl.now();
@@ -228,47 +152,32 @@ describe('CoinifySellController', () => {
   );
 
   describe('.timeToExpiration()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
-    xit('should return expiration time of quote',function () {
+    it('should return expiration time of quote', function () {
       let ctrl = getController(quote, trade);
       ctrl.timeToExpiration();
-      return expect(ctrl.timeToExpiration()).toEqual(100000000 - ctrl.now());
+      return expect(ctrl.timeToExpiration()).toEqual(Math.floor(100000000 - ctrl.now()));
     });
   });
 
   describe('.refreshQuote()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
-
     it('should refresh the quote', () => {
       let onRefreshQuote = q => true;
       let ctrl = getController(quote, trade);
-      spyOn(coinify, 'getSellQuote');
       return ctrl.refreshQuote().then(onRefreshQuote);
     });
   });
 
   describe('initial state', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
+    let ctrl;
+    beforeEach(() => ctrl = getController(quote, trade));
 
     it('should go to isx step if isKYC', () => {
-      let ctrl = getController(quote, trade);
       ctrl.isKYC = true;
       ctrl.nextStep();
       return expect(ctrl.onStep('isx')).toEqual(true);
     });
 
     it('should go to trade-complete step', () => {
-      let ctrl = getController(quote, trade);
       ctrl.trade.state = 'awaiting_transfer_in';
       ctrl.trade.iSignThisID = undefined;
       ctrl.nextStep();
@@ -276,14 +185,14 @@ describe('CoinifySellController', () => {
     });
 
     it('should go to email step', () => {
-      let ctrl = getController(quote, trade);
+      ctrl.exchange.profile = null;
       ctrl.exchange.user = undefined;
       ctrl.nextStep();
       return expect(ctrl.onStep('email')).toEqual(true);
     });
 
     it('should go to accept-terms step', () => {
-      let ctrl = getController(quote, trade);
+      ctrl.exchange.profile = null;
       ctrl.exchange.user = false;
       ctrl.user.isEmailVerified = true;
       ctrl.nextStep();
@@ -291,7 +200,7 @@ describe('CoinifySellController', () => {
     });
 
     it('should go to account step', () => {
-      let ctrl = getController(quote, trade);
+      ctrl.exchange.profile = null;
       ctrl.exchange.user = true;
       ctrl.accounts.length = 0;
       ctrl.nextStep();
@@ -299,7 +208,7 @@ describe('CoinifySellController', () => {
     });
 
     it('should go to bank-link step', () => {
-      let ctrl = getController(quote, trade);
+      ctrl.exchange.profile = null;
       ctrl.exchange.user = true;
       ctrl.accounts.length = 1;
       ctrl.nextStep();
@@ -308,19 +217,15 @@ describe('CoinifySellController', () => {
   });
 
   describe('.getQuoteHelper()', function () {
-    beforeEach(function () {
-      let ctrl;
-      return ctrl = undefined;
-    });
+    let ctrl;
+    beforeEach(() => ctrl = getController(quote, trade));
 
     it('should return the right copy', () => {
-      let ctrl = getController(quote, trade);
       let result = ctrl.getQuoteHelper();
       return expect(result).toEqual('EST_QUOTE_1');
     });
 
     it('should return the right copy', () => {
-      let ctrl = getController(quote, trade);
       ctrl.quote.id = 123;
       let result = ctrl.getQuoteHelper();
       return expect(result).toEqual('SELL.QUOTE_WILL_EXPIRE');

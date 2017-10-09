@@ -33,15 +33,17 @@ describe('exchange-checkout.component', () => {
   ;
 
   let handlers = {
+    handleMediums () { return $q.resolve(mockMediums()); },
     handleQuote () { return $q.resolve(mockQuote()); },
     handleBuy () { return $q.resolve(); },
     buySuccess () { return $q.resolve(); },
     buyError () { return $q.resolve(); },
-    quote () { return mockQuote(); },
-    limits: { min: {}, max: {} },
+    provider: 'unocoin',
     dollars: {code: 'USD'},
-    pendingTrade () { () => { return $q.resolve(); }; },
-    openPendingTrade () { return $q.resolve(); }
+    quote () { return mockQuote(); },
+    limits () { return { min: {}, max: {} }; },
+    openPendingTrade () { return $q.resolve(); },
+    pendingTrade () { () => { return $q.resolve(); }; }
   };
 
   let getControllerScope = function (bindings) {
@@ -93,20 +95,6 @@ describe('exchange-checkout.component', () => {
     scope.$digest();
     expect(scope.quote).not.toBeDefined();
     expect(scope.state.rate).toEqual(mockQuote().quoteAmount);
-  });
-
-  describe('hasMultipleAccounts', () => {
-    it('should be false for one account', () => {
-      spyOn(Wallet, 'accounts').and.returnValue([{active: true}]);
-      scope = getControllerScope(handlers);
-      expect(scope.hasMultipleAccounts).toEqual(false);
-    });
-
-    it('should be true for more than one account', () => {
-      spyOn(Wallet, 'accounts').and.returnValue([{active: true}, {active: true}]);
-      scope = getControllerScope(handlers);
-      expect(scope.hasMultipleAccounts).toEqual(true);
-    });
   });
 
   describe('.buy()', () => {

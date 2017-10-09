@@ -15,7 +15,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.state = {
     account: accounts[0],
     trades: exchange.trades,
-    limits: { max: exchange.profile && exchange.profile.limits.buy || 100 },
+    limits: () => ({
+      max: exchange.profile && exchange.profile.limits.buy || 100
+    }),
     buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
