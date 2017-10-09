@@ -1,9 +1,9 @@
 describe('coinify service', () => {
+  let $rootScope;
+  let $q;
   let Wallet;
   let MyWallet;
   let coinify;
-  let $rootScope;
-  let $q;
   let exchange;
   let Alerts;
 
@@ -14,9 +14,7 @@ describe('coinify service', () => {
       $provide.value('Env', Promise.resolve({
         showBuySellTab: ['US'],
         partners: {
-          coinify: {
-            countries: ['US']
-          }
+          coinify: { countries: ['US'] }
         }
       }));
     });
@@ -27,6 +25,7 @@ describe('coinify service', () => {
       Wallet = $injector.get('Wallet');
       MyWallet = $injector.get('MyWallet');
       Alerts = $injector.get('Alerts');
+      coinify = $injector.get('coinify');
 
       MyWallet.wallet = {
         accountInfo: {
@@ -35,26 +34,28 @@ describe('coinify service', () => {
         hdwallet: {
           accounts: [{label: ''}, {label: '2nd account'}],
           defaultAccount: {index: 0}
+        },
+        external: {
+          coinify: {
+            getBuyCurrencies: () => {},
+            getTrades: () => {}
+          }
         }
       };
-
-      coinify = $injector.get('coinify');
 
       Wallet.settings.currency = {code: 'EUR'};
       Wallet.status.isLoggedIn = true;
     });
   });
 
-  let makeTrade = state =>
-    ({
-      state,
-      accountIndex: 0,
-      inCurrency: 'USD',
-      bitcoinReceived: state === 'completed',
-      watchAddress () { return $q.resolve(); },
-      refresh () { return $q.resolve(); }
-    })
-  ;
+  let makeTrade = state => ({
+    state,
+    accountIndex: 0,
+    inCurrency: 'USD',
+    bitcoinReceived: state === 'completed',
+    watchAddress () { return $q.resolve(); },
+    refresh () { return $q.resolve(); }
+  });
 
   beforeEach(function () {
     exchange = coinify.exchange;
@@ -108,23 +109,6 @@ describe('coinify service', () => {
       coinify.cancelTrade(trade);
       $rootScope.$digest();
       expect(Alerts.displayError).toHaveBeenCalledWith('ERROR_TRADE_CANCEL');
-    });
-  });
-
-  describe('isPendingSellTrade()', () => {
-    let pendingTrade;
-    exchange = undefined;
-    beforeEach(function () {
-      exchange = coinify.exchange;
-      pendingTrade = {
-        state: 'awaiting_transfer_in',
-        medium: 'blockchain'
-      };
-    });
-
-    it('should return true', () => {
-      let result = coinify.isPendingSellTrade(pendingTrade);
-      expect(result).toEqual(true);
     });
   });
 });
