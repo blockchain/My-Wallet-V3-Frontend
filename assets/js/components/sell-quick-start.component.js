@@ -120,7 +120,7 @@ function sellQuickStartController ($scope, $rootScope, currency, buySell, Alerts
   };
 
   $scope.setFiat = (amount) => {
-    this.transaction.fiat = amount;
+    this.transaction.fiat = parseFloat(amount);
   };
 
   const success = (quote) => {
