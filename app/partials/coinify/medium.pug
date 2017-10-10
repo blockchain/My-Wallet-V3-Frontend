@@ -10,7 +10,7 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
         .flex-row.flex-center
           img.mrm(src="img/bank.png" height="15")
           span.type-h5.em-300(translate="BANK")
-        ul
+        ul.pan
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY1" ng-show="needsKYC()")
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY2" translate-values)
           li.ml-30.em-300.f-12(translate="{{mediums.bank.inPercentageFee > 0 ? 'BANK_TRANSFER.COPY4' : 'BANK_TRANSFER.COPY3'}}" translate-values="{fee: mediums.bank.inPercentageFee}")
@@ -28,7 +28,7 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
         .flex-row.flex-center
           img.mrm(src="img/credit-card.png" height="15")
           span.type-h5.em-300(translate="CARD")
-        ul
+        ul.pan
           li.ml-35.em-300.f-12(translate="CARD_TRANSFER.COPY1")
           li.ml-35.em-300.f-12
             span(translate="CARD_TRANSFER.COPY2" translate-values="{fee: mediums.card.inPercentageFee}")

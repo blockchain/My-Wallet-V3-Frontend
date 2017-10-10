@@ -6,16 +6,16 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   let { exchange, medium, fiatCurrency } = $scope.vm;
 
   let limits = $scope.limits = exchange.profile.limits;
-  let max = limits[medium].inRemaining[fiatCurrency()];
-  let min = limits[medium].minimumInAmounts[fiatCurrency()];
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
+
+  $scope.max = limits[medium].inRemaining[fiatCurrency()];
+  $scope.min = limits[medium].minimumInAmounts[fiatCurrency()];
 
   $scope.state = {};
   $scope.isBank = medium === 'bank';
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.currencies = currency.coinifyCurrencies;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   let tryParse = (json) => {
@@ -39,7 +39,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   };
 
   setTrade();
-  $scope.state.editAmount = $scope.trade.fiatAmount > max || $scope.trade.fiatAmount < min;
+  $scope.state.editAmount = $scope.trade.fiatAmount > $scope.max || $scope.trade.fiatAmount < $scope.min;
 
   let getQuote = () => {
     return coinify.getQuote($scope.tempTrade.fiatAmount * 100, $scope.tempTrade.fiatCurrency);
