@@ -21,7 +21,7 @@ angular
       this.level = this.profile ? +this.profile.level.name : null;
 
       this.getCardMax = () => {
-        if (coinify.limits.card.max) return this.currency && coinify.limits.card.max[this.currency.code] + ' ' + this.currency.code;
+        if (coinify.limits.card.inRemaining) return this.currency && coinify.limits.card.inRemaining[this.currency] + ' ' + this.currency;
       };
     }
   });

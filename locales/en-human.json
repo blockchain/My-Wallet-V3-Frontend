@@ -1110,7 +1110,7 @@
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
-    "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to {{ccmax}} per day.",
+    "BODY": "Bank transfers are unavailable until verification is complete. Your remaining limit for credit card purchases is {{ccmax}}.",
     "LINK": "Review status"
   },
   "KYC_FLAGGED": {
