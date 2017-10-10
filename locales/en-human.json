@@ -1376,6 +1376,15 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
+  "sfox-identity": {
+    "ICON": "ti-id-badge",
+    "TITLE": "Identification In Review",
+    "COPY": "SFOX is currently verifying your identity. This can take up to 2 days. Your limit will increase once you are verified."
+  },
+  "coinify_after-trade": {
+    "TITLE": "🔒 Verification Needed",
+    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume buying or selling bitcoin in <b>{{::days}} day(s).</b>"
+  },
   "unocoin_pancard-id-helper": {
     "TITLE": "Acceptable PAN Card",
     "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
@@ -1404,16 +1413,6 @@
   "UNOCOIN_EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
-  "coinify-verification": {
-    "ICON": "ti-lock",
-    "TITLE": "Verification Needed",
-    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume buying or selling bitcoin in <b>{{days}} day(s).</b>"
-  },
-  "sfox-identity": {
-    "ICON": "ti-id-badge",
-    "TITLE": "Identification In Review",
-    "COPY": "SFOX is currently verifying your identity. This can take up to 2 days. Your limit will increase once you are verified."
-  },
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
@@ -1585,8 +1584,13 @@
     "can_sell_remaining_balance": {
       "EXPLAIN": "You can sell up to {{::max}} {{::curr}}"
     },
+    "after_first_trade": {
+      "EXPLAIN": "Your limit is set to 0 {{::curr}}.",
+      "WHY": "Why?"
+    },
     "awaiting_first_trade_completion": {
       "EXPLAIN": "Trading is disabled until your pending trade is complete.",
+      "CHECK_STATUS": "Check Status",
       "FINISH": "Finish",
       "CANCEL": "Cancel"
     }

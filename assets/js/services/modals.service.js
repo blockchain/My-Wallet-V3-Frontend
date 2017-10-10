@@ -68,20 +68,22 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     })
   );
 
-  service.openHelper = (helper) => open({
+  service.openHelper = (helper, opts) => open({
     controller ($scope) {
       let helperImages = {
-        'bank-deposit-helper': 'img/bank-deposit-helper.png',
+        'id-id-helper': 'img/id-id-helper.png',
         'bank-check-helper': 'img/bank-check-helper.png',
         'address-id-helper': 'img/address-id-helper.png',
-        'id-id-helper': 'img/id-id-helper.png',
+        'bank-deposit-helper': 'img/bank-deposit-helper.png',
         'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
         'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
         'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png',
-        'expiring-exchange-helper': null
+        'expiring-exchange-helper': null,
+        'coinify_after-trade': null
       };
 
       $scope.helper = helper;
+      $scope.days = opts && opts.days;
       $scope.image = helperImages[helper];
     },
     templateUrl: 'partials/helper-modal.pug',

@@ -76,7 +76,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let { user, profile } = service.exchange;
 
       if (reason === 'has_remaining_buy_limit' && user && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
-      else if (reason === 'awaiting_first_trade_completion') return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
+      else if (reason === 'awaiting_first_trade_completion' && service.getPendingTrade()) return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
+      else if (reason === 'awaiting_first_trade_completion' && service.getProcessingTrade()) return { 'CHECK_STATUS': service.openProcessingTrade };
+      else if (reason === 'after_first_trade') return { 'WHY': service.openTradingDisabledHelper };
     },
     get sellLaunchOptions () {
       let reason = service.sellReason;
@@ -84,7 +86,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
       if (reason === 'can_sell_max' && user && profile.level && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
       else if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
-      else if (reason === 'awaiting_first_trade_completion') return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
+      else if (reason === 'awaiting_first_trade_completion' && service.getPendingTrade()) return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
+      else if (reason === 'awaiting_first_trade_completion' && service.getProcessingTrade()) return { 'CHECK_STATUS': service.openProcessingTrade };
+      else if (reason === 'after_first_trade') return { 'WHY': service.openTradingDisabledHelper };
     },
     trades: { completed: [], pending: [] },
     getTxMethod: (hash) => txHashes[hash] || null,
@@ -102,6 +106,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     openPendingKYC,
     getPendingTrade,
     openPendingTrade,
+    getProcessingTrade,
+    openProcessingTrade,
+    openTradingDisabledHelper,
     getTrades,
     signupForAccess,
     tradeStateIn,
@@ -186,8 +193,24 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return trades.filter((trade) => trade._state === 'awaiting_transfer_in')[0];
   }
 
+  function getProcessingTrade () {
+    let trades = service.exchange.trades;
+    return trades.filter((trade) => trade._state === 'processing')[0];
+  }
+
   function openPendingTrade () {
     modals.openBuyView(null, service.getPendingTrade());
+  }
+
+  function openProcessingTrade () {
+    modals.openBuyView(null, service.getProcessingTrade());
+  }
+
+  function openTradingDisabledHelper () {
+    let canTradeAfter = service.exchange.profile.canTradeAfter;
+    let days = isNaN(canTradeAfter) ? 1 : Math.ceil((canTradeAfter - Date.now()) / ONE_DAY_MS);
+
+    modals.openHelper('coinify_after-trade', { days: days });
   }
 
   function getTrades () {
