@@ -2,6 +2,7 @@ angular
   .module('walletApp')
   .component('bitcoinCashWallet', {
     bindings: {
+      shiftLoaded: '<',
       wallet: '<'
     },
     templateUrl: 'templates/bitcoin-cash/bitcoin-cash-wallet.pug',
@@ -9,7 +10,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, currency, Env) {
+function bitcoinCashWalletController ($scope, modals, ShapeShift, MyWallet, Wallet, currency, Env) {
   this.accountInfo = MyWallet.wallet.accountInfo;
 
   Env.then(env => {
@@ -36,11 +37,16 @@ function bitcoinCashWalletController (modals, ShapeShift, MyWallet, Wallet, curr
   this.trades = ShapeShift.shapeshift.trades;
   this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
 
-  this.shiftTrades = this.trades.filter(ss => {
+  this.shiftTrades = [];
+  this.loadShiftTrades = () => this.trades.filter(ss => {
     return this.txList().some(tx => tx.hash === ss.depositHash);
   });
 
-  this.hasTransactions = () => this.txList().length > 0 || this.shiftTrades.length > 0;
+  this.hasTransactions = () => this.shiftLoaded && this.txList().length > 0 || this.shiftTrades.length > 0;
 
   this.isDefault = (account) => Wallet.isDefaultAccount(account);
+
+  $scope.$watch(() => this.shiftLoaded, (loaded) => {
+    this.shiftTrades = loaded ? this.loadShiftTrades() : [];
+  });
 }

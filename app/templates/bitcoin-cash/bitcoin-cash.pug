@@ -5,4 +5,4 @@
   .flex-column.pv-10-mobile(ng-if="!$ctrl.showWallets()")
     button.button-primary(translate="Show Bitcoin Cash Balance" ng-click="$ctrl.showBitcoinCashAbout()")
 .flex-column.pbl(ng-if="$ctrl.showWallets()")
-  bitcoin-cash-wallet(ng-repeat="wallet in $ctrl.allWallets" ng-class="{'border-bottom': $last}" wallet="wallet")
+  bitcoin-cash-wallet(ng-repeat="wallet in $ctrl.allWallets" ng-class="{'border-bottom': $last}" wallet="wallet" shift-loaded="$ctrl.shiftLoaded")
