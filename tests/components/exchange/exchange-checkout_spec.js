@@ -35,15 +35,13 @@ describe('exchange-checkout.component', () => {
   let handlers = {
     handleMediums () { return $q.resolve(mockMediums()); },
     handleQuote () { return $q.resolve(mockQuote()); },
-    handleBuy () { return $q.resolve(); },
-    buySuccess () { return $q.resolve(); },
-    buyError () { return $q.resolve(); },
+    handleTrade () { return $q.resolve(); },
+    onSuccess () { return $q.resolve(); },
+    onError () { return $q.resolve(); },
     provider: 'unocoin',
     fiat: {code: 'USD'},
     quote () { return mockQuote(); },
-    limits () { return { min: {}, max: {} }; },
-    openPendingTrade () { return $q.resolve(); },
-    pendingTrade () { () => { return $q.resolve(); }; }
+    limits () { return { min: {}, max: {} }; }
   };
 
   let getControllerScope = function (bindings) {

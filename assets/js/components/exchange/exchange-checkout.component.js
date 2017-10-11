@@ -16,12 +16,10 @@ angular
       conversion: '<',
       fiatOptions: '<',
       collapseSummary: '<',
-      buyError: '&',
-      handleBuy: '&',
-      buySuccess: '&',
+      onSuccess: '&',
       fiatChange: '&',
       handleQuote: '&',
-      handleMediums: '&'
+      handleTrade: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
@@ -39,7 +37,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.trading = this.trading;
-  $scope.buySuccess = this.buySuccess;
+  $scope.onSuccess = this.onSuccess;
   $scope.provider = this.provider.toUpperCase();
   $scope.displayCurrency = () => this.type === 'Buy' ? $scope.fiat : $scope.bitcoin;
 
@@ -103,7 +101,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.getRate = () => {
     let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.fiat.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount); this.handleMediums({quote: quote}); });
+    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount) });
   };
 
   $scope.refreshIfValid = (field) => {
@@ -133,9 +131,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     $scope.lock();
     let quote = $scope.quote;
     if (this.buyAccount || this.buyEnabled) {
-      this.handleBuy({account: this.buyAccount, quote: quote})
+      this.handleTrade({account: this.buyAccount, quote: quote})
         .then(trade => {
-          this.buySuccess({trade});
+          this.onSuccess({trade});
         })
         .catch((err) => {
           $scope.state.loadFailed = true;
@@ -143,7 +141,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      this.buySuccess({quote});
+      this.onSuccess({quote});
       $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };

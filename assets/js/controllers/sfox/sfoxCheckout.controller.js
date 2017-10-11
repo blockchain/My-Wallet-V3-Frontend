@@ -69,8 +69,4 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     $scope.tradeId = trade.id;
     $scope.siftScienceEnabled = true;
   };
-
-  $scope.buyError = () => {
-    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
-  };
 }

@@ -22,10 +22,9 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       buy-level="state.buyLevel"
       buy-account="state.account"
       collapse-summary="signupCompleted"
-      handle-buy="buyHandler(account, quote)"
+      handle-trade="buyHandler(account, quote)"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
-      buy-success="userId ? buySuccess(trade) : openSfoxSignup(quote)"
-      buy-error="buyError()")
+      on-success="userId ? buySuccess(trade) : openSfoxSignup(quote)")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black

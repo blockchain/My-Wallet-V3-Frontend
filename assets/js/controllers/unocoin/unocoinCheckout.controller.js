@@ -50,8 +50,4 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
   $scope.buySuccess = (trade) => {
     modals.openBankTransfer(trade);
   };
-
-  $scope.buyError = () => {
-    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
-  };
 }

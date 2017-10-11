@@ -22,11 +22,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       buy-enabled="true"
       limits="state.limits"
       provider="'Unocoin'"
-      buy-error="buyError()"
       collapse-summary="true"
-      handle-buy="buyHandler(account, quote)"
+      handle-trade="buyHandler(account, quote)"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
-      buy-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)")
+      on-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black

@@ -15,9 +15,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         limits="buyLimits"
         provider="'Coinify'"
         fiat-options="fiatOptions"
-        buy-success="buyHandler(quote)"
+        on-success="buyHandler(quote)"
         fiat-change="fiatHandler(currency)"
-        handle-mediums="buyMediumsHandler(quote)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="fiat.code")
@@ -32,9 +31,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         limits="sellLimits"
         provider="'Coinify'"
         fiat-options="fiatOptions"
-        buy-success="sellHandler(quote)"
+        on-success="sellHandler(quote)"
         fiat-change="fiatHandler(currency)"
-        handle-mediums="sellMediumsHandler(quote)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")

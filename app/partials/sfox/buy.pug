@@ -21,11 +21,10 @@
         limits="state.limits"
         buy-account="account"
         buy-level="state.buyLevel"
-        handle-buy="buyHandler(account, quote)"
-        handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
-        buy-success="buySuccess(trade)"
-        buy-error="buyError()"
-        collapse-summary="summaryCollapsed")
+        on-success="buySuccess(trade)"
+        collapse-summary="summaryCollapsed"
+        handle-trade="buyHandler(account, quote)"
+        handle-quote="quoteHandler(amount, baseCurr, quoteCurr)")
   .width-60.flex-justify(ng-if="trade")
     .width-80.width-100-tablet.width-100-mobile
       order-details(formatted-trade="trade")
