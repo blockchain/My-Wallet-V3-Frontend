@@ -145,15 +145,18 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };
-
-  $scope.$watch('state.rate', (rate) => {
-    if (!rate) return;
+  
+  $scope.$watch(() => {
+    if (!state.rate) return;
     if (!this.limits()) return;
 
-    let limits = this.limits();
-    let baseFiat = !currency.isBitCurrency($scope.displayCurrency());
-    $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
-    $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
+    $scope.$$postDigest(() => {
+      let rate = state.rate;
+      let limits = this.limits();
+      let baseFiat = !currency.isBitCurrency($scope.displayCurrency());
+      $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
+      $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
+    });
   });
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
