@@ -8,7 +8,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.trades = coinify.trades;
 
   $scope.fiatOptions = currency.coinifyCurrencies;
-  let walletCurrencyMatch = $scope.fiatOptions.filter(c => c.code === ($scope.exchange.profile ? $scope.exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
+  let walletCurrencyMatch = $scope.fiatOptions.filter(c => c.code === ($scope.exchange.user ? $scope.exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
   $scope.fiat = walletCurrencyMatch || $scope.fiatOptions.filter(c => c.code === 'EUR')[0];
   $scope.fiatHandler = (currency) => $scope.fiat = currency;
 
