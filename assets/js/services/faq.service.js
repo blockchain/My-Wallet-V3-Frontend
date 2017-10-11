@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('faq', faq);
 
-function faq (Ethereum) {
+function faq (Ethereum, modals) {
   const questions = [
     { name: 'CAN_I_BUY_BTC',
       values: {'link': 'wallet.common.buy-sell', 'text': 'START_CLICK_HERE'} },
@@ -15,7 +15,9 @@ function faq (Ethereum) {
     { name: 'HOW_MUCH_TO_SEND' },
     { name: 'WHEN_IS_A_TX_CONFIRMED' },
     { name: 'CAN_BC_SEE_FUNDS' },
-    { name: 'CAN_BC_RESET_PW' }
+    { name: 'CAN_BC_RESET_PW' },
+    { name: 'BITCOIN_CASH_ABOUT',
+      function: {text: 'BITCOIN_CASH.FAQ_GET_STARTED', click: modals.openBitcoinCashAbout} }
   ];
 
   const service = {

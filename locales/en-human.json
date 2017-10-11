@@ -66,6 +66,10 @@
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
       "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+    },
+    "BITCOIN_CASH_ABOUT": {
+      "Q": "How can I access Bitcoin Cash?",
+      "A": "If you had Bitcoin in your wallet prior to the fork on August 1, 2017, you can access your Bitcoin Cash in Settings > General. If not, ignore this message. "
     }
   },
   "SETTINGS": "Settings",
@@ -276,7 +280,7 @@
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
-  "NOTE" : "Note:",
+  "NOTE" : "Note",
   "CREATE" : "Create",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
@@ -543,6 +547,7 @@
   "API_ACCESS" : "API Access",
   "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>here</a> to get started.",
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
+  "BCH_ADDRESS_INVALID": "Invalid Bitcoin Cash Address",
   "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
@@ -573,6 +578,7 @@
   "COPY_SUCCESS": "Successfully copied to your clipboard!",
   "BITCOIN_SENT" : "Your transaction is being confirmed!",
   "BITCOIN_SENT_TOR" : "You've successfully sent bitcoin. Please refresh your TOR browser to see it.",
+  "BITCOIN_CASH_SENT" : "Your Bitcoin Cash transaction is being confirmed!",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
@@ -695,6 +701,7 @@
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
   "VERIFY_ON_ETHERSCAN": "Verify on Etherscan.io",
+  "VERIFY_ON_BLOCKCHAIR": "Verify on Blockchair.com",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
   "ACCOUNT_NAME_TAKEN" : "That name is already in use",
   "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send payment alerts when you receive funds.",
@@ -1289,7 +1296,7 @@
   },
   "ETHEREUM_SURVEY_PROMPT": {
     "TITLE": "Before you continue...",
-    "BODY": "Would you like to provide feedback regarding your Ethereum wallet experience today?"
+    "BODY": "Would you like to provide feedback regarding your ether wallet experience today?"
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
@@ -1561,7 +1568,7 @@
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
     "VERIFY_EMAIL": "Verify Email Address",
     "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
-    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your Unocoin and Blockchain accounts. If it's not, you can update your Blockchain email ",
+    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your {{::exchange}} and Blockchain accounts. If it's not, you can update your Blockchain email ",
     "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "Hey 👋! We noticed your Blockchain email is different than your {{::exchange}} email. Make sure you use the same email address.",
     "CHANGE_EMAIL": "Change Email",
     "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
@@ -1618,6 +1625,7 @@
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
     "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Order History tab.",
+    "CONFIRM_DEPOSIT_AMOUNT_BCH": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Bitcoin Cash area of Settings.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
@@ -1631,6 +1639,7 @@
     "NO_FUNDS_TO_EXCHANGE": "Not enough funds to exchange",
     "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
     "EXCHANGE_IN_PROGRESS_EXPLAIN": "Exchanges can take up to two hours, you can keep track of your exchange progress in the Order History tab. Once the trade is complete, your {{::output}} will arrive in your wallet.",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN_BCH": "Exchanges can take up to two hours, you can keep track of your exchange progress in the Bitcoin Cash area of Settings. Once the trade is complete, your {{::output}} will arrive in your wallet.",
     "ORDER_SUMMARY": "Order Summary",
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
@@ -1646,11 +1655,13 @@
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "Pending"
       },
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "In Progress"
       },
       "resolved": {
@@ -1676,6 +1687,37 @@
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
-  "HERE": "here",
+  "GENERAL": "General",
+  "BITCOIN_CASH": {
+    "SEE_BALANCE": "See Bitcoin Cash Balance",
+    "ABOUT_1": "What is Bitcoin Cash?",
+    "ABOUT_1_ANSWER": "Bitcoin Cash was created after a hard fork in the Bitcoin block chain and implemented an increased block size of 8mb with the goal of confirming transactions even faster. All bitcoin holders as of August 1, 2017 (block 478558) became owners of an identical amount of Bitcoin Cash.",
+    "ABOUT_2": "How is Bitcoin Cash different from bitcoin?",
+    "ABOUT_2_ANSWER": "Bitcoin (BTC) and Bitcoin Cash (BCH) are two different currencies. However, the addresses used for transacting (sending and receiving BTC and BCH) look exactly the same. It’s important to confirm that you’re using the correct currency’s address when transacting BTC/BCH.",
+    "ABOUT_3": "What can I do with my Bitcoin Cash?",
+    "ABOUT_3_ANSWER": "You can use BCH like any other cryptocurrency. You can use your Blockchain wallet to store your BCH, send all of your funds to a BCH wallet, or exchange it for bitcoin and/or ether.",
+    "ABOUT_4": "Where can I see my Bitcoin Cash balance?",
+    "ABOUT_4_ANSWER": "You can see your balance at: Settings > General.",
+    "ABOUT_5": "Will Bitcoin Cash affect my bitcoin balance?",
+    "ABOUT_5_ANSWER": "No, bitcoin and Bitcoin Cash are two separate currencies, completely independent of each other. You can send or exchange your Bitcoin Cash without changing your bitcoin balance.",
+    "KEEP": "Keep Bitcoin Cash",
+    "EXCHANGE": "Exchange Bitcoin Cash",
+    "SEND": "Send Bitcoin Cash",
+    "ADDRESSES": "Even though Bitcoin Cash addresses and bitcoin addresses look the same, they are different. <b>If you send Bitcoin Cash to a bitcoin address, your funds will be lost.</b><br><br><b>Are you sure the address below is a Bitcoin Cash address?</b>",
+    "YES_IT_IS": "Yes, it is",
+    "SENDING_ALL": "All of your Bitcoin Cash will be sent to the receiving address in a single transaction. Double check that you are using a Bitcoin Cash address and not a bitcoin address. Sending Bitcoin Cash to a bitcoin address will result in the permanent loss of your Bitcoin Cash funds.",
+    "FAQ_GET_STARTED": "Or click here to see the about and get started.",
+    "BCH_IN_WALLET": "Bitcoin Cash",
+    "BCH_WHATS_NEW": "If you had bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General.",
+    "BCH_BALANCE": "Bitcoin Cash Balance",
+    "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address"
+  },
+  "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
+  "EXCHANGE_STATUS": "Exchange Status",
+  "SEND_ETHER": "Send Ether",
+  "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
+  "ALL_ADDRESSES": "All Addresses",
+  "VIEW_TXS": "View Transactions",
+  "HIDE_TXS": "Hide Transactions",
   "": ""
 }
