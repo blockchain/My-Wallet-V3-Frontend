@@ -33,11 +33,9 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
 
   let email = MyWallet.wallet.accountInfo.email;
   Env.then(env => {
-    // TODO: don't pass all of 'env' into shouldDisplaySellTab()
-    $scope.canSeeSellTab = MyWallet.wallet.external.shouldDisplaySellTab(email, env, 'coinify');
     $scope.tabs = {
       selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-      options: $rootScope.inMobileBuy || !$scope.canSeeSellTab
+      options: $rootScope.inMobileBuy
       ? ['BUY_BITCOIN', 'ORDER_HISTORY']
       : ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
       select (tab) {
