@@ -94,15 +94,15 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getTxMethod: (hash) => txHashes[hash] || null,
     goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'}),
     setSellMax: (balance) => { service.sellMax = balance.amount / 1e8; service.sellFee = balance.fee; },
-    initialized: () => {},
     watchAddress: () => {},
     init,
     buying,
     selling,
     getQuote,
     getSellQuote,
-    triggerKYC,
     getOpenKYC,
+    pendingKYC,
+    pollUserLevel,
     openPendingKYC,
     getPendingTrade,
     openPendingTrade,
@@ -170,22 +170,23 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
-
-  function getOpenKYC () {
-    if (service.kycs.length) {
-      let kyc = service.kycs[0];
-      return ['declined', 'rejected', 'expired'].indexOf(kyc.state) > -1 ? service.triggerKYC() : kyc;
-    } else {
-      return service.triggerKYC();
-    }
+  
+  function pendingKYC () {
+    return service.kycs[0] && service.tradeStateIn(service.states.pending)(service.kycs[0]) && service.kycs[0];
   }
 
-  function triggerKYC () {
-    return $q.resolve(service.exchange.triggerKYC());
+  function getOpenKYC () {
+    return service.kycs.length ? service.pendingKYC() : service.exchange.triggerKYC();
   }
 
   function openPendingKYC () {
     modals.openBuyView(null, service.getOpenKYC());
+  } 
+  
+  function pollUserLevel () {
+    let kyc = service.pendingKYC();
+    let success = () => Exchange.fetchProfile(service.exchange);
+    kyc && Exchange.pollUserLevel(() => kyc && kyc.refresh(), () => kyc.state === 'completed', success);
   }
 
   function getPendingTrade () {

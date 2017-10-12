@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('Exchange', Exchange);
 
-function Exchange ($q, Alerts, modals, Env) {
+function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
   const watching = {};
 
   const service = {
@@ -10,6 +10,7 @@ function Exchange ($q, Alerts, modals, Env) {
     displayError,
     fetchProfile,
     fetchExchangeData,
+    pollUserLevel,
     fetchQuote,
     watchTrades,
     watchTrade
@@ -53,6 +54,12 @@ function Exchange ($q, Alerts, modals, Env) {
     trades
       .filter(t => !t.bitcoinReceived && !watching[t.receiveAddress])
       .forEach(service.watchTrade);
+  }
+  
+  function pollUserLevel (action, test, successCallback) {
+    let exit = () => { stop(); successCallback(); };
+    let check = () => action().then(() => test() && exit());
+    stop = MyWalletHelpers.exponentialBackoff(check, 30000);
   }
 
   function watchTrade (trade) {

@@ -74,13 +74,11 @@ function transactionDescription ($translate, Wallet, MyWallet, coinify, unocoin,
 
     if (external) {
       if (external.coinify) scope.exchange = 'Coinify';
-      if (external.coinify) { coinify.initialized(); scope.txMethod = coinify.getTxMethod(scope.tx.hash); }
+      if (external.coinify) coinify.init(external.coinify).then(() => scope.txMethod = coinify.getTxMethod(scope.tx.hash));
 
       if (external.unocoin) scope.exchange = 'Unocoin';
       if (external.unocoin) unocoin.init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
     }
-
-    coinify.initialized();
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {

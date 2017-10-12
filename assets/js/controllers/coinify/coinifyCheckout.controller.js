@@ -28,8 +28,8 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     max: Math.min(coinify.limits.blockchain.outRemaining['BTC'], coinify.sellMax)
   });
 
+  $scope.pendingKYC = () => coinify.pendingKYC();
   $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());
-  $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]) && coinify.kycs[0];
 
   Env.then(env => {
     $scope.tabs = {
@@ -44,6 +44,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     };
   });
 
+  coinify.pollUserLevel();
   coinify.setSellMax(balance);
   AngularHelper.installLock.call($scope);
 }
