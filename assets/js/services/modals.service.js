@@ -161,7 +161,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     return openMobileCompatible({
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance) {
+      controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance, $timeout) {
         let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
 
         $scope.vm = {
@@ -170,6 +170,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
 
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
         unocoin && trade.state === 'cancelled' && ($scope.formattedTrade.namespace = 'UNOCOIN_TX_ERROR_STATE');
+        $scope.editRef = () => {
+          service.openBankTransfer(trade, 'reference');
+          $timeout(() => { $uibModalInstance.dismiss(); }, 1500);
+        };
       },
       resolve: {
         trade: () => trade,
@@ -178,7 +182,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openBankTransfer = service.dismissPrevious((trade) => {
+  service.openBankTransfer = service.dismissPrevious((trade, step) => {
     return openMobileCompatible({
       templateUrl: 'partials/unocoin/bank-transfer.pug',
       windowClass: 'bc-modal trade-summary',
@@ -186,7 +190,8 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       controllerAs: 'vm',
       resolve: {
         trade () { return trade; },
-        bankAccount () { return trade.getBankAccountDetails(); }
+        bankAccount () { return trade.getBankAccountDetails(); },
+        step () { return step; }
       }
     });
   });

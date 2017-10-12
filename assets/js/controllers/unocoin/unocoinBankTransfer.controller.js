@@ -4,7 +4,7 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinBankTransferController ($rootScope, trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env, localStorageService) {
+function UnocoinBankTransferController ($rootScope, trade, bankAccount, $uibModalInstance, formatTrade, $q, unocoin, modals, AngularHelper, Alerts, Env, localStorageService, step) {
   Env.then(env => {
     let links = env.partners.unocoin.surveyTradeLinks;
     this.close = () => {
@@ -23,7 +23,8 @@ function UnocoinBankTransferController ($rootScope, trade, bankAccount, $uibModa
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => this.step = this.steps[s];
 
-  this.goTo('summary');
+  step ? this.goTo(step) : this.goTo('summary');
+
   this.state = { reference: '' };
 
   this.addReferenceNumber = () => {
