@@ -20,7 +20,7 @@ form.bc-form(
               span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
             .state-danger-text.f-12(ng-show="!state.loadFailed && checkoutForm.$error.min")
               i.ti-alert
-              span.mls Please enter an amount greater than {{ format($ctrl.limits().min, displayCurrency(), false) }} {{ displayCurrency().code }}
+              span.mls Please enter an amount greater than {{ format($ctrl.limits().min, displayCurrency, false) }} {{ displayCurrency.code }}
         .flex-center
           .flex-1.flex-center.border
             input.form-control.no-border(
@@ -55,7 +55,7 @@ form.bc-form(
               required)
             span.mhm {{bitcoin.code}}
         .f-12.mts
-          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: $ctrl.limits().max, curr: displayCurrency().code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}")
+          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: $ctrl.limits().max, curr: displayCurrency.code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}" ng-click="setMax()")
           | &nbsp;
           span(ng-repeat="(option, action) in trading().launchOptions")
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")

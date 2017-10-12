@@ -1569,7 +1569,7 @@
       "OPTION": ""
     },
     "has_remaining_buy_limit": {
-      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}.",
+      "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
       "KYC": "Increase your limit."
     },
     "not_enough_funds_to_sell": {
@@ -1578,11 +1578,11 @@
       "BUY": "@:BUY"
     },
     "can_sell_max": {
-      "EXPLAIN": "You can sell up to {{::max}} {{::curr}}.",
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>.",
       "KYC": "Increase your limit."
     },
     "can_sell_remaining_balance": {
-      "EXPLAIN": "You can sell up to {{::max}} {{::curr}}"
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>"
     },
     "after_first_trade": {
       "EXPLAIN": "Your limit is set to 0 {{::curr}}.",
