@@ -9,17 +9,17 @@ blocket-loading(loading="!isWalletInitialized()")
         li.flex-between.border-bottom-light(ng-if="activeAccounts().length > 1" ng-repeat="account in activeAccounts()")
           span.f-16.em-300.flex-center {{::account.label}}
           .flex-column.flex-align-end
-            span.f-16.em-300 {{ account.balance | toBitCurrency:BTCCurrency }}
+            span.f-16.em-300 {{ account.balance | toBitCurrency:settings.btcCurrency }}
             fiat.f-12.em-300(btc="account.balance")
         li.flex-between.border-bottom-light(ng-if="activeAccounts().length === 1" ng-repeat="account in activeAccounts()")
           span.f-16.em-300.flex-center {{::account.label}}
           .flex-column.flex-align-end
-            span.f-16.em-300 {{ getTotal() | toBitCurrency:BTCCurrency }}
+            span.f-16.em-300 {{ getTotal() | toBitCurrency:settings.btcCurrency }}
             fiat.f-12.em-300(btc="account.balance")
         li.flex-between.border-bottom-light.mid-grey(ng-if="activeLegacyAddresses().length > 0")
           span.f-16.em-300.flex-center(translate="IMPORTED_ADDRESSES")
           .flex-column.flex-align-end
-            span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:BTCCurrency }}
+            span.f-16.em-300 {{ getLegacyTotal() | toBitCurrency:settings.btcCurrency }}
             fiat(btc="getLegacyTotal()")
         li.flex-between.border-bottom-light
           span.f-16.em-300.flex-center {{ eth.defaultAccount.label }}
