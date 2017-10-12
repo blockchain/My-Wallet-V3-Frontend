@@ -22,7 +22,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
   this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
-  this.overMax = () => this.BTCAmount() / 1e8 > coinify.sellLimits.max;
+  this.overMax = () => this.BTCAmount() / 1e8 > coinify.limits.blockchain.outRemaining['BTC'];
 
   this.payment = Wallet.my.wallet.createPayment();
   this.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
