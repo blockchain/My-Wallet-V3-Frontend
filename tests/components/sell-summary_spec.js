@@ -63,7 +63,7 @@ describe('sell-summary.component', () => {
   };
 
   beforeEach(module('walletApp'));
-  
+
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_) {
       $rootScope = _$rootScope_;

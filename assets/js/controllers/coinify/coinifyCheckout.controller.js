@@ -31,7 +31,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.openKYC = () => modals.openBuyView(null, $scope.pendingKYC());
   $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]) && coinify.kycs[0];
 
-  let email = MyWallet.wallet.accountInfo.email;
   Env.then(env => {
     $scope.tabs = {
       selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',

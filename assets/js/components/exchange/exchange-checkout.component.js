@@ -39,7 +39,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.trading = this.trading;
   $scope.onSuccess = this.onSuccess;
   $scope.provider = this.provider.toUpperCase();
-  $scope.displayCurrency = this.type === 'Buy' ? $scope.fiat : $scope.bitcoin;
+  $scope.displayCurrency = () => this.type === 'Buy' ? $scope.fiat : $scope.bitcoin;
 
   let state = $scope.state = {
     btc: null,
@@ -101,7 +101,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.getRate = () => {
     let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.fiat.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount) });
+    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount); });
   };
 
   $scope.refreshIfValid = (field) => {
@@ -112,13 +112,15 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       $scope.cancelRefresh();
     }
   };
-  
-  $scope.setMax = () => {
-    let curr = $scope.displayCurrency;
-    let field = curr === $scope.bitcoin ? 'btc' : 'fiat';
 
-    state[field] = this.limits().max; state.baseCurr = curr; $timeout(() => $scope.refreshIfValid(field), 1);
-  }
+  $scope.setMax = () => {
+    let { displayCurrency, bitcoin } = $scope;
+    let field = displayCurrency() === bitcoin ? 'btc' : 'fiat';
+
+    state[field] = this.limits().max;
+    state.baseCurr = displayCurrency();
+    $timeout(() => $scope.refreshIfValid(field), 10);
+  };
 
   $scope.enableBuy = () => {
     let obj = {
@@ -152,7 +154,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };
-  
+
   $scope.$watch(() => {
     if (!state.rate) return;
     if (!this.limits()) return;
@@ -160,17 +162,16 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     $scope.$$postDigest(() => {
       let rate = state.rate;
       let limits = this.limits();
-      let baseFiat = !currency.isBitCurrency($scope.displayCurrency);
+      let baseFiat = !currency.isBitCurrency($scope.displayCurrency());
       $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
       $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
     });
   });
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
-  $scope.$watch('$ctrl.fiat', () => ($scope.fiat = this.fiat) && $scope.resetFields() && $scope.getRate());
+  $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
 
   Env.then(env => $scope.qaDebugger = env.qaDebugger);
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
-  $scope.getRate();
 }
