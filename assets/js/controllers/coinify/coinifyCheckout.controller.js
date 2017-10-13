@@ -25,7 +25,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.sellQuoteHandler = coinify.getSellQuote;
   $scope.sellLimits = () => ({
     min: coinify.limits.blockchain.minimumInAmounts['BTC'],
-    max: Math.min(coinify.limits.blockchain.outRemaining['BTC'], coinify.sellMax)
+    max: Math.min(coinify.limits.blockchain.inRemaining['BTC'], coinify.sellMax)
   });
 
   $scope.openKYC = () => coinify.openPendingKYC();

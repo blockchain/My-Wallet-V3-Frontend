@@ -33,7 +33,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return service.sellMax && service.sellMax > service.limits.blockchain.minimumInAmounts['BTC'];
     },
     get balanceAboveMax () {
-      return service.sellMax && service.sellMax > service.limits.blockchain.outRemaining['BTC'];
+      return service.sellMax && service.sellMax > service.limits.blockchain.inRemaining['BTC'];
     },
     get buyLimitRemaining () {
       let { limits } = service;
