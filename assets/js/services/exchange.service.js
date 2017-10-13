@@ -59,7 +59,7 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
   function pollUserLevel (action, test, successCallback) {
     let exit = () => { stop(); successCallback(); };
     let check = () => action().then(() => test() && exit());
-    stop = MyWalletHelpers.exponentialBackoff(check, 30000);
+    let stop = MyWalletHelpers.exponentialBackoff(check, 30000);
   }
 
   function watchTrade (trade) {
