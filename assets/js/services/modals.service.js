@@ -215,13 +215,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openSellView = service.openOnce((quote, trade) => {
-    let accounts = ($q, MyWallet) => {
-      let coinify = MyWallet.wallet.external.coinify;
-      return coinify.profile && quote
-        ? quote.getPaymentMediums().then((medium) => medium.bank.getBankAccounts())
-        : $q.resolve([]);
-    };
-
     return openMobileCompatible({
       templateUrl: 'partials/coinify-sell-modal.pug',
       windowClass: 'bc-modal buy',
@@ -230,7 +223,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        accounts,
+        accounts ($q, MyWallet) {
+          let coinify = MyWallet.wallet.external.coinify;
+          return coinify.user && quote
+            ? quote.getPaymentMediums().then((medium) => medium.bank.getBankAccounts())
+            : $q.resolve([]);
+        },
         quote () { return quote; },
         trade () { return trade; }
       }

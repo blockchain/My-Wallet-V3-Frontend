@@ -46,9 +46,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get userCanSell () {
       return service.userCanTrade && service.balanceAboveMin;
     },
-    get disabledUntil () {
-      return service.exchange.profile && Math.ceil((service.exchange.profile.canTradeAfter - Date.now()) / ONE_DAY_MS);
-    },
     get buyReason () {
       let reason;
       let { profile, user } = service.exchange;
@@ -133,7 +130,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return {
       reason: service.buyReason,
       isDisabled: !service.userCanBuy,
-      isDisabledUntil: service.isDisabledUntil,
       launchOptions: service.buyLaunchOptions
     };
   }
@@ -142,7 +138,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return {
       reason: service.sellReason,
       isDisabled: !service.userCanSell,
-      isDisabledUntil: service.isDisabledUntil,
       launchOptions: service.sellLaunchOptions
     };
   }
