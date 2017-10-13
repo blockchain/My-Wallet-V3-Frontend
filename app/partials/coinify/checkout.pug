@@ -8,15 +8,15 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     //- BUY
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
       exchange-checkout(
-        fiat="fiat"
         type="'Buy'"
+        fiat="buyFiat"
         conversion="100"
         trading="buying"
         limits="buyLimits"
         provider="'Coinify'"
-        fiat-options="fiatOptions"
+        fiat-options="buyFiatOptions"
         on-success="buyHandler(quote)"
-        fiat-change="fiatHandler(currency)"
+        fiat-change="buyFiatHandler(currency)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="fiat.code")
@@ -24,15 +24,15 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     //- SELL
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
       exchange-checkout(
-        fiat="fiat"
         type="'Sell'"
+        fiat="sellFiat"
         conversion="100"
         trading="selling"
         limits="sellLimits"
         provider="'Coinify'"
-        fiat-options="fiatOptions"
+        fiat-options="sellFiatOptions"
         on-success="sellHandler(quote)"
-        fiat-change="fiatHandler(currency)"
+        fiat-change="sellFiatHandler(currency)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
