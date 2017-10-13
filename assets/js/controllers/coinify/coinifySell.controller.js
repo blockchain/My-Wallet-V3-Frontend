@@ -107,11 +107,9 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   };
 
   this.cancel = () => {
-    $uibModalInstance.dismiss('');
     this.trade = null;
-    coinify.getTrades().then(() => {
-      this.goToOrderHistory();
-    });
+    $uibModalInstance.dismiss('');
+    Exchange.fetchProfile(coinify.exchange).then(coinify.getTrades);
   };
 
   let links;
