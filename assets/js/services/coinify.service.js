@@ -50,8 +50,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let reason;
       let { profile, user } = service.exchange;
 
-      if (!user) reason = 'user_needs_account';
-      else if (!profile.canTrade) reason = profile.cannotTradeReason;
+      if (user && !profile.canTrade) reason = profile.cannotTradeReason;
+      else if (!user) reason = 'user_needs_account';
       else reason = 'has_remaining_buy_limit';
 
       return reason;
