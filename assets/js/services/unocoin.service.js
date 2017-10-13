@@ -100,7 +100,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
 
   function pollLevel () {
     let success = () => Exchange.fetchProfile(service.exchange);
-    service.profile && Exchange.pollUserLevel(() => Exchange.fetchProfile(service.exchange), () => service.profile.level < 3, success);
+    service.profile && Exchange.pollUserLevel(() => Exchange.fetchProfile(service.exchange), () => service.profile.level >= 3, success);
   }
 
   return service;
