@@ -1137,7 +1137,7 @@
     "BODY": "Completing verification will raise your daily sell amount limit.",
     "LINK": "Finish verification"
   },
-  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
+  "KYC_APPROVED": "Identity verification approved! Your exchange limits have been updated.",
   "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
   "DATE_INITIALIZED": "Date Ordered",

@@ -26,15 +26,13 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   };
 
   this.cancel = () => {
+    coinify.pollUserLevel();
     $uibModalInstance.dismiss('');
-    $rootScope.$broadcast('fetchExchangeProfile');
     this.trade && this.trade.sendAmount && coinify.getTrades().then($scope.goToOrderHistory());
   };
 
   let links;
-  Env.then(env => {
-    links = env.partners.coinify.surveyLinks;
-  });
+  Env.then(env => links = env.partners.coinify.surveyLinks);
 
   this.close = (idx) => {
     if (idx > links.length - 1) { this.cancel(); return; }
