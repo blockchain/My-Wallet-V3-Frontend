@@ -50,4 +50,6 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
   $scope.buySuccess = (trade) => {
     modals.openBankTransfer(trade);
   };
+
+  unocoin.pollLevel();
 }

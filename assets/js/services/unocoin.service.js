@@ -18,6 +18,9 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
 
       return reason;
     },
+    get profile () {
+      return service.exchange.profile;
+    },
     get buyLaunchOptions () {
       let reason = service.buyReason;
 
@@ -30,7 +33,8 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
     determineStep,
     getPendingTrade,
     openPendingTrade,
-    verificationRequired
+    verificationRequired,
+    pollLevel
   };
 
   angular.extend(service, Exchange);
@@ -92,6 +96,11 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
 
   function openPendingTrade () {
     return modals.openBankTransfer(service.getPendingTrade());
+  }
+
+  function pollLevel () {
+    let success = () => Exchange.fetchProfile(service.exchange);
+    service.profile && Exchange.pollUserLevel(() => Exchange.fetchProfile(service.exchange), () => service.profile.level < 3, success);
   }
 
   return service;
