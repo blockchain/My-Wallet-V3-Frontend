@@ -103,12 +103,6 @@ describe('CoinifyMediumController', () => {
     });
   });
 
-  // describe ".needsKYC()", ->
-  //
-  //   it "should return true if amount is greater than yearlyMax", ->
-  //     expect(scope.needsKYC('bank')).toBe(true)
-  //
-
   describe('.pendingKYC()', function () {
     it('should return true if the user has a kyc pending', () => {
       return expect(scope.pendingKYC()).toBe(true);

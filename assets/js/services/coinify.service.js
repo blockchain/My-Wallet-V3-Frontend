@@ -24,7 +24,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return service.exchange.profile.limits;
     },
     get kycs () {
-      return service.exchange.kycs;
+      return service.exchange.kycs.sort((a,b) => a.createdAt < b.createdAt);
     },
     get userCanTrade () {
       return !service.exchange.user || service.exchange.profile.canTrade;
@@ -97,24 +97,25 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     watchAddress: () => {},
     init,
     buying,
+    states,
     selling,
     getQuote,
     getSellQuote,
     getOpenKYC,
-    pendingKYC,
+    getPendingKYC,
+    getRejectedKYC,
     pollUserLevel,
     openPendingKYC,
+    getTrades,
     getPendingTrade,
     openPendingTrade,
     getProcessingTrade,
     openProcessingTrade,
     openTradingDisabledHelper,
-    getTrades,
+    incrementBuyDropoff,
     signupForAccess,
     tradeStateIn,
     cancelTrade,
-    states,
-    incrementBuyDropoff
   };
 
   return service;
@@ -171,23 +172,21 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
   
-  function pendingKYC () {
+  function getPendingKYC () {
     return service.kycs[0] && service.tradeStateIn(service.states.pending)(service.kycs[0]) && service.kycs[0];
   }
-
+  
+  function getRejectedKYC () {
+    return service.kycs[0] && service.tradeStateIn(service.states.error)(service.kycs[0]) && service.kycs[0];
+  }
+  
   function getOpenKYC () {
-    return service.kycs.length ? service.pendingKYC() : service.exchange.triggerKYC();
+    return service.kycs.length && service.getPendingKYC() ? service.getPendingKYC() : service.exchange.triggerKYC();
   }
 
   function openPendingKYC () {
     modals.openBuyView(null, service.getOpenKYC());
   } 
-  
-  function pollUserLevel () {
-    let kyc = service.pendingKYC();
-    let success = () => Exchange.fetchProfile(service.exchange);
-    kyc && Exchange.pollUserLevel(() => kyc && kyc.refresh(), () => kyc.state === 'completed', success);
-  }
 
   function getPendingTrade () {
     let trades = service.exchange.trades;
@@ -236,6 +235,13 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     });
 
     return service.trades;
+  }
+  
+  function pollUserLevel () {
+    let kyc = service.getPendingKYC();
+    let success = () => { Exchange.fetchProfile(service.exchange); Alerts.displaySuccess('KYC_APPROVED'); }
+
+    kyc && Exchange.pollUserLevel(() => kyc && kyc.refresh(), () => kyc.state === 'completed', success);
   }
 
   function signupForAccess (email, country, state) {

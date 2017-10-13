@@ -107,7 +107,6 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   };
 
   this.cancel = () => {
-    $rootScope.$broadcast('fetchExchangeProfile');
     $uibModalInstance.dismiss('');
     this.trade = null;
     coinify.getTrades().then(() => {
