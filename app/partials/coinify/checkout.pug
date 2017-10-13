@@ -1,4 +1,4 @@
-bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)" badge="trades.pending.length")
+bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)" badge="pendingTrades().length")
   .sfox-logo
     span.mrs.type-sm Powered By
     a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
@@ -37,10 +37,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
-    .flex-row.flex-between.flex-center.mtl(ng-show="trades.pending.length")
-      h4.type-h5 Pending Orders ({{trades.pending.length}})
-      span.hidden-xs(ng-show="trades.pending.length") Coinify Account: {{ exchange.profile.email }}
-    table.width-100(ng-show="trades.pending.length")
+    .flex-row.flex-between.flex-center.mtl(ng-show="pendingTrades().length")
+      h4.type-h5 Pending Orders ({{pendingTrades().length}})
+      span.hidden-xs(ng-show="pendingTrades().length") Coinify Account: {{ exchange.profile.email }}
+    table.width-100(ng-show="pendingTrades().length")
       tr.border.bg-light-blue
         th.pvs.width-5-mobile.visible-xs
         th.phml.pvs.width-30(translate="STATUS")
@@ -49,7 +49,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         th.pvs.width-15(translate="TOTAL")
         th.pvs.width-5-mobile.visible-xs
       tr(
-        ng-repeat="trade in trades.pending | orderBy:'createdAt':true"
+        ng-repeat="trade in pendingTrades() | orderBy:'createdAt':true"
         user-action-required="trade.state === 'awaiting_transfer_in'"
         disabled="status.disabled"
         sell="sellHandler"
@@ -59,7 +59,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
 
     .flex-row.flex-between.flex-center.mtl
       h4.type-h5 Completed Orders
-      div(ng-hide="trades.pending.length")
+      div(ng-hide="pendingTrades().length")
         span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
     table.width-100.mb-30(gradual-render)
       tr.border.bg-light-blue
@@ -69,18 +69,18 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         th.pvs.width-25.hidden-xs BTC
         th.pvs.width-15(translate="TOTAL")
         th.pvs.width-5-mobile.visible-xs
-      tr.border(ng-hide="trades.completed.length")
+      tr.border(ng-hide="completedTrades().length")
         td.pvml.plml.italic.type-lbl.hidden-xs(colspan="4") You haven't completed any trades yet.
         td.pvml.plml.italic.type-lbl.visible-xs(colspan="5") You haven't completed any trades yet.
       tr(
-        ng-repeat="trade in trades.completed | orderBy:'createdAt':true | limitTo:$render.limit"
+        ng-repeat="trade in completedTrades() | orderBy:'createdAt':true | limitTo:$render.limit"
         disabled="status.disabled"
         sell="sellHandler"
         conversion="100"
         buy="buyHandler"
         trade="trade"
         in-view="$last && !$root.size.xs && $render.next()")
-      tr.border.center(ng-show="$root.size.xs && trades.completed.length > $render.limit")
+      tr.border.center(ng-show="$root.size.xs && completedTrades().length > $render.limit")
         td.pvl.italic.type-lbl.primary(colspan="5" ng-click="$render.next()" translate="SHOW_MORE")
 
 contact-support-footer(ng-hide="inMobileBuy")

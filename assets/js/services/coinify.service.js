@@ -14,7 +14,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   let tradeStateIn = (states) => (t) => states.indexOf(t.state) > -1;
 
   let txHashes = {};
-  let watching = {};
 
   const service = {
     get exchange () {
@@ -22,6 +21,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get limits () {
       return service.exchange.profile.limits;
+    },
+    get trades () {
+      return service.exchange.trades;
     },
     get kycs () {
       return service.exchange.kycs.sort((a, b) => a.createdAt < b.createdAt);
@@ -34,11 +36,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get balanceAboveMax () {
       return service.sellMax && service.sellMax > service.limits.blockchain.inRemaining['BTC'];
-    },
-    get buyLimitRemaining () {
-      let { limits } = service;
-      let { defaultCurrency } = service.exchange.profile;
-      return Math.max(limits.bank.inRemaining[defaultCurrency], limits.card.inRemaining[defaultCurrency]);
     },
     get userCanBuy () {
       return service.userCanTrade;
@@ -87,7 +84,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       else if (reason === 'awaiting_first_trade_completion' && service.getProcessingTrade()) return { 'CHECK_STATUS': service.openProcessingTrade };
       else if (reason === 'after_first_trade') return { 'WHY': service.openTradingDisabledHelper };
     },
-    trades: { completed: [], pending: [] },
     getTxMethod: (hash) => txHashes[hash] || null,
     goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'}),
     setSellMax: (balance) => { service.sellMax = balance.amount / 1e8; service.sellFee = balance.fee; },
@@ -103,7 +99,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     getRejectedKYC,
     pollUserLevel,
     openPendingKYC,
-    getTrades,
     getPendingTrade,
     openPendingTrade,
     getProcessingTrade,
@@ -119,9 +114,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   function init (coinify) {
     return Env.then(env => {
-      coinify.partnerId = env.partners.coinify.partnerId;
       coinify.api.sandbox = !env.isProduction;
-      if (coinify.trades) setTrades(coinify.trades);
+      coinify.partnerId = env.partners.coinify.partnerId;
+      if (coinify.trades) Exchange.watchTrades(coinify.trades);
       coinify.monitorPayments();
     });
   }
@@ -160,10 +155,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
-    }).then(() => trade.cancel().then(() => Exchange.fetchProfile(service.exchange)).then(() => {
-      // so when a trade is cancelled it moves to the completed table
-      service.getTrades();
-    }), () => {})
+    }).then(() => trade.cancel().then(() => Exchange.fetchExchangeData(service.exchange)), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
 
@@ -206,30 +198,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     let days = isNaN(canTradeAfter) ? 1 : Math.ceil((canTradeAfter - Date.now()) / ONE_DAY_MS);
 
     modals.openHelper('coinify_after-trade', { days: days });
-  }
-
-  function getTrades () {
-    return $q.resolve(service.exchange.getTrades()).then(setTrades);
-  }
-
-  function setTrades (trades) {
-    service.trades.pending = trades.filter(tradeStateIn(states.pending));
-    service.trades.completed = trades.filter(tradeStateIn(states.completed));
-
-    service.trades.completed
-      .filter(t => (
-        tradeStateIn(states.success)(t) &&
-        !t.bitcoinReceived &&
-        !watching[t.receiveAddress]
-      ))
-      .forEach(service.watchAddress);
-
-    service.trades.completed.forEach(t => {
-      let type = t.isBuy ? 'buy' : 'sell';
-      if (t.txHash) { txHashes[t.txHash] = type; }
-    });
-
-    return service.trades;
   }
 
   function pollUserLevel () {

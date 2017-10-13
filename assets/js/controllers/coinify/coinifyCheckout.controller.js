@@ -33,6 +33,8 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
 
   $scope.openKYC = () => coinify.openPendingKYC();
   $scope.pendingKYC = () => coinify.getPendingKYC() || coinify.getRejectedKYC();
+  $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t));
+  $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t));
 
   Env.then(env => {
     $scope.tabs = {

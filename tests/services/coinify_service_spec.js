@@ -66,22 +66,6 @@ describe('coinify service', () => {
     spyOn(exchange, 'getTrades').and.returnValue($q.resolve(trades));
   });
 
-  describe('getTrades', () => {
-    beforeEach(() => spyOn(coinify, 'watchAddress').and.returnValue($q.resolve()));
-
-    it('should call exchange.getTrades', () => {
-      coinify.getTrades();
-      expect(exchange.getTrades).toHaveBeenCalled();
-    });
-
-    it('should sort the trades into pending and completed arrays', () => {
-      coinify.getTrades();
-      $rootScope.$digest();
-      expect(coinify.trades.pending.length).toEqual(1);
-      expect(coinify.trades.completed.length).toEqual(3);
-    });
-  });
-
   describe('cancelTrade', () => {
     let trade;
     beforeEach(function () {

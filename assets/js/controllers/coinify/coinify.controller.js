@@ -28,7 +28,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.cancel = () => {
     coinify.pollUserLevel();
     $uibModalInstance.dismiss('');
-    Exchange.fetchProfile(coinify.exchange).then(coinify.getTrades);
+    coinify.exchange.user && Exchange.fetchExchangeData(coinify.exchange);
   };
 
   let links;
