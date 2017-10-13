@@ -24,7 +24,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return service.exchange.profile.limits;
     },
     get kycs () {
-      return service.exchange.kycs.sort((a,b) => a.createdAt < b.createdAt);
+      return service.exchange.kycs.sort((a, b) => a.createdAt < b.createdAt);
     },
     get userCanTrade () {
       return !service.exchange.user || service.exchange.profile.canTrade;
@@ -115,7 +115,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     incrementBuyDropoff,
     signupForAccess,
     tradeStateIn,
-    cancelTrade,
+    cancelTrade
   };
 
   return service;
@@ -171,22 +171,22 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   }
-  
+
   function getPendingKYC () {
     return service.kycs[0] && service.tradeStateIn(service.states.pending)(service.kycs[0]) && service.kycs[0];
   }
-  
+
   function getRejectedKYC () {
     return service.kycs[0] && service.tradeStateIn(service.states.error)(service.kycs[0]) && service.kycs[0];
   }
-  
+
   function getOpenKYC () {
     return service.kycs.length && service.getPendingKYC() ? service.getPendingKYC() : service.exchange.triggerKYC();
   }
 
   function openPendingKYC () {
     modals.openBuyView(null, service.getOpenKYC());
-  } 
+  }
 
   function getPendingTrade () {
     let trades = service.exchange.trades;
@@ -236,10 +236,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
     return service.trades;
   }
-  
+
   function pollUserLevel () {
     let kyc = service.getPendingKYC();
-    let success = () => { Exchange.fetchProfile(service.exchange); Alerts.displaySuccess('KYC_APPROVED'); }
+    let success = () => { Exchange.fetchProfile(service.exchange); Alerts.displaySuccess('KYC_APPROVED'); };
 
     kyc && Exchange.pollUserLevel(() => kyc && kyc.refresh(), () => kyc.state === 'completed', success);
   }
