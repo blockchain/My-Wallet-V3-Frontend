@@ -60,7 +60,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else if (service.balanceAboveMax) reason = 'can_sell_max';
-      else reason = 'has_remaining_sell_limit';
+      else reason = 'can_sell_max';
 
       return reason;
     },
