@@ -202,12 +202,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        exchange ($q, MyWallet, Exchange) {
-          let exchange = MyWallet.wallet.external.coinify;
-          return exchange.user
-            ? Exchange.fetchExchangeData(exchange)
-            : Exchange.fetchProfile(exchange);
-        },
         quote () { return quote; },
         trade () { return trade; }
       }
