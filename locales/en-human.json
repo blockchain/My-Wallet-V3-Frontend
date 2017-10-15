@@ -904,7 +904,7 @@
   "SURGE_EXPLAIN":"比特币网络正在处理不同寻常的高负荷。<b>为了避免出现任何确认延迟，我们建议收取一笔异常高的交易手续费 {{ suggested | convert:'btc' }}.</b>",
   "HIGH_FEE_WARN": "不需要高手续费",
   "HIGH_FEE_EXPLAIN": "您指定了一笔不同寻常高的手续费{{ fee | convert:'btc' }}。<b>即使您将手续费降到 {{ suggested | convert:'btc' }} ({{ suggested | convert:'fiat' }}), 您的交易仍旧会在接下来 ~10分钟(1个区块)确认.",
-  "LOW_FEE_ERROR": "Your transaction fee is too small",
+  "LOW_FEE_ERROR": "您的交易手续费太低了。",
   "LOW_FEE_WARN": "Low Custom Fee Not Recommended",
   "LOW_FEE_EXPLAIN": "You specified an exceptionally small transaction fee of {{ fee | convert:'btc' }}. Your transaction may become stuck and possibly never confirm. To increase the likelihood for your transaction to confirm within approximately one hour (6 blocks) <b>we strongly recommend a fee of no less than {{ suggested | convert:'btc' }} ({{ suggested | convert:'fiat' }}).</b>",
   "BALANCE_OVERFLOW_EXPLAIN": "The send amounts will have to be lowered. You'll be able to review the changes in the next step.",
