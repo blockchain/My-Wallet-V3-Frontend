@@ -68,20 +68,22 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     })
   );
 
-  service.openHelper = (helper) => open({
+  service.openHelper = (helper, opts) => open({
     controller ($scope) {
       let helperImages = {
-        'bank-deposit-helper': 'img/bank-deposit-helper.png',
+        'id-id-helper': 'img/id-id-helper.png',
         'bank-check-helper': 'img/bank-check-helper.png',
         'address-id-helper': 'img/address-id-helper.png',
-        'id-id-helper': 'img/id-id-helper.png',
+        'bank-deposit-helper': 'img/bank-deposit-helper.png',
         'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
         'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
         'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png',
-        'expiring-exchange-helper': null
+        'expiring-exchange-helper': null,
+        'coinify_after-trade': null
       };
 
       $scope.helper = helper;
+      $scope.days = opts && opts.days;
       $scope.image = helperImages[helper];
     },
     templateUrl: 'partials/helper-modal.pug',
@@ -192,22 +194,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openBuyView = service.openOnce((quote, trade) => {
-    let coinifyState = 'wallet.common.buy-sell.coinify';
-
-    let exchange = ($q, MyWallet) => {
-      let coinify = MyWallet.wallet.external.coinify;
-      return coinify.hasAccount && coinify.profile == null
-        ? coinify.fetchProfile()
-        : $q.resolve(coinify.profile ? coinify : {profile: {}});
-    };
-
-    let trades = ($q, MyWallet) => {
-      let coinify = MyWallet.wallet.external.coinify;
-      return coinify.hasAccount && $state.$current.name !== coinifyState
-        ? coinify.getTrades()
-        : $q.resolve([]);
-    };
-
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
       controller: 'CoinifyController',
@@ -216,8 +202,27 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       backdrop: 'static',
       keyboard: false,
       resolve: {
-        trades,
-        exchange,
+        quote () { return quote; },
+        trade () { return trade; }
+      }
+    });
+  });
+
+  service.openSellView = service.openOnce((quote, trade) => {
+    return openMobileCompatible({
+      templateUrl: 'partials/coinify-sell-modal.pug',
+      windowClass: 'bc-modal buy',
+      controller: 'CoinifySellController',
+      controllerAs: 'vm',
+      backdrop: 'static',
+      keyboard: false,
+      resolve: {
+        accounts ($q, MyWallet) {
+          let coinify = MyWallet.wallet.external.coinify;
+          return coinify.user && quote
+            ? quote.getPaymentMediums().then((medium) => medium.bank.getBankAccounts())
+            : $q.resolve([]);
+        },
         quote () { return quote; },
         trade () { return trade; }
       }

@@ -5,24 +5,24 @@
     span.mvm(ng-show="$ctrl.err.error === 'price_quote_expired'" translate="SELL.QUOTE_EXPIRED_ERROR" translate-values="{error: $ctrl.err.error_description}")
   .flex-column.mbl(ng-hide="$ctrl.err")
     p.mvm.pb-10
-      span.em-500.f-14 {{ $ctrl.transaction.btcAfterFee }} BTC
+      span.em-500.f-14 {{ $ctrl.BTCAmount() | convert:'btc' }}
       | &nbsp;
-      span.f-14(translate="SELL.WILL_BE_SENT")    
+      span.f-14(translate="SELL.WILL_BE_SENT") 
     .border.pam(ng-class="{'bg-grey': editAmount}")
       .flex-row.flex-between.pam.pos-rel.pv-15
         span.colon( translate="SELL.BTC_TO_SELL")
-        span {{ $ctrl.transaction.btc }} BTC
+        span {{ $ctrl.BTCAmount() | convert:'btc' }}
       .flex-end(ng-show="$ctrl.overMax()")
         span.type-sm.state-danger-text(translate="SELL.AMOUNT_OVER" translate-values="{max: $ctrl.sellLimits.max}")
       .flex-row.flex-between.pam.pv-15
         span.colon(translate="SELL.BTC_TX_FEE")
-        span {{ $ctrl.transaction.fee.btc }} BTC
+        span {{ $ctrl.fee | convert:'btc' }}
       .flex-row.flex-between.pam.pv-15
         span(translate="PAYMENT_FEE")
-        span {{ $ctrl.trade.fee }} {{ $ctrl.transaction.currency.code }}
+        span {{ $ctrl.paymentFee | format }} {{ $ctrl.fiatCurrency() }}
       .flex-row.flex-between.pam.pv-15
         span.em-500.colon(translate="SELL.CREDIT_OWED")
-        span.em-500 {{ $ctrl.trade.total | format }} {{ $ctrl.transaction.currency.code }}
+        span.em-500 {{ $ctrl.fiatAmount() - $ctrl.paymentFee | format }} {{ $ctrl.fiatCurrency() }}
     form.clearfix(name="$ctrl.sellRateForm" role="form" novalidate)
       .flex-row.flex-start.mtl
         div
@@ -41,4 +41,4 @@
       data-style="expand-left"
       ui-ladda="$ctrl.waiting"
       ng-hide="$ctrl.err"
-      ng-disabled="$ctrl.isDisabled() || $ctrl.overMax()")
+      ng-disabled="$ctrl.sellRateForm.$invalid || $ctrl.overMax()")

@@ -2,13 +2,15 @@ angular
   .module('walletApp')
   .factory('Exchange', Exchange);
 
-function Exchange ($q, Alerts, modals, Env) {
+function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
   const watching = {};
 
   const service = {
     interpretError,
     displayError,
+    fetchProfile,
     fetchExchangeData,
+    pollUserLevel,
     fetchQuote,
     watchTrades,
     watchTrade
@@ -32,8 +34,12 @@ function Exchange ($q, Alerts, modals, Env) {
     Alerts.displayError(service.interpretError(error));
   }
 
+  function fetchProfile (exchange) {
+    return $q.resolve(exchange.fetchProfile());
+  }
+
   function fetchExchangeData (exchange) {
-    return $q.resolve(exchange.fetchProfile())
+    return $q.resolve(service.fetchProfile(exchange))
       .then(() => exchange.getTrades())
       .then((trades) => service.trades = trades)
       .then(service.watchTrades);
@@ -48,6 +54,12 @@ function Exchange ($q, Alerts, modals, Env) {
     trades
       .filter(t => !t.bitcoinReceived && !watching[t.receiveAddress])
       .forEach(service.watchTrade);
+  }
+
+  function pollUserLevel (action, test, successCallback) {
+    let exit = () => { stop(); successCallback(); };
+    let check = () => action().then(() => test() && exit());
+    let stop = MyWalletHelpers.exponentialBackoff(check, 30000);
   }
 
   function watchTrade (trade) {

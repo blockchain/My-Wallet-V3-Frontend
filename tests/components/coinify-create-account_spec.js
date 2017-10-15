@@ -37,7 +37,6 @@ describe('coinify-create-account.component', () => {
       $componentController = _$componentController_;
 
       // Wallet = $injector.get('Wallet');
-      // buySell = $injector.get('buySell');
     })
   );
 

@@ -1,7 +1,7 @@
 describe('Activity', () => {
   let Activity;
   let MyWallet;
-  let buySell;
+  let coinify;
 
   beforeEach(angular.mock.module('walletApp'));
 
@@ -16,7 +16,7 @@ describe('Activity', () => {
     };
 
     Activity = $injector.get('Activity');
-    buySell = $injector.get('buySell');
+    coinify = $injector.get('coinify');
   }));
 
   describe('updateAllActivities', () =>
@@ -58,7 +58,7 @@ describe('Activity', () => {
     });
 
     it('should have the bought label for buy txs', () => {
-      spyOn(buySell, 'getTxMethod').and.returnValue('buy');
+      spyOn(coinify, 'getTxMethod').and.returnValue('buy');
       let tx = Activity.btcTxFactory(MyWallet.wallet.txList.transactions()[0]);
       expect(tx).toEqual(jasmine.objectContaining({
         type: 0,
