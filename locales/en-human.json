@@ -1106,7 +1106,10 @@
     "COPY4": "{{::fee}}% payment fee",
     "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card.",
     "PAY_VIA": "I want to pay via bank transfer",
-    "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase."
+    "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase.",
+    "CC_REQUIRED": "You must use a credit card to place recurring orders.",
+    "WANT_BANK": "Want to make a bank transfer instead?",
+    "REMOVE_RECURRING": "Remove recurring buy"
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",

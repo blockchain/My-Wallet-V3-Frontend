@@ -77,5 +77,10 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(state.total || 0, fiat, true) }}
+    .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled")
+      .item.inline.check
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck")
+        label(for="frequencyCheck") Make this a recurring order
+        select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true")
     .group.mtl
       button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin

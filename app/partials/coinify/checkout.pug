@@ -15,8 +15,9 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         limits="buyLimits"
         provider="'Coinify'"
         fiat-options="buyFiatOptions"
-        on-success="buyHandler(quote)"
         fiat-change="buyFiatHandler(currency)"
+        frequencies="['Daily', 'Weekly', 'Monthly']"
+        on-success="buyHandler(quote, null, frequency)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="buyFiat.code")

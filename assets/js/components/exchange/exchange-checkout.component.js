@@ -15,6 +15,7 @@ angular
       buyAccount: '<',
       conversion: '<',
       fiatOptions: '<',
+      frequencies: '<',
       collapseSummary: '<',
       onSuccess: '&',
       fiatChange: '&',
@@ -46,6 +47,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     fiat: null,
     rate: null,
     baseCurr: $scope.fiat,
+    frequency: this.frequencies && this.frequencies[0],
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.fiat; },
     get baseFiat () { return this.baseCurr === $scope.fiat; },
     get total () { return this.fiat; }
@@ -139,6 +141,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
+    let frequency = state.frequencyCheck && state.frequency;
+
     if (this.buyAccount || this.buyEnabled) {
       this.handleTrade({account: this.buyAccount, quote: quote})
         .then(trade => {
@@ -150,7 +154,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      this.onSuccess({quote});
+      this.onSuccess({quote, frequency});
       $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };

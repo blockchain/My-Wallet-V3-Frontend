@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, coinify, Exchange, $state, buyMobile, Env) {
+function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalInstance, MyWallet, Wallet, Alerts, Env, currency, formatTrade, Exchange, buyMobile, coinify, quote, trade, frequency) {
   Env.then(env => this.qaDebugger = env.qaDebugger);
 
   let exchange = coinify.exchange;
@@ -10,6 +10,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.quote = quote;
   this.trade = trade;
   this.user = Wallet.user;
+  this.frequency = frequency;
   this.now = () => new Date().getTime();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
