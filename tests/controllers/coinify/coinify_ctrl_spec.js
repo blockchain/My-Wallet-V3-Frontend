@@ -49,12 +49,14 @@ describe('CoinifyController', () => {
 
   let getController = function (quote, trade, options) {
     let scope = $rootScope.$new();
+    let frequency = 'Daily';
 
     let ctrl = $controller('CoinifyController', {
 
       $scope: scope,
       trade: trade || null,
       quote: quote || null,
+      frequency: frequency || false,
       options: options || {},
       $uibModalInstance: { close () {}, dismiss () {} }
     });
