@@ -999,276 +999,276 @@
   "ACCEPT_PARTNER_TOS_PRIVACY": "接受我们的 <a href='https://www.blockchain.com/terms' target='_blank' rel='noopener noreferrer'>服务条款</a>, Coinify的 <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>服务条款</a> 和<a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>隐私政策</a>",
   "EMAIL_IN_USE": "{{::email}}已正在使用中 ",
   "CLICK_TO_CHANGE": "点击此处以更改。",
-  "METHOD": "Method",
-  "VERIFY_PAYMENT": "Verify Payment",
-  "PLEASE_CREATE_ACCOUNT": "Please <span class='underline pointer'>create an account</span> to get an accurate exchange rate.",
-  "TRADE_AMOUNT_TOO_LOW": "The amount of this trade is too small. Try increasing the amount.",
-  "TRADE_EXCEEDS_LIMITS": "The amount of this trade is larger than your allowed limit.",
-  "INVALID_ARGUMENT": "An error occured. Please try again later or contact support.",
-  "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
-  "INTERNAL_ERROR": "An internal error occurred. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
-  "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "We are having trouble verifying your email. Please try again later or contact support.",
-  "OFFLINE_TOKEN_NOT_FOUND": "We were unable to login to your account. Please try again later or contact support.",
-  "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}.",
-  "CANT_FIND_CURRENCY": "Can't find your currency?",
-  "CURRENCY_COMING_SOON": "We'll be rolling out more currencies soon. Stay tuned.",
-  "NOTIFY_ME": "Notify me",
-  "COUNTRY_COMING_SOON": "We'll be rolling out more countries soon. Stay tuned.",
-  "AUTO_REFRESH": "This rate will automatically refresh after 15 minutes.",
-  "EST_QUOTE_1": "This is an estimated quote, create an account for more accuracy.",
-  "EST_QUOTE_2": "This is an estimated quote. The original quote for this trade expired. The exact amount of bitcoin received depends on when the payment is received.",
-  "RATE_WILL_EXPIRE": "Complete this trade before the rate expires to receive the guaranteed amount of bitcoin.",
-  "RATE_GUARANTEED": "Rate guaranteed: {{::count}}",
-  "QUOTE_EXPIRES_IN": "Quote expires in: {{::count}}",
-  "NOT_FINISHED": "Not Finished",
-  "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
-  "awaiting_transfer_in": "Pending",
-  "processing": "Processing",
-  "reviewing": "In Review",
-  "completed": "Completed",
-  "completed_test": "Completed Test",
-  "cancelled": "Canceled",
-  "rejected": "Rejected",
-  "expired": "Expired",
-  "SEE_BITCOIN": "See Your Bitcoin",
-  "SUMMARY": "Summary:",
-  "PROCESSED_BY_EXCHANGE": "This transaction is processed directly by Coinify. Blockchain is not a party to this transaction, nor is any transaction information sent to Blockchain. As always, bitcoins are sent directly to your wallet. Blockchain does not act as an intermediary in this transaction.",
-  "CARD_FEES": "{{::fee}}% fees charged by the card payment processor.",
-  "CURRENCY_NOT_SUPPORTED": "The currency for this transaction is not supported by the payment method selected. Try another currency or select a different payment method.",
-  "SEND_FUNDS_TO": "Send funds to the following bank account:",
-  "BANK_ADDRESS": "Bank Address:",
-  "VERIFY_IDENTITY": "Verify Identity",
-  "BANK_TRANSFER_PENDING": "Bank Transfer Pending",
-  "BOUGHT_VIA": "Bought via {{exchange}}",
-  "SOLD_VIA": "Sold via {{exchange}}",
-  "DEPOSITED_TO": "Deposited to {{exchange}}",
-  "RECEIVED_FROM": "Received from {{exchange}}",
+  "METHOD": "方式",
+  "VERIFY_PAYMENT": "验证付款",
+  "PLEASE_CREATE_ACCOUNT": "请 <span class='underline pointer'>创建一个账户</span>获得精确的汇率.",
+  "TRADE_AMOUNT_TOO_LOW": "这笔交易额太小，请尝试增加数量 Try increasing the amount.",
+  "TRADE_EXCEEDS_LIMITS": "这笔交易的金额超过了你方被允许的限额。",
+  "INVALID_ARGUMENT": "发生错误。请稍后再试或联系支持。",
+  "INVALID_REQUEST": "发生错误。请稍后再试或联系支持。",
+  "INTERNAL_ERROR": "发生内部错误，这很可能不是Blockchain的问题。 请稍后再试或联系Coinify支持。",
+  "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "我们在验证您的邮箱过程中遇到困难。请稍后再试或联系支持。",
+  "OFFLINE_TOKEN_NOT_FOUND": "我们无法登录到您的帐户。请稍后再试或联系支持。",
+  "INVALID_OFFLINE_TOKEN": "我们无法登录到您的帐户。请联系支持和参考您的帐号{{::user}}。",
+  "CANT_FIND_CURRENCY": "找不到您的货币？",
+  "CURRENCY_COMING_SOON": "我们很快就会推出更多的货币。敬请关注。",
+  "NOTIFY_ME": "通知我",
+  "COUNTRY_COMING_SOON": "我们将很快推出更多的国家。敬请关注。",
+  "AUTO_REFRESH": "此汇率在15分钟后会自动刷新。",
+  "EST_QUOTE_1": "这是一个估计的报价，请创建账户以获得更加精确的汇率。",
+  "EST_QUOTE_2": "这是一个估计的报价，本次交易的原始报价已过期。收到的比特币的确切数额取决于何时收到付款。",
+  "RATE_WILL_EXPIRE": "在这个汇率到期前完成这项交易，以获得比特币的担保金额。",
+  "RATE_GUARANTEED": "汇率已担保: {{::count}}",
+  "QUOTE_EXPIRES_IN": "报价到期: {{::count}}",
+  "NOT_FINISHED": "未完成",
+  "COUNTRY_NOT_FOUND": "对不起，您不能在所选国家创建帐户。",
+  "awaiting_transfer_in": "正在进行中",
+  "processing": "正在处理中",
+  "reviewing": "审核中",
+  "completed": "已完成",
+  "completed_test": "完成测试",
+  "cancelled": "已取消",
+  "rejected": "已拒绝",
+  "expired": "已过期",
+  "SEE_BITCOIN": "查看您的比特币",
+  "SUMMARY": "一览:",
+  "PROCESSED_BY_EXCHANGE": "这笔交易直接由Coinfy处理。Blockchain不是这笔交易的参与方，也没有任何交易信息被发送到Blockchain。与以往一样，比特币直接发送到您的钱包。Blockchain在本次交易中不作为中间人。",
+  "CARD_FEES": "该银行卡支付处理商收取{{::fee}}%的手续费。 ",
+  "CURRENCY_NOT_SUPPORTED": "选择的支付方式不支持这笔交易的货币。尝试另一种货币或选择一种不同的支付方式。",
+  "SEND_FUNDS_TO": "向以下银行账户发送资金:",
+  "BANK_ADDRESS": "银行账户地址:",
+  "VERIFY_IDENTITY": "验证身份",
+  "BANK_TRANSFER_PENDING": "银行转账申请中",
+  "BOUGHT_VIA": "通过{{exchange}}购买",
+  "SOLD_VIA": "通过 {{exchange}}出售",
+  "DEPOSITED_TO": "提现到{{exchange}}",
+  "RECEIVED_FROM": "从{{exchange}接收}",
   "TX_ERROR_STATE": {
-    "TITLE": "Transaction {{::state}}",
+    "TITLE": "交易{{::state}}",
     "BODY": ""
   },
   "TX_CONFIRM": {
-    "TITLE": "Confirm Purchase",
-    "BODY": "You are about to initiate a bank transfer."
+    "TITLE": "确认购买",
+    "BODY": "您将开始进行银行转账。"
   },
   "TX_PENDING": {
-    "TITLE": "Order Pending",
-    "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
+    "TITLE": "正在下订单",
+    "BODY": "您的购买目前正在处理中。我们的交易所合作伙伴将在1个工作日内向您发送状态更新。"
   },
   "TX_SUCCESS": {
-    "TITLE": "Order Purchased",
-    "BODY": "Your purchase was successful! Bitcoins were sent to <b>{{::label}}</b>."
+    "TITLE": "订单已购买",
+    "BODY": "您的购买已成功！比特币被发送到 <b>{{::label}}</b>."
   },
   "TX_IN_REVIEW": {
-    "TITLE": "Transaction in review.",
-    "BODY": "Your card was charged and the purchase is currently under review. This process will complete within one business day. In case your order cannot be processed, a refund will be issued and appear in your card statement within a few days. Thank you for your patience!"
+    "TITLE": "交易审核中",
+    "BODY": "您的卡片已被收费，这笔购买目前正在审查中。该流程将在1个工作日内完成。如果您的订单无法处理，退款将在几天内发布并出现在您的卡片声明中。谢谢您的耐心等待！"
   },
   "TX_EXPIRED": {
-    "TITLE": "Transaction expired.",
-    "BODY": "This transaction is expired. Click Try Again to buy bitcoin."
+    "TITLE": "交易已过期",
+    "BODY": "这笔交易已过期。点击重新购买比特币。"
   },
   "TX_CARD_REJECTED": {
-    "TITLE": "Transaction {{::state}}",
-    "BODY": "Your purchase was rejected and unfortunately the reason cannot be disclosed. A refund has been issued and should appear in your card statement within a few days. We apologize for the inconvenience."
+    "TITLE": "交易{{::state}}",
+    "BODY": "您的购买被拒绝，不幸的是原因无法透露。退款将在几天内发布并出现在您的卡片声明中。谢谢您的耐心等待！"
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
-    "BODY": "Please send <b>{{::amt}} {{::curr}}</b> to Coinify's bank account below within <b>the next 48 hours</b>.<br/><br/><b>Funds must come from your bank account, which needs to be in the same name as your government issued ID.</b> Coinify will reject any transfers from third party accounts not in your name."
+    "BODY": "请在<b>接下来的48小时内</b>发送 <b>{{::amt}} {{::curr}}</b> 到下面的Coinify的银行账户。<br/><br/><b>资金必须来自您的银行账户，要与您的政府颁发的ID名字相同。</b> Coinify将会拒绝所有不是您的名字的第三方账户。"
   },
   "TX_AWAITING_REF_NUMBER": {
-    "TITLE": "Bank Transfer",
-    "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below before continuing. You will then need to provide the bank transfer reference number. <b>Please use the same bank account that was used to create the account.</b>"
+    "TITLE": "银行转账",
+    "BODY": "请在继续前以电子形式(via IMPS, NEFT, or RTGS)发送{{::amount}} 到下面的Unocoin银行账户。然后您将需要提供银行转账编号。<b>请使用与创建 这个账户相同的银行账户。</b>"
 
   },
   "TX_INITIATED": {
-    "TITLE": "Trade Initiated",
-    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 days."
+    "TITLE": "交易已开始",
+    "BODY": "邮件确认将会发送到{{::email}}。<br>您可以在3-5天内获得您的BTC。"
   },
   "BITCOIN_RECEIVED": {
-    "TITLE": "Bitcoin received!",
-    "BODY": "You have just received the bitcoins you purchased! <br/> Bitcoins were sent to <b>{{::label}}</b>."
+    "TITLE": "已收到比特币!",
+    "BODY": "您刚刚已经收到您购买的比特币! <br/>比特币被发送到 <b>{{::label}}</b>."
   },
-  "CLICK_TO_CANCEL": "Cancel trade",
-  "SPEND_IMPORTED_ADDRESS": "Spend",
-  "CARD": "Credit/Debit Card",
-  "BANK": "Bank Transfer",
+  "CLICK_TO_CANCEL": "取消交易",
+  "SPEND_IMPORTED_ADDRESS": "支出",
+  "CARD": "信用卡/借记卡",
+  "BANK": "银行转账",
   "CARD_TRANSFER": {
-    "COPY1": "Receive bitcoin instantly",
-    "COPY2": "{{::fee}}% convenience fee",
-    "COPY3": "Visa or Mastercard",
-    "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
-    "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
+    "COPY1": "立即接收比特币",
+    "COPY2": "{{::fee}}% 的便利费",
+    "COPY3": "Visa或Mastercard",
+    "HELPER": "为了结帐的便利性和速度，将会收取支付手续费。将您的付款兑换成比特币的汇率是固定的。",
+    "RECOMMENDATION": "对于超过{{::max}} {{::code}}的订单, 我们建议通过银行转账支付。"
   },
   "BANK_TRANSFER": {
-    "COPY1": "One time ID Verification",
-    "COPY2": "Receive bitcoin in 2-3 days",
-    "COPY3": "No payment fees",
-    "COPY4": "{{::fee}}% payment fee",
-    "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card.",
-    "PAY_VIA": "I want to pay via bank transfer",
-    "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase."
+    "COPY1": "一次性身份验证",
+    "COPY2": "在2-3天内接收比特币",
+    "COPY3": "没有支付手续费",
+    "COPY4": "{{::fee}}%的支付手续费",
+    "RECOMMENDATION": "对于低于{{::min}} {{::code}}的订单，我们建议通过信用卡或借记卡支付。",
+    "PAY_VIA": "我想通过银行转账支付",
+    "PAY_VIA_NEEDS_KYC": "我想通过银行转账支付。您将需要在您的购买之前完成KYC。"
   },
   "KYC_IN_REVIEW": {
-    "TITLE": "Identity Verification In Review",
-    "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to {{ccmax}} per day.",
-    "LINK": "Review status"
+    "TITLE": "身份验证正在审核中",
+    "BODY": "验证完成后便可以使用银行转帐。信用卡购买每天可高达 {{ccmax}}。",
+    "LINK": "审核状态"
   },
   "KYC_FLAGGED": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
+    "BODY": "您的验证请求以被标记为人工审核。Coinify将在1个工作日内以您提供的方式发送一个状态更新。如果给您带来不便，这里提前感谢您的耐心。"
   },
   "KYC_REJECTED": {
-    "TITLE": "Identity Verification Denied",
-    "BODY": "There was an issue verifying your identity with the documents provided. Please try uploading different identification. Bank transfers are unavailable until we can successfully verify your identity.",
-    "LINK": "Try again"
+    "TITLE": "身份验证被拒绝",
+    "BODY": "使用所提供的文件验证您的身份时出现了一个问题。请尝试上传不同的身份证明。银行转帐只有在我们成功验证了您的身份后才可使用。",
+    "LINK": "请重试。"
   },
   "KYC_UPDATES_REQUESTED": {
-    "TITLE": "Identity Verification Updates Requested",
-    "BODY": "There was an issue verifying your identity with the documents provided. More information is needed.",
-    "LINK": "Finish verification"
+    "TITLE": "请求身份验证更新",
+    "BODY": "使用所提供的文件验证您的身份时出现了一个问题。需要更多的信息。",
+    "LINK": "完成验证"
   },
   "KYC_PENDING": {
-    "TITLE": "Complete Identity Verification",
+    "TITLE": "完成身份验证",
     "BODY": "@:KYC_IN_REVIEW.BODY",
-    "LINK": "Finish verification"
+    "LINK": "完成验证"
   },
   "SELL_KYC_PENDING": {
-    "TITLE": "Complete Identity Verification",
-    "BODY": "Completing verification will raise your daily sell amount limit.",
-    "LINK": "Finish verification"
+    "TITLE": "完成身份验证",
+    "BODY": "完成验证将提高您的每日卖出限额",
+    "LINK": "完成验证"
   },
-  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
-  "TRADE_ID": "Trade ID",
+  "KYC_APPROVED": "身份验证被批准!点击这里通过银行转帐开始购买比特币。",
+  "TRADE_ID": "交易ID",
   "ISX_ID": "iSignthis ID",
-  "DATE_INITIALIZED": "Date Ordered",
-  "TOTAL_COST": "Total Cost",
-  "BTC_PURCHASED": "BTC Purchased",
-  "PAYMENT_METHOD": "Payment Method",
-  "SEND_TO": "Send To",
-  "RECEIVING_WALLET": "Receiving wallet",
-  "RECEIVING_ADDRESS": "QA: Receiving address",
-  "RECEIVE_BITCOIN_TO": "Bitcoins will be sent to {{::label}}.",
-  "BLACKLISTED_COUNTRY": "Buying bitcoin is not available in your country yet.<br>We'll be rolling out more countries soon.",
-  "CONFIRM_YOUR_ORDER": "Confirm your order:",
-  "ORDER_CONFIRMATION_COPY": "Please confirm your order details before we direct you to our secure payment provider.",
-  "ORDER_CONFIRMATION_BANK_COPY": "Please confirm your order details before continuing. Bank transfers can take a day or more to complete depending on your bank, and the displayed bitcoin rate may change depending on the current exchange rate when processed.",
-  "ERROR_QUOTE_FETCH" : "Unable to obtain quote at this time, please try again later.",
-  "ERROR_PAYMENT_MEDIUMS_FETCH" : "Something went wrong, please try again later.",
-  "ERROR_TRADE_CREATE" : "Unable to place your order at this time, please try again later.",
-  "ERROR_TRADE_CANCEL": "Unable to cancel your trade at this time, please try again later.",
-  "ORDER_DETAILS": "Order Details:",
-  "BANK_ORDER_DETAILS": "Send your funds to the following bank account:",
-  "ORDER_ID_REFERENCE": "*Must be included in your transfer*",
-  "MAX_LIMIT_EXCEEDED": "To pay via {{::medium}}, please decrease your amount below {{::max}} {{::code}}.",
-  "BELOW_MIN_LIMIT": "To pay via {{::medium }}, please increase your amount to {{::min}} {{::code}} or more.",
-  "MAX_MIN_HELPER": "Minimum buy amount is {{::min}} {{::code}}. Maximum buy amount is {{::max}} {{::code}}.",
-  "BUY_AMT_LOW": "Minimum buy amount is {{::symbol}}{{::limit}}",
-  "BUY_AMT_HIGH": "Maximum buy amount is {{::symbol}}{{::limit}}",
-  "BUY_AMT_IS": "Your limit is set to {{::amount}} {{::code}}.",
-  "SELL_AMT_LOW": "Minimum sell amount is {{::symbol}}{{::limit}}",
-  "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
-  "WHY": "Why?",
-  "UPDATE": "Update",
+  "DATE_INITIALIZED": "订单日期",
+  "TOTAL_COST": "总承包",
+  "BTC_PURCHASED": "已购买BTC",
+  "PAYMENT_METHOD": "支付方式",
+  "SEND_TO": "发送到",
+  "RECEIVING_WALLET": "接收钱包",
+  "RECEIVING_ADDRESS": "QA: 接收地址",
+  "RECEIVE_BITCOIN_TO": "比特币将被发送到{{::label}}.",
+  "BLACKLISTED_COUNTRY": "您的国家还不能购买比特币。<br>我们将很快在更多国家推出服务。",
+  "CONFIRM_YOUR_ORDER": "确认您的订单:",
+  "ORDER_CONFIRMATION_COPY": "请确认您的订单详情，而后，我们会将您导向我们的安全支付提供商。",
+  "ORDER_CONFIRMATION_BANK_COPY": "请在继续前确认您的订单详细信息。银行转账根据您的银行可能会需要一天或更久才能完成，显示的比特币汇率可能会根据处理时的汇率发生变化。",
+  "ERROR_QUOTE_FETCH" : "此时无法获得报价，请稍后重试。",
+  "ERROR_PAYMENT_MEDIUMS_FETCH" : "出现错误，请稍后重试。.",
+  "ERROR_TRADE_CREATE" : "目前无法下达您的订单，请稍后重试。",
+  "ERROR_TRADE_CANCEL": "目前无法取消您的交易，请稍后重试。",
+  "ORDER_DETAILS": "订单详细信息:",
+  "BANK_ORDER_DETAILS": "将您的资金发送到下列银行帐户:",
+  "ORDER_ID_REFERENCE": "*必须包括在你的转帐中*",
+  "MAX_LIMIT_EXCEEDED": "想要通过{{::medium}}付款，请减少您的数额{{::max}} {{::code}}.",
+  "BELOW_MIN_LIMIT": "想要通过 {{::medium }}付款，请增加您的数额到 {{::min}} {{::code}}或更多",
+  "MAX_MIN_HELPER": "最低购买额为 {{::min}} {{::code}}. 最大购买额为 {{::max}} {{::code}}.",
+  "BUY_AMT_LOW": "最低购买额 {{::symbol}}{{::limit}}",
+  "BUY_AMT_HIGH": "最大购买额 {{::symbol}}{{::limit}}",
+  "BUY_AMT_IS": "您的限制设置为{{::amount}} {{::code}}.",
+  "SELL_AMT_LOW": "最低购买额为  {{::symbol}}{{::limit}}",
+  "SELL_AMT_HIGH": "最大购买额为 {{::symbol}}{{::limit}}",
+  "WHY": "为什么?",
+  "UPDATE": "更新",
   "BUY_SUBSCRIBE": {
-    "TITLE": "This feature is coming soon!",
-    "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Sign up to get access as soon as we launch in your area!",
-    "BODY_MOBILE": "The world's most popular bitcoin wallet now lets you buy bitcoin securely.",
-    "BUTTON": "Sign Up"
+    "TITLE": "这个功能即将到来!",
+    "BODY": "全球最受欢迎的比特币钱包现在让您安全购买比特币。注册以便当我们在您的地区推出服务时立即就能登录!",
+    "BODY_MOBILE": "全球最受欢迎的比特币钱包现在让您安全购买比特币。",
+    "BUTTON": "注册"
   },
-  "SUBSCRIBE_TITLE": "Sign up for Blockchain updates!",
-  "SUBSCRIBE_BODY": "Opt-in to stay up-to-date on new features, bitcoin news, and other exciting things at Blockchain. Confirm your email and region below.",
-  "SUBSCRIBE_BUTTON": "Subscribe",
+  "SUBSCRIBE_TITLE": "注册获取Blockchain更新!",
+  "SUBSCRIBE_BODY": "选择保持最新的功能、比特币新闻和其他Blockchain的精彩信息。在下面确认您的电子邮件和地区。",
+  "SUBSCRIBE_BUTTON": "订阅",
   "BUY_FEEDBACK": {
-    "PROMPT": "I thought the Buy Bitcoin feature was easy to use",
-    "DISAGREE": "Strongly Disagree",
-    "AGREE": "Strongly Agree"
+    "PROMPT": "我认为“购买比特币”功能很好用。",
+    "DISAGREE": "强烈反对",
+    "AGREE": "强烈赞同"
   },
-  "SPEND_IMPORTED_ADDRESS": "Spend",
-  "ACCEPT_TOS": "I have read and agree to the <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
-  "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
-  "SIMPLE_SEAMLESS_SECURE": "Simple. Seamless. Secure.",
-  "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
-  "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
-  "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
-  "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
-  "ORDER_HISTORY": "Order History",
-  "STATUS": "Status",
-  "CHOOSE_EXCHANGE_AMOUNT": "Choose amount to exchange:",
-  "SELECT_COUNTRY": "Select country of residence:",
-  "SELECT_YOUR_COUNTRY": "Select your country",
-  "SELECT_YOUR_STATE": "Select your state",
-  "VERIFY_EMAIL": "Verify email:",
-  "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your purchase.",
-  "ACCEPT_TERMS": "Coinify account terms:",
-  "PAYMENT_FEE": "Payment Fee:",
-  "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
-  "GO_BACK": "Go Back",
+  "SPEND_IMPORTED_ADDRESS": "支出",
+  "ACCEPT_TOS": "我已阅读并同意 <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>服务条款</a>",
+  "ACCEPT_COINIFY_RATE": "我接受以Coinify处理我的订单时的汇率交易比特币，这可能与上面显示的汇率不同。",
+  "SIMPLE_SEAMLESS_SECURE": "简单，无缝，安全。",
+  "BUY_SIMPLE_STEPS": "Blockchain与全球交易所合作，使您的钱包内的比特币买卖安全且便捷。",
+  "METADATA_DOWN": "钱包在加载您的交易所信息时存在问题。请稍后重试。",
+  "EXCHANGE_DOWN": "您的交易所合作伙伴出错。请尝试刷新页面或稍后重试。",
+  "FETCHING_INFO_EXCHANGE": "获取来自您的交易所合作伙伴的信息。这可能需要几分钟时间。",
+  "ORDER_HISTORY": "订单历史记录",
+  "STATUS": "状态",
+  "CHOOSE_EXCHANGE_AMOUNT": "选择要兑换的金额:",
+  "SELECT_COUNTRY": "选择您的居住国:",
+  "SELECT_YOUR_COUNTRY": "选择您的国家",
+  "SELECT_YOUR_STATE": "选择您的州",
+  "VERIFY_EMAIL": "验证邮箱:",
+  "SENT_VERIFICATION": "我们已经向 <b>{{::email}}</b>发送了一个验证链接。点击该链接并返回此处继续购买。",
+  "ACCEPT_TERMS": "Coinify账户条件:",
+  "PAYMENT_FEE": "付款手续费:",
+  "NEEDS_REFRESH": "请刷新钱包以访问此功能。",
+  "GO_BACK": "返回",
   "LANDING": {
     "HEADER": "@:SIMPLE_SEAMLESS_SECURE",
-    "SUB_HEADER": "Blockchain is the world’s most popular bitcoin wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
-    "SUB_HEADER_ETH": "Blockchain is the world’s most popular digital wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
-    "GET_STARTED_NOW": "Get Started Now",
-    "WHY_BLOCKCHAIN" : "Why Blockchain?",
-    "LOVED_BY_ALL": "Loved by Users. Praised by Geeks. Recognized by the Press.",
+    "SUB_HEADER": "Blockchain是全球最受欢迎的比特币钱包。我们以打造一种更加开放，可用和公平的金融未来为使命，让这个未来在将来成为软件的一部分。",
+    "SUB_HEADER_ETH": "Blockchain是全球最受欢迎的数字钱包。我们以打造一种更加开放，可用和公平的金融未来为使命，让这个未来在将来成为软件的一部分。",
+    "GET_STARTED_NOW": "现在开始",
+    "WHY_BLOCKCHAIN" : "为什么选择Blockchain?",
+    "LOVED_BY_ALL": "用户喜爱，极客赞赏，媒体认同。",
     "SIMPLE": {
-      "TITLE": "Simple",
-      "COPY": "We make using bitcoin safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world.",
-      "COPY_ETH": "We make using bitcoin and ether safe, simple, and fun. Securely store your bitcoin and instantly transact with anyone in the world."
+      "TITLE": "简单",
+      "COPY": "我们让比特币的使用变得安全，简单，有趣。安全地存储您的比特币并立即与全球任何人进行交易。",
+      "COPY_ETH": "我们让比特币和ETH的使用变得安全，简单，有趣。安全地存储您的比特币并立即与全球任何人进行交易。"
     },
     "SAFE_AND_SECURE": {
-      "TITLE": "Safe & Secure",
-      "COPY": "Our step-by-step Security Center helps you backup your funds, and protect them from unauthorized access."
+      "TITLE": "安全",
+      "COPY": "我们的安全中心帮助您备份您的资金, 并保护他们不受未经授权的访问。"
     },
     "BUY_AND_SELL": {
-      "TITLE": "Buy & Sell",
-      "COPY": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience."
+      "TITLE": "买&卖",
+      "COPY": "Blockchain与全球交易所合作，使您的钱包内的比特币买卖体验安全且便捷。"
     },
     "SOPHISTICATED": {
-      "TITLE": "Sophisticated",
-      "COPY": "Hierarchical deterministic addresses. Dynamic transaction fees. Monitoring and spending from Watch Only addresses."
+      "TITLE": "精细的",
+      "COPY": "分层确认（HD）地址。动态交易手续费。监视和只从只看地址支出。"
     },
     "GLOBAL": {
-      "TITLE": "Global",
-      "COPY": "140+ countries served. 20+ currency conversion rates, including JPY, RUB, SGD, USD, CNY, EUR, GBP, and many more. 25+ languages"
+      "TITLE": "全球",
+      "COPY": "为140+个国家提供服务。 提供20+种货币汇率，包括JPY, RUB, SGD, USD, CNY, EUR, GBP等等。 25+种语言。"
     },
     "SUPPORTED": {
-      "TITLE": "Always Supported",
-      "COPY": "Should you need help or have a question, our best in class support team will always be there for you."
+      "TITLE": "永远全力支持",
+      "COPY": "如果您需要帮助或有问题，我们最好的支持团队将永远为您服务。"
     },
     "BITCOIN_ON_ALL_DEVICES": {
-      "HEADER": "Bitcoin on All Your Devices",
-      "SUB_TEXT": "Access your bitcoin wallet securely anywhere you go."
+      "HEADER": "比特币在您的所有设备上",
+      "SUB_TEXT": "在任何地方安全地访问您的比特币钱包。"
     },
     "NEW_TO_BITCOIN": {
-      "HEADER": "New To Bitcoin?",
-      "HEADER_ETH": "New To Digital Currencies?",
-      "SUB_TEXT": "Like paper money and gold before it, bitcoin is a currency that allows parties to exchange value. Unlike it’s predecessors, bitcoin is digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees.",
-      "SUB_TEXT_ETH": "Like paper money and gold before it, bitcoin and ether allow parties to exchange value. Unlike their predecessors, they are digital and decentralized. For the first time in history, people can exchange value without intermediaries which translates to greater control of funds and lower fees."
+      "HEADER": "比特币新手?",
+      "HEADER_ETH": "数字货币新手?",
+      "SUB_TEXT": "就像之前的纸币和黄金一样，比特币允许各方参与者进行价值交换。但不同的是，比特币是数字化的和去中心化的。这是人们有史以来这是第一次无需中介机构的参与就能进行价值交换，因此带来了更高的资金掌控和更低的手续费。",
+      "SUB_TEXT_ETH": "就像之前的纸币和黄金一样，比特币和以太币允许各方参与者进行价值交换。但不同的是，比特币和以太币是数字化的和去中心化的。这是人们有史以来这是第一次无需中介机构的参与就能进行价值交换，因此带来了更高的资金掌控和更低的手续费。"
     },
-    "GET_WORLDS_MOST_POPULAR_WALLET": "Get the world's most popular<br/>bitcoin wallet",
-    "GET_WORLDS_MOST_POPULAR_WALLET_ETH": "Get the world's most popular<br/>digital currency wallet",
+    "GET_WORLDS_MOST_POPULAR_WALLET": "获取全球最受欢迎的<br/>比特币钱包",
+    "GET_WORLDS_MOST_POPULAR_WALLET_ETH": "获取全球最受欢迎的<br/>数字货币钱包",
     "" : ""
   },
-  "DOUBLE_SPEND": "This transaction may be at risk of a double spend.",
-  "SHOW": "Show",
-  "HIDE": "Hide",
-  "FILTER": "Filter",
-  "EDIT_NAME": "Edit Name",
-  "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
-  "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
-  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
-  "SUBSCRIBE": "Subscribe",
-  "GET_BITCOIN": "Get Bitcoin",
-  "POWERED_BY": "Powered By",
-  "EDIT_ORDER": "Edit Order",
-  "TOTAL_COST:": "Total Cost:",
-  "ENTER_AMOUNT:": "Enter amount:",
-  "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
-  "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
-  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
+  "DOUBLE_SPEND": "这笔交易可能面临重复支付的风险。",
+  "SHOW": "显示",
+  "HIDE": "隐藏",
+  "FILTER": "过滤",
+  "EDIT_NAME": "编辑名称",
+  "NOT_BACKED_BY_RECOVERY": "您的找回短语不支持。转入钱包以保护资金。",
+  "EXCHANGE_RATE_HELPER": "由您的地区的交易所合作伙伴提供的汇率。可能包括手续费。",
+  "EXCHANGE_RATE_HELPER_TWO": "由您的地区的交易所合作伙伴提供的汇率可能包括手续费。",
+  "SUBSCRIBE": "订阅",
+  "GET_BITCOIN": "获得比特币",
+  "POWERED_BY": "由...推动",
+  "EDIT_ORDER": "编辑订单",
+  "TOTAL_COST:": "总成本:",
+  "ENTER_AMOUNT:": "输入金额:",
+  "BUY_BITCOIN_ALERT": "您现在可以使用您的Blockchain钱包购买比特币了! 点击下方开始。",
+  "TX_RBF": "这笔交易已标记为按费用替换(RBF)。",
+  "TX_RBF_AND_DOUBLE_SPEND": "这笔交易已标记为按费用替换(RBF)，可能面临重复支付的风险。",
   "GENERAL_SURVEY_PROMPT": {
-    "TITLE": "Before you go...",
-    "BODY": "Would you like to provide feedback regarding your experience today?"
+    "TITLE": "在你前往...之前",
+    "BODY": "你愿意为你今天的体验提供反馈吗？"
   },
   "BUY_SURVEY_OPENED_PROMPT": {
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
@@ -1295,110 +1295,110 @@
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
   "ETHEREUM_SURVEY_PROMPT": {
-    "TITLE": "Before you continue...",
-    "BODY": "Would you like to provide feedback regarding your ether wallet experience today?"
+    "TITLE": "在您继续...之前",
+    "BODY": "你愿意为你今天的ETH钱包体验提供反馈吗？"
   },
-  "TAKE_SURVEY": "Take Survey",
+  "TAKE_SURVEY": "接受调查",
   "id_ID": {
-    "TITLE": "Photo ID Verification",
-    "COPY": "To verify your identity, we need one of the following government-issued forms of identification showing your country of residence:",
-    "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
-    "OPTION1": "State issued driver’s license",
-    "OPTION2": "State issued identification card",
-    "OPTION3": "Passport",
-    "OPTION4": "Government issued identification",
-    "UPLOAD_TITLE": "Photo ID",
-    "UPLOAD_SELECT": "Select Upload Method",
-    "HELP": "Capture the front side of ID, clearly displaying your identification number."
+    "TITLE": "照片ID验证",
+    "COPY": "为了验证您的身份，我们需要以下政府发行的能够显示您的居住国家的身份形式之一:",
+    "COPY_2": "只需要您的ID的正面，必须清楚地显示您的身份号码。",
+    "OPTION1": "国家颁发的驾驶执照",
+    "OPTION2": "国家颁发的身份证",
+    "OPTION3": "护照",
+    "OPTION4": "政府颁发的身份证",
+    "UPLOAD_TITLE": "照片ID",
+    "UPLOAD_SELECT": "选择上传方式",
+    "HELP": "捕捉您的ID的正面，清楚地显示您的身份号码。"
   },
   "address_ID": {
-    "TITLE": "Proof of Address Verification",
-    "COPY": "Please upload one of the following documents clearly displaying your address dated within the past 6 months:",
-    "OPTION1": "Utility bill (except mobile phone bills)",
-    "OPTION2": "First page and signature page of lease",
-    "OPTION3": "First page of your bank statement",
-    "OPTION4": "DMV or voter registration",
-    "UPLOAD_TITLE": "Proof of Address",
-    "UPLOAD_SELECT": "Select Upload Method",
-    "HELP": "Make sure the snapshot clearly displays your address."
+    "TITLE": "地址验证证明",
+    "COPY": "请上传以下文件，清楚地显示您的地址，必须是在过去6个月内的才有效:",
+    "OPTION1": "物业账单(除了手机话费账单)",
+    "OPTION2": "第一页和租赁签字页",
+    "OPTION3": "银行对账单的第一页",
+    "OPTION4": "DMV 或选民登记",
+    "UPLOAD_TITLE": "地址证明",
+    "UPLOAD_SELECT": "选择上传方式",
+    "HELP": "确保快照清楚显示您的地址。"
   },
-  "UNOCOIN_IF_IMPS": "<span class='em-500'>For IMPS transfers</span>, the reference number is RRN OR External Reference number and is 12 digits long, starting from \"7\".",
-  "UNOCOIN_IF_NEFT_OR_RTGS": "<span class='em-500'>For NEFT or RTGS transfers</span>, the reference number is UTR NUMBER (does not start with \"IR\" or \"IZ\").",
-  "UNOCOIN_IF_CANT_ID": "<span class='em-500'>If you cannot identify the UTR number</span>, please provide all reference numbers you see along with the narration as per your bank statement.",
+  "UNOCOIN_IF_IMPS": "<span class='em-500'>对于IMPS转账</span>,参考号码是RRN OR External Reference号码，这是一个12位数，从\"7\"开始。",
+  "UNOCOIN_IF_NEFT_OR_RTGS": "<span class='em-500'>对于NEFT或RTGS转账</span>,参考号码是UTR NUMBER (不从 \"IR\" 或 \"IZ\"开始).",
+  "UNOCOIN_IF_CANT_ID": "<span class='em-500'>如果您不能识别这个UTR号码</span>，请提供您所看到的所有参考数字，并按照您的银行报表进行叙述。 ",
   "REF_NUMBER": "Reference Number",
   "UNOCOIN_TX_ERROR_STATE": {
     "TITLE": "@:TX_ERROR_STATE.TITLE",
-    "BODY": "Your transaction has been canceled. If the funds were withdrawn from your bank account, create a new trade for the same amount and use the original reference number."
+    "BODY": "您的交易已经被取消。如果这些资金从你的银行账户中提取出来，那么创建一个相同金额的新交易，并使用原始参考号。"
   },
   "unocoin_pancard_ID": {
-    "TITLE": "1. PAN Card",
-    "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
-    "UPLOAD_TITLE": "PAN Card",
+    "TITLE": "1. PAN卡",
+    "COPY": "上传或拍一张您的PAN卡的照片，清楚显示您的名字和十位数的永久帐号。",
+    "UPLOAD_TITLE": "PAN卡",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "HELP": "Make sure the snapshot clearly displays your pancard number."
+    "HELP": "确保快照清晰显示您的PAN卡号码。"
   },
   "unocoin_photo_ID": {
-    "TITLE": "2. Your Photo",
-    "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
-    "UPLOAD_TITLE": "Photo",
+    "TITLE": "2. 您的照片",
+    "COPY": "上传或拍一张自己的照片以便Unocoin能够验证您的PAN卡。",
+    "UPLOAD_TITLE": "照片",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "HELP": "Make sure the snapshot clearly displays your face."
+    "HELP": "确保快照清楚地显示你的脸。"
   },
   "unocoin_address_ID": {
-    "TITLE": "3. Address Proof",
-    "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
-    "UPLOAD_TITLE": "Address Proof",
+    "TITLE": "3. 地址证明",
+    "COPY": "上传或拍一张您的住址证明的照片。您可以上传以下经过批准的文件之一，这些文件的名字与您最初提供的地址相匹配。",
+    "UPLOAD_TITLE": "地址证明",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "OPTION1": "Aadhar Card (front and back)",
-    "OPTION2": "Driving License",
-    "OPTION3": "Passport (page showing address)",
-    "OPTION4": "Utility Bill",
-    "HELP": "Make sure the snapshot clearly displays your name and address."
+    "OPTION1": "Aadhar卡 (正面与背面)",
+    "OPTION2": "驾驶执照",
+    "OPTION3": "护照 (显示地址的页面)",
+    "OPTION4": "物业账单",
+    "HELP": "确保快照清楚显示您的姓名和地址。"
   },
-  "BANK_NAME": "Bank Name",
-  "ACCOUNT_HOLDER_NAME": "Account Holder Name",
-  "ACCOUNT_NUMBER": "Account Number",
-  "IFSC_CODE": "IFSC Code",
-  "ACCOUNT_TYPE": "Account Type",
+  "BANK_NAME": "银行名字",
+  "ACCOUNT_HOLDER_NAME": "账户持有者姓名",
+  "ACCOUNT_NUMBER": "账号",
+  "IFSC_CODE": "IFSC码",
+  "ACCOUNT_TYPE": "账户类型",
   "bank-check-helper": {
-    "TITLE": "Routing and Account Number",
-    "COPY": "You can find your bank routing and account numbers at the bottom of a check. Or you can contact your bank for this information."
+    "TITLE": "路由号码和账号",
+    "COPY": "你可以在支票的底部找到你的银行路由号码和帐号。或者您可以联系您的银行获取此信息。"
   },
   "bank-deposit-helper": {
-    "TITLE": "Bank Deposits",
-    "COPY": "SFOX sent 2 small deposits to your bank account. Deposits will appear in your account as “SFOX” in 1-2 days."
+    "TITLE": "银行存款",
+    "COPY": "SFOX发送了两笔小额存款到您的账户。存款将在1-2天以“SFOX”出现在您的账户中。"
   },
   "id-id-helper": {
-    "TITLE": "Acceptable Photo IDs",
-    "COPY": "You may submit a valid state issued driver license, state issued identification card, passport, or government issued identification. Make sure the identifation number is clearly visible."
+    "TITLE": "可接受的照片IDs",
+    "COPY": "您可以提交有效的国家颁发的驾驶执照、国家颁发的身份证、护照或政府颁发的身份证明。确保身份号码清晰可见。"
   },
   "address-id-helper": {
-    "TITLE": "Acceptable Proof of Address",
-    "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
+    "TITLE": "可接受的地址证明",
+    "COPY": "你可以提供一份物业账单（除了手机账单），租约的第一页和最后一页，银行对账单的第一页，或DMV /选民登记表格。确保它显示您的地址，并在注明过去6个月内的日期。"
   },
   "unocoin_pancard-id-helper": {
-    "TITLE": "Acceptable PAN Card",
-    "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
+    "TITLE": "可接受的PAN卡",
+    "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>。<br>PAN卡必须根据政府记录有效。"
   },
   "unocoin_photo-id-helper": {
-    "TITLE": "Acceptable User Photograph",
-    "COPY": "Selfies with goggles or hats are <span class='state-danger-text'>not acceptable</span>."
+    "TITLE": "可接受的用户照片",
+    "COPY": "穿戴护目镜或帽子的自拍照 <span class='state-danger-text'>不可接受</span>."
   },
   "unocoin_address-id-helper": {
-    "TITLE": "Acceptable Proof of Address",
-    "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+    "TITLE": "可接受的地址证明",
+    "COPY": "避免因相机闪光灯使地址证明的详细信息不清楚。<br>地址证明必须是6个月内的才会有效。<br>地址证明应与前面输入的地址相匹配。<br>选民身份证必须在政府网站才有效。<br>上传的地址证明应该是英文的。"
   },
   "expiring-exchange-helper": {
-    "TITLE": "👋 Confirm Exchange Order!",
-    "COPY": "Did you forget about your exchange order? Exchange rates are only valid for 10 minutes, and once a rate expires, you'll have to start over."
+    "TITLE": "👋 确认交易订单!",
+    "COPY": "您忘记了您的交易订单？汇率有效时间为10分钟，一旦汇率过期，您将需要重新开始。"
   },
-  "GET_BITCOIN": "Get Bitcoin",
-  "POWERED_BY": "Powered By",
-  "EDIT_ORDER": "Edit Order",
-  "TOTAL_COST:": "Total Cost:",
-  "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
-  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
+  "GET_BITCOIN": "获得比特币",
+  "POWERED_BY": "由...推动",
+  "EDIT_ORDER": "编辑订单",
+  "TOTAL_COST:": "总成本:",
+  "TX_RBF": "这笔交易已标记为按费用替换(RBF)。",
+  "TX_RBF_AND_DOUBLE_SPEND": "这笔交易已标记为按费用替换(RBF)，并且可能面临重复支付的风险。",
+  "EXCHANGE_CONNECT_ERROR": "连接到我们的交易所合作货币出错",
   "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
   "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "UNOCOIN_EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
