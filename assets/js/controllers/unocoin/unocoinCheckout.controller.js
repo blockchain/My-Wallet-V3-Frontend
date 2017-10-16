@@ -34,7 +34,7 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
 
   $scope.userId = exchange.user;
 
-  $scope.signupCompleted = () => exchange.profile.level > 2;
+  $scope.signupCompleted = () => $scope.exchange.profile.level > 2;
   $scope.showCheckout = () => $scope.signupCompleted() || (showCheckout && !$scope.userId);
   $scope.inspectTrade = (quote, trade) => trade.state === 'awaiting_reference_number' ? modals.openBankTransfer(trade) : modals.openTradeSummary(trade);
 
@@ -52,9 +52,5 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
     modals.openBankTransfer(trade);
   };
 
-  unocoin.pollLevel();
-
-  $scope.$watch('exchange.profile', (next) => {
-    if (next.level >= 3) $scope.tabs.select('BUY_BITCOIN');
-  });
+  if (exchange.profile && exchange.profile.level < 3) unocoin.pollLevel();
 }
