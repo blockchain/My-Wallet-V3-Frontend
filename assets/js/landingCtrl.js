@@ -5,10 +5,10 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats) 
     $scope.rootURL = env.rootURL;
     $scope.showEth = env.ethereum.rolloutFraction === 1;
     $scope.apiDomain = env.apiDomain;
-    
+
     $http.get($scope.apiDomain + 'charts/my-wallet-n-users')
       .then((res) => $scope.walletCount = Math.floor(res.data.values[res.data.values.length - 1].y / 1e6))
-      .catch((err) => $scope.walletCount = walletStats.walletCountMillions);
+      .catch(() => $scope.walletCount = walletStats.walletCountMillions);
   });
 
   $scope.fields = {
