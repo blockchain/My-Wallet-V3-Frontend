@@ -1564,10 +1564,6 @@
     "user_cant_trade": {
       "EXPLAIN": "Something went wrong. Please try again later."
     },
-    "loading_data": {
-      "EXPLAIN": "Loading data...",
-      "OPTION": ""
-    },
     "has_remaining_buy_limit": {
       "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
       "KYC": "Increase your limit."

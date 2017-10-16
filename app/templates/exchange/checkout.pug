@@ -55,7 +55,7 @@ form.bc-form(
               required)
             span.mhm {{bitcoin.code}}
         .f-12.mts
-          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: $ctrl.limits().max, curr: displayCurrency().code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}" ng-click="setMax()")
+          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: $ctrl.limits().max, curr: displayCurrency().code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}" ng-click="!trading().isDisabled && setMax()")
           | &nbsp;
           span(ng-repeat="(option, action) in trading().launchOptions")
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")

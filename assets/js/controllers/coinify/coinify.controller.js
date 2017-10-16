@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, coinify, $state, buyMobile, Env) {
+function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, coinify, Exchange, $state, buyMobile, Env) {
   Env.then(env => this.qaDebugger = env.qaDebugger);
 
   let exchange = coinify.exchange;
@@ -28,7 +28,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
   this.cancel = () => {
     coinify.pollUserLevel();
     $uibModalInstance.dismiss('');
-    this.trade && this.trade.sendAmount && coinify.getTrades().then($scope.goToOrderHistory());
+    coinify.exchange.user && Exchange.fetchExchangeData(coinify.exchange);
   };
 
   let links;

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifySellController', CoinifySellController);
 
-function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModalInstance, $q, $rootScope, accounts, $state, $stateParams, quote, trade, coinify) {
+function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModalInstance, $q, $rootScope, accounts, $state, $stateParams, quote, trade, coinify, Exchange) {
   Env.then(env => this.qaDebugger = env.qaDebugger);
 
   $scope.fields = {};
@@ -94,7 +94,7 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
 
   let exchange = coinify.exchange;
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.country = exchange.profile ? exchange.profile.country : $stateParams.countryCode;
+  this.country = exchange.user ? exchange.profile.country : $stateParams.countryCode;
 
   $scope.fields = { email: $scope.user.email };
 
@@ -107,11 +107,9 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   };
 
   this.cancel = () => {
-    $uibModalInstance.dismiss('');
     this.trade = null;
-    coinify.getTrades().then(() => {
-      this.goToOrderHistory();
-    });
+    $uibModalInstance.dismiss('');
+    coinify.exchange.user && Exchange.fetchExchangeData(coinify.exchange);
   };
 
   let links;
@@ -144,15 +142,15 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
   };
 
   this.onSignupComplete = () => {
-    this.refreshQuote().then(() => {
-      this.quote.getPaymentMediums().then(mediums => {
-        coinify.getSellLimits(mediums);
+    Exchange.fetchProfile(coinify.exchange)
+      .then(() => this.refreshQuote())
+      .then(() => this.quote.getPaymentMediums())
+      .then((mediums) => {
         mediums.bank.getBankAccounts().then(bankAccounts => {
           this.accounts = bankAccounts;
           this.goTo('account');
         });
       });
-    });
   };
 
   const handleError = (e) => {

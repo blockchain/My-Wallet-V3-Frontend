@@ -116,14 +116,6 @@ describe('CoinifySellController', () => {
     });
   });
 
-  describe('.cancel()', function () {
-    it('should reset the transaction', () => {
-      let ctrl = getController(quote, trade);
-      ctrl.cancel();
-      return expect(ctrl.trade).toEqual(null);
-    });
-  });
-
   describe('.setTitle()', function () {
     let ctrl;
     beforeEach(() => ctrl = getController(quote, trade));
