@@ -29,7 +29,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   this.payment.amount(this.BTCAmount());
   this.payment.updateFeePerKb(coinify.sellFee);
   this.payment.sideEffect((p) => this.fee = p.finalFee);
-  this.paymentFee = (this.quote.paymentMediums.bank.fee / 100).toFixed(2);
+  this.paymentFee = this.quote.paymentMediums.bank.fee;
 
   this.checkForUpdatedQuote = () => {
     let updated = new Date(this.quote.expiresAt).getTime();
