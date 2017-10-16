@@ -1,6 +1,6 @@
-.flex-column.note.em-300.width-80.alt-font.f-16
+.flex-column.note.em-300.width-80.alt-font.f-14
   .flex-row.flex-end.flex-start-tablet
-    .flex-row.width-100(ng-hide="editNote")
+    .flex-row.width-100.basic-grey(ng-hide="editNote")
       .tx-note.em-300.text-cursor(ng-show="label && !note") {{ label }}
       .tx-note.em-300.text-cursor(ng-hide="label && !note" ng-bind-html="note | escapeHtml | highlight:search")
       a.mlm(ng-show="label || note" ng-click="startEditNote()")
