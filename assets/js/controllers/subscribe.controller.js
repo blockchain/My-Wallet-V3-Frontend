@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SubscribeCtrl', SubscribeCtrl);
 
-function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, buySell, localStorageService, $uibModalStack) {
+function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, coinify, localStorageService, $uibModalStack) {
   $scope.countries = country;
   $scope.states = state;
   $scope.data = {};
@@ -15,7 +15,7 @@ function SubscribeCtrl ($rootScope, $scope, MyWallet, country, state, buySell, l
 
   $scope.signupForAccess = () => {
     let email = encodeURIComponent($scope.fields.email);
-    buySell.signupForAccess(email, $scope.fields.country);
+    coinify.signupForAccess(email, $scope.fields.country);
   };
 
   $scope.subscribe = () => {

@@ -2,20 +2,20 @@ angular
   .module('walletApp')
   .controller('CoinifySummaryController', CoinifySummaryController);
 
-function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, buySell, currency, Alerts, buyMobile) {
-  let medium = $scope.vm.medium;
-  let fiatCurrency = $scope.vm.fiatCurrency;
-  let limits = $scope.limits = buySell.limits;
-  let max = parseFloat(limits[medium].max[fiatCurrency()], 0);
-  let min = parseFloat(limits[medium].min[fiatCurrency()], 0);
+function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, coinify, currency, Alerts, Exchange, buyMobile) {
+  let { exchange, medium, fiatCurrency } = $scope.vm;
+
+  let limits = $scope.limits = exchange.profile.limits;
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
+
+  $scope.max = limits[medium].inRemaining[fiatCurrency()];
+  $scope.min = limits[medium].minimumInAmounts[fiatCurrency()];
 
   $scope.state = {};
   $scope.isBank = medium === 'bank';
   $scope.format = currency.formatCurrencyForView;
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.currencies = currency.coinifyCurrencies;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
   let tryParse = (json) => {
@@ -28,8 +28,8 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     $scope.dollars = currency.currencies.filter(c => c.code === fiatCurrency())[0];
 
     $scope.trade = {
-      fee: (quote.paymentMediums[medium].fee / 100).toFixed(2),
-      total: (quote.paymentMediums[medium].total / 100).toFixed(2),
+      fee: (quote.paymentMediums[medium].fee).toFixed(2),
+      total: (quote.paymentMediums[medium].total).toFixed(2),
       BTCAmount: BTCAmount(),
       fiatAmount: fiatAmount(),
       fiatCurrency: fiatCurrency()
@@ -39,10 +39,10 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   };
 
   setTrade();
-  $scope.state.editAmount = $scope.trade.fiatAmount > max || $scope.trade.fiatAmount < min;
+  $scope.state.editAmount = $scope.trade.fiatAmount > $scope.max || $scope.trade.fiatAmount < $scope.min;
 
   let getQuote = () => {
-    return buySell.getQuote($scope.tempTrade.fiatAmount, $scope.tempTrade.fiatCurrency);
+    return coinify.getQuote($scope.tempTrade.fiatAmount * 100, $scope.tempTrade.fiatCurrency);
   };
 
   $scope.commitValues = () => {
@@ -51,7 +51,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     getQuote().then((q) => $scope.vm.quote = q)
               .then((q) => q.getPaymentMediums())
               .then((mediums) => mediums[medium].getAccounts())
-              .then((accounts) => buySell.accounts = accounts)
+              .then((accounts) => coinify.accounts = accounts)
               .then(setTrade).then($scope.free)
               .finally(() => $scope.state.editAmount = false);
   };
@@ -68,6 +68,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     $q.resolve($scope.vm.quote.getPaymentMediums())
       .then((mediums) => mediums[medium].getAccounts())
       .then((accounts) => accounts[0].buy()).then(success)
+      .then(() => Exchange.fetchProfile(exchange))
       .then(() => $scope.vm.goTo('isx'))
       .then(() => $scope.vm.trade && $scope.vm.trade.watchAddress())
       .catch((err) => {
