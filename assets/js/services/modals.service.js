@@ -164,7 +164,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
       controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance, $timeout) {
-        let unocoin = $scope.unocoin = MyWallet.wallet.external.unocoin.hasAccount;
+        let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
 
         $scope.vm = {
           trade: trade
