@@ -6,9 +6,13 @@
         .flex-column.flex-align-end(uib-tooltip="{{ vm.getQuoteHelper() | translate}}"
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top")
-          .flex-row.type-h5.em-500(ng-hide="vm.onStep('trade-complete') || vm.onStep('isx')")
-            span {{vm.transaction.btc }} BTC ({{vm.transaction.currency.symbol}}{{vm.transaction.fiat}})
-          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="vm.message" debug="false")
+          .flex-row.f-16.em-300
+            span(ng-if="vm.quote") {{ vm.BTCAmount() | convert:'btc' }}
+            span(ng-if="vm.trade") {{ vm.trade.transferIn.receiveAmount }} BTC
+            | &nbsp;
+            span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
+            span(ng-if="vm.trade") ({{ vm.trade._transferOut.receiveAmount }} {{ vm.trade.inCurrency }})
+          countdown.mid-grey(ng-if="vm.onStep('account') || vm.onStep('bank-link') || vm.onStep('summary')" time-to-expiration="vm.timeToExpiration" on-expiration="vm.refreshQuote()" message="'SELL.QUOTE_EXPIRES'" debug="vm.qaDebugger")
   coinify-email(
       ng-if="vm.onStep('email')"
       on-complete="vm.goTo('accept-terms')"
@@ -26,7 +30,7 @@
       email="vm.user.email"
       valid-email="vm.state.email.valid"
       on-email-change="vm.onEmailChange(false)"
-      fiat-currency="vm.fiat()")
+      fiat-currency="vm.fiatCurrency()")
   coinify-create-account(
       ng-if="vm.onStep('account')"
       country="vm.country"
@@ -37,10 +41,8 @@
       close="vm.close()")
   sell-bank-link(
       ng-if="vm.onStep('bank-link')" 
-      on-complete="vm.goTo('summary')" 
       accounts="vm.accounts"
-      transaction="vm.transaction"
-      payment-account="vm.paymentAccount"
+      on-complete="vm.goTo('summary')" 
       selected-bank-account="vm.selectedBankAccount" 
       select-account="vm.selectAccount(account)" 
       new-account="vm.goTo('account')" 

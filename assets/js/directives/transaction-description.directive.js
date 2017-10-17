@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin, Labels, ShapeShift) {
+function transactionDescription ($translate, Wallet, MyWallet, coinify, unocoin, Labels, ShapeShift) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -74,13 +74,11 @@ function transactionDescription ($translate, Wallet, MyWallet, buySell, unocoin,
 
     if (external) {
       if (external.coinify) scope.exchange = 'Coinify';
-      if (external.coinify) buySell.initialized().finally(() => scope.txMethod = buySell.getTxMethod(scope.tx.hash));
+      if (external.coinify) coinify.init(external.coinify).then(() => scope.txMethod = coinify.getTxMethod(scope.tx.hash));
 
       if (external.unocoin) scope.exchange = 'Unocoin';
       if (external.unocoin) unocoin.init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
     }
-
-    buySell.initialized();
 
     scope.$watch('tx.confirmations', () => {
       if (scope.tx && scope.tx.confirmations != null) {

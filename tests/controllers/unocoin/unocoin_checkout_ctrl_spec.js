@@ -141,15 +141,6 @@ describe('UnocoinCheckoutController', () => {
     });
   });
 
-  describe('buyError()', () => {
-    it('should call displayError', () => {
-      scope = getControllerScope();
-      spyOn(Alerts, 'displayError');
-      scope.buyError();
-      expect(Alerts.displayError).toHaveBeenCalled();
-    });
-  });
-
   describe('inspectTrade()', () => {
     it('should openBankTransfer if state is awaiting_reference_number', () => {
       scope = getControllerScope();

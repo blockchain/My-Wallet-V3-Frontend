@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('UnocoinCheckoutController', UnocoinCheckoutController);
 
-function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, exchangeRate, mediums, $rootScope, showCheckout, buyMobile) {
+function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelpers, AngularHelper, Alerts, currency, modals, unocoin, exchangeRate, mediums, showCheckout) {
   let exchange = $scope.vm.external.unocoin;
 
+  $scope.buying = unocoin.buying;
   $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
 
   $scope.openUnocoinSignup = (quote) => {
@@ -14,10 +15,10 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.state = {
     trades: exchange.trades,
-    limits: {
+    limits: () => ({
       min: mediums && mediums.bank.minimumInAmounts[$scope.rupees.code],
       max: mediums && mediums.bank.limitInAmounts['BTC'] * exchangeRate.quoteAmount
-    }
+    })
   };
 
   $scope.stepDescription = () => {
@@ -31,7 +32,6 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.userId = exchange.user;
-  $scope.siftScienceEnabled = false;
 
   $scope.signupCompleted = exchange.profile.level > 2;
   $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
@@ -50,11 +50,4 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.buySuccess = (trade) => {
     modals.openBankTransfer(trade);
   };
-
-  $scope.buyError = () => {
-    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
-  };
-
-  $scope.pendingTrade = (trades) => unocoin.getPendingTrade(trades);
-  $scope.openPendingTrade = (pendingTrade) => unocoin.openPendingTrade(pendingTrade);
 }
