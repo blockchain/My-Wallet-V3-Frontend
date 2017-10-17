@@ -14,7 +14,7 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY1" ng-show="needsKYC()")
           li.ml-30.em-300.f-12(translate="BANK_TRANSFER.COPY2" translate-values)
           li.ml-30.em-300.f-12(translate="{{mediums.bank.inPercentageFee > 0 ? 'BANK_TRANSFER.COPY4' : 'BANK_TRANSFER.COPY3'}}" translate-values="{fee: mediums.bank.inPercentageFee}")
-    .width-45.flex-justify.flex-column(ng-show="!aboveBankMin || pendingKYC() && !vm.frequency")
+    .width-45.flex-justify.flex-column(ng-show="(!aboveBankMin || pendingKYC()) && !vm.frequency")
       div.mb-20(ng-hide="pendingKYC()" translate="BANK_TRANSFER.RECOMMENDATION" translate-values="{min: limits.bank.minimumInAmounts[vm.fiatCurrency()], code: vm.fiatCurrency()}")
       label.pointer.em-300.primary(ng-hide="pendingKYC()" for="bank" ng-click="needsKYC() ? openKYC() : $timeout(submit, 1)" translate="{{needsKYC() ? 'BANK_TRANSFER.PAY_VIA_NEEDS_KYC' : 'BANK_TRANSFER.PAY_VIA'}}")
       label.pointer.em-300.primary(ng-show="pendingKYC()" for="bank" ng-click="openKYC()" translate="Bank transfers are disabled while identity verification is pending. Click here to check the status of your identity verification.")
