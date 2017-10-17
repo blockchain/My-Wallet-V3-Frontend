@@ -164,15 +164,21 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
       controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance, $timeout) {
-        let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
+        let unocoin = $scope.unocoin = MyWallet.wallet.external.unocoin.hasAccount;
 
         $scope.vm = {
           trade: trade
         };
 
+        $scope.tradeIsPending = () => (
+          $scope.vm.trade.state === 'awaiting_transfer_in' ||
+          $scope.vm.trade.state === 'awaiting_reference_number'
+        );
+
         $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
         unocoin && trade.state === 'cancelled' && ($scope.formattedTrade.namespace = 'UNOCOIN_TX_ERROR_STATE');
         $scope.editRef = () => {
+          $scope.disableLink = true;
           service.openBankTransfer(trade, 'reference');
           $timeout(() => { $uibModalInstance.dismiss(); }, 1500);
         };

@@ -34,6 +34,7 @@ function UnocoinBankTransferController ($rootScope, trade, bankAccount, $uibModa
         this.formattedTrade = formatTrade.initiated(trade);
       })
       .then(() => {
+        step ? this.updatedRefNumber = true : '';
         this.goTo('initiated');
       })
       .catch((err) => { console.log(err); }).finally(this.free);
