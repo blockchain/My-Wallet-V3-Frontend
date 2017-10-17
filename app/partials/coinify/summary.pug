@@ -10,7 +10,7 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
       span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempTrade.fiatCurrency, max: max, medium: vm.medium}")
       span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempTrade.fiatCurrency, min: min, medium: vm.medium}")
     .flex-center.flex-between.flex-row-reverse
-      .mam
+      .mvm
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = true" ng-hide="state.editAmount" translate="EDIT_ORDER")
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = false" ng-show="state.editAmount" translate="CANCEL")
     .border.pam(ng-class="{'bg-grey': state.editAmount}")
@@ -47,17 +47,8 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
         input(type="checkbox" checked id="rate" name="rate" ng-model="fields.rate" ng-disabled="rejectedRate" required)
       div
         label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
-    div.pam(ng-if="vm.frequency")
-      span.primary.em-500 This is a Recurring Order 
-      .flex-row.pam
-        span.primary.colon(translate="AMOUNT")
-        span {{ format(trade.fiatAmount, dollars, true) }}
-      .flex-row.pam
-        span.primary.colon(translate="FREQUENCY")
-        span(translate="FREQUENCY_INFO" translate-values="{timespan: timespan, time: time()}")
-      .flex-row.pam
-        span.primary.colon(translate="DURATION")
-        span(translate="DURATION_INFO")
+    .mtl
+      exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" t="trade" dollars="dollars")
     .flex-row.flex-between.pt-20
       button.button-muted(type="button" ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
       button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="{{state.editAmount ? 'UPDATE' : 'CONFIRM'}}")

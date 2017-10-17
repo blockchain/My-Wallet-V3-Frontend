@@ -18,17 +18,6 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.label = MyWallet.wallet.hdwallet.accounts[accountIndex].label;
 
-  $scope.date = () => new Date();
-  $scope.time = () => $scope.date().toLocaleTimeString();
-  
-  let d = $scope.date();
-  let human = { 1: 'st', 2: 'nd', 3: 'rd', 21: 'st', 22: 'nd', 23: 'rd', 31: 'st' };
-  let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-  if (frequency === 'Daily') $scope.timespan = '24 hours';
-  if (frequency === 'Weekly') $scope.timespan = `${days[d.getDay()]}`;
-  if (frequency === 'Monthly') $scope.timespan = `${d.getDate() + (human[d.getDate()] || 'th')} of the month`;
-
   let tryParse = (json) => {
     try { return JSON.parse(json); } catch (e) { return json; }
   };

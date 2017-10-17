@@ -1,0 +1,12 @@
+.flex-row.flex-between.mbm
+  span.primary.em-500 This is a Recurring Order
+.pam.bg-ultralight-blue.border-light-blue
+  .flex-row.pam
+    span.flex-1.primary.colon(translate="AMOUNT")
+    span.flex-5 {{ format($ctrl.trade.fiatAmount, $ctrl.dollars, true) }}
+  .flex-row.pam
+    span.flex-1.primary.colon(translate="FREQUENCY")
+    span.flex-5(translate="FREQUENCY_INFO" translate-values="{timespan: timespan}")
+  .flex-row.pam
+    span.flex-1.primary.colon(translate="DURATION")
+    span.flex-5(translate="DURATION_INFO")
