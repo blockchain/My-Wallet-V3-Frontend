@@ -58,6 +58,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
 
   $scope.buy = () => {
     $scope.lock();
+    let subscription = frequency ? { frequency: frequency.toLowerCase(), endTime: endTime } : undefined;
 
     let success = (trade) => {
       $scope.vm.quote = null;
@@ -67,7 +68,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
 
     $q.resolve($scope.vm.quote.getPaymentMediums())
       .then((mediums) => mediums[medium].getAccounts())
-      .then((accounts) => accounts[0].buy({frequency, endTime})).then(success)
+      .then((accounts) => accounts[0].buy(subscription)).then(success)
       .then(() => Exchange.fetchProfile(exchange))
       .then(() => $scope.vm.goTo('isx'))
       .then(() => $scope.vm.trade && $scope.vm.trade.watchAddress())
