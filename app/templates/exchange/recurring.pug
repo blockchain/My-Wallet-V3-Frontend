@@ -9,4 +9,5 @@
     span.flex-5(translate="FREQUENCY_INFO" translate-values="{timespan: timespan}")
   .flex-row.pam
     span.flex-1.primary.colon(translate="DURATION")
-    span.flex-5(translate="DURATION_INFO")
+    span.flex-5(ng-show="endTime" translate="DURATION_INFO" translate-values="{endTime: endTime}")
+    span.flex-5(ng-show="!endTime") Until you cancel or reach your limit, whichever happens first.

@@ -23,7 +23,7 @@
         span.em-500(translate="TOTAL")
     .exchange-trade(ng-repeat="trade in trades")
       .exchange-status.pv-15
-        span.pl-25 {{ trade.state | translate }}
+        span.pl-25(ng-class="getClass(trade)") {{ trade.state | translate }}
         a.hidden-xs(translate="VIEW_DETAILS")
       .exchange-date.pv-15
         span {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}

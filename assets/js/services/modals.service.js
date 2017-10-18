@@ -193,7 +193,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     });
   });
 
-  service.openBuyView = service.openOnce((quote, trade, frequency) => {
+  service.openBuyView = service.openOnce((quote, trade, frequency, endTime) => {
     return openMobileCompatible({
       templateUrl: 'partials/coinify-modal.pug',
       controller: 'CoinifyController',
@@ -204,6 +204,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
       resolve: {
         quote () { return quote; },
         trade () { return trade; },
+        endTime () { return endTime; },
         frequency () { return frequency; }
       }
     });
