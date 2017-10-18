@@ -70,14 +70,14 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       .width-100
         .exchange-trade.border.bg-footer-blue
           .pvs
-            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+            span.em-500.pl-25.ph-10-mobile Recurring Order
           .pvs
-            span.em-500(translate="DATE")
+            span.em-500(translate="FREQUENCY")
           .pvs
-            span.em-500(translate="BTC")
+            span.em-500(translate="START")
           .pvs
-            span.em-500(translate="TOTAL")
-        exchange-recurring-trades(ng-repeat="subscription in subscriptions" subscription="subscription" trades="recurringTrades")
+            span.em-500(translate="END")
+      exchange-recurring-trades(ng-repeat="subscription in subscriptions" subscription="subscription" trades="recurringTrades")
 
     div(ng-show="completedTrades().length")
       .flex-row.flex-between.flex-center.mtl

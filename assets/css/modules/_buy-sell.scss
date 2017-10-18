@@ -361,12 +361,22 @@ input[type="radio"]:checked + label {
 .exchange-trade {
   display: grid;
   grid-template-columns: 40% 20% 20% 20%;
+  > div:last-child {
+    @extend .pr-50;
+    @extend .right-align;
+  }
 }
 
 .exchange-status {
   display: grid;
   grid-template-columns: 50% 50%;
 }
+
+.child-trades {
+  width: 95%;
+  padding-left: 2.5%;
+}
+
 @media(max-width: 768px) {
   .exchange-status {
     grid-template-columns: 100%;
