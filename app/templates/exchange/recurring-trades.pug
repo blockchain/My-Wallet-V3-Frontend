@@ -1,8 +1,8 @@
 .exchange-trade.border-right.border-left(ng-class="{'border-bottom': !state.toggled}")
-  .exchange-status.pv-15(ng-click="state.toggled = !state.toggled")
+  .exchange-status.pv-15.pos-rel(ng-click="state.toggled = !state.toggled")
     span.pl-25.ph-10-mobile.transfer Recurring
     a.hidden-xs(ng-show="state.toggled" translate="VIEW_DETAILS")
-    .pl-25.pt-40.flex-column(ng-show="state.toggled")
+    .pl-25.pt-45.flex-column.pos-abs(ng-show="state.toggled")
       span.em-600.capitalize {{ subscription.frequency }}
       span
         span.em-600 Start:
@@ -25,6 +25,7 @@
     span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
 .exchange-trade.border-left.border-right(ng-show="state.toggled")
   .exchange-status.pv-15
+    span.fade Recurring
     span Next Scheduled
   .exchange-date.pv-15
     span {{ trade.createdAt }}
@@ -32,3 +33,5 @@
     span Pending
   .exchange-received.pv-15
     span {{ subscription.amount }} {{ subscription.currency }}
+.width-100.pr-40.flex-end.border-bottom.border-left.border-right(ng-show="state.toggled")
+  .span.pv-15.state-danger-text Cancel Recurring Order
