@@ -34,9 +34,10 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
 
   $scope.openKYC = () => coinify.openPendingKYC();
   $scope.pendingKYC = () => coinify.getPendingKYC() || coinify.getRejectedKYC();
-  $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t));
-  $scope.recurringTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && t.tradeSubscriptionId);
+
+  $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t) && !t.tradeSubscriptionId);
   $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && !t.tradeSubscriptionId);
+  $scope.recurringTrades = () => coinify.trades.filter((t) => t.tradeSubscriptionId);
   
   Env.then(env => {
     $scope.tabs = {
