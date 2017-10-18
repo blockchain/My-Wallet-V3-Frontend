@@ -43,24 +43,22 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         h4.type-h5 Pending Orders ({{pendingTrades().length}})
         span.hidden-xs Coinify Account: {{ exchange.profile.email }}
       .width-100
-        .exchange-trade.border.bg-footer-blue
-          .pvs
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
             span.em-500.pl-25.ph-10-mobile(translate="STATUS")
-          .pvs
+          .pv-5
             span.em-500(translate="DATE")
-          .pvs
+          .pv-5.hidden-xs
             span.em-500(translate="BTC")
-          .pvs
+          .pv-5
             span.em-500(translate="TOTAL")
-      table.width-100
-        tr(
-          ng-repeat="trade in pendingTrades() | orderBy:'createdAt':true"
-          user-action-required="trade.state === 'awaiting_transfer_in'"
-          disabled="status.disabled"
-          sell="sellHandler"
-          conversion="100"
-          buy="buyHandler"
-          trade="trade")
+        div(ng-repeat="trade in pendingTrades() | orderBy:'createdAt':true"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
+            disabled="status.disabled"
+            sell="sellHandler"
+            conversion="100"
+            buy="buyHandler"
+            trade="trade")
     
     div(ng-show="recurringTrades().length")
       .flex-row.flex-between.flex-center.mtl
@@ -68,14 +66,14 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         div(ng-hide="pendingTrades().length")
           span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
       .width-100
-        .exchange-trade.border.bg-footer-blue
-          .pvs
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
             span.em-500.pl-25.ph-10-mobile Recurring Order
-          .pvs
+          .pv-5
             span.em-500(translate="FREQUENCY")
-          .pvs
+          .pv-5
             span.em-500(translate="START")
-          .pvs
+          .pv-5
             span.em-500(translate="END")
       exchange-recurring-trades(ng-repeat="subscription in subscriptions" subscription="subscription" trades="recurringTrades")
 
@@ -85,28 +83,21 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         div(ng-hide="pendingTrades().length || recurringTrades().length && subscriptions")
           span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
       .width-100
-        .exchange-trade.border.bg-footer-blue
-          .pvs
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
             span.em-500.pl-25.ph-10-mobile(translate="STATUS")
-          .pvs
+          .pv-5
             span.em-500(translate="DATE")
-          .pvs
+          .pv-5.hidden-xs
             span.em-500(translate="BTC")
-          .pvs
+          .pv-5
             span.em-500(translate="TOTAL")
-      table.width-100.mb-30(gradual-render)
-        tr.border(ng-hide="completedTrades().length")
-          td.pvml.plml.italic.type-lbl.hidden-xs(colspan="4") You haven't completed any trades yet.
-          td.pvml.plml.italic.type-lbl.visible-xs(colspan="5") You haven't completed any trades yet.
-        tr(
-          ng-repeat="trade in completedTrades() | orderBy:'createdAt':true | limitTo:$render.limit"
-          disabled="status.disabled"
-          sell="sellHandler"
-          conversion="100"
-          buy="buyHandler"
-          trade="trade"
-          in-view="$last && !$root.size.xs && $render.next()")
-        tr.border.center(ng-show="$root.size.xs && completedTrades().length > $render.limit")
-          td.pvl.italic.type-lbl.primary(colspan="5" ng-click="$render.next()" translate="SHOW_MORE")
+        div(ng-repeat="trade in completedTrades() | orderBy:'createdAt':true | limitTo:$render.limit"
+            disabled="status.disabled"
+            sell="sellHandler"
+            conversion="100"
+            buy="buyHandler"
+            trade="trade"
+            in-view="$last && !$root.size.xs && $render.next()")
 
 contact-support-footer(ng-hide="inMobileBuy")
