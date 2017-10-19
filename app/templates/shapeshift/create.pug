@@ -12,19 +12,21 @@ form.bc-form(
       .group.inline.mb-30.mb-10
         .item.width-50.width-50-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
-            span.f-16.em-500.colon(translate=".EXCHANGE_FROM")
+            span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
           ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.wallet")
             ui-select-match
               i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.from).icon")
               span {{ $ctrl.from.label }}
-            ui-select-choices(repeat="origin in $ctrl.origins")
-              i.pr-5(ng-class="currencyHelper(origin).icon")
-              span {{ origin.label }}
+            ui-select-choices(repeat="account in $ctrl.origins")
+              i.pr-5(ng-class="currencyHelper(account).icon")
+              span {{ account.label }}
+        .flex-center
+          span(ng-click="switch()") switch
         .item.width-50.width-50-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
-            span.f-16.em-500.colon(translate="TO")
+            span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center
-            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="state.output.amount = 0; state.output.curr = $ctrl.currencyHelper($ctrl.to).name" ng-disabled="!$ctrl.wallet")
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="setTo(); state.output.amount = 0; state.output.curr = $ctrl.currencyHelper($ctrl.to).name" ng-disabled="state.baseBCH")
               ui-select-match
                 i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.to).icon")
                 span {{ $ctrl.to.label }}
@@ -76,16 +78,29 @@ form.bc-form(
                 fiat(btc="0" ng-if="state.balanceFailed || forms.shiftForm.$invalid")
                 fiat(eth="state.output.amount" ng-if="state.output.curr === 'eth' && !state.balanceFailed && !forms.shiftForm.$invalid")
                 fiat(btc="toSatoshi(state.output.amount, bitcoin)" ng-if="state.output.curr === 'btc' && !state.balanceFailed && !forms.shiftForm.$invalid")
+          .flex-row
+            .flex-row.f-12
+              span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min" translate="Below the minimum limit.")
+              div(ng-hide="forms.shiftForm.input.$error.max")
+                span Use
+                | &nbsp;
+                a(ng-click="useMin()") minimum
+            .flex-row.f-12
+              span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max" translate="Amount over the limit.")
+              div(ng-hide="forms.shiftForm.input.$error.min")
+                span Use
+                | &nbsp;
+                a(ng-click="useMax()") maximum
           .pos-rel.f-12.mts.state-danger-text(ng-show="forms.shiftForm.input.$error")
             span.pos-abs(ng-show="maxAvailable < state.rate.min && state.rate.max > state.rate.min")
               span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
               | &nbsp;
               a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseBTC")
-            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min" ng-click="state.input.amount = state.rate.min; state.baseCurr = state.input.curr")
+            //- span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.min && maxAvailable >= state.rate.min" ng-click="state.input.amount = state.rate.min; state.baseCurr = state.input.curr")
               span(translate=".BELOW_MIN_SHIFT_LIMIT")
               | :&nbsp;
               span.upper {{ state.rate.min }} {{ state.input.curr }}
-            span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max" ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr")
+            //- span.pointer.pos-abs(ng-show="forms.shiftForm.input.$error.max && maxAvailable > state.rate.min && maxAvailable < state.rate.max" ng-click="state.input.amount = maxAvailable; state.baseCurr = state.input.curr")
               span(translate=".MAX_AVAILABLE_ERROR")
               | :&nbsp;
               span.upper {{ maxAvailable }} {{ state.input.curr }}
