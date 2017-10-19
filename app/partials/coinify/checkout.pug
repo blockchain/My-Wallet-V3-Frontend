@@ -75,7 +75,11 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500(translate="START")
           .pv-5
             span.em-500(translate="END")
-      exchange-recurring-trades(ng-repeat="subscription in subscriptions" subscription="subscription" trades="recurringTrades")
+      exchange-recurring-trades(ng-repeat="subscription in subscriptions"
+                                subscription="subscription"
+                                trades="recurringTrades"
+                                cancel-subscription="cancelSubscription(id)"
+                                buy="buyHandler")
 
     div(ng-show="completedTrades().length")
       .flex-row.flex-between.flex-center.mtl

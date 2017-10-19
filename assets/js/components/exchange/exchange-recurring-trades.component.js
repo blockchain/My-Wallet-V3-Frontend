@@ -2,8 +2,10 @@ angular
   .module('walletApp')
   .component('exchangeRecurringTrades', {
     bindings: {
+      subscription: '<',
       trades: '&',
-      subscription: '<'
+      cancelSubscription: '&',
+      buy: '&'
     },
     templateUrl: 'templates/exchange/recurring-trades.pug',
     controller: ExchangeRecurringTradesController,
@@ -14,7 +16,8 @@ function ExchangeRecurringTradesController ($scope, coinify) {
   $scope.state = {};
   $scope.subscription = this.subscription;
   $scope.trades = this.trades()().filter((t) => t.tradeSubscriptionId === $scope.subscription.id);
-  
+  $scope.buyHandler = this.buy;
+
   $scope.getClass = (trade) => {
     let c = '';
 
@@ -24,5 +27,7 @@ function ExchangeRecurringTradesController ($scope, coinify) {
     else c = '';
 
     return c;
-  }
+  };
+
+  $scope.cancel = () => this.cancelSubscription({ id: $scope.subscription.id });
 }

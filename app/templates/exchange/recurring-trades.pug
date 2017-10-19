@@ -24,7 +24,7 @@
     .exchange-trade(ng-repeat="trade in trades")
       .exchange-status.pv-15
         span.pl-25(ng-class="getClass(trade)") {{ trade.state | translate }}
-        a.hidden-xs(translate="VIEW_DETAILS")
+        a.hidden-xs(translate="VIEW_DETAILS" ng-click="buyHandler()")
       .exchange-date.pv-15
         span {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
       .exchange-exchanged.pv-15
@@ -32,5 +32,5 @@
       .exchange-received.pv-15
         span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
     .width-100.flex-end(ng-show="state.toggled")
-      .span.pv-15.state-danger-text.pointer(ng-if="subscription.isActive") Cancel Recurring Order
+      .span.pv-15.state-danger-text.pointer(ng-if="subscription.isActive" ng-click="cancel()") Cancel Recurring Order
       .span.pv-15.primary.pointer(ng-if="!subscription.isActive") Restart Recurring Order

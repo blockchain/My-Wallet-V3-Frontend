@@ -139,9 +139,13 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }).then(() => trade.cancel().then(() => Exchange.fetchExchangeData(service.exchange)), () => {})
       .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   };
-  
+
   service.getSubscriptions = () => {
     return service.exchange.getSubscriptions();
+  };
+
+  service.cancelSubscription = (id) => {
+    return service.exchange.cancelSubscription(id);
   };
 
   service.getPendingKYC = () => {

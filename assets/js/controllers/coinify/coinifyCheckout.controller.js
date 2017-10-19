@@ -32,6 +32,8 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     max: Math.min(coinify.limits.blockchain.inRemaining['BTC'], coinify.sellMax)
   });
 
+  $scope.cancelSubscription = (id) => coinify.cancelSubscription(id);
+
   $scope.openKYC = () => coinify.openPendingKYC();
   $scope.pendingKYC = () => coinify.getPendingKYC() || coinify.getRejectedKYC();
 
