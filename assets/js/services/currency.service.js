@@ -232,6 +232,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (isBitCurrency(currency)) {
       console.warn('do not try to convert bitcoin to ether');
       return null;
+    } else if (isEthCurrency(currency)) {
+      return amount;
     } else if (ethConversions[currency.code] != null) {
       return amount / ethConversions[currency.code].last;
     } else {
@@ -255,7 +257,9 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function convertToBitcoinCash (amount, currency) {
     if (amount == null || currency == null) return null;
-    if (conversions[currency.code] != null) {
+    if (isBchCurrency(currency)) {
+      return amount;
+    } else if (conversions[currency.code] != null) {
       return Math.ceil(amount * parseInt(SATOSHI / bchConversions[currency.code].last, 10));
     } else {
       return null;
