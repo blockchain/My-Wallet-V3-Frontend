@@ -159,7 +159,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       }
     };
 
-    let fee = state.baseBTC || state.baseBCH ? this.fees[state.baseCurr] : '';
+    let fee = this.fees[state.baseCurr];
     return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
   $scope.switched = false;
