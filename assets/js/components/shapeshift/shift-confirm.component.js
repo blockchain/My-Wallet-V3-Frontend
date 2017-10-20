@@ -6,6 +6,7 @@ angular
       quote: '<',
       payment: '<',
       wallet: '<',
+      destination: '<',
       onCancel: '&',
       onComplete: '&',
       handleShift: '&',
@@ -19,17 +20,7 @@ angular
 
 function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q, $filter, currency, Env) {
   let now = new Date();
-
-  $scope.assign = (c) => {
-    switch (c) {
-      case 'btc':
-        return Wallet.getDefaultAccount();
-      case 'eth':
-        return Ethereum.defaultAccount;
-      case 'bch':
-        return this.wallet;
-    }
-  };
+  $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether', 'bch': 'Bitcoin Cash'};
 
   $scope.fee = this.fee;
   $scope.quote = this.quote;
@@ -37,14 +28,10 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.bitcoinCash = currency.bchCurrencies.filter(c => c.code === 'BCH')[0];
-  $scope.from = $scope.assign($scope.quote.fromCurrency);
-  $scope.to = $scope.assign($scope.quote.toCurrency);
-  $scope.fromCurrency = $scope.quote.fromCurrency === 'btc' ? $scope.bitcoin : $scope.quote.fromCurrency === 'eth' ? $scope.ether : $scope.bitcoinCash;
+  $scope.toCurrency = $scope.human[$scope.quote.toCurrency].toLowerCase();
 
   $scope.total = parseFloat($scope.quote.depositAmount) + parseFloat($filter('convert')(this.fee, $scope.fromCurrency, false));
   $scope.getTimeToExpiration = () => $scope.quote.expires - now;
-
-  $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether', 'bch': 'Bitcoin Cash'};
 
   $scope.shift = () => {
     $scope.lock();

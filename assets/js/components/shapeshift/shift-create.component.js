@@ -98,7 +98,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     state.baseCurr = state.input.curr;
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
       let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee, from: this.from});
-      payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
+      payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote, destination: this.to}));
     }).then($scope.free);
   };
 
