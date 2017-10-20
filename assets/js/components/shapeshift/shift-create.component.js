@@ -115,14 +115,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
   $scope.getAvailableBalance = () => {
     let fetchSuccess = (balance, fee) => {
-      $scope.maxAvailable = balance.amount;
-      $scope.cachedFee = balance.fee;
-
       state.error = null;
       state.balanceFailed = false;
-      if (this.wallet) {
-        state.input.amount = Math.min(state.rate.max, $scope.maxAvailable);
-      }
+      $scope.cachedFee = balance.fee;
+      $scope.maxAvailable = balance.amount;
+      if (this.wallet) state.input.amount = Math.min(state.rate.max, $scope.maxAvailable);
     };
 
     let fetchError = (err) => {
@@ -142,8 +139,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.switch = (from) => {
     this.from = from || this.to;
     this.to = this.destinations()[0];
+    state.baseCurr = this.currencyHelper(this.from).name;
     [state.input, state.output] = [state.output, state.input];
-    getRate().then(() => $scope.getAvailableBalance());
   };
   
   $scope.setFrom = () => {
@@ -153,10 +150,10 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.setMin = () => state.input.amount = state.rate.min;
   $scope.setMax = () => state.input.amount = $scope.maxAvailable < state.rate.max ? $scope.maxAvailable : state.rate.max;
 
-  $scope.$watch('$ctrl.from.balance', (n, o) => n !== o && $scope.getAvailableBalance());
   $scope.$watch('state.output.curr', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
+  $scope.$watch('$ctrl.from.balance', (n, o) => { if (n !== o) { getRate().then($scope.getAvailableBalance); } });
 
   this.currencyHelper = (obj) => {
     if (obj.wei) {
