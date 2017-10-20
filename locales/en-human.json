@@ -37,7 +37,7 @@
     },
     "WALLET_SAFETY": {
       "Q": "为了保持钱包的安全，我需要做些什么？",
-      "A": "我们的安全中心可以帮助您保持钱包的安全并确保即使您丢失了密码也能够访问您的资金 - 所有过程将在5分钟内完成。启用两步认证方法就是一个非常棒的开始，能够帮助防止对您的钱包未经授权的访问，写下您的找回短语以确保您绝不会丢失您的资金。我们还建议您使用一个至少16个字符或者更长的独一无二的随机密码。"
+      "A": "我们的安全中心可以帮助您保持钱包的安全并确保即使您丢失了密码也能够访问您的资金 - 所有过程将在5分钟内完成。启用双重认证方法就是一个非常棒的开始，能够帮助防止对您的钱包未经授权的访问，写下您的找回短语以确保您绝不会丢失您的资金。我们还建议您使用一个至少16个字符或者更长的独一无二的随机密码。"
     },
     "WALLET_ID_VS_ADDRESS": {
       "Q": "钱包ID与比特币地址的区别是什么?",
@@ -68,8 +68,8 @@
       "A": "在Blockchain, 我们致力于让客户保持对资金的完全控制。本着这种精神，我们从来没有看到或存储您的密码。所以我们不能为你重新设置。不过，我们确实为用户提供了备份短语，能够用来恢复对您的资金的访问。 前往我们的安全中心获取您的备份短语并确保将其保存在安全的地方，绝不要分享给别人。"
     },
     "BITCOIN_CASH_ABOUT": {
-      "Q": "我要如何访问Bitcoin Cash?",
-      "A": "如果在2017年8月1日分叉之前您的钱包中存有比特币, 您将能够在“>通用”设置中访问您的Bitcoin Cash。如果没有，请忽略此消息。 "
+      "Q": "我要如何访问比特币现金?",
+      "A": "如果在2017年8月1日分叉之前您的钱包中存有比特币, 您将能够在“>通用”设置中访问您的比特币现金。如果没有，请忽略此消息。 "
     }
   },
   "SETTINGS": "设置",
@@ -209,7 +209,7 @@
   "LANGUAGE_EXPLAIN" : "设置你喜欢的语言",
   "EMAIL_ADDRESS" : "电子邮件地址",
   "NOT_VALID_EMAIL_ADDRESS": "请输入有效的电子邮件地址。",
-  "EMAIL_ADDRESS_EXPLAIN" : "当检测到可以或不寻常活动时，您的验证电子邮箱地址将被用于发送登录码，提醒你的钱包登录ID，以及当您接收到资金时发送支付通知。",
+  "EMAIL_ADDRESS_EXPLAIN" : "当检测到可疑或不寻常活动时，您的验证电子邮箱地址将被用于发送登录码，提醒您的钱包登录ID，以及当您接收到资金时发送支付通知。",
   "CHANGE_EMAIL_NOT_EXCHANGE": "此操作将改变您的电子邮箱地址，但您签署用于购买比特币的邮箱地址保持不变。",
   "MAIL_PROVIDER_WARN": "您的邮件提供商可能会在从Blockchain这里接收邮件时出现问题",
   "VERIFIED" : "已验证",
@@ -294,16 +294,16 @@
   "EMAIL_CODE" : "邮箱验证码",
   "YUBI_CODE" : "Yubikey验证码",
   "CONFIGURE_2FA" : "启用",
-  "TWO_STEP_VERIFICATION" : "两步验证",
-  "TWO_STEP_EXPLAIN" : "两步验证通过在每次登陆尝试后要求一个一次性密码帮助阻止您的钱包遭受未经授权的访问。启用这个选项将阻止那些未经授权的用户访问您的钱包。",
-  "ENABLE_TWO_STEP" : "启用两步验证",
-  "DISABLE_TWO_STEP" : "禁用两步验证",
+  "TWO_STEP_VERIFICATION" : "双重验证",
+  "TWO_STEP_EXPLAIN" : "双重验证通过在每次登陆尝试后要求一个一次性密码帮助阻止您的钱包遭受未经授权的访问。启用这个选项将阻止那些未经授权的用户访问您的钱包。",
+  "ENABLE_TWO_STEP" : "启用双重验证",
+  "DISABLE_TWO_STEP" : "禁用双重验证",
   "2FA_YUBI" : "Yubikey",
   "2FA_SMS" : "短信",
   "2FA_GOOGLE_AUTH" : "谷歌验证",
   "2FA_NOT_SUPPORTED" : "不支持这种双重验证方法",
   "DISABLE" : "禁用",
-  "CONFIRM_DISABLE_2FA" : "您确认要禁用两步验证?",
+  "CONFIRM_DISABLE_2FA" : "您确认要禁用双重验证?",
   "IMPORTED_ADDRESSES" : "导入的比特币地址",
   "HD_ADDRESSES" : "HD地址",
   "ADDRESS_BOOK" : "地址簿",
@@ -368,7 +368,7 @@
   "RECOVERY_BEFORE_SECOND_PASSWORD": "请先备份您的资金！",
   "RECOVERY_BEFORE_SECOND_EXPLAINER": "我们强烈建议您在设置第二密码钱备份找回短语。备份您的钱包将确保您的比特币安全以防您丢失密码。为了您的安全，请不要在任何文件上保存密码。",
   "BACKUP_NOW": "现在备份",
-  "REMEMBER_2FA" : "牢记两步验证",
+  "REMEMBER_2FA" : "牢记双重验证",
   "REMEMBER_2FA_EXPLAIN" : "您的浏览器将被记住一段很短的时间，允许您再次登录时不再需要重新验证。禁用这个设置将在您每次登录时要求完整验证。在删除所有cookie之前，这不会影响您当前的浏览器。",
   "BLOCK_TOR" : "通过Tor访问钱包",
   "BLOCK_TOR_EXPLAIN" : "启用下面选项来保护IP地址，Tor匿名网络通过IP访问你的钱包的一部分。Tor网络经常被黑客用户尝试访问Blockchain用户钱包。 ",
@@ -453,7 +453,7 @@
   "ADDRESS_VALID" : "这个比特币地址是有效的。",
   "ADDRESS_FOR_PRIVATE_KEY" : "这个比特币地址的私钥是",
   "PRIVATE_KEY_WARNING" : "<b>警告:</b> 允许其他人访问此私钥将使他们能够从这个地址发送比特币。向其他人公开您的私钥会导致丢失比特币的安全风险。您要继续吗？",
-  "PRIVATE_KEY_WARNING_ETH" : "<b class='state-danger-text'><i class='icon-alert'></i> 警告:</b> 允许其他人访问此私钥将使他们能够从这个地址发送ETH。向其他人公开您的私钥会导致丢失ETH的安全风险。<b>你将被要求提供主密码才能继续。</b>",
+  "PRIVATE_KEY_WARNING_ETH" : "<b class='state-danger-text'><i class='icon-alert'></i> 警告:</b> 允许其他人访问此私钥将使他们能够从这个地址发送ETH。向其他人公开您的私钥会导致丢失ETH的安全风险。<b>您将被要求提供主密码才能继续。</b>",
   "BALANCE_FOR_ADDRESS": "这个地址的余额是",
   "INPUT_NOT_RECOGNIZED" : "您输入的值似乎不是有效的私钥或比特币地址。",
   "ALREADY_IN_WALLET" : "钱包里已经有这个地址了",
@@ -641,7 +641,7 @@
   "LEVEL_2_TITLE" : "防止您的钱包遭受未经授权访问",
   "LEVEL_3" : "等级3",
   "LEVEL_3_TITLE" : "高级安全选项以加强您的钱包",
-  "TWO_STEP_EXPLAIN" : "通过启用两步验证来保护您的钱包不会遭受未经授权的访问。您可以选择使用一个免费App或您的手机号码来保护您的钱包。",
+  "TWO_STEP_EXPLAIN" : "通过启用双重验证来保护您的钱包不会遭受未经授权的访问。您可以选择使用一个免费App或您的手机号码来保护您的钱包。",
   "ENABLE_2FA_ENTER_MOBILE" : "使用您的手机在一次登录尝试后接收一个一次性密码。在下面添加您的手机号码以继续。",
   "USE_AUTH_YUBIKEY" : "使用谷歌验证或Yubikey",
   "USE_MOBILE" : "使用您的手机号码",
@@ -651,7 +651,7 @@
   "TRANSACTION_DETAILS" : "交易详细信息",
   "2FA_DISABLED" : "双重验证已禁用",
   "2FA_SUCCESS" : "恭喜！双重验证已经成功启用。",
-  "2FA_ERROR" : "启用2FA时出错，请重试",
+  "2FA_ERROR" : "启用双重验证时出错，请重试",
   "2FA_INVALID" : "双重验证码无法验证，请重试",
   "SEND_STEP_1" : "立即发送比特币到任何比特币地址。",
   "SEND_STEP_2" : "请检查您的交易。",
@@ -663,7 +663,7 @@
   "RECEIVE_BITCOIN_MESSAGE_LEGACY_1": "这是一个导入的地址。",
   "CLICK_HERE": "使用一个新的地址以提高隐私性。",
   "COPY_ADDRESS" : "复制上面的地址并分享给其他人。",
-  "SC_CONFIGURE_2FA" : "两步验证在每次登陆尝试之后通过要求一个一次性密码来帮助阻止未经授权的访问。启用这个选项将阻止未经授权的人访问您的钱包。",
+  "SC_CONFIGURE_2FA" : "双重验证在每次登陆尝试之后通过要求一个一次性密码来帮助阻止未经授权的访问。启用这个选项将阻止未经授权的人访问您的钱包。",
   "OR" : " or ",
   "DIDNT_RECEIVE_EMAIL" : "未收到邮件？",
   "YOUR_EMAIL_ADDRESS" : "您的电子邮件地址。",
@@ -708,7 +708,7 @@
   "RECOVERY_PHRASE_TOOLTIP" : "您的找回短语允许您在密码丢失或我们的服务器延长停机时恢复您的钱包。",
   "PASSWORD_HINT_TOOLTIP" : "允许我们向您的验证邮箱地址发送您的密码提示，以防您忘记您的密码。",
   "MOBILE_NUMBER_TOOLTIP" : "@:MOBILE_NUMBER_EXPLAIN",
-  "2FA_TOOLTIP" : "两步验证在每次登陆尝试之后通过要求一个一次性密码来帮助阻止未经授权的访问。",
+  "2FA_TOOLTIP" : "双重验证在每次登陆尝试之后通过要求一个一次性密码来帮助阻止未经授权的访问。",
   "BLOCK_TOR_TOOLTIP" : "阻止已知是Tor匿名网络的IP地址访问您的钱包。",
   "ALL_BITCOIN_WALLETS" : "所有比特币钱包",
   "ALL_TRANSACTIONS": "所有交易",
@@ -808,25 +808,25 @@
   "XPUB_WARNING": "只应将此扩展公钥 (xPub) 提供给信任的人。通过该信息，他们能够跟踪您的付款，也能够阻止您访问自己的钱包。",
   "LOST_WALLET_ID": "我丢失了我的钱包ID",
   "LOST_WALLET_PWD": "我丢失了我的钱包密码",
-  "LOST_2FA": "我丢失了我的2FA设备",
+  "LOST_2FA": "我丢失了我的双重验证设备",
   "LOST_ID_DESC": "用我的钱包ID给我发电子邮件提醒。",
   "LOST_PWD_DESC": "使用您的12个单词找回密码恢复您的资金",
-  "RESET_2FA" : "重置2FA",
+  "RESET_2FA" : "重置双重验证",
   "REMIND_ME": "提示我",
   "REMIND_ME_HELP": "丢失了您的钱包标识符?我们将通过您的邮件发送给你。",
   "REMIND_SUCCESS": "您将很快收到一份包含您的钱包标识符的邮件",
   "CAPTCHA": "验证码",
   "CAPTCHA_EXPAIN": "这样我们就知道你不是机器人",
   "CAPTCHA_INCORRECT": "您提供的验证码不正确，请重试",
-  "LOST_2FA_DESC": "重新设置两步验证以重新访问您的钱包。",
-  "RESET_2FA_HELP_1" : "您是否由于丢失双重认证 (2FA) 设备或无法访问电子邮件帐户而无法访问您的钱包？",
+  "LOST_2FA_DESC": "重新设置双重验证以重新访问您的钱包。",
+  "RESET_2FA_HELP_1" : "您是否由于丢失双重验证设备或无法访问电子邮件帐户而无法访问您的钱包？",
   "RESET_2FA_HELP_2" : "请提交下表并检查您的邮箱获取进一步指示。双重认证重置请求会在一定时间后自动获批。如果您能提供更详细的信息，此过程将更快。我们会在您提交时记录您的 IP 地址和浏览器信息。",
   "RESET_2FA_WALLET_IDENTIFIER" : "钱包标识符",
   "RESET_2FA_WALLET_IDENTIFIER_EXPLAIN" : "如果您忘记了您的钱包标识符 (36个字符长，包含4个破折号。）",
   "RESET_2FA_REGISTERED_EMAIL" : "已注册电子邮件",
   "RESET_2FA_REGISTERED_EMAIL_EXPLAIN" : "输入与您钱包关联的电子邮箱。即使您无法访问这个邮箱，请继续输入。",
   "RESET_2FA_NEW_EMAIL" : "新的邮箱",
-  "RESET_2FA_NEW_EMAIL_EXPLAIN" : "如果您失去了与钱包关联的电子邮件的访问，请输入新的电子邮件。如果双重认证重置请求得到批准，该电子邮件将被自动设置为钱包的新电子邮件。",
+  "RESET_2FA_NEW_EMAIL_EXPLAIN" : "如果您失去了与钱包关联的电子邮件的访问，请输入新的电子邮件。如果双重验证重置请求得到批准，该电子邮件将被自动设置为钱包的新电子邮件。",
   "RESET_2FA_SECRET_PHRASE" : "密语",
   "RESET_2FA_SECRET_PHRASE_EXPLAIN" : "如果已为您的钱包设置密语，请在此处输入。如果密语正确，将大幅缩短您的请求批准所需的时间。如果您不知道密语，请将字段留空。",
   "RESET_2FA_MESSAGE" : "信息",
@@ -901,7 +901,7 @@
   },
   "YOU_WILL_LOSE": "您将丢失您的所有比特币！您确定吗？",
   "SURGE_WARN": "推荐了不同寻常的高手续费",
-  "SURGE_EXPLAIN":"比特币网络正在处理不同寻常的高负荷。<b>为了避免出现任何确认延迟，我们建议收取一笔异常高的交易手续费 {{ suggested | convert:'btc' }}.</b>",
+  "SURGE_EXPLAIN":"比特币网络正在处理不同寻常的高负荷。<b>为了避免出现任何确认延迟，我们建议收取一笔较高的交易手续费 {{ suggested | convert:'btc' }}.</b>",
   "HIGH_FEE_WARN": "不需要高手续费",
   "HIGH_FEE_EXPLAIN": "您指定了一笔不同寻常高的手续费{{ fee | convert:'btc' }}。<b>即使您将手续费降到 {{ suggested | convert:'btc' }} ({{ suggested | convert:'fiat' }}), 您的交易仍旧会在接下来 ~10分钟(1个区块)确认.",
   "LOW_FEE_ERROR": "您的交易手续费太低了。",
@@ -1061,7 +1061,7 @@
   },
   "TX_IN_REVIEW": {
     "TITLE": "交易审核中",
-    "BODY": "您的卡片已被收费，这笔购买目前正在审查中。该流程将在1个工作日内完成。如果您的订单无法处理，退款将在几天内发布并出现在您的卡片声明中。谢谢您的耐心等待！"
+    "BODY": "您的银行卡已被收费，这笔购买目前正在审查中。该流程将在1个工作日内完成。如果您的订单无法处理，退款将在几天内发布并出现在您的卡片声明中。谢谢您的耐心等待！"
   },
   "TX_EXPIRED": {
     "TITLE": "交易已过期",
@@ -1082,7 +1082,7 @@
   },
   "TX_INITIATED": {
     "TITLE": "交易已开始",
-    "BODY": "邮件确认将会发送到{{::email}}。<br>您可以在3-5天内获得您的BTC。"
+    "BODY": "邮件确认将会发送到{{::email}}。<br>您可以在3-5天内获得您的比特币。"
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "已收到比特币!",
@@ -1217,7 +1217,7 @@
     },
     "SAFE_AND_SECURE": {
       "TITLE": "安全",
-      "COPY": "我们的安全中心帮助您备份您的资金, 并保护他们不受未经授权的访问。"
+      "COPY": "我们的安全中心帮助您备份您的资金, 并保护他们不会遭受任何未经授权的访问。"
     },
     "BUY_AND_SELL": {
       "TITLE": "买&卖",
@@ -1346,7 +1346,7 @@
   },
   "unocoin_address_ID": {
     "TITLE": "3. 地址证明",
-    "COPY": "上传或拍一张您的住址证明的照片。您可以上传以下经过批准的文件之一，这些文件的名字与您最初提供的地址相匹配。",
+    "COPY": "上传或拍一张您的住址证明的照片。您可以上传以下经过批准的文件之一，这些文件的名字需要与您最初提供的地址相匹配。",
     "UPLOAD_TITLE": "地址证明",
     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
     "OPTION1": "Aadhar卡 (正面与背面)",
@@ -1412,7 +1412,7 @@
   "sfox-identity": {
     "ICON": "ti-id-badge",
     "TITLE": "身份审核中",
-    "COPY": "SFOX目前正在验证您的身份。这个过程将需要2天时间。一旦通过验证，您的上限将会提高。"
+    "COPY": "SFOX目前正在验证您的身份。这个过程将需要2天时间。一旦通过验证，您的限额将会提高。"
   },
   "PURCHASE_PENDING": "您的正在进行中的...购买",
   "PURCHASE_PENDING_CANT_CANCEL": "请等待您正在进行中的交易完成。",
