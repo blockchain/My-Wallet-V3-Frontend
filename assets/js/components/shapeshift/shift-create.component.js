@@ -139,15 +139,15 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
 
-  $scope.switch = () => {
-    [this.from, this.to] = [this.to, this.from];
-    [state.input, state.output] = [state.output, state.input];
+  $scope.switch = (from) => {
+    this.from = from || this.to;
     this.to = this.destinations()[0];
+    [state.input, state.output] = [state.output, state.input];
     getRate().then(() => $scope.getAvailableBalance());
   };
   
   $scope.setFrom = () => {
-    this.to.constructor.name === this.from.constructor.name && $scope.switch();
+    this.to.constructor.name === this.from.constructor.name && $scope.switch(this.from);
   };
 
   $scope.setMin = () => state.input.amount = state.rate.min;
