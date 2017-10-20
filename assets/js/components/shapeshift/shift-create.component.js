@@ -5,6 +5,7 @@ angular
       fees: '<',
       asset: '<',
       wallet: '<',
+      wallets: '<',
       onComplete: '&',
       handleRate: '&',
       handleQuote: '&',
@@ -26,8 +27,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.from = this.wallet || Wallet.getDefaultAccount();
   this.to = this.wallet ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
-  this.origins = this.wallet ? [this.wallet] : Wallet.accounts().concat(Ethereum.defaultAccount);
-  this.destinations = this.wallet ? [Wallet.accounts(), Ethereum.defaultAccount] : [this.to];
+  this.origins = this.wallet ? [this.wallet] : this.wallets;
+  this.destinations = () => this.wallets.filter((w) => w.constructor.name !== this.from.constructor.name);
 
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
@@ -49,8 +50,6 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     'btc': { currency: $scope.bitcoin, format: $scope.toSatoshi },
     'bch': { currency: $scope.bitcoinCash, format: $scope.toBitcoinCash }
   };
-
-  buyStatus.canBuy().then((res) => $scope.canBuy = res);
 
   let state = $scope.state = {
     baseCurr: this.asset || 'btc',
@@ -107,34 +106,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     let upperLimit = input.format(UPPER_LIMIT, $scope.fiat);
 
     return $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
-    .then((rate) => {
-      let maxLimit = input.format(rate.maxLimit, input.currency);
-      state.rate.min = input.format(rate.minimum, input.currency);
-      state.rate.max = maxLimit < upperLimit ? maxLimit : upperLimit;
-    });
-  };
-
-  $scope.setTo = () => {
-    if (this.from.wei) $scope.setFromEth();
-    else if (this.from.keyRing) $scope.setFromBtc();
-  };
-
-  $scope.setFromEth = () => {
-    this.destinations = Wallet.accounts();
-    this.to = this.to.keyRing ? this.to : Wallet.getDefaultAccount();
-    state.input.curr = state.baseCurr = 'eth';
-    state.output.curr = 'btc';
-    state.input.amount = state.output.amount = null;
-    getRate().then(() => $scope.getAvailableBalance());
-  };
-
-  $scope.setFromBtc = () => {
-    this.destinations = Ethereum.defaultAccount;
-    this.to = Ethereum.defaultAccount;
-    state.input.curr = state.baseCurr = 'btc';
-    state.output.curr = 'eth';
-    state.input.amount = state.output.amount = null;
-    getRate().then(() => $scope.getAvailableBalance());
+              .then((rate) => {
+                let maxLimit = input.format(rate.maxLimit, input.currency);
+                state.rate.min = input.format(rate.minimum, input.currency);
+                state.rate.max = maxLimit < upperLimit ? maxLimit : upperLimit;
+              });
   };
 
   $scope.getAvailableBalance = () => {
@@ -162,14 +138,16 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     let fee = this.fees[state.baseCurr];
     return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
-  $scope.switched = false;
+
   $scope.switch = () => {
-    $scope.switched = !$scope.switched;
-    [$scope.state.input, $scope.state.output] = [$scope.state.output, $scope.state.input];
     [this.from, this.to] = [this.to, this.from];
-    $scope.state.input.curr === 'eth' ? state.baseCurr = 'eth' : state.baseCurr = 'btc';
-    state.input.amount = state.output.amount = null;
+    [state.input, state.output] = [state.output, state.input];
+    this.to = this.destinations()[0];
     getRate().then(() => $scope.getAvailableBalance());
+  };
+  
+  $scope.setFrom = () => {
+    this.to.constructor.name === this.from.constructor.name && $scope.switch();
   };
 
   $scope.setMin = () => state.input.amount = state.rate.min;
@@ -210,4 +188,5 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   });
 
   AngularHelper.installLock.call($scope);
+  buyStatus.canBuy().then((res) => $scope.canBuy = res);
 }

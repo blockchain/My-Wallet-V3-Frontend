@@ -14,12 +14,12 @@ form.bc-form(
         .item.width-45.width-45-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
-          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.wallet")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setFrom()" ng-disabled="$ctrl.wallet")
             ui-select-match
               i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.from).icon")
               span {{ $ctrl.from.label }}
             ui-select-choices(repeat="account in $ctrl.origins")
-              i.pr-5(ng-class="currencyHelper(account).icon")
+              i.pr-5(ng-class="$ctrl.currencyHelper(account).icon")
               span {{ account.label }}
         .flex-center.flex-justify.pt-30
           img.switch(src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }")
@@ -27,12 +27,12 @@ form.bc-form(
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center
-            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="setTo(); state.output.amount = 0; state.output.curr = $ctrl.currencyHelper($ctrl.to).name" ng-disabled="state.baseBCH")
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-disabled="state.baseBCH")
               ui-select-match
                 i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.to).icon")
                 span {{ $ctrl.to.label }}
-              ui-select-choices(repeat="destination in $ctrl.destinations")
-                i.pr-5(ng-class="currencyHelper(destination).icon")
+              ui-select-choices(repeat="destination in $ctrl.destinations()")
+                i.pr-5(ng-class="$ctrl.currencyHelper(destination).icon")
                 span {{ destination.label }}
       .group
         .item
@@ -112,7 +112,7 @@ form.bc-form(
                 span Use
                 | &nbsp;
                 a.underline(ng-click="state.baseCurr = state.input.curr; setMax();") maximum
-          .pos-rel.f-12.mts.state-danger-text
+          .pos-rel.f-12.state-danger-text
             span.pos-abs(ng-show="maxAvailable < state.rate.min")
               span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: state.rate.min, curr: state.input.curr.toUpperCase()}")
               | &nbsp;
