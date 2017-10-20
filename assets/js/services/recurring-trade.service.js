@@ -6,7 +6,7 @@ function RecurringTradeService () {
   const service = {};
   
   let human = { 1: 'st', 2: 'nd', 3: 'rd', 21: 'st', 22: 'nd', 23: 'rd', 31: 'st' };
-  let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   service.getTimespan = (date, frequency) => {
     if (frequency === 'Daily') return '24 hours';

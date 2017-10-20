@@ -77,7 +77,7 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(state.total || 0, fiat, true) }}
-    .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled")
+    .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled && false")
       .item.inline.check
         input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck")
         label(for="frequencyCheck") Make this a recurring order
