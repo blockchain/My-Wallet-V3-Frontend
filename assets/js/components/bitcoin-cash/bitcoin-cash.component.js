@@ -15,6 +15,7 @@ function bitcoinCashController (modals, MyWallet, Wallet, localStorageService, S
   this.activeWallets = MyWallet.wallet.bch.accounts.filter(a => !a.archived);
   this.imported = MyWallet.wallet.bch.importedAddresses;
   this.allWallets = this.imported ? this.activeWallets.concat([this.imported]) : this.activeWallets;
+  this.showExchange = ShapeShift.userHasAccess;
 
   if (ShapeShift.userHasAccess) {
     ShapeShift.fetchFullTrades().then(() => { this.shiftLoaded = true; });

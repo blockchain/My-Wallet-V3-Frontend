@@ -843,7 +843,7 @@
   "RECOVER_FUNDS_WARNING": "You should always pair or login if you have access to your Wallet ID and password. Recovering your funds will create a new Wallet ID.",
   "STEP_2_RECOVER": "Step 2 of 2: Create a new wallet",
   "STEP_1_RECOVER": "Step 1 of 2: Enter 12 word passphrase",
-  "RECOVER_BTC_LOST": "Recover bitcoins from your lost wallet",
+  "RECOVER_BTC_LOST": "Recover funds from your lost wallet",
   "YOUR_REC_PASS": "Your Recovery Passphrase",
   "YOUR_REC_PASS_EXPLAIN": "Enter your 12 recovery words with spaces to recover your funds & transactions",
   "RESTORE_SUCCESSFUL": "Restore Successful",
@@ -1752,6 +1752,7 @@
     "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address"
   },
   "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
+  "BITCOIN_CASH_INFO_NO_EXCHANGE": "You can use your Blockchain wallet to store your Bitcoin Cash, or send all of your funds to a Bitcoin Cash wallet.",
   "EXCHANGE_STATUS": "Exchange Status",
   "SEND_ETHER": "Send Ether",
   "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
