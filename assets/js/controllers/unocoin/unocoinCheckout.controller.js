@@ -4,6 +4,7 @@ angular
 
 function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelpers, AngularHelper, Alerts, currency, modals, unocoin, exchangeRate, mediums, showCheckout) {
   let exchange = $scope.vm.external.unocoin;
+  $scope.exchange = unocoin.exchange;
 
   $scope.buying = unocoin.buying;
   $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
@@ -33,8 +34,8 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
 
   $scope.userId = exchange.user;
 
-  $scope.signupCompleted = exchange.profile.level > 2;
-  $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
+  $scope.signupCompleted = () => $scope.exchange.profile.level > 2;
+  $scope.showCheckout = () => $scope.signupCompleted() || (showCheckout && !$scope.userId);
   $scope.inspectTrade = (quote, trade) => trade.state === 'awaiting_reference_number' ? modals.openBankTransfer(trade) : modals.openTradeSummary(trade);
 
   $scope.tabs = {
@@ -50,4 +51,6 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
   $scope.buySuccess = (trade) => {
     modals.openBankTransfer(trade);
   };
+
+  if (exchange.profile && exchange.profile.level < 3) unocoin.pollLevel();
 }
