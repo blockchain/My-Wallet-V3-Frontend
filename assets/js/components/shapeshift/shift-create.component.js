@@ -68,18 +68,19 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   });
 
   $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
-    $scope.busy = true;
+    $scope.lock();
     let fetchSuccess = (quote) => {
-      let base = $scope.bitCurrencyMap[state.input.curr];
+      let input = $scope.bitCurrencyMap[state.input.curr];
+      let output = $scope.bitCurrencyMap[state.output.curr];
       $scope.quote = quote; state.error = null; state.loadFailed = false;
-      if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
-      else state.input.amount = base.format(Number.parseFloat(quote.depositAmount), base.currency);
-      $scope.busy = false;
+      if (state.baseInput) state.output.amount = output.format(Number.parseFloat(quote.withdrawalAmount), output.currency);
+      else state.input.amount = input.format(Number.parseFloat(quote.depositAmount), input.currency);
       AngularHelper.$safeApply();
     };
 
     this.handleApproximateQuote($scope.getQuoteArgs(state))
-      .then(fetchSuccess, () => { state.loadFailed = true; });
+      .then(fetchSuccess, () => { state.loadFailed = true; })
+      .then($scope.free);
   }, 500, () => {
     $scope.quote = null;
   });
@@ -93,26 +94,22 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   $scope.getSendAmount = () => {
-    $scope.busy = true;
     $scope.lock();
     state.baseCurr = state.input.curr;
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
       let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee, from: this.from});
       payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
-    }).then(() => {
-      $scope.free;
-      $scope.busy = false;
-    });
+    }).then($scope.free);
   };
 
   let getRate = () => {
-    let base = $scope.bitCurrencyMap[state.input.curr];
-    let upperLimit = base.format(UPPER_LIMIT, $scope.fiat);
+    let input = $scope.bitCurrencyMap[state.input.curr];
+    let upperLimit = input.format(UPPER_LIMIT, $scope.fiat);
 
     return $q.resolve(this.handleRate({rate: state.input.curr + '_' + state.output.curr}))
     .then((rate) => {
-      let maxLimit = base.format(rate.maxLimit, base.currency);
-      state.rate.min = base.format(rate.minimum, base.currency);
+      let maxLimit = input.format(rate.maxLimit, input.currency);
+      state.rate.min = input.format(rate.minimum, input.currency);
       state.rate.max = maxLimit < upperLimit ? maxLimit : upperLimit;
     });
   };

@@ -4,12 +4,12 @@ form.bc-form(
   novalidate
   translate-namespace="SHIFT"
   autocomplete="off")
-  fieldset(ng-disabled="locked || busy")
-    .z-10.shift-loading(ng-show="locked || busy")
+  fieldset(ng-disabled="locked")
+    .z-10.shift-loading(ng-show="locked")
       img.loader(src="img/puff.svg")
     .flex-end.pv-20-mobile.ph-10-mobile.pb-5
       span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
-    .ph-30.ph-10-mobile.pv-20-mobile(ng-class="{ 'opacity-4': busy }")
+    .ph-30.ph-10-mobile.pv-20-mobile(ng-class="{ 'opacity-4': locked }")
       .group.inline.mb-30
         .item.width-45.width-45-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
@@ -66,8 +66,6 @@ form.bc-form(
                   name="inputFiat"
                   ng-model="state.input.amount"
                   ng-model-options="{allowInvalid: true}"
-                  ng-min="state.rate.min"
-                  ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
                   base-currency="bitCurrencyMap[state.input.curr].currency"
                   ng-change="state.baseCurr = state.input.curr"
                   transform-currency="dollars"
@@ -94,8 +92,6 @@ form.bc-form(
                   name="inputFiat"
                   ng-model="state.output.amount"
                   ng-model-options="{allowInvalid: true}"
-                  ng-min="state.rate.min"
-                  ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
                   base-currency="bitCurrencyMap[state.output.curr].currency"
                   ng-change="state.baseCurr = state.output.curr"
                   transform-currency="dollars"
