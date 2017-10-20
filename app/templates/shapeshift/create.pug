@@ -4,13 +4,14 @@ form.bc-form(
   novalidate
   translate-namespace="SHIFT"
   autocomplete="off")
-  fieldset(ng-disabled="locked")
-    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
-      span.f-16.em-500.pl-30.no-padding-mobile(translate=".EXCHANGE_DETAILS")
+  fieldset(ng-disabled="locked || busy")
+    .z-10.shift-loading(ng-show="locked || busy")
+      img.loader(src="img/puff.svg")
+    .flex-end.pv-20-mobile.ph-10-mobile.pb-5
       span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
-    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
-      .group.inline.mb-30.mb-10
-        .item.width-50.width-50-mobile.pr-15.no-padding-mobile
+    .ph-30.ph-10-mobile.pv-20-mobile(ng-class="{ 'opacity-4': busy }")
+      .group.inline.mb-30
+        .item.width-45.width-45-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
           ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setTo()" ng-disabled="$ctrl.wallet")
@@ -20,9 +21,9 @@ form.bc-form(
             ui-select-choices(repeat="account in $ctrl.origins")
               i.pr-5(ng-class="currencyHelper(account).icon")
               span {{ account.label }}
-        .flex-center
-          span(ng-click="switch()") switch
-        .item.width-50.width-50-mobile.pl-15.no-padding-mobile
+        .flex-center.flex-justify.pt-30
+          img.switch(src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }")
+        .item.width-45.width-45-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center

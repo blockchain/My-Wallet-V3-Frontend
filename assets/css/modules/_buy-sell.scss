@@ -378,3 +378,20 @@ input[type="radio"]:checked + label {
     grid-template-columns: 25% 15% 30% 30%;
   }
 }
+
+.shift-loading {
+  width: 70px;
+  position: relative;
+  margin: 0 auto;
+  top: 9em;
+  height: 0;
+}
+
+.rotate-180 {
+  transform: rotate(-180deg);
+}
+
+.switch {
+  transition: 0.5s;
+  margin-right: 13px;
+}

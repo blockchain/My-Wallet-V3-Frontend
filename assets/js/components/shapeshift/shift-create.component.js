@@ -27,7 +27,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.to = this.wallet ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
   this.origins = this.wallet ? [this.wallet] : Wallet.accounts().concat(Ethereum.defaultAccount);
-  this.destinations = this.wallet ? [Wallet.getDefaultAccount(), Ethereum.defaultAccount] : [this.to];
+  this.destinations = this.wallet ? [Wallet.accounts(), Ethereum.defaultAccount] : [this.to];
 
   $scope.toEther = currency.convertToEther;
   $scope.toSatoshi = currency.convertToSatoshi;
@@ -43,10 +43,10 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.bitcoinCash = currency.bchCurrencies.filter(c => c.code === 'BCH')[0];
   $scope.dollars = Wallet.settings.currency;
   $scope.forms = $scope.state = {};
-  
-  $scope.bitCurrencyMap = { 
+
+  $scope.bitCurrencyMap = {
     'eth': { currency: $scope.ether, format: $scope.toEther },
-    'btc': { currency: $scope.bitcoin, format: $scope.toSatoshi }, 
+    'btc': { currency: $scope.bitcoin, format: $scope.toSatoshi },
     'bch': { currency: $scope.bitcoinCash, format: $scope.toBitcoinCash }
   };
 
@@ -68,11 +68,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   });
 
   $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
+    $scope.busy = true;
     let fetchSuccess = (quote) => {
       let base = $scope.bitCurrencyMap[state.input.curr];
       $scope.quote = quote; state.error = null; state.loadFailed = false;
       if (state.baseInput) state.output.amount = Number.parseFloat(quote.withdrawalAmount);
       else state.input.amount = base.format(Number.parseFloat(quote.depositAmount), base.currency);
+      $scope.busy = false;
       AngularHelper.$safeApply();
     };
 
@@ -91,12 +93,16 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   $scope.getSendAmount = () => {
+    $scope.busy = true;
     $scope.lock();
     state.baseCurr = state.input.curr;
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
       let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee, from: this.from});
       payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote}));
-    }).then($scope.free);
+    }).then(() => {
+      $scope.free;
+      $scope.busy = false;
+    });
   };
 
   let getRate = () => {
@@ -159,8 +165,9 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     let fee = state.baseBTC || state.baseBCH ? this.fees[state.baseCurr] : '';
     return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
-
+  $scope.switched = false;
   $scope.switch = () => {
+    $scope.switched = !$scope.switched;
     [$scope.state.input, $scope.state.output] = [$scope.state.output, $scope.state.input];
     [this.from, this.to] = [this.to, this.from];
     $scope.state.input.curr === 'eth' ? state.baseCurr = 'eth' : state.baseCurr = 'btc';
