@@ -1,6 +1,6 @@
 form.bc-form(
   name="checkoutForm"
-  ng-submit="$ctrl.buyAccount ? enableBuy(): buy();"
+  ng-submit="$ctrl.tradeAccount ? enableBuy(): buy();"
   novalidate
   autocomplete="off")
   fieldset(ng-disabled="locked || trading().isDisabled")
@@ -69,10 +69,10 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border
             span.colon BTC Order
             span {{ format(state.btc || 0, bitcoin, true) }}
-          .border-bottom.mhm(ng-if="typeof($ctrl.buyAccount) === 'object'")
-          .flex-between.flex-center.form-control.bg-grey.no-border(ng-if="typeof($ctrl.buyAccount) === 'object'")
+          .border-bottom.mhm(ng-if="typeof($ctrl.tradeAccount) === 'object'")
+          .flex-between.flex-center.form-control.bg-grey.no-border(ng-if="typeof($ctrl.tradeAccount) === 'object'")
             span.colon Payment Method
-            span.capitalize {{ $ctrl.buyAccount.accountType }} ({{ $ctrl.buyAccount.accountNumber }})
+            span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
           .border-bottom.mhm
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost

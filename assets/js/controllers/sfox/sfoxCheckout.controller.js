@@ -47,14 +47,14 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: ['BUY_BITCOIN', 'ORDER_HISTORY'],
+    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
-  $scope.account = accounts[0];
   $scope.trades = exchange.trades;
   $scope.buyHandler = (...args) => sfox.buy(...args);
-  $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
+  $scope.buyQuoteHandler = sfox.fetchQuote.bind(null, exchange);
+  $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {
     sfox.watchTrade(trade);
