@@ -14,6 +14,8 @@ describe('CoinifyMediumController', () => {
       getAccounts () { return $q.resolve([]); }
     }
   };
+  
+  let frequency = 'Daily';
 
   let quote = {
     quoteAmount: 1,
@@ -75,6 +77,7 @@ describe('CoinifyMediumController', () => {
     scope.vm = {
       quote,
       exchange,
+      frequency,
       medium: 'card',
       baseFiat () { return true; },
       fiatCurrency () { return 'EUR'; },

@@ -15,6 +15,7 @@ angular
       buyAccount: '<',
       conversion: '<',
       fiatOptions: '<',
+      frequencies: '<',
       collapseSummary: '<',
       onSuccess: '&',
       fiatChange: '&',
@@ -26,26 +27,28 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, recurringTrade, Exchange) {
+  $scope.date = new Date();
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.format = currency.formatCurrencyForView;
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.btcAccount = Wallet.getDefaultAccount();
 
   $scope.fiat = this.fiat;
-  $scope.fiatOptions = this.fiatOptions;
-  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-
   $scope.trading = this.trading;
   $scope.onSuccess = this.onSuccess;
+  $scope.fiatOptions = this.fiatOptions;
   $scope.provider = this.provider.toUpperCase();
+  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.displayCurrency = () => this.type === 'Buy' ? $scope.fiat : $scope.bitcoin;
+  $scope.recurringTimespan = () => recurringTrade.getTimespan($scope.date, state.frequency || this.frequencies[0]);
 
   let state = $scope.state = {
     btc: null,
     fiat: null,
     rate: null,
     baseCurr: $scope.fiat,
+    frequency: this.frequencies && this.frequencies[0],
     get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.fiat; },
     get baseFiat () { return this.baseCurr === $scope.fiat; },
     get total () { return this.fiat; }
@@ -139,6 +142,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.buy = () => {
     $scope.lock();
     let quote = $scope.quote;
+    let endTime = state.endTime;
+    let frequency = state.frequencyCheck && state.frequency;
+
     if (this.buyAccount || this.buyEnabled) {
       this.handleTrade({account: this.buyAccount, quote: quote})
         .then(trade => {
@@ -150,7 +156,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      this.onSuccess({quote});
+      this.onSuccess({quote, frequency, endTime});
       $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };
