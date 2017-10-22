@@ -30,11 +30,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.origins = this.wallet ? [this.wallet] : this.wallets;
   this.destinations = () => this.wallets.filter((w) => w.constructor.name !== this.from.constructor.name);
 
-  $scope.toEther = currency.convertToEther;
-  $scope.toSatoshi = currency.convertToSatoshi;
-  $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.toBitcoinCash = currency.convertToBitcoinCash;
-  $scope.fromBitcoinCash = currency.convertFromBitcoinCash;
+  $scope.forms = $scope.state = {};
+  $scope.dollars = Wallet.settings.currency;
   $scope.country = MyWallet.wallet.accountInfo.countryCodeGuess;
   $scope.fiat = $scope.country === 'US'
     ? currency.currencies.filter(c => c.code === 'USD')[0]
@@ -42,13 +39,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.bitcoinCash = currency.bchCurrencies.filter(c => c.code === 'BCH')[0];
-  $scope.dollars = Wallet.settings.currency;
-  $scope.forms = $scope.state = {};
 
   $scope.bitCurrencyMap = {
-    'eth': { currency: $scope.ether, format: $scope.toEther },
-    'btc': { currency: $scope.bitcoin, format: $scope.toSatoshi },
-    'bch': { currency: $scope.bitcoinCash, format: $scope.toBitcoinCash }
+    'eth': { currency: $scope.ether, format: currency.convertToEther },
+    'btc': { currency: $scope.bitcoin, format: currency.convertToSatoshi },
+    'bch': { currency: $scope.bitcoinCash, format: currency.convertToBitcoinCash }
   };
 
   let state = $scope.state = {
