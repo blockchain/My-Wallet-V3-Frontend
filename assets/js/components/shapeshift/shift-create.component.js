@@ -78,7 +78,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       $scope.free();
     };
 
-    this.handleApproximateQuote($scope.getQuoteArgs(state)).then(fetchSuccess, $scope.fetchError);
+    this.handleApproximateQuote($scope.getQuoteArgs(state)).then(fetchSuccess, fetchError);
   }, 500, () => {
     $scope.quote = null;
   });
@@ -118,7 +118,6 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
       state.balanceFailed = false;
       $scope.cachedFee = balance.fee;
       $scope.maxAvailable = balance.amount;
-      let input = $scope.bitCurrencyMap[state.input.curr];
       if (this.wallet) state.input.amount = Math.min(state.rate.max, $scope.maxAvailable);
     };
 
