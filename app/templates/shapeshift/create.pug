@@ -22,12 +22,13 @@ form.bc-form(
               i.pr-5(ng-class="$ctrl.currencyHelper(account).icon")
               span {{ account.label }}
         .flex-center.flex-justify.pt-30
-          img.switch(src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }")
+          img.pointer.switch.fade(ng-if="$ctrl.wallet" src="img/Switch.svg")
+          img.pointer.switch(ng-if="!$ctrl.wallet" src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }")
         .item.width-45.width-45-mobile.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center
-            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-disabled="state.baseBCH")
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="setTo()")
               ui-select-match
                 i.pr-5(ng-class="$ctrl.currencyHelper($ctrl.to).icon")
                 span {{ $ctrl.to.label }}
@@ -73,7 +74,7 @@ form.bc-form(
                     step="0.01"
                     required)
                   span.mhm.upper {{dollars.code}}
-              i.icon-skinny-arrow-right.f-12.border-grey.ph-10.hidden-xs
+              i.icon-skinny-arrow-right.f-14.border-grey.ph-30.hidden-xs
               .flex-column.flex-1.border
                 .flex-center
                   input.form-control.no-border(

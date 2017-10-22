@@ -258,7 +258,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
   function convertToBitcoinCash (amount, currency) {
     if (amount == null || currency == null) return null;
     if (isBchCurrency(currency)) {
-      return amount;
+      return amount * currency.conversion;
     } else if (conversions[currency.code] != null) {
       return Math.ceil(amount * parseInt(SATOSHI / bchConversions[currency.code].last, 10));
     } else {
