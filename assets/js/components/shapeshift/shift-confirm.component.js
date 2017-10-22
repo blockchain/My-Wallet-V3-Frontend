@@ -4,8 +4,8 @@ angular
     bindings: {
       fee: '<',
       quote: '<',
-      payment: '<',
       wallet: '<',
+      payment: '<',
       destination: '<',
       onCancel: '&',
       onComplete: '&',
