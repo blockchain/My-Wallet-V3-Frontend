@@ -1693,7 +1693,9 @@
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
     "SEE_YOUR_OUTPUT": "See Your <span class='capitalize'>{{::output}}</span>",
-    "PARTNERED": "Blockchain has partnered with ShapeShift to give you the ability to exchange between bitcoin and ether. Currently, the service is only available to users in certain states.",
+    "PARTNERED": "Blockchain works with exchange partners to make exchanging coins in your wallet secure and seamless.",
+    "STATE_RESIDENCY": "Select your state of residency",
+    "PARTNER_PROCESS": "Our partner ShapeShift will process your exchange.",
     "STATE_NOT_SUPPORTED": "This service is not yet available in your state. If you would like to be notified when it is available, sign up below.",
     "TRADE": {
       "complete": {
