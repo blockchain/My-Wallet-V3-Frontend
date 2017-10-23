@@ -91,7 +91,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
   }
 
   function getPendingTrade () {
-    return service.exchange.trades.filter((trade) => trade._state === 'awaiting_reference_number')[0];
+    return service.exchange.trades.filter((trade) => trade._state === 'awaiting_reference_number' || trade._state === 'awaiting_transfer_in')[0];
   }
 
   function openPendingTrade () {

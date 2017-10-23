@@ -38,12 +38,12 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
     return service.shapeshift.getRate(pair);
   };
 
-  service.getApproximateQuote = (pair, amount) => {
-    return service.shapeshift.getApproximateQuote(pair, amount);
+  service.getApproximateQuote = (from, to, amount) => {
+    return service.shapeshift.getApproximateQuote(from, to, amount);
   };
 
-  service.getQuote = (pair, amount) => {
-    return service.shapeshift.getQuote(pair, amount);
+  service.getQuote = (from, to, amount) => {
+    return service.shapeshift.getQuote(from, to, amount);
   };
 
   service.shift = (quote) => {
