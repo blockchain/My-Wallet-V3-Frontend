@@ -869,7 +869,7 @@
   "COUNTRY_OF_ORIGIN": "来源国",
   "COUNTRY": "国家",
   "STATE": "州",
-  "AUTHORIZE_REJECT_SUCCESS" :"登录尝试已被拒绝！如果这不是您本人，请联系客户支持。",,
+  "AUTHORIZE_REJECT_SUCCESS" :"登录尝试已被拒绝！如果这不是您本人，请联系客户支持。",
   "CHECKING_LOGIN_ATTEMPT": "正在检查登录尝试",
   "ERROR": "错误",
   "SEARCH": "搜索",
