@@ -18,8 +18,8 @@ function BitcoinCashExchangeController ($scope, Env, ShapeShift, MyWallet, modal
 
   $scope.rateHandler = ShapeShift.getRate;
   $scope.buildPayment = ShapeShift.buildPayment;
+  $scope.quoteHandler = ShapeShift.getQuote;
   $scope.approximateQuoteHandler = ShapeShift.getApproximateQuote;
-  $scope.quoteHandler = (pair, amount) => ShapeShift.getQuote(pair, amount);
 
   $scope.onCreateComplete = (payment, fee, quote) => {
     $scope.fee = fee;

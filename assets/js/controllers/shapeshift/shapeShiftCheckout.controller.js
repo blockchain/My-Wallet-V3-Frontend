@@ -18,7 +18,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
   this.goTo = (s) => this.step = this.steps[s];
   this.wallets = Wallet.accounts().concat(Ethereum.defaultAccount);
 
-  this.trades = () => ShapeShift.shapeshift.trades.filter((t) => this.orderHistoryCurrencies.indexOf(t.fromCurrency.toLowerCase()) > -1);
+  this.trades = () => ShapeShift.shapeshift.trades.filter((t) => t.pair && this.orderHistoryCurrencies.indexOf(t.fromCurrency.toLowerCase()) > -1);
   this.completedTrades = () => this.trades().some(t => t.isComplete || t.isFailed || t.isResolved);
   this.pendingTrades = () => this.trades().some(t => t.isProcessing || t.isWaitingForDeposit);
   this.openTradeDetails = (trade) => modals.openShiftTradeDetails(trade);
