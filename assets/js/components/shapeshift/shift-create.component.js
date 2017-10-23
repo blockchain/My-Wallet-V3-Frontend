@@ -62,6 +62,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   $scope.getQuoteArgs = (state) => ({
+    index: this.to.index || 0,
     pair: state.input.curr + '_' + state.output.curr,
     amount: state.baseInput ? $scope.forms.shiftForm.input.$viewValue : -$scope.forms.shiftForm.output.$viewValue
   });

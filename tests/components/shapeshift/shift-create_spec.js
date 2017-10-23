@@ -140,7 +140,7 @@ describe('shift-create.component', () => {
       scope.state.baseCurr = 'btc';
       scope.state.input = { curr: 'btc', amount: 1 };
       scope.forms.shiftForm.input.$viewValue = 1;
-      expect(scope.getQuoteArgs(scope.state)).toEqual({pair: 'btc_eth', amount: 1});
+      expect(scope.getQuoteArgs(scope.state)).toEqual({index: 0, pair: 'btc_eth', amount: 1});
     });
   });
 
