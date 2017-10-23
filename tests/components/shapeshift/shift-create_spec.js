@@ -133,17 +133,6 @@ describe('shift-create.component', () => {
     });
   });
 
-  describe('.setTo()', () => {
-    beforeEach(function () {
-      scope = getControllerScope(handlers);
-    });
-
-    it('should set the to field', () => {
-      scope.setTo();
-      expect(scope.$ctrl.to).toBeDefined();
-    });
-  });
-
   describe('.getQuoteArgs()', () => {
     beforeEach(() => scope = getControllerScope(handlers));
 

@@ -28,7 +28,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.to = this.wallet ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
 
   this.origins = this.wallet ? [this.wallet] : this.wallets;
-  this.destinations = () => this.wallets.filter((w) => w.constructor.name !== this.from.constructor.name);
+  this.destinations = this.wallets;
 
   $scope.forms = $scope.state = {};
   $scope.dollars = Wallet.settings.currency;
@@ -53,6 +53,12 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     output: { amount: null, curr: this.asset ? 'btc' : 'eth' },
     get baseBTC () { return this.baseCurr === 'btc'; },
     get baseInput () { return this.baseCurr === state.input.curr; }
+  };
+  
+  $scope.setState = () => {
+    state.baseCurr = this.currencyHelper(this.from).name;
+    state.input.curr = this.currencyHelper(this.from).name;
+    state.output.curr = this.currencyHelper(this.to).name;
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -135,23 +141,21 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     return $q.resolve(this.from.getAvailableBalance(fee)).then(fetchSuccess, fetchError);
   };
 
-  $scope.switch = (from) => {
-    this.from = from || this.to;
-    this.to = this.destinations()[0];
-    state.baseCurr = this.currencyHelper(this.from).name;
-    [state.input, state.output] = [state.output, state.input];
-  };
+  $scope.switch = (wallet) => {
+    let from = this.from;
+    let needsSelection = wallet && this.from.constructor.name === wallet.constructor.name;
+    let selection = needsSelection && this.wallets.filter((w) => w.constructor.name !== wallet.constructor.name);
 
-  $scope.setFrom = () => {
-    this.to.constructor.name === this.from.constructor.name && $scope.switch(this.from);
-  };
+    this.from = wallet || this.to;
+    this.to = needsSelection ? selection[0] : from;
 
-  $scope.setTo = () => {
-    (state.output.curr = this.currencyHelper(this.to).name) && $scope.refreshIfValid('input');
+    state.input.amount = state.output.amount = null;
+    $scope.setState();
   };
 
   $scope.setMin = () => state.input.amount = state.rate.min;
   $scope.setMax = () => state.input.amount = $scope.maxAvailable < state.rate.max ? $scope.maxAvailable : state.rate.max;
+  $scope.setWallet = (wallet) => { this.to.constructor.name === this.from.constructor.name && $scope.switch(wallet); $scope.setState(); };
 
   $scope.$watch('state.output.curr', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));

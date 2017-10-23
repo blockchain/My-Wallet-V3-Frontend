@@ -28,9 +28,6 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
   $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.bitcoinCash = currency.bchCurrencies.filter(c => c.code === 'BCH')[0];
-  $scope.toCurrency = $scope.human[$scope.quote.toCurrency].toLowerCase();
-
-  $scope.total = parseFloat($scope.quote.depositAmount) + parseFloat($filter('convert')(this.fee, $scope.fromCurrency, false));
   $scope.getTimeToExpiration = () => $scope.quote.expires - now;
 
   $scope.shift = () => {
