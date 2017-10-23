@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyTradeSummaryController', CoinifyTradeSummaryController);
 
-function CoinifyTradeSummaryController ($scope, $q, formatTrade, modals) {
+function CoinifyTradeSummaryController ($scope, $q, formatTrade) {
   let { trade } = $scope.vm;
   let completedState = $scope.vm.completedState || trade.state;
   $scope.formattedTrade = formatTrade[completedState](trade);

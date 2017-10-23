@@ -180,7 +180,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         $scope.editRef = () => {
           $scope.disableLink = true;
           service.openBankTransfer(trade, 'reference');
-          $timeout(() => { $uibModalInstance.dismiss(); }, 1500);
+          $uibModalInstance.dismiss();
         };
       },
       resolve: {
