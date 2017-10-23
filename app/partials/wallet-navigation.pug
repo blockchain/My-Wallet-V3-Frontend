@@ -18,7 +18,7 @@
         span.flex-row.flex-align-end
           span ETHER
     div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
-    // Don't forget to update controllers/buySell.controller.js
+    // Don't forget to update controllers/coinifyCheckout.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
         active-when="shouldShowBuyCta() && !shouldShowInviteForm"
@@ -41,8 +41,6 @@
         i.icon-ExchangeTab
         span.flex-row.flex-align-end
           span(translate="EXCHANGE_SIMPLE")
-          | &nbsp;
-          p.f-12.mbn.transform-none.em-300.blue.exclaim(translate="NEW")
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(
         active-when="shouldShowSecurityWarning()"
@@ -63,7 +61,7 @@
       ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
         li.mts.mbm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.info")
-            span(translate="WALLET_INFO")
+            span(translate="GENERAL")
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.preferences")
             span(translate="PREFERENCES")
@@ -77,6 +75,13 @@
       a(ui-sref="wallet.common.faq")
         i.icon-help
         span(translate="FAQ")
+    div.border-solid.mb-15.mt-15.mh-15.visible-xs.visible-sm
+    li.visible-xs.visible-sm.header(ui-sref-active="current" ng-click="refresh()")
+      a(ng-click="refresh()")
+        span.upper(translate="REFRESH")
+    li.visible-xs.visible-sm.header(ui-sref-active="current")
+      a(ng-click="logout()")
+        span.upper(translate="SIGNOUT")
   ul.aside.wallet-footer
     li.header.mbm
       span(translate="SPONSORS")

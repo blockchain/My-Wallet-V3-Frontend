@@ -66,6 +66,10 @@
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
       "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
+    },
+    "BITCOIN_CASH_ABOUT": {
+      "Q": "How can I access Bitcoin Cash?",
+      "A": "If you had Bitcoin in your wallet prior to the fork on August 1, 2017, you can access your Bitcoin Cash in Settings > General. If not, ignore this message. "
     }
   },
   "SETTINGS": "Settings",
@@ -276,7 +280,7 @@
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
   "OVERVIEW" : "Overview:",
-  "NOTE" : "Note:",
+  "NOTE" : "Note",
   "CREATE" : "Create",
   "MAKE_PUBLIC" : "Make Public",
   "FROM" : "From",
@@ -543,6 +547,7 @@
   "API_ACCESS" : "API Access",
   "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>here</a> to get started.",
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
+  "BCH_ADDRESS_INVALID": "Invalid Bitcoin Cash Address",
   "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
@@ -573,6 +578,7 @@
   "COPY_SUCCESS": "Successfully copied to your clipboard!",
   "BITCOIN_SENT" : "Your transaction is being confirmed!",
   "BITCOIN_SENT_TOR" : "You've successfully sent bitcoin. Please refresh your TOR browser to see it.",
+  "BITCOIN_CASH_SENT" : "Your Bitcoin Cash transaction is being confirmed!",
   "NO_TRANSACTIONS_YET" : "Your Transactions",
   "SORRY_ZERO_TXS" : "Sorry, we couldn't find any transactions!",
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
@@ -695,6 +701,7 @@
   "VALUE_NOW" : "Value Now",
   "VERIFY_ON_BCI" : "Verify on Blockchain.info",
   "VERIFY_ON_ETHERSCAN": "Verify on Etherscan.io",
+  "VERIFY_ON_BLOCKCHAIR": "Verify on Blockchair.com",
   "ARE_YOU_SURE" : "We just want to double check! Are you sure you wish to proceed? Remember you cannot go back to your old wallet :)",
   "ACCOUNT_NAME_TAKEN" : "That name is already in use",
   "EMAIL_ADDRESS_TOOLTIP" : "Your verified email address is used to send login codes when unusual activity is detected and to send payment alerts when you receive funds.",
@@ -836,7 +843,7 @@
   "RECOVER_FUNDS_WARNING": "You should always pair or login if you have access to your Wallet ID and password. Recovering your funds will create a new Wallet ID.",
   "STEP_2_RECOVER": "Step 2 of 2: Create a new wallet",
   "STEP_1_RECOVER": "Step 1 of 2: Enter 12 word passphrase",
-  "RECOVER_BTC_LOST": "Recover bitcoins from your lost wallet",
+  "RECOVER_BTC_LOST": "Recover funds from your lost wallet",
   "YOUR_REC_PASS": "Your Recovery Passphrase",
   "YOUR_REC_PASS_EXPLAIN": "Enter your 12 recovery words with spaces to recover your funds & transactions",
   "RESTORE_SUCCESSFUL": "Restore Successful",
@@ -1087,7 +1094,7 @@
   "BANK": "Bank Transfer",
   "CARD_TRANSFER": {
     "COPY1": "Receive bitcoin instantly",
-    "COPY2": "3% convenience fee",
+    "COPY2": "{{::fee}}% convenience fee",
     "COPY3": "Visa or Mastercard",
     "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
     "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
@@ -1096,13 +1103,17 @@
     "COPY1": "One time ID Verification",
     "COPY2": "Receive bitcoin in 2-3 days",
     "COPY3": "No payment fees",
+    "COPY4": "{{::fee}}% payment fee",
     "RECOMMENDATION": "For orders under {{::min}} {{::code}}, we recommend paying via credit or debit card.",
     "PAY_VIA": "I want to pay via bank transfer",
-    "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase."
+    "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase.",
+    "CC_REQUIRED": "You must use a credit card to place recurring orders.",
+    "WANT_BANK": "Want to make a bank transfer instead?",
+    "REMOVE_RECURRING": "Remove recurring buy"
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
-    "BODY": "Bank transfers are unavailable until verification is complete. Credit card purchases are available up to {{ccmax}} per day.",
+    "BODY": "Bank transfers are unavailable until verification is complete. Your remaining limit for credit card purchases is {{ccmax}}.",
     "LINK": "Review status"
   },
   "KYC_FLAGGED": {
@@ -1129,7 +1140,7 @@
     "BODY": "Completing verification will raise your daily sell amount limit.",
     "LINK": "Finish verification"
   },
-  "KYC_APPROVED": "Identity verification approved! Click here to start buying bitcoin via bank transfer.",
+  "KYC_APPROVED": "Identity verification approved! Your exchange limits have been updated.",
   "TRADE_ID": "Trade ID",
   "ISX_ID": "iSignthis ID",
   "DATE_INITIALIZED": "Date Ordered",
@@ -1255,12 +1266,44 @@
   "EDIT_ORDER": "Edit Order",
   "TOTAL_COST:": "Total Cost:",
   "ENTER_AMOUNT:": "Enter amount:",
+  "FREQUENCY": "Frequency",
+  "FREQUENCY_INFO": "<b>Today</b> and every <b>{{::timespan}}</b>.",
+  "DURATION": "Duration",
+  "DURATION_INFO": "This order will repeat until {{::endTime}}.",
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
-  "SURVEY_PROMPT": {
+  "GENERAL_SURVEY_PROMPT": {
     "TITLE": "Before you go...",
     "BODY": "Would you like to provide feedback regarding your experience today?"
+  },
+  "BUY_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SELL_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SFOX_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SHIFT_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "ETHEREUM_SURVEY_PROMPT": {
+    "TITLE": "Before you continue...",
+    "BODY": "Would you like to provide feedback regarding your ether wallet experience today?"
   },
   "TAKE_SURVEY": "Take Survey",
   "id_ID": {
@@ -1340,6 +1383,15 @@
     "TITLE": "Acceptable Proof of Address",
     "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
   },
+  "sfox-identity": {
+    "ICON": "ti-id-badge",
+    "TITLE": "Identification In Review",
+    "COPY": "SFOX is currently verifying your identity. This can take up to 2 days. Your limit will increase once you are verified."
+  },
+  "coinify_after-trade": {
+    "TITLE": "🔒 Verification Needed",
+    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume buying or selling bitcoin in <b>{{::days}} day(s).</b>"
+  },
   "unocoin_pancard-id-helper": {
     "TITLE": "Acceptable PAN Card",
     "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
@@ -1351,6 +1403,10 @@
   "unocoin_address-id-helper": {
     "TITLE": "Acceptable Proof of Address",
     "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+  },
+  "expiring-exchange-helper": {
+    "TITLE": "👋 Confirm Exchange Order!",
+    "COPY": "Did you forget about your exchange order? Exchange rates are only valid for 10 minutes, and once a rate expires, you'll have to start over."
   },
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1364,16 +1420,6 @@
   "UNOCOIN_EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
-  "coinify-verification": {
-    "ICON": "ti-lock",
-    "TITLE": "Verification Needed",
-    "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume buying or selling bitcoin in <b>{{days}} day(s).</b>"
-  },
-  "sfox-identity": {
-    "ICON": "ti-id-badge",
-    "TITLE": "Identification In Review",
-    "COPY": "SFOX is currently verifying your identity. This can take up to 2 days. Your limit will increase once you are verified."
-  },
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
@@ -1443,7 +1489,6 @@
     "SELECT_CURRENCY": "Select your currency",
     "SELL_ALL": "Sell all minus BTC fee",
     "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin sale. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
-    "ZERO_BALANCE": "Unfortunately, you don't have any bitcoin to sell. To get bitcoin in your wallet,",
     "WHO_OWNS": "Who owns this bank account? This information should match the holder's bank statement.",
     "PLEASE_ADD_ACCOUNT": "You don't have any bank accounts stored. Please add an account where you would like your funds sent.",
     "MAX_DAILY": "Maximum daily sell amount is",
@@ -1490,10 +1535,6 @@
   "priority": "Priority",
   "regular_ESTIMATION_TIME": "Estimated confirmation time 1+ hour.",
   "priority_ESTIMATION_TIME": "Estimated confirmation time 0 - 60 minutes.",
-  "UNOCOIN": {
-    "PENDING": "Identity Verification Pending",
-    "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!"
-  },
   "GO_MOBILE": "Go mobile with Blockchain",
   "PAIR_YOUR_WALLET": "Pair Your Wallet",
   "SHOW_QR_CODE": "Show QR Code",
@@ -1523,12 +1564,57 @@
   "CLICK_HERE_TO_RESTART": "Click here to restart.",
   "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
+  "COINIFY": {
+    "user_needs_account": {
+      "EXPLAIN": ""
+    },
+    "user_cant_trade": {
+      "EXPLAIN": "Something went wrong. Please try again later."
+    },
+    "has_remaining_buy_limit": {
+      "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "KYC": "Increase your limit."
+    },
+    "not_enough_funds_to_sell": {
+      "EXPLAIN": "😢 Unfortunately, you do not have enough funds to sell.",
+      "REQUEST": "@:REQUEST",
+      "BUY": "@:BUY"
+    },
+    "can_sell_max": {
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "KYC": "Increase your limit."
+    },
+    "can_sell_remaining_balance": {
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>"
+    },
+    "after_first_trade": {
+      "EXPLAIN": "Your limit is set to 0 {{::curr}}.",
+      "WHY": "Why?"
+    },
+    "awaiting_first_trade_completion": {
+      "EXPLAIN": "Trading is disabled until your pending trade is complete.",
+      "CHECK_STATUS": "Check Status",
+      "FINISH": "Finish",
+      "CANCEL": "Cancel"
+    }
+  },
+  "UNOCOIN": {
+    "PENDING": "Identity Verification Pending",
+    "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!",
+    "awaiting_trade_completion": {
+      "EXPLAIN": "@:COINIFY.awaiting_first_trade_completion.EXPLAIN",
+      "FINISH": "Finish"
+    },
+    "user_can_trade": {
+      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+    }
+  },
   "EXCHANGE": {
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
     "VERIFY_EMAIL": "Verify Email Address",
     "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
-    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your Unocoin and Blockchain accounts. If it's not, you can update your Blockchain email ",
+    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your {{::exchange}} and Blockchain accounts. If it's not, you can update your Blockchain email ",
     "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "Hey 👋! We noticed your Blockchain email is different than your {{::exchange}} email. Make sure you use the same email address.",
     "CHANGE_EMAIL": "Change Email",
     "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
@@ -1577,27 +1663,32 @@
     "NO_EXCHANGES": "@:NO_TRADES",
     "NO_EXCHANGES_EXPLAIN": "You haven't made any exchanges yet, <span class='primary'>click here to start</span>.",
     "EXCHANGE_DETAILS": "Exchange Details",
-    "EXCHANGE_FROM": "Exchange From",
+    "EXCHANGE_FROM": "Exchange",
+    "RECEIVE": "Receive",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
-    "MIN_NEEDED_TO_SHIFT": "{{::min}} {{::curr}} needed to exchange.",
+    "MIN_NEEDED_TO_SHIFT": "😢 Not enough funds to exchange.",
     "BELOW_MIN_SHIFT_LIMIT": "Below the minimum limit. Use min",
     "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
-    "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Order History tab.",
+    "CONFIRM_DEPOSIT_AMOUNT": "Once you click confirm, the exchange trade will begin. When your trade is complete the {{::toCurrency}} will be deposited directly into {{::to}}.",
+    "CONFIRM_DEPOSIT_AMOUNT_BCH": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Bitcoin Cash area of Settings.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
     "OUTPUT_RECEIVED": "<span class='capitalize'>{{::output}}</span> Received",
-    "TX_FEE_EXPLAIN": "This fee is used to send funds from your wallet.",
-    "WITHDRAWAL_FEE": "ShapeShift Withdrawal Fee",
-    "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the withdrawal amount to your wallet.",
+    "TX_FEE_EXPLAIN": "This fee is used to send the outgoing exchange funds to ShapeShift.",
+    "WITHDRAWAL_FEE": "Network Transaction Fee",
+    "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the incoming exchange funds to your wallet.",
+    "TRANSACTION_FEE": "Transaction Fee",
+    "RATE_EXPLAIN": "This rate may change depending on the market price at the time of your transaction.",
     "ORDER_ID": "Order ID",
     "EXPLAIN_QUOTE": "This quote may change depending on the market price at the time of your transaction.",
     "ACCEPT_TERMS": "I agree to ShapeShift's <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>terms and conditions</a>.",
     "NO_FUNDS_TO_EXCHANGE": "Not enough funds to exchange",
     "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
-    "EXCHANGE_IN_PROGRESS_EXPLAIN": "Exchanges can take up to two hours, you can keep track of your exchange progress in the Order History tab. Once the trade is complete, your {{::output}} will arrive in your wallet.",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN": "Thanks for placing your trade!  Exchange trades can take up to two hours, and you can keep track of your trade’s progress in the Order History tab.",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN_BCH": "Thanks for placing your trade!  Exchange trades can take up to two hours, and you can keep track of your trade’s progress in the Bitcoin Cash area of Settings.",
     "ORDER_SUMMARY": "Order Summary",
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
@@ -1613,11 +1704,13 @@
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "Pending"
       },
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "In Progress"
       },
       "resolved": {
@@ -1643,6 +1736,38 @@
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
-  "HERE": "here",
+  "GENERAL": "General",
+  "BITCOIN_CASH": {
+    "SEE_BALANCE": "See Bitcoin Cash Balance",
+    "ABOUT_1": "What is Bitcoin Cash?",
+    "ABOUT_1_ANSWER": "Bitcoin Cash was created after a hard fork in the Bitcoin block chain and implemented an increased block size of 8mb with the goal of confirming transactions even faster. All bitcoin holders as of August 1, 2017 (block 478558) became owners of an identical amount of Bitcoin Cash.",
+    "ABOUT_2": "How is Bitcoin Cash different from bitcoin?",
+    "ABOUT_2_ANSWER": "Bitcoin (BTC) and Bitcoin Cash (BCH) are two different currencies. However, the addresses used for transacting (sending and receiving BTC and BCH) look exactly the same. It’s important to confirm that you’re using the correct currency’s address when transacting BTC/BCH.",
+    "ABOUT_3": "What can I do with my Bitcoin Cash?",
+    "ABOUT_3_ANSWER": "You can use BCH like any other cryptocurrency. You can use your Blockchain wallet to store your BCH, send all of your funds to a BCH wallet, or exchange it for bitcoin and/or ether.",
+    "ABOUT_4": "Where can I see my Bitcoin Cash balance?",
+    "ABOUT_4_ANSWER": "You can see your balance at: Settings > General.",
+    "ABOUT_5": "Will Bitcoin Cash affect my bitcoin balance?",
+    "ABOUT_5_ANSWER": "No, bitcoin and Bitcoin Cash are two separate currencies, completely independent of each other. You can send or exchange your Bitcoin Cash without changing your bitcoin balance.",
+    "KEEP": "Keep Bitcoin Cash",
+    "EXCHANGE": "Exchange Bitcoin Cash",
+    "SEND": "Send Bitcoin Cash",
+    "ADDRESSES": "Even though Bitcoin Cash addresses and bitcoin addresses look the same, they are different. <b>If you send Bitcoin Cash to a bitcoin address, your funds will be lost.</b><br><br><b>Are you sure the address below is a Bitcoin Cash address?</b>",
+    "YES_IT_IS": "Yes, it is",
+    "SENDING_ALL": "All of your Bitcoin Cash will be sent to the receiving address in a single transaction. Double check that you are using a Bitcoin Cash address and not a bitcoin address. Sending Bitcoin Cash to a bitcoin address will result in the permanent loss of your Bitcoin Cash funds.",
+    "FAQ_GET_STARTED": "Or click here to see the about and get started.",
+    "BCH_IN_WALLET": "Bitcoin Cash",
+    "BCH_WHATS_NEW": "If you had bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General.",
+    "BCH_BALANCE": "Bitcoin Cash Balance",
+    "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address"
+  },
+  "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
+  "BITCOIN_CASH_INFO_NO_EXCHANGE": "You can use your Blockchain wallet to store your Bitcoin Cash, or send all of your funds to a Bitcoin Cash wallet.",
+  "EXCHANGE_STATUS": "Exchange Status",
+  "SEND_ETHER": "Send Ether",
+  "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
+  "ALL_ADDRESSES": "All Addresses",
+  "VIEW_TXS": "View Transactions",
+  "HIDE_TXS": "Hide Transactions",
   "": ""
 }

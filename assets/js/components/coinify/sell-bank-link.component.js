@@ -4,11 +4,9 @@ angular
     bindings: {
       accounts: '<',
       selectedBankAccount: '<',
-      paymentAccount: '<',
-      transaction: '<',
+      close: '&',
       onComplete: '&',
       newAccount: '&',
-      close: '&',
       selectAccount: '&'
     },
     templateUrl: 'partials/coinify/bank-link.pug',

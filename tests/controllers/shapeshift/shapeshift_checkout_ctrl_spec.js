@@ -5,6 +5,7 @@ describe('ShapeShiftCheckoutController', () => {
   let ShapeShift;
   let $rootScope;
   let $controller;
+  let Wallet;
   let $q;
 
   beforeEach(angular.mock.module('walletApp'));
@@ -12,6 +13,7 @@ describe('ShapeShiftCheckoutController', () => {
   let mockTrade = (complete) =>
     ({
       pair: 'btc_eth',
+      fromCurrency: 'btc',
       isComplete: complete,
       isProcessing: !complete
     });
@@ -26,6 +28,8 @@ describe('ShapeShiftCheckoutController', () => {
       $controller = _$controller_;
 
       modals = $injector.get('modals');
+      Wallet = $injector.get('Wallet');
+      Wallet.accounts = () => [{label: 'My Bitcoin Wallet'}];
       modals.openShiftTradeDetails = (trade) => $q.resolve();
     })
   );

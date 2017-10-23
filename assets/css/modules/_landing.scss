@@ -1,4 +1,4 @@
-.landing-page {
+#landing-page {
   overflow: scroll;
   .navbar {
     .round {
@@ -35,6 +35,9 @@
   }
   img {
     max-width: 100%;
+  }
+  button.header {
+    width: 130px;
   }
   .carousel {
     .carousel-control {

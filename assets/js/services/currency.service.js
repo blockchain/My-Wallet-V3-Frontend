@@ -9,6 +9,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
   const SATOSHI = 100000000;
   const conversions = {};
   const ethConversions = {};
+  const bchConversions = {};
   const fiatConversionCache = {};
 
   const coinifyCurrencyCodes = {
@@ -75,25 +76,38 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     }
   ];
 
+  const bchCurrencies = [
+    {
+      code: 'BCH',
+      conversion: 100000000
+    }
+  ];
+
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
     coinifySellCurrencies: formatCurrencies(coinifySellCurrencyCodes),
     bitCurrencies,
     ethCurrencies,
+    bchCurrencies,
     conversions,
     ethConversions,
     fetchExchangeRate,
     fetchEthRate,
+    fetchBchRate,
+    fetchAllRates,
     updateCoinifyCurrencies,
     getFiatAtTime,
     isBitCurrency,
     isEthCurrency,
+    isBchCurrency,
     decimalPlacesForCurrency,
     convertToSatoshi,
     convertFromSatoshi,
     convertToEther,
     convertFromEther,
+    convertToBitcoinCash,
+    convertFromBitcoinCash,
     formatCurrencyForView,
     getCurrencyByCode: MyWalletHelpers.memoize(getCurrencyByCode),
     commaSeparate
@@ -131,6 +145,21 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     });
   }
 
+  function fetchBchRate (currency) {
+    let { code } = currency;
+    return MyBlockchainApi.getExchangeRate(code, 'BCH').then((rate) => {
+      Object.keys(rate).forEach(key => {
+        bchConversions[key] = rate[key];
+      });
+    });
+  }
+
+  function fetchAllRates (currency) {
+    service.fetchExchangeRate(currency);
+    service.fetchEthRate(currency);
+    service.fetchBchRate(currency);
+  }
+
   function getFiatAtTime (time, amount, currencyCode) {
     time = time * 1000;
     currencyCode = currencyCode.toLowerCase();
@@ -160,9 +189,14 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     return ethCurrencies.map(c => c.code).indexOf(currency.code) > -1;
   }
 
+  function isBchCurrency (currency) {
+    if (currency == null) return null;
+    return bchCurrencies.map(c => c.code).indexOf(currency.code) > -1;
+  }
+
   function decimalPlacesForCurrency (currency) {
     if (currency == null) return null;
-    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8 };
+    let decimalMap = { 'BTC': 8, 'mBTC': 5, 'bits': 2, 'sat': 0, 'INR': 0, 'ETH': 8, 'BCH': 8 };
     let decimalPlaces = decimalMap[currency.code];
     return !isNaN(decimalPlaces) ? decimalPlaces : 2;
   }
@@ -182,7 +216,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function convertFromSatoshi (amount, currency) {
     if (amount == null || currency == null) return null;
-    if (isBitCurrency(currency)) {
+    if (isBitCurrency(currency) || isBchCurrency(currency)) {
       return amount / currency.conversion;
     } else if (conversions[currency.code] != null) {
       return amount / conversions[currency.code].conversion;
@@ -198,6 +232,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (isBitCurrency(currency)) {
       console.warn('do not try to convert bitcoin to ether');
       return null;
+    } else if (isEthCurrency(currency)) {
+      return amount;
     } else if (ethConversions[currency.code] != null) {
       return amount / ethConversions[currency.code].last;
     } else {
@@ -219,12 +255,34 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     }
   }
 
+  function convertToBitcoinCash (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBchCurrency(currency)) {
+      return amount * currency.conversion;
+    } else if (conversions[currency.code] != null) {
+      return Math.ceil(amount * parseInt(SATOSHI / bchConversions[currency.code].last, 10));
+    } else {
+      return null;
+    }
+  }
+
+  function convertFromBitcoinCash (amount, currency) {
+    if (amount == null || currency == null) return null;
+    if (isBchCurrency(currency)) {
+      return amount / currency.conversion;
+    } else if (bchConversions[currency.code] != null) {
+      return amount * bchConversions[currency.code].last;
+    } else {
+      return null;
+    }
+  }
+
   function formatCurrencyForView (amount, currency, showCode = true) {
     if (amount == null || currency == null) return null;
     let decimalPlaces = decimalPlacesForCurrency(currency);
     let code = showCode ? (' ' + currency.code) : '';
     amount = parseFloat(amount);
-    if (isBitCurrency(currency) || isEthCurrency(currency)) {
+    if (isBitCurrency(currency) || isEthCurrency(currency) || isBchCurrency(currency)) {
       amount = amount.toFixed(decimalPlaces);
       amount = amount.replace(/\.?0+$/, '');
     } else {
@@ -235,7 +293,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function getCurrencyByCode (code) {
     code = code.toUpperCase();
-    return service.currencies.concat(bitCurrencies).concat(ethCurrencies)
+    return service.currencies.concat(bitCurrencies).concat(ethCurrencies).concat(bchCurrencies)
       .find(curr => curr.code === code);
   }
 

@@ -2,9 +2,9 @@ angular
   .module('walletDirectives')
   .directive('trade', trade);
 
-trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'buySell'];
+trade.$inject = ['Env', 'Alerts', 'MyWallet', '$timeout', '$interval', 'coinify', 'Exchange'];
 
-function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
+function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
   const directive = {
     restrict: 'A',
     replace: true,
@@ -32,10 +32,10 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
 
     scope.update = () => angular.extend(scope, {
-      error: buySell.tradeStateIn(buySell.states.error)(scope.trade),
-      success: buySell.tradeStateIn(buySell.states.success)(scope.trade),
-      pending: buySell.tradeStateIn(buySell.states.pending)(scope.trade),
-      completed: buySell.tradeStateIn(buySell.states.completed)(scope.trade)
+      error: coinify.tradeStateIn(coinify.states.error)(scope.trade),
+      success: coinify.tradeStateIn(coinify.states.success)(scope.trade),
+      pending: coinify.tradeStateIn(coinify.states.pending)(scope.trade),
+      completed: coinify.tradeStateIn(coinify.states.completed)(scope.trade)
     });
 
     scope.update();
@@ -47,7 +47,8 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     scope.cancel = () => {
       if (!scope.canCancel) return;
       scope.disabled = true;
-      buySell.cancelTrade(scope.trade).finally(() => scope.disabled = false);
+      let exchange = MyWallet.wallet.external.coinify;
+      coinify.cancelTrade(scope.trade).then(() => Exchange.fetchProfile(exchange)).finally(() => scope.disabled = false);
     };
 
     scope.triggerBuy = () => {
@@ -55,8 +56,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, buySell) {
     };
 
     scope.triggerSell = () => {
-      let t = scope.trade;
-      scope.sell(t);
+      scope.sell(null, scope.trade);
     };
 
     scope.updateBTCExpected = () => {

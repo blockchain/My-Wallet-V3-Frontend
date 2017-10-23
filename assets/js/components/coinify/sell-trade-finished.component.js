@@ -29,7 +29,7 @@ function CoinifySellTradeFinishedController (currency) {
     this.id = this.sellTrade.id;
     this.btcSold = currency.convertFromSatoshi(this.sellTrade.sendAmount, currency.bitCurrencies[0]);
     this.bank = this.sellTrade.bankAccountNumber;
-    this.creditIssued = `${this.sellTrade.outAmountExpected / 100} ${this.sellTrade.outCurrency}`;
+    this.creditIssued = `${this.sellTrade.transferOut.receiveAmount} ${this.sellTrade.outCurrency}`;
     this.showNote = () => this.sellTrade.state === 'completed' || this.sellTrade.state === 'awaiting_transfer_in';
   }
 }

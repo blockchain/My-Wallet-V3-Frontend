@@ -12,6 +12,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     scope: {
       btc: '=',
       eth: '=',
+      bch: '=',
       date: '=',
       parens: '=',
       currency: '='
@@ -32,6 +33,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     scope.settings = Wallet.settings;
     scope.conversions = currency.conversions;
     scope.ethConversions = currency.ethConversions;
+    scope.bchConversions = currency.bchConversions;
 
     scope.updateFiat = () => {
       scope.fiat = { currencySymbol: null, amount: null };
@@ -45,7 +47,8 @@ function fiat ($rootScope, $q, Wallet, currency) {
 
       let btc = scope.btc;
       let eth = scope.eth;
-      if ((btc == null || isNaN(scope.btc)) && (eth == null || isNaN(scope.eth))) return;
+      let bch = scope.bch;
+      if ((btc == null || isNaN(scope.btc)) && (eth == null || isNaN(scope.eth)) && (bch == null || isNaN(scope.bch))) return;
 
       if (attrs.abs != null && btc < 0) btc *= -1;
 
@@ -57,6 +60,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
       } else {
         let fiat;
         if (btc && eth) fiat = currency.convertFromSatoshi(btc, curr) + currency.convertFromEther(eth, curr);
+        else if (bch) fiat = currency.convertFromBitcoinCash(bch, curr);
         else if (btc) fiat = currency.convertFromSatoshi(btc, curr);
         else fiat = currency.convertFromEther(eth, curr);
         scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
@@ -65,7 +69,8 @@ function fiat ($rootScope, $q, Wallet, currency) {
 
     scope.$watchCollection('conversions', () => scope.updateFiat());
     scope.$watchCollection('ethConversions', () => scope.updateFiat());
-    scope.$watch('settings.currency.code + btc + eth + currency', () => scope.updateFiat());
+    scope.$watchCollection('bchConversions', () => scope.updateFiat());
+    scope.$watch('settings.currency.code + btc + eth + bch + currency', () => scope.updateFiat());
     $rootScope.$on('refresh', () => scope.updateFiat());
   }
 }

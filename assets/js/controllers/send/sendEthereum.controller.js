@@ -2,13 +2,16 @@ angular
   .module('walletApp')
   .controller('SendEthereumController', SendEthereumController);
 
-function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum, Wallet) {
+function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum, Wallet, Env, localStorageService) {
   const txTemplate = {
     to: null,
     amount: null,
     amountFiat: null,
     note: null
   };
+
+  let links;
+  Env.then(env => links = env.ethereum.surveyLinks);
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
@@ -32,8 +35,10 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
   };
 
   this.onScan = (result) => {
-    if (Ethereum.isAddress(result)) {
-      this.tx.to = result;
+    let cleaned = result.replace(/ethereum:/, '');
+    if (Ethereum.isAddress(cleaned)) {
+      this.tx.to = cleaned;
+      this.setTo();
     } else {
       throw new Error('ETHER_ADDRESS_INVALID');
     }
@@ -65,6 +70,9 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
   };
 
   this.nextStep = () => {
+    this.transaction = Object.assign(this.payment, this.account, this.transaction);
+    this.transaction.note = this.tx.note;
+    this.transaction.to = this.tx.to;
     $scope.vm.toConfirmView();
   };
 
@@ -82,13 +90,10 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
       Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
       Ethereum.recordLastTransaction(txHash);
       if (this.tx.note) Ethereum.setTxNote(txHash, this.tx.note);
+      if (!localStorageService.get('ethereum-survey')) Alerts.surveyCloseConfirm('ethereum-survey', links, 0);
     }).catch(({ message }) => {
       Alerts.displayError(message);
     });
-  };
-
-  this.getTransactionTotal = () => {
-    return this.payment.amount + this.payment.fee;
   };
 
   this.convertFromEther = (eth) => {

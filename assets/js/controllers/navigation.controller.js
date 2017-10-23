@@ -46,7 +46,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     });
   };
 
-  $scope.logout = () => {
+  $rootScope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
     let needsBackup = !Wallet.status.didConfirmRecoveryPhrase;
 
@@ -76,8 +76,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   $interval(() => {
     if (Wallet.status.isLoggedIn) {
-      currency.fetchExchangeRate(Wallet.settings.currency);
-      currency.fetchEthRate(Wallet.settings.currency);
+      currency.fetchAllRates(Wallet.settings.currency);
     }
   }, 15 * 60000);
 
@@ -96,13 +95,16 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   $q.all([Env, buyStatus.canBuy()]).then(([env, canBuy]) => {
     let now = Date.now();
-    let filterFeatures = (feat) => (
+
+    $scope.filterFeatures = (feat) => (
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
       (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
       (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
       (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess)
     );
-    $scope.feats = whatsNew.filter(filterFeatures).filter(f => (now - f.date) < whatsNewDateCutoff);
+
+    $scope.filterByDate = (f) => (now - f.date) < whatsNewDateCutoff;
+    $scope.feats = whatsNew.filter($scope.filterFeatures).filter($scope.filterByDate);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {

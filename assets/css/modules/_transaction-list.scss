@@ -10,6 +10,7 @@
     @extend .btn-xs;
     font-weight: normal;
     display: inline-block;
+    margin-left: 0px;
   }
   .transaction-feed {
     position: relative;
@@ -62,6 +63,7 @@
       }
     }
     transaction-description-ethereum,
+    transaction-description-bcash,
     transaction-description {
       .progress {
         @extend .mbn;
@@ -127,6 +129,7 @@
     border-top: 1px solid $border-grey;
   }
   .tx-note {
+    font-family: 'Montserrat';
     max-width: 100%;
     word-wrap: break-word;
   }
@@ -137,10 +140,6 @@
 
   font-size: 16px;
   font-weight: 300;
-
-  .rotated {
-    transform: rotate(-90deg);
-  }
   .get-started-ether {
     border-radius: 5px;
   }
@@ -368,4 +367,8 @@ a.date,p.date { color: $black; }
 .half-eth {
   height: 230px;
   width: auto;
+}
+
+.rotated {
+  transform: rotate(-90deg);
 }

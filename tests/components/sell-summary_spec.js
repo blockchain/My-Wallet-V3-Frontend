@@ -1,22 +1,18 @@
 describe('sell-summary.component', () => {
   let $q;
-  let Wallet;
-  let scope;
   let $rootScope;
   $rootScope = undefined;
   let $compile;
   let $templateCache;
   let $componentController;
+  let Wallet;
+  let scope;
 
   let transaction = {
-    currency: {
-      code: 'DKK'
-    },
+    currency: { code: 'DKK' },
     btc: 0.01,
     fiat: 100,
-    fee: {
-      btc: 0.0001
-    }
+    fee: { btc: 0.0001 }
   };
 
   let sellTrade = {
@@ -41,13 +37,12 @@ describe('sell-summary.component', () => {
   let bankAccount = {
     sell (bankId) { return $q.resolve(sellTrade); },
     updateQuote (quote) { return $q.resolve('something'); },
-    quote: {
-      expiresAt: 1493928203205
-    }
+    quote: { expiresAt: 1493928203205 }
   };
 
   let quote = {
-    expiresAt: 1494028203205
+    expiresAt: 1494028203205,
+    paymentMediums: {'bank': {'outPercentageFee': 3}}
   };
 
   let handlers = {
@@ -68,6 +63,7 @@ describe('sell-summary.component', () => {
   };
 
   beforeEach(module('walletApp'));
+
   beforeEach(() =>
     angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_) {
       $rootScope = _$rootScope_;
@@ -79,56 +75,35 @@ describe('sell-summary.component', () => {
 
       let askForSecondPassword = $q.defer();
       Wallet.askForSecondPasswordIfNeeded = () => askForSecondPassword.promise;
+
+      Wallet.my.wallet = {
+        hdwallet: {
+          defaultAccount: {index: 0}
+        },
+        createPayment: () => ({
+          from: () => {},
+          amount: () => {},
+          updateFeePerKb: () => {},
+          sideEffect: () => {}
+        })
+      };
     })
   );
 
-  describe('.insufficientFunds()', () => {
-    it('should be true if the wallet does not have enough funds', () => {
-      let ctrl = getController(handlers);
-      ctrl.totalBalance = 0.001;
-      let result = ctrl.insufficientFunds();
-      expect(result).toEqual(true);
-    });
-  });
-
-  describe('.isDisabled()', () => {
-    it('should be disabled if insufficient funds', () => {
-      let ctrl = getController(handlers);
-      ctrl.totalBalance = 0.001;
-      let result = ctrl.isDisabled();
-      expect(result).toEqual(true);
-    });
-
-    it('should disable if the form is invalid', () => {
-      let ctrl = getController(handlers);
-      ctrl.sellRateForm.$valid = false;
-      let result = ctrl.isDisabled();
-      expect(result).toEqual(true);
-    });
-
-    it('should disable if there is no quote attached to sell Trade', () => {
-      let ctrl = getController(handlers);
-      ctrl.totalBalane = 1;
-      ctrl.sellRateForm.$valid = true;
-      let result = ctrl.isDisabled();
-      expect(result).toEqual(undefined);
-    });
-  });
-
   describe('.sell()', () => {
+    let ctrl;
+    beforeEach(() => ctrl = getController(handlers));
+
     it('should set waiting to true', () => {
-      let ctrl = getController(handlers);
       ctrl.sell();
       expect(ctrl.waiting).toEqual(true);
     });
 
     it('should call Wallet.askForSecondPasswordIfNeeded()', inject(function (Wallet) {
-      let ctrl = getController(handlers);
       spyOn(Wallet, 'askForSecondPasswordIfNeeded').and.callThrough();
       ctrl.sell();
       expect(Wallet.askForSecondPasswordIfNeeded).toHaveBeenCalled();
-    })
-  );
+    }));
   });
 
   describe('.checkForUpdatedQuote()', () => {

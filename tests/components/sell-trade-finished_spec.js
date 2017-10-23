@@ -48,7 +48,7 @@ describe('sell-trade-finished.component', () => {
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
 
-      $injector.get('buySell');
+      $injector.get('coinify');
     })
   );
 

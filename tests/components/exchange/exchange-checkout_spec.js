@@ -33,13 +33,15 @@ describe('exchange-checkout.component', () => {
   ;
 
   let handlers = {
+    handleMediums () { return $q.resolve(mockMediums()); },
     handleQuote () { return $q.resolve(mockQuote()); },
-    handleBuy () { return $q.resolve(); },
-    buySuccess () { return $q.resolve(); },
-    buyError () { return $q.resolve(); },
+    handleTrade () { return $q.resolve(); },
+    onSuccess () { return $q.resolve(); },
+    onError () { return $q.resolve(); },
+    provider: 'unocoin',
+    fiat: {code: 'USD'},
     quote () { return mockQuote(); },
-    limits: { min: {}, max: {} },
-    dollars: {code: 'USD'}
+    limits () { return { min: {}, max: {} }; }
   };
 
   let getControllerScope = function (bindings) {
@@ -93,20 +95,6 @@ describe('exchange-checkout.component', () => {
     expect(scope.state.rate).toEqual(mockQuote().quoteAmount);
   });
 
-  describe('hasMultipleAccounts', () => {
-    it('should be false for one account', () => {
-      spyOn(Wallet, 'accounts').and.returnValue([{active: true}]);
-      scope = getControllerScope(handlers);
-      expect(scope.hasMultipleAccounts).toEqual(false);
-    });
-
-    it('should be true for more than one account', () => {
-      spyOn(Wallet, 'accounts').and.returnValue([{active: true}, {active: true}]);
-      scope = getControllerScope(handlers);
-      expect(scope.hasMultipleAccounts).toEqual(true);
-    });
-  });
-
   describe('.buy()', () => {
     beforeEach(function () {
       scope = getControllerScope(handlers);
@@ -133,23 +121,11 @@ describe('exchange-checkout.component', () => {
 
     beforeEach(() => scope = getControllerScope(handlers));
 
-    // it('should get args for a USD->BTC quote', () => {
-    //   scope.state.baseCurr = scope.dollars;
-    //   scope.state.fiat = 150;
-    //   expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([7500, 'USD', 'BTC']));
-    // });
-
     it('should get args for a BTC->USD quote', () => {
       scope.state.baseCurr = scope.bitcoin;
       scope.state.btc = 3.5;
       expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([350000000, 'BTC', 'USD']));
     });
-
-    // it('should get the correct fiat arg with a number js has trouble with', () => {
-    //   scope.state.baseCurr = scope.dollars;
-    //   scope.state.fiat = 2.2;
-    //   expect(scope.getQuoteArgs(scope.state)).toEqual(buildArgs([110, 'USD', 'BTC']));
-    // });
   });
 
   describe('.cancelRefresh()', () => {
@@ -171,13 +147,6 @@ describe('exchange-checkout.component', () => {
       scope.refreshQuote();
       expect(scope.cancelRefresh).toHaveBeenCalled();
     });
-
-    // it('should call exchange.getBuyQuote()', () => {
-    //   let spy = jasmine.createSpy('quote').and.returnValue($q.resolve(mockQuote()));
-    //   scope = getControllerScope({handleQuote: spy});
-    //   scope.refreshQuote();
-    //   expect(spy).toHaveBeenCalledWith({amount: 0, baseCurr: 'USD', quoteCurr: 'BTC'});
-    // });
 
     describe('success', () => {
       let quote;
@@ -205,18 +174,6 @@ describe('exchange-checkout.component', () => {
         scope.$digest();
         expect(scope.state.loadFailed).toBeFalsy();
       });
-
-      it('should set state.btc to quoteAmount if in baseFiat', () => {
-        scope.state.baseCurr = scope.dollars;
-        scope.$digest();
-        expect(scope.state.btc).toEqual(0.0000015);
-      });
-
-      // it('should set state.fiat to quoteAmount if not in baseFiat', () => {
-      //   scope.state.baseCurr = scope.bitcoin;
-      //   scope.$digest();
-      //   expect(scope.state.fiat).toEqual(3);
-      // });
     });
 
     describe('failure', () => {
@@ -242,7 +199,7 @@ describe('exchange-checkout.component', () => {
     describe('fiat', () => {
       it('should refresh if base fiat', () => {
         scope.state.fiat = 20;
-        scope.state.baseCurr = scope.dollars;
+        scope.state.baseCurr = scope.fiat;
         scope.$digest();
         expect(scope.refreshIfValid).toHaveBeenCalled();
       });
@@ -258,7 +215,7 @@ describe('exchange-checkout.component', () => {
     describe('btc', () => {
       it('should not refresh if base fiat', () => {
         scope.state.btc = 200000;
-        scope.state.baseCurr = scope.dollars;
+        scope.state.baseCurr = scope.fiat;
         scope.$digest();
         expect(scope.refreshIfValid).not.toHaveBeenCalled();
       });

@@ -55,6 +55,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.shapeshift = res.shapeshift;
 
+      env.bcash = res.bcash;
+
       defer.resolve(env);
     }
   );

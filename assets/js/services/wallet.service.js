@@ -100,8 +100,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
     $window.name = 'blockchain-' + uid;
     wallet.fetchAccountInfo().then((guid) => {
-      currency.fetchExchangeRate(wallet.settings.currency);
-      currency.fetchEthRate(wallet.settings.currency);
+      currency.fetchAllRates(wallet.settings.currency);
       wallet.initExternal();
       wallet.status.isLoggedIn = true;
       successCallback && successCallback(guid);
@@ -268,6 +267,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           }
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
+          $rootScope.showBch = wallet.my.wallet.bch.balance > 0 || wallet.my.wallet.bch.txs.length > 0;
           Ethereum.recordStats();
           AngularHelper.$safeApply();
         };
@@ -292,7 +292,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let { external } = MyWallet.wallet;
     if (external) {
       let { coinify, sfox, unocoin } = external;
-      if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
+      if (coinify) $injector.get('coinify').init(coinify); // init coinify to monitor incoming coinify payments
       if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
       if (unocoin) $injector.get('unocoin').init(unocoin); // init unocoin to monitor incoming payments
     }
@@ -922,8 +922,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {
     wallet.settings_api.changeLocalCurrency(curr.code, () => {
       wallet.settings.currency = curr;
-      currency.fetchExchangeRate(curr);
-      currency.fetchEthRate(curr);
+      currency.fetchAllRates(curr);
       if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
         wallet.settings.displayCurrency = curr;
       }

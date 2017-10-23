@@ -2,8 +2,9 @@ angular
   .module('walletApp')
   .controller('SendController', SendController);
 
-function SendController ($uibModalInstance, paymentRequest, assetContext) {
-  let code = assetContext.isViewingBtc() && 'btc' ||
+function SendController ($uibModalInstance, paymentRequest, asset, assetContext) {
+  let code = asset.code ||
+             assetContext.isViewingBtc() && 'btc' ||
              assetContext.isViewingEth() && 'eth' ||
              'btc';
 
@@ -12,7 +13,7 @@ function SendController ($uibModalInstance, paymentRequest, assetContext) {
 
   this.showTab = (asset) => this.asset = asset;
   this.onTab = (asset) => asset === this.asset.code;
-  this.asset = assetContext.getAssets().filter((a) => a.code === code)[0];
+  this.asset = asset.code ? asset : assetContext.getAssets().filter((a) => a.code === code)[0];
 
   this.close = (result) => {
     $uibModalInstance.close(result);
