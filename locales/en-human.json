@@ -1568,9 +1568,6 @@
     "user_needs_account": {
       "EXPLAIN": ""
     },
-    "user_cant_trade": {
-      "EXPLAIN": "Something went wrong. Please try again later."
-    },
     "has_remaining_buy_limit": {
       "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
       "KYC": "Increase your limit."
@@ -1607,6 +1604,17 @@
     },
     "user_can_trade": {
       "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+    }
+  },
+  "SFOX": {
+    "user_needs_account": {
+      "EXPLAIN": ""
+    },
+    "user_can_buy": {
+      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+    },
+    "user_can_sell": {
+      "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
     }
   },
   "EXCHANGE": {
