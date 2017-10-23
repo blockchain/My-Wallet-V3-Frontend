@@ -415,6 +415,10 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           let exchange = MyWallet.wallet.external.coinify;
           return exchange.user && exchange.getKYCs();
         },
+        _loadSubscriptions ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getSubscriptions();
+        },
         balance ($q, MyWallet) {
           let defaultAccount = MyWallet.wallet.hdwallet.defaultAccount;
 

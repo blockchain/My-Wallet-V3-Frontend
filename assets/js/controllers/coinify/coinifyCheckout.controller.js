@@ -5,6 +5,7 @@ angular
 function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, modals, balance) {
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
+  $scope.subscriptions = coinify.subscriptions;
 
   $scope.buyFiatOptions = currency.coinifyCurrencies;
   $scope.sellFiatOptions = currency.coinifyCurrencies.filter((c) => c.code !== 'USD');
@@ -31,10 +32,14 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     max: Math.min(coinify.limits.blockchain.inRemaining['BTC'], coinify.sellMax)
   });
 
+  $scope.cancelSubscription = (id) => coinify.cancelSubscription(id);
+
   $scope.openKYC = () => coinify.openPendingKYC();
   $scope.pendingKYC = () => coinify.getPendingKYC() || coinify.getRejectedKYC();
-  $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t));
-  $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t));
+
+  $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t) && !t.tradeSubscriptionId);
+  $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && !t.tradeSubscriptionId);
+  $scope.recurringTrades = () => coinify.trades.filter((t) => t.tradeSubscriptionId);
 
   Env.then(env => {
     $scope.tabs = {

@@ -61,7 +61,7 @@ form.bc-form(
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
-    .group.mtl(ng-if="$ctrl.collapseSummary")
+    .group(ng-if="$ctrl.collapseSummary")
       .item
         .mbm
           span.f-16.em-500.colon Order Summary
@@ -77,5 +77,23 @@ form.bc-form(
           .flex-between.flex-center.form-control.bg-grey.no-border.em-500
             span.colon Total Cost
             span {{ format(state.total || 0, fiat, true) }}
+    .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled && false")
+      .item.inline.check
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck")
+        label(for="frequencyCheck") Make this a recurring order
+    .group(ng-if="state.frequencyCheck && !trading().isDisabled")
+      .group.mtl
+        .item.inline
+          span.colon.f-13.em-500(translate="FREQUENCY")
+          select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true")
+        .item.mtm
+          span(translate="FREQUENCY_INFO" translate-values="{timespan: recurringTimespan()}")
+      .group.mtl
+        .item.inline
+          span.colon.f-13.em-500(translate="DURATION")
+          input.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: date}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" ng-model="state.endTime" ng-value="state.endTime || 'Until I Cancel'" readonly)
+        .item.mtm
+          span(ng-show="!state.endTime") You can cancel anytime.
+          span(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
     .group.mtl
       button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin

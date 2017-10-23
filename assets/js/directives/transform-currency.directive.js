@@ -8,6 +8,7 @@ function transformCurrency (currency) {
     restrict: 'A',
     require: 'ngModel',
     scope: {
+      baseCurrency: '=',
       transformCurrency: '='
     },
     link: link
@@ -57,13 +58,29 @@ function transformCurrency (currency) {
         ctrl.$render();
       }
 
-      return currency.convertToSatoshi(modifiedInput, scope.transformCurrency);
+      if (currency.isEthCurrency(scope.baseCurrency)) {
+        return currency.convertToEther(modifiedInput, scope.transformCurrency);
+      } else if (currency.isBchCurrency(scope.baseCurrency)) {
+        return currency.convertToBitcoinCash(modifiedInput, scope.transformCurrency);
+      } else {
+        return currency.convertToSatoshi(modifiedInput, scope.transformCurrency);
+      }
     };
 
     // Model formatter
     scope.formatToView = (modelValue) => {
       if (modelValue === null || modelValue === '') return null;
-      let fiat = currency.convertFromSatoshi(modelValue, scope.transformCurrency);
+
+      let fiat;
+      if (currency.isEthCurrency(scope.baseCurrency)) {
+        fiat = currency.convertFromEther(modelValue, scope.transformCurrency);
+      } else if (currency.isBchCurrency(scope.baseCurrency)) {
+        if (currency.isBchCurrency(scope.transformCurrency)) fiat = currency.convertFromSatoshi(modelValue, scope.transformCurrency);
+        else fiat = currency.convertFromBitcoinCash(modelValue / 1e8, scope.transformCurrency);
+      } else {
+        fiat = currency.convertFromSatoshi(modelValue, scope.transformCurrency);
+      }
+
       let factor = Math.pow(10, restrictions.decimals);
       let formatted = (Math.floor(fiat * factor) / factor).toFixed(restrictions.decimals);
       return parseFloat(formatted);

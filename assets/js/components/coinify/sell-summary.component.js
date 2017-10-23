@@ -73,9 +73,7 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   };
 
   const assignAndBuildPayment = (sellResult) => {
-    // this.payment.to(sellResult.transferIn.details.account);
-    // Debugging
-    this.payment.to('16rVM9kaJKGXaNgaxgKhwyQ5pdnRsnYEy3');
+    this.payment.to(sellResult.transferIn.details.account);
     // QA tool
     if (this.exchange._customAddress && this.exchange._customAmount) {
       console.log('QA - Address and Amount (in satoshi):', this.exchange._customAddress, this.exchange._customAmount);
