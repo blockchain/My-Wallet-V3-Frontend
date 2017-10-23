@@ -2,7 +2,8 @@
   form.bc-form(id="bankTransferForm" name="bankTransferForm" role="form" novalidate)
     div
       .mbl
-        span.type-h5.em-500.flex-start.pts.capitalize(class="{{vm.formattedTrade.class}}" translate="{{vm.formattedTrade.namespace}}.TITLE")
+        span.type-h5.em-500.flex-start.pts.capitalize(ng-hide="vm.updatedRefNumber" class="{{vm.formattedTrade.class}}" translate="{{vm.formattedTrade.namespace}}.TITLE")
+        span.type-h5.em-500.flex-start.pts.success(ng-show="vm.updatedRefNumber" translate="REF_NUMBER_UPDATED")
         p.ptm(ng-show="vm.onStep('summary')" translate="{{vm.formattedTrade.namespace}}.BODY" translate-values="vm.formattedTrade.values")
       .border(ng-if="vm.onStep('summary')")
         ul.em-300.bg-grey.border-top.pan.mbn.bank-transfer

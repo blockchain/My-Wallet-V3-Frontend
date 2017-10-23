@@ -53,7 +53,8 @@ describe('UnocoinBankTransferController', () => {
           (trade, bankAccount) => { return 'trade'; },
         initiated:
           (trade) => { return true; }
-      }
+      },
+      step: ''
     });
   };
 

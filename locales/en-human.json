@@ -1082,7 +1082,7 @@
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
-    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 days."
+    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 {{::time}}."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
@@ -1771,5 +1771,7 @@
   "ALL_ADDRESSES": "All Addresses",
   "VIEW_TXS": "View Transactions",
   "HIDE_TXS": "Hide Transactions",
+  "EDIT_REF": "Edit Ref Number",
+  "REF_NUMBER_UPDATED": "Ref Number Successfully Updated",
   "": ""
 }
