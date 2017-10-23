@@ -35,12 +35,14 @@ describe('shift-create.component', () => {
   let mockDefaultBTCWallet = (invalid) =>
     ({
       label: 'My Bitcoin Wallet',
+      coinCode: 'btc',
       getAvailableBalance: () => invalid ? $q.reject() : $q.resolve(1)
     });
 
   let mockDefaultETHWallet = () =>
     ({
       label: 'My Eth Wallet',
+      coinCode: 'eth',
       getAvailableBalance: () => $q.resolve(1)
     });
 
@@ -113,8 +115,7 @@ describe('shift-create.component', () => {
     });
 
     it('should set the baseCurr to the input currency', () => {
-      scope.baseInput = 'eth';
-      scope.state.input.curr = 'btc';
+      scope.from = mockDefaultBTCWallet();
       scope.getSendAmount();
       expect(scope.state.baseCurr).toBe('btc');
     });
@@ -138,9 +139,8 @@ describe('shift-create.component', () => {
 
     it('should get args for a BTC->ETH quote', () => {
       scope.state.baseCurr = 'btc';
-      scope.state.input = { curr: 'btc', amount: 1 };
       scope.forms.shiftForm.input.$viewValue = 1;
-      expect(scope.getQuoteArgs(scope.state)).toEqual({index: 0, pair: 'btc_eth', amount: 1});
+      expect(scope.getQuoteArgs(scope.state).from.coinCode).toEqual(mockDefaultBTCWallet().coinCode);
     });
   });
 
@@ -172,12 +172,6 @@ describe('shift-create.component', () => {
         scope.state.baseCurr = 'btc';
         scope.$digest();
         expect(scope.state.output.amount).toEqual(0.0015);
-      });
-
-      it('should set state.input.amount to withdrawalAmount if not baseInput', () => {
-        scope.state.baseCurr = 'eth';
-        scope.$digest();
-        expect(scope.state.input.curr).toEqual('btc');
       });
     });
 
