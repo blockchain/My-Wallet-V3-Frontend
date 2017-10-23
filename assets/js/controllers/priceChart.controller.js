@@ -52,7 +52,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   $scope.isTime = time => $scope.state.time === time;
   $scope.isCurrency = curr => $scope.state.base === curr;
 
-  const handleChart = (chartData) => {
+  $scope.handleChart = (chartData) => {
     $scope.options = {};
 
     $scope.options.data = chartData.map(data => parseFloat(data.price));
@@ -79,7 +79,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     $scope.useCache = true;
   };
 
-  const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then(handleChart, handleChartError);
+  const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then($scope.handleChart, handleChartError);
 
   $scope.getStartDate = () => {
     let d = new Date();
