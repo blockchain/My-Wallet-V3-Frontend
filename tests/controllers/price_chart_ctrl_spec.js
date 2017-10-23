@@ -137,11 +137,4 @@ describe('PriceChartController', () => {
       expect(scope.options.interval).toBe((3600 * 1000) / 4);
     });
   });
-
-  describe('mapStateToReq()', () => {
-    it('should return an object', () => {
-      scope = getControllerScope();
-      expect(scope.mapStateToReq('1week')).toEqual(jasmine.any(Object));
-    });
-  });
 });
