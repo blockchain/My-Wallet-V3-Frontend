@@ -54,7 +54,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     get baseBTC () { return this.baseCurr === 'btc'; },
     get baseInput () { return this.baseCurr === state.input.curr; }
   };
-  
+
   $scope.setState = () => {
     state.baseCurr = this.currencyHelper(this.from).name;
     state.input.curr = this.currencyHelper(this.from).name;
