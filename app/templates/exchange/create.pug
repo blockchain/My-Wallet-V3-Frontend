@@ -5,13 +5,17 @@
         h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CREATE_ACCOUNT" translate-values="{exchange: $ctrl.name}")
         span.f-16(translate="EXCHANGE.CREATE_ACCOUNT_EXPLAIN" translate-values="{exchange: $ctrl.name}")
       div.mbl(ng-show="$ctrl.viewing('email')")
-        div(ng-show="$ctrl.state.sentEmailCode")
+        div.mb-10(ng-show="$ctrl.state.sentEmailCode")
           h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.VERIFY_EMAIL")
           span.f-16(translate="EXCHANGE.VERIFY_EMAIL_EXPLAIN" translate-values="{exchange: $ctrl.name}")
-        div(ng-hide="$ctrl.state.sentEmailCode")
+        div.f-12(ng-show="$ctrl.state.sentEmailCode && $ctrl.state.needsEmailReminder && !$ctrl.state.verificationError")
+          span(translate="EXCHANGE.VERIFY_EMAIL_REMINDER" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
+          | 
+          a.period(ng-click="$ctrl.state.sentEmailCode = false; $ctrl.state.needsEmailReminder = false;" translate="HERE")
+        div.mb-10(ng-hide="$ctrl.state.sentEmailCode")
           h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CHANGE_EMAIL")
-          span.f-16(translate="EXCHANGE.CHANGE_EMAIL_EXPLAIN")
-
+          span.f-16(ng-if="!$ctrl.state.verificationError" translate="EXCHANGE.CHANGE_EMAIL_EXPLAIN")
+          span.f-16(ng-if="$ctrl.state.verificationError"  translate="EXCHANGE.VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
       div.mbl(ng-show="$ctrl.viewing('mobile')")
         h4.f-20.em-500.mvn.mb-10(translate="Verify Phone Number")
         span.f-16(ng-hide="$ctrl.state.sentMobileCode" translate="Please add your phone number to create your {{$ctrl.name}} exchange account.")
@@ -41,7 +45,7 @@
             input#terms(type="checkbox" ng-model="$ctrl.state.terms" name="terms" required)
             label(for="terms")
               | I accept Blockchain's 
-              a.em-500(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
+              a.em-500(href="https://www.blockchain.com/terms" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
               | , {{$ctrl.name}}'s 
               a.em-500(href="{{$ctrl.termsOfService}}" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
               |  and {{$ctrl.name}}'s 
@@ -59,8 +63,8 @@
               label.colon(translate="EXCHANGE.CONFIRM_EMAIL")
               input(ng-model="$ctrl.state.email" ng-change="$ctrl.state.sentEmailCode = false" name="email" type="email" required)
           .group.pt-25
-            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="emailForm.email.$invalid || ($ctrl.state.verified && $ctrl.state.email === $ctrl.user.email)") Send Verification Email
-            a.f-14.display-block.center.pt-15(ng-show="$ctrl.state.verified" ng-click="$ctrl.setState()") Go Back
+            button.btn.button-primary.full.pb-15(type="submit" ng-disabled="emailForm.email.$invalid || ($ctrl.state.email === $ctrl.user.email)") Send Verification Email
+            a.f-14.display-block.center.pt-15(ng-if="!$ctrl.verificationError" ng-click="$ctrl.state.sentEmailCode = true; $ctrl.setState();") Cancel
         div(ng-show="$ctrl.state.sentEmailCode")
           .group
             .item

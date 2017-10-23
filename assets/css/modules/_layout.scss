@@ -5,6 +5,7 @@
   flex-grow: 1;
   display: flex;
   min-height: 0;
+  overflow: hidden;
 }
 
 .left-nav {
@@ -15,7 +16,7 @@
   @media (max-height: 550px) {
     overflow: auto;
   }
-  @media (max-width: 767px) {
+  @media (max-width: 1024px) {
     height: calc(100% - 50px);
   }
   .active-accounts{
@@ -75,7 +76,7 @@
   overflow: hidden;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .left-nav {
     position: absolute;
     left: -270px;

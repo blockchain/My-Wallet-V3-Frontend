@@ -4,28 +4,41 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function UnocoinVerifyController (AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
+function UnocoinVerifyController (MyWallet, AngularHelper, Env, $scope, $q, state, $http, unocoin, modals, Upload, QA, bcPhoneNumber) {
   Env.then(env => {
-    $scope.buySellDebug = env.buySellDebug;
+    $scope.qaDebugger = env.qaDebugger;
   });
 
   $scope.openHelper = modals.openHelper;
+  $scope.verificationError = $scope.vm.verificationError;
+
+  let external = MyWallet.wallet.external;
   let exchange = $scope.exchange = $scope.vm.exchange;
 
-  $scope.error = $scope.vm.error;
   $scope.steps = enumify('address', 'info');
   $scope.fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
-  $scope.initialStep = exchange.profile.addressComplete ? 'info' : 'address';
+  $scope.initialStep = exchange.profile.identityComplete ? 'info' : 'address';
 
   $scope.verifyProfile = () => $scope.vm.goTo('upload');
 
-  $scope.setProfile = (fields) => {
+  $scope.handleRestart = () => {
+    $scope.vm.goTo('create');
+    external.wipe();
+  };
+
+  $scope.setProfile = () => {
     let profile = $scope.exchange.profile;
 
     profile.address.street = profile.street;
     profile.address.city = profile.city;
     profile.address.state = profile.state;
     profile.address.zipcode = profile.zipcode;
+  };
+
+  $scope.setBankInfo = () => {
+    let profile = $scope.exchange.profile;
+    profile.submittedBankInfo = true;
+    $scope.verifyProfile();
   };
 
   AngularHelper.installLock.call($scope);

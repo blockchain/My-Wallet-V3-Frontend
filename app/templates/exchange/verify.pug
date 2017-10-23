@@ -4,7 +4,7 @@
       h4.f-20.em-500.mvn.mb-10(translate="Setup Your Profile")
       .mbl.hidden-xs
         span.f-16(translate="EXCHANGE.VERIFY_ACCOUNT" translate-values="{exchange: $ctrl.name}")
-      .mbl(ng-show="$ctrl.buySellDebug")
+      .mbl(ng-show="$ctrl.qaDebugger")
         div.type-h4.mbs.underline
           i.mrs.ti-search
           span QA
@@ -44,7 +44,11 @@
             .mb-20.pos-rel
               label(translate="EXCHANGE.PAN_CARD")
               input(ng-model="$ctrl.profile.pancard" ng-change="$ctrl.clearInlineErrors('addressForm', 'pancard')" name="pancard" required)
-              span.error(translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
+              span.state-danger-text.mrs(ng-if="$ctrl.addressForm.pancard.$error.correct" translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
+              span.state-danger-text.mrs(ng-if="$ctrl.addressForm.pancard.$error.duplicate")
+                span(translate="PAN_CARD_DUPLICATE")
+                | 
+                a(ng-click="$ctrl.onRestart()" translate="CLICK_HERE_TO_RESTART")
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('ssn')")
             .mb-20.pos-rel
               label.hidden-xs Social Security Number
@@ -102,7 +106,7 @@
         .row
           .col-md-12
             button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$invalid") Continue
-    form.bc-form(ng-if="$ctrl.onStep('info')" name="$ctrl.infoForm" role="form" ng-submit="$ctrl.setProfile()" novalidate autocomplete="off")
+    form.bc-form(ng-if="$ctrl.onStep('info')" name="$ctrl.infoForm" role="form" ng-submit="$ctrl.setBankInfo()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
           .col-md-6

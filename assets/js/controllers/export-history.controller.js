@@ -10,7 +10,7 @@ function ExportHistoryController ($scope, $timeout, $translate, browser, format,
   let addresses = Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address);
   let all_accounts = {
     index: '',
-    label: $translate.instant('ALL_WALLETS'),
+    label: $translate.instant('ALL_BITCOIN_WALLETS'),
     address: accounts.map(a => a.extendedPublicKey).concat(addresses)
   };
   let imported_addresses = {

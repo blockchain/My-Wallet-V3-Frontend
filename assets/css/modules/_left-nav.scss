@@ -8,6 +8,11 @@
       right: -3px;
     }
   }
+  @media (max-width: 1024px) {
+    .visible-xs.visible-sm {
+      display: block !important;
+    }
+  }
 }
 
 .tray ~ .wallet-container {
@@ -62,6 +67,17 @@ ul.aside {
       span {
         color: $iris;
       }
+    }
+  }
+  li {
+    span.tx-divider:after {
+      position: absolute;
+      content: "";
+      height: 1px;
+      background-color: grey;
+      width: 9.8em;
+      margin-left: 10px;
+      top: 50%;
     }
   }
   ul.aside-list{
@@ -161,4 +177,8 @@ li.action-bar{
 
 @media (max-width: 480px) {
   .wallet-footer { margin: 0; }
+}
+
+.border-solid {
+  border-bottom: 1px solid grey;
 }

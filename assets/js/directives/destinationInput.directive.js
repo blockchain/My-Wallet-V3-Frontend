@@ -32,12 +32,15 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
-      let isValidPrivateKey = Wallet.isValidPrivateKey(result);
-      let address = isValidPrivateKey ? Wallet.parsePaymentRequest(isValidPrivateKey) : Wallet.parsePaymentRequest(result);
-      scope.model = format.destination(address, 'External');
-      scope.onPaymentRequest({request: address});
-      scope.setInputMetric({metric: 'qr'});
-      $timeout(scope.change);
+      let address = Wallet.parsePaymentRequest(result);
+      if (Wallet.isValidAddress(address.address)) {
+        scope.model = format.destination(address, 'External');
+        scope.onPaymentRequest({request: address});
+        scope.setInputMetric({metric: 'qr'});
+        $timeout(scope.change);
+      } else {
+        throw new Error('BITCOIN_ADDRESS_INVALID');
+      }
     };
 
     scope.setModel = (a) => {

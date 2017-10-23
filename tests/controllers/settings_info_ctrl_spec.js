@@ -1,6 +1,7 @@
 describe('SettingsInfoCtrl', () => {
   let scope;
   let Wallet;
+  let MyWallet;
   let Alerts;
   let $q;
 
@@ -13,12 +14,17 @@ describe('SettingsInfoCtrl', () => {
 
   beforeEach(() =>
     angular.mock.inject(function ($injector, $rootScope, $controller, _$q_) {
+      MyWallet = $injector.get('MyWallet');
       Wallet = $injector.get('Wallet');
       Alerts = $injector.get('Alerts');
       $q = _$q_;
 
       Wallet.user.guid = "user_guid";
       Wallet.user.alias = "user_alias";
+      MyWallet.wallet.bch = {
+        balance: 100,
+        txs: []
+      };
       Wallet.makePairingCode = function (success, error) {
         if (scope.pairingCode) { return error(); } else { return success("code"); }
       };

@@ -19,7 +19,6 @@ var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://st
 var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
 var sfoxProduction = parseInt(process.env.SFOX_USE_PRODUCTION, 10) === 1;
 var unocoinProduction = parseInt(process.env.UNOCOIN_USE_PRODUCTION, 10) === 1;
-var testnet = process.env.NETWORK === 'testnet';
 
 // App configuration
 var rootApp = express();
@@ -59,13 +58,15 @@ app.use(function (req, res, next) {
         "'self'",
         rootURL,
         (webSocketURL || 'wss://ws.blockchain.info'),
+        (webSocketURL || 'wss://ws.blockchain.info/inv').replace('/inv', '/eth/inv'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
-        `https://app-api.${testnet ? 'sandbox.' : ''}coinify.com`,
+        'https://shapeshift.io',
+        `https://app-api.${!production ? 'sandbox.' : ''}coinify.com`,
         `https://api.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://quotes.${sfoxProduction ? '' : 'staging.'}sfox.com`,
         `https://sfox-kyc${sfoxProduction ? '' : 'test'}.s3.amazonaws.com`,
-        `https://${unocoinProduction ? '' : 'sandbox.'}unocoin.co`
+        `https://${unocoinProduction ? 'www.' : 'sandbox.'}unocoin.${unocoinProduction ? 'com' : 'co'}`
       ].join(' '),
       "object-src 'none'",
       "media-src 'self' https://storage.googleapis.com/bc_public_assets/ data: mediastream: blob:",

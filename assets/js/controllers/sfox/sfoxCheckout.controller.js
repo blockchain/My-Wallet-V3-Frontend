@@ -15,7 +15,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.state = {
     account: accounts[0],
     trades: exchange.trades,
-    limits: { max: exchange.profile && exchange.profile.limits.buy || 100 },
+    limits: () => ({
+      max: exchange.profile && exchange.profile.limits.buy || 100
+    }),
     buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
@@ -61,14 +63,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     exchange.fetchProfile().then($scope.setState);
     buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-    if ($scope.buySellDebug) {
+    if ($scope.qaDebugger) {
       console.info('Load Sift Science iframe');
     }
     $scope.tradeId = trade.id;
     $scope.siftScienceEnabled = true;
-  };
-
-  $scope.buyError = () => {
-    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
 }

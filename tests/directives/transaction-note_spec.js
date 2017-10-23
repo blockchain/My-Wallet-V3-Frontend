@@ -40,8 +40,6 @@ describe('Transaction Note Directive', () => {
     return isoScope = element.isolateScope();
   });
 
-  it('should show the note', () => expect(element.html()).toContain("Hello World"));
-
   it('should have the note in its scope', () => expect(isoScope.transaction.note).toBe("Hello World"));
 
   it('should show only the note if no address labels match the tx', inject(function (Wallet) {
@@ -62,99 +60,37 @@ describe('Transaction Note Directive', () => {
     expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(true);
   });
 
-  it('should show the label if it is associated with an address in the tx and there is no tx note', inject(function (Wallet) {
-    spyOn(Wallet, 'deleteNote');
-    isoScope.deleteNote();
-    isoScope.$digest();
-
-    let addressLabel = element[0].querySelectorAll('.tx-note');
-    expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false);
-  })
-  );
-
-  it('should show a label when All wallets are filtered', inject(function (Wallet) {
-    $rootScope.account = '';
-    spyOn(Wallet, 'deleteNote');
-    isoScope.deleteNote();
-    element = $compile("<transaction-note transaction='transaction' account='account'></transaction-note>")($rootScope);
-    $rootScope.$digest();
-
-    let addressLabel = element[0].querySelectorAll('.tx-note');
-    expect(angular.element(addressLabel).hasClass('ng-hide')).toBe(false);
-  })
-  );
-
-  it('should save a modified note', inject(function (Wallet) {
-    spyOn(Wallet, 'setNote');
-    isoScope.transaction.note = "Modified note";
-    isoScope.$digest();
-    expect(Wallet.setNote).toHaveBeenCalled();
-  })
-  );
-
-  it('should not save an unmodified note', inject(function (Wallet) {
-    spyOn(Wallet, 'setNote');
-    isoScope.$digest();
-    expect(Wallet.setNote).not.toHaveBeenCalled();
-  })
-  );
-
-  it('should create a new note', inject(function (Wallet) {
-    isoScope.transaction.note = null;
-
-    spyOn(Wallet, 'setNote');
-
-    isoScope.transaction.note = "New note";
-    isoScope.$digest();
-
-    expect(Wallet.setNote).toHaveBeenCalled();
+  it('should save a modified note', inject(function () {
+    spyOn(isoScope, 'setNote');
+    isoScope.note = "Modified note";
+    isoScope.saveNote();
+    expect(isoScope.setNote).toHaveBeenCalled();
   })
   );
 
   it('should delete a note', inject(function (Wallet) {
-    isoScope.transaction.note = null;
-
-    spyOn(Wallet, 'deleteNote');
-
-    isoScope.$digest();
-
-    expect(Wallet.deleteNote).toHaveBeenCalled();
-  })
-  );
-
-
-  it('should delete a note if it\'s an empty string', inject(function (Wallet) {
-    isoScope.transaction.note = "";
-
-    spyOn(Wallet, 'deleteNote');
-
-    isoScope.$digest();
-
-    expect(Wallet.deleteNote).toHaveBeenCalled();
+    isoScope.note = null;
+    spyOn(isoScope, 'deleteNote');
+    isoScope.removeNote();
+    expect(isoScope.deleteNote).toHaveBeenCalled();
   })
   );
 
   it('does cancel edit note', () => {
     isoScope.cancelEditNote();
-    expect(isoScope.transaction.draftNote).toBe("");
+    expect(isoScope.draftNote).toBe("");
     expect(isoScope.editNote).toBe(false);
   });
 
   it('does start edit note', () => {
     isoScope.startEditNote();
-    expect(isoScope.transaction.draftNote).toBe(isoScope.transaction.note);
+    expect(isoScope.draftNote).toBe(isoScope.note);
     expect(isoScope.editNote).toBe(true);
   });
 
   it('does save note', () => {
     isoScope.saveNote();
-    expect(isoScope.transaction.draftNote).toBe(isoScope.transaction.note);
-    expect(isoScope.editNote).toBe(false);
-  });
-
-  it('does delete note', () => {
-    isoScope.deleteNote();
-    expect(isoScope.transaction.note).toBe(null);
+    expect(isoScope.draftNote).toBe(isoScope.note);
     expect(isoScope.editNote).toBe(false);
   });
 

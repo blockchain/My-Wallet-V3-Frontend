@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env, Ethereum, ShapeShift) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
+  $scope.popover = { isOpen: false };
 
   const whatsNewDateCutoff = 7.884e+9; // ~3 months
   const lastViewedDefaultTime = 1231469665000;
@@ -12,7 +13,6 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   $scope.lastViewedWhatsNew = null;
 
   $rootScope.isSubscribed = localStorageService.get('subscribed');
-
   $scope.getTheme = () => $scope.settings.theme;
 
   let asyncAssert = (value) => value ? $q.resolve(value) : $q.reject();
@@ -46,7 +46,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     });
   };
 
-  $scope.logout = () => {
+  $rootScope.logout = () => {
     let isSynced = Wallet.isSynchronizedWithServer();
     let needsBackup = !Wallet.status.didConfirmRecoveryPhrase;
 
@@ -75,7 +75,9 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
   };
 
   $interval(() => {
-    if (Wallet.status.isLoggedIn) currency.fetchExchangeRate();
+    if (Wallet.status.isLoggedIn) {
+      currency.fetchAllRates(Wallet.settings.currency);
+    }
   }, 15 * 60000);
 
   if ($scope.status.isLoggedIn) {
@@ -93,14 +95,21 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   $q.all([Env, buyStatus.canBuy()]).then(([env, canBuy]) => {
     let now = Date.now();
-    let filterBuySell = (feat) => (
+
+    $scope.filterFeatures = (feat) => (
       (feat.title !== 'BUY_BITCOIN' || canBuy) &&
-      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify')))
+      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
+      (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
+      (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess)
     );
-    $scope.feats = whatsNew.filter(filterBuySell).filter(f => (now - f.date) < whatsNewDateCutoff);
+
+    $scope.filterByDate = (f) => (now - f.date) < whatsNewDateCutoff;
+    $scope.feats = whatsNew.filter($scope.filterFeatures).filter($scope.filterByDate);
   });
 
   $scope.$watch('lastViewedWhatsNew', (lastViewed) => $timeout(() => {
     $scope.nLatestFeats = $scope.getNLatestFeats($scope.feats, lastViewed);
   }));
+
+  $scope.goTo = (ref) => { $state.go(ref); $scope.popover.isOpen = false; };
 }

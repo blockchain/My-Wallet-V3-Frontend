@@ -49,32 +49,18 @@ function DidYouKnow () {
       icon: 'ti-id-badge'
     }, {
       id: 7,
-      title: 'DYK_MOBILE_TITLE',
-      type: 'FEATURE',
-      text: 'DYK_MOBILE',
-      icon: 'ti-mobile',
-      linkText: 'PAIRING_CODE',
-      state: 'wallet.common.settings.info'
-    }, {
-      id: 8,
       title: 'DYK_HOW_IT_WORKS_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_HOW_IT_WORKS',
       icon: 'ti-cloud-up'
     }, {
-      id: 9,
-      title: 'DYK_HD_PRIVACY_TITLE',
-      type: 'EDUCATIONAL',
-      text: 'DYK_HD_PRIVACY',
-      icon: 'ti-check'
-    }, {
-      id: 10,
+      id: 8,
       title: 'DYK_DYNAMIC_FEES_TITLE',
       type: 'FEATURE',
       text: 'DYK_DYNAMIC_FEES',
       icon: 'ti-check'
     }, {
-      id: 11,
+      id: 9,
       title: 'DYK_OPEN_SOURCE_TITLE',
       type: 'EDUCATIONAL',
       text: 'DYK_OPEN_SOURCE',

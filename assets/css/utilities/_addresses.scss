@@ -11,11 +11,4 @@
 .dest-oflow {
   overflow: hidden;
   white-space: nowrap;
-  > span {
-    display: block;
-    overflow: auto;
-    // hide scrollbar
-    margin-bottom: -20px;
-    padding-bottom: 20px;
-  }
 }

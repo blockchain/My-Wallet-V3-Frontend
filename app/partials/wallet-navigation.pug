@@ -3,12 +3,22 @@
     li.header(ui-sref-active="current", ng-click="hideMenu()")
       a(ui-sref="wallet.common.home")
         i.icon-home
-        span(translate="HOME")
+        span(translate="DASHBOARD")
+    li.mv-10(ng-show="showEthereum()")
+      div
+        span.tx-divider.pos-rel.ml-10.em-200(translate="MY_TRANSACTIONS")
     li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
-      a(ui-sref="wallet.common.transactions")
-        i.icon-tx
-        span(translate="MY_TRANSACTIONS")
-    // Don't forget to update controllers/buySell.controller.js
+      a(ui-sref="wallet.common.btc.transactions")
+        i.icon-bitcoin
+        span(ng-show="showEthereum()" translate="BITCOIN")
+        span(ng-hide="showEthereum()" translate="MY_TRANSACTIONS")
+    li.scroll-parent.header(ui-sref-active="current" ng-show="showEthereum()" ng-click="hideMenu()")
+      a(ui-sref="wallet.common.eth.transactions")
+        i.icon-ethereum
+        span.flex-row.flex-align-end
+          span ETHER
+    div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
+    // Don't forget to update controllers/coinifyCheckout.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
       pulse-cta(
         active-when="shouldShowBuyCta() && !shouldShowInviteForm"
@@ -20,13 +30,17 @@
       a(ng-hide="shouldShowInviteForm"
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
-        i.icon-bitcoin
-        span(translate="BUY_SELL_BITCOIN")
+        i.icon-buy-sell
+        span(translate="{{buyLink}}")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
-        i.icon-bitcoin
-        span(translate="BUY_SELL_BITCOIN")
-
+        i.icon-buy-sell
+        span(translate="BUY_BITCOIN")
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="showShift() && isInWhitelistedState")
+      a(ui-sref="wallet.common.shift")
+        i.icon-ExchangeTab
+        span.flex-row.flex-align-end
+          span(translate="EXCHANGE_SIMPLE")
     li.header.mbm(ui-sref-active="current",  ng-click="hideMenu()")
       pulse-cta(
         active-when="shouldShowSecurityWarning()"
@@ -47,7 +61,7 @@
       ul.scroll-settings.aside-list.pas(ng-show="showOrHide('settings')" ng-click="hideMenu()")
         li.mts.mbm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.info")
-            span(translate="WALLET_INFO")
+            span(translate="GENERAL")
         li.mvm(ui-sref-active="active")
           a.pas(ui-sref="wallet.common.settings.preferences")
             span(translate="PREFERENCES")
@@ -61,6 +75,13 @@
       a(ui-sref="wallet.common.faq")
         i.icon-help
         span(translate="FAQ")
+    div.border-solid.mb-15.mt-15.mh-15.visible-xs.visible-sm
+    li.visible-xs.visible-sm.header(ui-sref-active="current" ng-click="refresh()")
+      a(ng-click="refresh()")
+        span.upper(translate="REFRESH")
+    li.visible-xs.visible-sm.header(ui-sref-active="current")
+      a(ng-click="logout()")
+        span.upper(translate="SIGNOUT")
   ul.aside.wallet-footer
     li.header.mbm
       span(translate="SPONSORS")
@@ -68,11 +89,11 @@
     li.terms-policy
       ul.flex-center.flex-wrap.aside.em-300.type-sm
         li.pointer.mrm
-          a.text-color(href="https://blockchain.info/Resources/TermsofServicePolicy.pdf", translate="TOS" target="_blank" rel="noopener noreferrer")
+          a.text-color(href="https://www.blockchain.com/terms", translate="TOS" target="_blank" rel="noopener noreferrer")
         li.mrm.type-xs
           i.ti-control-record
         li.pointer.mrm
-          a.text-color(href="https://www.blockchain.com/assets/pdf/Blockchain_PrivacyPolicy.pdf", translate="PRIVACY" target="_blank" rel="noopener noreferrer")
+          a.text-color(href="https://www.blockchain.com/privacy", translate="PRIVACY" target="_blank" rel="noopener noreferrer")
         li.mrm.type-xs
           i.ti-control-record
         li.pointer

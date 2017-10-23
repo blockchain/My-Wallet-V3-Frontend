@@ -1,0 +1,123 @@
+form.bc-form(
+  name="forms.shiftForm"
+  ng-submit="getSendAmount()"
+  novalidate
+  translate-namespace="SHIFT"
+  autocomplete="off")
+  fieldset(ng-disabled="locked")
+    .z-10.shift-loading(ng-show="locked")
+      img.loader(src="img/puff.svg")
+    .flex-end.pv-20-mobile.ph-10-mobile.pb-5
+      span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
+    .ph-30.ph-10-mobile.pv-20-mobile(ng-class="{ 'opacity-4': locked }")
+      .group.inline.mb-30
+        .item.width-45.width-45-mobile.pr-15.no-padding-mobile
+          .flex-between.flex-baseline.mbs
+            span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setWallet('from', 'to')" ng-disabled="$ctrl.wallet || locked")
+            ui-select-match
+              i.pr-5(ng-class="bitCurrencyMap[$ctrl.from.coinCode].icon")
+              span {{ $ctrl.from.label }}
+            ui-select-choices(repeat="account in $ctrl.origins")
+              i.pr-5(ng-class="bitCurrencyMap[account.coinCode].icon")
+              span {{ account.label }}
+        .flex-center.flex-justify.pt-30
+          img.pointer.switch.fade(ng-if="$ctrl.wallet" src="img/Switch.svg")
+          img.pointer.switch(ng-if="!$ctrl.wallet" src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }" ng-disabled="locked")
+        .item.width-45.width-45-mobile.pl-15.no-padding-mobile
+          .flex-between.flex-baseline.mbs
+            span.f-16.em-600.colon(translate=".RECEIVE")
+          .flex-center
+            ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="setWallet('to', 'from')" ng-disabled="locked")
+              ui-select-match
+                i.pr-5(ng-class="bitCurrencyMap[$ctrl.to.coinCode].icon")
+                span {{ $ctrl.to.label }}
+              ui-select-choices(repeat="destination in $ctrl.destinations")
+                i.pr-5(ng-class="bitCurrencyMap[destination.coinCode].icon")
+                span {{ destination.label }}
+      fieldset(ng-disabled="maxAvailable < state.rate.min || locked")
+        .group
+          .item
+            .flex-between.flex-baseline.mbs
+              span.f-16.em-500.colon Enter Amount
+              span.state-danger-text(ng-if="state.loadFailed || state.balanceFailed && maxAvailable > state.rate.min")
+                i.ti-alert
+                span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+              span(ng-if="!state.loadFailed && !state.balanceFailed")
+                helper-button(content="SHIFT.EXPLAIN_QUOTE" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
+            .flex-center
+              .flex-column.flex-1.border
+                .flex-center
+                  input.form-control.no-border(
+                    type="number"
+                    name="input"
+                    ng-model="state.input.amount"
+                    ng-model-options="{allowInvalid: true}"
+                    ng-min="state.rate.min"
+                    ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
+                    transform-currency="bitCurrencyMap[$ctrl.from.coinCode].currency"
+                    base-currency="bitCurrencyMap[$ctrl.from.coinCode].currency"
+                    ng-change="state.baseCurr = $ctrl.from.coinCode"
+                    prevent-event="mousewheel"
+                    focus-when="true"
+                    required)
+                  span.mhm.upper {{$ctrl.from.coinCode}}
+                .flex-center.border-top
+                  input.form-control.no-border(
+                    type="number"
+                    name="inputFiat"
+                    ng-model="state.input.amount"
+                    ng-model-options="{allowInvalid: true}"
+                    base-currency="bitCurrencyMap[$ctrl.from.coinCode].currency"
+                    ng-change="state.baseCurr = $ctrl.from.coinCode"
+                    transform-currency="dollars"
+                    step="0.01"
+                    required)
+                  span.mhm.upper {{dollars.code}}
+              i.icon-skinny-arrow-right.f-14.border-grey.ph-30.hidden-xs
+              .flex-column.flex-1.border
+                .flex-center
+                  input.form-control.no-border(
+                    type="number"
+                    name="output"
+                    ng-model="state.output.amount"
+                    base-currency="bitCurrencyMap[$ctrl.to.coinCode].currency"
+                    transform-currency="bitCurrencyMap[$ctrl.to.coinCode].currency"
+                    ng-change="state.baseCurr = $ctrl.to.coinCode"
+                    prevent-event="mousewheel"
+                    step="0.01"
+                    required)
+                  span.mhm.upper {{$ctrl.to.coinCode}}
+                .flex-center.border-top
+                  input.form-control.no-border(
+                    type="number"
+                    name="inputFiat"
+                    ng-model="state.output.amount"
+                    ng-model-options="{allowInvalid: true}"
+                    base-currency="bitCurrencyMap[$ctrl.to.coinCode].currency"
+                    ng-change="state.baseCurr = $ctrl.to.coinCode"
+                    transform-currency="dollars"
+                    step="0.01"
+                    required)
+                  span.mhm.upper {{dollars.code}}
+            .pos-rel.f-12.mts(ng-hide="locked")
+              span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min")
+                span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.min" translate="Below the minimum limit.")
+                div(ng-hide="forms.shiftForm.input.$error.max")
+                  span Use
+                  | &nbsp;
+                  a.underline(ng-click="state.baseCurr = $ctrl.from.coinCode; setMin();") minimum
+                | &nbsp;
+                span(ng-show="!forms.shiftForm.input.$error.min && !forms.shiftForm.input.$error.max") |&nbsp;
+                span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.max" translate="Amount over the limit.")
+                div(ng-hide="forms.shiftForm.input.$error.min")
+                  span Use
+                  | &nbsp;
+                  a.underline(ng-click="state.baseCurr = $ctrl.from.coinCode; setMax();") maximum
+            .pos-rel.f-12.state-danger-text
+              span.pos-abs(ng-show="maxAvailable < state.rate.min")
+                span(translate=".MIN_NEEDED_TO_SHIFT")
+                | &nbsp;
+                a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseCurr === 'btc'")
+      .group.mt-30.mt-10-mobile
+        button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")

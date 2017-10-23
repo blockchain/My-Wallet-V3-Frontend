@@ -7,6 +7,8 @@ function CoinifyTradeSummaryController ($scope, $q, formatTrade) {
   let completedState = $scope.vm.completedState || trade.state;
   $scope.formattedTrade = formatTrade[completedState](trade);
 
+  $scope.isPendingBankTransfer = () => trade.state === 'awaiting_transfer_in' && trade.medium === 'bank';
+
   $scope.fakeBankTransfer = () => {
     $q.resolve(trade.fakeBankTransfer())
       .then(() => trade.refresh())

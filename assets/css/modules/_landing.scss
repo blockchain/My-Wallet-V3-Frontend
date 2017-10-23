@@ -1,4 +1,4 @@
-.landing-page {
+#landing-page {
   overflow: scroll;
   .navbar {
     .round {
@@ -36,6 +36,9 @@
   img {
     max-width: 100%;
   }
+  button.header {
+    width: 130px;
+  }
   .carousel {
     .carousel-control {
       display: none;
@@ -60,6 +63,11 @@
   }
   .play-store-badge {
     height: 60px;
+  }
+  @media (max-width: 991px) {
+    .banner {
+      background-position: calc(60% - 140px) 50%;
+    }
   }
 }
 

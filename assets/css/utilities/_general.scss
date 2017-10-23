@@ -25,8 +25,12 @@ body {
 .wallet-top-navigation.navbar-inverse {
   flex: 0 0 60px;
   width: 100%;
+  border: 0px;
   @media (max-width: 767px) {
     flex: 0 0 50px;
+  }
+  .navbar-nav > li {
+    font-weight: 300;
   }
 }
 
@@ -71,3 +75,8 @@ noscript {
 }
 
 .mw { max-width: 100%; }
+
+.vertical-line {
+  border-right: 1px solid black;
+  height: 20px;
+}

@@ -26,10 +26,10 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     labelsForCurrency
   };
 
-  let buySellDebug;
+  let qaDebugger;
 
   Env.then(env => {
-    buySellDebug = env.buySellDebug;
+    qaDebugger = env.qaDebugger;
   });
 
   let errorStates = {
@@ -64,7 +64,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(wholeNumber(trade) ? trade.sendAmount : trade.sendAmount / 100, { code: trade.inCurrency })
     };
-    if (buySellDebug) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
+    if (qaDebugger) transaction['RECEIVING_ADDRESS'] = trade.receiveAddress;
     return transaction;
   };
 
@@ -133,11 +133,16 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     let account = accounts && accounts[0];
     let tx = addTradeDetails(trade, account);
 
+    let time;
+    if (/\bINR\b/.test(tx.TOTAL_COST)) time = 'hours';
+    else time = 'days';
+
     return {
       tx: tx,
       class: 'success',
       values: {
-        email: Wallet.user.email
+        email: Wallet.user.email,
+        time: time
       },
       namespace: 'TX_INITIATED'
     };
@@ -220,7 +225,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       values: {
         label: getLabel(trade),
         curr: trade.inCurrency,
-        amt: trade.inAmount / 100
+        amt: trade.sendAmount / 100
       }
     };
   }

@@ -2,46 +2,44 @@ angular
   .module('walletApp')
   .controller('CoinifyController', CoinifyController);
 
-function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, currency, $uibModalInstance, quote, trade, formatTrade, $timeout, $interval, buySell, $state, buyMobile, Env) {
-  Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
-  });
+function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalInstance, MyWallet, Wallet, Alerts, Env, currency, formatTrade, Exchange, buyMobile, coinify, quote, trade, frequency, endTime) {
+  Env.then(env => this.qaDebugger = env.qaDebugger);
 
-  let exchange = buySell.getExchange();
+  let exchange = coinify.exchange;
 
   this.quote = quote;
   this.trade = trade;
   this.user = Wallet.user;
+  this.endTime = endTime;
+  this.frequency = frequency;
   this.now = () => new Date().getTime();
   this.exchange = exchange && exchange.profile ? exchange : {profile: {}};
-  this.message = 'RATE_GUARANTEED';
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
-  this.BTCAmount = () => !this.baseFiat() ? this.quote.baseAmount : this.quote.quoteAmount;
-  this.fiatAmount = () => this.baseFiat() ? -this.quote.baseAmount / 100 : -this.quote.quoteAmount / 100;
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
+  this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
+  this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
   this.refreshQuote = () => {
-    if (this.baseFiat()) return $q.resolve(buySell.getQuote(-this.quote.baseAmount / 100, this.quote.baseCurrency)).then((q) => this.quote = q);
-    else return $q.resolve(buySell.getQuote(-this.quote.baseAmount / 100000000, this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
+    if (this.baseFiat()) return $q.resolve(coinify.getQuote(this.fiatAmount() * 100, this.quote.baseCurrency)).then((q) => this.quote = q);
+    else return $q.resolve(coinify.getQuote(this.BTCAmount(), this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
   };
   this.expireTrade = () => {
     return $q.resolve(this.state.trade.expired = true);
   };
 
   this.cancel = () => {
+    coinify.pollUserLevel();
     $uibModalInstance.dismiss('');
-    $rootScope.$broadcast('fetchExchangeProfile');
-    this.trade && this.trade.sendAmount && buySell.getTrades().then($scope.goToOrderHistory());
+    coinify.exchange.user && Exchange.fetchExchangeData(coinify.exchange);
   };
 
   let links;
-  Env.then(env => {
-    links = env.partners.coinify.surveyLinks;
-  });
+  Env.then(env => links = env.partners.coinify.surveyLinks);
 
   this.close = (idx) => {
     if (idx > links.length - 1) { this.cancel(); return; }
-    Alerts.surveyCloseConfirm('survey-opened', links, idx).then(this.cancel);
+    Alerts.surveyCloseConfirm('buy-survey-opened', links, idx).then(this.cancel);
+    coinify.incrementBuyDropoff(this.currentStep());
   };
 
   this.state = {
@@ -59,9 +57,13 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
 
   this.onSignupComplete = () => {
     return $q.resolve(exchange.fetchProfile())
-             .then((p) => buySell.getMaxLimits(p.defaultCurrency))
-             .then(this.refreshQuote).then((q) => this.quote = q)
-             .then(() => this.goTo('select-payment-medium'));
+             .then(this.refreshQuote).then((q) => {
+               this.quote = q;
+               return q;
+             })
+             .then((quote) => {
+               $q.resolve(quote.getPaymentMediums()).then(() => this.goTo('select-payment-medium'));
+             });
   };
 
   $scope.exitToNativeTx = () => {
@@ -99,7 +101,7 @@ function CoinifyController ($rootScope, $scope, $q, MyWallet, Wallet, Alerts, cu
     this.goTo('signup');
   } else if (!this.trade) {
     this.goTo('select-payment-medium');
-  } else if (!buySell.tradeStateIn(buySell.states.completed)(this.trade) && this.trade.medium !== 'bank') {
+  } else if (!coinify.tradeStateIn(coinify.states.completed)(this.trade) && this.trade.medium !== 'bank') {
     this.goTo('isx');
   } else {
     this.goTo('trade-complete');

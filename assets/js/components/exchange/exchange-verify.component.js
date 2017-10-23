@@ -3,13 +3,15 @@ angular
   .component('exchangeVerify', {
     bindings: {
       steps: '<',
-      error: '<',
       fields: '<',
       nextStep: '<',
       exchange: '<',
       initialStep: '<',
+      verificationError: '<',
       onVerify: '&',
+      onRestart: '&',
       onSetProfile: '&',
+      onSetBankInfo: '&',
       mobilePreferred: '@'
     },
     templateUrl: 'templates/exchange/verify.pug',
@@ -19,7 +21,7 @@ angular
 
 function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, state, $q, $timeout, Exchange, AngularHelper) {
   Env.then(env => {
-    this.buySellDebug = env.buySellDebug;
+    this.qaDebugger = env.qaDebugger;
     let states = env.partners.sfox.states;
     this.states = state.stateCodes.filter((s) => states.indexOf(s.Code) > -1);
   });
@@ -38,6 +40,10 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
         this.goTo('address');
         $timeout(() => $scope.$ctrl.addressForm.pancard.$setValidity('correct', false), 100);
         break;
+      case 'This pancard number is already used on another account':
+        this.goTo('address');
+        $timeout(() => $scope.$ctrl.addressForm.pancard.$setValidity('duplicate', false), 100);
+        break;
       case 'Please select valid State and City':
         this.goTo('address');
         $timeout(() => $scope.$ctrl.addressForm.city.$setValidity('correct', false), 100);
@@ -46,10 +52,12 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
       case 'You entered wrong account number':
         this.goTo('info');
         $timeout(() => $scope.$ctrl.infoForm.bankAccountNumber.$setValidity('correct', false), 100);
+        this.profile.submittedBankInfo = false;
         break;
       case 'You entered wrong IFSC':
         this.goTo('info');
         $timeout(() => $scope.$ctrl.infoForm.ifsc.$setValidity('correct', false), 100);
+        this.profile.submittedBankInfo = false;
         break;
       default:
         Exchange.displayError(error);
@@ -59,6 +67,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.clearInlineErrors = (form, input) => {
     $scope.$ctrl[form][input].$setUntouched();
     $scope.$ctrl[form][input].$setValidity('correct', true);
+    $scope.$ctrl[form][input].$setValidity('duplicate', true);
   };
 
   let exchange = this.exchange;
@@ -80,7 +89,11 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
     this.step < Object.keys(this.steps).length - 1 ? this.step++ : this.onVerify();
   };
 
-  this.error && this.displayInlineError(this.error);
+  this.setBankInfo = () => {
+    this.onSetBankInfo();
+  };
+
+  this.verificationError && this.displayInlineError(this.verificationError);
 
   // QA Tools
   this.qa = () => {

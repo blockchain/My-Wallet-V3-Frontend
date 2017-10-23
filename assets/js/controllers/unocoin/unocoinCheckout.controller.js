@@ -2,9 +2,11 @@ angular
   .module('walletApp')
   .controller('UnocoinCheckoutController', UnocoinCheckoutController);
 
-function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, unocoin, exchangeRate, mediums, $rootScope, showCheckout, buyMobile) {
+function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelpers, AngularHelper, Alerts, currency, modals, unocoin, exchangeRate, mediums, showCheckout) {
   let exchange = $scope.vm.external.unocoin;
+  $scope.exchange = unocoin.exchange;
 
+  $scope.buying = unocoin.buying;
   $scope.rupees = currency.currencies.filter(c => c.code === 'INR')[0];
 
   $scope.openUnocoinSignup = (quote) => {
@@ -14,10 +16,10 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.state = {
     trades: exchange.trades,
-    limits: {
+    limits: () => ({
       min: mediums && mediums.bank.minimumInAmounts[$scope.rupees.code],
       max: mediums && mediums.bank.limitInAmounts['BTC'] * exchangeRate.quoteAmount
-    }
+    })
   };
 
   $scope.stepDescription = () => {
@@ -31,10 +33,9 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.userId = exchange.user;
-  $scope.siftScienceEnabled = false;
 
-  $scope.signupCompleted = exchange.profile.level > 2;
-  $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
+  $scope.signupCompleted = () => $scope.exchange.profile.level > 2;
+  $scope.showCheckout = () => $scope.signupCompleted() || (showCheckout && !$scope.userId);
   $scope.inspectTrade = (quote, trade) => trade.state === 'awaiting_reference_number' ? modals.openBankTransfer(trade) : modals.openTradeSummary(trade);
 
   $scope.tabs = {
@@ -51,7 +52,5 @@ function UnocoinCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     modals.openBankTransfer(trade);
   };
 
-  $scope.buyError = () => {
-    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
-  };
+  if (exchange.profile && exchange.profile.level < 3) unocoin.pollLevel();
 }

@@ -7,19 +7,11 @@ angular
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise(function ($injector, $location) {
-    if (!$injector.has('Wallet')) {
-      return '/';
-    } else {
-      let Wallet = $injector.get('Wallet');
-      if (!Wallet.status.isLoggedIn) {
-        return '/';
-      } else {
-        return '/home';
-      }
-    }
-  });
+  let isAuthenticated = (injector) => (
+    injector.has('Wallet') && injector.get('Wallet').status.isLoggedIn
+  );
 
+  $urlRouterProvider.otherwise($injector => isAuthenticated($injector) ? '/home' : '/');
   $urlRouterProvider.when('/settings', '/settings/wallet');
 
   let top = {
@@ -42,15 +34,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     }
   };
 
-  let transactionsViews = {
-    top: top,
-    left: walletNav,
-    right: {
-      templateUrl: 'partials/transactions.pug',
-      controller: 'TransactionsCtrl'
-    }
-  };
-
   let loadWalletModule = ($ocLazyLoad) => (
     $ocLazyLoad.load('walletLazyLoad')
   );
@@ -64,7 +47,12 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        loadWalletModule
+        loadWalletModule,
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+          return Ethereum && Ethereum.needsTransitionFromLegacy().then((res) => Wallet.goal.needsTransitionFromLegacy = res);
+        }
       }
     })
     .state('wallet.common', {
@@ -279,10 +267,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.transactions', {
-      url: '/transactions',
-      views: transactionsViews
-    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
@@ -311,6 +295,14 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'SettingsCtrl',
           templateUrl: 'partials/settings/settings.pug'
         }
+      },
+      resolve: {
+        _loadBCH ($q, $injector) {
+          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+          return MyWallet && MyWallet.wallet.bch
+            ? MyWallet.wallet.bch.getHistory()
+            : $q.resolve();
+        }
       }
     })
     .state('wallet.common.faq', {
@@ -322,6 +314,72 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/faq.pug',
           controller: 'faqCtrl'
         }
+      }
+    });
+
+  $stateProvider
+    .state('wallet.common.btc', {
+      url: '/btc',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin.pug',
+          controller: 'bitcoinTransactionsCtrl'
+        }
+      }
+    })
+    .state('wallet.common.btc.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.eth', {
+      url: '/eth',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-ethereum.pug',
+          controller: 'ethereumTransactionsCtrl'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
+        }
+      },
+      onEnter ($injector, $state) {
+        let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+        if (!Ethereum) $state.transition = null;
+      }
+    })
+    .state('wallet.common.eth.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.shift', {
+      url: '/exchange',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/shapeshift/checkout.pug',
+          controller: 'ShapeShiftCheckoutController',
+          controllerAs: 'vm'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
+        }
+      },
+      onEnter ($injector, $state) {
+        let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
+        ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
       }
     });
 
@@ -343,9 +401,32 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'BuySellSelectPartnerController'
     })
     .state('wallet.common.buy-sell.coinify', {
-      templateUrl: 'partials/buy-sell.pug',
-      controller: 'BuySellCtrl',
-      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' }
+      templateUrl: 'partials/coinify/checkout.pug',
+      controller: 'CoinifyCheckoutController',
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
+      resolve: {
+        _loadExchangeData ($q, MyWallet, Exchange) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user
+            ? Exchange.fetchExchangeData(exchange)
+            : Exchange.fetchProfile(exchange);
+        },
+        _loadKYCs ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getKYCs();
+        },
+        _loadSubscriptions ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getSubscriptions();
+        },
+        balance ($q, MyWallet) {
+          let defaultAccount = MyWallet.wallet.hdwallet.defaultAccount;
+
+          return defaultAccount.getAvailableBalance('priority')
+            .then((balance) => balance)
+            .catch(() => { return {amount: 0}; });
+        }
+      }
     })
     .state('wallet.common.buy-sell.unocoin', {
       templateUrl: 'partials/unocoin/checkout.pug',
@@ -376,7 +457,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.unocoin.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },
@@ -414,7 +495,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             let email = MyWallet.wallet.accountInfo.email;
             let fraction = env.partners.sfox.showCheckoutFraction;
 
-            return Blockchain.Helpers.isEmailInvited(email, fraction);
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
           });
         }
       },

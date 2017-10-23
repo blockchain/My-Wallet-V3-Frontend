@@ -25,6 +25,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     settings: {
       currency: null,
       displayCurrency: null,
+      displayTransactionCurrencyAsFiat: null,
       language: null,
       btcCurrency: null,
       needs2FA: null,
@@ -67,9 +68,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
     BlockchainConstants.NETWORK = env.network;
 
+    if (env.shapeshift) {
+      BlockchainConstants.SHAPE_SHIFT_KEY = env.shapeshift.apiKey;
+    }
+
     if ($window.location.hostname === 'localhost' || !env.isProduction) {
       const KEY = 'qa-tools-enabled';
-      env.buySellDebug = localStorageService.get(KEY);
+      env.qaDebugger = localStorageService.get(KEY);
       let reloadWithDebug = (debug) => { localStorageService.set(KEY, debug); $window.location.reload(); };
       $window.enableQA = () => reloadWithDebug(true);
       $window.disableQA = () => reloadWithDebug(false);
@@ -80,7 +85,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   MyBlockchainApi.API_CODE = wallet.api_code;
 
   wallet.didLogin = (uid, successCallback) => {
-    currency.fetchExchangeRate();
     wallet.status.didUpgradeToHd = wallet.my.wallet.isUpgradedToHD;
     if (wallet.my.wallet.isUpgradedToHD) {
       wallet.status.didConfirmRecoveryPhrase = wallet.my.wallet.hdwallet.isMnemonicVerified;
@@ -96,6 +100,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
     $window.name = 'blockchain-' + uid;
     wallet.fetchAccountInfo().then((guid) => {
+      currency.fetchAllRates(wallet.settings.currency);
       wallet.initExternal();
       wallet.status.isLoggedIn = true;
       successCallback && successCallback(guid);
@@ -126,6 +131,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       } else if ((error.length && error.indexOf('Invalid authentication code') > -1) || (error.length && error.indexOf('Authentication code is incorrect') > -1)) {
         errorCallback('twoFactor', error);
       } else {
+        console.log(error);
         Alerts.displayError(error.message || error, true);
         errorCallback();
       }
@@ -240,10 +246,15 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       wallet.setLanguage($filter('getByProperty')('code', result.language, languages.languages));
       wallet.settings.btcCurrency = $filter('getByProperty')('serverCode', result.btc_currency, currency.bitCurrencies);
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
+      wallet.settings.displayTransactionCurrencyAsFiat = false;
       wallet.settings.theme = $filter('getByProperty')('name', localStorageService.get('theme'), theme.themes) || theme.themes[0];
       wallet.settings.feePerKB = wallet.my.wallet.fee_per_kb;
       wallet.settings.blockTOR = !!result.block_tor_ips;
       wallet.status.didLoadSettings = true;
+
+      let isUsingThemesExperiment = MyBlockchainApi.createExperiment(0);
+      if (wallet.settings.theme === theme.themes[0]) isUsingThemesExperiment.recordA();
+      else isUsingThemesExperiment.recordB();
 
       if (wallet.my.wallet.isUpgradedToHD) {
         let didFetchTransactions = () => {
@@ -256,9 +267,21 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           }
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
+          $rootScope.showBch = wallet.my.wallet.bch.balance > 0 || wallet.my.wallet.bch.txs.length > 0;
+          Ethereum.recordStats();
           AngularHelper.$safeApply();
         };
-        wallet.my.wallet.getHistory().then(didFetchTransactions);
+
+        let history = [];
+        history.push(wallet.my.wallet.getHistory());
+
+        let Ethereum = $injector.get('Ethereum');
+        if (Ethereum.eth) history.push(Ethereum.fetchHistory());
+
+        let ShapeShift = $injector.get('ShapeShift');
+        if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
+
+        $q.all(history).then(didFetchTransactions);
       }
 
       return result.guid;
@@ -269,7 +292,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let { external } = MyWallet.wallet;
     if (external) {
       let { coinify, sfox, unocoin } = external;
-      if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
+      if (coinify) $injector.get('coinify').init(coinify); // init coinify to monitor incoming coinify payments
       if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
       if (unocoin) $injector.get('unocoin').init(unocoin); // init unocoin to monitor incoming payments
     }
@@ -353,6 +376,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           error
         );
       });
+  };
+
+  wallet.askForMainPassword = () => {
+    let defer = $q.defer();
+    $rootScope.$broadcast('requireMainPassword', defer);
+    return defer.promise;
   };
 
   wallet.askForSecondPasswordIfNeeded = () => {
@@ -893,6 +922,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.changeCurrency = (curr) => $q((resolve, reject) => {
     wallet.settings_api.changeLocalCurrency(curr.code, () => {
       wallet.settings.currency = curr;
+      currency.fetchAllRates(curr);
       if (!currency.isBitCurrency(wallet.settings.displayCurrency)) {
         wallet.settings.displayCurrency = curr;
       }
@@ -1084,11 +1114,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     wallet.settings_api.toggleSave2FA(true, success, error);
   };
 
-  wallet.handleBitcoinLinks = () => {
-    wallet.saveActivity(2);
-    const uri = $rootScope.rootPath + '/open/%s';
+  wallet.handleBitcoinLinks = () => Env.then(env => {
+    let uri = env.rootPath + '/open/%s';
     $window.navigator.registerProtocolHandler('bitcoin', uri, 'Blockchain');
-  };
+  });
 
   wallet.enableBlockTOR = () => {
     wallet.settings_api.updateTorIpBlock(1, () => {

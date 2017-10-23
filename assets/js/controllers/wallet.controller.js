@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals) {
-  $scope.goal = Wallet.goal;
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift) {
+  let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
+  $scope.goal = Wallet.goal;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
@@ -43,23 +44,29 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $rootScope.browserWithCamera = (navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia) !== void 0;
 
-  $scope.request = modals.openOnce(() => {
+  $scope.request = () => {
     Alerts.clear();
-    return $uibModal.open({
-      templateUrl: 'partials/request.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'RequestCtrl',
-      resolve: {
-        destination: () => null,
-        focus: () => false
-      }
-    });
-  });
+    isUsingRequestQuickCopyExperiment.recordA();
+    modals.openRequest();
+  };
 
   $scope.send = () => {
     Alerts.clear();
     modals.openSend({ address: '', amount: '' });
   };
+
+  $scope.$on('requireMainPassword', (notification, defer) => {
+    const modalInstance = $uibModal.open({
+      templateUrl: 'partials/main-password.pug',
+      controller: 'MainPasswordCtrl',
+      windowClass: 'bc-modal',
+      keyboard: false,
+      resolve: {
+        defer: () => defer
+      }
+    });
+    modalInstance.result.then(() => {}, () => defer.reject());
+  });
 
   $scope.$on('requireSecondPassword', (notification, defer, insist) => {
     const modalInstance = $uibModal.open({
@@ -67,7 +74,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       controller: 'SecondPasswordCtrl',
       backdrop: insist ? 'static' : null,
       keyboard: insist,
-      windowClass: 'bc-modal',
+      windowClass: 'bc-modal second-password',
       resolve: {
         insist: () => insist,
         defer: () => defer
@@ -133,7 +140,13 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.refresh = () => {
     $scope.refreshing = true;
-    $q.all([ MyWallet.wallet.getHistory(), currency.fetchExchangeRate() ])
+    let tasks = [
+      MyWallet.wallet.getHistory(),
+      MyWallet.wallet.bch.getHistory(),
+      currency.fetchAllRates(Wallet.settings.currency),
+      Ethereum.fetchHistory()
+    ];
+    $q.all(tasks)
       .catch(() => console.log('error refreshing'))
       .finally(() => {
         $scope.$broadcast('refresh');
@@ -178,18 +191,26 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         });
         Wallet.goal.firstLogin = true;
         Wallet.goal.firstTime = void 0;
-      }
-      if (!Wallet.goal.firstLogin) {
-        buyStatus.canBuy().then((canBuy) => {
-          if (buyStatus.shouldShowBuyReminder() &&
-              !buyStatus.userHasAccount() &&
-              canBuy) buyStatus.showBuyReminder();
-        });
+        Ethereum.setHasSeen();
       }
       if (Wallet.status.didLoadTransactions && Wallet.status.didLoadBalances) {
-        if (Wallet.goal.send != null) {
-          modals.openSend(Wallet.goal.send);
+        let { send, needsTransitionFromLegacy } = Wallet.goal;
+        if (needsTransitionFromLegacy && !Ethereum.isWaitingOnTransaction()) {
+          modals.openEthLegacyTransition();
+        } else if (send != null) {
+          modals.openSend(send);
           Wallet.goal.send = void 0;
+        } else if (!Wallet.goal.firstLogin && Wallet.status.didUpgradeToHd) {
+          if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
+            modals.openEthLogin();
+            Ethereum.setHasSeen();
+          } else {
+            buyStatus.canBuy().then((canBuy) => {
+              if (buyStatus.shouldShowBuyReminder() &&
+                  !buyStatus.userHasAccount() &&
+                  canBuy) buyStatus.showBuyReminder();
+            });
+          }
         }
       } else {
         $timeout($scope.checkGoals, 100);
