@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('unocoin', unocoin);
 
-function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
+function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet, $uibModalStack) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.unocoin;
@@ -99,7 +99,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet) {
   }
 
   function pollLevel () {
-    let success = () => Exchange.fetchProfile(service.exchange);
+    let success = () => Exchange.fetchProfile(service.exchange).then(() => $uibModalStack.dismissAll());
     service.profile && Exchange.pollUserLevel(() => Exchange.fetchProfile(service.exchange), () => service.profile.level >= 3, success);
   }
 

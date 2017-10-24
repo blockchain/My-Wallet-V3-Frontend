@@ -264,9 +264,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         <div class='pv-30'>
           <shift-receipt shift='trade' on-close="onClose()"></shift-receipt>
         </div>`,
-      controller: function ($scope, $uibModalInstance) {
+      controller: function ($scope, $uibModalInstance, $state) {
         $scope.trade = trade;
-        $scope.onClose = () => $uibModalInstance.dismiss();
+        $scope.onClose = () => {
+          $uibModalInstance.dismiss();
+          $state.go('wallet.common.shift', {selectedTab: 'ORDER_HISTORY'});
+        };
       }
     });
   });
