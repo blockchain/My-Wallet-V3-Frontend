@@ -29,8 +29,8 @@ function CoinifySellSummaryController ($scope, $q, Wallet, currency, Alerts, $ti
   this.payment.amount(this.BTCAmount());
   this.payment.updateFeePerKb(coinify.sellFee);
   this.paymentFee = this.quote.paymentMediums.bank.fee;
-  this.payment.sideEffect((p) => {this.fee = p.finalFee; this.total = this.fee + this.BTCAmount()});
-  
+  this.payment.sideEffect((p) => { this.fee = p.finalFee; this.total = this.fee + this.BTCAmount(); });
+
   $scope.bitcoin = currency.bitCurrencies[0];
   $scope.fromSatoshi = currency.convertFromSatoshi;
 
