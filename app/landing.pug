@@ -82,96 +82,82 @@
       p.f-14.em-300.upper
         | or&nbsp;
         a(translate="LOGIN" ui-sref="public.login-no-uid")
-  .footer.pt-30.pb-25.ph-10
-    .container
-      .row.upper
-        .col-md-3.col-sm-6.col-xs-6.float-right.right-align.visible-sm.visible-xs
-          li.dropup(uib-dropdown)
-            a(href="#" uib-dropdown-toggle)
-              span.upper.f-12 {{language}}
-              i.icon-down_arrow.f-8.ml-5
-            ul.languages_select(uib-dropdown-menu)
-              li(ng-repeat="lang in languages")
-                a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
-        .col-md-2
-          img(src="img/bc-name-and-logo-dark-blue.svg" width="150px")
-        .col-md-3.col-sm-6.col-xs-6.mr-40.no-margin-mobile
-          p.blue.uppercase.em-600.f-12.underline-blue.visible-lg.visible-md.visible-sm.hidden-xs(translate="PRODUCTS")
-          p.blue.uppercase.em-600.f-12.hidden-lg.hidden-md.hidden-sm.visible-xs
-            span.underline-blue Products
-          .flex-column.footer-links.flex-wrap
-            p
-              a(href="{{rootURL}}wallet/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="WALLET")
-            p
-              a(href="{{rootURL}}api/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") API
-            p
-              a(href="https://www.blockchain.com/enterprise" class="blue em-300 f-12 uppercase" translate="BUSINESS")
-            p
-              a(href="https://www.blockchain.com/thunder" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="THUNDER")
-            p
-              a(href="https://www.blockchain.com/research" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="RESEARCH")
-            p
-              a(href="{{rootURL}}" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Explorer
-            p
-              a(href="{{rootURL}}charts" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Charts
-            p
-              a(href="{{rootURL}}markets" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Markets
-            p
-              a(href="{{rootURL}}stats" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase") Stats
-        .col-md-3.col-sm-4.col-xs-6.mr-40.no-margin-mobile
-          p.blue.uppercase.em-600.f-12.underline-blue.visible-lg.visible-md.visible-sm.hidden-xs Company
-          p.blue.uppercase.em-600.f-12.hidden-lg.hidden-md.hidden-sm.visible-xs
-            span.underline-blue Company
-          .flex-column.footer-links.flex-wrap
-            p
-              a(href="https://www.blockchain.com/about" class="blue em-300 f-12 uppercase" translate="ABOUT")
-            p
-              a(href="https://www.blockchain.com/team" class="blue em-300 f-12 uppercase" translate="TEAM")
-            p
-              a(href="https://www.blockchain.com/careers" class="blue em-300 f-12 uppercase" translate="CAREERS")
-            p
-              a(href="https://www.blockchain.com/interview" class="blue em-300 f-12 uppercase" translate="INTERVIEWING")
-            p
-              a(href="https://www.blockchain.com/faq" class="blue em-300 f-12 uppercase") FAQ
-            p
-              a(href="https://www.blockchain.com/press" class="blue em-300 f-12 uppercase") Press
-            p
-              a(href="https://blog.blockchain.com/" class="blue em-300 f-12 uppercase") Blog
-        .col-md-2.col-sm-2.col-xs-6
-          p.blue.uppercase.em-600.f-12.underline-blue.visible-lg.visible-md.visible-sm.hidden-xs  Support
-          p.blue.uppercase.em-600.f-12.hidden-lg.hidden-md.hidden-sm.visible-xs
-            span.underline-blue Support
-          p
-            a(href="https://support.blockchain.com/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="Help Center")
-          p
-            a(href="https://blog.blockchain.com/category/tutorials-and-guides/" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="Tutorials")
-          p
-            a(href="https://blockchain.info/wallet/bitcoin-faq" target="_blank" rel="noopener noreferrer" class="blue em-300 f-12 uppercase" translate="Learning Portal")
-        .col-md-1.right-align.hidden-sm.hidden-xs
-          li.dropup(uib-dropdown)
-            a(href="#" uib-dropdown-toggle)
-              span.upper.f-12 {{language}}
-              i.icon-down_arrow.f-8.ml-5
-            ul.languages_select(uib-dropdown-menu)
-              li(ng-repeat="lang in languages")
-                a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
-    .container.type-sm.flex-column-reverse-mobile.flex-center
-      .col-md-8.col-sm-7.pln.pt-15
-        span(class="blue mbn upper f-10")
-          span(class="mrm em-300") 2017 Blockchain Luxembourg S.A. All Rights Reserved.
-          br.visible-xs
-          a(class="blue light-bg mrm legal-link" href="https://www.blockchain.com/privacy") Privacy
-          a(class="blue light-bg mrm legal-link" href="https://www.blockchain.com/terms") Terms
-          a(class="blue light-bg mrm legal-link" href="https://www.blockchain.com/legal") Law Enforcement Guide
-          a(class="blue light-bg legal-link" href="https://blockchain.info/advertise") Advertise
-      .col-md-4.col-sm-5.prn.pt-15.right-align
+  footer
+    div.flex-container
+      div.footer-logo
+        img(alt="Blockchain Logo" src="img/bc-name-and-logo-dark-blue.svg")
+      div
+        h6(translate="PRODUCTS") Products
+        ol
+          li
+            a(href="{{rootURL}}wallet/") Wallet
+          li
+            a(href="{{rootURL}}api/") API
+          li
+            a(href="https://www.blockchain.com/enterprise" target="_blank" translate="BUSINESS")
+          li
+            a(href="https://www.blockchain.com/thunder" rel="noopener noreferrer" target="_blank" translate="THUNDER")
+          li
+            a(href="https://www.blockchain.com/research" rel="noopener noreferrer" target="_blank" translate="RESEARCH")
+          li
+            a(href="{{rootURL}}" rel="noopener noreferrer") Explorer
+          li
+            a(href="{{rootURL}}charts" rel="noopener noreferrer") Charts
+          li
+            a(href="{{rootURL}}markets" rel="noopener noreferrer") Markets
+          li
+            a(href="{{rootURL}}stats" rel="noopener noreferrer") Stats
+      div
+        h6 Company
+        ol
+          li
+            a(href="https://www.blockchain.com/about" target="_blank" translate="ABOUT")
+          li
+            a(href="https://www.blockchain.com/team" target="_blank" translate="TEAM")
+          li
+            a(href="https://www.blockchain.com/careers" target="_blank" translate="CAREERS")
+          li
+            a(href="https://www.blockchain.com/interview" target="_blank" translate="INTERVIEWING")
+          li
+            a(href="https://www.blockchain.com/faq" target="_blank") FAQ
+          li
+            a(href="https://www.blockchain.com/press" target="_blank") Press
+          li
+            a(href="https://blog.blockchain.com/" target="_blank") Blog
+      div
+        h6 Support
+        ol
+          li
+            a(href="https://support.blockchain.com/" rel="noopener noreferrer" target="_blank" translate="Help Center")
+          li
+            a(href="https://blog.blockchain.com/category/tutorials-and-guides/" rel="noopener noreferrer" target="_blank" translate="Tutorials")
+          li
+            a(href="https://blockchain.info/wallet/bitcoin-faq" rel="noopener noreferrer" target="_blank" translate="Learning Portal")
+          li
+            a(href="https://www.blockchain-status.com" rel="noopener noreferrer" target="_blank" translate="Status")
+      div
+        div.dropup(uib-dropdown)
+          a(href="#" uib-dropdown-toggle)
+            span.upper.f-12 {{language}}
+            i.icon-down_arrow.f-8.ml-5
+          ul.languages_select(uib-dropdown-menu)
+            li(ng-repeat="lang in languages")
+              a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
+    div.flex-container
+      div.copyright
+        span &copy; 2017 Blockchain Luxembourg S.A. All Rights Reserved.
+        a(href="https://www.blockchain.com/privacy" target="_blank") Privacy
+        a(href="https://www.blockchain.com/terms" target="_blank") Terms
+        a(href="https://www.blockchain.com/legal" target="_blank") Law Enforcement Guide
+        a(href="https://blockchain.info/advertise" target="_blank") Advertise
+      div.social-media
         a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android&hl=en" target="_blank" rel="noopener noreferrer nofollow")
-          img(class="social-logo mlm" src="img/android-footer-logo.svg" alt="")
+          img(alt="Android App Icon" src="img/android-footer-logo.svg")
         a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309?mt=8" target="_blank" rel="noopener noreferrer nofollow")
-          img(class="social-logo mlm" src="img/apple-footer-logo.svg" alt="")
-        a(href="https://www.facebook.com/blockchain/" target="_blank" rel="noopener noreferrer nofollow")
-          img(class="social-logo mlm" src="img/facebook-footer-logo.svg" alt="")
-        a(href="https://www.linkedin.com/company/blockchain" target="_blank" rel="noopener noreferrer nofollow")
-          img(class="social-logo mlm" src="img/linkedin-footer-logo.svg" alt="")
+          img(alt="iOS App Icon" src="img/apple-footer-logo.svg")
         a(href="https://twitter.com/blockchain" target="_blank" rel="noopener noreferrer nofollow")
-          img(class="social-logo mlm" src="img/twitter-footer-logo.svg" alt="")
+          img(alt="Twitter Icon" src="img/twitter-footer-logo.svg")
+        a(href="https://www.linkedin.com/company/blockchain" target="_blank" rel="noopener noreferrer nofollow")
+          img(alt="LinkedIn Icon" src="img/linkedin-footer-logo.svg")
+        a(href="https://www.facebook.com/blockchain/" target="_blank" rel="noopener noreferrer nofollow")
+          img(alt="Facebook Icon" src="img/facebook-footer-logo.svg")

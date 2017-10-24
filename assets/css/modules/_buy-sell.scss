@@ -1,6 +1,6 @@
 .buy-sell {
   position: relative;
-  padding: 20px 15px 0 15px;
+  padding: 30px 30px 0 30px;
   flex: 1;
   @media (max-width: 991px) {
     padding: 10px 10px 0 10px;
@@ -355,21 +355,18 @@ input[type="radio"]:checked + label {
 
 .shift-history {
   display: grid;
-  grid-template-columns: 40% 20% 20% 20%;
+  grid-template-columns: 35% 25% 20% 20%;
 }
 
 .exchange-trade {
   display: grid;
-  grid-template-columns: 35% 25% 15% 20% 5%;
+  grid-template-columns: 35% 25% 20% 20% 5%;
+  font-size: 13px;
 }
 
 .exchange-trade-header {
   display: grid;
-  grid-template-columns: 35% 25% 15% 20%;
-  > div:last-child {
-    @extend .pr-50;
-    @extend .right-align;
-  }
+  grid-template-columns: 35% 25% 20% 20%;
 }
 
 .exchange-status {
@@ -384,20 +381,21 @@ input[type="radio"]:checked + label {
 
 @media(max-width: 768px) {
   .exchange-trade-header {
-    grid-template-columns: 40% 20% 40%;
+    grid-template-columns: 25% 15% 30% 30%;
     > div:last-child {
       padding-top: 5px;
       text-align: left;
     }
   }
   .exchange-trade {
-    grid-template-columns: 40% 20% 40%;
+    grid-template-columns: 25% 15% 30% 30%;
     > div:last-child {
       text-align: inherit;
     }
   }
   .exchange-received {
     padding: 1.3125em 0px;
+    display: flex;
   }
   .exchange-status {
     grid-template-columns: 3% 97%;
