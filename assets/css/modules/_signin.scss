@@ -19,9 +19,6 @@ div.login-form {
     left: 0;
     top: 0;
   }
-  .bc-logo-footer {
-    position: absolute;
-  }
 }
 
 @mixin block-login {
@@ -33,9 +30,6 @@ div.login-form {
   }
   > div {
     display: block !important;
-  }
-  .bc-logo-footer {
-    position: relative;
   }
   .login-box-container {
     margin-top: 0px;
