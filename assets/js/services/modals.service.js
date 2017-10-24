@@ -269,7 +269,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
         $scope.onClose = () => {
           $uibModalInstance.dismiss();
           $state.go('wallet.common.shift', {selectedTab: 'ORDER_HISTORY'});
-        }
+        };
       }
     });
   });
