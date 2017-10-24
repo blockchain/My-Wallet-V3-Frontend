@@ -5,18 +5,18 @@
     span.mvm(ng-show="$ctrl.err.error === 'price_quote_expired'" translate="SELL.QUOTE_EXPIRED_ERROR" translate-values="{error: $ctrl.err.error_description}")
   .flex-column.mbl(ng-hide="$ctrl.err")
     p.mvm.pb-10
-      span.em-500.f-14 {{ $ctrl.BTCAmount() | convert:'btc' }}
+      span.em-500.f-14 {{ fromSatoshi($ctrl.total, bitcoin) }} BTC
       | &nbsp;
       span.f-14(translate="SELL.WILL_BE_SENT") 
     .border.pam(ng-class="{'bg-grey': editAmount}")
       .flex-row.flex-between.pam.pos-rel.pv-15
         span.colon( translate="SELL.BTC_TO_SELL")
-        span {{ $ctrl.BTCAmount() | convert:'btc' }}
+        span {{ fromSatoshi($ctrl.BTCAmount(), bitcoin) }} BTC
       .flex-end(ng-show="$ctrl.overMax()")
         span.type-sm.state-danger-text(translate="SELL.AMOUNT_OVER" translate-values="{max: $ctrl.sellLimits.max}")
       .flex-row.flex-between.pam.pv-15
         span.colon(translate="SELL.BTC_TX_FEE")
-        span {{ $ctrl.fee | convert:'btc' }}
+        span {{ fromSatoshi($ctrl.fee, bitcoin) }} BTC
       .flex-row.flex-between.pam.pv-15
         span(translate="PAYMENT_FEE")
         span {{ $ctrl.paymentFee | format }} {{ $ctrl.fiatCurrency() }}

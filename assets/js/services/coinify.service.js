@@ -43,7 +43,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return service.userCanTrade;
     },
     get userCanSell () {
-      return service.userCanTrade && service.balanceAboveMin;
+      return service.balanceAboveMin;
     },
     get buyReason () {
       let reason;
@@ -57,9 +57,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get sellReason () {
       let reason;
-      let { profile, user } = service.exchange;
+      let { user } = service.exchange;
 
-      if (user && !profile.canTrade) reason = profile.cannotTradeReason;
+      if (!user) reason = 'user_needs_account';
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else if (service.balanceAboveMax) reason = 'can_sell_max';
@@ -72,19 +72,16 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let { user, profile } = service.exchange;
 
       if (reason === 'has_remaining_buy_limit' && user && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
-      else if (reason === 'awaiting_first_trade_completion' && service.getPendingTrade()) return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
-      else if (reason === 'awaiting_first_trade_completion' && service.getProcessingTrade()) return { 'CHECK_STATUS': service.openProcessingTrade };
-      else if (reason === 'after_first_trade') return { 'WHY': service.openTradingDisabledHelper };
+      if (reason === 'awaiting_first_trade_completion' && service.getPendingTrade()) return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
+      if (reason === 'awaiting_first_trade_completion' && service.getProcessingTrade()) return { 'CHECK_STATUS': service.openProcessingTrade };
+      if (reason === 'after_first_trade') return { 'WHY': service.openTradingDisabledHelper };
     },
     get sellLaunchOptions () {
       let reason = service.sellReason;
       let { user, profile } = service.exchange;
 
       if (reason === 'can_sell_max' && user && profile.level && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
-      else if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
-      else if (reason === 'awaiting_first_trade_completion' && service.getPendingTrade()) return { 'FINISH': service.openPendingTrade, 'CANCEL': service.cancelTrade };
-      else if (reason === 'awaiting_first_trade_completion' && service.getProcessingTrade()) return { 'CHECK_STATUS': service.openProcessingTrade };
-      else if (reason === 'after_first_trade') return { 'WHY': service.openTradingDisabledHelper };
+      if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
     },
     states,
     getTxMethod: (hash) => txHashes[hash] || null,
