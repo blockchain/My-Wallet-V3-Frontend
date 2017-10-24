@@ -1467,7 +1467,7 @@
     "BANK_ACCOUNT_NUMBER": "Bankrekeningnummer",
     "IFSC": "IFSC"
   },
-  "TESTNET_WARNING": "Waarschuwing! Dit is een Testnet-portemonnee. Uw coins hebben hier geen waarde."
+  "TESTNET_WARNING": "Waarschuwing! Dit is een Testnet-portemonnee. Uw coins hebben hier geen waarde.",
   "TX_AWAITING_REF_NUMBER": {
     "TITLE": "Bankoverschrijving",
     "BODY": "Verzend {{::amount}} elektronisch (via IMPS, NEFT of RTGS) naar onderstaande bankrekening van Unocoin. U dient dan het referentienummer van de bankoverschrijving te verstrekken."
