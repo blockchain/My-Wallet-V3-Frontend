@@ -36,7 +36,7 @@ form.bc-form(
               ng-model-options="{debounce: 250}"
               required)
             .input-dropdown(uib-dropdown)
-              span.pr-10(uib-dropdown-toggle ng-class="{'arrow': fiatOptions.length}") {{fiat.code}}
+              span.ph-10(uib-dropdown-toggle ng-class="{'arrow': fiatOptions.length}") {{fiat.code}}
               ul.uib-dropdown-menu.dropdown-menu-right(uib-dropdown-menu ng-if="fiatOptions.length")
                 li(ng-repeat="currency in fiatOptions" ng-if="currency.code !== fiat.code")
                   a(ng-click="$ctrl.fiatChange({currency});") {{ currency.code }}
@@ -53,7 +53,7 @@ form.bc-form(
               prevent-event="mousewheel"
               ng-model-options="{debounce: 250}"
               required)
-            span.pr-10 {{bitcoin.code}}
+            span.ph-10 {{bitcoin.code}}
         .f-12.mts
           span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: max.fiat.toFixed(2), min: min.fiat.toFixed(2), curr: fiat.code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}" ng-click="!trading().isDisabled && setMax()")
           | &nbsp;
