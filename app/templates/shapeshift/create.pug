@@ -3,18 +3,19 @@ form.bc-form(
   ng-submit="getSendAmount()"
   novalidate
   translate-namespace="SHIFT"
+  ng-class="{busy: busy}"
   autocomplete="off")
-  fieldset(ng-disabled="locked")
-    .z-10.shift-loading(ng-show="locked")
-      img.loader(src="img/puff.svg")
+  fieldset(ng-disabled="busy")
+    .shift-created(ng-show="false")
+      img(src="img/puff.svg")
     .flex-end.pv-20-mobile.ph-10-mobile.pb-5
       span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
-    .ph-30.ph-10-mobile.pv-20-mobile(ng-class="{ 'opacity-4': locked }")
+    .ph-30.ph-10-mobile.pv-20-mobile
       .group.inline.mb-30
-        .item.width-45.width-45-mobile.pr-15.no-padding-mobile
+        .item.width-50.width-50-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
-          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setWallet('from', 'to')" ng-disabled="$ctrl.wallet || locked")
+          ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setWallet('from', 'to')" ng-disabled="$ctrl.wallet")
             ui-select-match
               i.pr-5(ng-class="bitCurrencyMap[$ctrl.from.coinCode].icon")
               span {{ $ctrl.from.label }}
@@ -23,8 +24,8 @@ form.bc-form(
               span {{ account.label }}
         .flex-center.flex-justify.pt-30
           img.pointer.switch.fade(ng-if="$ctrl.wallet" src="img/Switch.svg")
-          img.pointer.switch(ng-if="!$ctrl.wallet" src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }" ng-disabled="locked")
-        .item.width-45.width-45-mobile.pl-15.no-padding-mobile
+          img.pointer.switch(ng-if="!$ctrl.wallet" src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }")
+        .item.width-50.width-50-mobile.ml-15.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center
@@ -35,7 +36,7 @@ form.bc-form(
               ui-select-choices(repeat="destination in $ctrl.destinations")
                 i.pr-5(ng-class="bitCurrencyMap[destination.coinCode].icon")
                 span {{ destination.label }}
-      fieldset(ng-disabled="maxAvailable < state.rate.min || locked")
+      fieldset(ng-disabled="maxAvailable < state.rate.min")
         .group
           .item
             .flex-between.flex-baseline.mbs
@@ -74,7 +75,8 @@ form.bc-form(
                     step="0.01"
                     required)
                   span.mhm.upper {{dollars.code}}
-              i.icon-skinny-arrow-right.f-14.border-grey.ph-30.hidden-xs
+              i.icon-skinny-arrow-right.f-14.border-grey.ph-30.hidden-xs(ng-hide="locked")
+              img.ph-20.input-loading(src="img/puff.svg" ng-show="locked")
               .flex-column.flex-1.border
                 .flex-center
                   input.form-control.no-border(
@@ -100,7 +102,7 @@ form.bc-form(
                     step="0.01"
                     required)
                   span.mhm.upper {{dollars.code}}
-            .pos-rel.f-12.mts(ng-hide="locked")
+            .pos-rel.f-12.mts
               span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min")
                 span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.min" translate="Below the minimum limit.")
                 div(ng-hide="forms.shiftForm.input.$error.max")
@@ -120,4 +122,4 @@ form.bc-form(
                 | &nbsp;
                 a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseCurr === 'btc'")
       .group.mt-30.mt-10-mobile
-        button.btn.button-primary.full(type="submit" ng-disabled="locked || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")
+        button.btn.button-primary.full(type="submit" ng-disabled="locked || busy || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")
