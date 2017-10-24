@@ -15,7 +15,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, coinify) {
+function CoinifySellSummaryController ($scope, $q, Wallet, currency, Alerts, $timeout, coinify) {
   this.sellRateForm;
 
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
@@ -28,8 +28,11 @@ function CoinifySellSummaryController ($q, Wallet, currency, Alerts, $timeout, c
   this.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
   this.payment.amount(this.BTCAmount());
   this.payment.updateFeePerKb(coinify.sellFee);
-  this.payment.sideEffect((p) => this.fee = p.finalFee);
   this.paymentFee = this.quote.paymentMediums.bank.fee;
+  this.payment.sideEffect((p) => {this.fee = p.finalFee; this.total = this.fee + this.BTCAmount()});
+  
+  $scope.bitcoin = currency.bitCurrencies[0];
+  $scope.fromSatoshi = currency.convertFromSatoshi;
 
   this.checkForUpdatedQuote = () => {
     let updated = new Date(this.quote.expiresAt).getTime();
