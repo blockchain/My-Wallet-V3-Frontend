@@ -107,11 +107,11 @@ describe('shift-create.component', () => {
       scope.quote = mockQuote();
     });
 
-    it('should lock the scope while getting send amount', () => {
+    it('should busy the scope while getting send amount', () => {
       scope.getSendAmount();
-      expect(scope.locked).toEqual(true);
+      expect(scope.busy).toEqual(true);
       scope.$digest();
-      expect(scope.locked).toEqual(false);
+      expect(scope.busy).toEqual(false);
     });
 
     it('should set the baseCurr to the input currency', () => {

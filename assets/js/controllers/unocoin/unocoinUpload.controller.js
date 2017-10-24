@@ -38,7 +38,7 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
     let profile = exchange.profile;
 
     return $q.resolve(profile.verify())
-             .then(() => $scope.vm.goTo('pending'))
+             .then(() => { $scope.vm.goTo('pending'); unocoin.pollLevel(); })
              .catch((err) => { $scope.vm.verificationError = err; $scope.vm.goTo('verify'); }).finally($scope.free);
   };
 
