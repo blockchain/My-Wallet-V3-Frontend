@@ -12,7 +12,7 @@ form.bc-form(
       span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
     .ph-30.ph-10-mobile.pv-20-mobile
       .group.inline.mb-30
-        .item.width-50.width-50-mobile.pr-15.no-padding-mobile
+        .item.width-50.width-50-tablet.width-50-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
           ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setWallet('from', 'to')" ng-disabled="$ctrl.wallet")
@@ -25,7 +25,7 @@ form.bc-form(
         .flex-center.flex-justify.pt-30
           img.pointer.switch.fade(ng-if="$ctrl.wallet" src="img/Switch.svg")
           img.pointer.switch(ng-if="!$ctrl.wallet" src="img/Switch.svg" ng-click="switch()" ng-class="{ 'rotate-180': switched }")
-        .item.width-50.width-50-mobile.ml-15.pl-15.no-padding-mobile
+        .item.width-50.width-50-tablet.width-50-mobile.ml-15.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center
