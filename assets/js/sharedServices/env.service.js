@@ -2,15 +2,17 @@ angular
   .module('shared')
   .factory('Env', Env);
 
-Env.$inject = ['$rootScope', '$location', '$q', '$http'];
+Env.$inject = ['$rootScope', '$location', '$q', '$http', 'blockAlert'];
 
-function Env ($rootScope, $location, $q, $http) {
+function Env ($rootScope, $location, $q, $http, blockAlert) {
   let env = {
   };
 
   // These are set by grunt dist:
   env.versionFrontend = null;
   env.versionMyWallet = null;
+
+  env.alert = blockAlert.pre;
 
   const absUrl = $location.absUrl();
   const path = $location.path();
