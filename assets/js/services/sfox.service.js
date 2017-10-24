@@ -2,10 +2,36 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, Alerts, modals, Env, Exchange) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
   const service = {
+    get exchange () {
+      return MyWallet.wallet.external.sfox;
+    },
+    get profile () {
+      return service.exchange.profile;
+    },
+    get userCanBuy () {
+      return !service.profile || service.profile.canBuy;
+    },
+    get userCanSell () {
+      return !service.profile || service.profile.canSell;
+    },
+    get buyReason () {
+      let reason;
+      if (!service.profile) reason = 'user_needs_account';
+      else reason = 'user_can_buy';
+      return reason;
+    },
+    get sellReason () {
+      let reason;
+      if (!service.profile) reason = 'user_needs_account';
+      else reason = 'user_can_sell';
+      return reason;
+    },
     buy,
     init,
+    buying,
+    selling,
     determineStep
   };
 
@@ -43,6 +69,22 @@ function sfox ($q, Alerts, modals, Env, Exchange) {
         return 'buy';
       }
     }
+  }
+  
+  function buying () {
+    return {
+      reason: service.buyReason,
+      isDisabled: !service.userCanBuy,
+      launchOptions: service.buyLaunchOptions
+    };
+  }
+
+  function selling () {
+    return {
+      reason: service.sellReason,
+      isDisabled: !service.userCanSell,
+      launchOptions: service.sellLaunchOptions
+    };
   }
 
   function buy (account, quote) {

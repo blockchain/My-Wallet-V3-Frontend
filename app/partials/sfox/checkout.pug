@@ -14,17 +14,34 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         button.btn.button-primary.full(type="submit" focus-when="!tabs.selectedTab" ng-disabled="modalOpen") Continue
   .flex-column.pbvl(ng-show="showCheckout && tabs.selectedTab === 'BUY_BITCOIN'")
     exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+      type="'Buy'"
       fiat="dollars"
       user-id="userId"
       conversion="100"
+      trading="buying"
       limits="state.limits"
       provider="'sfox'"
       buy-level="state.buyLevel"
-      buy-account="state.account"
+      trade-account="state.account"
       collapse-summary="signupCompleted"
       handle-trade="buyHandler(account, quote)"
-      handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
+      handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
       on-success="userId ? buySuccess(trade) : openSfoxSignup(quote)")
+  .flex-column.pbvl(ng-show="showCheckout && tabs.selectedTab === 'SELL_BITCOIN'")
+    exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+      type="'Sell'"
+      fiat="dollars"
+      user-id="userId"
+      conversion="100"
+      trading="selling"
+      limits="state.limits"
+      provider="'sfox'"
+      buy-level="state.buyLevel"
+      trade-account="state.account"
+      collapse-summary="signupCompleted"
+      handle-trade="buyHandler(account, quote)"
+      handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
+      on-success="userId ? sellSuccess(trade) : openSfoxSignup(quote)")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black

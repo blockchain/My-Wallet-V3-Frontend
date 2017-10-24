@@ -7,12 +7,11 @@ angular
       type: '<',
       quote: '<',
       limits: '<',
-      userId: '<',
       trading: '<',
       provider: '<',
       buyLevel: '<',
       buyEnabled: '<',
-      buyAccount: '<',
+      tradeAccount: '<',
       conversion: '<',
       fiatOptions: '<',
       frequencies: '<',
@@ -128,7 +127,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.enableBuy = () => {
     let obj = {
       'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
-      'Payment Method': typeof this.buyAccount === 'object' ? this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')' : null,
+      'Payment Method': typeof this.tradeAccount === 'object' ? this.tradeAccount.accountType + ' (' + this.tradeAccount.accountNumber + ')' : null,
       'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.fiat), $scope.fiat, true)
     };
 
@@ -145,8 +144,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
 
-    if (this.buyAccount || this.buyEnabled) {
-      this.handleTrade({account: this.buyAccount, quote: quote})
+    if (this.tradeAccount || this.buyEnabled) {
+      this.handleTrade({account: this.tradeAccount, quote: quote})
         .then(trade => {
           this.onSuccess({trade});
         })

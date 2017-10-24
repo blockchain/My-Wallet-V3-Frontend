@@ -76,6 +76,7 @@ describe('SfoxCheckoutController', () => {
             verificationStatus: { level: 'unverified' }
           },
           getBuyQuote () { return $q.resolve(mockQuote()); },
+          getSellQuote () { return $q.resolve(mockQuote()); },
           fetchProfile () { return $q.resolve(); }
         }
       }
