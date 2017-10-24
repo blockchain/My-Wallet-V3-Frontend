@@ -57,7 +57,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get sellReason () {
       let reason;
-      let { profile, user } = service.exchange;
+      let { user } = service.exchange;
 
       if (!user) reason = 'user_needs_account';
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
