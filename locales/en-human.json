@@ -1573,7 +1573,7 @@
       "KYC": "Increase your limit."
     },
     "not_enough_funds_to_sell": {
-      "EXPLAIN": "😢 Unfortunately, you do not have enough funds to sell.",
+      "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell.",
       "REQUEST": "@:REQUEST",
       "BUY": "@:BUY"
     },
