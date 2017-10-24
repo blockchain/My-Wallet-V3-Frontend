@@ -1,6 +1,8 @@
 blocket-loading(loading="!isWalletInitialized()")
 .home.width-100(data-preflight-tag="Home")
   .col-md-5.col-sm-12.col-xs-12.col-home.flex-column
+    .section.mb-15(ng-show="alertConfig")
+      block-alert(config="alertConfig")
     .section.mb-15.border.pal
       h5.mtn.f-24.em-300.blue(translate="YOUR_BALANCES")
       ul.pln.account-balances
