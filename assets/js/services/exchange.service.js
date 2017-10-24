@@ -50,7 +50,7 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
     let quoteP = exchange.getBuyQuote(amount, baseCurr, quoteCurr);
     return $q.resolve(quoteP);
   }
-  
+
   function fetchSellQuote (exchange, amount, baseCurr, quoteCurr) {
     let quoteP = exchange.getSellQuote(amount, baseCurr, quoteCurr);
     return $q.resolve(quoteP);

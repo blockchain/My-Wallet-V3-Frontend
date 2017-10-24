@@ -70,7 +70,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
       }
     }
   }
-  
+
   function buying () {
     return {
       reason: service.buyReason,
