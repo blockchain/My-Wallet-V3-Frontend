@@ -3,7 +3,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     span.mrs.type-sm Powered By
     a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
       img(src="img/coinify-logo.svg")
-.buy-sell.mbvl.mh-15
+.buy-sell.mbvl
   .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
     //- BUY
     .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
@@ -48,7 +48,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500.pl-25.ph-10-mobile(translate="STATUS")
           .pv-5
             span.em-500(translate="DATE")
-          .pv-5.hidden-xs
+          .pv-5
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
@@ -61,7 +61,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             trade="trade")
     
     div(ng-show="recurringTrades().length")
-      .flex-row.flex-between.flex-center.mtl
+      .flex-row.flex-between.flex-center
         h4.type-h5 Recurring Orders
         div(ng-hide="pendingTrades().length")
           span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
@@ -92,7 +92,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500.pl-25.ph-10-mobile(translate="STATUS")
           .pv-5
             span.em-500(translate="DATE")
-          .pv-5.hidden-xs
+          .pv-5
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
