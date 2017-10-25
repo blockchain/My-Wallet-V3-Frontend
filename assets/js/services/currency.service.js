@@ -218,8 +218,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (amount == null || currency == null) return null;
     if (isBitCurrency(currency) || isBchCurrency(currency)) {
       return amount / currency.conversion;
-    } else if (conversions[currency.code] != null) {
-      return conversions[currency.code].conversion ? amount / conversions[currency.code].conversion : 0;
+    } else if (conversions[currency.code] != null && conversions[currency.code].conversion) {
+      return amount / conversions[currency.code].conversion;
     } else if (currency.conversion) {
       return Math.ceil(amount * currency.conversion);
     } else {
