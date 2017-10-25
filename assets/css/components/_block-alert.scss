@@ -9,11 +9,24 @@
 }
 
 .block-alert {
-  padding: 15px 30px;
+  $spacing-v: 15px;
+  $spacing-h: 30px;
+
+  position: relative;
+  padding: $spacing-v $spacing-h;
   border: 1px solid;
+
   .block-alert-icon {
     font-size: 80px;
   }
+
+  i.ti-close {
+    position: absolute;
+    top: $spacing-v;
+    right: $spacing-h;
+    cursor: pointer;
+  }
+
   @include block-alert-type("info", $iris, $light-blue);
   @include block-alert-type("warning", $dandelion, $moccasin);
   @include block-alert-type("danger", $bittersweet, $rosebud);

@@ -15,6 +15,7 @@ const isLocalizedMessage = (message) =>
 const isValidConfig = (config) => (
   angular.isObject(config) &&
   ['info', 'warning', 'danger'].indexOf(config.type) > -1 &&
+  (config.dismissId == null || angular.isString(config.dismissId)) &&
   (config.header == null || isLocalizedMessage(config.header)) &&
   (config.sections && config.sections.length > 0 && config.sections.every(s =>
     isLocalizedMessage(s.title) && isLocalizedMessage(s.body)
@@ -27,6 +28,7 @@ const localize = (lang, localizedMessage) =>
 
 const localizeConfig = (lang, config) => ({
   type: config.type,
+  dismissId: config.dismissId,
   header: localize(lang, config.header),
   sections: config.sections.map(s => ({
     title: localize(lang, s.title),
@@ -38,7 +40,7 @@ const localizeConfig = (lang, config) => ({
   }
 })
 
-function BlockAlertController (languages) {
+function BlockAlertController (languages, localStorageService) {
   this.iconTypes = {
     'info': 'icon-success',
     'warning': 'icon-alert',
@@ -46,6 +48,16 @@ function BlockAlertController (languages) {
   }
   if (isValidConfig(this.config)) {
     this.alert = localizeConfig(languages.get(), this.config)
+    this.dismissable = this.alert.dismissId != null
+
+    if (this.dismissable) {
+      this.storageId = `dismissed-block-alert-id:${this.alert.dismissId}`
+      this.dismissed = localStorageService.get(this.storageId)
+      this.dismiss = () => {
+        this.dismissed = true
+        localStorageService.set(this.storageId, true)
+      }
+    }
   } else {
     console.warn('block-alert received invalid config:', this.config)
   }

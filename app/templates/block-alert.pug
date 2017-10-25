@@ -1,4 +1,5 @@
-.block-alert.flex-center(ng-class="$ctrl.alert.type")
+.block-alert.flex-center(ng-class="$ctrl.alert.type" ng-show="$ctrl.alert && !$ctrl.dismissed")
+  i.ti-close.f-14(ng-show="$ctrl.dismissable" ng-click="$ctrl.dismiss()")
   .block-alert-icon(ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
   .ml-25
     .mb-15
