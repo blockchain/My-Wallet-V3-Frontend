@@ -3,13 +3,13 @@ angular
   .module('walletApp')
   .factory('blockAlert', blockAlert)
 
-function blockAlert () {
+function blockAlert ($translate) {
   const allTrue = (xs) => xs.every(x => x === true)
 
   const alertTypes = ['info', 'warning', 'danger']
 
-  const isLocalizedMessage = (message) =>
-    angular.isObject(message) && message['en'] != null
+  const isLocalizedMessage = (msg) =>
+    angular.isString(msg) || (angular.isObject(msg) && msg['en'] != null)
 
   const isValidConfig = (config) => allTrue([
     angular.isObject(config),
@@ -25,8 +25,8 @@ function blockAlert () {
     )
   ])
 
-  const localize = (lang, localizedMessage) =>
-    localizedMessage[lang] || localizedMessage['en']
+  const localize = (lang, msg) =>
+    angular.isString(msg) ? msg : (msg[lang] || msg['en'])
 
   const localizeConfig = (lang, config) => ({
     type: config.type,
@@ -42,8 +42,26 @@ function blockAlert () {
     }
   })
 
+  const create = (type) => (header, sections, action, { dismissId } = {}) =>
+    ({ type, dismissId, header, sections, action })
+
+  const header = (title) =>
+    $translate.instant(title)
+
+  const section = (title, body) =>
+    ({ title: $translate.instant(title), body: $translate.instant(body) })
+
+  const action = (title, link) =>
+    ({ title: $translate.instant(title), link })
+
   return {
     isValidConfig,
-    localizeConfig
+    localizeConfig,
+    header,
+    section,
+    action,
+    createInfo: create('info'),
+    createWarning: create('warning'),
+    createDanger: create('danger')
   }
 }

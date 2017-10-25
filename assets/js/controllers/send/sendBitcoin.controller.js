@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendBitcoinController', SendBitcoinController);
 
-function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $timeout, $state, $filter, $stateParams, $translate, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env, modals) {
+function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $timeout, $state, $filter, $stateParams, $translate, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env, modals, blockAlert) {
   let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
 
@@ -35,6 +35,13 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
   $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
+
+  $scope.showAlert = true;
+  $scope.blockAlertConfig = blockAlert.createDanger(
+    blockAlert.header('SERVICE_INTERRUPT.TITLE'),
+    [blockAlert.section('SERVICE_INTERRUPT.SUB_TITLE', 'SERVICE_INTERRUPT.EXPLAIN_SEND')],
+    blockAlert.action('SERVICE_INTERRUPT.VISIT_STATUS', 'https://www.blockchain-status.com/')
+  );
 
   $scope.transactionTemplate = {
     fee: 0,

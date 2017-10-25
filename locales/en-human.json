@@ -1781,5 +1781,12 @@
   "HIDE_TXS": "Hide Transactions",
   "EDIT_REF": "Edit Ref Number",
   "REF_NUMBER_UPDATED": "Ref Number Successfully Updated",
+  "SERVICE_INTERRUPT": {
+    "TITLE": "Ongoing service interruption",
+    "SUB_TITLE": "The Segwit2x (BTC1) Hard Fork started on XX November 2017.",
+    "EXPLAIN_SEND": "In an effort to protect our users from blockchain re-organizations, replay attacks, and prolonged confirmation times, we have temporarily suspended the ability to send bitcoin. We hope to reintroduce this functionality as soon as the network stabilizes and reaches consensus.",
+    "EXPLAIN_RECEIVE": "We strongly recommend that you refrain from requesting bitcoin until the network has reached consensus. Bitcoins sent during this time are subject to blockchain re-organizations, replay attacks, and prolonged confirmation times. To stay up to date, subscribe to our updates by visiting www.blockchain-status.com.",
+    "VISIT_STATUS": "In the meantime, you can visit www.blockchain-status.com for regular updates."
+  },
   "": ""
 }
