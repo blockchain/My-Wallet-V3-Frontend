@@ -62,7 +62,7 @@
             ng-model-options="{ debounce: 250 }")
           i.ti-search
   .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed")
-    wallet-options-alert
+    service-alert
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black.ph-25.center
         .flex-center.flex-justify
