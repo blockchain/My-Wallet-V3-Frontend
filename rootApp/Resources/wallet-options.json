@@ -2,6 +2,8 @@
   "showBuySellTab": ["GB", "NL", "DE", "US"],
   "platforms": {
     "web": {
+      "serviceAlertInSend": false,
+      "serviceAlertInRequest": false,
       "serviceAlert": {
         "type": "warning",
         "header": {
