@@ -39,6 +39,11 @@ const localizeConfig = (lang, config) => ({
 })
 
 function BlockAlertController (languages) {
+  this.iconTypes = {
+    'info': 'icon-success',
+    'warning': 'icon-alert',
+    'danger': ''
+  }
   if (isValidConfig(this.config)) {
     this.alert = localizeConfig(languages.get(), this.config)
   } else {

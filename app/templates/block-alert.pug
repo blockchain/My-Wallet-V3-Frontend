@@ -1,8 +1,14 @@
-.block-alert.border(ng-class="$ctrl.alert.type")
-  .mb-15
-    span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
-  .mb-15(ng-repeat="section in $ctrl.alert.sections")
-    span.f-14 {{ section.title }}
-    p.f-14.em-200 {{ section.body }}
-  .flex-justify(ng-show="$ctrl.alert.action")
-    a.button(ng-href="{{ $ctrl.alert.action.link }}") {{ $ctrl.alert.action.title }}
+.block-alert.flex-center(ng-class="$ctrl.alert.type")
+  .block-alert-icon(ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
+  .ml-25
+    .mb-15
+      span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
+    .mb-15.f-12(ng-repeat="section in $ctrl.alert.sections")
+      span {{ section.title }}
+      p.em-200 {{ section.body }}
+    a.text-color.underline.f-12(
+      ng-show="$ctrl.alert.action"
+      ng-href="{{ $ctrl.alert.action.link }}"
+      target="_blank"
+      rel="noopener noreferrer")
+      | {{ $ctrl.alert.action.title }}

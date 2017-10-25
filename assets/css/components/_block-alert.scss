@@ -2,17 +2,18 @@
   &.#{$name} {
     background: $secondary;
     border-color: $primary;
-    a.button {
-      @extend .ph-30;
+    .block-alert-icon {
       color: $primary;
-      border: 1px solid $primary;
     }
   }
 }
 
 .block-alert {
-  padding: 16px;
+  padding: 15px 30px;
   border: 1px solid;
+  .block-alert-icon {
+    font-size: 80px;
+  }
   @include block-alert-type("info", $iris, $light-blue);
   @include block-alert-type("warning", $dandelion, $moccasin);
   @include block-alert-type("danger", $bittersweet, $rosebud);

@@ -10,19 +10,15 @@ function blockAlert () {
 
   service.pre = {
     type: 'warning',
-    header: localized('Upcoming service interruption warning'),
+    header: localized('ALERT: Upcoming Service Interruption'),
     sections: [
       {
-        title: localized('Preparing for the Bitcoin Hard Fork:'),
-        body: localized('Segwit2x (BTC1) will take place roughly around mid-Novemeber or block height 494784.')
-      },
-      {
-        title: localized('What you need to know:'),
-        body: localized('Your funds will be safe, however once the fork starts all bitcoin transactions will be on hold. Not send, buy & sell or exchange will be possible until the fork resumes.')
+        title: localized('The Segwit2x (BTC1) hard fork will take place at block 494784 (on or about November 16th).'),
+        body: localized('Your funds will be safe throughout the fork but, in an effort to keep user funds safe, we will be temporarily suspending send, buy, sell and exchange functionality until the network stabilizes. Ether functionality will remain intact.')
       }
     ],
     action: {
-      title: localized('Visit our blog post with all the information'),
+      title: localized('For more details on the fork and how it impacts our users, read our blog post here.'),
       link: 'https://blog.blockchain.com/'
     }
   }
@@ -56,15 +52,11 @@ function blockAlert () {
 
   service.after = {
     type: 'info',
-    header: localized('Service restored'),
+    header: localized('And we\'re back!'),
     sections: [
       {
-        title: localized('What you need to know:'),
-        body: localized('This is the status of the service at the moment [to be written at the time]')
-      },
-      {
-        title: localized('What to do next:'),
-        body: localized('Are we working on ways to get the legacy coins out?')
+        title: localized('The bitcoin community has now reached a consensus.'),
+        body: localized('This is the status of the service at the moment [to be written at the time]. Bitcoin price will be a bit unstable over the next few days. You don’t need to do anything. We will let you know if any kind of action is required from your side.')
       }
     ]
   }
