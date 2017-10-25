@@ -2,7 +2,7 @@
   &.#{$name} {
     background: $secondary;
     border-color: $primary;
-    .block-alert-icon {
+    i.block-alert-icon {
       color: $primary;
     }
   }
@@ -16,7 +16,7 @@
   padding: $spacing-v $spacing-h;
   border: 1px solid;
 
-  .block-alert-icon {
+  i.block-alert-icon {
     font-size: 80px;
   }
 

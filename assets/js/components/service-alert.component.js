@@ -2,7 +2,7 @@
 angular
   .module('walletApp')
   .component('serviceAlert', {
-    template: '<block-alert config="$ctrl.alert" />',
+    template: '<block-alert config="$ctrl.alert" show-icon="true" />',
     controller: ServiceAlertController
   })
 

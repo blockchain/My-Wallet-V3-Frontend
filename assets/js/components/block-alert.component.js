@@ -3,7 +3,8 @@ angular
   .module('walletApp')
   .component('blockAlert', {
     bindings: {
-      config: '<'
+      config: '<',
+      showIcon: '<'
     },
     templateUrl: 'templates/block-alert.pug',
     controller: BlockAlertController

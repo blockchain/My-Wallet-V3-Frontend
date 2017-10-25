@@ -1,7 +1,7 @@
 .block-alert.flex-center(ng-class="$ctrl.alert.type" ng-show="$ctrl.alert && !$ctrl.dismissed")
   i.ti-close.f-14(ng-show="$ctrl.dismissable" ng-click="$ctrl.dismiss()")
-  .block-alert-icon(ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
-  .ml-25
+  i.block-alert-icon.mr-25(ng-show="$ctrl.showIcon" ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
+  div
     .mb-15
       span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
     .mb-15.f-12(ng-repeat="section in $ctrl.alert.sections")
