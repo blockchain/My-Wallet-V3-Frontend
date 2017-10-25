@@ -12,7 +12,7 @@ function Env ($rootScope, $location, $q, $http, blockAlert) {
   env.versionFrontend = null;
   env.versionMyWallet = null;
 
-  env.alert = blockAlert.pre;
+  env.serviceAlert = blockAlert.pre;
 
   const absUrl = $location.absUrl();
   const path = $location.path();

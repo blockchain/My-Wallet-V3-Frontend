@@ -3,7 +3,7 @@ angular
   .module('walletApp')
   .component('walletOptionsAlert', {
     template: [
-      '<div class="mb-15" ng-show="$ctrl.alert">',
+      '<div ng-show="$ctrl.alert">',
       '  <block-alert config="$ctrl.alert" />',
       '</div>'
     ].join(''),
@@ -11,5 +11,5 @@ angular
   })
 
 function WalletOptionsAlertController (Env) {
-  Env.then(options => { this.alert = options.alert })
+  Env.then(options => { this.alert = options.serviceAlert })
 }
