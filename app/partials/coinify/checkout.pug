@@ -39,7 +39,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     div(ng-show="pendingTrades().length")
-      .flex-row.flex-between.flex-center.mtl
+      .flex-row.flex-between.flex-center
         h4.type-h5 Pending Orders ({{pendingTrades().length}})
         span.hidden-xs Coinify Account: {{ exchange.profile.email }}
       .width-100
