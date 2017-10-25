@@ -12,8 +12,6 @@ function Env ($rootScope, $location, $q, $http, blockAlert) {
   env.versionFrontend = null;
   env.versionMyWallet = null;
 
-  env.serviceAlert = blockAlert.pre;
-
   const absUrl = $location.absUrl();
   const path = $location.path();
   if (absUrl && path && path.length) {
@@ -58,6 +56,8 @@ function Env ($rootScope, $location, $q, $http, blockAlert) {
       env.shapeshift = res.shapeshift;
 
       env.bcash = res.bcash;
+
+      env.platforms = res.platforms;
 
       defer.resolve(env);
     }

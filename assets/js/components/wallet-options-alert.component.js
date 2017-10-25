@@ -11,5 +11,5 @@ angular
   })
 
 function WalletOptionsAlertController (Env) {
-  Env.then(options => { this.alert = options.serviceAlert })
+  Env.then(options => { this.alert = options.platforms.web.serviceAlert })
 }
