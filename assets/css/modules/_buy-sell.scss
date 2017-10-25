@@ -369,6 +369,14 @@ input[type="radio"]:checked + label {
   grid-template-columns: 35% 25% 20% 20%;
 }
 
+.recurring-buy-header {
+  @extend .exchange-trade-header;
+}
+
+.recurring-trade {
+  @extend .exchange-trade;
+}
+
 .exchange-status {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -394,16 +402,21 @@ input[type="radio"]:checked + label {
     }
   }
   .exchange-received {
-    padding: 1.3125em 0px;
     display: flex;
   }
   .exchange-status {
-    grid-template-columns: 3% 97%;
+    grid-template-columns: 15% 85%;
     span {
       padding-left: 5px;
     }
   }
   .shift-history {
     grid-template-columns: 25% 15% 30% 30%;
+  }
+  .recurring-buy-header {
+    grid-template-columns: 35% 25% 20% 20%;
+  }
+  .recurring-trade {
+    grid-template-columns: 35% 25% 20% 20%;
   }
 }

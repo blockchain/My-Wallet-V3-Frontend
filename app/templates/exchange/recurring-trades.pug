@@ -1,4 +1,4 @@
-.exchange-trade.border-right.border-left(ng-class="{'border-bottom': !state.toggled}")
+.recurring-trade.border-right.border-left(ng-class="{'border-bottom': !state.toggled}")
   .exchange-status.pv-15.pos-rel
     span.pl-25.ph-10-mobile.flex-row.flex-center.pointer(ng-click="state.toggled = !state.toggled")
       i.icon-down_arrow.f-8.mr-5(ng-class="{rotated: !state.toggled}")
@@ -6,9 +6,9 @@
   .exchange-date.pv-15
     span.capitalize {{ subscription.frequency }}
   .exchange-exchanged.pv-15
-    span {{ trades[0].createdAt | date:'d MMMM yyyy' }}
+    span {{ trades[0].createdAt | date:recurringDateFormat }}
   .exchange-received.pv-15
-    span(ng-if="subscription.endTime") {{ subscription.endTime | date:'d MMMM yyyy' }}
+    span(ng-if="subscription.endTime") {{ subscription.endTime | date:recurringDateFormat }}
     span(ng-if="!subscription.endTime") Until you cancel
 .border-right.border-left.border-bottom(ng-show="state.toggled")
   .width-95.child-trades
@@ -21,16 +21,19 @@
         span.em-500(translate="BTC")
       .pvs.pr-50
         span.em-500(translate="TOTAL")
-    .exchange-trade(ng-repeat="trade in trades")
+    .exchange-trade(ng-repeat="trade in trades" ng-click="$root.size.xs && buyHandler(trade)")
       .exchange-status.pv-15
         span.pl-25(ng-class="getClass(trade)") {{ trade.state | translate }}
         a.hidden-xs(translate="VIEW_DETAILS" ng-click="buyHandler(trade)")
       .exchange-date.pv-15
-        span {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
+        span {{ trade.createdAt | date:dateFormat }}
       .exchange-exchanged.pv-15
-        span {{ trade.outAmount || trade.outAmountExpected / 1e8 }} BTC
+        span {{ (trade.outAmount || trade.outAmountExpected) / 1e8 }}
+        | &nbsp;
+        span.hidden-xs BTC
       .exchange-received.pv-15
         span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
     .width-100.flex-end(ng-show="state.toggled")
       .span.pv-15.state-danger-text.pointer(ng-if="subscription.isActive" ng-click="cancel()") Cancel Recurring Order
-      .span.pv-15.primary.pointer(ng-if="!subscription.isActive") Restart Recurring Order
+      //- TODO remove if not possible
+      //- .span.pv-15.primary.pointer(ng-if="!subscription.isActive") Restart Recurring Order

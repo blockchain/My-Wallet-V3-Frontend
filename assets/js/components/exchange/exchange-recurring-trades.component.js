@@ -12,10 +12,13 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeRecurringTradesController ($scope, coinify) {
+function ExchangeRecurringTradesController ($scope, coinify, $rootScope) {
   $scope.state = {};
   $scope.subscription = this.subscription;
   $scope.trades = this.trades()().filter((t) => t.tradeSubscriptionId === $scope.subscription.id);
+  $scope.recurringDateFormat = $rootScope.size.xs ? 'MMM d' : 'd MMMM yyyy';
+  $scope.dateFormat = $rootScope.size.xs ? 'MMM d' : 'd MMMM yyyy, HH:mm';
+
   $scope.buyHandler = (trade) => {
     let { frequency, endTime } = this.subscription;
     this.buy(null, trade, frequency, endTime);

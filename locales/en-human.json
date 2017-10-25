@@ -1781,5 +1781,7 @@
   "HIDE_TXS": "Hide Transactions",
   "EDIT_REF": "Edit Ref Number",
   "REF_NUMBER_UPDATED": "Ref Number Successfully Updated",
+  "START": "Start",
+  "END": "End",
   "": ""
 }
