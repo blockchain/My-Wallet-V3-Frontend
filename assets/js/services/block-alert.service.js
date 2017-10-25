@@ -11,8 +11,7 @@ function blockAlert ($translate) {
   const isLocalizedMessage = (msg) =>
     angular.isString(msg) || (angular.isObject(msg) && msg['en'] != null)
 
-  const isValidConfig = (config) => allTrue([
-    angular.isObject(config),
+  const isValidConfig = (config) => angular.isObject(config) && allTrue([
     alertTypes.indexOf(config.type) > -1,
     config.dismissId == null || angular.isString(config.dismissId),
     config.header == null || isLocalizedMessage(config.header),
