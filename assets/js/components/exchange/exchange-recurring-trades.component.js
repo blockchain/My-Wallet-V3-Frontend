@@ -3,9 +3,9 @@ angular
   .component('exchangeRecurringTrades', {
     bindings: {
       subscription: '<',
+      buy: '<',
       trades: '&',
-      cancelSubscription: '&',
-      buy: '&'
+      cancelSubscription: '&'
     },
     templateUrl: 'templates/exchange/recurring-trades.pug',
     controller: ExchangeRecurringTradesController,
@@ -16,7 +16,10 @@ function ExchangeRecurringTradesController ($scope, coinify) {
   $scope.state = {};
   $scope.subscription = this.subscription;
   $scope.trades = this.trades()().filter((t) => t.tradeSubscriptionId === $scope.subscription.id);
-  $scope.buyHandler = this.buy;
+  $scope.buyHandler = (trade) => {
+    let { frequency, endTime } = this.subscription;
+    this.buy(null, trade, frequency, endTime);
+  };
 
   $scope.getClass = (trade) => {
     let c = '';

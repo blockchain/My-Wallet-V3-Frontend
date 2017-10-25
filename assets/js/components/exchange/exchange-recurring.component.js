@@ -18,6 +18,8 @@ function ExchangeRecurringController ($scope, currency, recurringTrade) {
   $scope.date = new Date();
   $scope.format = currency.formatCurrencyForView;
 
-  $scope.endTime = this.endTime && this.endTime.toDateString();
+  this.trade.fiatAmount = !this.trade.fiatAmount ? this.trade.inAmount / 100 : this.trade.fiatAmount;
+
+  $scope.endTime = this.endTime && new Date(this.endTime).toDateString();
   $scope.timespan = recurringTrade.getTimespan($scope.date, frequency);
 }

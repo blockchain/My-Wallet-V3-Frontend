@@ -61,7 +61,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             trade="trade")
     
     div(ng-show="recurringTrades().length")
-      .flex-row.flex-between.flex-center
+      .flex-row.flex-between.flex-center.mtl
         h4.type-h5 Recurring Orders
         div(ng-hide="pendingTrades().length")
           span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}

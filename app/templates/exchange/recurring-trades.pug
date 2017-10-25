@@ -24,7 +24,7 @@
     .exchange-trade(ng-repeat="trade in trades")
       .exchange-status.pv-15
         span.pl-25(ng-class="getClass(trade)") {{ trade.state | translate }}
-        a.hidden-xs(translate="VIEW_DETAILS" ng-click="buyHandler()")
+        a.hidden-xs(translate="VIEW_DETAILS" ng-click="buyHandler(trade)")
       .exchange-date.pv-15
         span {{ trade.createdAt | date:'d MMMM yyyy, HH:mm' }}
       .exchange-exchanged.pv-15

@@ -9,9 +9,10 @@ function RecurringTradeService () {
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   service.getTimespan = (date, frequency) => {
-    if (frequency === 'Daily') return '24 hours';
-    if (frequency === 'Weekly') return `${days[date.getDay()]}`;
-    if (frequency === 'Monthly') return `${date.getDate() + (human[date.getDate()] || 'th')} of the month`;
+    let freq = frequency.toLowerCase()
+    if (freq === 'daily') return '24 hours';
+    if (freq === 'weekly') return `${days[date.getDay()]}`;
+    if (freq === 'monthly') return `${date.getDate() + (human[date.getDate()] || 'th')} of the month`;
   };
 
   return service;
