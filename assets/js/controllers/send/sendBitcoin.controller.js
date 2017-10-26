@@ -13,7 +13,8 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
     FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
     FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
     $scope.AB_TEST_FEE = FEE_OPTIONS != null;
-    $scope.showAlert = env.platforms.web.serviceAlertInSend;
+    $scope.blockAlertConfig = env.platforms.web.serviceAlertInSend;
+    $scope.showAlert = $scope.blockAlertConfig != null;
   });
 
   $scope.status = Wallet.status;
@@ -36,12 +37,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
   $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
-
-  $scope.blockAlertConfig = blockAlert.createDanger(
-    blockAlert.header('SERVICE_INTERRUPT.TITLE'),
-    [blockAlert.section('SERVICE_INTERRUPT.SUB_TITLE', 'SERVICE_INTERRUPT.EXPLAIN_SEND')],
-    blockAlert.action('SERVICE_INTERRUPT.VISIT_STATUS', 'https://www.blockchain-status.com/')
-  );
 
   $scope.transactionTemplate = {
     fee: 0,

@@ -6,7 +6,8 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
-    $scope.showAlert = env.platforms.web.serviceAlertInRequest;
+    $scope.blockAlertConfig = env.platforms.web.serviceAlertInRequest;
+    $scope.showAlert = $scope.blockAlertConfig != null;
   });
 
   let isUsingPaymentRequestsExperiment = MyBlockchainApi.createExperiment(2);
@@ -34,11 +35,6 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
     address: '',
     requestCreated: null
   };
-
-  $scope.blockAlertConfig = blockAlert.createDanger(
-    blockAlert.header('SERVICE_INTERRUPT.TITLE'),
-    [blockAlert.section('SERVICE_INTERRUPT.SUB_TITLE', 'SERVICE_INTERRUPT.EXPLAIN_RECEIVE')]
-  );
 
   $scope.destinations = smartAccount.getOptions();
   $scope.state.to = $scope.vm.destination || Wallet.my.wallet.hdwallet.defaultAccount;
