@@ -14,7 +14,7 @@ function BlockAlertController (languages, localStorageService, blockAlert) {
   this.iconTypes = {
     'info': 'icon-success',
     'warning': 'icon-alert',
-    'danger': ''
+    'danger': 'icon-build'
   }
   if (blockAlert.isValidConfig(this.config)) {
     this.alert = blockAlert.localizeConfig(languages.get(), this.config)
