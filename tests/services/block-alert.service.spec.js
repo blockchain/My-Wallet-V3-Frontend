@@ -13,7 +13,7 @@ describe('BlockAlertService', () => {
   let header = () => blockAlert.header('header')
   let section = () => blockAlert.section('section_title', 'section_body')
   let action = () => blockAlert.action('action_title', 'www.example.com')
-  let validConfig = () => blockAlert.createInfo(header(), [section(), section()], action(), { dismissId: 'dismiss-me' })
+  let validConfig = () => blockAlert.createInfo(header(), [section(), section()], action(), { hideType: 'collapse' })
 
   describe('.isValidConfig', () => {
     it('should detect a valid config', () => {
@@ -27,9 +27,9 @@ describe('BlockAlertService', () => {
       expect(blockAlert.isValidConfig(config)).toEqual(false)
     })
 
-    it('should be invalid if dismissId is not a string', () => {
+    it('should be invalid if hideType is incorrect', () => {
       let config = validConfig()
-      config.dismissId = 42
+      config.hideType = 'hidden'
       expect(blockAlert.isValidConfig(config)).toEqual(false)
     })
 
@@ -73,7 +73,7 @@ describe('BlockAlertService', () => {
   describe('.localizeConfig', () => {
     const result = {
       type: 'info',
-      dismissId: void 0,
+      hideType: void 0,
       header: 'header',
       sections: [{ title: 'title', body: 'body' }],
       action: { title: 'action', link: 'www.example.com' }
@@ -138,9 +138,9 @@ describe('BlockAlertService', () => {
       expect(blockAlert.isValidConfig(config)).toEqual(true)
     })
 
-    it('should create an alert with a dismissId', () => {
-      let config = blockAlert.createInfo(header(), [section()], action(), { dismissId: 'dismiss-me' })
-      expect(config.dismissId).toEqual('dismiss-me')
+    it('should create an alert with a hideType', () => {
+      let config = blockAlert.createInfo(header(), [section()], action(), { hideType: 'dismiss' })
+      expect(config.hideType).toEqual('dismiss')
     })
   })
 

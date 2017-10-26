@@ -2,28 +2,24 @@
   &.#{$name} {
     background: $secondary;
     border-color: $primary;
-    i.block-alert-icon {
+    i.alert-icon {
       color: $primary;
     }
   }
 }
 
 .block-alert {
-  $spacing-v: 15px;
-  $spacing-h: 30px;
-
   position: relative;
-  padding: $spacing-v $spacing-h;
   border: 1px solid;
 
-  i.block-alert-icon {
+  i.icon-lg {
     font-size: 80px;
   }
 
   i.ti-close {
     position: absolute;
-    top: $spacing-v;
-    right: $spacing-h;
+    top: 15px;
+    right: 30px;
     cursor: pointer;
   }
 

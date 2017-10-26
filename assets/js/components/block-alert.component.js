@@ -10,7 +10,7 @@ angular
     controller: BlockAlertController
   })
 
-function BlockAlertController (languages, localStorageService, blockAlert) {
+function BlockAlertController (languages, blockAlert) {
   this.iconTypes = {
     'info': 'icon-success',
     'warning': 'icon-alert',
@@ -18,16 +18,9 @@ function BlockAlertController (languages, localStorageService, blockAlert) {
   }
   if (blockAlert.isValidConfig(this.config)) {
     this.alert = blockAlert.localizeConfig(languages.get(), this.config)
-    this.dismissable = this.alert.dismissId != null
-
-    if (this.dismissable) {
-      this.storageId = `dismissed-block-alert-id:${this.alert.dismissId}`
-      this.dismissed = localStorageService.get(this.storageId)
-      this.dismiss = () => {
-        this.dismissed = true
-        localStorageService.set(this.storageId, true)
-      }
-    }
+    this.dismissible = this.alert.hideType != null
+    this.collapsible = this.alert.hideType === 'collapse'
+    this.dismiss = () => { this.dismissed = true }
   } else {
     console.warn('block-alert received invalid config:', this.config)
   }

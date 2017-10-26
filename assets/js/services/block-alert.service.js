@@ -7,13 +7,14 @@ function blockAlert ($translate) {
   const allTrue = (xs) => xs.every(x => x === true)
 
   const alertTypes = ['info', 'warning', 'danger']
+  const hideTypes = ['collapse', 'dismiss']
 
   const isLocalizedMessage = (msg) =>
     angular.isString(msg) || (angular.isObject(msg) && msg['en'] != null)
 
   const isValidConfig = (config) => angular.isObject(config) && allTrue([
     alertTypes.indexOf(config.type) > -1,
-    config.dismissId == null || angular.isString(config.dismissId),
+    config.hideType == null || hideTypes.indexOf(config.hideType) > -1,
     config.header == null || isLocalizedMessage(config.header),
     config.sections && config.sections.length > 0 && config.sections.every(s =>
       isLocalizedMessage(s.title) && isLocalizedMessage(s.body)
@@ -29,7 +30,7 @@ function blockAlert ($translate) {
 
   const localizeConfig = (lang, config) => ({
     type: config.type,
-    dismissId: config.dismissId,
+    hideType: config.hideType,
     header: localize(lang, config.header),
     sections: config.sections.map(s => ({
       title: localize(lang, s.title),
@@ -41,8 +42,8 @@ function blockAlert ($translate) {
     }
   })
 
-  const create = (type) => (header, sections, action, { dismissId } = {}) =>
-    ({ type, dismissId, header, sections, action })
+  const create = (type) => (header, sections, action, { hideType } = {}) =>
+    ({ type, hideType, header, sections, action })
 
   const header = (title) =>
     $translate.instant(title)
