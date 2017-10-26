@@ -75,7 +75,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500(translate="START")
           .pv-5
             span.em-500(translate="END")
-      exchange-recurring-trades(ng-repeat="subscription in subscriptions"
+      exchange-recurring-trades(ng-repeat="subscription in subscriptions()"
                                 subscription="subscription"
                                 trades="recurringTrades"
                                 cancel-subscription="cancelSubscription(id)"
@@ -84,7 +84,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     div(ng-show="completedTrades().length")
       .flex-row.flex-between.flex-center.mtl
         h4.type-h5 Completed Orders
-        div(ng-hide="pendingTrades().length || recurringTrades().length && subscriptions")
+        div(ng-hide="pendingTrades().length || recurringTrades().length && subscriptions()")
           span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
       .width-100
         .exchange-trade-header.border.bg-footer-blue

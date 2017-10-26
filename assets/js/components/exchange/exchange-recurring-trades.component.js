@@ -35,5 +35,8 @@ function ExchangeRecurringTradesController ($scope, coinify, $rootScope) {
     return c;
   };
 
-  $scope.cancel = () => this.cancelSubscription({ id: $scope.subscription.id });
+  $scope.cancel = () => {
+    const onCancel = (res) => $scope.subscription.isActive = res.isActive;
+    this.cancelSubscription({ id: $scope.subscription.id }).then(onCancel);
+  };
 }

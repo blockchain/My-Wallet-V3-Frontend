@@ -34,6 +34,4 @@
       .exchange-received.pv-15
         span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
     .width-100.flex-end(ng-show="state.toggled")
-      .span.pv-15.state-danger-text.pointer(ng-if="subscription.isActive" ng-click="cancel()") Cancel Recurring Order
-      //- TODO remove if not possible
-      //- .span.pv-15.primary.pointer(ng-if="!subscription.isActive") Restart Recurring Order
+      .span.pv-15.state-danger-text.pointer(ng-show="subscription.isActive" ng-click="cancel()") Cancel Recurring Order
