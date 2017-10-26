@@ -2,7 +2,7 @@
   "showBuySellTab": ["GB", "NL", "DE", "US"],
   "platforms": {
     "web": {
-      "serviceAlert": {
+      "__serviceAlert": {
         "type": "warning",
         "header": {
           "en": "ALERT: Upcoming Service Interruption"
@@ -24,7 +24,7 @@
           "link": "https://blog.blockchain.com/"
         }
       },
-      "serviceAlertInSend": {
+      "__serviceAlertInSend": {
         "type": "danger",
         "header": {
           "en": "Ongoing service interruption"
@@ -46,7 +46,7 @@
           "link": "https://blog.blockchain.com/"
         }
       },
-      "serviceAlertInRequest": {
+      "__serviceAlertInRequest": {
         "type": "danger",
         "header": {
           "en": "Ongoing service interruption"
