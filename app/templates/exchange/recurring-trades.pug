@@ -11,7 +11,7 @@
     span(ng-if="subscription.endTime") {{ subscription.endTime | date:recurringDateFormat }}
     span(ng-if="!subscription.endTime") Until you cancel
 .border-right.border-left.border-bottom(ng-show="state.toggled")
-  .width-95.child-trades
+  .child-trades
     .exchange-trade.border.bg-grey
       .pvs
         span.em-500.pl-25.ph-10-mobile(translate="STATUS")
