@@ -295,6 +295,46 @@ $tt-position-default: -4px !important;
 // -------------- UIB-DATEPICKER -------------- //
 
 .uib-datepicker-popup {
+  table {
+    thead {
+      tr {
+        th {
+          button {
+            i {
+              color: #ccc;
+            }
+          }
+        }
+      }
+      strong {
+        font-weight: 300;
+      }
+      small {
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+    tbody {
+      tr {
+        td {
+          button {
+            border: none;
+          }
+          button.active {
+            background: $iris;
+            box-shadow: none;
+            span {
+              color: white;
+            }
+          }
+          button.active:hover {
+            background: $iris;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
   > .uib-button-bar {
     > .btn-success {
       @extend .button-primary;
@@ -303,11 +343,11 @@ $tt-position-default: -4px !important;
     > .btn-group.pull-left {
       > .btn-danger, .btn-info {
         @extend .button-muted;
-        color: #10ade4;
+        color: $iris;
       }
       > .btn-danger:hover, .btn-info:hover {
         background-color: white;
-        color: #10ade4;
+        color: $iris;
       }
     }
   }
