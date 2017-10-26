@@ -2,9 +2,9 @@ angular
   .module('shared')
   .factory('Env', Env);
 
-Env.$inject = ['$rootScope', '$location', '$q', '$http', 'blockAlert'];
+Env.$inject = ['$rootScope', '$location', '$q', '$http'];
 
-function Env ($rootScope, $location, $q, $http, blockAlert) {
+function Env ($rootScope, $location, $q, $http) {
   let env = {
   };
 
