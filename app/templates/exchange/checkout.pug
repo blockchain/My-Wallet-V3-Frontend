@@ -1,6 +1,6 @@
 form.bc-form(
   name="checkoutForm"
-  ng-submit="$ctrl.tradeAccount ? enableBuy(): buy();"
+  ng-submit="$ctrl.tradeAccount ? enableTrade(): trade();"
   novalidate
   autocomplete="off")
   fieldset(ng-disabled="locked || trading().isDisabled")
@@ -61,7 +61,7 @@ form.bc-form(
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
-    .group(ng-if="$ctrl.collapseSummary")
+    .group.mt-20(ng-if="$ctrl.collapseSummary")
       .item
         .mbm
           span.f-16.em-500.colon Order Summary

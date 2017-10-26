@@ -95,14 +95,14 @@ describe('exchange-checkout.component', () => {
     expect(scope.state.rate).toEqual(mockQuote().quoteAmount);
   });
 
-  describe('.buy()', () => {
+  describe('.trade()', () => {
     beforeEach(function () {
       scope = getControllerScope(handlers);
       scope.quote = mockQuote();
     });
 
     it('should lock the scope while buying', () => {
-      scope.buy();
+      scope.trade();
       expect(scope.locked).toEqual(true);
       scope.$digest();
       expect(scope.locked).toEqual(false);
@@ -110,7 +110,7 @@ describe('exchange-checkout.component', () => {
 
     it('should reset the form fields after buying', () => {
       spyOn(scope, 'resetFields');
-      scope.buy();
+      scope.trade();
       scope.$digest();
       expect(scope.resetFields).toHaveBeenCalled();
     });

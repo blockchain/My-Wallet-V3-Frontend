@@ -394,6 +394,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'BuySellMasterController',
           controllerAs: 'vm'
         }
+      },
+      resolve: {
+        balance ($injector, $q) {
+          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+          let defaultAccount = MyWallet && MyWallet.wallet.hdwallet.defaultAccount;
+
+          return defaultAccount && defaultAccount.getAvailableBalance('priority')
+            .then((balance) => balance)
+            .catch(() => { return {amount: 0}; });
+        }
       }
     })
     .state('wallet.common.buy-sell.select', {
@@ -418,13 +428,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         _loadSubscriptions ($q, MyWallet) {
           let exchange = MyWallet.wallet.external.coinify;
           return exchange.user && exchange.getSubscriptions();
-        },
-        balance ($q, MyWallet) {
-          let defaultAccount = MyWallet.wallet.hdwallet.defaultAccount;
-
-          return defaultAccount.getAvailableBalance('priority')
-            .then((balance) => balance)
-            .catch(() => { return {amount: 0}; });
         }
       }
     })

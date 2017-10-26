@@ -34,10 +34,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return !service.exchange.user || service.exchange.profile.canTrade;
     },
     get balanceAboveMin () {
-      return service.sellMax && service.sellMax > service.limits.blockchain.minimumInAmounts['BTC'];
+      return Exchange.sellMax && Exchange.sellMax > service.limits.blockchain.minimumInAmounts['BTC'];
     },
     get balanceAboveMax () {
-      return service.sellMax && service.sellMax > service.limits.blockchain.inRemaining['BTC'];
+      return Exchange.sellMax && Exchange.sellMax > service.limits.blockchain.inRemaining['BTC'];
     },
     get userCanBuy () {
       return service.userCanTrade;
@@ -86,8 +86,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     states,
     getTxMethod: (hash) => txHashes[hash] || null,
     tradeStateIn: (states) => (t) => states.indexOf(t.state) > -1,
-    goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'}),
-    setSellMax: (balance) => { service.sellMax = balance.amount / 1e8; service.sellFee = balance.fee; }
+    goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'})
   };
 
   service.init = (coinify) => {

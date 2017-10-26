@@ -1615,6 +1615,9 @@
     },
     "user_can_sell": {
       "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
+    },
+    "not_enough_funds_to_sell": {
+      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
     }
   },
   "EXCHANGE": {
