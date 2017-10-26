@@ -60,7 +60,12 @@
               "en": "We strongly recommend that you refrain from requesting bitcoin until the network has reached consensus. Bitcoins sent during this time are subject to blockchain re-organizations, replay attacks, and prolonged confirmation times. To stay up to date, subscribe to our updates by visiting www.blockchain-status.com."
             }
           }
-        ]
+        ],
+        "action": {
+          "title": {
+            "en": "Show bitcoin address"
+          }
+        }
       }
     }
   },

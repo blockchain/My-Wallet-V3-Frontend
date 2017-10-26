@@ -26,6 +26,8 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.originLimit = 50;
   $scope.increaseLimit = () => $scope.originLimit += 50;
 
+  $scope.hideAlert = () => $scope.showAlert = false;
+
   $scope.sending = false;
   $scope.advanced = false;
   $scope.building = false;

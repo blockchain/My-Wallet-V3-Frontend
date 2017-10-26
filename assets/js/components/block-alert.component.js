@@ -4,7 +4,8 @@ angular
   .component('blockAlert', {
     bindings: {
       config: '<',
-      showIcon: '<'
+      showIcon: '<',
+      onAction: '&'
     },
     templateUrl: 'templates/block-alert.pug',
     controller: BlockAlertController

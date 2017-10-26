@@ -21,7 +21,7 @@ function blockAlert ($translate) {
     ),
     config.action == null || (
       isLocalizedMessage(config.action.title) &&
-      angular.isString(config.action.link)
+      (config.action.link == null || angular.isString(config.action.link))
     )
   ])
 

@@ -65,7 +65,7 @@ describe('BlockAlertService', () => {
 
     it('should be invalid if the action link is invalid', () => {
       let config = validConfig()
-      config.action.link = null
+      config.action.link = 23
       expect(blockAlert.isValidConfig(config)).toEqual(false)
     })
   })

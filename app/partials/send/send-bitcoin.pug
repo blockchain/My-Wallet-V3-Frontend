@@ -44,7 +44,7 @@
               span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN")
               span.help-block.inprv(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
 
-        block-alert(ng-show="showAlert" config="blockAlertConfig")
+        block-alert(ng-show="showAlert" config="blockAlertConfig" on-action="hideAlert()")
 
         .group(ng-hide="showAlert")
           //- To

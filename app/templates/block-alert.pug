@@ -11,11 +11,16 @@
     .mb-15.f-12(ng-repeat="section in $ctrl.alert.sections")
       span {{ section.title }}
       p.em-200 {{ section.body }}
-    a.text-color.underline.f-12(
-      ng-show="$ctrl.alert.action"
-      ng-href="{{ $ctrl.alert.action.link }}"
-      target="_blank" rel="noopener noreferrer")
-      | {{ $ctrl.alert.action.title }}
+    span.f-12(ng-show="$ctrl.alert.action")
+      a.text-color.underline(
+        ng-show="$ctrl.alert.action.link"
+        ng-href="{{ $ctrl.alert.action.link }}"
+        target="_blank" rel="noopener noreferrer")
+        | {{ $ctrl.alert.action.title }}
+      span.text-color.pointer(
+        ng-hide="$ctrl.alert.action.link"
+        ng-click="$ctrl.onAction()")
+        | {{ $ctrl.alert.action.title }}
 .block-alert.flex-center.ph-30.pv-5.pointer(
   ng-class="$ctrl.alert.type"
   ng-show="$ctrl.alert && $ctrl.collapsible && $ctrl.dismissed"
