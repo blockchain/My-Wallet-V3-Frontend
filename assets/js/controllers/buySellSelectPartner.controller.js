@@ -65,7 +65,8 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   $scope.selectPartner = (partner, countryCode) => {
     $scope.status = { busy: true };
-    $state.go($scope.vm.base + partner.route, { countryCode });
+    $state.go($scope.vm.base + partner.route, { countryCode })
+      .catch(() => { $scope.status.busy = false; });
   };
 
   $scope.onWhitelist = (countryCode) => (

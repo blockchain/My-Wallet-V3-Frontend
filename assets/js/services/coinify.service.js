@@ -93,6 +93,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return Env.then(env => {
       coinify.api.sandbox = !env.isProduction;
       coinify.partnerId = env.partners.coinify.partnerId;
+      service.disabled = env.partners.coinify.disabled;
+      service.disabledReason = env.partners.coinify.disabledReason;
       if (coinify.trades) Exchange.watchTrades(coinify.trades);
       coinify.monitorPayments();
     });

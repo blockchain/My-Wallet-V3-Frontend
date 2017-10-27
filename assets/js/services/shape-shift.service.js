@@ -89,6 +89,8 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
       service.countriesBlacklist = shapeshift.countriesBlacklist || [];
       service.statesWhitelist = shapeshift.statesWhitelist || [];
       service.rolloutFraction = shapeshift.rolloutFraction || 0;
+      service.disabled = shapeshift.disabled;
+      service.disabledReason = shapeshift.disabledReason;
       service.qaDebugger = qaDebugger;
     }
   });

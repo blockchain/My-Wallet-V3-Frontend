@@ -51,6 +51,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.walletHelperDomain = res.domains.walletHelper;
 
+      env.buySell = res.buySell;
+
       env.ethereum = res.ethereum;
 
       env.shapeshift = res.shapeshift;
