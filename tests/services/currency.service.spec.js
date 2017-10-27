@@ -156,6 +156,11 @@ describe('currency', () => {
       let conversion = currency.convertFromSatoshi(10000, currency.currencies[1]);
       expect(conversion).toEqual(0.025);
     }));
+
+    it('should return null if currency conversion is 0', inject((currency) => {
+      let conversion = currency.convertFromSatoshi(10000, currency.currencies[2]);
+      expect(conversion).toEqual(null);
+    }));
   });
 
   describe('formatCurrencyForView()', () => {
