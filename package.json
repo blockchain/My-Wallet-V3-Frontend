@@ -97,7 +97,7 @@
     "heroku-start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --progress --colors --port $PORT --host 0.0.0.0"
   },
   "engines": {
-    "node": "7.5.x"
+    "node": ">= 7.5"
   },
   "repository": {
     "type": "git",
