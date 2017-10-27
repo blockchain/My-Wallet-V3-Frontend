@@ -4,6 +4,7 @@ describe('SfoxCheckoutController', () => {
   let $compile;
   let $templateCache;
   let $q;
+  let sfox;
   let scope;
   let modals;
   let Wallet;
@@ -56,10 +57,13 @@ describe('SfoxCheckoutController', () => {
 
       MyWallet.wallet.external = {
         sfox: {
-          profile: {}
+          profile: {
+            limits: { buy: 100, sell: 100 }
+          }
         }
       };
-
+      
+      sfox = $injector.get('sfox');
       let currency = $injector.get('currency');
       currency.conversions['USD'] = { conversion: 2 };
       return currency.conversions['USD'];
@@ -71,10 +75,7 @@ describe('SfoxCheckoutController', () => {
     scope.vm = {
       external: {
         sfox: {
-          profile: {
-            limits: { buy: 100 },
-            verificationStatus: { level: 'unverified' }
-          },
+          profile: { verificationStatus: { level: 'unverified' } },
           getBuyQuote () { return $q.resolve(mockQuote()); },
           getSellQuote () { return $q.resolve(mockQuote()); },
           fetchProfile () { return $q.resolve(); }
@@ -83,6 +84,7 @@ describe('SfoxCheckoutController', () => {
     };
     let template = $templateCache.get('partials/sfox/checkout.pug');
     $controller('SfoxCheckoutController', {
+      sfox: sfox,
       $scope: scope,
       accounts: accounts || [],
       showCheckout: showCheckout || undefined

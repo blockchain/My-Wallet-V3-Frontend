@@ -3,6 +3,7 @@ describe('BuySellMasterController', () => {
   let $controller;
   let $state;
   let MyWallet;
+  let balance;
   let cta;
 
   beforeEach(angular.mock.module('walletApp'));
@@ -21,8 +22,8 @@ describe('BuySellMasterController', () => {
 
       MyWallet = $injector.get('MyWallet');
 
-      cta =
-        {setBuyCtaDismissed() {}};
+      cta = {setBuyCtaDismissed() {}};
+      balance = { amount: 1, fee: .001 }
 
       return MyWallet.wallet =
         {external};
@@ -35,6 +36,7 @@ describe('BuySellMasterController', () => {
     return $controller('BuySellMasterController', {
       cta,
       $scope,
+      balance,
       $uibModalInstance: { close: (function () {})({dismiss() {}}) },
       exchange: { profile }
     });

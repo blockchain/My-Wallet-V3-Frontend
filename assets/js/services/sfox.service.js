@@ -10,11 +10,18 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
     get profile () {
       return service.exchange.profile;
     },
+    get limits () {
+      return service.profile.limits;
+    },
+    // TODO: SFOX needs access to the sell exchange rate
+    get balanceAboveMin () {
+      return Exchange.sellMax > 0;
+    },
     get userCanBuy () {
       return !service.profile || service.profile.canBuy;
     },
     get userCanSell () {
-      return !service.profile || service.profile.canSell;
+      return service.balanceAboveMin;
     },
     get buyReason () {
       let reason;
@@ -24,11 +31,13 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
     },
     get sellReason () {
       let reason;
-      if (!service.profile) reason = 'user_needs_account';
+      if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
+      else if (!service.profile) reason = 'user_needs_account';
       else reason = 'user_can_sell';
       return reason;
     },
     buy,
+    sell,
     init,
     buying,
     selling,
@@ -90,6 +99,11 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
   function buy (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
       .then(mediums => mediums.ach.buy(account));
+  }
+
+  function sell (account, quote) {
+    return $q.resolve(quote.getPaymentMediums())
+      .then(mediums => mediums.ach.sell(account));
   }
 
   return service;

@@ -10,7 +10,8 @@ angular
       trading: '<',
       provider: '<',
       buyLevel: '<',
-      buyEnabled: '<',
+      fiatLimits: '<',
+      tradeEnabled: '<',
       tradeAccount: '<',
       conversion: '<',
       fiatOptions: '<',
@@ -116,15 +117,15 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
 
   $scope.setMax = () => {
     let { fiat, bitcoin } = $scope;
-    let curr = this.type === 'Buy' ? fiat : bitcoin;
-    let field = this.type === 'Buy' ? 'fiat' : 'btc';
+    let curr = this.fiatLimits ? fiat : bitcoin;
+    let field = this.fiatLimits ? 'fiat' : 'btc';
 
     state.baseCurr = curr;
     state[field] = this.limits().max;
     $timeout(() => $scope.refreshIfValid(field), 10);
   };
 
-  $scope.enableBuy = () => {
+  $scope.enableTrade = () => {
     let obj = {
       'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
       'Payment Method': typeof this.tradeAccount === 'object' ? this.tradeAccount.accountType + ' (' + this.tradeAccount.accountNumber + ')' : null,
@@ -135,16 +136,16 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
       templateUrl: 'partials/confirm-trade-modal.pug',
       windowClass: 'bc-modal trade-summary'
-    }).result.then($scope.buy);
+    }).result.then($scope.trade);
   };
 
-  $scope.buy = () => {
+  $scope.trade = () => {
     $scope.lock();
     let quote = $scope.quote;
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
 
-    if (this.tradeAccount || this.buyEnabled) {
+    if (this.tradeAccount || this.tradeEnabled) {
       this.handleTrade({account: this.tradeAccount, quote: quote})
         .then(trade => {
           this.onSuccess({trade});
@@ -167,7 +168,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     $scope.$$postDigest(() => {
       let rate = state.rate;
       let limits = this.limits();
-      let baseFiat = this.type === 'Buy';
+      let baseFiat = this.fiatLimits;
       $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
       $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
     });

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
-function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, modals, balance) {
+function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals) {
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
   $scope.subscriptions = () => coinify.subscriptions;
@@ -29,7 +29,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.sellFiat = sellMatch || $scope.sellFiatOptions.filter(c => c.code === 'EUR')[0];
   $scope.sellLimits = () => ({
     min: coinify.limits.blockchain.minimumInAmounts['BTC'],
-    max: Math.min(coinify.limits.blockchain.inRemaining['BTC'], coinify.sellMax)
+    max: Math.min(coinify.limits.blockchain.inRemaining['BTC'], Exchange.sellMax)
   });
 
   $scope.cancelSubscription = (id) => coinify.cancelSubscription(id);
@@ -55,6 +55,5 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   });
 
   coinify.pollUserLevel();
-  coinify.setSellMax(balance);
   AngularHelper.installLock.call($scope);
 }
