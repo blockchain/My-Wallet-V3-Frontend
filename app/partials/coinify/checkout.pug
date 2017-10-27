@@ -38,6 +38,12 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="trades.length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
     div(ng-show="pendingTrades().length")
       .flex-row.flex-between.flex-center
         h4.type-h5 Pending Orders ({{pendingTrades().length}})
@@ -59,7 +65,6 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             conversion="100"
             buy="buyHandler"
             trade="trade")
-    
     div(ng-show="recurringTrades().length")
       .flex-row.flex-between.flex-center
         h4.type-h5 Recurring Orders
@@ -80,7 +85,6 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
                                 trades="recurringTrades"
                                 cancel-subscription="cancelSubscription(id)"
                                 buy="buyHandler")
-
     div(ng-show="completedTrades().length")
       .flex-row.flex-between.flex-center.mtl
         h4.type-h5 Completed Orders
