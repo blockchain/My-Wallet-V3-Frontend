@@ -5,65 +5,65 @@
       "__serviceAlert": {
         "type": "warning",
         "header": {
-          "en": "ALERT: Upcoming Service Interruption"
+          "en": "Service alert title"
         },
         "sections": [
           {
             "title": {
-              "en": "The Segwit2x (BTC1) hard fork will take place at block 494784 (on or about November 16th)."
+              "en": "Section title"
             },
             "body": {
-              "en": "Your funds will be safe throughout the fork but, in an effort to keep user funds safe, we will be temporarily suspending send, buy, sell and exchange functionality until the network stabilizes. Ether functionality will remain intact."
+              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             }
           }
         ],
         "action": {
           "title": {
-            "en": "For more details on the fork and how it impacts our users, read our blog post here."
+            "en": "More details concerning this alert."
           },
-          "link": "https://blog.blockchain.com/"
+          "link": "https://www.example.com/"
         }
       },
       "__serviceAlertInSend": {
         "type": "danger",
         "header": {
-          "en": "Ongoing service interruption"
+          "en": "Service alert title"
         },
         "sections": [
           {
             "title": {
-              "en": "The Segwit2x (BTC1) Hard Fork started on XX November 2017."
+              "en": "Section title"
             },
             "body": {
-              "en": "In an effort to protect our users from blockchain re-organizations, replay attacks, and prolonged confirmation times, we have temporarily suspended the ability to send bitcoin. We hope to reintroduce this functionality as soon as the network stabilizes and reaches consensus."
+              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             }
           }
         ],
         "action": {
           "title": {
-            "en": "In the meantime, you can visit www.blockchain-status.com for regular updates."
+            "en": "More details concerning this alert."
           },
-          "link": "https://blog.blockchain.com/"
+          "link": "https://www.example.com/"
         }
       },
       "__serviceAlertInRequest": {
         "type": "danger",
         "header": {
-          "en": "Ongoing service interruption"
+          "en": "Service alert title"
         },
         "sections": [
           {
             "title": {
-              "en": "The Segwit2x (BTC1) Hard Fork started on XX November 2017."
+              "en": "Section title"
             },
             "body": {
-              "en": "We strongly recommend that you refrain from requesting bitcoin until the network has reached consensus. Bitcoins sent during this time are subject to blockchain re-organizations, replay attacks, and prolonged confirmation times. To stay up to date, subscribe to our updates by visiting www.blockchain-status.com."
+              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
             }
           }
         ],
         "action": {
           "title": {
-            "en": "Show bitcoin address"
+            "en": "Alert action"
           }
         }
       }
