@@ -42,6 +42,8 @@ function languages ($translate, $location) {
     get: () => $translate.use(),
     set: (code) => $translate.use(code),
     mapCodeToName: (code) => languageCodes[code],
+    isLocalizedMessage,
+    localizeMessage,
     parseFromUrl
   };
 
@@ -49,6 +51,14 @@ function languages ($translate, $location) {
   if (code) $translate.use(code);
 
   return service;
+
+  function isLocalizedMessage (msg) {
+    return angular.isString(msg) || (angular.isObject(msg) && msg['en'] != null);
+  }
+
+  function localizeMessage (msg) {
+    return angular.isString(msg) ? msg : (msg[service.get()] || msg['en']);
+  }
 
   function formatLanguages (langs) {
     let langFormat = code => ({

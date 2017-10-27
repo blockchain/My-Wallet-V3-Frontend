@@ -11,14 +11,14 @@ angular
     controller: BlockAlertController
   })
 
-function BlockAlertController (languages, blockAlert) {
+function BlockAlertController (blockAlert) {
   this.iconTypes = {
     'info': 'icon-success',
     'warning': 'icon-alert',
     'danger': 'icon-build'
   }
   if (blockAlert.isValidConfig(this.config)) {
-    this.alert = blockAlert.localizeConfig(languages.get(), this.config)
+    this.alert = blockAlert.localizeConfig(this.config)
     this.dismissible = this.alert.hideType != null
     this.collapsible = this.alert.hideType === 'collapse'
     this.dismiss = () => { this.dismissed = true }
