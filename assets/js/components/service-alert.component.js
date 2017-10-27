@@ -7,5 +7,5 @@ angular
   })
 
 function ServiceAlertController (Env) {
-  Env.then(options => { this.alert = options.platforms.web.serviceAlert })
+  Env.then(options => { this.alert = options.platforms.web.serviceAlert.global })
 }

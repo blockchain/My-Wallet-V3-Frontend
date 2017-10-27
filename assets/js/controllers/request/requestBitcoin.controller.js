@@ -6,7 +6,7 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
-    $scope.blockAlertConfig = env.platforms.web.serviceAlertInRequest;
+    $scope.blockAlertConfig = env.platforms.web.serviceAlert.requestBtc;
     $scope.showAlert = $scope.blockAlertConfig != null;
   });
 

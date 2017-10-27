@@ -2,68 +2,71 @@
   "showBuySellTab": ["GB", "NL", "DE", "US"],
   "platforms": {
     "web": {
-      "__serviceAlert": {
-        "type": "warning",
-        "header": {
-          "en": "Service alert title"
-        },
-        "sections": [
-          {
-            "title": {
-              "en": "Section title"
-            },
-            "body": {
-              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            }
-          }
-        ],
-        "action": {
-          "title": {
-            "en": "More details concerning this alert."
+      "serviceAlert": {
+        "__global": {
+          "type": "warning",
+          "hideType": "collapse",
+          "header": {
+            "en": "Service alert title"
           },
-          "link": "https://www.example.com/"
-        }
-      },
-      "__serviceAlertInSend": {
-        "type": "danger",
-        "header": {
-          "en": "Service alert title"
-        },
-        "sections": [
-          {
-            "title": {
-              "en": "Section title"
-            },
-            "body": {
-              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          "sections": [
+            {
+              "title": {
+                "en": "Section title"
+              },
+              "body": {
+                "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
             }
+          ],
+          "action": {
+            "title": {
+              "en": "More details concerning this alert."
+            },
+            "link": "https://www.example.com/"
           }
-        ],
-        "action": {
-          "title": {
-            "en": "More details concerning this alert."
+        },
+        "__sendBtc": {
+          "type": "danger",
+          "header": {
+            "en": "Service alert title"
           },
-          "link": "https://www.example.com/"
-        }
-      },
-      "__serviceAlertInRequest": {
-        "type": "danger",
-        "header": {
-          "en": "Service alert title"
-        },
-        "sections": [
-          {
-            "title": {
-              "en": "Section title"
-            },
-            "body": {
-              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          "sections": [
+            {
+              "title": {
+                "en": "Section title"
+              },
+              "body": {
+                "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
             }
+          ],
+          "action": {
+            "title": {
+              "en": "More details concerning this alert."
+            },
+            "link": "https://www.example.com/"
           }
-        ],
-        "action": {
-          "title": {
-            "en": "Alert action"
+        },
+        "__requestBtc": {
+          "type": "danger",
+          "header": {
+            "en": "Service alert title"
+          },
+          "sections": [
+            {
+              "title": {
+                "en": "Section title"
+              },
+              "body": {
+                "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
+            }
+          ],
+          "action": {
+            "title": {
+              "en": "Alert action"
+            }
           }
         }
       }
