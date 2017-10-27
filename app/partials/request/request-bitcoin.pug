@@ -5,7 +5,8 @@
         .item.width-30.width-50-mobile
           label.colon(translate="CURR")
           asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
-      .group.mb-20
+      block-alert(ng-show="showAlert" config="blockAlertConfig" on-action="hideAlert()")
+      .group.mb-20(ng-hide="showAlert")
         .item
           label.flex-between.flex-baseline
             span
@@ -17,10 +18,10 @@
             span.f-14.bg-grey.ph-10.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
             span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel.center-mobile(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browser.canExecCommand" copy-content="{{ address() }}" ng-click="state.isAddressCopied = true")
             span.f-14.ph-25.pv-10.upper.white.bg-success.center-mobile(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
-      .group.mb-20
+      .group.mb-20(ng-hide="showAlert")
         .item
           .or-horizontal Or
-      .group.inline.mb-20
+      .group.inline.mb-20(ng-hide="showAlert")
         .item.width-100
           label.capitalize(translate="ENTER_AMOUNT:")
           .flex-center
@@ -51,7 +52,7 @@
                 required)
               span.mhm {{ settings.currency.code }}
 
-      .group.mb-20(ng-show="numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': state.to.isWatchOnly}")
+      .group.mb-20(ng-show="!showAlert && numberOfActiveAccountsAndLegacyAddresses() > 1" ng-class="{'has-warning': state.to.isWatchOnly}")
         .item
           label(translate="RECEIVE_TO")
           ui-select(ng-model="state.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label" tagging)
@@ -62,12 +63,12 @@
                 label-origin(origin="::destination" highlight="$select.search")
           span.help-block(ng-show="state.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
 
-      .group.mb-20
+      .group.mb-20(ng-hide="showAlert")
         .item
           label.colon(translate="DESCRIPTION")
           textarea(name="label" ng-model="state.label" maxlength="512" rows="8" cols="80" placeholder="What's this transaction for?" required)
 
-      .group.mb-10
+      .group.mb-10(ng-hide="showAlert")
         .item
           button.btn.button-primary.upper(ng-disabled="requestForm.$invalid || locked" translate="NEXT" type="submit")
 

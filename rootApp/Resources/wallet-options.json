@@ -1,5 +1,77 @@
 {
   "showBuySellTab": ["GB", "NL", "DE", "US"],
+  "platforms": {
+    "web": {
+      "serviceAlert": {
+        "__global": {
+          "type": "warning",
+          "hideType": "collapse",
+          "header": {
+            "en": "Service alert title"
+          },
+          "sections": [
+            {
+              "title": {
+                "en": "Section title"
+              },
+              "body": {
+                "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
+            }
+          ],
+          "action": {
+            "title": {
+              "en": "More details concerning this alert."
+            },
+            "link": "https://www.example.com/"
+          }
+        },
+        "__sendBtc": {
+          "type": "danger",
+          "header": {
+            "en": "Service alert title"
+          },
+          "sections": [
+            {
+              "title": {
+                "en": "Section title"
+              },
+              "body": {
+                "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
+            }
+          ],
+          "action": {
+            "title": {
+              "en": "More details concerning this alert."
+            },
+            "link": "https://www.example.com/"
+          }
+        },
+        "__requestBtc": {
+          "type": "danger",
+          "header": {
+            "en": "Service alert title"
+          },
+          "sections": [
+            {
+              "title": {
+                "en": "Section title"
+              },
+              "body": {
+                "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              }
+            }
+          ],
+          "action": {
+            "title": {
+              "en": "Alert action"
+            }
+          }
+        }
+      }
+    }
+  },
   "service_charge": {
     "US": {
       "min_tx_amount": 0,

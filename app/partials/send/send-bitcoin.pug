@@ -44,7 +44,9 @@
               span.help-block(ng-show="sendForm.from.$invalid && sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN")
               span.help-block.inprv(ng-show="sendForm.priv.$invalid && sendForm.priv.$touched" translate="INVALID_PRIV")
 
-        .group
+        block-alert(ng-show="showAlert" config="blockAlertConfig" on-action="hideAlert()")
+
+        .group(ng-hide="showAlert")
           //- To
           .item
             label.colon(translate="TO")
@@ -117,7 +119,7 @@
             .flex-1
               textarea.pas(rows="4" ng-model="transaction.note" name="note" maxlength="512" placeholder="{{'NOTE_PLACEHOLDER' | translate}}")
         //- Fee
-        .group(ng-if="!advanced")
+        .group(ng-hide="showAlert" ng-if="!advanced")
           .group.inline.flex-center.mt-20
             .item.inline.width-60.width-60-mobile
               label.mbn.colon(translate="TX_FEE")
@@ -135,7 +137,7 @@
               span.f-12.state-danger-text(ng-if="transaction.maxAvailable <= 0") You do not have enough funds to use this fee.
               a.f-12(ng-click="advancedSend()" translate="Customize Fee")
         //- Custom Fee
-        .group(ng-if="advanced")
+        .group(ng-hide="showAlert" ng-if="advanced")
           .group.inline.flex-center.mt-10
             .item.width-55.width-55-mobile.width-55-tablet
               .flex-between.flex-baseline
@@ -167,9 +169,9 @@
               span.f-14(ng-if="transaction.maxAvailable > 0") {{ transaction.fee | convert:'btc':true }} ({{ transaction.fee | convert:'fiat':true }})
               a.f-12(ng-click="regularSend()" translate="Cancel")
   //- Step 2 (confirm)
-  div.overview(ng-if="vm.confirm")
+  .overview(ng-if="vm.confirm")
     send-confirm(tx="transaction" on-send="send()" asset="'btc'" on-go-back="vm.toSendView()")
-  .mt-25(ng-if="!vm.confirm")
+  .mt-25(ng-hide="showAlert" ng-if="!vm.confirm")
     button.full.button-primary.upper(
       ladda-translate="CONTINUE"
       ui-ladda="building"

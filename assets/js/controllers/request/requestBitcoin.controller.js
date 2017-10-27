@@ -2,10 +2,12 @@ angular
   .module('walletApp')
   .controller('RequestBitcoinController', RequestBitcoinController);
 
-function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, currency, $log, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, MyBlockchainApi) {
+function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, currency, $log, $translate, $stateParams, filterFilter, $filter, $q, format, smartAccount, Labels, $timeout, browser, Env, MyBlockchainApi, blockAlert) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
+    $scope.blockAlertConfig = env.platforms.web.serviceAlert.requestBtc;
+    $scope.showAlert = $scope.blockAlertConfig != null;
   });
 
   let isUsingPaymentRequestsExperiment = MyBlockchainApi.createExperiment(2);
@@ -23,6 +25,8 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
 
   $scope.destinationLimit = 50;
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
+
+  $scope.hideAlert = () => $scope.showAlert = false;
 
   $scope.state = {
     to: null,
