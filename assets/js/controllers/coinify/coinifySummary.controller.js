@@ -70,6 +70,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
       .then((mediums) => mediums[medium].getAccounts())
       .then((accounts) => accounts[0].buy(subscription)).then(success)
       .then(() => Exchange.fetchProfile(exchange))
+      .then(() => coinify.getSubscriptions())
       .then(() => $scope.vm.goTo('isx'))
       .then(() => $scope.vm.trade && $scope.vm.trade.watchAddress())
       .catch((err) => {

@@ -13,6 +13,8 @@
   p.security-red.pointer.ng-hide(ng-show="vm.qaDebugger && vm.trade.bankAccount && vm.trade.state === 'awaiting_transfer_in'")
     i.ti-search.mrm
     span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
+  .mtm
+    exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars")
   .flex-row.flex-between.pt-20
     .flex-start.flex-center
       a(ng-show="vm.trade.inCurrency === 'INR' && tradeIsPending()" ng-click="editRef()" ng-class="{ 'link-disabled mid-grey': disableLink }" translate="EDIT_REF")

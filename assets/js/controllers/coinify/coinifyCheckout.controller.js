@@ -5,7 +5,7 @@ angular
 function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, modals, balance) {
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
-  $scope.subscriptions = coinify.subscriptions;
+  $scope.subscriptions = () => coinify.subscriptions;
 
   $scope.buyFiatOptions = currency.coinifyCurrencies;
   $scope.sellFiatOptions = currency.coinifyCurrencies.filter((c) => c.code !== 'USD');

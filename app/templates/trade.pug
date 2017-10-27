@@ -33,7 +33,7 @@
         br
     span.display-inline-block(ng-show="trade.medium === 'blockchain'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
     span.display-inline-block(ng-hide="trade.medium === 'blockchain'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ pending && expiredQuote ? btcExpected / 100000000 : (trade.outAmount || trade.outAmountExpected) / 100000000 }} {{ trade.outCurrency }}
-  .exchange-received.pvml.pr-50.flex-row-mobile.flex-between-mobile
+  .exchange-received.pvml.flex-row-mobile.flex-between-mobile
     span(ng-hide="status.gettingQuote")
       span.em-600(ng-hide="trade.medium === 'blockchain'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
       span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.transferOut.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}

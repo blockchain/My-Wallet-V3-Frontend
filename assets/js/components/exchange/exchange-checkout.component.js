@@ -176,7 +176,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
 
-  Env.then(env => $scope.qaDebugger = env.qaDebugger);
+  Env.then(env => {
+    $scope.qaDebugger = env.qaDebugger;
+    this.showRecurringBuy = env.partners.coinify.showRecurringBuy;
+  });
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
 }

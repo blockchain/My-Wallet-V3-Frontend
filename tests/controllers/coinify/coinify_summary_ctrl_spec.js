@@ -34,7 +34,8 @@ describe('CoinifySummaryController', () => {
     },
     accounts: accounts,
     fetchProfile: () => $q.resolve(),
-    getBuyQuote: () => $q.resolve(quote)
+    getBuyQuote: () => $q.resolve(quote),
+    getSubscriptions: () => $q.resolve()
   };
 
   let quote = {

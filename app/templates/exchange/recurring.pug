@@ -3,11 +3,11 @@
 .pam.bg-ultralight-blue.border-light-blue
   .flex-row.pam
     span.flex-1.primary.colon(translate="AMOUNT")
-    span.flex-5 {{ format($ctrl.trade.fiatAmount, $ctrl.dollars, true) }}
+    span.flex-5.ph-5-mobile {{ format($ctrl.trade.fiatAmount, $ctrl.dollars, true) }}
   .flex-row.pam
     span.flex-1.primary.colon(translate="FREQUENCY")
-    span.flex-5(translate="FREQUENCY_INFO" translate-values="{timespan: timespan}")
+    span.flex-5.ph-5-mobile(translate="FREQUENCY_INFO" translate-values="{timespan: timespan}")
   .flex-row.pam
     span.flex-1.primary.colon(translate="DURATION")
-    span.flex-5(ng-show="endTime" translate="DURATION_INFO" translate-values="{endTime: endTime}")
-    span.flex-5(ng-show="!endTime") Until you cancel or reach your limit, whichever happens first.
+    span.flex-5.ph-5-mobile(ng-show="endTime" translate="DURATION_INFO" translate-values="{endTime: endTime}")
+    span.flex-5.ph-5-mobile(ng-show="!endTime") Until you cancel or reach your limit, whichever happens first.
