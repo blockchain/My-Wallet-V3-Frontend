@@ -1604,7 +1604,10 @@
     },
     "user_can_trade": {
       "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
-    }
+    },
+    "create": "Email Verification",
+    "verify": "Setup Profile",
+    "upload": "Upload Documents"
   },
   "SFOX": {
     "user_needs_account": {
@@ -1618,7 +1621,10 @@
     },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
-    }
+    },
+    "create": "Create Account",
+    "verify": "Verify Identity",
+    "link": "Link Payment"
   },
   "EXCHANGE": {
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",

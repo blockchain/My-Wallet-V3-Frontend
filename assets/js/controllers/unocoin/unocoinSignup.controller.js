@@ -8,6 +8,7 @@ function UnocoinSignupController ($stateParams, $uibModalInstance, unocoin, exch
   let links;
   Env.then(env => links = env.partners.unocoin.surveyLinks);
 
+  this.provider = 'UNOCOIN';
   this.exchange = exchange;
   this.quote = quote;
 

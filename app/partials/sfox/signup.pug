@@ -1,6 +1,6 @@
 .sfox-signup.pb-50
   .signup-steps.border-bottom-light
-    div(ng-include="'partials/sfox/signup-steps.pug'")
+    div(ng-include="'templates/exchange/signup-steps.pug'")
   div.pl-40.pr-40.pt-40.pb-25
     div(ng-if="vm.onStep('create')" ng-controller="SfoxCreateAccountController")
       exchange-create(views="views" exchange="exchange" on-create="vm.goTo('verify')" terms-of-service="https://www.sfox.com/terms.html" privacy-agreement="https://www.sfox.com/privacy.html")

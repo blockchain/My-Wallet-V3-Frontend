@@ -13,11 +13,14 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
     };
   });
 
+  this.provider = 'SFOX';
   this.exchange = exchange;
   this.accounts = accounts;
   this.quote = quote;
 
-  this.steps = enumify('create', 'verify', 'link', 'buy');
+  this.steps = enumify('create', 'verify', 'link');
+  this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
+  this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => { this.step = this.steps[s]; };
 

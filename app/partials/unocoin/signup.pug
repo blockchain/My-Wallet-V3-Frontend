@@ -1,6 +1,6 @@
 .unocoin-signup.pb-50
   .signup-steps.border-bottom-light
-    div(ng-include="'partials/unocoin/signup-steps.pug'")
+    div(ng-include="'templates/exchange/signup-steps.pug'")
   div.pl-40.pr-40.pt-40.pb-25
     div(ng-if="vm.onStep('create')" ng-controller="UnocoinCreateAccountController")
       exchange-create(views="views" exchange="exchange" on-create="createAccount()" clear-verification-error="clearVerificationError()" verification-error="vm.verificationError" terms-of-service="https://www.unocoin.com/post/98" privacy-agreement="https://www.unocoin.com/post/104")
