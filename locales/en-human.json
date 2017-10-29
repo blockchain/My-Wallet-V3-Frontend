@@ -1786,5 +1786,9 @@
   "REF_NUMBER_UPDATED": "Ref Number Successfully Updated",
   "START": "Start",
   "END": "End",
+  "FEATURE_DISABLED": {
+    "TITLE": "Feature Disabled",
+    "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
+  },
   "": ""
 }

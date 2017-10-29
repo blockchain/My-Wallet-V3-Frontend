@@ -86,7 +86,7 @@ describe('BlockAlertService', () => {
         { title: { en: 'action' }, link: 'www.example.com' }
       )
       expect(blockAlert.isValidConfig(config)).toEqual(true)
-      expect(blockAlert.localizeConfig('en', config)).toEqual(result)
+      expect(blockAlert.localizeConfig(config)).toEqual(result)
     })
 
     it('should ignore config items that are already strings', () => {
@@ -96,7 +96,7 @@ describe('BlockAlertService', () => {
         { title: 'action', link: 'www.example.com' }
       )
       expect(blockAlert.isValidConfig(config)).toEqual(true)
-      expect(blockAlert.localizeConfig('en', config)).toEqual(result)
+      expect(blockAlert.localizeConfig(config)).toEqual(result)
     })
   })
 

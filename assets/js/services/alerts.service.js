@@ -13,6 +13,7 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
     confirm,
     prompt,
     saving,
+    featureDisabled,
     isDuplicate,
     surveyCloseConfirm,
     displayInfo: display.bind(null, 'info'),
@@ -119,6 +120,14 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
           .catch(() => sync());
         sync();
       }
+    }).result;
+  }
+
+  function featureDisabled (reason) {
+    return $uibModal.open({
+      templateUrl: 'partials/modal-feature-disabled.pug',
+      windowClass: 'bc-modal confirm top',
+      controller: ($scope) => angular.extend($scope, { reason })
     }).result;
   }
 

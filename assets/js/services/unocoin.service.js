@@ -46,6 +46,8 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet, $uibModalStack) {
         env.partners.unocoin.production ? 'production' : 'staging'
       );
       unocoin.api.production = env.partners.unocoin.production;
+      service.disabled = env.partners.unocoin.disabled;
+      service.disabledReason = env.partners.unocoin.disabledReason;
       if (unocoin.trades) service.watchTrades(unocoin.trades);
       unocoin.monitorPayments();
     });
