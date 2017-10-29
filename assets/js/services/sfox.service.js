@@ -69,13 +69,10 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
     } else {
       let { level, required_docs = [] } = profile.verificationStatus;
       let didVerify = (level === 'verified') || (level === 'pending' && required_docs.length === 0);
-      let hasAccount = accounts.length && accounts[0].status === 'active';
       if (!didVerify) {
         return 'verify';
-      } else if (!hasAccount) {
-        return 'link';
       } else {
-        return 'buy';
+        return 'link';
       }
     }
   }

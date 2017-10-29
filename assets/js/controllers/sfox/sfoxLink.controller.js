@@ -73,7 +73,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   $scope.verify = () => {
     $scope.lock();
     $q.resolve(state.accounts[0].verify($scope.fields.deposit1, $scope.fields.deposit2))
-      .then(() => $scope.vm.goTo('buy'))
+      .then(() => $scope.vm.close(true))
       .catch($scope.displayInlineError)
       .finally($scope.free);
   };
@@ -94,7 +94,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
     };
 
     $q.resolve(exchange.bankLink.setAccount(obj))
-      .then(() => $scope.vm.goTo('buy'))
+      .then(() => $scope.vm.close(true))
       .catch(sfox.displayError)
       .finally($scope.free);
   };

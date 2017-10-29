@@ -1624,6 +1624,7 @@
     },
     "create": "Create Account",
     "verify": "Verify Identity",
+    "upload": "Upload Documents",
     "link": "Link Payment"
   },
   "EXCHANGE": {

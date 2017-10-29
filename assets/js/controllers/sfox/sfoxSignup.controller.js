@@ -8,8 +8,9 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
   Env.then(env => {
     let links = env.partners.sfox.surveyLinks;
 
-    this.close = () => {
-      Alerts.surveyCloseConfirm('sfox-survey', links, this.step).then($uibModalInstance.dismiss);
+    this.close = (skipConfirm) => {
+      if (skipConfirm) $uibModalInstance.dismiss();
+      else Alerts.surveyCloseConfirm('sfox-survey', links, this.step).then($uibModalInstance.dismiss);
     };
   });
 
@@ -18,7 +19,8 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
   this.accounts = accounts;
   this.quote = quote;
 
-  this.steps = enumify('create', 'verify', 'link');
+  this.steps = enumify('create', 'verify', 'upload', 'link');
+  this.displaySteps = ['create', 'verify', 'upload', 'link'];
   this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
   this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;

@@ -37,13 +37,13 @@ describe('SfoxSignupController', () => {
     beforeEach(() => ctrl = getController());
 
     it('should have goTo correctly implemented', () => {
-      ctrl.goTo('buy');
-      return expect(ctrl.step).toEqual(ctrl.steps['buy']);
+      ctrl.goTo('link');
+      return expect(ctrl.step).toEqual(ctrl.steps['link']);
     });
 
     it('should have onStep correctly implemented', () => {
-      ctrl.goTo('buy');
-      return expect(ctrl.onStep('buy')).toEqual(true);
+      ctrl.goTo('link');
+      return expect(ctrl.onStep('link')).toEqual(true);
     });
   });
 
