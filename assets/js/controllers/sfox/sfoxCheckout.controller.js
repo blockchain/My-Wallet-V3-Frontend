@@ -60,8 +60,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.inspectTrade = modals.openTradeSummary;
 
   $scope.tabs = {
-    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
+    selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
+    options: ['SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
