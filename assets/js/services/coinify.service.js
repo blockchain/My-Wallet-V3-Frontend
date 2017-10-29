@@ -59,10 +59,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let reason;
       let { user } = service.exchange;
 
-      if (!user) reason = 'user_needs_account';
+      if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
-      else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else if (service.balanceAboveMax) reason = 'can_sell_max';
+      else if (!user) reason = 'user_needs_account';
       else reason = 'can_sell_max';
 
       return reason;
