@@ -1585,7 +1585,7 @@
       "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance."
     },
     "max_remaining_below_min": {
-      "EXPLAIN": "🙁 You have reached your sell limits.",
+      "EXPLAIN": "🙁 You have reached your sell limit.",
       "KYC": "Increase your limit."
     },
     "after_first_trade": {
