@@ -1648,6 +1648,7 @@
     "BANK_ACCOUNT_NUMBER": "Bank Account Number",
     "IFSC": "IFSC"
   },
+  "HERE": "here",
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "YOUR_BALANCES": "YOUR BALANCES",
   "WELCOME_TO_ETHER": "Welcome to ether!",
