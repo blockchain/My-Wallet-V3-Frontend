@@ -211,7 +211,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         buyStatus.canBuy().then((canBuy) => {
-          let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+          let template = canBuy && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',
