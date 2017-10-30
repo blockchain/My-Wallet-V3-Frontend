@@ -885,9 +885,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blockchain-css@^1.1.35:
-  version "1.1.38"
-  resolved "https://registry.yarnpkg.com/blockchain-css/-/blockchain-css-1.1.38.tgz#57473d6bb2b537b5726d814d1ecc1e94c1661f27"
+blockchain-css@^1.1.39:
+  version "1.1.39"
+  resolved "https://registry.npmjs.org/blockchain-css/-/blockchain-css-1.1.39.tgz#af711e4ea64a552abacb98053976f5ba34b5fa95"
   dependencies:
     bootstrap-sass "^3.3.7"
 
