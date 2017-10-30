@@ -120,6 +120,6 @@ form.bc-form(
               span.pos-abs(ng-show="maxAvailable < state.rate.min")
                 span(translate=".MIN_NEEDED_TO_SHIFT")
                 | &nbsp;
-                a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && state.baseCurr === 'btc'")
+                a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && $ctrl.from.coinCode === 'btc'")
       .group.mt-30.mt-10-mobile
         button.btn.button-primary.full(type="submit" ng-disabled="locked || busy || forms.shiftForm.$invalid || !quote || state.loadFailed || state.balanceFailed" translate="NEXT")
