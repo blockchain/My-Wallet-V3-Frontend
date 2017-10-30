@@ -103,7 +103,7 @@ form.bc-form(
                     required)
                   span.mhm.upper {{dollars.code}}
             .pos-rel.f-12.mts
-              span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min")
+              span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min && state.rate.min > 0")
                 span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.min" translate="Below the minimum limit.")
                 div(ng-hide="forms.shiftForm.input.$error.max")
                   span Use
@@ -117,8 +117,8 @@ form.bc-form(
                   | &nbsp;
                   a.underline(ng-click="state.baseCurr = $ctrl.from.coinCode; setMax();") maximum
             .pos-rel.f-12.state-danger-text
-              span.pos-abs(ng-show="maxAvailable < state.rate.min")
-                span(translate=".MIN_NEEDED_TO_SHIFT")
+              span.pos-abs(ng-show="maxAvailable < state.rate.min && state.rate.min > 0")
+                span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: bitCurrencyMap[$ctrl.from.coinCode].convertFrom(state.rate.min, bitCurrencyMap[$ctrl.from.coinCode].currency), curr: $ctrl.from.coinCode.toUpperCase()}")
                 | &nbsp;
                 a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && $ctrl.from.coinCode === 'btc'")
       .group.mt-30.mt-10-mobile
