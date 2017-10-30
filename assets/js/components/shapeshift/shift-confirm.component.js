@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethereum, $q, $filter, currency, Env) {
+function ShiftConfirmController (AngularHelper, $scope, Exchange, Alerts, Wallet, Ethereum, $q, $filter, currency, Env) {
   let now = new Date();
   $scope.human = {'btc': 'Bitcoin', 'eth': 'Ether', 'bch': 'Bitcoin Cash'};
 
@@ -36,7 +36,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, Ethere
     this.handleShift({payment})
         .then(trade => this.onComplete({trade}))
         .then(() => $scope.$root.scheduleRefresh())
-        .catch(() => {}).finally($scope.free);
+        .catch((err) => Exchange.displayError(err)).then($scope.free);
   };
 
   AngularHelper.installLock.call($scope);
