@@ -1,8 +1,8 @@
   angular
     .module('shared')
-    .directive('gaPageView', gaPageView);
+    .directive('gaPageview', gaPageview);
 
-  function gaPageView () {
+  function gaPageview () {
     const directive = {
       restrict: 'E',
       link: link
