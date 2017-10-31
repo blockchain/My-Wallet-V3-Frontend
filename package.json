@@ -109,6 +109,7 @@
   "license": "",
   "semistandard": {
     "ignore": [
+      "assets/js/sharedDirectives/ga-create.directive.js",
       "tests/controllers",
       "tests/directives",
       "tests/services",
@@ -125,6 +126,7 @@
       "confirm",
       "expect",
       "describe",
+      "ga",
       "it",
       "fit",
       "inject",
