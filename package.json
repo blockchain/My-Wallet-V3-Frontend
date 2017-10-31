@@ -109,7 +109,7 @@
   "license": "",
   "semistandard": {
     "ignore": [
-      "assets/js/sharedDirectives/ga-create.directive.js",
+      "assets/js/sharedDirectives/google-analytics.directive.js",
       "tests/controllers",
       "tests/directives",
       "tests/services",

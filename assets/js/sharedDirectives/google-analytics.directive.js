@@ -1,10 +1,9 @@
 angular
   .module('shared')
-  .directive('gaCreate', gaCreate);
+  .directive('googleAnalytics', googleAnalytics);
 
-function gaCreate () {
+function googleAnalytics () {
   const directive = {
-    restrict: 'E',
     link: link
   };
   return directive;
@@ -16,5 +15,13 @@ function gaCreate () {
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-75417471-1', 'auto');
+
+    let page = document.location.pathname;
+    ga('send', 'pageview', page, { anonymizeIp: true });
+
+    scope.$on('$destroy', () => {
+      ga('send', 'pageview', {'sessionControl': 'end'});
+      document.head.getElementsByTagName('script')[0].remove();
+    });
   }
 }
