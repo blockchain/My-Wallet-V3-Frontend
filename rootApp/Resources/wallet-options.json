@@ -72,6 +72,9 @@
       }
     }
   },
+  "webHardFork": {
+    "forkTime": 1510808400000
+  },
   "service_charge": {
     "US": {
       "min_tx_amount": 0,

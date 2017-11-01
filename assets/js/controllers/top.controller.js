@@ -2,8 +2,14 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi) {
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi, Env) {
   let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
+
+  Env.then(env => {
+    if (env.webHardFork.forkTime) {
+      $scope.forkDate = new Date(env.webHardFork.forkTime);
+    }
+  });
 
   $scope.copied = false;
   $scope.status = Wallet.status;

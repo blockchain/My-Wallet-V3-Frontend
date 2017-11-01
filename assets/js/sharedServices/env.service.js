@@ -61,6 +61,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.platforms = res.platforms;
 
+      env.webHardFork = res.webHardFork || {};
+
       defer.resolve(env);
     }
   );
