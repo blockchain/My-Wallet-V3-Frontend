@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', 'localStorageService'];
+Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', 'localStorageService', 'languages'];
 
-function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, localStorageService) {
+function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, localStorageService, languages) {
   const service = {
     alerts: [],
     close,
@@ -123,7 +123,8 @@ function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal,
     }).result;
   }
 
-  function featureDisabled (reason) {
+  function featureDisabled (disabledReason) {
+    let reason = disabledReason && languages.localizeMessage(disabledReason);
     return $uibModal.open({
       templateUrl: 'partials/modal-feature-disabled.pug',
       windowClass: 'bc-modal confirm top',
