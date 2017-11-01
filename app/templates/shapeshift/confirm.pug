@@ -24,11 +24,11 @@ form.bc-form(
             span(translate="TX_FEE")
             helper-button(content="SHIFT.TX_FEE_EXPLAIN")
           span.em-300.right-align
-            span {{ fee | convert:quote.fromCurrency:true }}
+            span {{ fee | format:quote.fromCurrency:true }}
         li.pv-10.border-bottom-light.flex-between
           span.em-500(translate="SHIFT.LEAVING_WALLET" translate-values="{input: human[quote.fromCurrency]}")
           span.em-300.right-align
-            span {{ totalLeavingWallet() | format:quote.fromCurrency:true }}
+            span {{ total | format:quote.fromCurrency:true }}
         li.pv-10.border-bottom-light.flex-between
           span.em-500
             span(translate="EXCHANGE_RATE")

@@ -33,18 +33,10 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.forms = $scope.state = {};
   $scope.dollars = Wallet.settings.currency;
   $scope.country = MyWallet.wallet.accountInfo.countryCodeGuess;
+  $scope.cryptoCurrencyMap = currency.cryptoCurrencyMap;
   $scope.fiat = $scope.country === 'US'
     ? currency.currencies.filter(c => c.code === 'USD')[0]
     : currency.currencies.filter(c => c.code === 'EUR')[0];
-  $scope.ether = currency.ethCurrencies.filter(c => c.code === 'ETH')[0];
-  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-  $scope.bitcoinCash = currency.bchCurrencies.filter(c => c.code === 'BCH')[0];
-
-  $scope.bitCurrencyMap = {
-    'eth': { currency: $scope.ether, convert: currency.convertToEther, icon: 'icon-ethereum' },
-    'btc': { currency: $scope.bitcoin, convert: currency.convertToSatoshi, icon: 'icon-bitcoin' },
-    'bch': { currency: $scope.bitcoinCash, convert: currency.convertToBitcoinCash, icon: 'icon-bitcoin-cash' }
-  };
 
   let state = $scope.state = {
     input: { amount: null },
@@ -63,13 +55,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.refreshQuote = MyWalletHelpers.asyncOnce(() => {
     $scope.lock();
     let fetchSuccess = (quote) => {
-      let input = $scope.bitCurrencyMap[this.from.coinCode];
-      let output = $scope.bitCurrencyMap[this.to.coinCode];
+      let input = $scope.cryptoCurrencyMap[this.from.coinCode];
+      let output = $scope.cryptoCurrencyMap[this.to.coinCode];
 
       $scope.free();
       $scope.quote = quote; state.error = null; state.loadFailed = false;
-      if (state.baseInput) state.output.amount = output.convert(Number.parseFloat(quote.withdrawalAmount), output.currency);
-      else state.input.amount = input.convert(Number.parseFloat(quote.depositAmount), input.currency);
+      if (state.baseInput) state.output.amount = output.to(Number.parseFloat(quote.withdrawalAmount), output.currency);
+      else state.input.amount = input.to(Number.parseFloat(quote.depositAmount), input.currency);
       AngularHelper.$safeApply();
     };
 
@@ -102,13 +94,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   let getRate = () => {
-    let input = $scope.bitCurrencyMap[this.from.coinCode];
-    let upperLimit = input.convert(UPPER_LIMIT, $scope.fiat);
+    let input = $scope.cryptoCurrencyMap[this.from.coinCode];
+    let upperLimit = input.to(UPPER_LIMIT, $scope.fiat);
 
     return $q.resolve(this.handleRate({rate: this.from.coinCode + '_' + this.to.coinCode}))
               .then((rate) => {
-                let maxLimit = input.convert(rate.maxLimit, input.currency);
-                state.rate.min = input.convert(rate.minimum, input.currency);
+                let maxLimit = input.to(rate.maxLimit, input.currency);
+                state.rate.min = input.to(rate.minimum, input.currency);
                 state.rate.max = maxLimit < upperLimit ? maxLimit : upperLimit;
               });
   };

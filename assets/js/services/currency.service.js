@@ -83,6 +83,12 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     }
   ];
 
+  const cryptoCurrencyMap = {
+    'eth': { currency: ethCurrencies[0], to: convertToEther, from: convertFromEther, icon: 'icon-ethereum' },
+    'btc': { currency: bitCurrencies[0], to: convertToSatoshi, from: convertFromSatoshi, icon: 'icon-bitcoin' },
+    'bch': { currency: bchCurrencies[0], to: convertToBitcoinCash, from: convertFromBitcoinCash, icon: 'icon-bitcoin-cash' }
+  };
+
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
@@ -93,6 +99,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     conversions,
     ethConversions,
     fetchExchangeRate,
+    cryptoCurrencyMap,
     fetchEthRate,
     fetchBchRate,
     fetchAllRates,
