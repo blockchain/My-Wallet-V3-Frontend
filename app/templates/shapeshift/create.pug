@@ -17,10 +17,10 @@ form.bc-form(
             span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
           ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setWallet('from', 'to')" ng-disabled="$ctrl.wallet")
             ui-select-match
-              i.pr-5(ng-class="bitCurrencyMap[$ctrl.from.coinCode].icon")
+              i.pr-5(ng-class="cryptoCurrencyMap[$ctrl.from.coinCode].icon")
               span {{ $ctrl.from.label }}
             ui-select-choices(repeat="account in $ctrl.origins")
-              i.pr-5(ng-class="bitCurrencyMap[account.coinCode].icon")
+              i.pr-5(ng-class="cryptoCurrencyMap[account.coinCode].icon")
               span {{ account.label }}
         .flex-center.flex-justify.pt-30
           .switch.fade(ng-if="$ctrl.wallet")
@@ -31,10 +31,10 @@ form.bc-form(
           .flex-center
             ui-select.asset-select.width-100(ng-model="$ctrl.to" name="$ctrl.to" ng-change="setWallet('to', 'from')" ng-disabled="locked")
               ui-select-match
-                i.pr-5(ng-class="bitCurrencyMap[$ctrl.to.coinCode].icon")
+                i.pr-5(ng-class="cryptoCurrencyMap[$ctrl.to.coinCode].icon")
                 span {{ $ctrl.to.label }}
               ui-select-choices(repeat="destination in $ctrl.destinations")
-                i.pr-5(ng-class="bitCurrencyMap[destination.coinCode].icon")
+                i.pr-5(ng-class="cryptoCurrencyMap[destination.coinCode].icon")
                 span {{ destination.label }}
       fieldset(ng-disabled="maxAvailable < state.rate.min")
         .group
@@ -56,8 +56,8 @@ form.bc-form(
                     ng-model-options="{allowInvalid: true}"
                     ng-min="state.rate.min"
                     ng-max="state.rate.max < maxAvailable ? state.rate.max : maxAvailable"
-                    transform-currency="bitCurrencyMap[$ctrl.from.coinCode].currency"
-                    base-currency="bitCurrencyMap[$ctrl.from.coinCode].currency"
+                    transform-currency="cryptoCurrencyMap[$ctrl.from.coinCode].currency"
+                    base-currency="cryptoCurrencyMap[$ctrl.from.coinCode].currency"
                     ng-change="state.baseCurr = $ctrl.from.coinCode"
                     prevent-event="mousewheel"
                     focus-when="true"
@@ -69,7 +69,7 @@ form.bc-form(
                     name="inputFiat"
                     ng-model="state.input.amount"
                     ng-model-options="{allowInvalid: true}"
-                    base-currency="bitCurrencyMap[$ctrl.from.coinCode].currency"
+                    base-currency="cryptoCurrencyMap[$ctrl.from.coinCode].currency"
                     ng-change="state.baseCurr = $ctrl.from.coinCode"
                     transform-currency="dollars"
                     step="0.01"
@@ -83,8 +83,8 @@ form.bc-form(
                     type="number"
                     name="output"
                     ng-model="state.output.amount"
-                    base-currency="bitCurrencyMap[$ctrl.to.coinCode].currency"
-                    transform-currency="bitCurrencyMap[$ctrl.to.coinCode].currency"
+                    base-currency="cryptoCurrencyMap[$ctrl.to.coinCode].currency"
+                    transform-currency="cryptoCurrencyMap[$ctrl.to.coinCode].currency"
                     ng-change="state.baseCurr = $ctrl.to.coinCode"
                     prevent-event="mousewheel"
                     step="0.01"
@@ -96,7 +96,7 @@ form.bc-form(
                     name="inputFiat"
                     ng-model="state.output.amount"
                     ng-model-options="{allowInvalid: true}"
-                    base-currency="bitCurrencyMap[$ctrl.to.coinCode].currency"
+                    base-currency="cryptoCurrencyMap[$ctrl.to.coinCode].currency"
                     ng-change="state.baseCurr = $ctrl.to.coinCode"
                     transform-currency="dollars"
                     step="0.01"
