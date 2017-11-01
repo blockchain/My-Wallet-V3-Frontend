@@ -555,11 +555,13 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.toggleDisplayCurrency = () => {
+    /* Disable for fork
     if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
       wallet.settings.displayCurrency = wallet.settings.currency;
     } else {
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
     }
+    */
   };
 
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) => {
