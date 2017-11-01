@@ -133,8 +133,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         case 'wallet.common.buy-sell': return (
           featureDisabledWhen($scope.buySellDisabled, $scope.buySellDisabledReason) ||
           featureDisabledWhen(wallet.external.coinify.user && coinify.disabled, coinify.disabledReason) ||
-          featureDisabledWhen(wallet.external.unocoin.user && unocoin.disabled, coinify.disabledReason) ||
-          featureDisabledWhen(wallet.external.sfox.user && sfox.disabled, coinify.disabledReason) ||
+          featureDisabledWhen(wallet.external.unocoin.user && unocoin.disabled, unocoin.disabledReason) ||
+          featureDisabledWhen(wallet.external.sfox.user && sfox.disabled, sfox.disabledReason) ||
           ensureMetadataReady()
         );
         case 'wallet.common.buy-sell.coinify': return (
