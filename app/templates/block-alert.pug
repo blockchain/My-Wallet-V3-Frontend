@@ -1,8 +1,10 @@
 .block-alert.flex-center.flex-column-mobile.ph-30.pv-15(
   ng-class="$ctrl.alert.type"
   ng-show="$ctrl.alert && !$ctrl.dismissed")
-  i.ti-close.f-14(ng-show="$ctrl.dismissible" ng-click="$ctrl.dismiss()")
-  i.alert-icon.icon-lg.mr-25.no-margin-mobile(
+  span.dismiss-action(ng-show="$ctrl.dismissible" ng-click="$ctrl.dismiss()")
+    i.ti-close.f-14(ng-hide="$ctrl.collapsible")
+    i.icon-up_arrow.f-12.hidden-xs(ng-show="$ctrl.collapsible")
+  i.alert-icon.icon-lg.mr-25.hidden-xs(
     ng-show="$ctrl.showIcon"
     ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
   div
@@ -21,12 +23,15 @@
         ng-hide="$ctrl.alert.action.link"
         ng-click="$ctrl.onAction()")
         | {{ $ctrl.alert.action.title }}
-.block-alert.flex-center.ph-30.pv-5.pointer(
+  .visible-xs.mt-15
+    i.icon-up_arrow(ng-show="$ctrl.collapsible" ng-click="$ctrl.dismiss()")
+.block-alert.flex-center.flex-between.flex-column-mobile.ph-30.pv-5(
   ng-class="$ctrl.alert.type"
-  ng-show="$ctrl.alert && $ctrl.collapsible && $ctrl.dismissed"
-  ng-click="$ctrl.dismissed = false")
-  i.alert-icon.f-18.mr-15.no-margin-mobile(
-    ng-show="$ctrl.showIcon"
-    ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
-  .center-mobile.flex-grow
-    span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
+  ng-show="$ctrl.alert && $ctrl.collapsible && $ctrl.dismissed")
+  .flex-center.flex-grow
+    i.alert-icon.f-18.mr-15.hidden-xs(
+      ng-show="$ctrl.showIcon"
+      ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
+    .center-mobile.flex-grow
+      span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
+  i.icon-down_arrow.mt-5.f-12.pointer(ng-click="$ctrl.dismissed = false")
