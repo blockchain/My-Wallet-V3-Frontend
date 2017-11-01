@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi, Env) {
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi, Env, languages) {
   let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
   Env.then(env => {
-    if (env.webHardFork.forkTime) {
-      $scope.forkDate = new Date(env.webHardFork.forkTime);
+    if (env.webHardFork.balanceMessage) {
+      $scope.balanceMessage = languages.localizeMessage(env.webHardFork.balanceMessage);
     }
   });
 

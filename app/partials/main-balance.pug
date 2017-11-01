@@ -18,7 +18,7 @@
             span {{ getEthTotal() | format:'eth' }} ETH
           span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(eth="getEthTotal()")
-    .mvn.f-20.em-200.lh1(ng-class="{'security-red flex-end flex-center flex-justify-mobile': forkDate}")
-      .fork-warn.mr-10.flex-center(ng-show="forkDate")
-        span.f-10 This balance shows your equivalent fiat balance using the BTC price as of {{ forkDate | date:'MMMM d' }}
+    .mvn.f-20.em-200.lh1(ng-class="{'security-red flex-end flex-center flex-justify-mobile': balanceMessage}")
+      .fork-warn.mr-10.flex-center.flex-end(ng-show="balanceMessage")
+        span.f-10 {{ balanceMessage }}
       fiat(btc="getTotal()" eth="getEthTotal() > 0 ? getEthTotal() : null")

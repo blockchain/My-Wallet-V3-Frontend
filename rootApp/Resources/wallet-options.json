@@ -73,7 +73,9 @@
     }
   },
   "webHardFork": {
-    "forkTime": 1510808400000
+    "balanceMessage": {
+      "en": "This balance shows your equivalent fiat balance using the BTC price as of November 16"
+    }
   },
   "service_charge": {
     "US": {
