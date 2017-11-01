@@ -8,6 +8,7 @@
   div(ng-hide="vm.confirm")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
       fieldset
+        block-alert.form-banner-alert(ng-show="showAlertBanner" config="blockAlertBannerConfig")
         .group.inline
           .item.width-30.width-50-mobile.mb-20.mr-20
             label.colon(translate="CURR")

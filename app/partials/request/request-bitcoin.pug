@@ -1,6 +1,7 @@
 #receive.modal-body
   form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="nextStep()" novalidate)
     fieldset
+      block-alert.form-banner-alert(ng-show="showAlertBanner" config="blockAlertBannerConfig")
       .group.mb-20.inline
         .item.width-30.width-50-mobile
           label.colon(translate="CURR")
