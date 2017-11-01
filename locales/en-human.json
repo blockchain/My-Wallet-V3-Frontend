@@ -1578,11 +1578,15 @@
       "BUY": "@:BUY"
     },
     "can_sell_max": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance.",
       "KYC": "Increase your limit."
     },
     "can_sell_remaining_balance": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>"
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance."
+    },
+    "max_remaining_below_min": {
+      "EXPLAIN": "🙁 You have reached your sell limit.",
+      "KYC": "Increase your limit."
     },
     "after_first_trade": {
       "EXPLAIN": "Your limit is set to 0 {{::curr}}.",

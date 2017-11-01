@@ -10,7 +10,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function bitcoinCashWalletController ($scope, modals, ShapeShift, MyWallet, Wallet, currency, Env) {
+function bitcoinCashWalletController ($scope, modals, Alerts, ShapeShift, MyWallet, Wallet, currency, Env) {
   this.accountInfo = MyWallet.wallet.accountInfo;
 
   Env.then(env => {
@@ -29,7 +29,9 @@ function bitcoinCashWalletController ($scope, modals, ShapeShift, MyWallet, Wall
   this.showShift = () => ShapeShift.userHasAccess;
 
   this.openSend = () => modals.openSend(null, { code: 'bch', account: this.wallet });
-  this.openExchange = () => modals.openExchange({ code: 'bch', account: this.wallet });
+  this.openExchange = () => ShapeShift.disabled
+    ? Alerts.featureDisabled(ShapeShift.disabledReason)
+    : modals.openExchange({ code: 'bch', account: this.wallet });
 
   let txs = () => Blockchain.MyWallet.wallet.bch.txs;
   this.txList = () => txs().filter((tx) => tx.belongsTo(this.wallet.index >= 0 ? this.wallet.index : 'imported'));

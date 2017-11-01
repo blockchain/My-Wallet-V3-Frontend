@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift, coinify, unocoin, sfox, Env, languages) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift, coinify, unocoin, sfox, Env) {
   Env.then(env => {
     $scope.buySellDisabled = env.buySell.disabled;
     $scope.buySellDisabledReason = env.buySell.disabledReason;
@@ -98,7 +98,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
     let featureDisabledWhen = (disabled, reason) => {
       if (disabled) {
-        Alerts.featureDisabled(reason && languages.localizeMessage(reason));
+        Alerts.featureDisabled(reason);
         event.preventDefault();
         return true;
       }
@@ -211,7 +211,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         buyStatus.canBuy().then((canBuy) => {
-          let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+          let template = canBuy && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',

@@ -7,7 +7,7 @@
                                     tooltip-append-to-body="true"
                                     tooltip-placement="top")
           .flex-row.f-16.em-300
-            span(ng-if="vm.quote") {{ vm.BTCAmount() | convert:'btc' }}
+            span(ng-if="vm.quote") {{ vm.BTCAmount() / 1e8 }} BTC
             span(ng-if="vm.trade") {{ vm.trade.transferIn.receiveAmount }} BTC
             | &nbsp;
             span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
