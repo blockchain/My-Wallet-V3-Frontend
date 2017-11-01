@@ -68,13 +68,13 @@ $select-fg: #686868;
     background-color: transparent;
     border-color: none;
   }
-  
+
   &.asset-select {
     .ui-select-choices-row > a {
       padding: 8px 16px;
     }
   }
-  
+
   &.ui-select-bootstrap.dropdown.open {
     input {
       border-radius: 0;
@@ -290,4 +290,65 @@ $tt-position-default: -4px !important;
 .badge {
   background-color: $regal-blue !important;
   padding: 3px 6px 3px 7px !important;
+}
+
+// -------------- UIB-DATEPICKER -------------- //
+
+.uib-datepicker-popup {
+  table {
+    thead {
+      tr {
+        th {
+          button {
+            i {
+              color: #ccc;
+            }
+          }
+        }
+      }
+      strong {
+        font-weight: 300;
+      }
+      small {
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+    tbody {
+      tr {
+        td {
+          button {
+            border: none;
+          }
+          button.active {
+            background: $iris;
+            box-shadow: none;
+            span {
+              color: white;
+            }
+          }
+          button.active:hover {
+            background: $iris;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+  > .uib-button-bar {
+    > .btn-success {
+      @extend .button-primary;
+      @extend .button-sm;
+    }
+    > .btn-group.pull-left {
+      > .btn-danger, .btn-info {
+        @extend .button-muted;
+        color: $iris;
+      }
+      > .btn-danger:hover, .btn-info:hover {
+        background-color: white;
+        color: $iris;
+      }
+    }
+  }
 }

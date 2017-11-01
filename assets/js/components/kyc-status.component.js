@@ -2,12 +2,12 @@ angular
   .module('walletApp')
   .component('kycStatus', {
     bindings: {
-      state: '<',
+      kyc: '<',
       currency: '<',
       onTrigger: '&'
     },
     templateUrl: 'templates/kyc-status.pug',
-    controller: function (buySell) {
+    controller: function (coinify) {
       this.stateMap = {
         'pending': { ns: 'KYC_PENDING', i: 'ti-alert' },
         'updateRequested': { ns: 'KYC_UPDATES_REQUESTED', i: 'ti-alert' },
@@ -15,13 +15,13 @@ angular
         'rejected': { ns: 'KYC_REJECTED', i: 'ti-na' }
       };
 
-      this.getState = () => this.stateMap[this.state];
+      this.getState = () => this.stateMap[this.kyc.state];
 
-      this.profile = buySell.getExchange().profile;
+      this.profile = coinify.exchange.profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
       this.getCardMax = () => {
-        if (buySell.limits.card.max) return this.currency && buySell.limits.card.max[this.currency.code] + ' ' + this.currency.code;
+        if (coinify.limits.card.inRemaining) return this.currency && coinify.limits.card.inRemaining[this.currency] + ' ' + this.currency;
       };
     }
   });

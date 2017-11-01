@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendBitcoinController', SendBitcoinController);
 
-function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $timeout, $state, $filter, $stateParams, $translate, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env, modals) {
+function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $timeout, $state, $filter, $stateParams, $translate, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env, modals, blockAlert) {
   let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
   const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
 
@@ -13,6 +13,10 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
     FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
     FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
     $scope.AB_TEST_FEE = FEE_OPTIONS != null;
+    $scope.blockAlertConfig = env.platforms.web.serviceAlert.sendBtc;
+    $scope.blockAlertBannerConfig = env.platforms.web.serviceAlert.sendBtcBanner;
+    $scope.showAlert = $scope.blockAlertConfig != null;
+    $scope.showAlertBanner = !$scope.showAlert && $scope.blockAlertBannerConfig != null;
   });
 
   $scope.status = Wallet.status;
@@ -23,6 +27,9 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.originsLoaded = false;
   $scope.originLimit = 50;
   $scope.increaseLimit = () => $scope.originLimit += 50;
+
+  $scope.hideAlert = () => $scope.showAlert = false;
+  $scope.hideAlertBanner = () => $scope.showAlertBanner = false;
 
   $scope.sending = false;
   $scope.advanced = false;

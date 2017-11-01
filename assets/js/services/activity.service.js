@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'buySell', 'Ethereum'];
+Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'coinify', 'Ethereum'];
 
-function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySell, Ethereum) {
+function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinify, Ethereum) {
   var txSub;
 
   const activity = {
@@ -24,7 +24,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, buySel
   };
 
   let getTxMessage = (hash, type, asset) => (
-    buySell.getTxMethod(hash) === 'buy' ? 'BOUGHT' : `${type} ${asset.toUpperCase()}`
+    coinify.getTxMethod(hash) === 'buy' ? 'BOUGHT' : `${type} ${asset.toUpperCase()}`
   );
 
   setTxSub();

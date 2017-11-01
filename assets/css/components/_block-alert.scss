@@ -1,0 +1,29 @@
+@mixin block-alert-type($name, $primary, $secondary) {
+  &.#{$name} {
+    background: $secondary;
+    border-color: $primary;
+    i.alert-icon {
+      color: $primary;
+    }
+  }
+}
+
+.block-alert {
+  position: relative;
+  border: 1px solid;
+
+  i.icon-lg {
+    font-size: 80px;
+  }
+
+  .dismiss-action {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    cursor: pointer;
+  }
+
+  @include block-alert-type("info", $iris, $light-blue);
+  @include block-alert-type("warning", $dandelion, $moccasin);
+  @include block-alert-type("danger", $bittersweet, $rosebud);
+}

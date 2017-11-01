@@ -2,10 +2,45 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, Alerts, modals, Env, Exchange) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
   const service = {
+    get exchange () {
+      return MyWallet.wallet.external.sfox;
+    },
+    get profile () {
+      return service.exchange.profile;
+    },
+    get limits () {
+      return service.profile.limits;
+    },
+    // TODO: SFOX needs access to the sell exchange rate
+    get balanceAboveMin () {
+      return Exchange.sellMax > 0;
+    },
+    get userCanBuy () {
+      return !service.profile || service.profile.canBuy;
+    },
+    get userCanSell () {
+      return service.balanceAboveMin;
+    },
+    get buyReason () {
+      let reason;
+      if (!service.profile) reason = 'user_needs_account';
+      else reason = 'user_can_buy';
+      return reason;
+    },
+    get sellReason () {
+      let reason;
+      if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
+      else if (!service.profile) reason = 'user_needs_account';
+      else reason = 'user_can_sell';
+      return reason;
+    },
     buy,
+    sell,
     init,
+    buying,
+    selling,
     determineStep
   };
 
@@ -22,6 +57,8 @@ function sfox ($q, Alerts, modals, Env, Exchange) {
       );
       sfox.api.production = env.partners.sfox.production;
       sfox.api.apiKey = env.partners.sfox.apiKey;
+      service.disabled = env.partners.sfox.disabled;
+      service.disabledReason = env.partners.sfox.disabledReason;
       if (sfox.trades) service.watchTrades(sfox.trades);
       sfox.monitorPayments();
     });
@@ -45,9 +82,30 @@ function sfox ($q, Alerts, modals, Env, Exchange) {
     }
   }
 
+  function buying () {
+    return {
+      reason: service.buyReason,
+      isDisabled: !service.userCanBuy,
+      launchOptions: service.buyLaunchOptions
+    };
+  }
+
+  function selling () {
+    return {
+      reason: service.sellReason,
+      isDisabled: !service.userCanSell,
+      launchOptions: service.sellLaunchOptions
+    };
+  }
+
   function buy (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
       .then(mediums => mediums.ach.buy(account));
+  }
+
+  function sell (account, quote) {
+    return $q.resolve(quote.getPaymentMediums())
+      .then(mediums => mediums.ach.sell(account));
   }
 
   return service;

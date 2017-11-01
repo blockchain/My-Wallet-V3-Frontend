@@ -1,9 +1,14 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
-function LandingCtrl ($scope, $state, $sce, languages, Env, walletStats) {
+function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.showEth = env.ethereum.rolloutFraction === 1;
+    $scope.apiDomain = env.apiDomain;
+
+    $http.get($scope.apiDomain + 'charts/my-wallet-n-users?cors=true')
+      .then((res) => $scope.walletCount = Math.floor(res.data.values[res.data.values.length - 1].y / 1e6))
+      .catch(() => $scope.walletCount = walletStats.walletCountMillions);
   });
 
   $scope.fields = {
@@ -15,7 +20,6 @@ function LandingCtrl ($scope, $state, $sce, languages, Env, walletStats) {
   $scope.languages = languages.languages;
 
   $scope.txsCount = walletStats.transactionsCountMillions;
-  $scope.walletCount = walletStats.walletCountMillions;
 
   $scope.firstLoad = () => {
     let language_code = languages.get();

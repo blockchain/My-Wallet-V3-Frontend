@@ -47,11 +47,12 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   $scope.setCurrency = curr => $scope.state.base = curr;
   $scope.setTime = time => $scope.state.time = time;
   $scope.setScale = range => $scope.state.scale = $scope.timeHelpers[range]['scale'];
+  $scope.setStart = start => $scope.state.start = start;
 
   $scope.isTime = time => $scope.state.time === time;
   $scope.isCurrency = curr => $scope.state.base === curr;
 
-  const handleChart = (chartData) => {
+  $scope.handleChart = (chartData) => {
     $scope.options = {};
 
     $scope.options.data = chartData.map(data => parseFloat(data.price));
@@ -78,7 +79,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     $scope.useCache = true;
   };
 
-  const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then(handleChart, handleChartError);
+  const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then($scope.handleChart, handleChartError);
 
   $scope.getStartDate = () => {
     let d = new Date();
@@ -98,17 +99,16 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     }
   };
 
-  $scope.mapStateToReq = time => {
-    let startDate = $scope.getStartDate();
-    $scope.state.start = startDate;
-
-    return Object.assign({}, $scope.state, $scope.timeHelpers[time], {start: startDate});
-  };
-
   $scope.$watch('settings.currency', next => $scope.state.quote = next.code);
-  $scope.$watch('state.base', next => fetchChart($scope.state));
+
   $scope.$watch('state.time', next => {
+    $scope.setStart($scope.getStartDate());
     $scope.setScale(next);
-    fetchChart($scope.mapStateToReq(next));
+    fetchChart($scope.state);
+  });
+
+  $scope.$watch('state.base', next => {
+    $scope.setStart($scope.getStartDate());
+    fetchChart($scope.state);
   });
 }

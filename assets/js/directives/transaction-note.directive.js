@@ -41,6 +41,7 @@ function transactionNote ($translate, $rootScope, Wallet) {
     };
 
     scope.removeNote = () => {
+      scope.draftNote = '';
       scope.note = null;
       scope.editNote = false;
       scope.deleteNote();

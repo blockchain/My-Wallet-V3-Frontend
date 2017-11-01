@@ -133,11 +133,16 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
     let account = accounts && accounts[0];
     let tx = addTradeDetails(trade, account);
 
+    let time;
+    if (/\bINR\b/.test(tx.TOTAL_COST)) time = 'hours';
+    else time = 'days';
+
     return {
       tx: tx,
       class: 'success',
       values: {
-        email: Wallet.user.email
+        email: Wallet.user.email,
+        time: time
       },
       namespace: 'TX_INITIATED'
     };

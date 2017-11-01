@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, buySell, country, state, buyStatus, modals, Env) {
+function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, buyStatus, modals, Env) {
   buyStatus.canBuy().then((canBuy) => {
     if (!canBuy) {
       $state.go('wallet.common.home');
@@ -60,12 +60,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     let country = $scope.country.Name;
     let state = $scope.country.Code === 'US' ? $scope.state.Name : undefined;
 
-    buySell.signupForAccess(email, country, state);
+    coinify.signupForAccess(email, country, state);
   };
 
   $scope.selectPartner = (partner, countryCode) => {
     $scope.status = { busy: true };
-    $state.go($scope.vm.base + partner.route, { countryCode });
+    $state.go($scope.vm.base + partner.route, { countryCode })
+      .catch(() => { $scope.status.busy = false; });
   };
 
   $scope.onWhitelist = (countryCode) => (

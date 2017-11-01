@@ -15,6 +15,9 @@ describe('buyStatus service', () => {
     module(($provide) => {
       $provide.value('Env', Promise.resolve({
         showBuySellTab: ['US'],
+        buySell: {
+          disabled: false
+        },
         partners: {
           coinify: {
             countries: ['NL']
