@@ -29,6 +29,7 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
 
   $scope.hideAlert = () => $scope.showAlert = false;
+  $scope.hideAlertBanner = () => $scope.showAlertBanner = false;
 
   $scope.state = {
     to: null,
