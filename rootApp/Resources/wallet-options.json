@@ -157,7 +157,7 @@
     }
   },
   "webHardFork": {
-    "balanceMessage": {
+    "__balanceMessage": {
       "en": "This balance shows your equivalent fiat balance using the BTC price as of November 16"
     }
   },
