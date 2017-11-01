@@ -58,9 +58,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
+  let toggleEnabled = true;
   Env.then(env => {
     wallet.api.ROOT_URL = env.rootURL; // Explorer endpoints
     wallet.api.API_ROOT_URL = env.apiDomain; // API endpoints
+
+    if (languages.isLocalizedMessage(env.webHardFork.balanceMessage)) {
+      toggleEnabled = false;
+    }
 
     if (env.customWebSocketURL) {
       wallet.my.ws.wsUrl = env.customWebSocketURL;
@@ -555,13 +560,12 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.toggleDisplayCurrency = () => {
-    /* Disable for fork
+    if (!toggleEnabled) return;
     if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
       wallet.settings.displayCurrency = wallet.settings.currency;
     } else {
       wallet.settings.displayCurrency = wallet.settings.btcCurrency;
     }
-    */
   };
 
   wallet.checkAndGetTransactionAmount = (amount, currency, success, error) => {
