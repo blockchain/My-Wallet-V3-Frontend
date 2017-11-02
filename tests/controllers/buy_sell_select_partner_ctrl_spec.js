@@ -11,6 +11,9 @@ describe('BuySellSelectPartnerController', () => {
   beforeEach(() => {
     module(($provide) => {
       $provide.factory('Env', ($q) => $q.resolve({
+        webHardFork: {
+          balanceMessage: { 'en': 'Balance message' }
+        },
         partners: {
           coinify: {
             countries: ['GB']

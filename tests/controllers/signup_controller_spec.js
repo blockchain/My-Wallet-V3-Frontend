@@ -13,7 +13,10 @@ describe('SignupCtrl', () => {
   beforeEach(() => {
     module(($provide) => {
       $provide.factory('Env', ($q) => $q.resolve({
-        rootURL: 'https://blockchain.info/'
+        rootURL: 'https://blockchain.info/',
+        webHardFork: {
+          balanceMessage: { 'en': 'Balance message' }
+        }
       }));
     });
   });
