@@ -30,4 +30,12 @@ form.bc-form {
       background-image: url('../img/puff.svg');
     }
   }
+  .item {
+    .symbol {
+      padding: 0px 6px 0px 12px;
+      & + input.form-control {
+        padding-left: 0px;
+      }
+    }
+  }
 }

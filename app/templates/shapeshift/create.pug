@@ -64,6 +64,7 @@ form.bc-form(
                     required)
                   span.mhm.upper {{$ctrl.from.coinCode}}
                 .flex-center.border-top
+                  span.symbol {{ symbol }}
                   input.form-control.no-border(
                     type="number"
                     name="inputFiat"
@@ -74,7 +75,6 @@ form.bc-form(
                     transform-currency="dollars"
                     step="0.01"
                     required)
-                  span.mhm.upper {{dollars.code}}
               i.icon-skinny-arrow-right.f-14.border-grey.ph-30.hidden-xs(ng-hide="locked")
               img.ph-20.input-loading(src="img/puff.svg" ng-show="locked")
               .flex-column.flex-1.border
@@ -91,6 +91,7 @@ form.bc-form(
                     required)
                   span.mhm.upper {{$ctrl.to.coinCode}}
                 .flex-center.border-top
+                  span.symbol {{ symbol }}
                   input.form-control.no-border(
                     type="number"
                     name="inputFiat"
@@ -101,7 +102,6 @@ form.bc-form(
                     transform-currency="dollars"
                     step="0.01"
                     required)
-                  span.mhm.upper {{dollars.code}}
             .pos-rel.f-12.mts
               span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min && state.rate.min > 0")
                 span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.min" translate="Below the minimum limit.")
