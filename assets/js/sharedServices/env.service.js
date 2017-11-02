@@ -59,7 +59,9 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.bcash = res.bcash;
 
-      env.platforms = res.platforms;
+      env.web = res.web || {};
+
+      env.webHardFork = res.webHardFork || {};
 
       defer.resolve(env);
     }

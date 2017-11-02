@@ -1,3 +1,11 @@
+.main-balance {
+  .fork-warn {
+    line-height: 12px;
+    flex: 0 250px;
+    text-align: right;
+  }
+}
+
 @media (max-width: 991px) {
   .main-balance {
     .f-24 {
