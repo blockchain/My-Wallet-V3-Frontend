@@ -43,7 +43,7 @@ app.use(function (req, res, next) {
   var cspHeader;
   if (req.url === '/') {
     cspHeader = ([
-      "img-src 'self' " + rootURL + ' data: blob: android-webview-video-poster:',
+      "img-src 'self' " + rootURL + ' data: blob: android-webview-video-poster: https://www.google-analytics.com',
       // echo -n "outline: 0;" | openssl dgst -sha256 -binary | base64
       // "outline: 0;"        : ud+9... from ui-select
       // "margin-right: 10px" : 4If ... from ui-select
@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
       `child-src ${ walletHelperFrameDomain } ${ iSignThisDomain} `,
       `frame-src ${ walletHelperFrameDomain } ${ iSignThisDomain} `,
-      "script-src 'self'",
+      "script-src 'self' https://www.google-analytics.com",
       'connect-src ' + [
         "'self'",
         rootURL,
