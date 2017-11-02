@@ -370,20 +370,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
 
   $scope.checkFee = () => {
     let tx = $scope.transaction;
-    let maximumFee = tx.maxAvailable + tx.fee - $scope.getTransactionTotal();
-
-    const commitFee = (fee) => {
-      if (fee) {
-        if (fee > maximumFee) {
-          let feeDiff = fee - tx.fee;
-          tx.amount -= feeDiff;
-          $scope.setPaymentAmount();
-        }
-        tx.fee = fee;
-        $scope.payment.fee(fee);
-      }
-    };
-
     let max = tx.fees.limits.max;
     let min = tx.fees.limits.min;
     console.log(`Fees { max: ${max}, min: ${min} }`);
@@ -392,7 +378,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
       let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
       let feeRatio = tx.fee / tx.amount;
       if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
-        return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
+        return fees.showLargeTxWarning(tx.size, tx.fee);
       }
     }
     return $q.resolve();
