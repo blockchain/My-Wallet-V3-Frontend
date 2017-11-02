@@ -57,6 +57,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
       );
       sfox.api.production = env.partners.sfox.production;
       sfox.api.apiKey = env.partners.sfox.apiKey;
+      service.disabled = env.partners.sfox.disabled;
+      service.disabledReason = env.partners.sfox.disabledReason;
       if (sfox.trades) service.watchTrades(sfox.trades);
       sfox.monitorPayments();
     });

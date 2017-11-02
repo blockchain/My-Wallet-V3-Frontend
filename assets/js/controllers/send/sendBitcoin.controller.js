@@ -13,8 +13,10 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
     FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
     FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
     $scope.AB_TEST_FEE = FEE_OPTIONS != null;
-    $scope.blockAlertConfig = env.platforms.web.serviceAlert.sendBtc;
+    $scope.blockAlertConfig = env.web.serviceAlert.sendBtc;
+    $scope.blockAlertBannerConfig = env.web.serviceAlert.sendBtcBanner;
     $scope.showAlert = $scope.blockAlertConfig != null;
+    $scope.showAlertBanner = !$scope.showAlert && $scope.blockAlertBannerConfig != null;
   });
 
   $scope.status = Wallet.status;
@@ -27,6 +29,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.increaseLimit = () => $scope.originLimit += 50;
 
   $scope.hideAlert = () => $scope.showAlert = false;
+  $scope.hideAlertBanner = () => $scope.showAlertBanner = false;
 
   $scope.sending = false;
   $scope.advanced = false;

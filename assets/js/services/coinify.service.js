@@ -33,6 +33,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get userCanTrade () {
       return !service.exchange.user || service.exchange.profile.canTrade;
     },
+    get remainingBelowMin () {
+      return service.limits.blockchain.inRemaining['BTC'] < service.limits.blockchain.minimumInAmounts['BTC'];
+    },
     get balanceAboveMin () {
       return Exchange.sellMax && Exchange.sellMax > service.limits.blockchain.minimumInAmounts['BTC'];
     },
@@ -43,7 +46,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       return service.userCanTrade;
     },
     get userCanSell () {
-      return service.balanceAboveMin;
+      return service.balanceAboveMin && !service.remainingBelowMin;
     },
     get buyReason () {
       let reason;
@@ -57,13 +60,12 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     },
     get sellReason () {
       let reason;
-      let { user } = service.exchange;
 
-      if (!user) reason = 'user_needs_account';
+      if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
+      else if (service.remainingBelowMin) reason = 'max_remaining_below_min';
       else if (service.balanceAboveMin) reason = 'can_sell_remaining_balance';
-      else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else if (service.balanceAboveMax) reason = 'can_sell_max';
-      else reason = 'can_sell_max';
+      else reason = 'user_needs_account';
 
       return reason;
     },
@@ -81,6 +83,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       let { user, profile } = service.exchange;
 
       if (reason === 'can_sell_max' && user && profile.level && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
+      if (reason === 'max_remaining_below_min' && +profile.level.name < 2) return { 'KYC': service.openPendingKYC };
       if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
     },
     states,
@@ -93,6 +96,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return Env.then(env => {
       coinify.api.sandbox = !env.isProduction;
       coinify.partnerId = env.partners.coinify.partnerId;
+      service.disabled = env.partners.coinify.disabled;
+      service.disabledReason = env.partners.coinify.disabledReason;
       if (coinify.trades) Exchange.watchTrades(coinify.trades);
       coinify.monitorPayments();
     });

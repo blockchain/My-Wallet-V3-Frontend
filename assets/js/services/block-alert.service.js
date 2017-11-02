@@ -3,41 +3,35 @@ angular
   .module('walletApp')
   .factory('blockAlert', blockAlert)
 
-function blockAlert ($translate) {
+function blockAlert ($translate, languages) {
   const allTrue = (xs) => xs.every(x => x === true)
 
   const alertTypes = ['info', 'warning', 'danger']
   const hideTypes = ['collapse', 'dismiss']
 
-  const isLocalizedMessage = (msg) =>
-    angular.isString(msg) || (angular.isObject(msg) && msg['en'] != null)
-
   const isValidConfig = (config) => angular.isObject(config) && allTrue([
     alertTypes.indexOf(config.type) > -1,
     config.hideType == null || hideTypes.indexOf(config.hideType) > -1,
-    config.header == null || isLocalizedMessage(config.header),
+    config.header == null || languages.isLocalizedMessage(config.header),
     config.sections && config.sections.length > 0 && config.sections.every(s =>
-      isLocalizedMessage(s.title) && isLocalizedMessage(s.body)
+      languages.isLocalizedMessage(s.title) && languages.isLocalizedMessage(s.body)
     ),
     config.action == null || (
-      isLocalizedMessage(config.action.title) &&
+      languages.isLocalizedMessage(config.action.title) &&
       (config.action.link == null || angular.isString(config.action.link))
     )
   ])
 
-  const localize = (lang, msg) =>
-    angular.isString(msg) ? msg : (msg[lang] || msg['en'])
-
-  const localizeConfig = (lang, config) => ({
+  const localizeConfig = (config) => ({
     type: config.type,
     hideType: config.hideType,
-    header: localize(lang, config.header),
+    header: languages.localizeMessage(config.header),
     sections: config.sections.map(s => ({
-      title: localize(lang, s.title),
-      body: localize(lang, s.body)
+      title: languages.localizeMessage(s.title),
+      body: languages.localizeMessage(s.body)
     })),
     action: config.action && {
-      title: localize(lang, config.action.title),
+      title: languages.localizeMessage(config.action.title),
       link: config.action.link
     }
   })

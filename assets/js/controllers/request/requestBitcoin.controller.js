@@ -6,8 +6,10 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
-    $scope.blockAlertConfig = env.platforms.web.serviceAlert.requestBtc;
+    $scope.blockAlertConfig = env.web.serviceAlert.requestBtc;
+    $scope.blockAlertBannerConfig = env.web.serviceAlert.requestBtcBanner;
     $scope.showAlert = $scope.blockAlertConfig != null;
+    $scope.showAlertBanner = !$scope.showAlert && $scope.blockAlertBannerConfig != null;
   });
 
   let isUsingPaymentRequestsExperiment = MyBlockchainApi.createExperiment(2);
@@ -27,6 +29,7 @@ function RequestBitcoinController ($scope, AngularHelper, Wallet, Alerts, curren
   $scope.increaseLimit = () => $scope.destinationLimit += 50;
 
   $scope.hideAlert = () => $scope.showAlert = false;
+  $scope.hideAlertBanner = () => $scope.showAlertBanner = false;
 
   $scope.state = {
     to: null,

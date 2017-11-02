@@ -545,7 +545,7 @@
   "EMAIL_VERIFIED_MSG" : "Your email address has been verified",
   "PLEASE_LOGIN_FIRST" : "Please login to your wallet to proceed.",
   "API_ACCESS" : "API Access",
-  "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programtically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>here</a> to get started.",
+  "API_ACCESS_SUPPORT": "Use our API to interact with your wallet programmatically. Follow the steps <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>here</a> to get started.",
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
   "BCH_ADDRESS_INVALID": "Invalid Bitcoin Cash Address",
   "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
@@ -1578,11 +1578,15 @@
       "BUY": "@:BUY"
     },
     "can_sell_max": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance.",
       "KYC": "Increase your limit."
     },
     "can_sell_remaining_balance": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span>"
+      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance."
+    },
+    "max_remaining_below_min": {
+      "EXPLAIN": "🙁 You have reached your sell limit.",
+      "KYC": "Increase your limit."
     },
     "after_first_trade": {
       "EXPLAIN": "Your limit is set to 0 {{::curr}}.",
@@ -1655,6 +1659,7 @@
     "BANK_ACCOUNT_NUMBER": "Bank Account Number",
     "IFSC": "IFSC"
   },
+  "HERE": "here",
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
   "YOUR_BALANCES": "YOUR BALANCES",
   "WELCOME_TO_ETHER": "Welcome to ether!",
@@ -1684,12 +1689,12 @@
     "EXCHANGE_FROM": "Exchange",
     "RECEIVE": "Receive",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
-    "MIN_NEEDED_TO_SHIFT": "😢 Not enough funds to exchange.",
+    "MIN_NEEDED_TO_SHIFT": "😢 {{::min}} {{::curr}} required to exchange.",
     "BELOW_MIN_SHIFT_LIMIT": "Below the minimum limit. Use min",
     "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
-    "CONFIRM_DEPOSIT_AMOUNT": "Once you click confirm, the exchange trade will begin. When your trade is complete the {{::toCurrency}} will be deposited directly into {{::to}}.",
+    "CONFIRM_DEPOSIT_AMOUNT": "Review the details below and click 'Confirm' to begin your exchange. The exchanged funds will be deposited directly into {{::to}}.",
     "CONFIRM_DEPOSIT_AMOUNT_BCH": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Bitcoin Cash area of Settings.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
@@ -1715,10 +1720,11 @@
     "STATE_RESIDENCY": "Select your state of residency",
     "PARTNER_PROCESS": "Our partner ShapeShift will process your exchange.",
     "STATE_NOT_SUPPORTED": "This service is not yet available in your state. If you would like to be notified when it is available, sign up below.",
+    "LEAVING_WALLET": "Total {{::input}} leaving the wallet",
     "TRADE": {
       "complete": {
-        "HEADER": "Success! Your exchange has completed!",
-        "BODY": "Your exchange is completed. It may take a few minutes for the funds to show in your balance.",
+        "HEADER": "Success! Your exchange is complete",
+        "BODY": "Your exchange is complete. It may take a few minutes for the funds to show in your balance.",
         "STATE": "Complete"
       },
       "received": {
@@ -1793,5 +1799,9 @@
   "REF_NUMBER_UPDATED": "Ref Number Successfully Updated",
   "START": "Start",
   "END": "End",
+  "FEATURE_DISABLED": {
+    "TITLE": "Feature Disabled",
+    "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
+  },
   "": ""
 }

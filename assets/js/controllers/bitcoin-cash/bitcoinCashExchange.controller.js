@@ -21,10 +21,11 @@ function BitcoinCashExchangeController ($scope, Env, ShapeShift, MyWallet, modal
   $scope.quoteHandler = ShapeShift.getQuote;
   $scope.approximateQuoteHandler = ShapeShift.getApproximateQuote;
 
-  $scope.onCreateComplete = (payment, fee, quote) => {
+  $scope.onCreateComplete = (payment, fee, quote, destination) => {
     $scope.fee = fee;
     $scope.quote = quote;
     $scope.payment = payment;
+    $scope.destination = destination;
     $scope.goTo('exchange-confirm');
   };
 

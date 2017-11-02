@@ -26,6 +26,7 @@ describe('ShapeShiftReceiptController', () => {
     scope = $rootScope.$new();
     scope.vm = {
       goTo: (step) => { scope.vm.step = step; },
+      tabs: { select: () => {} },
       trade: 'a b c'
     };
     $controller('ShapeShiftReceiptController',

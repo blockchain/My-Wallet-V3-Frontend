@@ -1,0 +1,7 @@
+.modal-body(capture-key="{ 'Enter': $close }")
+  h4
+    i.security-red.mrs.ti-alert
+    span(translate="FEATURE_DISABLED.TITLE")
+  p.em-300.ptm(translate="{{:: reason || 'FEATURE_DISABLED.BODY' }}")
+.flex-end.flex-center.ph-35.pb-25
+  button.btn.button-primary.full(ng-click="$close()" translate="OK")

@@ -5,6 +5,7 @@ angular
 function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localStorageService, Alerts, $state, $q) {
   const service = {};
 
+  let buySellDisabled = null;
   let isCountryWhitelisted = null;
   let isCoinifyCountry = null;
   let isSFOXCountry = null;
@@ -24,6 +25,8 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
 
     sfoxInviteFraction = (env.partners.sfox && env.partners.sfox.inviteFormFraction) || 0;
+
+    buySellDisabled = env.buySell.disabled;
   };
 
   service.canBuy = () => {
@@ -64,7 +67,6 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     return Env.then(processEnv).then(buyLink);
   };
 
-  // check to make sure this does not get called on home
   service.shouldShowBuyReminder = () => {
     let buyReminder = localStorageService.get('buy-bitcoin-reminder');
     let timeHasPassed = buyReminder ? new Date() > buyReminder.when : true;
@@ -72,7 +74,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
     let firstTime = Wallet.goal.firstTime;
     let mobileBuy = $rootScope.inMobileBuy;
 
-    return !mobileBuy && !firstTime && (!shownTwice && timeHasPassed || !buyReminder);
+    return !buySellDisabled && !mobileBuy && !firstTime && (!shownTwice && timeHasPassed || !buyReminder);
   };
 
   service.showBuyReminder = () => {

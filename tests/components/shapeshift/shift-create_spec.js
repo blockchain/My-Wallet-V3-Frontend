@@ -77,6 +77,7 @@ describe('shift-create.component', () => {
 
       $q = $injector.get('$q');
       Wallet = $injector.get('Wallet');
+      let currency = $injector.get('currency');
       let Exchange = $injector.get('Exchange');
       let MyWallet = $injector.get('MyWallet');
       let buyStatus = $injector.get('buyStatus');
@@ -92,6 +93,7 @@ describe('shift-create.component', () => {
       Wallet.getDefaultAccount = () => mockDefaultBTCWallet();
       MyWallet.wallet.eth = { defaultAccount: mockDefaultETHWallet() };
       Exchange.interpretError = (err) => err;
+      currency.conversions = { 'USD': '$' };
       MyWalletHelpers.asyncOnce = function (f) {
         let async = () => f();
         async.cancel = function () {};
