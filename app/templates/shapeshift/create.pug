@@ -118,7 +118,7 @@ form.bc-form(
                   a.underline(ng-click="state.baseCurr = $ctrl.from.coinCode; setMax();") maximum
             .pos-rel.f-12.state-danger-text
               span.pos-abs(ng-show="maxAvailable < state.rate.min && state.rate.min > 0")
-                span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: bitCurrencyMap[$ctrl.from.coinCode].convertFrom(state.rate.min, bitCurrencyMap[$ctrl.from.coinCode].currency), curr: $ctrl.from.coinCode.toUpperCase()}")
+                span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: cryptoCurrencyMap[$ctrl.from.coinCode].from(state.rate.min, cryptoCurrencyMap[$ctrl.from.coinCode].currency), curr: $ctrl.from.coinCode.toUpperCase()}")
                 | &nbsp;
                 a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canBuy && $ctrl.from.coinCode === 'btc'")
       .group.mt-30.mt-10-mobile
