@@ -1682,7 +1682,7 @@
     "EXCHANGE_FROM": "Exchange",
     "RECEIVE": "Receive",
     "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
-    "MIN_NEEDED_TO_SHIFT": "😢 Not enough funds to exchange.",
+    "MIN_NEEDED_TO_SHIFT": "😢 {{::min}} {{::curr}} required to exchange.",
     "BELOW_MIN_SHIFT_LIMIT": "Below the minimum limit. Use min",
     "EXCEEDED_MAX_SHIFT": "Exceeds max shift limit. Use max",
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",

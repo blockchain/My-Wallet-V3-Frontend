@@ -421,3 +421,14 @@ input[type="radio"]:checked + label {
     grid-template-columns: 35% 25% 20% 20%;
   }
 }
+
+.switch {
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  transition: background-image $fast;
+  background-image: url('../img/switch.svg');
+  &:hover {
+    background-image: url('../img/switch-hover.svg');
+  }
+}

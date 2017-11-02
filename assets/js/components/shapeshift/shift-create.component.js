@@ -129,11 +129,13 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   };
 
   $scope.switch = () => {
+    state.rate.min = 0;
     [this.from, this.to] = [this.to, this.from];
     state.input.amount = state.output.amount = null;
   };
 
   $scope.setWallet = (direction, change) => {
+    state.rate.min = 0;
     let needsSelection = this.from.coinCode === this.to.coinCode;
     let selection = needsSelection && this.wallets.filter((w) => w.coinCode !== this[direction].coinCode);
     needsSelection && (this[change] = selection[0]);

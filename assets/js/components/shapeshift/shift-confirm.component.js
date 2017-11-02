@@ -36,7 +36,7 @@ function ShiftConfirmController (AngularHelper, $scope, Exchange, Wallet, $q, $f
     this.handleShift({payment})
         .then(trade => this.onComplete({trade}))
         .then(() => $scope.$root.scheduleRefresh())
-        .catch(() => {}).finally($scope.free);
+        .catch((err) => Exchange.displayError(err)).then($scope.free);
   };
 
   AngularHelper.installLock.call($scope);
