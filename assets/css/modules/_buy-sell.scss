@@ -427,7 +427,7 @@ input[type="radio"]:checked + label {
   height: 30px;
   background-size: cover;
   transition: background-image $fast;
-  background-image: url('../img/switch.svg');
+  background-image: url('../img/switch-regular.svg');
   &:hover {
     background-image: url('../img/switch-hover.svg');
   }
