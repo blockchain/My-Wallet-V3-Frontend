@@ -32,12 +32,12 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
 
   $scope.forms = $scope.state = {};
   $scope.dollars = Wallet.settings.currency;
+  $scope.symbol = currency.conversions[$scope.dollars.code].symbol;
   $scope.country = MyWallet.wallet.accountInfo.countryCodeGuess;
   $scope.cryptoCurrencyMap = currency.cryptoCurrencyMap;
   $scope.fiat = $scope.country === 'US'
     ? currency.currencies.filter(c => c.code === 'USD')[0]
     : currency.currencies.filter(c => c.code === 'EUR')[0];
-  $scope.symbol = currency.conversions[$scope.fiat.code].symbol;
 
   let state = $scope.state = {
     input: { amount: null },
