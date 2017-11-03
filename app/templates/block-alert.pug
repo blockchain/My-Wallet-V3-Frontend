@@ -19,7 +19,7 @@
         ng-href="{{ $ctrl.alert.action.link }}"
         target="_blank" rel="noopener noreferrer")
         | {{ $ctrl.alert.action.title }}
-      span.text-color.pointer(
+      span.text-color.pointer.btn-sm.btn-default(
         ng-hide="$ctrl.alert.action.link"
         ng-click="$ctrl.onAction()")
         | {{ $ctrl.alert.action.title }}
