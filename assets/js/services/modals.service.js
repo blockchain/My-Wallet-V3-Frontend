@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
+function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
   const service = {};
 
   let open = (defaults, options = {}) => {
@@ -154,38 +154,21 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   });
 
   service.openTradeSummary = service.dismissPrevious((trade, state) => {
-    let accounts = ($q, MyWallet) => {
-      let exchange = MyWallet.wallet.external.sfox;
-      return exchange.hasAccount
-        ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
-        : $q.resolve([]);
-    };
+    let exchange = MyWallet.wallet.external.hasExchangeAccount;
+    let controllers = { 'sfox': 'SfoxTradeSummaryController', 'unocoin': 'UnocoinTradeSummaryController' };
+
     return openMobileCompatible({
       templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
-      controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance, $timeout) {
-        let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
-
-        $scope.vm = {
-          trade: trade
-        };
-
-        $scope.tradeIsPending = () => (
-          $scope.vm.trade.state === 'awaiting_transfer_in' ||
-          $scope.vm.trade.state === 'awaiting_reference_number'
-        );
-
-        $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
-        unocoin && trade.state === 'cancelled' && ($scope.formattedTrade.namespace = 'UNOCOIN_TX_ERROR_STATE');
-        $scope.editRef = () => {
-          $scope.disableLink = true;
-          service.openBankTransfer(trade, 'reference');
-          $uibModalInstance.dismiss();
-        };
-      },
+      controller: controllers[exchange],
       resolve: {
-        trade: () => trade,
-        accounts
+        trade () { return trade; },
+        state () { return state; },
+        sfoxAccounts ($q, sfox) {
+          return sfox.exchange.hasAccount
+            ? sfox.exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+            : $q.resolve([]);
+        }
       }
     });
   });

@@ -77,10 +77,5 @@ describe('SfoxSignupController', () => {
       let ctrl = getController(profile('verified'), accounts({status: 'pending'}));
       return expect(ctrl.onStep('link')).toEqual(true);
     });
-
-    it('should be \'buy\' if user is verified and has account', () => {
-      let ctrl = getController(profile('verified'), accounts({status: 'active'}));
-      return expect(ctrl.onStep('buy')).toEqual(true);
-    });
   });
 });

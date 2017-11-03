@@ -54,10 +54,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
 
+  $scope.inspectTrade = (quote, trade) => modals.openTradeSummary(trade);
   $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
   $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
-
-  $scope.inspectTrade = modals.openTradeSummary;
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
