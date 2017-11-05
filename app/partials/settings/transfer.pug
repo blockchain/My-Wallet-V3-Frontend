@@ -2,10 +2,14 @@
   h3(translate="TRANSFER" ng-show="addresses.length === 1")
   h3(translate="TRANSFER_ALL" ng-show="addresses.length > 1")
 
+block-alert(ng-show="showAlert" config="blockAlertConfig" on-action="hideAlert()")
+
 uib-progressbar.modal-progress(
   value="ncomplete" max="ntotal" ng-show="addresses.length > 1" animate="true")
 
-#transfer-all.modal-body.fade(ng-class="{expanded : expand}")
+#transfer-all.modal-body.fade.pos-rel(ng-class="{expanded : expand}")
+  .form-cover(ng-show="showAlert && obscureForm")
+
   form.form-horizontal(role="form" name="transferForm" novalidate)
 
     .form-group
