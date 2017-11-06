@@ -14,7 +14,8 @@ function blockAlert ($translate, languages) {
     config.hideType == null || hideTypes.indexOf(config.hideType) > -1,
     config.header == null || languages.isLocalizedMessage(config.header),
     config.sections && config.sections.length > 0 && config.sections.every(s =>
-      languages.isLocalizedMessage(s.title) && languages.isLocalizedMessage(s.body)
+      (s.title == null || languages.isLocalizedMessage(s.title)) &&
+      (languages.isLocalizedMessage(s.body))
     ),
     config.action == null || (
       languages.isLocalizedMessage(config.action.title) &&
@@ -27,7 +28,7 @@ function blockAlert ($translate, languages) {
     hideType: config.hideType,
     header: languages.localizeMessage(config.header),
     sections: config.sections.map(s => ({
-      title: languages.localizeMessage(s.title),
+      title: s.title && languages.localizeMessage(s.title),
       body: languages.localizeMessage(s.body)
     })),
     action: config.action && {

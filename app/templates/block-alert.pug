@@ -11,7 +11,7 @@
     .mb-15.center-mobile
       span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
     .mb-15.f-12(ng-repeat="section in $ctrl.alert.sections")
-      span {{ section.title }}
+      span(ng-show="section.title") {{ section.title }}
       p.em-200 {{ section.body }}
     span.f-12(ng-show="$ctrl.alert.action")
       a.text-color.underline(
@@ -19,7 +19,7 @@
         ng-href="{{ $ctrl.alert.action.link }}"
         target="_blank" rel="noopener noreferrer")
         | {{ $ctrl.alert.action.title }}
-      span.text-color.pointer(
+      span.text-color.pointer.btn-sm.btn-default(
         ng-hide="$ctrl.alert.action.link"
         ng-click="$ctrl.onAction()")
         | {{ $ctrl.alert.action.title }}

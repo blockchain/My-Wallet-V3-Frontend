@@ -2,7 +2,24 @@ angular
   .module('walletApp')
   .controller('faqCtrl', faqCtrl);
 
-function faqCtrl ($scope, faq, buyStatus, $uibModal, Ethereum, ShapeShift) {
+function faqCtrl ($scope, faq, Env, buyStatus, languages, $uibModal, Ethereum, ShapeShift) {
+  Env.then(env => {
+    if (env.webHardFork.faqMessage) {
+      let a = languages.localizeMessage(env.webHardFork.faqMessage.answer);
+      let q = languages.localizeMessage(env.webHardFork.faqMessage.question);
+      let actions = env.webHardFork.faqMessage.actions;
+      $scope.questions.unshift({
+        translated: true,
+        actions: actions.map(a => ({
+          link: a.link,
+          title: a.title && languages.localizeMessage(a.title)
+        })),
+        question: q,
+        answer: a
+      });
+    }
+  });
+
   let showEthereum = Ethereum.userHasAccess || void 0;
   let showShapeShift = ShapeShift.userHasAccess || void 0;
 

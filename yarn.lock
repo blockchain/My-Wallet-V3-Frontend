@@ -885,9 +885,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blockchain-css@^1.1.39:
-  version "1.1.39"
-  resolved "https://registry.npmjs.org/blockchain-css/-/blockchain-css-1.1.39.tgz#af711e4ea64a552abacb98053976f5ba34b5fa95"
+blockchain-css@^1.1.40:
+  version "1.1.40"
+  resolved "https://registry.npmjs.org/blockchain-css/-/blockchain-css-1.1.40.tgz#5bb7e5ab39d9eed1d5f6d0542e9512c59fd5e23d"
   dependencies:
     bootstrap-sass "^3.3.7"
 
