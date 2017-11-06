@@ -23,11 +23,14 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       fiat-limits="true"
       provider="'sfox'"
       buy-level="state.buyLevel"
+      ng-show="onStep('create')"
       trade-account="state.account"
       collapse-summary="signupCompleted"
       handle-trade="sellHandler(account, quote)"
       handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
       on-success="userId ? sellSuccess(trade) : openSfoxSignup(quote)")
+    div(ng-show="onStep('confirm')")
+      span {{ payment }}
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black

@@ -33,24 +33,21 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   $scope.partners = {
     'coinify': {
-      name: 'Coinify',
+      namespace: 'COINIFY',
       logo: 'img/coinify-logo.svg',
       href: 'https://www.coinify.com/',
-      subtext: 'COINIFY_EXPLAIN',
       route: '.coinify'
     },
     'sfox': {
-      name: 'SFOX',
+      namespace: 'SFOX',
       logo: 'img/sfox-logo.png',
       href: 'https://www.sfox.com/',
-      subtext: 'SFOX_EXPLAIN',
       route: '.sfox'
     },
     'unocoin': {
-      name: 'Unocoin',
+      namespace: 'UNOCOIN',
       logo: 'img/unocoin-logo.png',
       href: 'https://www.unocoin.com/',
-      subtext: 'UNOCOIN_EXPLAIN',
       route: '.unocoin'
     }
   };

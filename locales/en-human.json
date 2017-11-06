@@ -1008,11 +1008,6 @@
   "INVALID_REQUEST": "An error occured. Please try again later or contact support.",
   "INTERNAL_ERROR": "An internal error occurred. This is most likely not an issue with Blockchain. Please try again later or contact Coinify support.",
   "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "We are having trouble verifying your email. Please try again later or contact support.",
-  "OFFLINE_TOKEN_NOT_FOUND": "We were unable to login to your account. Please try again later or contact support.",
-  "INVALID_OFFLINE_TOKEN": "We were unable to login to your account. Please contact support and reference your account number {{::user}}.",
-  "CANT_FIND_CURRENCY": "Can't find your currency?",
-  "CURRENCY_COMING_SOON": "We'll be rolling out more currencies soon. Stay tuned.",
-  "NOTIFY_ME": "Notify me",
   "COUNTRY_COMING_SOON": "We'll be rolling out more countries soon. Stay tuned.",
   "AUTO_REFRESH": "This rate will automatically refresh after 15 minutes.",
   "EST_QUOTE_1": "This is an estimated quote, create an account for more accuracy.",
@@ -1190,7 +1185,6 @@
   "ACCEPT_TOS": "I have read and agree to the <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SEAMLESS_SECURE": "Simple. Seamless. Secure.",
-  "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
   "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
   "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
@@ -1415,9 +1409,6 @@
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
-  "COINIFY_EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
-  "SFOX_EXPLAIN": "Our partner SFOX will process your bitcoin purchases. You will need to provide some information and link a payment method.",
-  "UNOCOIN_EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "PURCHASE_PENDING": "your pending purchase for",
@@ -1425,7 +1416,7 @@
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
-  "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
+  "SELL_BTC_UNAVAIL_STATE": "Selling bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span> trading bitcoin.",
@@ -1565,6 +1556,7 @@
   "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
   "COINIFY": {
+    "EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
     "user_needs_account": {
       "EXPLAIN": ""
     },
@@ -1600,6 +1592,7 @@
     }
   },
   "UNOCOIN": {
+    "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
     "PENDING": "Identity Verification Pending",
     "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!",
     "awaiting_trade_completion": {
@@ -1614,6 +1607,8 @@
     "upload": "Upload Documents"
   },
   "SFOX": {
+    "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
+    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
     "user_needs_account": {
       "EXPLAIN": ""
     },
@@ -1632,6 +1627,8 @@
     "link": "Link Payment"
   },
   "EXCHANGE": {
+    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
+    "NOTIFY_ME_WHEN_AVAIL": "Notify Me When This Becomes Available",
     "CREATE_ACCOUNT": "Create {{::exchange}} Account",
     "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
     "VERIFY_EMAIL": "Verify Email Address",

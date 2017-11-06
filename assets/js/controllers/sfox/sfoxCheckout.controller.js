@@ -2,8 +2,13 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
+  let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+
+  $scope.steps = enumify('state-select', 'create', 'confirm', 'receipt');
+  $scope.onStep = (s) => $scope.steps[s] === $scope.step;
+  $scope.goTo = (s) => $scope.step = $scope.steps[s];
 
   $scope.trades = exchange.trades;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
@@ -18,7 +23,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   });
 
   $scope.selling = sfox.selling;
-  $scope.sellHandler = (...args) => sfox.sell(...args);
+  $scope.sellHandler = (...args) => sfox.sell(...args).then(buildPayment);
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
   $scope.sellLimits = () => ({
     min: 10,
@@ -64,17 +69,18 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
-  $scope.buySuccess = (trade) => {
-    sfox.watchTrade(trade);
-    $scope.tabs.select('ORDER_HISTORY');
-    modals.openTradeSummary(trade, 'initiated');
-    exchange.fetchProfile().then($scope.setState);
-    buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
-    // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
-    if ($scope.qaDebugger) {
-      console.info('Load Sift Science iframe');
-    }
-    $scope.tradeId = trade.id;
-    $scope.siftScienceEnabled = true;
+  let buildPayment = (trade) => {
+    $scope.payment = Wallet.my.wallet.createPayment();
+    $scope.payment.amount(trade.outAmount);
+    $scope.payment.to(trade.receiveAddress);
+    $scope.payment.updateFeePerKb(100);
+    $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
+    $scope.payment.build().sign().publish();
+
+    // $scope.payment.sideEffect((p) => {
+    //   $scope.goTo('confirm');
+    // });
   };
+
+  $scope.goTo('create');
 }
