@@ -650,10 +650,8 @@ describe('SendBitcoinController', () => {
 
       it('should build the payment before going to confirmation step', inject(function ($q) {
         spyOn(scope, 'checkFee').and.callFake(() => $q.resolve());
-        spyOn(scope, 'finalBuild').and.callFake(() => $q.resolve());
         scope.goToConfirmation();
         scope.$digest();
-        expect(scope.finalBuild).toHaveBeenCalled();
         expect(scope.vm.confirm).toEqual(true);
       })
       );
@@ -676,17 +674,6 @@ describe('SendBitcoinController', () => {
         expect(scope.advanced).toBeFalsy();
       });
     });
-
-    describe('finalBuild', () =>
-
-      it('should resolve with the payment transaction', function (done) {
-        scope.finalBuild().then(function (tx) {
-          expect(tx).toEqual('tx');
-          return done();
-        });
-        return scope.$digest();
-      })
-    );
 
     describe('checkPriv', () => {
 
