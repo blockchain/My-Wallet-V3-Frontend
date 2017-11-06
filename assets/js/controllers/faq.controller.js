@@ -7,10 +7,13 @@ function faqCtrl ($scope, faq, Env, buyStatus, languages, $uibModal, Ethereum, S
     if (env.webHardFork.faqMessage) {
       let a = languages.localizeMessage(env.webHardFork.faqMessage.answer);
       let q = languages.localizeMessage(env.webHardFork.faqMessage.question);
-      let actions = env.webHardFork.faqMessage.actions.map((a) => { a.title = languages.localizeMessage(a.title); return a; });
+      let actions = env.webHardFork.faqMessage.actions;
       $scope.questions.unshift({
         translated: true,
-        actions: actions,
+        actions: actions.map(a => ({
+          link: a.link,
+          title: a.title && languages.localizeMessage(a.title)
+        })),
         question: q,
         answer: a
       });
