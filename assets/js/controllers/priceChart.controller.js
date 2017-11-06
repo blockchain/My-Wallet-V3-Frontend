@@ -53,6 +53,10 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   $scope.isCurrency = curr => $scope.state.base === curr;
 
   $scope.handleChart = (chartData) => {
+    if (!chartData.length) {
+      $scope.handleNoData();
+      return;
+    }
     $scope.options = {};
 
     $scope.options.data = chartData.map(data => parseFloat(data.price));
@@ -71,11 +75,18 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
     localStorageService.set('chart', $scope.state);
     localStorageService.set('chart-data', $scope.options);
     $scope.useCache = false;
+    $scope.noData = false;
+  };
+
+  $scope.getCachedData = () => $scope.options = localStorageService.get('chart-data');
+
+  $scope.handleNoData = () => {
+    $scope.getCachedData();
+    $scope.noData = true;
   };
 
   const handleChartError = () => {
-    let cachedOptions = localStorageService.get('chart-data');
-    $scope.options = cachedOptions;
+    $scope.getCachedData();
     $scope.useCache = true;
   };
 

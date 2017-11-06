@@ -34,7 +34,7 @@ blocket-loading(loading="!isWalletInitialized()")
             fiat(eth="1")
         .flex-column.flex-center.flex-justify(ng-if="!options")
           img(src="img/spinner.gif" width="35")
-        .flex-column.flex-align-end.pv-5.blue(ng-if="useCache")
+        .flex-column.flex-align-end.pv-5.blue(ng-if="useCache || noData")
           a.disabled.f-10.opacity-5 Last Updated: {{ options.timeFetched | date:dateFormat }}
         chart(ng-if="options" options="options")
         .flex-row.flex-justify.mt-10
