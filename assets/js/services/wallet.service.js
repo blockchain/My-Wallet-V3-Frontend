@@ -58,9 +58,14 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   wallet.api = MyBlockchainApi;
   wallet.rng = MyBlockchainRng;
 
+  let toggleEnabled = true;
   Env.then(env => {
     wallet.api.ROOT_URL = env.rootURL; // Explorer endpoints
     wallet.api.API_ROOT_URL = env.apiDomain; // API endpoints
+
+    if (languages.isLocalizedMessage(env.webHardFork.balanceMessage)) {
+      toggleEnabled = false;
+    }
 
     if (env.customWebSocketURL) {
       wallet.my.ws.wsUrl = env.customWebSocketURL;
@@ -292,7 +297,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     let { external } = MyWallet.wallet;
     if (external) {
       let { coinify, sfox, unocoin } = external;
-      if (coinify) $injector.get('buySell').init(coinify); // init buySell to monitor incoming coinify payments
+      if (coinify) $injector.get('coinify').init(coinify); // init coinify to monitor incoming coinify payments
       if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
       if (unocoin) $injector.get('unocoin').init(unocoin); // init unocoin to monitor incoming payments
     }
@@ -555,6 +560,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   };
 
   wallet.toggleDisplayCurrency = () => {
+    if (!toggleEnabled) return;
     if (currency.isBitCurrency(wallet.settings.displayCurrency)) {
       wallet.settings.displayCurrency = wallet.settings.currency;
     } else {

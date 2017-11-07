@@ -4,9 +4,9 @@ form.bc-form(
   translate-namespace="SHIFT"
   autocomplete="off")
   fieldset(ng-disabled="locked")
-    .border-bottom.pb-30.pv-20-mobile.ph-10-mobile.flex-between.flex-center
+    .border-bottom.pb-20.pv-20-mobile.ph-10-mobile.flex-between.flex-center
       span.f-16.em-500.pl-30.no-padding-mobile(translate=".TRADE.{{trade.status}}.HEADER")
-    .ph-30.pt-30.ph-10-mobile.pv-20-mobile
+    .ph-30.ph-10-mobile.pv-20-mobile
       .mv-20.ph-30.no-padding-mobile
         shift-progress(shift="trade")
       .f-13.mb-20
@@ -25,12 +25,15 @@ form.bc-form(
           span.em-500.colon(translate="{{ trade.isComplete ? 'SHIFT.OUTPUT_RECEIVED' : 'SHIFT.TO_RECEIVE'}}" translate-values="{output: human[output]}")
           span.em-300.right-align(ng-class="{'mid-grey opacity-5': trade.isResolved}") {{ trade.withdrawalAmount | format:output:true }}
         li.pv-5.flex-between
-          span.em-500.colon(translate="EXCHANGE_RATE")
-          span.em-300.right-align {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
+          span.em-500
+            span.em-500.colon(translate="EXCHANGE_RATE")
+            helper-button(content="SHIFT.RATE_EXPLAIN")
+          span.em-300.right-align
+            span {{ 1 | format:input:true }} = {{ trade.rate | format:output:true }}
         li.pv-5.flex-between
           span.em-500
-            span.colon(translate=".WITHDRAWAL_FEE")
-            helper-button(content="SHIFT.WITHDRAWAL_FEE_EXPLAIN" linktext="LEARN_MORE" link="https://info.shapeshift.io/about")
+            span.colon(translate=".TRANSACTION_FEE")
+            helper-button(content="SHIFT.TX_FEE_EXPLAIN")
           span.em-300.right-align
             span {{ trade.quote.minerFee | format:output:true }}
         li.pt-5.flex-between
@@ -39,6 +42,4 @@ form.bc-form(
           span.em-300.right-align
             span {{ trade.quote.orderId }}
       .flex-row.flex-end
-        button.button-muted.mr-15(ng-if="trade.isComplete" ng-click="$ctrl.onClose()" translate="CLOSE")
-        button.button-primary(ng-if="!trade.isComplete" ng-click="$ctrl.onClose()" translate="CLOSE")
-        button.button-primary(ng-if="trade.isComplete" ui-sref="{{ output === 'btc' ? 'wallet.common.btc.transactions' : 'wallet.common.eth.transactions' }}" translate=".SEE_YOUR_OUTPUT" translate-values="{output: human[output]}")  
+        button.button-primary(ng-click="$ctrl.onClose()" translate="CLOSE")

@@ -29,7 +29,7 @@ describe('shift-confirm.component', () => {
     onComplete () { return $q.resolve(); },
     onCancel () { return $q.resolve(); },
     payment () { return mockPayment(); },
-    quote () { return mockQuote(); },
+    quote: mockQuote(),
     fee: 0.0002
   };
 
@@ -71,7 +71,6 @@ describe('shift-confirm.component', () => {
   describe('.getTimeToExpiration()', () => {
     beforeEach(function () {
       scope = getControllerScope(handlers);
-      scope.quote = mockQuote();
     });
 
     it('should have an expiration time', () => {

@@ -2,7 +2,12 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift, coinify, unocoin, sfox, Env) {
+  Env.then(env => {
+    $scope.buySellDisabled = env.buySell.disabled;
+    $scope.buySellDisabledReason = env.buySell.disabledReason;
+  });
+
   let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
   $scope.goal = Wallet.goal;
@@ -90,32 +95,61 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
     let wallet = MyWallet.wallet;
-    if ($scope.isPublicState(toState.name) && Wallet.status.isLoggedIn) {
-      event.preventDefault();
-    }
-    if (wallet && [
-      'wallet.common.buy-sell'
-      // 'wallet.common.settings.accounts_addresses'
-    ].includes(toState.name)) {
-      let error;
 
+    let featureDisabledWhen = (disabled, reason) => {
+      if (disabled) {
+        Alerts.featureDisabled(reason);
+        event.preventDefault();
+        return true;
+      }
+    };
+
+    let ensureMetadataReady = () => {
       if (!wallet.isMetadataReady) {
-        Wallet.askForSecondPasswordIfNeeded().then(pw => {
-          Wallet.my.wallet.cacheMetadataKey.bind(Wallet.my.wallet)(pw).then(() => {
+        Wallet.askForSecondPasswordIfNeeded()
+          .then(pw => Wallet.my.wallet.cacheMetadataKey(pw))
+          .then(() => {
             Alerts.displaySuccess('NEEDS_REFRESH');
             $rootScope.needsRefresh = true;
           });
-        });
         event.preventDefault();
+        return true;
       } else if ($rootScope.needsRefresh) {
-        error = 'NEEDS_REFRESH';
+        Alerts.displayError('NEEDS_REFRESH');
+        event.preventDefault();
+        return true;
       } else if (wallet.external === null) {
         // Metadata service connection failed
-        error = 'POOR_CONNECTION';
-      }
-      if (error) {
+        Alerts.displayError('POOR_CONNECTION');
         event.preventDefault();
-        Alerts.displayError(error);
+        return true;
+      }
+    };
+
+    if (Wallet.status.isLoggedIn && $scope.isPublicState(toState.name)) {
+      event.preventDefault();
+    } else {
+      switch (toState.name) {
+        case 'wallet.common.buy-sell': return (
+          featureDisabledWhen($scope.buySellDisabled, $scope.buySellDisabledReason) ||
+          ensureMetadataReady() ||
+          featureDisabledWhen(wallet.external.coinify.user && coinify.disabled, coinify.disabledReason) ||
+          featureDisabledWhen(wallet.external.unocoin.user && unocoin.disabled, unocoin.disabledReason) ||
+          featureDisabledWhen(wallet.external.sfox.user && sfox.disabled, sfox.disabledReason)
+        );
+        case 'wallet.common.buy-sell.coinify': return (
+          featureDisabledWhen(coinify.disabled, coinify.disabledReason)
+        );
+        case 'wallet.common.buy-sell.unocoin': return (
+          featureDisabledWhen(unocoin.disabled, unocoin.disabledReason)
+        );
+        case 'wallet.common.buy-sell.sfox': return (
+          featureDisabledWhen(sfox.disabled, sfox.disabledReason)
+        );
+        case 'wallet.common.shift': return (
+          featureDisabledWhen(ShapeShift.disabled, ShapeShift.disabledReason) ||
+          ensureMetadataReady()
+        );
       }
     }
   });
@@ -180,7 +214,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         buyStatus.canBuy().then((canBuy) => {
-          let template = canBuy ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+          let template = canBuy && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',

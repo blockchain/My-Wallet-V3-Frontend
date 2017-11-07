@@ -3,7 +3,7 @@
     h3
       img(ng-show="balance == null" src="img/spinner.gif")
   span.flex-between.flex-column(ng-show="getTotal() != null")
-    .mvn.f-24.em-300.lh1.mb-10
+    .mvn.f-24.em-300.lh1.mb-10.flex-end.flex-justify-mobile
       .flex-row
         .flex-row.flex-center
           i.icon-bitcoin.f-20.mrs
@@ -18,5 +18,7 @@
             span {{ getEthTotal() | format:'eth' }} ETH
           span(ng-hide="isBitCurrency(settings.displayCurrency)")
             fiat(eth="getEthTotal()")
-    .mvn.f-20.em-200.lh1
+    .mvn.f-20.em-200.lh1(ng-class="{'security-red flex-end flex-center flex-justify-mobile': balanceMessage}")
+      .fork-warn.mr-10.flex-center.flex-end(ng-show="balanceMessage")
+        span.f-10 {{ balanceMessage }}
       fiat(btc="getTotal()" eth="getEthTotal() > 0 ? getEthTotal() : null")

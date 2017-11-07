@@ -3,67 +3,67 @@ angular
   .module('walletApp')
   .component('exchangeCheckout', {
     bindings: {
+      fiat: '<',
+      type: '<',
       quote: '<',
       limits: '<',
-      userId: '<',
-      dollars: '<',
+      trading: '<',
+      provider: '<',
       buyLevel: '<',
-      buyEnabled: '<',
-      buyAccount: '<',
+      fiatLimits: '<',
+      tradeEnabled: '<',
+      tradeAccount: '<',
       conversion: '<',
+      fiatOptions: '<',
+      frequencies: '<',
       collapseSummary: '<',
-      handleBuy: '&',
+      onSuccess: '&',
+      fiatChange: '&',
       handleQuote: '&',
-      buySuccess: '&',
-      buyError: '&',
-      trades: '<',
-      pendingTrade: '&',
-      openPendingTrade: '&'
+      handleTrade: '&'
     },
     templateUrl: 'templates/exchange/checkout.pug',
     controller: ExchangeCheckoutController,
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, Exchange) {
-  $scope.format = currency.formatCurrencyForView;
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, recurringTrade, Exchange) {
+  $scope.date = new Date();
   $scope.toSatoshi = currency.convertToSatoshi;
+  $scope.format = currency.formatCurrencyForView;
   $scope.fromSatoshi = currency.convertFromSatoshi;
-  $scope.dollars = this.dollars;
-  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-  $scope.hasMultipleAccounts = Wallet.accounts().filter(a => a.active).length > 1;
   $scope.btcAccount = Wallet.getDefaultAccount();
-  $scope.siftScienceEnabled = false;
-  $scope.buySuccess = this.buySuccess;
-  $scope.trades = this.trades || [];
-  $scope.pendingTrade = () => this.pendingTrade($scope.trades);
-  $scope.openPendingTrade = this.openPendingTrade($scope.pendingTrade);
 
-  Env.then(env => {
-    $scope.qaDebugger = env.qaDebugger;
-  });
+  $scope.fiat = this.fiat;
+  $scope.trading = this.trading;
+  $scope.onSuccess = this.onSuccess;
+  $scope.fiatOptions = this.fiatOptions;
+  $scope.provider = this.provider.toUpperCase();
+  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+  $scope.recurringTimespan = () => recurringTrade.getTimespan($scope.date, state.frequency || this.frequencies[0]);
 
   let state = $scope.state = {
     btc: null,
     fiat: null,
     rate: null,
-    baseCurr: $scope.dollars,
-    get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.dollars; },
-    get baseFiat () { return this.baseCurr === $scope.dollars; },
+    baseCurr: $scope.fiat,
+    frequency: this.frequencies && this.frequencies[0],
+    get quoteCurr () { return this.baseFiat ? $scope.bitcoin : $scope.fiat; },
+    get baseFiat () { return this.baseCurr === $scope.fiat; },
     get total () { return this.fiat; }
   };
 
   // cached quote from checkout first
   let quote = this.quote;
   if (quote) {
-    state.baseCurr = quote.baseCurrency === 'BTC' ? $scope.bitcoin : $scope.dollars;
-    state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.dollars) / this.conversion : null;
+    state.baseCurr = quote.baseCurrency === 'BTC' ? $scope.bitcoin : $scope.fiat;
+    state.fiat = state.baseFiat ? $scope.toSatoshi(quote.baseAmount, $scope.fiat) / this.conversion : null;
     state.btc = !state.baseFiat ? quote.baseAmount : null;
   }
 
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
-    state.baseCurr = $scope.dollars;
+    state.baseCurr = $scope.fiat;
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -84,14 +84,13 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       $scope.quote = quote;
       state.error = null;
       state.loadFailed = false;
-      this.collapseSummary = true;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       if (state.baseFiat) {
-        state.btc = $scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin);
-        state.rate = (1 / (quote.quoteAmount / 1e8)) * Math.abs(quote.baseAmount);
+        state.btc = Math.abs($scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin));
+        state.rate = (1 / (Math.abs(quote.quoteAmount) / 1e8)) * Math.abs(quote.baseAmount);
       } else {
-        state.fiat = quote.quoteAmount;
-        state.rate = (1 / (Math.abs(quote.baseAmount) / 1e8)) * (quote.quoteAmount);
+        state.fiat = Math.abs(quote.quoteAmount);
+        state.rate = (1 / (Math.abs(quote.baseAmount) / 1e8)) * Math.abs(quote.quoteAmount);
       }
     };
 
@@ -101,10 +100,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     $scope.quote = null;
   });
 
-  $scope.getInitialQuote = () => {
-    let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.dollars.code };
+  $scope.getRate = () => {
+    let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.fiat.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = quote.quoteAmount; });
+    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount); });
   };
 
   $scope.refreshIfValid = (field) => {
@@ -116,27 +115,40 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     }
   };
 
-  $scope.enableBuy = () => {
+  $scope.setMax = () => {
+    let { fiat, bitcoin } = $scope;
+    let curr = this.fiatLimits ? fiat : bitcoin;
+    let field = this.fiatLimits ? 'fiat' : 'btc';
+
+    state.baseCurr = curr;
+    state[field] = this.limits().max;
+    $timeout(() => $scope.refreshIfValid(field), 10);
+  };
+
+  $scope.enableTrade = () => {
     let obj = {
       'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
-      'Payment Method': typeof this.buyAccount === 'object' ? this.buyAccount.accountType + ' (' + this.buyAccount.accountNumber + ')' : null,
-      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.dollars), $scope.dollars, true)
+      'Payment Method': typeof this.tradeAccount === 'object' ? this.tradeAccount.accountType + ' (' + this.tradeAccount.accountNumber + ')' : null,
+      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.fiat), $scope.fiat, true)
     };
 
     $uibModal.open({
       controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
       templateUrl: 'partials/confirm-trade-modal.pug',
       windowClass: 'bc-modal trade-summary'
-    }).result.then($scope.buy);
+    }).result.then($scope.trade);
   };
 
-  $scope.buy = () => {
+  $scope.trade = () => {
     $scope.lock();
     let quote = $scope.quote;
-    if (this.buyAccount || this.buyEnabled) {
-      this.handleBuy({account: this.buyAccount, quote: quote})
+    let endTime = state.endTime;
+    let frequency = state.frequencyCheck && state.frequency;
+
+    if (this.tradeAccount || this.tradeEnabled) {
+      this.handleTrade({account: this.tradeAccount, quote: quote})
         .then(trade => {
-          this.buySuccess({trade});
+          this.onSuccess({trade});
         })
         .catch((err) => {
           $scope.state.loadFailed = true;
@@ -144,21 +156,31 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      this.buySuccess({quote});
-      $q.resolve().finally($scope.resetFields).finally($scope.free);
+      this.onSuccess({quote, frequency, endTime});
+      $q.resolve().then($scope.resetFields).finally($scope.free);
     }
   };
 
-  $scope.$watch('state.rate', (rate) => {
-    if (!rate) return;
-    let limits = this.limits;
-    $scope.min = { fiat: limits.min, btc: limits.min / rate };
-    $scope.max = { fiat: limits.max, btc: limits.max / rate };
-  });
-  $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
-  $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
+  $scope.$watch(() => {
+    if (!state.rate) return;
+    if (!this.limits()) return;
 
+    $scope.$$postDigest(() => {
+      let rate = state.rate;
+      let limits = this.limits();
+      let baseFiat = this.fiatLimits;
+      $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
+      $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
+    });
+  });
+  $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
+  $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
+  $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
+
+  Env.then(env => {
+    $scope.qaDebugger = env.qaDebugger;
+    this.showRecurringBuy = env.partners.coinify.showRecurringBuy;
+  });
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
-  $scope.getInitialQuote();
 }

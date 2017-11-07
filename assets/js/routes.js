@@ -394,6 +394,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'BuySellMasterController',
           controllerAs: 'vm'
         }
+      },
+      resolve: {
+        balance ($injector, $q) {
+          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+          let defaultAccount = MyWallet && MyWallet.wallet.hdwallet.defaultAccount;
+
+          return defaultAccount && defaultAccount.getAvailableBalance('priority')
+            .then((balance) => balance)
+            .catch(() => { return {amount: 0}; });
+        }
       }
     })
     .state('wallet.common.buy-sell.select', {
@@ -401,9 +411,25 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       controller: 'BuySellSelectPartnerController'
     })
     .state('wallet.common.buy-sell.coinify', {
-      templateUrl: 'partials/buy-sell.pug',
-      controller: 'BuySellCtrl',
-      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' }
+      templateUrl: 'partials/coinify/checkout.pug',
+      controller: 'CoinifyCheckoutController',
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
+      resolve: {
+        _loadExchangeData ($q, MyWallet, Exchange) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user
+            ? Exchange.fetchExchangeData(exchange)
+            : Exchange.fetchProfile(exchange);
+        },
+        _loadKYCs ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getKYCs();
+        },
+        _loadSubscriptions ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getSubscriptions();
+        }
+      }
     })
     .state('wallet.common.buy-sell.unocoin', {
       templateUrl: 'partials/unocoin/checkout.pug',

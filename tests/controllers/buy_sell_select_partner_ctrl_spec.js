@@ -11,6 +11,9 @@ describe('BuySellSelectPartnerController', () => {
   beforeEach(() => {
     module(($provide) => {
       $provide.factory('Env', ($q) => $q.resolve({
+        webHardFork: {
+          balanceMessage: { 'en': 'Balance message' }
+        },
         partners: {
           coinify: {
             countries: ['GB']
@@ -108,10 +111,10 @@ describe('BuySellSelectPartnerController', () => {
   });
 
   describe('.selectPartner()', () => {
-    beforeEach(function () {
+    beforeEach(inject(($q) => {
       scope = getControllerScope();
-      return spyOn($state, "go");
-    });
+      spyOn($state, "go").and.returnValue($q.resolve());
+    }));
 
     it('should go to coinify signup', () => {
       scope.selectPartner(scope.partners["coinify"], "GB");

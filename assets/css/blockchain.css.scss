@@ -25,6 +25,7 @@
 
 //import global components
 @import 'blockchain-css/sass/components/modals';
+@import 'blockchain-css/sass/components/block-alert';
 
 //import utilitarian CSS
 @import 'utilities/shadows';
@@ -35,6 +36,7 @@
 @import 'elements/labels';
 @import 'elements/tables';
 @import 'elements/carousel';
+@import 'elements/forms';
 
 // import themes
 @import 'themes/dev';

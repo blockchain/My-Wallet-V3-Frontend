@@ -1,6 +1,6 @@
 .buy-sell {
   position: relative;
-  padding: 20px 15px 0 15px;
+  padding: 30px 30px 0 30px;
   flex: 1;
   @media (max-width: 991px) {
     padding: 10px 10px 0 10px;
@@ -87,27 +87,6 @@
   }
 }
 
-.coinify-logo {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  img {
-    width: 60px;
-    & + span {
-      top: 0;
-      left: 0;
-    }
-  }
-  &.coinify-logo-left {
-    left: 0px;
-    right: auto;
-    bottom: 0px;
-  }
-  @media(min-width: 425px) {
-    display: none;
-  }
-}
-
 .sfox-logo {
   img { width: 60px; }
   @media(max-width: 425px) {
@@ -146,54 +125,6 @@
   }
 }
 
-i.ti-credit-card.bank {
-  position: relative;
-  &.bank-lrg {
-    &:after {
-      width: 39px;
-      height: 39px;
-    }
-  }
-  &:before {
-    opacity: 0;
-  }
-  &:after {
-    content: '';
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url('../img/bank.png');
-  }
-}
-
-.sfox-signup {
-  i.ti-credit-card.bank {
-    &:after {
-      top: 0px;
-    }
-  }
-}
-
-.blue {
-  i.ti-credit-card.bank {
-    &:after {
-      background-image: url('../img/bank-blue.png');
-    }
-  }
-}
-.success {
-  i.ti-credit-card.bank {
-    &:after {
-      background-image: url('../img/bank-success.png');
-    }
-  }
-}
-
 .isx {
   padding: 0px;
 }
@@ -208,14 +139,6 @@ i.ti-credit-card.bank {
     border: 0;
     left: 0;
     top: 0;
-  }
-}
-
-.buy-sell {
-  .sell,
-  .sell > * {
-    opacity: 0.6;
-    cursor: no-drop;
   }
 }
 
@@ -241,12 +164,6 @@ i.ti-credit-card.bank {
     .input-group-btn {
       width: 70px;
     }
-  }
-}
-
-.buy-sell {
-  table th:last-child {
-    padding-right: 36px;
   }
 }
 
@@ -432,26 +349,86 @@ input[type="radio"]:checked + label {
 
 .shift-history {
   display: grid;
-  grid-template-columns: 40% 20% 20% 20%;
+  grid-template-columns: 35% 25% 20% 20%;
 }
 
 .exchange-trade {
   display: grid;
-  grid-template-columns: 40% 20% 20% 20%;
+  grid-template-columns: 35% 25% 20% 15% 5%;
+  font-size: 13px;
+}
+
+.exchange-trade-header {
+  display: grid;
+  grid-template-columns: 35% 25% 20% 20%;
+}
+
+.recurring-buy-header {
+  @extend .exchange-trade-header;
+}
+
+.recurring-trade {
+  @extend .exchange-trade;
 }
 
 .exchange-status {
   display: grid;
   grid-template-columns: 50% 50%;
 }
+
+.child-trades {
+  padding: 0px 20px;
+  .exchange-trade {
+    grid-template-columns: 34.4% 26% 21% 15%;
+    > div:first-child {
+      span {
+        padding-left: 5px;
+      }
+    }
+  }
+}
+
 @media(max-width: 768px) {
+  .exchange-trade-header {
+    grid-template-columns: 25% 15% 30% 30%;
+    > div:last-child {
+      padding-top: 5px;
+      text-align: left;
+    }
+  }
+  .exchange-trade {
+    grid-template-columns: 25% 15% 30% 30%;
+    > div:last-child {
+      text-align: inherit;
+    }
+  }
+  .exchange-received {
+    display: flex;
+  }
   .exchange-status {
-    grid-template-columns: 100%;
+    grid-template-columns: 15% 85%;
+    span {
+      padding-left: 5px;
+    }
   }
   .shift-history {
     grid-template-columns: 25% 15% 30% 30%;
   }
-  .exchange-trade {
-    grid-template-columns: 25% 15% 30% 30%;
+  .recurring-buy-header {
+    grid-template-columns: 35% 25% 20% 20%;
+  }
+  .recurring-trade {
+    grid-template-columns: 35% 25% 20% 20%;
+  }
+}
+
+.switch {
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  transition: background-image $fast;
+  background-image: url('../img/switch-regular.svg');
+  &:hover {
+    background-image: url('../img/switch-hover.svg');
   }
 }

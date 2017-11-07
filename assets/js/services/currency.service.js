@@ -83,6 +83,12 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     }
   ];
 
+  const cryptoCurrencyMap = {
+    'eth': { currency: ethCurrencies[0], to: convertToEther, from: convertFromEther, icon: 'icon-ethereum' },
+    'btc': { currency: bitCurrencies[0], to: convertToSatoshi, from: convertFromSatoshi, icon: 'icon-bitcoin' },
+    'bch': { currency: bchCurrencies[0], to: convertToBitcoinCash, from: convertFromBitcoinCash, icon: 'icon-bitcoin-cash' }
+  };
+
   var service = {
     currencies: formatCurrencies(currencyCodes),
     coinifyCurrencies: formatCurrencies(coinifyCurrencyCodes),
@@ -93,6 +99,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     conversions,
     ethConversions,
     fetchExchangeRate,
+    cryptoCurrencyMap,
     fetchEthRate,
     fetchBchRate,
     fetchAllRates,
@@ -218,7 +225,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (amount == null || currency == null) return null;
     if (isBitCurrency(currency) || isBchCurrency(currency)) {
       return amount / currency.conversion;
-    } else if (conversions[currency.code] != null) {
+    } else if (conversions[currency.code] != null && conversions[currency.code].conversion) {
       return amount / conversions[currency.code].conversion;
     } else if (currency.conversion) {
       return Math.ceil(amount * currency.conversion);
@@ -232,6 +239,8 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (isBitCurrency(currency)) {
       console.warn('do not try to convert bitcoin to ether');
       return null;
+    } else if (isEthCurrency(currency)) {
+      return amount;
     } else if (ethConversions[currency.code] != null) {
       return amount / ethConversions[currency.code].last;
     } else {
@@ -255,7 +264,9 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
   function convertToBitcoinCash (amount, currency) {
     if (amount == null || currency == null) return null;
-    if (conversions[currency.code] != null) {
+    if (isBchCurrency(currency)) {
+      return amount * currency.conversion;
+    } else if (conversions[currency.code] != null) {
       return Math.ceil(amount * parseInt(SATOSHI / bchConversions[currency.code].last, 10));
     } else {
       return null;

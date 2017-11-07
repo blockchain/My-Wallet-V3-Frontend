@@ -9,9 +9,7 @@ describe('unocoin service', () => {
       $provide.value('Env', Promise.resolve({
         showBuySellTab: ['US'],
         partners: {
-          coinify: {
-            countries: ['US']
-          }
+          coinify: { countries: ['US'] }
         }
       }));
     });
@@ -27,6 +25,9 @@ describe('unocoin service', () => {
         hdwallet: {
           accounts: [{label: ''}, {label: '2nd account'}],
           defaultAccount: {index: 0}
+        },
+        external: {
+          unocoin: { profile: null }
         }
       };
     });
@@ -35,8 +36,7 @@ describe('unocoin service', () => {
   describe('.determineStep', () => {
     describe('without an account', () => {
       it('should return create', () => {
-        let exchange = {};
-        let step = unocoin.determineStep(exchange);
+        let step = unocoin.determineStep();
         expect(step).toBe('create');
       });
     });
@@ -44,15 +44,16 @@ describe('unocoin service', () => {
     describe('with an account', () => {
       describe('incomplete', () => {
         it('should return verify', () => {
-          let exchange = { profile: { level: 1 } };
-          let step = unocoin.determineStep(exchange);
+          MyWallet.wallet.external.unocoin.profile = { level: 1 };
+          let step = unocoin.determineStep();
           expect(step).toBe('verify');
         });
       });
+
       describe('identity and bank info complete', () => {
         it('should return upload', () => {
-          let exchange = { profile: { level: 1, identityComplete: true, bankInfoComplete: true } };
-          let step = unocoin.determineStep(exchange);
+          MyWallet.wallet.external.unocoin.profile = { level: 1, identityComplete: true, bankInfoComplete: true };
+          let step = unocoin.determineStep();
           expect(step).toBe('upload');
         });
       });
@@ -60,8 +61,8 @@ describe('unocoin service', () => {
 
     describe('info uploaded', () => {
       it('should return pending', () => {
-        let exchange = { profile: { level: 2, identityComplete: true, bankInfoComplete: true } };
-        let step = unocoin.determineStep(exchange);
+        MyWallet.wallet.external.unocoin.profile = { level: 2, identityComplete: true, bankInfoComplete: true };
+        let step = unocoin.determineStep();
         expect(step).toBe('pending');
       });
     });

@@ -35,12 +35,14 @@ describe('shift-create.component', () => {
   let mockDefaultBTCWallet = (invalid) =>
     ({
       label: 'My Bitcoin Wallet',
+      coinCode: 'btc',
       getAvailableBalance: () => invalid ? $q.reject() : $q.resolve(1)
     });
 
   let mockDefaultETHWallet = () =>
     ({
       label: 'My Eth Wallet',
+      coinCode: 'eth',
       getAvailableBalance: () => $q.resolve(1)
     });
 
@@ -50,7 +52,8 @@ describe('shift-create.component', () => {
     buildPayment () { return mockPayment(); },
     handleRate () { return $q.resolve(mockRate()); },
     onComplete () { return $q.resolve(); },
-    fees: {'btc': 'priority'}
+    fees: {'btc': 'priority'},
+    wallets: [mockDefaultETHWallet(), mockDefaultBTCWallet()]
   };
 
   let getControllerScope = function (bindings) {
@@ -74,6 +77,7 @@ describe('shift-create.component', () => {
 
       $q = $injector.get('$q');
       Wallet = $injector.get('Wallet');
+      let currency = $injector.get('currency');
       let Exchange = $injector.get('Exchange');
       let MyWallet = $injector.get('MyWallet');
       let buyStatus = $injector.get('buyStatus');
@@ -85,10 +89,12 @@ describe('shift-create.component', () => {
         }
       };
       Wallet.accounts = () => [];
+      Wallet.settings = {currency: { code: 'USD' }};
       Wallet.api.incrementShapeshiftStat = () => {};
       Wallet.getDefaultAccount = () => mockDefaultBTCWallet();
       MyWallet.wallet.eth = { defaultAccount: mockDefaultETHWallet() };
       Exchange.interpretError = (err) => err;
+      currency.conversions = { 'USD': '$' };
       MyWalletHelpers.asyncOnce = function (f) {
         let async = () => f();
         async.cancel = function () {};
@@ -104,16 +110,15 @@ describe('shift-create.component', () => {
       scope.quote = mockQuote();
     });
 
-    it('should lock the scope while getting send amount', () => {
+    it('should busy the scope while getting send amount', () => {
       scope.getSendAmount();
-      expect(scope.locked).toEqual(true);
+      expect(scope.busy).toEqual(true);
       scope.$digest();
-      expect(scope.locked).toEqual(false);
+      expect(scope.busy).toEqual(false);
     });
 
     it('should set the baseCurr to the input currency', () => {
-      scope.baseInput = 'eth';
-      scope.state.input.curr = 'btc';
+      scope.from = mockDefaultBTCWallet();
       scope.getSendAmount();
       expect(scope.state.baseCurr).toBe('btc');
     });
@@ -132,24 +137,13 @@ describe('shift-create.component', () => {
     });
   });
 
-  describe('.setTo()', () => {
-    beforeEach(function () {
-      scope = getControllerScope(handlers);
-    });
-
-    it('should set the to field', () => {
-      scope.setTo();
-      expect(scope.$ctrl.to).toBeDefined();
-    });
-  });
-
   describe('.getQuoteArgs()', () => {
     beforeEach(() => scope = getControllerScope(handlers));
 
     it('should get args for a BTC->ETH quote', () => {
       scope.state.baseCurr = 'btc';
-      scope.state.input = { curr: 'btc', amount: 1 };
-      expect(scope.getQuoteArgs(scope.state)).toEqual({pair: 'btc_eth', amount: 1});
+      scope.forms.shiftForm.input.$viewValue = 1;
+      expect(scope.getQuoteArgs(scope.state).from.coinCode).toEqual(mockDefaultBTCWallet().coinCode);
     });
   });
 
@@ -181,12 +175,6 @@ describe('shift-create.component', () => {
         scope.state.baseCurr = 'btc';
         scope.$digest();
         expect(scope.state.output.amount).toEqual(0.0015);
-      });
-
-      it('should set state.input.amount to withdrawalAmount if not baseInput', () => {
-        scope.state.baseCurr = 'eth';
-        scope.$digest();
-        expect(scope.state.input.curr).toEqual('btc');
       });
     });
 
@@ -232,24 +220,6 @@ describe('shift-create.component', () => {
         scope.state.baseCurr = 'btc';
         scope.$digest();
         expect(scope.refreshIfValid).toHaveBeenCalled();
-      });
-
-      describe('curr', () => {
-        beforeEach(function () {
-          Wallet.getDefaultAccount = () => mockDefaultBTCWallet(true);
-          scope = getControllerScope(handlers);
-          spyOn(scope, 'refreshIfValid');
-          scope.$digest();
-        });
-
-        describe('fetchError', () => {
-          it('should set balance failed to true', () => {
-            scope.state.input = { curr: 'btc', amount: 20000 };
-            scope.state.baseCurr = 'btc';
-            scope.$digest();
-            expect(scope.state.balanceFailed).toBe(true);
-          });
-        });
       });
     });
   });

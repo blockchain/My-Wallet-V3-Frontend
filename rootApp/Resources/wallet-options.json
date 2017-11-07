@@ -8,6 +8,12 @@
       "send_to_miner": true
     }
   },
+  "buySell": {
+    "disabled": false,
+    "disabledReason": {
+      "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    }
+  },
   "partners": {
     "coinify": {
       "disabled": false,
@@ -27,14 +33,15 @@
       "sellSurveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_56iZITjrjyMOrzL",
                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_9u8XxkrkiUUy6z3",
                           "https://blockchain.co1.qualtrics.com/jfe/form/SV_9ysiGRC4rkMFwFv"],
-      "showSellFraction": 1
+      "showSellFraction": 1,
+      "showRecurringBuy": true
     },
     "sfox": {
       "production": true,
       "countries": ["US"],
       "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
       "inviteFormFraction": 0.1,
-      "showCheckoutFraction": 0.5,
+      "showCheckoutFraction": 1,
       "apiKey": "6CD61A0E965D48A7B1883A860490DC9E",
       "plaid": "0b041cd9e9fbf1e7d93a0d5a39f5b9",
       "plaidEnv": "tartan",
@@ -78,6 +85,103 @@
   },
   "bcash": {
     "feePerByte": 2
+  },
+  "web": {
+    "serviceAlert": {
+      "__global": {
+        "type": "warning",
+        "hideType": "collapse",
+        "header": {
+          "en": "Service alert title"
+        },
+        "sections": [
+          {
+            "title": {
+              "en": "Section title"
+            },
+            "body": {
+              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            }
+          }
+        ],
+        "action": {
+          "title": {
+            "en": "More details concerning this alert."
+          },
+          "link": "https://www.example.com/"
+        }
+      },
+      "__sendBtc": {
+        "type": "danger",
+        "header": {
+          "en": "Service alert title"
+        },
+        "sections": [
+          {
+            "title": {
+              "en": "Section title"
+            },
+            "body": {
+              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            }
+          }
+        ],
+        "action": {
+          "title": {
+            "en": "More details concerning this alert."
+          },
+          "link": "https://www.example.com/"
+        }
+      },
+      "__requestBtc": {
+        "type": "danger",
+        "header": {
+          "en": "Service alert title"
+        },
+        "sections": [
+          {
+            "title": {
+              "en": "Section title"
+            },
+            "body": {
+              "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            }
+          }
+        ],
+        "action": {
+          "title": {
+            "en": "Alert action"
+          }
+        }
+      }
+    }
+  },
+  "webHardFork": {
+    "__balanceMessage": {
+      "en": "This balance shows your equivalent fiat balance using the BTC price as of November 16"
+    },
+    "faqMessage": {
+      "question": {
+        "en": "What is a hard fork and how does it affect my bitcoin?"
+      },
+      "answer": {
+        "en": "A hard fork is a software upgrade that brings new changes to the network and causes a split, or fork, in the blockchain. A hard fork of Bitcoin to increase the block size to 2MB will take place at block 494784 (on or about November 15th). To ensure your funds remain safe during this fork, we will temporarily be suspending bitcoin send, request, buy, sell, and exchange until the network stabilizes."
+      },
+      "actions": [
+        {
+          "title": {
+            "en": "Read more about this fork and how it impacts our users"
+          },
+          "link": "https://www.example.com/"
+        },
+        {
+          "title": {
+            "en": "visit www.blockchain-status.com to stay updated"
+          },
+          "link": "https://www.blockchain-status.com/"
+        }
+      ]
+    }
   },
   "showMobileLogin": true,
   "network": "bitcoin"

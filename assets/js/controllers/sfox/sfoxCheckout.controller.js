@@ -5,7 +5,25 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
 
+  $scope.trades = exchange.trades;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
+  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+
+  $scope.buying = sfox.buying;
+  $scope.buyHandler = (...args) => sfox.buy(...args);
+  $scope.buyQuoteHandler = sfox.fetchQuote.bind(null, exchange);
+  $scope.buyLimits = () => ({
+    min: 10,
+    max: sfox.profile && sfox.profile.limits.buy || 100
+  });
+
+  $scope.selling = sfox.selling;
+  $scope.sellHandler = (...args) => sfox.sell(...args);
+  $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
+  $scope.sellLimits = () => ({
+    min: 10,
+    max: sfox.profile && sfox.profile.limits.sell || 100
+  });
 
   $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
@@ -15,13 +33,11 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.state = {
     account: accounts[0],
     trades: exchange.trades,
-    limits: { max: exchange.profile && exchange.profile.limits.buy || 100 },
     buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
   $scope.setState = () => {
     $scope.state.trades = exchange.trades;
-    $scope.state.limits.max = exchange.profile && exchange.profile.limits.buy;
     $scope.state.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   };
 
@@ -45,14 +61,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: ['BUY_BITCOIN', 'ORDER_HISTORY'],
+    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
-
-  $scope.account = accounts[0];
-  $scope.trades = exchange.trades;
-  $scope.buyHandler = (...args) => sfox.buy(...args);
-  $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
 
   $scope.buySuccess = (trade) => {
     sfox.watchTrade(trade);
@@ -66,9 +77,5 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     }
     $scope.tradeId = trade.id;
     $scope.siftScienceEnabled = true;
-  };
-
-  $scope.buyError = () => {
-    Alerts.displayError('EXCHANGE_CONNECT_ERROR');
   };
 }

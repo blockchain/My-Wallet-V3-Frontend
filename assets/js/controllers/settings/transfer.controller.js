@@ -2,7 +2,15 @@ angular
   .module('walletApp')
   .controller('TransferController', TransferController);
 
-function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wallet, Alerts, address) {
+function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wallet, Alerts, address, Env) {
+  Env.then(env => {
+    $scope.blockAlertConfig = env.web.serviceAlert.sendBtc || env.web.serviceAlert.sendBtcBanner;
+    $scope.showAlert = $scope.blockAlertConfig != null;
+    $scope.obscureForm = $scope.blockAlertConfig === env.web.serviceAlert.sendBtc;
+  });
+
+  $scope.hideAlert = () => $scope.showAlert = false;
+
   $scope.accounts = Wallet.accounts;
   $scope.selectedAccount = Wallet.my.wallet.hdwallet.defaultAccount;
   $scope.addresses = Array.isArray(address) ? address : [address];
