@@ -127,9 +127,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
 
   $scope.enableTrade = () => {
     let obj = {
-      'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
+      'BTC Order': $scope.format(state.btc, $scope.bitcoin, true),
       'Payment Method': typeof this.tradeAccount === 'object' ? this.tradeAccount.accountType + ' (' + this.tradeAccount.accountNumber + ')' : null,
-      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.fiat), $scope.fiat, true)
+      'TOTAL_COST': $scope.format(state.total, $scope.fiat, true)
     };
 
     $uibModal.open({

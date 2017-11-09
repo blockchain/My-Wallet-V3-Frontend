@@ -77,6 +77,6 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeSummary(trade, 'success'); });
+      .then(() => { modals.openTradeDetails(trade, 'success'); });
   }
 }

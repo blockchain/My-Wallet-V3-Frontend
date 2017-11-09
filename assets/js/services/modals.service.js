@@ -153,14 +153,15 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
-  service.openTradeSummary = service.dismissPrevious((trade, state) => {
+  service.openTradeDetails = service.dismissPrevious((trade, state) => {
     let exchange = MyWallet.wallet.external.hasExchangeAccount;
-    let controllers = { 'sfox': 'SfoxTradeSummaryController', 'unocoin': 'UnocoinTradeSummaryController' };
+    let templates = { 'sfox': 'partials/sfox/details.pug', 'unocoin': 'partials/unocoin/details.pug' };
+    let controllers = { 'sfox': 'SfoxTradeDetailsController', 'unocoin': 'UnocoinTradeDetailsController' };
 
     return openMobileCompatible({
-      templateUrl: 'partials/trade-summary.pug',
       windowClass: 'bc-modal trade-summary',
       controller: controllers[exchange],
+      templateUrl: templates[exchange],
       resolve: {
         trade () { return trade; },
         state () { return state; },
