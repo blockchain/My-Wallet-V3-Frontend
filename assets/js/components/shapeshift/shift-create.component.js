@@ -139,7 +139,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     state.rate.min = 0;
     let needsSelection = this.from.coinCode === this.to.coinCode;
     let selection = needsSelection && this.wallets.filter((w) => w.coinCode !== this[direction].coinCode);
-    needsSelection && (this[change] = selection[0]);
+    needsSelection && (this[change] = selection.length > 1 ? Wallet.getDefaultAccount() : selection[0]);
   };
 
   $scope.setMin = () => state.input.amount = state.rate.min;
