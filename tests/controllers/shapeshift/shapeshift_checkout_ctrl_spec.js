@@ -29,7 +29,7 @@ describe('ShapeShiftCheckoutController', () => {
 
       modals = $injector.get('modals');
       Wallet = $injector.get('Wallet');
-      Wallet.accounts = () => [{label: 'My Bitcoin Wallet'}];
+      Wallet.accounts = () => [{label: 'My Bitcoin Wallet', coinCode: 'btc'}, {label: 'My Other Bitcoin Wallet', coinCode: 'btc'}];
       modals.openShiftTradeDetails = (trade) => $q.resolve();
     })
   );
