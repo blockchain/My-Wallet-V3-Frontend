@@ -12,6 +12,6 @@
       a(ng-show="q.function && !q.translated" translate="{{q.function.text}}" ng-click="q.function.click()")
       span(ng-show="q.actions" ng-repeat="action in q.actions")
         a(href="{{ action.link }}" target="_blank" rel="noopener noreferrer") {{ action.title }}
-        span(ng-hide="$last") &nbsp;and, 
+        span.mhs(ng-hide="$last" translate="OR")
         span(ng-show="$last") .
     .flex-1
