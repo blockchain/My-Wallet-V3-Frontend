@@ -35,8 +35,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       details="sellDetails"
       ng-if="onStep('confirm')"
       on-cancel="goTo('create')"
-      on-success="sellSuccess()"
       on-expiration="sellRefresh()"
+      on-success="sellSuccess(payment)"
       handle-trade="sellHandler(quote)")
     div.width-50.border-desktop(
       ng-if="onStep('receipt')"
