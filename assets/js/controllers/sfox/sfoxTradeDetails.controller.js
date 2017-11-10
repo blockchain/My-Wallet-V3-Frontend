@@ -3,6 +3,7 @@ angular
   .controller('SfoxTradeDetailsController', SfoxTradeDetailsController);
 
 function SfoxTradeDetailsController ($scope, MyWallet, currency, trade, state, sfoxAccounts) {
+  trade = $scope.trade || trade;
   let format = currency.formatCurrencyForView;
   let fiat = currency.currencies.find((c) => c.code === 'USD');
   let btc = currency.bitCurrencies.find((c) => c.code === 'BTC');

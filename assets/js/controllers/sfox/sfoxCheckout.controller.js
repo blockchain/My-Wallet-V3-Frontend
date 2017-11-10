@@ -16,7 +16,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.selling = sfox.selling;
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
-  $scope.sellHandler = () => sfox.sell($scope.state.account, $scope.quote);
+  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote);
+  $scope.sellSuccess = (trade) => { $scope.trade = trade; $scope.goTo('receipt'); };
   $scope.sellLimits = () => ({
     min: 10,
     max: sfox.profile && sfox.profile.limits.sell || 100
@@ -35,10 +36,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     let { baseAmount, quoteAmount, baseCurrency, quoteCurrency } = $scope.quote;
     let amt = baseCurrency === 'BTC' ? quoteAmount : baseAmount;
     return $q.resolve($scope.sellQuoteHandler(amt * 100, baseCurrency, quoteCurrency).then($scope.buildPayment));
-  };
-
-  $scope.sellSuccess = (trade) => {
-    $scope.trade = trade; $scope.goTo('receipt');
   };
 
   $scope.openSfoxSignup = (quote) => {
