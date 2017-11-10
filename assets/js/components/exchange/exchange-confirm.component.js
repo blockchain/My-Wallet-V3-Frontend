@@ -6,6 +6,7 @@ angular
       quote: '<',
       details: '<',
       namespace: '<',
+      onCancel: '&',
       onSuccess: '&',
       handleTrade: '&',
       handleQuote: '&',
