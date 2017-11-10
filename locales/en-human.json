@@ -1693,18 +1693,22 @@
         "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
       },
       "processing": {
+        "DISPLAY": "Pending",
         "HEADER": "Sell Order Initiated",
         "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days."
       },
       "failed": {
+        "DISPLAY": "Failed",
         "HEADER": "Sell Order Failed",
         "BODY": "Your sell trade has failed. Please contact our support team with the Transaction ID for this trade if you have any questions."
       },
       "rejected": {
+        "DISPLAY": "Rejected",
         "HEADER": "Sell Order Rejected",
         "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection."
       },
       "completed": {
+        "DISPLAY": "Completed",
         "HEADER": "Sell Order Completed!",
         "BODY": "Your sell trade has successfully completed. Thank you for using Blockchain to trade your bitcoin."
       },

@@ -2,9 +2,10 @@ angular
   .module('walletApp')
   .component('exchangeConfirm', {
     bindings: {
-      fiat: '<',
+      type: '<',
       quote: '<',
       details: '<',
+      namespace: '<',
       onSuccess: '&',
       handleTrade: '&',
       handleQuote: '&',
@@ -16,8 +17,9 @@ angular
   });
 
 function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, Alerts, currency, Wallet, MyWalletHelpers, Exchange) {
-  $scope.details = this.details;
+  $scope.type = '.' + this.type;
   $scope.tradeState = '.confirm';
+  $scope.namespace = this.namespace;
 
   $scope.getTimeToExpiration = () => this.quote.expiresAt - new Date();
   $scope.onExpiration = () => { $scope.lock(); this.quote = null; this.onExpiration().then($scope.free); };
@@ -36,5 +38,4 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
 
   AngularHelper.installLock.call($scope);
   Env.then(env => $scope.qaDebugger = env.qaDebugger);
-  $scope.$watch('$ctrl.quote', () => $scope.getDetails());
 }

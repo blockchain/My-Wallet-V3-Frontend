@@ -29,7 +29,9 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
       on-success="buildPayment(quote)")
     exchange-confirm.width-50.border-desktop(
+      type="'sell'"
       quote="quote"
+      namespace="'SFOX'"
       details="sellDetails"
       ng-if="onStep('confirm')"
       on-cancel="goTo('create')"
@@ -38,8 +40,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       handle-trade="sellHandler(quote)")
     div.width-50.border-desktop(
       ng-if="onStep('receipt')"
-      ng-include="'partials/sfox/details.pug'"
-      ng-controller="SfoxTradeDetailsController")
+      ng-include="'partials/sfox/details.pug'")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black

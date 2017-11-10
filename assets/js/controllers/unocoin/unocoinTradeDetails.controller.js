@@ -2,11 +2,12 @@ angular
   .module('walletApp')
   .controller('UnocoinTradeDetailsController', UnocoinTradeDetailsController);
 
-function UnocoinTradeDetailsController ($scope, $uibModalInstance, MyWallet, currency, modals, trade, state) {
+function UnocoinTradeDetailsController ($scope, $uibModalInstance, MyWallet, currency, modals) {
+  let trade = $scope.trade;
   $scope.tradeIsPending = () => (trade.state === 'awaiting_transfer_in' || trade.state === 'awaiting_reference_number');
 
   let format = currency.formatCurrencyForView;
-  let fiat = currency.currencies.find((c) => c.code === 'USD');
+  let fiat = currency.currencies.find((c) => c.code === 'INR');
   let btc = currency.bitCurrencies.find((c) => c.code === 'BTC');
 
   $scope.namespace = 'UNOCOIN';

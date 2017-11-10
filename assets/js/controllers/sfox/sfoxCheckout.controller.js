@@ -41,8 +41,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.sellRefresh = () => {
     let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
-    let btc = currency.convertFromSatoshi(baseCurrency === 'BTC' ? baseAmount : quoteAmount, $scope.bitcoin);
-    return $q.resolve($scope.sellQuoteHandler(btc, $scope.bitcoin.code, $scope.fiat.code).then($scope.buildPayment));
+    let btc = baseCurrency === 'BTC' ? baseAmount : quoteAmount;
+    return $q.resolve($scope.sellQuoteHandler(btc, $scope.bitcoin.code, $scope.dollars.code).then($scope.buildPayment));
   };
 
   $scope.openSfoxSignup = (quote) => {

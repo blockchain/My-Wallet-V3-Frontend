@@ -2,8 +2,8 @@ angular
   .module('walletApp')
   .controller('SfoxTradeDetailsController', SfoxTradeDetailsController);
 
-function SfoxTradeDetailsController ($scope, MyWallet, currency, trade, state, sfoxAccounts) {
-  trade = $scope.trade || trade;
+function SfoxTradeDetailsController ($scope, MyWallet, currency) {
+  let trade = $scope.trade;
   let format = currency.formatCurrencyForView;
   let fiat = currency.currencies.find((c) => c.code === 'USD');
   let btc = currency.bitCurrencies.find((c) => c.code === 'BTC');
@@ -17,11 +17,11 @@ function SfoxTradeDetailsController ($scope, MyWallet, currency, trade, state, s
   $scope.tradeDetails = {
     txAmt: {
       key: '.AMT',
-      val: format(currency.convertFromSatoshi(-tx.amount, btc), btc, true)
+      val: format(currency.convertFromSatoshi(tx ? -tx.amount : 0, btc), btc, true)
     },
     txFee: {
       key: '.TX_FEE',
-      val: format(currency.convertFromSatoshi(tx.fee, btc), btc, true)
+      val: format(currency.convertFromSatoshi(tx ? tx.fee : 0, btc), btc, true)
     },
     out: {
       key: '.TOTAL',

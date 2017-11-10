@@ -156,12 +156,15 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
   service.openTradeDetails = service.dismissPrevious((trade, state) => {
     let exchange = MyWallet.wallet.external.hasExchangeAccount;
     let templates = { 'sfox': 'partials/sfox/details.pug', 'unocoin': 'partials/unocoin/details.pug' };
-    let controllers = { 'sfox': 'SfoxTradeDetailsController', 'unocoin': 'UnocoinTradeDetailsController' };
 
     return openMobileCompatible({
       windowClass: 'bc-modal trade-summary',
-      controller: controllers[exchange],
       templateUrl: templates[exchange],
+      controller: function ($scope, trade, state, sfoxAccounts) {
+        $scope.trade = trade;
+        $scope.state = state;
+        $scope.sfoxAccounts = sfoxAccounts;
+      },
       resolve: {
         trade () { return trade; },
         state () { return state; },
