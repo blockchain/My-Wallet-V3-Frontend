@@ -29,11 +29,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
       on-success="buildPayment(quote)")
     exchange-confirm.width-50.border-desktop(
-      type="'sell'"
       quote="quote"
-      fiat="dollars"
-      payment="payment"
-      provider="'sfox'"
+      details="sellDetails"
       ng-if="onStep('confirm')"
       on-cancel="goTo('create')"
       on-success="sellSuccess()"

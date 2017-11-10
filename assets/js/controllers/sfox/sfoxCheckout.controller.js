@@ -25,17 +25,24 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.buildPayment = (quote) => {
     let amt = quote.baseCurrency === 'BTC' ? quote.baseAmount : quote.quoteAmount;
+
     $scope.payment = Wallet.my.wallet.createPayment();
     $scope.payment.amount(amt);
     $scope.payment.updateFeePerKb(Exchange.sellFee);
     $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
-    return $scope.payment.sideEffect((p) => { $scope.quote = quote; $scope.payment = p; $scope.goTo('confirm'); });
+
+    return $scope.payment.sideEffect((payment) => {
+      $scope.quote = quote;
+      $scope.payment = payment;
+      $scope.sellDetails = sfox.sellTradeDetails($scope.quote, $scope.payment);
+      $scope.goTo('confirm');
+    });
   };
 
   $scope.sellRefresh = () => {
-    let { baseAmount, quoteAmount, baseCurrency, quoteCurrency } = $scope.quote;
-    let amt = baseCurrency === 'BTC' ? quoteAmount : baseAmount;
-    return $q.resolve($scope.sellQuoteHandler(amt * 100, baseCurrency, quoteCurrency).then($scope.buildPayment));
+    let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
+    let btc = currency.convertFromSatoshi(baseCurrency === 'BTC' ? baseAmount : quoteAmount, $scope.bitcoin);
+    return $q.resolve($scope.sellQuoteHandler(btc, $scope.bitcoin.code, $scope.fiat.code).then($scope.buildPayment));
   };
 
   $scope.openSfoxSignup = (quote) => {

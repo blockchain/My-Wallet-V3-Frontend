@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -41,7 +41,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
     init,
     buying,
     selling,
-    determineStep
+    determineStep,
+    sellTradeDetails
   };
 
   angular.extend(service, Exchange);
@@ -103,6 +104,32 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange) {
   function sell (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
       .then(mediums => mediums.ach.sell(account));
+  }
+
+  function sellTradeDetails (payment, quote) {
+    let { formatCurrencyForView, convertFromSatoshi } = currency;
+    let fiat = currency.currencies.find((curr) => curr.code === 'USD');
+    let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
+
+    return {
+      txAmt: {
+        key: '.AMT',
+        val: formatCurrencyForView(convertFromSatoshi(this.payment.amounts[0], btc), btc, true)
+      },
+      txFee: {
+        key: '.TX_FEE',
+        val: formatCurrencyForView(convertFromSatoshi(this.payment.finalFee, btc), btc, true)
+      },
+      out: {
+        key: '.TOTAL',
+        val: formatCurrencyForView(convertFromSatoshi(this.payment.amounts[0] + this.payment.finalFee, btc), btc, true)
+      },
+      in: {
+        key: '.TO_BE_RECEIVED',
+        val: formatCurrencyForView(this.quote.baseCurrency === 'BTC' ? this.quote.quoteAmount : this.quote.baseAmount, fiat, true),
+        tip: () => console.log('Clicked tooltip')
+      }
+    };
   }
 
   return service;
