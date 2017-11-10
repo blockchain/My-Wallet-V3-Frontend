@@ -1022,14 +1022,6 @@
   "QUOTE_EXPIRES_IN": "Quote expires in: {{::count}}",
   "NOT_FINISHED": "Not Finished",
   "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
-  "awaiting_transfer_in": "Pending",
-  "processing": "Processing",
-  "reviewing": "In Review",
-  "completed": "Completed",
-  "completed_test": "Completed Test",
-  "cancelled": "Canceled",
-  "rejected": "Rejected",
-  "expired": "Expired",
   "SEE_BITCOIN": "See Your Bitcoin",
   "SUMMARY": "Summary:",
   "PROCESSED_BY_EXCHANGE": "This transaction is processed directly by Coinify. Blockchain is not a party to this transaction, nor is any transaction information sent to Blockchain. As always, bitcoins are sent directly to your wallet. Blockchain does not act as an intermediary in this transaction.",
@@ -1078,7 +1070,6 @@
   "TX_AWAITING_REF_NUMBER": {
     "TITLE": "Bank Transfer",
     "BODY": "Please send {{::amount}} electronically (via IMPS, NEFT, or RTGS) to Unocoin's bank account below before continuing. You will then need to provide the bank transfer reference number. <b>Please use the same bank account that was used to create the account.</b>"
-
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
@@ -1599,6 +1590,55 @@
       "CHECK_STATUS": "Check Status",
       "FINISH": "Finish",
       "CANCEL": "Cancel"
+    },
+    "buy": {
+      "awaiting_transfer_in": {
+        "DISPLAY": "Awaiting Funds"
+      },
+      "processing": {
+        "DISPLAY": "Pending"
+      },
+      "reviewing": {
+        "DISPLAY": "Reviewing"
+      },
+      "completed": {
+        "DISPLAY": "Completed"
+      },
+      "completed_test": {
+        "DISPLAY": "Completed"
+      },
+      "cancelled": {
+        "DISPLAY": "Cancelled"
+      },
+      "rejected": {
+        "DISPLAY": "Rejected"
+      },
+      "expired": {
+        "DISPLAY": "Expired"
+      }
+    },
+    "sell": {
+      "processing": {
+        "DISPLAY": "Pending"
+      },
+      "reviewing": {
+        "DISPLAY": "Reviewing"
+      },
+      "completed": {
+        "DISPLAY": "Completed"
+      },
+      "completed_test": {
+        "DISPLAY": "Completed"
+      },
+      "cancelled": {
+        "DISPLAY": "Cancelled"
+      },
+      "rejected": {
+        "DISPLAY": "Rejected"
+      },
+      "expired": {
+        "DISPLAY": "Expired"
+      }
     }
   },
   "UNOCOIN": {
@@ -1610,6 +1650,38 @@
     },
     "user_can_trade": {
       "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+    },
+    "create": "Email Verification",
+    "verify": "Setup Profile",
+    "upload": "Upload Documents",
+    "buy": {
+      "awaiting_transfer_in": {
+        "DISPLAY": "Pending",
+        "HEADER": "Trade Initiated",
+        "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 hours."
+      },
+      "awaiting_reference_number": {
+        "DISPLAY": "Awaiting Reference Number"
+      },
+      "processing": {
+        "DISPLAY": "In Progress",
+        "HEADER": "Trade In Progress",
+        "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
+      },
+      "completed": {
+        "DISPLAY": "Completed",
+        "HEADER": "Order Purchased",
+        "BODY": "Your purchase was successful! Bitcoins were sent to <b>{{::label}}</b>."
+      },
+      "cancelled": {
+        "DISPLAY": "Cancelled",
+        "HEADER": "Order Cancelled",
+        "BODY": "Your transaction has been cancelled. If the funds were withdrawn from your bank account, create a new trade for the same amount and use the original reference number."
+      },
+      "ID": "Trade ID",
+      "DATE": "Date Ordered",
+      "TOTAL": "BTC Purchased",
+      "TOTAL_COST": "Total Cost"
     }
   },
   "SFOX": {
