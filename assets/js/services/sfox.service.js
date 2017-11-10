@@ -106,27 +106,35 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
       .then(mediums => mediums.ach.sell(account));
   }
 
-  function sellTradeDetails (quote, payment) {
+  function sellTradeDetails (quote, payment, trade, tx) {
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
 
+    let amount = payment ? payment.amounts[0] : -tx.amount;
+    let fee = payment ? payment.finalFee : tx.fee;
+    let totalAmount = amount + fee;
+
+    let toBeReceived = quote
+                       ? quote.baseCurrency === 'BTC' ? quote.quoteAmount : quote.baseAmount
+                       : trade.inAmount;
+
     return {
       txAmt: {
         key: '.AMT',
-        val: formatCurrencyForView(convertFromSatoshi(payment.amounts[0], btc), btc, true)
+        val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
       },
       txFee: {
         key: '.TX_FEE',
-        val: formatCurrencyForView(convertFromSatoshi(payment.finalFee, btc), btc, true)
+        val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
       },
       out: {
         key: '.TOTAL',
-        val: formatCurrencyForView(convertFromSatoshi(payment.amounts[0] + payment.finalFee, btc), btc, true)
+        val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
       },
       in: {
         key: '.TO_BE_RECEIVED',
-        val: formatCurrencyForView(quote.baseCurrency === 'BTC' ? quote.quoteAmount : quote.baseAmount, fiat, true),
+        val: formatCurrencyForView(toBeReceived, fiat, true),
         tip: () => console.log('Clicked tooltip')
       }
     };
