@@ -14,21 +14,32 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
-  $scope.buying = sfox.buying;
-  $scope.buyHandler = (...args) => sfox.buy(...args);
-  $scope.buyQuoteHandler = sfox.fetchQuote.bind(null, exchange);
-  $scope.buyLimits = () => ({
-    min: 10,
-    max: sfox.profile && sfox.profile.limits.buy || 100
-  });
-
   $scope.selling = sfox.selling;
-  $scope.sellHandler = (...args) => sfox.sell(...args).then(buildPayment);
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
+  $scope.sellHandler = () => sfox.sell($scope.state.account, $scope.quote);
   $scope.sellLimits = () => ({
     min: 10,
     max: sfox.profile && sfox.profile.limits.sell || 100
   });
+
+  $scope.buildPayment = (quote) => {
+    let amt = quote.baseCurrency === 'BTC' ? quote.baseAmount : quote.quoteAmount;
+    $scope.payment = Wallet.my.wallet.createPayment();
+    $scope.payment.amount(amt);
+    $scope.payment.updateFeePerKb(Exchange.sellFee);
+    $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
+    return $scope.payment.sideEffect((p) => { $scope.quote = quote; $scope.payment = p; $scope.goTo('confirm'); });
+  };
+
+  $scope.sellRefresh = () => {
+    let { baseAmount, quoteAmount, baseCurrency, quoteCurrency } = $scope.quote;
+    let amt = baseCurrency === 'BTC' ? quoteAmount : baseAmount;
+    return $q.resolve($scope.sellQuoteHandler(amt * 100, baseCurrency, quoteCurrency).then($scope.buildPayment));
+  };
+
+  $scope.sellSuccess = (trade) => {
+    $scope.trade = trade; $scope.goTo('receipt');
+  };
 
   $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
@@ -67,19 +78,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
     options: ['SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
-  };
-
-  let buildPayment = (trade) => {
-    $scope.payment = Wallet.my.wallet.createPayment();
-    $scope.payment.amount(trade.outAmount);
-    $scope.payment.to(trade.receiveAddress);
-    $scope.payment.updateFeePerKb(100);
-    $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
-    $scope.payment.build().sign().publish();
-
-    // $scope.payment.sideEffect((p) => {
-    //   $scope.goTo('confirm');
-    // });
   };
 
   $scope.goTo('create');

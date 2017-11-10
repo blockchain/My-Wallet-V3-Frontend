@@ -1640,6 +1640,11 @@
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
     },
     "sell": {
+      "confirm": {
+        "HEADER": "Confirm Sell Order",
+        "BODY": "Please review your trade details below. Click 'Confirm' to initiate your trade.",
+        "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
+      },
       "processing": {
         "HEADER": "Sell Order Initiated",
         "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days."

@@ -78,7 +78,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet, $uibModalStack) {
     }
   }
 
-  function buy (account, quote) {
+  function buy (quote) {
     return $q.resolve(quote.getPaymentMediums())
              .then(mediums => mediums.bank.buy());
   }

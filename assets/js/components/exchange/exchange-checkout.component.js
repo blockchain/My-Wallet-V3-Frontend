@@ -125,28 +125,14 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     $timeout(() => $scope.refreshIfValid(field), 10);
   };
 
-  $scope.enableTrade = () => {
-    let obj = {
-      'BTC Order': $scope.format(state.btc, $scope.bitcoin, true),
-      'Payment Method': typeof this.tradeAccount === 'object' ? this.tradeAccount.accountType + ' (' + this.tradeAccount.accountNumber + ')' : null,
-      'TOTAL_COST': $scope.format(state.total, $scope.fiat, true)
-    };
-
-    $uibModal.open({
-      controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
-      templateUrl: 'partials/confirm-trade-modal.pug',
-      windowClass: 'bc-modal trade-summary'
-    }).result.then($scope.trade);
-  };
-
   $scope.trade = () => {
     $scope.lock();
     let quote = $scope.quote;
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
 
-    if (this.tradeAccount || this.tradeEnabled) {
-      this.handleTrade({account: this.tradeAccount, quote: quote})
+    if (this.tradeEnabled) {
+      this.handleTrade({quote: quote})
         .then(trade => {
           this.onSuccess({trade});
         })

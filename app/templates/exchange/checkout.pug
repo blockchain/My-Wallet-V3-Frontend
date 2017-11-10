@@ -1,6 +1,6 @@
 form.bc-form(
   name="checkoutForm"
-  ng-submit="$ctrl.tradeAccount ? enableTrade(): trade();"
+  ng-submit="trade()"
   novalidate
   autocomplete="off")
   fieldset(ng-disabled="locked || trading().isDisabled")

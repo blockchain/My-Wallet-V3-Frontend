@@ -22,15 +22,23 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       limits="sellLimits"
       fiat-limits="true"
       provider="'sfox'"
+      ng-if="onStep('create')"
       buy-level="state.buyLevel"
-      ng-show="onStep('create')"
       trade-account="state.account"
       collapse-summary="signupCompleted"
-      handle-trade="sellHandler(account, quote)"
       handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
-      on-success="userId ? sellSuccess(trade) : openSfoxSignup(quote)")
-    div(ng-show="onStep('confirm')")
-      span {{ payment }}
+      on-success="buildPayment(quote)")
+    exchange-confirm.width-50.border-desktop(
+      type="'sell'"
+      quote="quote"
+      fiat="dollars"
+      payment="payment"
+      provider="'sfox'"
+      ng-if="onStep('confirm')"
+      on-success="sellSuccess()"
+      handle-trade="sellHandler()"
+      on-expiration="sellRefresh()")
+    exchange-receipt.width-50.border-desktop()
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
       .flex-column.mbl.border-bottom.black
