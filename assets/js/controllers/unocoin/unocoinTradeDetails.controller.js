@@ -34,6 +34,11 @@ function UnocoinTradeDetailsController ($scope, $uibModalInstance, MyWallet, cur
     }
   };
 
+  $scope.values = {
+    'email': MyWallet.wallet.accountInfo.email,
+    'label': MyWallet.wallet.hdwallet.defaultAccount.label
+  };
+
   $scope.editRef = () => {
     $scope.disableLink = true;
     modals.openBankTransfer(trade, 'reference');
