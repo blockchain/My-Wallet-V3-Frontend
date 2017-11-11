@@ -16,8 +16,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.selling = sfox.selling;
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
-  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote).then(submitTx);
-  $scope.sellSuccess = (payment) => { $scope.payment = payment; $scope.goTo('receipt'); };
+  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote).then((trade) => submitTx(trade));
   $scope.sellLimits = () => ({
     min: 10,
     max: sfox.profile && sfox.profile.limits.sell || 100
@@ -33,8 +32,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
     return $scope.payment.sideEffect((payment) => {
       $scope.quote = quote;
-      $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
       $scope.goTo('confirm');
+      $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
     });
   };
 
@@ -46,9 +45,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   let submitTx = (trade) => {
     $scope.trade = trade;
-    Wallet.askForSecondPasswordIfNeeded().then((pw) => {
-      $scope.payment.to('n3PKdDhR8HG5wD23qiZtPQoq5GyGwcXN5h');
-      return $q.resolve($scope.payment.build().sign(pw).publish());
+    // $scope.payment.to(trade.receiveAddress);
+    $scope.payment.to('n3PKdDhR8HG5wD23qiZtPQoq5GyGwcXN5h');
+    return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
+      return $scope.payment.build().sign(pw).publish().payment;
     });
   };
 
