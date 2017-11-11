@@ -25,7 +25,6 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       ng-if="onStep('create')"
       buy-level="state.buyLevel"
       trade-account="state.account"
-      collapse-summary="signupCompleted"
       handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
       on-success="buildPayment(quote)")
     exchange-confirm.width-50.border-desktop(

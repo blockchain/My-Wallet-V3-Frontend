@@ -61,22 +61,13 @@ form.bc-form(
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
-    .group.mt-20(ng-if="$ctrl.collapseSummary")
+    .group.mt-20(ng-if="$ctrl.tradeAccount")
       .item
         .mbm
-          span.f-16.em-500.colon Order Summary
-        .border.flex-column.bg-grey
-          .flex-between.flex-center.form-control.bg-grey.no-border
-            span.colon BTC Order
-            span {{ format(state.btc || 0, bitcoin, true) }}
-          .border-bottom.mhm(ng-if="typeof($ctrl.tradeAccount) === 'object'")
-          .flex-between.flex-center.form-control.bg-grey.no-border(ng-if="typeof($ctrl.tradeAccount) === 'object'")
-            span.colon Payment Method
-            span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
-          .border-bottom.mhm
-          .flex-between.flex-center.form-control.bg-grey.no-border.em-500
-            span.colon Total Cost
-            span {{ format(state.total || 0, fiat, true) }}
+          span.f-14.em-300.colon Synced Bank Account
+        .border.flex-column.pv-5.ph-5.em-500
+          span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
+          span.f-12.capitalize Account Holder: {{ $ctrl.tradeAccount.name }}
     .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
         input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck")
