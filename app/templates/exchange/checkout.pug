@@ -61,6 +61,8 @@ form.bc-form(
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
+    .group.mt-5.border-top(ng-if="trading().reason === 'needs_verification'")
+      .item.mt-15 You need to finish verifying your account before you can start trading.
     .group.mt-20(ng-if="$ctrl.tradeAccount")
       .item
         .mbm

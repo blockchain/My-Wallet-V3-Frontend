@@ -58,7 +58,8 @@ describe('SfoxCheckoutController', () => {
       MyWallet.wallet.external = {
         sfox: {
           profile: {
-            limits: { buy: 100, sell: 100 }
+            limits: { buy: 100, sell: 100 },
+            verificationStatus: { level: 'verified' }
           }
         }
       };

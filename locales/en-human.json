@@ -1674,13 +1674,16 @@
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
     "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
-    "user_needs_account": {
+    "needs_account": {
       "EXPLAIN": ""
     },
-    "user_can_buy": {
+    "needs_verification": {
+      "EXPLAIN": ""
+    },
+    "can_buy": {
       "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
     },
-    "user_can_sell": {
+    "can_sell": {
       "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
     },
     "not_enough_funds_to_sell": {

@@ -13,33 +13,34 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     get limits () {
       return service.profile.limits;
     },
+    get verificationStatus () {
+      return service.profile.verificationStatus;
+    },
+    get requiredDocs () {
+      return service.verificationStatus.required_docs;
+    },
+    get verified () {
+      let { level } = service.verificationStatus;
+      return level === 'verified' || level === 'pending' && service.requiredDocs.length === 0;
+    },
     // TODO: SFOX needs access to the sell exchange rate
     get balanceAboveMin () {
       return Exchange.sellMax > 0;
     },
-    get userCanBuy () {
-      return !service.profile || service.profile.canBuy;
-    },
     get userCanSell () {
-      return service.balanceAboveMin;
-    },
-    get buyReason () {
-      let reason;
-      if (!service.profile) reason = 'user_needs_account';
-      else reason = 'user_can_buy';
-      return reason;
+      return service.profile && service.verified && service.balanceAboveMin;
     },
     get sellReason () {
       let reason;
       if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else if (!service.profile) reason = 'user_needs_account';
-      else reason = 'user_can_sell';
+      else if (!service.verified) reason = 'needs_verification';
+      else if (!service.profile) reason = 'needs_account';
+      else reason = 'can_sell';
       return reason;
     },
     buy,
     sell,
     init,
-    buying,
     selling,
     determineStep,
     sellTradeDetails
@@ -78,14 +79,6 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
         return 'link';
       }
     }
-  }
-
-  function buying () {
-    return {
-      reason: service.buyReason,
-      isDisabled: !service.userCanBuy,
-      launchOptions: service.buyLaunchOptions
-    };
   }
 
   function selling () {
