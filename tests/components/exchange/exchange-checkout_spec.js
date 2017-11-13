@@ -32,6 +32,13 @@ describe('exchange-checkout.component', () => {
     })
   ;
 
+  let mockTrading = () => ({
+    reason: 'can_trade',
+    isDisabled: true,
+    launchOptions: undefined,
+    verificationRequired: false
+  });
+
   let handlers = {
     handleMediums () { return $q.resolve(mockMediums()); },
     handleQuote () { return $q.resolve(mockQuote()); },
@@ -41,6 +48,7 @@ describe('exchange-checkout.component', () => {
     provider: 'unocoin',
     fiat: {code: 'USD'},
     quote () { return mockQuote(); },
+    trading () { return mockTrading(); },
     limits () { return { min: {}, max: {} }; }
   };
 
