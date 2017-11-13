@@ -41,7 +41,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && !t.tradeSubscriptionId);
   $scope.recurringTrades = () => coinify.trades.filter((t) => t.tradeSubscriptionId);
 
-  $scope.frequencyOptions = $scope.exchange.profile.level === 1 && coinify.buyReason === 'after_first_trade'
+  $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || coinify.buyReason === 'after_first_trade' || !coinify.trades.length
     ? ['Weekly', 'Monthly']
     : ['Daily', 'Weekly', 'Monthly'];
 

@@ -44,4 +44,4 @@ form.bc-form.modal-body.fade.clearfix(ng-hide="inMobileBuy" name="paymentMethodF
       //- hide above when kyc check is at medium level
       //- label.pointer.em-300.primary(ng-show="needsKYC('card')" for="card" ng-click="openKYC()" translate="Currently you can buy at most {{limits.card.yearlyMax[vm.fiatCurrency()]}} {{vm.fiatCurrency()}} via credit/debit card. Click here to increase your limit.")
   .flex-end.flex-row.pt-20
-    button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid" translate="CONTINUE")
+    button.button-primary(type="submit" form="paymentMethodForm" ng-disabled="!mediums || locked || paymentMethodForm.$invalid || (vm.frequency && !belowCardMax)" translate="CONTINUE")
