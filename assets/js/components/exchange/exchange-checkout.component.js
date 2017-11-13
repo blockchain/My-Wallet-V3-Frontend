@@ -64,6 +64,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
     state.baseCurr = $scope.fiat;
+    state.frequency = this.frequencies && this.frequencies[0] || null;
+    state.endTime = null;
+    state.frequencyCheck = false;
   };
 
   $scope.getQuoteArgs = (state) => ({
