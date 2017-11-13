@@ -1755,21 +1755,35 @@
         "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
       }
     },
+    "LINK_BANK": {
+      "HEADER": "Link Account",
+      "COPY": "Sync your bank account instantly by securely signing into your bank directly.",
+      "COPY_2": "You can also manually add your account by typing your routing number and account information. Please note that manually adding your bank account could take up to 2 business days to process.",
+      "COPY_SMALL": "(PS: Your bank information will not be saved to your Blockchain wallet.)"
+    },
     "needs_account": {
       "EXPLAIN": ""
     },
-    "needs_verification": {
+    "needs_id": {
       "EXPLAIN": "",
+      "REQUIRED": "You need to finish creating your SFOX account before you can start trading.",
       "CONTINUE": "Continue Where You Left Off"
     },
-    "can_buy": {
-      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+    "needs_bank": {
+      "EXPLAIN": "",
+      "REQUIRED": "You need to link a bank account before you can start trading.",
+      "CONTINUE": "Link Your Bank Account"
     },
-    "can_sell": {
-      "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
+    "needs_bank_active": {
+      "EXPLAIN": "",
+      "REQUIRED": "This bank account needs to be verified.",
+      "CONTINUE": "Finalize Your Account Verification"
     },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
+    },
+    "can_sell": {
+      "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
     },
     "sell": {
       "confirm": {

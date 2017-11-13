@@ -130,7 +130,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     let quote = $scope.quote;
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
-    let verificationRequired = $scope.verificationRequired;
+    let verificationRequired = this.trading().verificationRequired;
 
     if (this.tradeEnabled && !verificationRequired) {
       this.handleTrade({quote: quote})
@@ -163,7 +163,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
-  $scope.$watch('$ctrl.trading().reason', (reason) => { $scope.verificationRequired = reason === 'needs_verification'; });
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;

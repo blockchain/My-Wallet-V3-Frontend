@@ -13,6 +13,12 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     get limits () {
       return service.profile.limits;
     },
+    get accounts () {
+      return service._accounts || [];
+    },
+    set accounts (val) {
+      service._accounts = val;
+    },
     get verificationStatus () {
       return service.profile.verificationStatus;
     },
@@ -23,18 +29,23 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
       let { level } = service.verificationStatus;
       return level === 'verified' || level === 'pending' && service.requiredDocs.length === 0;
     },
+    get activeAccount () {
+      return service.accounts[0] && service.accounts[0].status === 'active';
+    },
     // TODO: SFOX needs access to the sell exchange rate
     get balanceAboveMin () {
       return Exchange.sellMax > 0;
     },
     get userCanSell () {
-      return service.profile && service.verified && service.balanceAboveMin;
+      return service.profile && service.verified && service.activeAccount && service.balanceAboveMin;
     },
     get sellReason () {
       let reason;
-      if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else if (!service.verified) reason = 'needs_verification';
-      else if (!service.profile) reason = 'needs_account';
+      if (!service.profile) reason = 'needs_account';
+      else if (!service.verified) reason = 'needs_id';
+      else if (!service.accounts.length) reason = 'needs_bank';
+      else if (!service.activeAccount) reason = 'needs_bank_active';
+      else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else reason = 'can_sell';
       return reason;
     },
@@ -71,10 +82,12 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     if (!profile) {
       return 'create';
     } else {
-      let { level, required_docs = [] } = profile.verificationStatus;
-      let didVerify = (level === 'verified') || (level === 'pending' && required_docs.length === 0);
-      if (!didVerify) {
-        return 'verify';
+      if (!service.verified) {
+        if (!service.profile.setupComplete) {
+          return 'verify';
+        } else {
+          return 'upload';
+        }
       } else {
         return 'link';
       }
@@ -85,7 +98,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     return {
       reason: service.sellReason,
       isDisabled: !service.userCanSell,
-      launchOptions: service.sellLaunchOptions
+      launchOptions: service.sellLaunchOptions,
+      verificationRequired: !service.activeAccount
     };
   }
 

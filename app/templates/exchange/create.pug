@@ -81,7 +81,7 @@
               span.f-14.mt-5(ng-show="$ctrl.state.resentEmailCode" translate=".CREATE.ANOTHER_CODE_SENT")
             .help.mt-5.mb-15(ng-show="emailForm.emailCode.$error.correct")
               span.state-danger-text 
-                | {{ '.CREATE.VERIFICATION_CODE_INCORRECT' | translate }} 
+                | {{ $ctrl.name.toUpperCase() + '.CREATE.VERIFICATION_CODE_INCORRECT' | translate }} 
                 a(ng-click="$ctrl.sendEmailCode(); $ctrl.clearInlineErrors(); $ctrl.state.resentEmailCode = true;" translate="RESEND")
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid" translate="CONTINUE")

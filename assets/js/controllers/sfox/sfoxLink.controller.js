@@ -10,6 +10,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
     $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
   });
 
+  $scope.namespace = 'SFOX';
   $scope.types = ['checking', 'savings'];
   $scope.openHelper = modals.openHelper;
 

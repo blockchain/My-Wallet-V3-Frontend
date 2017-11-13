@@ -2,7 +2,9 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile) {
+  sfox.accounts = accounts;
+
   let exchange = $scope.vm.external.sfox;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
@@ -82,8 +84,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.siftScienceEnabled = false;
 
   $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
-  $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
-  $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
