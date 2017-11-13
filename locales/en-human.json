@@ -1291,58 +1291,10 @@
     "BODY": "Would you like to provide feedback regarding your ether wallet experience today?"
   },
   "TAKE_SURVEY": "Take Survey",
-  "id_ID": {
-    "TITLE": "Photo ID Verification",
-    "COPY": "To verify your identity, we need one of the following government-issued forms of identification showing your country of residence:",
-    "COPY_2": "Only the front side of your ID is needed, which must clearly display your identification number.",
-    "OPTION1": "State issued driver’s license",
-    "OPTION2": "State issued identification card",
-    "OPTION3": "Passport",
-    "OPTION4": "Government issued identification",
-    "UPLOAD_TITLE": "Photo ID",
-    "UPLOAD_SELECT": "Select Upload Method",
-    "HELP": "Capture the front side of ID, clearly displaying your identification number."
-  },
-  "address_ID": {
-    "TITLE": "Proof of Address Verification",
-    "COPY": "Please upload one of the following documents clearly displaying your address dated within the past 6 months:",
-    "OPTION1": "Utility bill (except mobile phone bills)",
-    "OPTION2": "First page and signature page of lease",
-    "OPTION3": "First page of your bank statement",
-    "OPTION4": "DMV or voter registration",
-    "UPLOAD_TITLE": "Proof of Address",
-    "UPLOAD_SELECT": "Select Upload Method",
-    "HELP": "Make sure the snapshot clearly displays your address."
-  },
   "UNOCOIN_IF_IMPS": "<span class='em-500'>For IMPS transfers</span>, the reference number is RRN OR External Reference number and is 12 digits long, starting from \"7\".",
   "UNOCOIN_IF_NEFT_OR_RTGS": "<span class='em-500'>For NEFT or RTGS transfers</span>, the reference number is UTR NUMBER (does not start with \"IR\" or \"IZ\").",
   "UNOCOIN_IF_CANT_ID": "<span class='em-500'>If you cannot identify the UTR number</span>, please provide all reference numbers you see along with the narration as per your bank statement.",
   "REF_NUMBER": "Reference Number",
-  "unocoin_pancard_ID": {
-    "TITLE": "1. PAN Card",
-    "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
-    "UPLOAD_TITLE": "PAN Card",
-    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "HELP": "Make sure the snapshot clearly displays your pancard number."
-  },
-  "unocoin_photo_ID": {
-    "TITLE": "2. Your Photo",
-    "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
-    "UPLOAD_TITLE": "Photo",
-    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "HELP": "Make sure the snapshot clearly displays your face."
-  },
-  "unocoin_address_ID": {
-    "TITLE": "3. Address Proof",
-    "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
-    "UPLOAD_TITLE": "Address Proof",
-    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "OPTION1": "Aadhar Card (front and back)",
-    "OPTION2": "Driving License",
-    "OPTION3": "Passport (page showing address)",
-    "OPTION4": "Utility Bill",
-    "HELP": "Make sure the snapshot clearly displays your name and address."
-  },
   "BANK_NAME": "Bank Name",
   "ACCOUNT_HOLDER_NAME": "Account Holder Name",
   "ACCOUNT_NUMBER": "Account Number",
@@ -1356,14 +1308,6 @@
     "TITLE": "Bank Deposits",
     "COPY": "SFOX sent 2 small deposits to your bank account. Deposits will appear in your account as “SFOX” in 1-2 days."
   },
-  "id-id-helper": {
-    "TITLE": "Acceptable Photo IDs",
-    "COPY": "You may submit a valid state issued driver license, state issued identification card, passport, or government issued identification. Make sure the identifation number is clearly visible."
-  },
-  "address-id-helper": {
-    "TITLE": "Acceptable Proof of Address",
-    "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
-  },
   "sfox-identity": {
     "ICON": "ti-id-badge",
     "TITLE": "Identification In Review",
@@ -1372,18 +1316,6 @@
   "coinify_after-trade": {
     "TITLE": "🔒 Verification Needed",
     "COPY": "Please bear with us as our exchange partner verifies your payment information. This will only happen once, and you may resume buying or selling bitcoin in <b>{{::days}} day(s).</b>"
-  },
-  "unocoin_pancard-id-helper": {
-    "TITLE": "Acceptable PAN Card",
-    "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
-  },
-  "unocoin_photo-id-helper": {
-    "TITLE": "Acceptable User Photograph",
-    "COPY": "Selfies with goggles or hats are <span class='state-danger-text'>not acceptable</span>."
-  },
-  "unocoin_address-id-helper": {
-    "TITLE": "Acceptable Proof of Address",
-    "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
   },
   "expiring-exchange-helper": {
     "TITLE": "👋 Confirm Exchange Order!",
@@ -1542,6 +1474,40 @@
   "CLICK_HERE_TO_RESTART": "Click here to restart.",
   "CLICK_HERE_TO_CHANGE_IT": "Click here to change it.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "Bank Account Number incorrect",
+  "EXCHANGE": {
+    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
+    "NOTIFY_ME_WHEN_AVAIL": "Notify Me When This Becomes Available",
+    "CREATE": {
+      "ACCOUNT": "Create Your {{::exchange}} Account",
+      "ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
+      "VERIFY_EMAIL": "Verify Email Address",
+      "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
+      "VERIFY_EMAIL_REMINDER": "",
+      "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "",
+      "CHANGE_EMAIL": "Change Email",
+      "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
+      "CHANGE_EMAIL_FAILED": "Sorry, this email is already registered with {{::exchange}}.",
+      "CONFIRM_EMAIL": "Confirm email",
+      "VERIFICATION_CODE": "Verification Code",
+      "VERIFICATION_CODE_INCORRECT": "Verification code incorrect. ",
+      "CHANGE_EMAIL_": "change email",
+      "ANOTHER_CODE_SENT": "Another code has been sent!"
+    },
+    "VERIFY": {
+      "VERIFY_ACCOUNT": "To verify your identity we need to collect some personal information.<br/><br/>This information will be sent directly to {{::partner}} and will not be saved to your Blockchain wallet. Any information provided is secure and safe.",
+      "FULL_NAME": "Full Name",
+      "MOBILE": "Mobile",
+      "PAN_CARD": "PAN Card",
+      "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
+      "ADDRESS_LINE_1": "Address Line 1",
+      "ADDRESS_LINE_2": "Address Line 2",
+      "STATE": "State",
+      "CITY": "City",
+      "PIN_CODE": "Pin Code",
+      "BANK_ACCOUNT_NUMBER": "Bank Account Number",
+      "IFSC": "IFSC"
+    }
+  },
   "COINIFY": {
     "EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
     "user_needs_account": {
@@ -1629,6 +1595,71 @@
   },
   "UNOCOIN": {
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
+    "CREATE": {
+      "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
+      "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
+      "VERIFY_EMAIL": "@:EXCHANGE.CREATE.VERIFY_EMAIL",
+      "VERIFY_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.VERIFY_EMAIL_EXPLAIN",
+      "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your {{::exchange}} and Blockchain accounts. If it's not, you can update your Blockchain email ",
+      "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "Hey 👋! We noticed your Blockchain email is different than your {{::exchange}} email. Make sure you use the same email address.",
+      "CHANGE_EMAIL": "@:EXCHANGE.CREATE.CHANGE_EMAIL",
+      "CHANGE_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.CHANGE_EMAIL_EXPLAIN",
+      "CHANGE_EMAIL_FAILED": "@:EXCHANGE.CREATE.CHANGE_EMAIL_FAILED",
+      "CONFIRM_EMAIL": "@:EXCHANGE.CREATE.CONFIRM_EMAIL",
+      "VERIFICATION_CODE": "@:EXCHANGE.CREATE.VERIFICATION_CODE",
+      "VERIFICATION_CODE_INCORRECT": "@:EXCHANGE.CREATE.VERIFICATION_CODE_INCORRECT",
+      "CHANGE_EMAIL_": "@:EXCHANGE.CREATE.CHANGE_EMAIL_",
+      "ANOTHER_CODE_SENT": "@:EXCHANGE.CREATE.ANOTHER_CODE_SENT"
+    },
+    "UPLOAD": {
+      "pancard": {
+        "TITLE": "1. PAN Card",
+        "COPY": "Upload or take a photo of your PAN Card, clearly showing your name and ten-digit Permanent Account Number.",
+        "UPLOAD_TITLE": "PAN Card",
+        "UPLOAD_SELECT": "@:SFOX.UPLOAD.id.UPLOAD_SELECT",
+        "OPTION1": "",
+        "OPTION2": "",
+        "OPTION3": "",
+        "OPTION4": "",
+        "HELP": "Make sure the snapshot clearly displays your pancard number."
+      },
+      "photo": {
+        "TITLE": "2. Your Photo",
+        "COPY": "Upload or take a photo of yourself so Unocoin can verify your PAN Card.",
+        "UPLOAD_TITLE": "Photo",
+        "UPLOAD_SELECT": "@:SFOX.UPLOAD.id.UPLOAD_SELECT",
+        "OPTION1": "",
+        "OPTION2": "",
+        "OPTION3": "",
+        "OPTION4": "",
+        "HELP": "Make sure the snapshot clearly displays your face."
+      },
+      "address": {
+        "TITLE": "3. Address Proof",
+        "COPY": "Upload or take a photo of your address proof. Your may upload one of the following approved documents that match the name and address you initially provided.",
+        "UPLOAD_TITLE": "Address Proof",
+        "UPLOAD_SELECT": "@:SFOX.UPLOAD.id.UPLOAD_SELECT",
+        "OPTION1": "- Aadhar Card (front and back)",
+        "OPTION2": "- Driving License",
+        "OPTION3": "- Passport (page showing address)",
+        "OPTION4": "- Utility Bill",
+        "HELP": "Make sure the snapshot clearly displays your name and address."
+      }
+    },
+    "HELPER": {
+      "photo": {
+        "TITLE": "Acceptable User Photograph",
+        "COPY": "Selfies with goggles or hats are <span class='state-danger-text'>not acceptable</span>."
+      },
+      "pancard": {
+        "TITLE": "Acceptable PAN Card",
+        "COPY": "Minor PAN Card <span class='state-danger-text'>not acceptable</span>.<br>PAN Card must be valid as per Government records."
+      },
+      "address": {
+        "TITLE": "Acceptable Proof of Address",
+        "COPY": "Avoid camera flash on the details of the address proof.<br>Address proof must be valid at least for 6 months.<br>Address proof should match previous address entered.<br>Voter ID has to be valid in government website.<br>Address proof uploaded should be in English."
+      }
+    },
     "PENDING": "Identity Verification Pending",
     "PENDING_EXPLAIN": "Thanks for setting up your profile. You should receive a text message or phone call within 1 business day to confirm that your account has been verified. Then, you’ll be able to buy bitcoin!",
     "awaiting_trade_completion": {
@@ -1674,11 +1705,62 @@
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
     "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
+    "CREATE": {
+      "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
+      "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
+      "VERIFY_EMAIL": "@:EXCHANGE.CREATE.VERIFY_EMAIL",
+      "VERIFY_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.VERIFY_EMAIL_EXPLAIN",
+      "VERIFY_EMAIL_REMINDER": "@:EXCHANGE.CREATE.VERIFY_EMAIL_REMINDER",
+      "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "@:EXCHANGE.CREATE.VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR",
+      "CHANGE_EMAIL": "@:EXCHANGE.CREATE.CHANGE_EMAIL",
+      "CHANGE_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.CHANGE_EMAIL_EXPLAIN",
+      "CHANGE_EMAIL_FAILED": "@:EXCHANGE.CREATE.CHANGE_EMAIL_FAILED",
+      "CONFIRM_EMAIL": "@:EXCHANGE.CREATE.CONFIRM_EMAIL",
+      "VERIFICATION_CODE": "@:EXCHANGE.CREATE.VERIFICATION_CODE",
+      "VERIFICATION_CODE_INCORRECT": "@:EXCHANGE.CREATE.VERIFICATION_CODE_INCORRECT",
+      "CHANGE_EMAIL_": "@:EXCHANGE.CREATE.CHANGE_EMAIL_",
+      "ANOTHER_CODE_SENT": "@:EXCHANGE.CREATE.ANOTHER_CODE_SENT"
+    },
+    "UPLOAD": {
+      "id": {
+        "TITLE": "Photo ID Verification",
+        "COPY": "To verify your identity and confirm your country of residence, please upload one of the following government-issued forms of ID:",
+        "OPTION1": "- State issued driver’s license",
+        "OPTION2": "- Passport",
+        "OPTION3": "- State/government issued identification card",
+        "OPTION4": "",
+        "UPLOAD_TITLE": "Photo ID",
+        "UPLOAD_SELECT": "Select Upload Method",
+        "HELP": "Capture the front side of ID, clearly displaying your identification number."
+      },
+      "address": {
+        "TITLE": "Proof of Address Verification",
+        "COPY": "To verify your billing address please upload one of the following documents. The document must be dated within the last 6 months, and should clearly display your address.",
+        "OPTION1": "- Utility bill (mobile phone bills not accepted)",
+        "OPTION2": "- First page and signature page of your lease",
+        "OPTION3": "- First page of your bank statement",
+        "OPTION4": "- DMV or voter registration form",
+        "UPLOAD_TITLE": "Proof of Address",
+        "UPLOAD_SELECT": "Select Upload Method",
+        "HELP": "Make sure the snapshot clearly displays your address."
+      }
+    },
+    "HELPER": {
+      "id": {
+        "TITLE": "Acceptable Photo IDs",
+        "COPY": "You may submit a valid state issued driver license, state issued identification card, passport, or government issued identification. Make sure the identifation number is clearly visible."
+      },
+      "address": {
+        "TITLE": "Acceptable Proof of Address",
+        "COPY": "You may submit a utility bill (except mobile phone bills), first and last page of lease, first page of bank statement, or DMV/voter registration form. Make sure it displays your address and is dated within the past 6 months."
+      }
+    },
     "needs_account": {
       "EXPLAIN": ""
     },
     "needs_verification": {
-      "EXPLAIN": ""
+      "EXPLAIN": "",
+      "CONTINUE": "Continue Where You Left Off"
     },
     "can_buy": {
       "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
@@ -1724,36 +1806,6 @@
     "verify": "Verify Identity",
     "upload": "Upload Documents",
     "link": "Link Payment"
-  },
-  "EXCHANGE": {
-    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners all around the world to make buying and selling bitcoin in your wallet secure and seamless.",
-    "NOTIFY_ME_WHEN_AVAIL": "Notify Me When This Becomes Available",
-    "CREATE_ACCOUNT": "Create {{::exchange}} Account",
-    "CREATE_ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
-    "VERIFY_EMAIL": "Verify Email Address",
-    "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
-    "VERIFY_EMAIL_REMINDER": "<b>Psst 👋. Already have a {{::exchange}} account?</b> Make sure your email is {{::email}} for both your {{::exchange}} and Blockchain accounts. If it's not, you can update your Blockchain email ",
-    "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "Hey 👋! We noticed your Blockchain email is different than your {{::exchange}} email. Make sure you use the same email address.",
-    "CHANGE_EMAIL": "Change Email",
-    "CHANGE_EMAIL_EXPLAIN": "Updating your email will also change the email address associated with your wallet.",
-    "CHANGE_EMAIL_FAILED": "Sorry, this email is already registered with {{::exchange}}.",
-    "CONFIRM_EMAIL": "Confirm email",
-    "VERIFICATION_CODE": "Verification Code",
-    "VERIFICATION_CODE_INCORRECT": "Verification code incorrect. ",
-    "CHANGE_EMAIL_": "change email",
-    "ANOTHER_CODE_SENT": "Another code has been sent!",
-    "VERIFY_ACCOUNT": "We need to collect some personal information in order to verify your identity. Note that this information will be sent to <span class='capitalize'>{{::exchange}}</span> and will not be directly linked to your Blockchain wallet.",
-    "FULL_NAME": "Full Name",
-    "MOBILE": "Mobile",
-    "PAN_CARD": "PAN Card",
-    "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
-    "ADDRESS_LINE_1": "Address Line 1",
-    "ADDRESS_LINE_2": "Address Line 2",
-    "STATE": "State",
-    "CITY": "City",
-    "PIN_CODE": "Pin Code",
-    "BANK_ACCOUNT_NUMBER": "Bank Account Number",
-    "IFSC": "IFSC"
   },
   "HERE": "here",
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",

@@ -71,13 +71,13 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
   service.openHelper = (helper, opts) => open({
     controller ($scope) {
       let helperImages = {
-        'id-id-helper': 'img/id-id-helper.png',
+        'SFOX.HELPER.id': 'img/id-helper.png',
+        'SFOX.HELPER.address': 'img/address-id-helper.png',
+        'UNOCOIN.HELPER.photo': 'img/unocoin-photo-id-helper.png',
+        'UNOCOIN.HELPER.address': 'img/unocoin-address-id-helper.png',
+        'UNOCOIN.HELPER.pancard': 'img/unocoin-pancard-id-helper.png',
         'bank-check-helper': 'img/bank-check-helper.png',
-        'address-id-helper': 'img/address-id-helper.png',
         'bank-deposit-helper': 'img/bank-deposit-helper.png',
-        'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
-        'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
-        'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png',
         'expiring-exchange-helper': null,
         'coinify_after-trade': null
       };

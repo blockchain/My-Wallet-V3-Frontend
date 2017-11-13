@@ -18,7 +18,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       buy-level="state.buyLevel"
       trade-account="state.account"
       handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
-      on-success="buildPayment(quote)")
+      on-success="selling().reason === 'needs_verification' ? openSfoxSignup() : buildPayment(quote)")
     exchange-confirm.width-50.border-desktop(
       type="'sell'"
       quote="quote"

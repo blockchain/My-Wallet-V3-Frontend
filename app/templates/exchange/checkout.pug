@@ -3,7 +3,7 @@ form.bc-form(
   ng-submit="trade()"
   novalidate
   autocomplete="off")
-  fieldset(ng-disabled="locked || trading().isDisabled")
+  fieldset(ng-disabled="locked || trading().isDisabled || verificationRequired")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -61,7 +61,7 @@ form.bc-form(
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
-    .group.mt-5.border-top(ng-if="trading().reason === 'needs_verification'")
+    .group.mt-5.border-top(ng-if="verificationRequired")
       .item.mt-15 You need to finish verifying your account before you can start trading.
     .group.mt-20(ng-if="$ctrl.tradeAccount")
       .item
@@ -88,5 +88,6 @@ form.bc-form(
         .item.mtm
           span(ng-show="!state.endTime") You can cancel anytime.
           span(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
-    .group.mtl
-      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
+  .group.mtl
+    button.btn.button-primary.full(ng-if="!verificationRequired" type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
+    button.btn.button-primary.full(ng-if="verificationRequired" type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")
