@@ -432,3 +432,9 @@ input[type="radio"]:checked + label {
     background-image: url('../img/switch-hover.svg');
   }
 }
+
+.recurring-buy {
+  .fake-select {
+    background-color: white !important;
+  }
+}
