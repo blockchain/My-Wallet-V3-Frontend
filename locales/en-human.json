@@ -1796,5 +1796,6 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
+  "RECURRING_BUY_DISABLED": "Orders for 300EUR and below can become recurring buys",
   "": ""
 }

@@ -17,7 +17,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         fiat-limits="true"
         fiat-options="buyFiatOptions"
         fiat-change="buyFiatHandler(currency)"
-        frequencies="['Daily', 'Weekly', 'Monthly']"
+        frequencies="frequencyOptions"
         on-success="buyHandler(quote, null, frequency, endTime)"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn

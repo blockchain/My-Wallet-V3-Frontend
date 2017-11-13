@@ -79,8 +79,8 @@ form.bc-form(
             span {{ format(state.total || 0, fiat, true) }}
     .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
-        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="!state.fiat")
-        label(for="frequencyCheck") Make this a recurring order
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="!state.fiat || state.fiat > max.fiat")
+        label(for="frequencyCheck" uib-tooltip="{{'RECURRING_BUY_DISABLED' | translate}}" tooltip-enable="!state.fiat || state.fiat > max.fiat") Make this a recurring order
     .group.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled")
       .group.mtl
         span.colon.f-13.em-500(translate="FREQUENCY")
