@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('UnocoinTradeDetailsController', UnocoinTradeDetailsController);
 
-function UnocoinTradeDetailsController ($scope, $uibModalInstance, MyWallet, currency, modals) {
+function UnocoinTradeDetailsController ($scope, $uibModalStack, MyWallet, currency, modals) {
   let trade = $scope.trade;
   $scope.tradeIsPending = () => (trade.state === 'awaiting_transfer_in' || trade.state === 'awaiting_reference_number');
 
@@ -43,6 +43,6 @@ function UnocoinTradeDetailsController ($scope, $uibModalInstance, MyWallet, cur
   $scope.editRef = () => {
     $scope.disableLink = true;
     modals.openBankTransfer(trade, 'reference');
-    $uibModalInstance.dismiss();
+    $uibModalStack.dismissAll();
   };
 }
