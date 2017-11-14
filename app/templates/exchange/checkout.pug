@@ -93,7 +93,7 @@ form.bc-form(
         span.colon.f-13.em-500(translate="DURATION")
         .flex-row
           .flex-column.width-50.mr-15
-            span.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: minDate}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" readonly)
+            span.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: minDate}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" ng-model="state.endTime" clear-text="Until I Cancel" readonly)
               span {{ (state.endTime | date:dateFormat) || 'Until I Cancel' }}
           .flex-column.flex-justify
             span(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
