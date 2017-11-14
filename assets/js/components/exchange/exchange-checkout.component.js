@@ -17,6 +17,7 @@ angular
       fiatOptions: '<',
       frequencies: '<',
       collapseSummary: '<',
+      recurringBuyLimit: '&',
       onSuccess: '&',
       fiatChange: '&',
       handleQuote: '&',

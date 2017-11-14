@@ -80,7 +80,8 @@ form.bc-form(
     .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
         input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="!state.fiat || state.fiat > max.fiat")
-        label(for="frequencyCheck" uib-tooltip="{{'RECURRING_BUY_DISABLED' | translate}}" tooltip-enable="!state.fiat || state.fiat > max.fiat") Make this a recurring order
+        label(for="frequencyCheck") Make this a recurring order
+        helper-button(content="{{ 'RECURRING_BUY_DISABLED' | translate:{cardLimit: $ctrl.recurringBuyLimit(), currency: fiat.code } }}" ng-show="!state.fiat || state.fiat > max.fiat" append="true")
     .group.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled")
       .group.mtl
         span.colon.f-13.em-500(translate="FREQUENCY")
@@ -94,7 +95,7 @@ form.bc-form(
         .flex-row
           .flex-column.width-50.mr-15
             span.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: minDate}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" ng-model="state.endTime" clear-text="Until I Cancel" readonly)
-              span {{ (state.endTime | date:dateFormat) || 'Until I Cancel' }}
+              p.pts.mbn {{ (state.endTime | date:dateFormat) || 'Until I Cancel' }}
           .flex-column.flex-justify
             span(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
             span(ng-show="!state.endTime") You can cancel anytime.
