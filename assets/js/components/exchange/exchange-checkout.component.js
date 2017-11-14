@@ -143,8 +143,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      this.onSuccess({quote, frequency, endTime});
-      $q.resolve().then($scope.resetFields).finally($scope.free);
+      $q.resolve(this.onSuccess({quote, frequency, endTime}))
+        .then($scope.resetFields).finally($scope.free);
     }
   };
 

@@ -85,8 +85,10 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   };
 
   this.setProfile = () => {
+    $scope.lock();
     this.onSetProfile();
-    this.step < Object.keys(this.steps).length - 1 ? this.step++ : this.onVerify();
+    if (this.step < Object.keys(this.steps).length - 1) { this.step++; $scope.free(); }
+    else this.onVerify().then($scope.free);
   };
 
   this.setBankInfo = () => {
@@ -106,4 +108,6 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
         break;
     }
   };
+
+  AngularHelper.installLock.call($scope);
 }

@@ -18,7 +18,7 @@
     .width-90.width-100-tablet.width-100-mobile
       label.f-14.colon(translate="Select Account")
       form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
-        .radio-group.mb-30
+        .radio-group.mb-10
           .radio-label(ng-repeat="bankAccount in state.bankAccounts")
             input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
             label(for="{{bankAccount._id}}")
@@ -26,7 +26,7 @@
               .flex-column
                 span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
                 span.f-14.capitalize {{ bankAccount.institution_type }} Bank
-        .group.full.mb-30
+        .group.full.mb-10
           .item
             label Name on Account
               helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
