@@ -45,6 +45,8 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     return coinify.getQuote($scope.tempTrade.fiatAmount * 100, $scope.tempTrade.fiatCurrency);
   };
 
+  $scope.removeRecurring = () => $scope.vm.frequency = null; frequency = null;
+
   $scope.commitValues = () => {
     $scope.lock();
     $scope.vm.quote = null;

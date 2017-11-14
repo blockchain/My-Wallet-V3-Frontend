@@ -1,5 +1,6 @@
 .flex-row.flex-between.mbm
   span.primary.em-500 This is a Recurring Order
+  a.em-300.text-danger.underline(ng-show="$ctrl.showRemove" ng-click="$ctrl.onRemove()") Remove Recurring Buy
 .pam.bg-ultralight-blue.border-light-blue
   .flex-row.pam
     span.flex-1.primary.colon(translate="AMOUNT")
