@@ -196,6 +196,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     }
   });
 
+  $scope.dateFormat = 'd MMMM yyyy';
+
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;
     this.showRecurringBuy = env.partners.coinify.showRecurringBuy;
