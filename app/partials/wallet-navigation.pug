@@ -19,7 +19,7 @@
           span ETHER
     div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
     // Don't forget to update controllers/coinifyCheckout.controller.js
-    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canBuy || shouldShowInviteForm")
+    li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canTrade || shouldShowInviteForm")
       pulse-cta(
         active-when="shouldShowBuyCta() && !shouldShowInviteForm"
         on-dismiss="setBuyCtaDismissed()"
@@ -31,7 +31,7 @@
         ui-sref="wallet.common.buy-sell"
         ng-click="dismissBuyCta()")
         i.icon-buy-sell
-        span(translate="{{buyLink}}")
+        span(translate="{{tradeLink}}")
       a(ng-show="shouldShowInviteForm"
         ng-click="showInviteForm()")
         i.icon-buy-sell

@@ -687,8 +687,8 @@
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
-  "BUY_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular digital currency wallet platform. We’re helping to create an open, accessible, and fair financial future, one piece of software at a time.",
-  "BUY_FIRST_LOGIN_TEXT_2": "Get started now by purchasing your first bitcoins!",
+  "TRADE_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular digital currency wallet platform. We’re helping to create an open, accessible, and fair financial future, one piece of software at a time.",
+  "TRADE_FIRST_LOGIN_TEXT_2": "Get started now by trading your first bitcoins!",
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
@@ -739,9 +739,9 @@
     "TITLE": "Wait!",
     "BODY": "Before you sign out, make sure to record your backup phrase. This will allow you to recover your wallet if you ever forget your password."
   },
-  "BUY_BITCOIN_REMINDER": {
+  "TRADE_BITCOIN_REMINDER": {
     "TITLE": "Did you know?",
-    "BODY": "You can buy Bitcoin directly from your wallet! Check out our buy feature to top off your balance."
+    "BODY": "You can trade Bitcoin directly from your wallet! Check out our buy feature to top off your balance."
   },
   "WHAT_DO_YOU_THINK": "What do you think of Blockchain Wallet?",
   "VIEW_OPTIONS": "View Options",
@@ -1158,10 +1158,10 @@
   "SELL_AMT_HIGH": "Maximum sell amount is {{::symbol}}{{::limit}}",
   "WHY": "Why?",
   "UPDATE": "Update",
-  "BUY_SUBSCRIBE": {
+  "TRADE_SUBSCRIBE": {
     "TITLE": "This feature is coming soon!",
-    "BODY": "The world's most popular bitcoin wallet now lets you buy bitcoin securely. Sign up to get access as soon as we launch in your area!",
-    "BODY_MOBILE": "The world's most popular bitcoin wallet now lets you buy bitcoin securely.",
+    "BODY": "The world's most popular bitcoin wallet now lets you trade bitcoin securely. Sign up to get access as soon as we launch in your area!",
+    "BODY_MOBILE": "The world's most popular bitcoin wallet now lets you trade bitcoin securely.",
     "BUTTON": "Sign Up"
   },
   "SUBSCRIBE_TITLE": "Sign up for Blockchain updates!",

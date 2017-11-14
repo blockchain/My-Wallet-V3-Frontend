@@ -1,15 +1,16 @@
-describe('buyStatus service', () => {
+fdescribe('tradeStatus service', () => {
   let MyWallet;
   let MyWalletHelpers;
   let accountInfo;
-  let buyStatus;
+  let tradeStatus;
   let sfoxOptions;
 
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() => {
     sfoxOptions = {
-      countries: ['US']
+      countries: ['US'],
+      states: ['NY', 'PA']
     };
 
     module(($provide) => {
@@ -36,6 +37,7 @@ describe('buyStatus service', () => {
 
       accountInfo = {
         countryCodeGuess: 'US',
+        stateCodeGuess: 'NY',
         invited: {
           coinify: false,
           sfox: false
@@ -61,12 +63,12 @@ describe('buyStatus service', () => {
       };
 
 
-      buyStatus = $injector.get('buyStatus');
+      tradeStatus = $injector.get('tradeStatus');
     });
   });
 
-  describe('canBuy', function () {
-    it('should be false in a non-coinify country by default', done => expect(buyStatus.canBuy()).toBeResolvedWith(false, done));
+  describe('canTrade', function () {
+    it('should be false in a non-coinify country by default', done => expect(tradeStatus.canTrade()).toBeResolvedWith(false, done));
 
     // Coinify has been rolled out to 100%. Invite functionality will be pruned
     // from backend, so e.g. get-info's 'invited' will no longer have a coinify flag.
@@ -79,18 +81,18 @@ describe('buyStatus service', () => {
         accountInfo.invited.coinify = false;
         accountInfo.invited.sfox = false;
 
-        expect(buyStatus.canBuy()).toBeResolvedWith(true, done);
+        expect(tradeStatus.canTrade()).toBeResolvedWith(true, done);
       });
     });
 
     describe('in an SFOX country', function () {
       beforeEach(() => accountInfo.countryCodeGuess = 'US');
 
-      it('should be false when user is not invited', done => expect(buyStatus.canBuy()).toBeResolvedWith(false, done));
+      it('should be false when user is not invited', done => expect(tradeStatus.canTrade()).toBeResolvedWith(false, done));
 
       it('should be true when user is invited', function (done) {
         accountInfo.invited.sfox = true;
-        expect(buyStatus.canBuy()).toBeResolvedWith(true, done);
+        expect(tradeStatus.canTrade()).toBeResolvedWith(true, done);
       });
 
       it('should not be affected by coinify.invited', function (done) {
@@ -98,31 +100,31 @@ describe('buyStatus service', () => {
                                            // we'd show the tab to everyone in the US
         accountInfo.invited.sfox = false;
 
-        expect(buyStatus.canBuy()).toBeResolvedWith(false, done);
+        expect(tradeStatus.canTrade()).toBeResolvedWith(false, done);
       });
     });
   });
 
   describe('showInviteForm()', function () {
-    it('should not show if canBuy() is true', function (done) {
-      spyOn(buyStatus, 'canBuy').and.callFake(() => Promise.resolve(true));
-      expect(buyStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
+    it('should not show if canTrade() is true', function (done) {
+      spyOn(tradeStatus, 'canTrade').and.callFake(() => Promise.resolve(true));
+      expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
     });
 
-    it('canBuy should return false for these tests', done => expect(buyStatus.canBuy()).toBeResolvedWith(false, done));
+    it('canTrade should return false for these tests', done => expect(tradeStatus.canTrade()).toBeResolvedWith(false, done));
 
-    it('should not show for non-SFOX countries', done => expect(buyStatus.shouldShowInviteForm()).toBeResolvedWith(false, done));
+    it('should not show for non-SFOX countries', done => expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done));
 
     describe('in SFOX countries', function () {
       beforeEach(() => accountInfo.countryCodeGuess = 'US');
 
-      it('should not show if inviteFormFraction field is missing in wallet-options', done => expect(buyStatus.shouldShowInviteForm()).toBeResolvedWith(false, done));
+      it('should not show if inviteFormFraction field is missing in wallet-options', done => expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done));
 
       it('should be shown to fraction of emails based on sha256 hash', function (done) {
         sfoxOptions.inviteFormFraction = 0.01; // 1%
 
         accountInfo.email = "a+16@b.com"; // requires > 0.0078% threshold
-        expect(buyStatus.shouldShowInviteForm()).toBeResolvedWith(true, done);
+        expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(true, done);
       });
 
       it('should not show for non-SFOX countries, even if hash matches', function (done) {
@@ -131,12 +133,12 @@ describe('buyStatus service', () => {
 
         accountInfo.email = "a+16@b.com"; // requires > 0.0078% threshold
 
-        expect(buyStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
+        expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
       });
 
       it('should not be shown to remaining fraction of emails', function (done) {
         accountInfo.email = "a@b.com"; // requires >98% threshold
-        expect(buyStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
+        expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
       });
     });
   });

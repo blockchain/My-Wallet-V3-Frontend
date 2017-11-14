@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, buyStatus, modals, Env) {
-  buyStatus.canBuy().then((canBuy) => {
-    if (!canBuy) {
+function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, tradeStatus, modals, Env) {
+  tradeStatus.canTrade().then((canTrade) => {
+    if (!canTrade) {
       $state.go('wallet.common.home');
       if ($scope.inMobileBuy) {
         $timeout(() => modals.openFullScreen('partials/buy-subscribe-modal.pug', 'SubscribeCtrl'));
@@ -15,12 +15,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   let contains = (val, list) => list.indexOf(val) > -1;
   let accountInfo = MyWallet.wallet.accountInfo;
   let codeGuess = accountInfo && accountInfo.countryCodeGuess;
-
-  $scope.states = state.stateCodes;
-  $scope.state = $scope.states[0];
+  let stateCodeGuess = accountInfo && accountInfo.stateCodeGuess;
 
   $scope.countries = country.countryCodes;
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
+
+  $scope.states = state.stateCodes;
+  $scope.state = $scope.states.filter((s) => s.Code === stateCodeGuess)[0] || $scope.states[0];
 
   Env.then(env => {
     $scope.coinifyWhitelist = env.partners.coinify.countries;

@@ -72,8 +72,8 @@ describe('BuySellSelectPartnerController', () => {
     $controller('BuySellSelectPartnerController', {
       $scope,
       options,
-      buyStatus: {
-        canBuy () { return Promise.resolve(true); }
+      tradeStatus: {
+        canTrade () { return Promise.resolve(true); }
       },
       state: {
         stateCodes: [
