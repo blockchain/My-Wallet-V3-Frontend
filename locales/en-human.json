@@ -1268,6 +1268,7 @@
   "ENTER_AMOUNT:": "Enter amount:",
   "FREQUENCY": "Frequency",
   "FREQUENCY_INFO": "<b>Today</b> and every <b>{{::timespan}}</b>.",
+  "FREQUENCY_INFO_HOURLY": "<b>Now</b> and every <b>{{::timespan}}</b>.",
   "DURATION": "Duration",
   "DURATION_INFO": "This order will repeat until {{::endTime}}.",
   "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",

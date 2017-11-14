@@ -10,6 +10,7 @@ function RecurringTradeService () {
 
   service.getTimespan = (date, frequency) => {
     let freq = frequency.toLowerCase();
+    if (freq === 'hourly') return 'hour';
     if (freq === 'daily') return '24 hours';
     if (freq === 'weekly') return `${days[date.getDay()]}`;
     if (freq === 'monthly') return `${date.getDate() + (human[date.getDate()] || 'th')} of the month`;

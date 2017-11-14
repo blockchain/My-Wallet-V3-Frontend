@@ -45,7 +45,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     return coinify.getQuote($scope.tempTrade.fiatAmount * 100, $scope.tempTrade.fiatCurrency);
   };
 
-  $scope.removeRecurring = () => $scope.vm.frequency = null; frequency = null;
+  $scope.removeRecurring = () => { $scope.vm.frequency = null; frequency = null; };
 
   $scope.commitValues = () => {
     $scope.lock();
@@ -67,7 +67,6 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
       $scope.vm.trade = trade;
       buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     };
-
     $q.resolve($scope.vm.quote.getPaymentMediums())
       .then((mediums) => mediums[medium].getAccounts())
       .then((accounts) => accounts[0].buy(subscription)).then(success)

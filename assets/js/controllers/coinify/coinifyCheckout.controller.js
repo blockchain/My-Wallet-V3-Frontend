@@ -21,7 +21,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     max: Math.max(coinify.limits.bank.inRemaining[$scope.buyFiat.code], coinify.limits.card.inRemaining[$scope.buyFiat.code]),
     min: Math.min(coinify.limits.bank.minimumInAmounts[$scope.buyFiat.code], coinify.limits.card.minimumInAmounts[$scope.buyFiat.code])
   });
-  $scope.recurringBuyLimit = () => coinify.limits.card.inRemaining[$scope.buyFiat.code];
+  $scope.recurringBuyLimit = () => $scope.exchange.user ? coinify.limits.card.inRemaining[$scope.buyFiat.code] : 300;
 
   $scope.selling = coinify.selling;
   $scope.sellHandler = modals.openSellView;
@@ -57,6 +57,10 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
         $state.params.selectedTab = this.selectedTab;
       }
     };
+    if (env.qaDebugger) {
+      $scope.frequencyOptions = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
+      $scope.qaDebugger = env.qaDebugger;
+    }
   });
 
   coinify.pollUserLevel();

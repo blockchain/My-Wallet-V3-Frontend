@@ -87,9 +87,10 @@ form.bc-form(
         span.colon.f-13.em-500(translate="FREQUENCY")
         .flex-row
           .flex-column.width-50.mr-15
-            select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true")
+            select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true" ng-init="state.frequency = $ctrl.frequencies.length === 3 ? $ctrl.frequencies[1] : $ctrl.frequencies[0]")
           .flex-column.flex-justify
-            span(translate="FREQUENCY_INFO" translate-values="{timespan: recurringTimespan()}")
+            span(ng-hide="state.frequency === 'hourly'" translate="FREQUENCY_INFO" translate-values="{timespan: recurringTimespan()}")
+            span(ng-show="state.frequency === 'hourly'" translate="FREQUENCY_INFO_HOURLY" translate-values="{timespan: recurringTimespan()}")
       .group.mtl
         span.colon.f-13.em-500(translate="DURATION")
         .flex-row
