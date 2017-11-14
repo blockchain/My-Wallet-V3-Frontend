@@ -34,6 +34,7 @@ form.bc-form(
               prevent-event="mousewheel"
               focus-when="true"
               ng-model-options="{debounce: 250}"
+              ng-disabled="max.fiat <= 0"
               required)
             .input-dropdown(uib-dropdown)
               span.ph-10(uib-dropdown-toggle ng-class="{'arrow': fiatOptions.length}") {{fiat.code}}
@@ -52,6 +53,7 @@ form.bc-form(
               step="0.01"
               prevent-event="mousewheel"
               ng-model-options="{debounce: 250}"
+              ng-disabled="max.fiat <= 0"
               required)
             span.ph-10 {{bitcoin.code}}
         .f-12.mts
