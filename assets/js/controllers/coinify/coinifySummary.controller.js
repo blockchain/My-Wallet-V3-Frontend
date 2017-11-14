@@ -23,13 +23,14 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   };
 
   let setTrade = () => {
-    let { quote, fiatCurrency, fiatAmount, BTCAmount } = $scope.vm;
+    let { quote, fiatCurrency, fiatAmount, BTCAmount, transactionFee } = $scope.vm;
     $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
     $scope.dollars = currency.currencies.filter(c => c.code === fiatCurrency())[0];
 
     $scope.trade = {
       fee: (quote.paymentMediums[medium].fee).toFixed(2),
       total: (quote.paymentMediums[medium].total).toFixed(2),
+      txFee: transactionFee(),
       BTCAmount: BTCAmount(),
       fiatAmount: fiatAmount(),
       fiatCurrency: fiatCurrency()
