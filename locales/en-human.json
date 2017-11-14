@@ -109,6 +109,10 @@
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
   },
+  "CONFIRM_CANCEL_RECURRING_TRADE": {
+    "TITLE": "Cancel Recurring Buy?",
+    "BODY": "Are you sure you want to cancel? This will stop all future trades for this recurring buy order."
+  },
   "SAVING": "Saving",
   "SAVING_DESC": "Please wait while your wallet is saved...",
   "CANCEL_TRADE": "Cancel Trade",

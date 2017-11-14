@@ -12,7 +12,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeRecurringTradesController ($scope, coinify, $rootScope) {
+function ExchangeRecurringTradesController ($scope, coinify, $rootScope, Alerts) {
   $scope.state = {};
   $scope.subscription = this.subscription;
   $scope.trades = this.trades()().filter((t) => t.tradeSubscriptionId === $scope.subscription.id);
@@ -37,6 +37,11 @@ function ExchangeRecurringTradesController ($scope, coinify, $rootScope) {
 
   $scope.cancel = () => {
     const onCancel = (res) => $scope.subscription.isActive = res.isActive;
-    this.cancelSubscription({ id: $scope.subscription.id }).then(onCancel);
+    Alerts.confirm('CONFIRM_CANCEL_RECURRING_TRADE', {
+      action: 'CANCEL_TRADE',
+      cancel: 'GO_BACK'
+    }).then(() => {
+      this.cancelSubscription({ id: $scope.subscription.id }).then(onCancel);
+    });
   };
 }
