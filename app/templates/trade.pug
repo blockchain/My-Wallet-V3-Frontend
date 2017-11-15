@@ -16,23 +16,23 @@
         ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
         ng-show="userActionRequired && type === 'buy'") Finish payment
       span.type-sm.blue.underline.pointer.text-nowrap(
-        ng-click="trade.medium === 'blockchain' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
-        ng-show="!userActionRequired || trade.medium === 'blockchain'") View details
+        ng-click="type === 'sell' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
+        ng-show="!userActionRequired || type === 'sell'") View details
   .exchange-date.pvml
     span {{ trade.createdAt | date:dateFormat }}
   .exchange-exchanged.pvml
-    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || trade.medium === 'blockchain'")
+    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || type === 'sell'")
       span.display-inline-block.left-align
       span(ng-if="qaDebugger")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
-    span.display-inline-block(ng-show="trade.medium === 'blockchain'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
-    span.display-inline-block(ng-hide="trade.medium === 'blockchain'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ trade.receiveAmount }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-show="type === 'sell'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
+    span.display-inline-block(ng-hide="type === 'sell'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ trade.receiveAmount }} {{ trade.outCurrency }}
   .exchange-received.pvml.flex-row-mobile.flex-between-mobile
     span(ng-hide="status.gettingQuote")
-      span.em-600(ng-hide="trade.medium === 'blockchain'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
-      span.em-600(ng-show="trade.medium === 'blockchain'") {{ (trade.transferOut.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
+      span.em-600(ng-hide="type === 'sell'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
+      span.em-600(ng-show="type === 'sell'") {{ (trade.transferOut.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
     img(ng-show="status.gettingQuote" src="img/spinner.gif")
     .pr-10.visible-xs
       i.ti-angle-right
