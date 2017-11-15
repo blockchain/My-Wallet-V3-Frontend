@@ -59,7 +59,7 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   $scope.lock();
 
   quote.getPaymentMediums()
-       .then((mediums) => $scope.mediums = mediums)
+       .then((mediums) => $scope.vm.mediums = $scope.mediums = mediums)
        .then($scope.free).catch((err) => console.log(err));
 
   if ($rootScope.inMobileBuy) $scope.submit();

@@ -14,12 +14,18 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = true" ng-hide="state.editAmount" translate="EDIT_ORDER")
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = false" ng-show="state.editAmount" translate="CANCEL")
     .border.pam(ng-class="{'bg-grey': state.editAmount}")
+      .flex-row.flex-between.pam
+        span(translate="{{isBank ? 'BTC_APPROX_RATE' : 'BTC Amount:'}}")
+        span {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
+      .flex-row.flex-between.plm.prm
+        span.colon(translate="BTC_TX_FEE")
+        span -{{ format(fromSatoshi(trade.txFee || 0, bitcoin), bitcoin, true) }}
       .flex-row.flex-between.pam.border-bottom-light
-        span(translate="{{isBank ? 'BTC_APPROX_RATE' : 'BTC:'}}")
-        span.success(ng-class="{tilda: isBank}" uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
-      .flex-row.flex-between.pos-rel
-        span.pam.colon(translate="AMOUNT")
-        span.pam(ng-if="!state.editAmount") {{ format(trade.fiatAmount, dollars, true) }}
+        span.colon(translate="BTC_TO_BE_RECEIVED")
+        span.success(uib-tooltip="{{'RECEIVE_BITCOIN_TO' | translate:{label: label} }}") {{ format(fromSatoshi(trade.BTCAmount - trade.txFee || 0, bitcoin), bitcoin, true) }}
+      .flex-row.flex-between.pos-rel.pam
+        span.colon(translate="AMOUNT")
+        span(ng-if="!state.editAmount") {{ format(trade.fiatAmount, dollars, true) }}
         .width-50.group(ng-if="state.editAmount")
           .item
             .flex-center.flex-row.border.bg-white.width-100
@@ -35,7 +41,7 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
                 required)
               span.mrm {{ tempTrade.fiatCurrency }}
       //- Transaction Fees
-      .flex-row.flex-between.pam.border-bottom-light
+      .flex-row.flex-between.pbm.plm.prm.border-bottom-light
         span(translate="PAYMENT_FEE" )
         span() {{ trade.fee | format }} {{ dollars.code }}
       //- Transaction Totals

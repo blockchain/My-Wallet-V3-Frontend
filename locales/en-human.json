@@ -1437,6 +1437,8 @@
   "BUY_BTC_UNAVAIL_STATE": "Buying bitcoin is not yet available in your state. We'll be rolling out more states soon.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
+  "BTC_TX_FEE": "BTC Transaction Fee",
+  "BTC_TO_BE_RECEIVED": "BTC to be Received",
   "NO_TRADES_EXPLAIN": "You haven't made any trades yet, <span class='primary'>click here to start</span> buying bitcoin.",
   "NEED_HELP": "Need help?",
   "TRADING_SERVICE_IS_DISABLED": "Coinify's services have been temporarily disabled. Please read more at <a href='https://support.coinify.com/' target='_blank' rel='noopener noreferrer'>https://support.coinify.com/</a>",
