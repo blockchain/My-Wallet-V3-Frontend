@@ -13,6 +13,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
       userActionRequired: '=',
       tradingDisabled: '=',
       conversion: '=',
+      namespace: '=',
       disabled: '=',
       trade: '=',
       buy: '=',
@@ -29,17 +30,12 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
       scope.qaDebugger = env.qaDebugger;
     });
 
-    scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
-
-    scope.update = () => angular.extend(scope, {
-      error: coinify.tradeStateIn(coinify.states.error)(scope.trade),
-      success: coinify.tradeStateIn(coinify.states.success)(scope.trade),
-      pending: coinify.tradeStateIn(coinify.states.pending)(scope.trade),
-      completed: coinify.tradeStateIn(coinify.states.completed)(scope.trade)
-    });
-
-    scope.update();
     scope.status = {};
+    scope.classHelper = Exchange.classHelper;
+    scope.type = scope.trade.medium === 'blockchain' ? 'sell' : 'buy';
+    scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
+    scope.displayHelper = (trade) => scope.namespace + '.' + scope.type + '.' + trade.state + '.DISPLAY';
+
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
     scope.dateFormat = scope.$root.size.xs ? 'MMM d' : scope.dateFormat;
@@ -82,7 +78,6 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
       console.log('Receive Address:', trade.receiveAddress);
     };
 
-    scope.$watch('trade.state', scope.update);
     scope.$watch('expiredQuote', (newVal, oldVal) => {
       if (newVal) scope.updateBTCExpected();
       else scope.status = {};
