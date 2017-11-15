@@ -22,7 +22,7 @@ function ExchangeRecurringTradesController ($scope, $rootScope, Alerts, MyWallet
   $scope.dateFormat = $rootScope.size.xs ? 'MMM d' : 'd MMMM yyyy, HH:mm';
   $scope.canCancel = (t) => t.state === 'awaiting_transfer_in';
   $scope.classHelper = Exchange.classHelper;
-  $scope.displayHelper = (trade) => this.namespace + '.' + 'buy' + '.' + trade.state + '.DISPLAY';
+  $scope.displayHelper = (trade) => `${this.namespace}.buy.${trade.state}.DISPLAY`;
 
   $scope.buyHandler = (trade) => {
     let { frequency, endTime } = this.subscription;
