@@ -60,6 +60,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     if (env.qaDebugger) {
       $scope.frequencyOptions = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
       $scope.qaDebugger = env.qaDebugger;
+      $scope.showRecurringBuy = env.partners.coinify.showRecurringBuy;
     }
   });
 

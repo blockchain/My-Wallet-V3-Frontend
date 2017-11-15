@@ -109,9 +109,13 @@
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
   },
-  "CONFIRM_CANCEL_RECURRING_TRADE": {
+  "CONFIRM_CANCEL_RECURRING_SUBSCRIPTION": {
     "TITLE": "Cancel Recurring Buy?",
     "BODY": "Are you sure you want to cancel? This will stop all future trades for this recurring buy order."
+  },
+  "CONFIRM_CANCEL_RECURRING_TRADE": {
+    "TITLE": "Cancel Trade?",
+    "BODY": "Are you sure you want to cancel? This trade and the recurring buy order it is part of will both be canceled."
   },
   "SAVING": "Saving",
   "SAVING_DESC": "Please wait while your wallet is saved...",
@@ -1806,5 +1810,6 @@
   "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
   "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime.",
+  "FINISH_PAYMENT": "Finish Payment",
   "": ""
 }

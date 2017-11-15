@@ -22,7 +22,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         recurring-buy-limit="recurringBuyLimit()"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
-      .border.pv-10.ph-20.mb-20
+      .border.pv-10.ph-20.mb-20(ng-show="showRecurringBuy")
         span.f-24.blue(translate="RECURRING_INTRO_HEADER")
         p.f-12.mt-10(translate="RECURRING_INTRO_1")
         p.f-12(translate="RECURRING_INTRO_2")

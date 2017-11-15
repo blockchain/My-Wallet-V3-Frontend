@@ -129,8 +129,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.exchange.getSellQuote(Math.trunc(amt), curr, quoteCurr));
   };
 
-  service.cancelTrade = (trade) => {
-    let msg = 'CONFIRM_CANCEL_TRADE';
+  service.cancelTrade = (trade, message) => {
+    let msg = message || 'CONFIRM_CANCEL_TRADE';
     if (!trade) trade = service.getPendingTrade();
     if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
 

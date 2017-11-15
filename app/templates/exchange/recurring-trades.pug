@@ -24,14 +24,17 @@
     .exchange-trade(ng-repeat="trade in trades" ng-click="$root.size.xs && buyHandler(trade)")
       .exchange-status.pv-15
         span.pl-25(ng-class="getClass(trade)") {{ trade.state | translate }}
-        a.hidden-xs(translate="VIEW_DETAILS" ng-click="buyHandler(trade)")
+        a.hidden-xs(ng-hide="trade.state === 'awaiting_transfer_in'" translate="VIEW_DETAILS" ng-click="buyHandler(trade)")
+        a.hidden-xs(ng-show="trade.state === 'awaiting_transfer_in'" translate="FINISH_PAYMENT" ng-click="buyHandler(trade)")
       .exchange-date.pv-15
         span {{ trade.createdAt | date:dateFormat }}
       .exchange-exchanged.pv-15
         span {{ (trade.outAmount || trade.outAmountExpected) / 1e8 }}
         | &nbsp;
         span.hidden-xs BTC
-      .exchange-received.pv-15
+      .exchange-received.pv-15.flex-between
         span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
+        span(ng-if="canCancel(trade)")
+          i.ti-trash.mls.pointer.state-danger-text(ng-click="cancelTrade(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
     .width-100.flex-end(ng-show="state.toggled")
       .span.pv-15.state-danger-text.pointer(ng-show="subscription.isActive" ng-click="cancel()") Cancel Recurring Order
