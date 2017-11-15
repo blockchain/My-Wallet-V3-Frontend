@@ -10,7 +10,7 @@
       i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
       i.ti-trash.fade(ng-hide="canCancel")
     span.state.pl-25.mrl(class="{{classHelper(trade)}}" translate="{{displayHelper(trade)}}")
-    span.hidden-xs.pl-25
+    span.hidden-xs.pl-25o
       span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
         ng-class="{disabled: isTradingDisabled}"
         ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
@@ -31,8 +31,8 @@
     span.display-inline-block(ng-hide="type === 'sell'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ trade.receiveAmount }} {{ trade.outCurrency }}
   .exchange-received.pvml.flex-row-mobile.flex-between-mobile
     span(ng-hide="status.gettingQuote")
+      span.em-600(ng-show="type === 'sell'") {{ (trade.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
       span.em-600(ng-hide="type === 'sell'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
-      span.em-600(ng-show="type === 'sell'") {{ (trade.transferOut.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
     img(ng-show="status.gettingQuote" src="img/spinner.gif")
     .pr-10.visible-xs
       i.ti-angle-right

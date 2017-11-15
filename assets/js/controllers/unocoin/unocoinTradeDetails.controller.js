@@ -13,7 +13,6 @@ function UnocoinTradeDetailsController ($scope, $uibModalStack, MyWallet, curren
   $scope.namespace = 'UNOCOIN';
   $scope.state = '.' + trade.state;
   $scope.type = trade.isBuy ? '.buy' : '.sell';
-  $scope.rate = format(1 / trade.outAmount * trade.inAmount, fiat, true);
 
   $scope.tradeDetails = {
     id: {
@@ -26,7 +25,7 @@ function UnocoinTradeDetailsController ($scope, $uibModalStack, MyWallet, curren
     },
     in: {
       key: '.TOTAL',
-      val: format(currency.convertFromSatoshi(trade.outAmountExpected, btc), btc, true)
+      val: format(trade.receiveAmount, btc, true)
     },
     out: {
       key: '.TOTAL_COST',

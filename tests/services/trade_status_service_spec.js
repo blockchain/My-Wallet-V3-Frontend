@@ -1,4 +1,4 @@
-fdescribe('tradeStatus service', () => {
+describe('tradeStatus service', () => {
   let MyWallet;
   let MyWalletHelpers;
   let accountInfo;

@@ -1572,6 +1572,9 @@
       }
     },
     "sell": {
+      "awaiting_transfer_in": {
+        "DISPLAY": "Awaiting Funds"
+      },
       "processing": {
         "DISPLAY": "Pending"
       },
