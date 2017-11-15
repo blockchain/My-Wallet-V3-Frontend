@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
-function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals) {
+function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals, localStorageService) {
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
   $scope.subscriptions = () => coinify.subscriptions;
@@ -45,6 +45,9 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || coinify.buyReason === 'after_first_trade' || !coinify.trades.length
     ? ['Weekly', 'Monthly']
     : ['Daily', 'Weekly', 'Monthly'];
+
+  $scope.hasDismissedRecurringBuyIntro = () => localStorageService.get('dismissedRecurringBuyIntro');
+  $scope.dismissRecurringBuyIntro = () => localStorageService.set('dismissedRecurringBuyIntro', true);
 
   Env.then(env => {
     $scope.tabs = {
