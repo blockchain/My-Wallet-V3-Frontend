@@ -6,6 +6,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
   $scope.subscriptions = () => coinify.subscriptions;
+  $scope.coinifyService = coinify;
 
   $scope.buyFiatOptions = currency.coinifyCurrencies;
   $scope.sellFiatOptions = currency.coinifyCurrencies.filter((c) => c.code !== 'USD');

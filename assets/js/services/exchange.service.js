@@ -44,7 +44,7 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
 
     if (success.indexOf(trade.state) > -1) return 'success';
     else if (failure.indexOf(trade.state) > -1) return 'state-danger-text';
-    else if (pending.indexOf(trade.state) > -1) return 'light-blue';
+    else if (pending.indexOf(trade.state) > -1) return 'medium-blue';
     else return '';
   }
 

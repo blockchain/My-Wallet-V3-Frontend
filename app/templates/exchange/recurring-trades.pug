@@ -23,7 +23,7 @@
         span.em-500(translate="TOTAL")
     .exchange-trade(ng-repeat="trade in trades" ng-click="$root.size.xs && buyHandler(trade)")
       .exchange-status.pv-15
-        span.pl-25(ng-class="getClass(trade)") {{ trade.state | translate }}
+        span.state.pl-25.mrl(class="{{classHelper(trade)}}" translate="{{displayHelper(trade)}}")
         a.hidden-xs(ng-hide="trade.state === 'awaiting_transfer_in'" translate="VIEW_DETAILS" ng-click="buyHandler(trade)")
         a.hidden-xs(ng-show="trade.state === 'awaiting_transfer_in'" translate="FINISH_PAYMENT" ng-click="buyHandler(trade)")
       .exchange-date.pv-15
