@@ -3,7 +3,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     span.mrs.type-sm Powered By
     a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
       img(src="img/coinify-logo.svg")
-.buy-sell.mbvl
+.buy-sell.mbvl.pv-10-mobile.ph-10-mobile
   .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
     //- BUY
     .width-60.border-desktop.pv-30.ph-30.no-padding-mobile.height-100
@@ -21,7 +21,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         on-success="buyHandler(quote, null, frequency, endTime)"
         recurring-buy-limit="recurringBuyLimit()"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
-    .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
+    .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile
       .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
         .flex-between
           span.f-24.blue(translate="RECURRING_INTRO_HEADER")

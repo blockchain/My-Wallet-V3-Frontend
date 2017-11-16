@@ -43,8 +43,8 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
     let pending = ['awaiting_transfer_in', 'awaiting_reference_number', 'processing', 'reviewing', 'pending', 'ready'];
 
     if (success.indexOf(trade.state) > -1) return 'success';
-    else if (failure.indexOf(trade.state) > -1) return 'state-danger-text';
     else if (pending.indexOf(trade.state) > -1) return 'medium-blue';
+    else if (failure.indexOf(trade.state) > -1) return 'state-danger-text';
     else return '';
   }
 

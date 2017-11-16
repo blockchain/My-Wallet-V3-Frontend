@@ -196,8 +196,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         $scope.date;
     }
   });
-
   $scope.dateFormat = 'd MMMM yyyy';
+  $scope.$watch('checkoutForm.$error.max', () => state.frequencyCheck = false);
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;
