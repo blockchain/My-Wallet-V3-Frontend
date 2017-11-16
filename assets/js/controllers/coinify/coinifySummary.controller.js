@@ -3,7 +3,7 @@ angular
   .controller('CoinifySummaryController', CoinifySummaryController);
 
 function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, coinify, currency, Alerts, Exchange, buyMobile) {
-  let { exchange, medium, fiatCurrency, frequency, endTime } = $scope.vm;
+  let { exchange, medium, fiatCurrency, endTime } = $scope.vm;
 
   let limits = $scope.limits = exchange.profile.limits;
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
