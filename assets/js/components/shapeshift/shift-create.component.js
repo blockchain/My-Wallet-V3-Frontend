@@ -139,7 +139,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     state.rate.min = 0;
     let needsSelection = this.from.coinCode === this.to.coinCode;
     let selection = needsSelection && this.wallets.filter((w) => w.coinCode !== this[direction].coinCode);
-    needsSelection && (this[change] = selection[0]);
+    needsSelection && (this[change] = selection.length > 1 ? Wallet.getDefaultAccount() : selection[0]);
   };
 
   $scope.setMin = () => state.input.amount = state.rate.min;
@@ -148,7 +148,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.$watch('$ctrl.to.coinCode', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
-  $scope.$watch('$ctrl.from.balance', (n, o) => { if (n !== o) { getRate().then($scope.getAvailableBalance); } });
+  $scope.$watchGroup(['$ctrl.from.balance', '$ctrl.to.balance'], (n, o) => { if (n !== o) { getRate().then($scope.getAvailableBalance); } });
 
   // Stat: how often do users see the "max limit" error?
   let sawMaxLimit = false;

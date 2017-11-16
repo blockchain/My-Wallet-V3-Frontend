@@ -67,6 +67,12 @@ function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalI
              });
   };
 
+  this.cancelSubscription = () => {
+    return Alerts.confirm('CONFIRM_CANCEL_RECURRING').then(() => {
+      this.frequency = false;
+    });
+  };
+
   $scope.exitToNativeTx = () => {
     buyMobile.callMobileInterface(buyMobile.SHOW_TX, this.trade.txHash);
   };

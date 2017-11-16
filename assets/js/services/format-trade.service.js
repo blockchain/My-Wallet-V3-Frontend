@@ -57,8 +57,10 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
 
   let addTradeDetails = (trade, account) => {
     let showTradeID = !account;
+    let showTradeSubscription = trade.tradeSubscriptionId;
     let transaction = {
       'TRADE_ID': showTradeID ? '#' + trade.id : null,
+      'SUBSCRIPTION_ID': showTradeSubscription ? `#${trade.tradeSubscriptionId}` : null,
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
       'BTC_PURCHASED': currency.convertFromSatoshi(trade.outAmount || trade.receiveAmount, currency.bitCurrencies[0]),
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,

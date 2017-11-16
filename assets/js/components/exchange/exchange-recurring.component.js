@@ -5,7 +5,9 @@ angular
       trade: '<t',
       dollars: '<',
       endTime: '<',
-      frequency: '<'
+      frequency: '<',
+      showRemove: '<',
+      onRemove: '&'
     },
     templateUrl: 'templates/exchange/recurring.pug',
     controller: ExchangeRecurringController,

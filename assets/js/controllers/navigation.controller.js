@@ -97,6 +97,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     let now = Date.now();
 
     $scope.filterFeatures = (feat) => (
+      (feat.title !== 'RECURRING_BUY' || canTrade) &&
       (feat.title !== 'BUY_BITCOIN' || canTrade) &&
       (feat.title !== 'SELL_BITCOIN' || (canTrade && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
       (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&

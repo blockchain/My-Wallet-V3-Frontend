@@ -17,6 +17,7 @@ angular
       fiatOptions: '<',
       frequencies: '<',
       collapseSummary: '<',
+      recurringBuyLimit: '&',
       onSuccess: '&',
       fiatChange: '&',
       handleQuote: '&',
@@ -64,6 +65,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
     state.baseCurr = $scope.fiat;
+    state.frequency = this.frequencies && this.frequencies[0] || null;
+    state.endTime = null;
+    state.frequencyCheck = false;
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -163,6 +167,24 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
+  $scope.$watch('state.frequency', (n) => {
+    let d = new Date();
+    switch (state.frequency) {
+      case 'Daily':
+        $scope.minDate = new Date(d.setDate(d.getDate() + 1));
+        break;
+      case 'Weekly':
+        $scope.minDate = new Date(d.setDate(d.getDate() + 7));
+        break;
+      case 'Monthly':
+        $scope.minDate = new Date(d.setMonth(d.getMonth() + 1));
+        break;
+      default:
+        $scope.date;
+    }
+  });
+  $scope.dateFormat = 'd MMMM yyyy';
+  $scope.$watch('checkoutForm.$error.max', () => state.frequencyCheck = false);
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;

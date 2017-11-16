@@ -54,7 +54,7 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
       div
         label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
     .mtl
-      exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars")
+      exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars" show-remove="state.editAmount" on-remove="vm.cancelSubscription()")
     .flex-row.flex-between.pt-20
       button.button-muted(type="button" ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
       button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="{{state.editAmount ? 'UPDATE' : 'CONFIRM'}}")

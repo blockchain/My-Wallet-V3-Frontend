@@ -18,7 +18,7 @@
     }
   }
   @media (max-width: 767px) {
-    padding: 10px 0px;
+    padding: 10px 10px;
   }
   &.loading {
     height: 100%;
@@ -430,5 +430,11 @@ input[type="radio"]:checked + label {
   background-image: url('../img/switch-regular.svg');
   &:hover {
     background-image: url('../img/switch-hover.svg');
+  }
+}
+
+.recurring-buy {
+  .fake-select {
+    background-color: white !important;
   }
 }
