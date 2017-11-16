@@ -62,7 +62,7 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
       'TRADE_ID': showTradeID ? '#' + trade.id : null,
       'SUBSCRIPTION_ID': showTradeSubscription ? `#${trade.tradeSubscriptionId}` : null,
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
-      'BTC_PURCHASED': currency.convertFromSatoshi(trade.outAmount || trade.receiveAmount, currency.bitCurrencies[0]),
+      'BTC_PURCHASED': currency.formatCurrencyForView(trade.receiveAmount, currency.bitCurrencies[0], true),
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,
       'TOTAL_COST': currency.formatCurrencyForView(wholeNumber(trade) ? trade.sendAmount : trade.sendAmount / 100, { code: trade.inCurrency })
     };

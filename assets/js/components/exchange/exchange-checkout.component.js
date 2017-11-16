@@ -165,11 +165,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     });
   });
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
-  $scope.$watch('state.fiat', (nextAmount) => {
-    nextAmount > this.recurringBuyLimit() ? state.frequencyCheck = false : '';
-    state.baseFiat && $scope.refreshIfValid('fiat');
-  });
+  $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
+  $scope.$watch('checkoutForm.fiat.$viewValue', (val) => { if (parseFloat(val) > this.recurringBuyLimit()) state.frequencyCheck = false; });
   $scope.$watch('state.frequency', (n) => $scope.minDate = recurringTrade.setDate(n));
   $scope.dateFormat = 'd MMMM yyyy';
 
