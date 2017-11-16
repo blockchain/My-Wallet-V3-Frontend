@@ -2019,5 +2019,7 @@
   "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime.",
   "FINISH_PAYMENT": "Finish Payment",
   "SUBSCRIPTION_ID": "Recurring Order ID",
+  "RECURRING_BUY": "Recurring Buy",
+  "RECURRING_BUY_WHATS_NEW": "You can now create recurring buy orders in your Blockchain Wallet!",
   "": ""
 }
