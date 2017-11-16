@@ -42,10 +42,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t) && !t.tradeSubscriptionId);
   $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && !t.tradeSubscriptionId);
   $scope.recurringTrades = () => coinify.trades.filter((t) => t.tradeSubscriptionId);
-
-  $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || coinify.buyReason === 'after_first_trade' || !coinify.trades.length
-    ? ['Weekly', 'Monthly']
-    : ['Daily', 'Weekly', 'Monthly'];
+  $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || !coinify.trades.length ? ['Weekly', 'Monthly'] : ['Daily', 'Weekly', 'Monthly'];
 
   $scope.hasDismissedRecurringBuyIntro = () => localStorageService.get('dismissedRecurringBuyIntro');
   $scope.dismissRecurringBuyIntro = () => localStorageService.set('dismissedRecurringBuyIntro', true);
