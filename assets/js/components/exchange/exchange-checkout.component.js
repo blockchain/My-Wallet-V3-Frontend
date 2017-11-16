@@ -170,22 +170,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     state.baseFiat && $scope.refreshIfValid('fiat');
   });
   $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
-  $scope.$watch('state.frequency', (n) => {
-    let d = new Date();
-    switch (state.frequency) {
-      case 'Daily':
-        $scope.minDate = new Date(d.setDate(d.getDate() + 1));
-        break;
-      case 'Weekly':
-        $scope.minDate = new Date(d.setDate(d.getDate() + 7));
-        break;
-      case 'Monthly':
-        $scope.minDate = new Date(d.setMonth(d.getMonth() + 1));
-        break;
-      default:
-        $scope.date;
-    }
-  });
+  $scope.$watch('state.frequency', (n) => $scope.minDate = recurringTrade.setDate(n));
   $scope.dateFormat = 'd MMMM yyyy';
 
   Env.then(env => {
