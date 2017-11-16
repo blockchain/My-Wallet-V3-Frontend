@@ -1885,5 +1885,6 @@
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
   "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime.",
   "FINISH_PAYMENT": "Finish Payment",
+  "SUBSCRIPTION_ID": "Recurring Order ID",
   "": ""
 }
