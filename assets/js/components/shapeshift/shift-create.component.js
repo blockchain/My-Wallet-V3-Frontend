@@ -17,7 +17,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, buyStatus, MyWallet) {
+function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, tradeStatus, MyWallet) {
   let UPPER_LIMIT;
   Env.then(env => {
     UPPER_LIMIT = env.shapeshift.upperLimit || 500;
@@ -161,5 +161,5 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   });
 
   AngularHelper.installLock.call($scope);
-  buyStatus.canBuy().then((res) => $scope.canBuy = res);
+  tradeStatus.canTrade().then((res) => $scope.canTrade = res);
 }

@@ -34,9 +34,9 @@ describe('Trade Directive', () => {
       bitcionReceived: false
     };
 
-    parentScope.buy = function () {};
+    parentScope.inspectTrade = function () {};
 
-    let html = '<trade trade="trade" buy="buy"></trade>';
+    let html = '<trade trade="trade" inspect-trade="inspectTrade"></trade>';
     element = $compile(html)(parentScope);
     parentScope.$digest();
     isoScope = element.isolateScope();
@@ -45,5 +45,5 @@ describe('Trade Directive', () => {
 
   it('should be passed a trade object', () => expect(isoScope.trade).toBeDefined());
 
-  it('should be passed a buy function', () => expect(isoScope.buy).toBeDefined());
+  it('should be passed a details function', () => expect(isoScope.inspectTrade).toBeDefined());
 });

@@ -1,0 +1,23 @@
+form.bc-form.pv-20(
+  novalidate
+  ng-submit="trade()"
+  name="forms.confirmForm"
+  translate-namespace="{{namespace + type + tradeState}}"
+  autocomplete="off")
+  fieldset
+    .border-bottom.pb-20.pv-20-mobile.ph-30.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500(translate=".HEADER")
+      countdown(ng-if="$ctrl.quote" time-to-expiration="getTimeToExpiration" on-expiration="onExpiration()" debug="qaDebugger" message="QUOTE_EXPIRES_IN")
+    .ph-30.pt-20.ph-10-mobile.pv-20-mobile
+      .f-13.mb-10
+        span(translate=".BODY")
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+        li.flex-between(ng-repeat="(row, field) in $ctrl.details track by $index" ng-class="{'pb-10': $first, 'pt-10': $last, 'pv-10': !$first && !$last, 'border-bottom-light': !$last}")
+          span(translate="{{namespace + type + field.key}}")
+          span {{ field.val }}
+      .flex-row.flex-center.mb-15
+        input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
+        label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
+      .flex-row.flex-end
+        button.button-muted(type="button" translate="CANCEL" ng-click="$ctrl.onCancel()")
+        button.button-primary.ml-20(type="submit" translate="CONFIRM" ng-disabled="locked || forms.confirmForm.$invalid")

@@ -1,7 +1,8 @@
 describe('SfoxSignupController', () => {
   let $controller;
-  let options;
   let $rootScope;
+  let MyWallet;
+  let sfox;
 
   let profile = (status, docs) => ({verificationStatus: { level: status, required_docs: docs }});
   let accounts = function (first) { if (first) { return [first]; } else { return []; } };
@@ -12,38 +13,37 @@ describe('SfoxSignupController', () => {
     angular.mock.inject(function ($injector, $q, _$rootScope_, _$controller_) {
       $rootScope = _$rootScope_;
       $controller = _$controller_;
-
-      options = {
-        partners: {
-          sfox: {
-            surveyLinks: []
-          }
-        }
-      };
+      MyWallet = $injector.get('MyWallet');
+      sfox = $injector.get('sfox');
     }));
 
-  let getController = (profile, accounts, quote) =>
-    $controller('SfoxSignupController', {
-      $uibModalInstance: { close: (function () {})({dismiss () {}}) },
-      exchange: { profile },
-      quote: quote || {},
-      options: options || {},
-      accounts: accounts || []
-    })
-  ;
+  let getController = (profile, accounts) => {
+      MyWallet.wallet.external = {
+        sfox: {
+          profile: profile
+        }
+      }
+    
+      return $controller('SfoxSignupController', {
+        $uibModalInstance: { close: (function () {})({dismiss () {}}) },
+        exchange: { profile },
+        accounts: accounts || []
+      })
+    ;
+  }
 
   describe('steps', () => {
     let ctrl;
     beforeEach(() => ctrl = getController());
 
     it('should have goTo correctly implemented', () => {
-      ctrl.goTo('buy');
-      return expect(ctrl.step).toEqual(ctrl.steps['buy']);
+      ctrl.goTo('link');
+      return expect(ctrl.step).toEqual(ctrl.steps['link']);
     });
 
     it('should have onStep correctly implemented', () => {
-      ctrl.goTo('buy');
-      return expect(ctrl.onStep('buy')).toEqual(true);
+      ctrl.goTo('link');
+      return expect(ctrl.onStep('link')).toEqual(true);
     });
   });
 
@@ -64,7 +64,7 @@ describe('SfoxSignupController', () => {
     });
 
     it('should be \'link\' if profile is pending verification and does not need docs', () => {
-      let ctrl = getController(profile('pending'));
+      let ctrl = getController(profile('pending', []));
       return expect(ctrl.onStep('link')).toEqual(true);
     });
 
@@ -76,11 +76,6 @@ describe('SfoxSignupController', () => {
     it('should be \'link\' if user does not have an active account', () => {
       let ctrl = getController(profile('verified'), accounts({status: 'pending'}));
       return expect(ctrl.onStep('link')).toEqual(true);
-    });
-
-    it('should be \'buy\' if user is verified and has account', () => {
-      let ctrl = getController(profile('verified'), accounts({status: 'active'}));
-      return expect(ctrl.onStep('buy')).toEqual(true);
     });
   });
 });

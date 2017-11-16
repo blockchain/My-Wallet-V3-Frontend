@@ -1,9 +1,9 @@
 .flex-row.flex-column-tablet
   .width-40
     .width-80
-      h4.f-20.em-500.mvn.mb-10(translate="Setup Your Profile")
+      h4.f-20.em-500.mvn.mb-10(translate="Verify Identity")
       .mbl.hidden-xs
-        span.f-16(translate="EXCHANGE.VERIFY_ACCOUNT" translate-values="{exchange: $ctrl.name}")
+        span.f-16(translate="EXCHANGE.VERIFY.VERIFY_ACCOUNT" translate-values="{exchange: $ctrl.name}")
       .mbl(ng-show="$ctrl.qaDebugger")
         div.type-h4.mbs.underline
           i.mrs.ti-search
@@ -16,7 +16,7 @@
         .row(ng-if="$ctrl.showField('fullName')")
           .col-md-12
             .mb-20.pos-rel
-              label(translate="EXCHANGE.FULL_NAME")
+              label(translate="EXCHANGE.VERIFY.FULL_NAME")
               input(ng-model="$ctrl.profile.fullName" name="fullName" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('first')")
@@ -42,7 +42,7 @@
               span.state-danger-text.f-12.pos-abs(ng-show="!isValidMobileNumber && $ctrl.addressForm.mobile.$touched" translate="Required field")
           .col-md-6(ng-if="$ctrl.showField('pancard')")
             .mb-20.pos-rel
-              label(translate="EXCHANGE.PAN_CARD")
+              label(translate="EXCHANGE.VERIFY.PAN_CARD")
               input(ng-model="$ctrl.profile.pancard" ng-change="$ctrl.clearInlineErrors('addressForm', 'pancard')" name="pancard" required)
               span.state-danger-text.mrs(ng-if="$ctrl.addressForm.pancard.$error.correct" translate="{{$ctrl.profile.pancard.length ? 'PAN_CARD_INCORRECT' : 'PAN_CARD_REQUIRED'}}")
               span.state-danger-text.mrs(ng-if="$ctrl.addressForm.pancard.$error.duplicate")
@@ -63,24 +63,24 @@
         .row
           .col-md-12(ng-if="$ctrl.showField('address')")
             .mb-20.pos-rel
-              label(translate="EXCHANGE.FULL_RESIDENTIAL_ADDRESS")
+              label(translate="EXCHANGE.VERIFY.FULL_RESIDENTIAL_ADDRESS")
               input(ng-model="$ctrl.profile.street" name="street" placeholder="Street address" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr1')")
           .col-md-12
             .mb-20.pos-rel
-              label(translate="EXCHANGE.ADDRESS_LINE_1")
+              label(translate="EXCHANGE.VERIFY.ADDRESS_LINE_1")
               input(ng-model="$ctrl.profile.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr2')")
           .col-md-12
             .mb-20
-              label(translate="EXCHANGE.ADDRESS_LINE_2")
+              label(translate="EXCHANGE.VERIFY.ADDRESS_LINE_2")
               input(ng-model="$ctrl.profile.addr2" name="addr2" placeholder="Apartment, unit, floor, etc.")
         .row
           .col-md-4(ng-if="$ctrl.showField('state')")
             .mb-20.pos-rel
-              label(translate="EXCHANGE.STATE")
+              label(translate="EXCHANGE.VERIFY.STATE")
               input(ng-model="$ctrl.profile.state" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="state" required)
               span.error(translate="Required field")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('state-US')")
@@ -90,12 +90,12 @@
               span.error(translate="Required field")
           .col-md-4
             .mb-20.pos-rel
-              label(translate="EXCHANGE.CITY")
+              label(translate="EXCHANGE.VERIFY.CITY")
               input(ng-model="$ctrl.profile.city" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="city" required)
               span.error(translate="Required field")
           .col-md-4(ng-if="$ctrl.showField('pincode')")
             .mb-20.pos-rel
-              label(translate="EXCHANGE.PIN_CODE")
+              label(translate="EXCHANGE.VERIFY.PIN_CODE")
               input(ng-model="$ctrl.profile.zipcode" ng-change="$ctrl.clearInlineErrors('addressForm', 'zipcode')" name="zipcode" format-input="xxxxxx" required)
               span.error(translate="{{$ctrl.profile.zipcode.length ? 'PIN_CODE_INCORRECT' : 'PIN_CODE_REQUIRED'}}")
           .col-md-4.col-xs-6(ng-if="$ctrl.showField('zipcode')")
@@ -105,18 +105,18 @@
               span.error(translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$invalid") Continue
+            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$error.required") Continue
     form.bc-form(ng-if="$ctrl.onStep('info')" name="$ctrl.infoForm" role="form" ng-submit="$ctrl.setBankInfo()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
           .col-md-6
             .mb-20.pos-rel
-              label(translate="EXCHANGE.BANK_ACCOUNT_NUMBER")
+              label(translate="EXCHANGE.VERIFY.BANK_ACCOUNT_NUMBER")
               input(ng-model="$ctrl.profile.bankAccountNumber" ng-change="$ctrl.clearInlineErrors('infoForm', 'bankAccountNumber')" name="bankAccountNumber" required)
               span.error(translate="{{$ctrl.profile.bankAccountNumber.length ? 'BANK_ACCOUNT_NUMBER_INCORRECT': 'REQUIRED_FIELD'}}")
           .col-md-6
             .mb-20.pos-rel
-              label(translate="EXCHANGE.IFSC")
+              label(translate="EXCHANGE.VERIFY.IFSC")
               input(ng-model="$ctrl.profile.ifsc" ng-change="$ctrl.clearInlineErrors('infoForm', 'ifsc')" name="ifsc" required)
               span.error(translate="{{$ctrl.profile.ifsc.length ? 'IFSC_INCORRECT' : 'REQUIRED_FIELD'}}")
         .row

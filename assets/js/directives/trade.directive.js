@@ -12,12 +12,11 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
       tradingDisabledReason: '=',
       userActionRequired: '=',
       tradingDisabled: '=',
+      inspectTrade: '=',
       conversion: '=',
       namespace: '=',
       disabled: '=',
       trade: '=',
-      buy: '=',
-      sell: '=',
       usa: '='
     },
     templateUrl: 'templates/trade.pug',
@@ -32,9 +31,9 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
 
     scope.status = {};
     scope.classHelper = Exchange.classHelper;
-    scope.type = scope.trade.medium === 'blockchain' ? 'sell' : 'buy';
+    scope.type = scope.trade.isBuy ? 'buy' : 'sell';
+    scope.displayHelper = (trade) => scope.namespace + '.' + scope.type + '.' + trade.state;
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';
-    scope.displayHelper = (trade) => scope.namespace + '.' + scope.type + '.' + trade.state + '.DISPLAY';
 
     scope.expiredQuote = new Date() > scope.trade.quoteExpireTime;
     scope.dateFormat = 'd MMMM yyyy, ' + (scope.usa ? 'h:mm a' : 'HH:mm');
@@ -45,14 +44,6 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
       scope.disabled = true;
       let exchange = MyWallet.wallet.external.coinify;
       coinify.cancelTrade(scope.trade).then(() => Exchange.fetchProfile(exchange)).finally(() => scope.disabled = false);
-    };
-
-    scope.triggerBuy = () => {
-      scope.buy(null, scope.trade);
-    };
-
-    scope.triggerSell = () => {
-      scope.sell(null, scope.trade);
     };
 
     scope.updateBTCExpected = () => {

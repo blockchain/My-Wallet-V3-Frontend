@@ -29,7 +29,7 @@
       .exchange-date.pv-15
         span {{ trade.createdAt | date:dateFormat }}
       .exchange-exchanged.pv-15
-        span {{ (trade.outAmount || trade.outAmountExpected) / 1e8 }}
+        span {{ trade.receiveAmount }}
         | &nbsp;
         span.hidden-xs BTC
       .exchange-received.pv-15.flex-between

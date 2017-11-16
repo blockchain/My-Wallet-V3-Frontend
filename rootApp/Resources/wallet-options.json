@@ -37,11 +37,11 @@
       "showRecurringBuy": true
     },
     "sfox": {
-      "production": true,
       "countries": ["US"],
-      "states": ["AL", "AZ", "CA", "CO", "DE", "GA", "IN", "KS", "ME", "MD", "MA", "MO", "MT", "NY", "PA", "SC", "TN", "TX", "UT"],
+      "production": "REPLACED_BY_DEV_SERVER",
+      "states": ["AZ", "CA", "CO", "DE", "IN", "ID", "IL", "KS", "KY", "MA", "MD",
+                 "ME", "MI", "MO", "MT", "OH", "NY", "PA", "SC", "TN", "TX", "UT", "VA"],
       "inviteFormFraction": 0.1,
-      "showCheckoutFraction": 1,
       "apiKey": "6CD61A0E965D48A7B1883A860490DC9E",
       "plaid": "0b041cd9e9fbf1e7d93a0d5a39f5b9",
       "plaidEnv": "tartan",

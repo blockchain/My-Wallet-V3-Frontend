@@ -281,7 +281,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         history.push(wallet.my.wallet.getHistory());
 
         let Ethereum = $injector.get('Ethereum');
-        if (Ethereum.eth) history.push(Ethereum.fetchHistory());
+        if (Ethereum.eth && Ethereum.userHasAccess) history.push(Ethereum.fetchHistory());
 
         let ShapeShift = $injector.get('ShapeShift');
         if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
@@ -298,8 +298,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     if (external) {
       let { coinify, sfox, unocoin } = external;
       if (coinify) $injector.get('coinify').init(coinify); // init coinify to monitor incoming coinify payments
-      if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
       if (unocoin) $injector.get('unocoin').init(unocoin); // init unocoin to monitor incoming payments
+      if (sfox) $injector.get('sfox').init(sfox); // init sfox to monitor incoming payments
     }
   };
 
