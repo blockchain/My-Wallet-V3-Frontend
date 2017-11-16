@@ -34,9 +34,7 @@ function ExchangeRecurringTradesController ($scope, $rootScope, Alerts, MyWallet
   $scope.cancelTrade = (trade) => {
     if (!$scope.canCancel(trade)) return;
     let message = this.subscription.isActive ? 'CONFIRM_CANCEL_RECURRING_TRADE' : 'CONFIRM_CANCEL_TRADE';
-    let exchange = this.partnerService.exchange;
     this.partnerService.cancelTrade(trade, message)
-      .then(() => Exchange.fetchProfile(exchange))
       .then(() => this.partnerService.getSubscriptions())
       .then(() => {
         let sub = this.partnerService.subscriptions.filter(s => s.id === $scope.subscription.id)[0];
