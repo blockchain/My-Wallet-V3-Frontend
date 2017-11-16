@@ -125,28 +125,15 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     $timeout(() => $scope.refreshIfValid(field), 10);
   };
 
-  $scope.enableTrade = () => {
-    let obj = {
-      'BTC Order': $scope.format($scope.fromSatoshi(state.btc || 0, $scope.bitcoin), $scope.bitcoin, true),
-      'Payment Method': typeof this.tradeAccount === 'object' ? this.tradeAccount.accountType + ' (' + this.tradeAccount.accountNumber + ')' : null,
-      'TOTAL_COST': $scope.format($scope.fromSatoshi(state.total || 0, $scope.fiat), $scope.fiat, true)
-    };
-
-    $uibModal.open({
-      controller: function ($scope) { $scope.formattedTrade = formatTrade.confirm(obj); },
-      templateUrl: 'partials/confirm-trade-modal.pug',
-      windowClass: 'bc-modal trade-summary'
-    }).result.then($scope.trade);
-  };
-
   $scope.trade = () => {
     $scope.lock();
     let quote = $scope.quote;
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
+    let verificationRequired = this.trading().verificationRequired;
 
-    if (this.tradeAccount || this.tradeEnabled) {
-      this.handleTrade({account: this.tradeAccount, quote: quote})
+    if (this.tradeEnabled && !verificationRequired) {
+      this.handleTrade({quote: quote})
         .then(trade => {
           this.onSuccess({trade});
         })
@@ -156,8 +143,8 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         })
         .finally($scope.resetFields).finally($scope.free);
     } else {
-      this.onSuccess({quote, frequency, endTime});
-      $q.resolve().then($scope.resetFields).finally($scope.free);
+      $q.resolve(this.onSuccess({quote, frequency, endTime}))
+        .then($scope.resetFields).finally($scope.free);
     }
   };
 

@@ -58,7 +58,8 @@ describe('SfoxCheckoutController', () => {
       MyWallet.wallet.external = {
         sfox: {
           profile: {
-            limits: { buy: 100, sell: 100 }
+            limits: { buy: 100, sell: 100 },
+            verificationStatus: { level: 'verified' }
           }
         }
       };
@@ -70,7 +71,7 @@ describe('SfoxCheckoutController', () => {
     })
   );
 
-  let getControllerScope = function (accounts, showCheckout) {
+  let getControllerScope = function (accounts) {
     scope = $rootScope.$new();
     scope.vm = {
       external: {
@@ -86,8 +87,7 @@ describe('SfoxCheckoutController', () => {
     $controller('SfoxCheckoutController', {
       sfox: sfox,
       $scope: scope,
-      accounts: accounts || [],
-      showCheckout: showCheckout || undefined
+      accounts: accounts || []
     });
     $compile(template)(scope);
     return scope;
@@ -109,20 +109,4 @@ describe('SfoxCheckoutController', () => {
       return expect(scope.modalOpen).toBe(false);
     })
   );
-
-  describe('showCheckout', () => {
-    beforeEach(() => scope = getControllerScope([{}], true));
-
-    it('should show if signup is completed', () => {
-      scope.signupCompleted = true;
-      scope.$digest();
-      return expect(scope.showCheckout).toBe(true);
-    });
-
-    it('should show if signup is not completed but showCheckout is true', () => {
-      scope.signupCompleted = false;
-      scope.$digest();
-      return expect(scope.showCheckout).toBe(true);
-    });
-  });
 });

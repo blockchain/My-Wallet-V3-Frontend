@@ -14,7 +14,6 @@ function UnocoinUploadController (AngularHelper, Env, $scope, $q, state, $http, 
   $scope.goTo = (step) => $scope.state.step = step;
 
   $scope.state = {
-    base: 'unocoin_',
     idType: getNextIdType()
   };
 

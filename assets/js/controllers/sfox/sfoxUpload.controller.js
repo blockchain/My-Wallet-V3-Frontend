@@ -62,4 +62,13 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
 
   AngularHelper.installLock.call($scope);
   $scope.$watch('state.verificationStatus.level', watchVerificationStatusLevel);
+
+  // QA Tool
+  $scope.autoFill = () => {
+    ['id', 'address'].forEach((idType) => {
+      exchange.profile.getSignedURL(idType, idType).then((res) => {
+        $scope.upload(res.signed_url, QA.base64DataUrl());
+      });
+    });
+  };
 }

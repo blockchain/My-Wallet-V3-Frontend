@@ -25,11 +25,11 @@ function MyWallet () {
   };
 }
 
-function buyStatus () {
-  function canBuy () { return new Promise(() => {}); }
+function tradeStatus () {
+  function canTrade () { return new Promise(() => {}); }
 
   return {
-    canBuy: canBuy
+    canTrade: canTrade
   };
 }
 
@@ -37,5 +37,5 @@ export default {
   Activity: Activity,
   Wallet: Wallet,
   MyWallet: MyWallet,
-  buyStatus: buyStatus
+  tradeStatus: tradeStatus
 };

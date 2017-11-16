@@ -72,8 +72,8 @@ describe('BuySellSelectPartnerController', () => {
     $controller('BuySellSelectPartnerController', {
       $scope,
       options,
-      buyStatus: {
-        canBuy () { return Promise.resolve(true); }
+      tradeStatus: {
+        canTrade () { return Promise.resolve(true); }
       },
       state: {
         stateCodes: [
@@ -148,13 +148,13 @@ describe('BuySellSelectPartnerController', () => {
       accountInfo.countryCodeGuess = "GB";
       scope = getControllerScope();
       scope.$digest();
-      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'Coinify'}));
+      expect(scope.partner).toEqual(jasmine.objectContaining({namespace: 'COINIFY'}));
     });
 
     it('should guess SFOX in the USA', () => {
       scope = getControllerScope();
       scope.$digest();
-      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}));
+      expect(scope.partner).toEqual(jasmine.objectContaining({namespace: 'SFOX'}));
     });
 
     it('should not guess SFOX in the USA for excluded states', () => {
@@ -170,7 +170,7 @@ describe('BuySellSelectPartnerController', () => {
       scope = getControllerScope();
       scope.state = {Code: 'GA'};
       scope.$digest();
-      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}));
+      expect(scope.partner).toEqual(jasmine.objectContaining({namespace: 'SFOX'}));
     });
 
     it('should guess SFOX when user selects US for US IP address', () => {
@@ -181,7 +181,7 @@ describe('BuySellSelectPartnerController', () => {
       scope.$digest();
       scope.country = {Code: "US"}; // User selects US again
       scope.$digest();
-      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'SFOX'}));
+      expect(scope.partner).toEqual(jasmine.objectContaining({namespace: 'SFOX'}));
     });
 
     it('should not guess SFOX when user selects US for non-US IP address', () => { // Temporary measure
@@ -205,7 +205,7 @@ describe('BuySellSelectPartnerController', () => {
       scope.$digest();
       scope.country = {Code: "GB"};
       scope.$digest();
-      expect(scope.partner).toEqual(jasmine.objectContaining({name: 'Coinify'}));
+      expect(scope.partner).toEqual(jasmine.objectContaining({namespace: 'COINIFY'}));
     });
 
     it('should guess nothing if user switches country to other', () => {
