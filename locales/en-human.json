@@ -1508,6 +1508,10 @@
       "PIN_CODE": "Pin Code",
       "BANK_ACCOUNT_NUMBER": "Bank Account Number",
       "IFSC": "IFSC"
+    },
+    "ACTIONS": {
+      "FINISH": "Finish Trade",
+      "VIEW_DETAILS": "View Details"
     }
   },
   "COINIFY": {
@@ -1547,54 +1551,70 @@
     },
     "buy": {
       "awaiting_transfer_in": {
-        "DISPLAY": "Awaiting Funds"
+        "DISPLAY": "Awaiting Funds",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
       },
       "processing": {
-        "DISPLAY": "Pending"
+        "DISPLAY": "Pending",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
       },
       "reviewing": {
-        "DISPLAY": "Reviewing"
+        "DISPLAY": "Reviewing",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "completed": {
-        "DISPLAY": "Completed"
+        "DISPLAY": "Completed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "completed_test": {
-        "DISPLAY": "Completed"
+        "DISPLAY": "Completed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "cancelled": {
-        "DISPLAY": "Cancelled"
+        "DISPLAY": "Cancelled",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "rejected": {
-        "DISPLAY": "Rejected"
+        "DISPLAY": "Rejected",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "expired": {
-        "DISPLAY": "Expired"
+        "DISPLAY": "Expired",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       }
     },
     "sell": {
       "awaiting_transfer_in": {
-        "DISPLAY": "Awaiting Funds"
+        "DISPLAY": "Awaiting Funds",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
       },
       "processing": {
-        "DISPLAY": "Pending"
+        "DISPLAY": "Pending",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
       },
       "reviewing": {
-        "DISPLAY": "Reviewing"
+        "DISPLAY": "Reviewing",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "completed": {
-        "DISPLAY": "Completed"
+        "DISPLAY": "Completed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "completed_test": {
-        "DISPLAY": "Completed"
+        "DISPLAY": "Completed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "cancelled": {
-        "DISPLAY": "Cancelled"
+        "DISPLAY": "Cancelled",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "rejected": {
-        "DISPLAY": "Rejected"
+        "DISPLAY": "Rejected",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       },
       "expired": {
-        "DISPLAY": "Expired"
+        "DISPLAY": "Expired",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       }
     }
   },
@@ -1680,24 +1700,29 @@
     "buy": {
       "awaiting_transfer_in": {
         "DISPLAY": "Pending",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH",
         "HEADER": "Trade Initiated",
         "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 hours."
       },
       "awaiting_reference_number": {
-        "DISPLAY": "Awaiting Reference Number"
+        "DISPLAY": "Awaiting Reference Number",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
       },
       "processing": {
         "DISPLAY": "In Progress",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Trade In Progress",
         "BODY": "Your purchase is currently being processed. Our exchange partner will send a status update your way within 1 business day."
       },
       "completed": {
         "DISPLAY": "Completed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Order Purchased",
         "BODY": "Your purchase was successful! Bitcoins were sent to <b>{{::label}}</b>."
       },
       "cancelled": {
         "DISPLAY": "Cancelled",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Order Cancelled",
         "BODY": "Your transaction has been cancelled. If the funds were withdrawn from your bank account, create a new trade for the same amount and use the original reference number."
       },
@@ -1798,21 +1823,25 @@
       },
       "processing": {
         "DISPLAY": "Pending",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH",
         "HEADER": "Sell Order Initiated",
         "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days."
       },
       "failed": {
         "DISPLAY": "Failed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Failed",
         "BODY": "Your sell trade has failed. Please contact our support team with the Transaction ID for this trade if you have any questions."
       },
       "rejected": {
         "DISPLAY": "Rejected",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Rejected",
         "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection."
       },
       "completed": {
         "DISPLAY": "Completed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Completed!",
         "BODY": "Your sell trade has successfully completed. Thank you for using Blockchain to trade your bitcoin."
       },

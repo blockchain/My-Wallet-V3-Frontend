@@ -61,11 +61,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500(translate="TOTAL")
         div(ng-repeat="trade in pendingTrades() | orderBy:'createdAt':true"
             user-action-required="trade.state === 'awaiting_transfer_in'"
+            inspect-trade="trade.isBuy ? buyHandler : sellHandler"
             disabled="status.disabled"
             namespace="'COINIFY'"
-            sell="sellHandler"
             conversion="100"
-            buy="buyHandler"
             trade="trade")
     div(ng-show="recurringTrades().length")
       .flex-row.flex-between.flex-center.mtl
@@ -103,11 +102,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
           .pv-5
             span.em-500(translate="TOTAL")
         div(ng-repeat="trade in completedTrades() | orderBy:'createdAt':true | limitTo:$render.limit"
+            inspect-trade="trade.isBuy ? buyHandler : sellHandler"
             disabled="status.disabled"
             namespace="'COINIFY'"
-            sell="sellHandler"
             conversion="100"
-            buy="buyHandler"
             trade="trade"
             in-view="$last && !$root.size.xs && $render.next()")
 

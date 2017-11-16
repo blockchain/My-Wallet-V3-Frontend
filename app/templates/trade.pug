@@ -1,4 +1,4 @@
-.exchange-trade.border-right.border-bottom.border-left(ng-click="$root.size.xs && triggerBuy()")
+.exchange-trade.border-right.border-bottom.border-left(ng-click="$root.size.xs && inspectTrade(null, trade)")
   .exchange-status.pvml
     span.pos-abs(ng-if="qaDebugger" uib-dropdown)
       i.ti-search.pointer.blue(uib-dropdown-toggle)
@@ -9,15 +9,9 @@
     div.visible-xs(ng-click="cancel(trade); $event.stopPropagation();")
       i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
       i.ti-trash.fade(ng-hide="canCancel")
-    span.state.pl-25.mrl(class="{{classHelper(trade)}}" translate="{{displayHelper(trade)}}")
-    span.hidden-xs.pl-25o
-      span.type-sm.blue.underline.pos-rel.pointer.text-nowrap(
-        ng-class="{disabled: isTradingDisabled}"
-        ng-click="!isTradingDisabled && triggerBuy(); $event.stopPropagation();"
-        ng-show="userActionRequired && type === 'buy'") Finish payment
-      span.type-sm.blue.underline.pointer.text-nowrap(
-        ng-click="type === 'sell' ? triggerSell() : triggerBuy(); $event.stopPropagation();"
-        ng-show="!userActionRequired || type === 'sell'") View details
+    span.state.pl-25.mrl(class="{{classHelper(trade)}}" translate="{{displayHelper(trade) + '.DISPLAY'}}")
+    span.hidden-xs.pl-25
+      a.type-sm.blue.underline(ng-click="inspectTrade(null, trade)" translate="{{displayHelper(trade) + '.ACTION'}}")
   .exchange-date.pvml
     span {{ trade.createdAt | date:dateFormat }}
   .exchange-exchanged.pvml
