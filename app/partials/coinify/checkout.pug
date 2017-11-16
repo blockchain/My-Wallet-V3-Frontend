@@ -33,7 +33,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="buyFiat.code")
   .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     //- SELL
-    .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
+    .width-60.border-desktop.pv-30.ph-30.no-padding-mobile.height-100
       exchange-checkout(
         type="'Sell'"
         fiat="sellFiat"
@@ -45,7 +45,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         on-success="sellHandler(quote)"
         fiat-change="sellFiatHandler(currency)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
-    .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
+    .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="trades.length")
