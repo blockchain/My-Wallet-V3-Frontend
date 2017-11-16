@@ -109,13 +109,17 @@
     "TITLE": "Cancel Trade?",
     "BODY": "Are you sure you want to cancel this trade?"
   },
+  "CONFIRM_CANCEL_RECURRING": {
+    "TITLE": "Cancel Recurring Order?",
+    "BODY": "Are you sure you want to cancel this recurring order?"
+  },
   "CONFIRM_CANCEL_RECURRING_SUBSCRIPTION": {
-    "TITLE": "Cancel Recurring Buy?",
-    "BODY": "Are you sure you want to cancel? This will stop all future trades for this recurring buy order."
+    "TITLE": "Cancel Recurring Order?",
+    "BODY": "Are you sure you want to cancel? This will stop all future trades for this recurring order."
   },
   "CONFIRM_CANCEL_RECURRING_TRADE": {
     "TITLE": "Cancel Trade?",
-    "BODY": "Are you sure you want to cancel? This trade and the recurring buy order it is part of will both be canceled."
+    "BODY": "Are you sure you want to cancel? This trade and the recurring order it is part of will both be canceled."
   },
   "SAVING": "Saving",
   "SAVING_DESC": "Please wait while your wallet is saved...",
@@ -1108,7 +1112,7 @@
     "PAY_VIA_NEEDS_KYC": "I want to pay via bank transfer. You will need to complete KYC before your purchase.",
     "CC_REQUIRED": "You must use a credit card to place recurring orders.",
     "WANT_BANK": "Want to make a bank transfer instead?",
-    "REMOVE_RECURRING": "Remove recurring buy"
+    "REMOVE_RECURRING": "Remove recurring order"
   },
   "KYC_IN_REVIEW": {
     "TITLE": "Identity Verification In Review",
@@ -1879,7 +1883,7 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
-  "RECURRING_BUY_DISABLED": "Orders for {{:: cardLimit}} {{:: currency}} and below can become recurring buys",
+  "RECURRING_BUY_DISABLED": "Trades for {{:: cardLimit}} {{:: currency}} and below can become recurring orders",
   "RECURRING_INTRO_HEADER": "Introducing Recurring Orders",
   "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
