@@ -20,8 +20,8 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
 
   if (Wallet.accounts().length < 2) {
     this.wallets = this.wallets.map(w => {
-      if (w.coinCode === 'btc') w.altLabel = 'bitcoin';
-      if (w.coinCode === 'eth') w.altLabel = 'ether';
+      if (w.coinCode === 'btc') w.altLabel = 'Bitcoin';
+      if (w.coinCode === 'eth') w.altLabel = 'Ether';
       return w;
     });
   }
