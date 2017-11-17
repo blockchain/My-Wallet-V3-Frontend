@@ -58,10 +58,11 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
         $state.params.selectedTab = this.selectedTab;
       }
     };
+    $scope.showRecurringBuy = env.partners.coinify.showRecurringBuy;
+
     if (env.qaDebugger) {
-      $scope.frequencyOptions = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
       $scope.qaDebugger = env.qaDebugger;
-      $scope.showRecurringBuy = env.partners.coinify.showRecurringBuy;
+      $scope.frequencyOptions = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
     }
   });
 
