@@ -156,24 +156,29 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     let exchange = MyWallet.wallet.external.hasExchangeAccount;
     let templates = { 'sfox': 'partials/sfox/details.pug', 'unocoin': 'partials/unocoin/details.pug' };
 
-    return openMobileCompatible({
-      windowClass: 'bc-modal trade-summary',
-      templateUrl: templates[exchange],
-      controller: function ($scope, trade, state, sfoxAccounts) {
-        $scope.trade = trade;
-        $scope.state = state;
-        $scope.sfoxAccounts = sfoxAccounts;
-      },
-      resolve: {
-        trade () { return trade; },
-        state () { return state; },
-        sfoxAccounts ($q, sfox) {
-          return sfox.exchange.hasAccount
-            ? sfox.exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
-            : $q.resolve([]);
+    /* Coinify is still using buyView */
+    if (exchange === 'coinify') {
+      return service.openBuyView(null, trade);
+    } else {
+      return openMobileCompatible({
+        windowClass: 'bc-modal trade-summary',
+        templateUrl: templates[exchange],
+        controller: function ($scope, trade, state, sfoxAccounts) {
+          $scope.trade = trade;
+          $scope.state = state;
+          $scope.sfoxAccounts = sfoxAccounts;
+        },
+        resolve: {
+          trade () { return trade; },
+          state () { return state; },
+          sfoxAccounts ($q, sfox) {
+            return sfox.exchange.hasAccount
+              ? sfox.exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+              : $q.resolve([]);
+          }
         }
-      }
-    });
+      });
+    }
   });
 
   service.openBankTransfer = service.dismissPrevious((trade, step) => {
