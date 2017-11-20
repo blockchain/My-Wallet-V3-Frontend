@@ -11,6 +11,8 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   const FIVEDAY = 5 * 24 * 60 * 60;
   const BTCSTART = 1282089600;
   const ETHSTART = 1438992000;
+  const BCHSTART = 1500854400;
+  const startMap = { 'btc': BTCSTART, 'eth': ETHSTART, 'bch': BCHSTART };
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.cachedState = localStorageService.get('chart');
@@ -93,21 +95,29 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then($scope.handleChart, handleChartError);
 
   $scope.getStartDate = () => {
+    let base = $scope.state.base;
     let d = new Date();
+    let start;
 
     switch ($scope.state.time) {
       case '1month':
-        return d.setMonth(d.getMonth() - 1) / 1000 | 0;
+        start = d.setMonth(d.getMonth() - 1) / 1000 | 0;
+        break;
       case '1week':
-        return d.setDate(d.getDate() - 7) / 1000 | 0;
+        start = d.setDate(d.getDate() - 7) / 1000 | 0;
+        break;
       case '1day':
-        return d.setDate(d.getDate() - 1) / 1000 | 0;
+        start = d.setDate(d.getDate() - 1) / 1000 | 0;
+        break;
       case '1year':
-        return d.setFullYear(d.getFullYear() - 1) / 1000 | 0;
+        start = d.setFullYear(d.getFullYear() - 1) / 1000 | 0;
+        break;
       case 'all':
-        if ($scope.state.base === 'btc') return BTCSTART;
-        if ($scope.state.base === 'eth') return ETHSTART;
+        start = startMap[base];
+        break;
     }
+
+    return start >= startMap[base] ? start : startMap[base];
   };
 
   $scope.$watch('settings.currency', next => $scope.state.quote = next.code);

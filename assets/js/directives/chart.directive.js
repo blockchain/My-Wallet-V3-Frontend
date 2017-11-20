@@ -28,7 +28,7 @@ function chart (Wallet, currency, $timeout) {
     });
     let chart = Highcharts.chart('chart', {
       chart: {
-        height: 300
+        height: 230
       },
       title: {
         text: null

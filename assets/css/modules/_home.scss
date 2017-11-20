@@ -24,6 +24,12 @@
   }
 }
 
+.col-home {
+  > div:first-child {
+    height: 370px;
+  }
+}
+
 .section { &:last-of-type { margin-bottom: 5px } }
 
 .hashtag {
@@ -85,7 +91,6 @@
 }
 
 .chart-control {
-  max-height: 425px;
   .disabled {
     cursor: not-allowed;
     .underline-blue.disabled {
@@ -97,6 +102,7 @@
     color: #AAAAAA;
   }
 }
+
 #chart {
-  max-height: 300px;
+  max-height: 230px;
 }
