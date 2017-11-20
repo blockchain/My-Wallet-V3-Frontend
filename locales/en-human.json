@@ -1068,7 +1068,7 @@
   },
   "TX_CARD_REJECTED": {
     "TITLE": "Transaction {{::state}}",
-    "BODY": "Your purchase was rejected and unfortunately the reason cannot be disclosed. A refund has been issued and should appear in your card statement within a few days. We apologize for the inconvenience."
+    "BODY": "Your purchase was rejected after being flagged by an automatic risk evaluation. Unfortunately, the reason cannot be disclosed due to security regulations. An automatic refund has been issued and should appear in your card statement within a few days. We apologise for the inconvenience."
   },
   "TX_BANK_TRANSFER": {
     "TITLE": "",
@@ -1116,7 +1116,7 @@
   },
   "KYC_FLAGGED": {
     "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!"
+    "BODY": "Your request for authentication has been submitted and will be reviewed shortly. Coinify will email you a status update within 48 business hours. If you have any questions about the status of your submission, feel free to reach out to Coinify directly at <a href='https://www.coinify.com/support' target='_blank' rel='noopener noreferrer'>www.coinify.com/support</a>."
   },
   "KYC_REJECTED": {
     "TITLE": "Identity Verification Denied",
@@ -1442,7 +1442,7 @@
     "LEVEL_2_LIMIT_REMAINING": "You can sell {{::symbol}}{{::remaining}} of your {{::symbol}}{{::limit}} daily limit",
     "AMOUNT_OVER": "This amount is over the maximum of {{ ::max }} BTC. Please start over with a lower amount.",
     "ISX": {
-      "REVIEWING": "Your request for authentication has been flagged for manual review. Coinify will send a status update your way within 1 business day. Apologies for the inconvenience and thanks, in advance, for your patience!",
+      "REVIEWING": "Your request for authentication has been submitted and will be reviewed shortly. Coinify will email you a status update within 48 business hours. If you have any questions about the status of your submission, feel free to reach out to Coinify directly at <a href='https://www.coinify.com/support' target='_blank' rel='noopener noreferrer'>www.coinify.com/support</a>.",
       "REJECTED": "There was an issue verifying your identity. Please try again. Increasing your limit is unavailable until we can successfully verify your identity.",
       "PROCESSING": "Your request for authentication is processing. Please check back soon for an update.",
       "CANCELLED": "Your request for authentication has been cancelled.",
