@@ -59,17 +59,59 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
       $scope.handleNoData();
       return;
     }
-    $scope.options = {};
 
-    $scope.options.data = chartData.map(data => parseFloat(data.price));
-
+    let fiatCurrency = Wallet.settings.currency.code;
+    let fiatSymbol = currency.conversions[fiatCurrency]['symbol'];
     let date = new Date(chartData[0]['timestamp'] * 1000);
 
-    $scope.options.year = date.getFullYear();
-    $scope.options.month = date.getMonth();
-    $scope.options.day = date.getDate();
-    $scope.options.hour = date.getHours();
-    $scope.options.interval = $scope.timeHelpers[$scope.state.time]['interval'];
+    $scope.options = {
+      title: { text: null },
+      chart: { height: 230 },
+      yAxis: {
+        title: {
+          text: null
+        },
+        labels: {
+          formatter: function () {
+            return fiatSymbol + this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          }
+        },
+        lineWidth: 1,
+        gridLineWidth: 0
+      },
+      xAxis: {
+        type: 'datetime',
+        tickWidth: 0,
+        labels: {
+          style: {
+            color: 'gray'
+          }
+        }
+      },
+      plotOptions: {
+        series: {
+          color: '#10ADE4'
+        },
+        line: {
+          marker: {
+            enabled: false
+          }
+        }
+      },
+      tooltip: {
+        pointFormat: '{series.name}(' + fiatCurrency + '): {point.y}'
+      },
+      credits: { enabled: false },
+      legend: { enabled: false },
+      series: [
+        {
+          name: 'Price',
+          data: chartData.map(data => parseFloat(data.price)),
+          pointStart: Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()),
+          pointInterval: $scope.timeHelpers[$scope.state.time]['interval']
+        }
+      ]
+    };
 
     $scope.options.timeFetched = Date.now();
     $scope.options.state = $scope.state;
