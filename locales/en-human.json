@@ -1095,6 +1095,7 @@
     "COPY2": "{{::fee}}% convenience fee",
     "COPY3": "Visa or Mastercard",
     "HELPER": "The payment fee is charged for the convenience and speed of the checkout. The exchange rate used for converting your payment into bitcoin is fixed.",
+    "DISABLED": "Your credit card limit ({{::max}} {{::code}}) is below the minimum required to create a credit card trade.",
     "RECOMMENDATION": "For orders over {{::max}} {{::code}}, we recommend paying via bank transfer."
   },
   "BANK_TRANSFER": {
@@ -1629,6 +1630,10 @@
         "DISPLAY": "Expired",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
       }
+    },
+    "recurring_buy": {
+      "disabled": "Your credit card limit ({{::cardLimit}} {{::currency}}) is too low to create a recurring order.",
+      "enabled": "Trades for {{::cardLimit}} {{::currency}} and below can become recurring orders."
     }
   },
   "UNOCOIN": {
@@ -2012,7 +2017,6 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
-  "RECURRING_BUY_DISABLED": "Trades for {{:: cardLimit}} {{:: currency}} and below can become recurring orders",
   "RECURRING_INTRO_HEADER": "Introducing Recurring Orders",
   "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
