@@ -6,16 +6,18 @@ blocket-loading(loading="!isWalletInitialized()")
         .flex-row.flex-center.flex-between.upper
           h5.mtn.mbn.f-24.em-300.blue.f-16-mobile(translate="YOUR_BALANCES")
         chart(ng-if="options" options="options" id="balance-chart")
-        .flex-row.flex-between.flex-column.mobile
-          .flex-column.border-top-blue
+        .flex-row.flex-around.flex-column.mobile.mt-15.f-14.em-300
+          .flex-column.width-20.border-top-blue
             span Bitcoin
-            fiat.f-12.em-300(btc="getTotal()")
-          .flex-column.border-top-primary
+            fiat.em-200(btc="btc.total()")
+            a.f-10(ng-if="btc.accounts.length" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
+          .flex-column.width-20.border-top-primary
             span Ether
-            fiat.f-12.em-300(eth="eth.total()")
-          .flex-column.border-top-light-blue
+            fiat.em-200(eth="eth.total()")
+          .flex-column.width-20.border-top-light-blue
             span Bitcoin Cash
-            fiat.f-12.em-300(btc="getTotal()")
+            fiat.em-200(bch="bch.total()")
+            a.f-10(ng-if="bch.accounts.length" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
     activity-feed(data-preflight-tag="ActivityFeed")
   .col-md-6.col-sm-12.col-xs-12.col-home
     .border.flex-column.pal.chart-control(ng-controller="PriceChartController")
@@ -36,7 +38,7 @@ blocket-loading(loading="!isWalletInitialized()")
         .flex-row.flex-around.f-14.mt-15
           span.highlight.pointer(ng-click="setCurrency('btc')" ng-class="{'active': isCurrency('btc')}")
             span BTC =&nbsp;
-            fiat(btc="BTCCurrency.conversion")
+            fiat(btc="1e8")
           span.highlight.pointer(ng-click="setCurrency('eth')" ng-class="{'active': isCurrency('eth')}")
             span ETH =&nbsp;
             fiat(eth="1")

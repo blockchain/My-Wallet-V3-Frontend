@@ -30,6 +30,17 @@
   }
 }
 
+.border-top-blue,
+.border-top-primary,
+.border-top-light-blue {
+  @extend .pt-5;
+  border-top: 2px solid;
+}
+
+.border-top-blue { border-top-color: $blue; }
+.border-top-primary { border-top-color: $primary; }
+.border-top-light-blue { border-top-color: $light-blue; }
+
 .section { &:last-of-type { margin-bottom: 5px } }
 
 //override settings
@@ -52,4 +63,14 @@
 #balance-chart {
   display: block;
   max-height: 230px;
+}
+
+#balance-chart {
+  .highcharts-title {
+    font-size: 18px;
+    color: #5f5f5f !important;
+  }
+  .highcharts-point {
+    cursor: pointer;
+  }
 }
