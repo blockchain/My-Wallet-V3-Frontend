@@ -23,7 +23,7 @@
                 ng-model="transaction.from"
                 name="from"
                 ng-show="originsLoaded"
-                ng-change="checkForSameDestination(); setPaymentFrom()"
+                ng-change="setPaymentFrom()"
                 tagging
                 required)
                 ui-select-match(placeholder="{{'SEARCH' | translate}}...")

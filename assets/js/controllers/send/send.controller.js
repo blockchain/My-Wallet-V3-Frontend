@@ -6,7 +6,7 @@ function SendController ($uibModalInstance, paymentRequest, asset, assetContext)
   let code = asset.code ||
              assetContext.isViewingBtc() && 'btc' ||
              assetContext.isViewingEth() && 'eth' ||
-             assetContext.isViewingEth() && 'bch' ||
+             assetContext.isViewingBch() && 'bch' ||
              'btc';
 
   this.confirm = false;
