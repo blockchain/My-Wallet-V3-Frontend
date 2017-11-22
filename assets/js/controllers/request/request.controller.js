@@ -5,6 +5,7 @@ angular
 function RequestController ($scope, destination, assetContext) {
   let code = assetContext.isViewingBtc() && 'btc' ||
              assetContext.isViewingEth() && 'eth' ||
+             assetContext.isViewingBch() && 'bch' ||
              'btc';
 
   this.destination = destination;

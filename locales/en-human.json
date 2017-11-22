@@ -138,6 +138,7 @@
   "RECEIVE_BITCOIN" : "Receive",
   "START_RECEIVING_ETHER": "start receiving ether",
   "RECEIVE_TO" : "Receive To:",
+  "REQUEST_TO": "Request To",
   "AMOUNT" : "Amount",
   "PAID" : "Paid:",
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
@@ -689,6 +690,7 @@
   "SCAN_QR_CODE" : {
     "TITLE": "Scan QR Code",
     "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet.",
+    "BCH_HELPER": "Ask the sender to scan this QR code with their Bitcoin Cash wallet.",
     "ETH_HELPER": "Ask the sender to scan this QR code with their ether wallet"
   },
   "HINT_STORED" : "Hint Stored",
@@ -980,6 +982,7 @@
   "COPY_AND_SHARE_ADDRESS": {
     "TITLE": "Copy & Share Address",
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below.",
+    "BCH_HELPER": "Share this address with others, and they can send you BCH directly to your wallet. Your address changes with every payment.",
     "ETH_HELPER": "Share this address with others, and they can send you ETH directly to your wallet. Your request address will not change."
   },
   "COPY_AND_SHARE_IMPORTED_ADDRESS": {
