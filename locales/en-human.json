@@ -2000,7 +2000,9 @@
     "BCH_IN_WALLET": "Bitcoin Cash",
     "BCH_WHATS_NEW": "If you had bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General.",
     "BCH_BALANCE": "Bitcoin Cash Balance",
-    "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address"
+    "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address",
+    "": "",
+    "ALL_WALLETS": "All Bitcoin Cash Wallets"
   },
   "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
   "BITCOIN_CASH_INFO_NO_EXCHANGE": "You can use your Blockchain wallet to store your Bitcoin Cash, or send all of your funds to a Bitcoin Cash wallet.",

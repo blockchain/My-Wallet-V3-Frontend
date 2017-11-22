@@ -360,6 +360,21 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
+    .state('wallet.common.bch', {
+      url: '/bch',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin-cash.pug',
+          controller: 'bitcoinCashTransactionsCtrl'
+        }
+      }
+    }).state('wallet.common.bch.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
     .state('wallet.common.shift', {
       url: '/exchange',
       views: {
