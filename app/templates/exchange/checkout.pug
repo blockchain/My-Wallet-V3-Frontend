@@ -74,9 +74,9 @@ form.bc-form(
           span.f-12.capitalize Account Holder: {{ $ctrl.tradeAccount.name }}
     .group.inline.mt-10(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
-        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit()")
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat")
         label(for="frequencyCheck") Make this a recurring order
-        helper-button(content="{{ 'RECURRING_BUY_DISABLED' | translate:{cardLimit: $ctrl.recurringBuyLimit(), currency: fiat.code } }}" append="true")
+        helper-button(content="{{ provider + '.recurring_buy' + ($ctrl.recurringBuyLimit() < min.fiat ? '.disabled' : '.enabled') | translate:{cardLimit: $ctrl.recurringBuyLimit(), currency: fiat.code } }}" append="true")
     .group.mt-10.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled && checkoutForm.fiat.$viewValue <= $ctrl.recurringBuyLimit()")
       .group
         span.colon.f-13.em-500(translate="FREQUENCY")

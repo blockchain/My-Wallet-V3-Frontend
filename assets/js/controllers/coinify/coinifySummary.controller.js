@@ -85,5 +85,16 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
     $scope.$parent.rateForm = $scope.rateForm;
   });
 
+  $scope.$watchGroup(['trade.fiatAmount', 'state.editAmount', 'tempTrade.fiatAmount'], (next) => {
+    let max = limits[medium].inRemaining[fiatCurrency()];
+    if (($scope.trade.fiatAmount > max || $scope.tempTrade.fiatAmount > max) && !$scope.state.editAmount) {
+      $scope.max = limits[medium].inRemaining[fiatCurrency()];
+      $scope.min = limits[medium].minimumInAmounts[fiatCurrency()];
+      $scope.lock();
+    } else {
+      $scope.free();
+    }
+  });
+
   AngularHelper.installLock.call($scope);
 }
