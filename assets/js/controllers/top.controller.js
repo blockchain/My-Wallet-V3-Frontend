@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi, Env, languages) {
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, BitcoinCash, assetContext, MyBlockchainApi, Env, languages) {
   let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
 
   Env.then(env => {
@@ -18,13 +18,19 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetCon
 
   $scope.browser = browser;
 
-  $scope.toggleDisplayCurrency = () => Wallet.toggleDisplayCurrency();
+  $scope.btc = {
+    total: () => Wallet.total('') + Wallet.total('imported')
+  };
 
-  $scope.getTotal = () => Wallet.total();
-  $scope.getEthTotal = () => Ethereum.balance;
+  $scope.eth = {
+    total: () => Ethereum.balance
+  };
+
+  $scope.bch = {
+    total: () => BitcoinCash.balance
+  };
 
   $scope.showBtcClipboard = () => assetContext.getContext().defaultTo === 'btc';
-
   $scope.resetCopy = () => $scope.copied = false;
 
   $scope.nextAddress = () => {

@@ -1,24 +1,20 @@
-.heavy.flex-column.flex-align-end.right-align.center-mobile.main-balance.pointer(ng-click="toggleDisplayCurrency()", ng-show="status.didUpgradeToHd")
-  span(ng-show="getTotal() == null")
-    h3
-      img(ng-show="balance == null" src="img/spinner.gif")
-  span.flex-between.flex-column(ng-show="getTotal() != null")
-    .mvn.f-24.em-300.lh1.mb-10.flex-end.flex-justify-mobile
-      .flex-row
-        .flex-row.flex-center
-          i.icon-bitcoin.f-20.mrs
-          span(ng-show="isBitCurrency(settings.displayCurrency)")
-            span {{ getTotal() | toBitCurrency:settings.btcCurrency }}
-          span(ng-hide="isBitCurrency(settings.displayCurrency)")
-            fiat(btc="getTotal()")
-        .flex-row.flex-center(ng-hide="getEthTotal() === null")
-          .vertical-line.mh-15.hidden-sm.hidden-xs
-          i.icon-ethereum.f-20.mrs
-          span(ng-show="isBitCurrency(settings.displayCurrency)")
-            span {{ getEthTotal() | format:'eth' }} ETH
-          span(ng-hide="isBitCurrency(settings.displayCurrency)")
-            fiat(eth="getEthTotal()")
-    .mvn.f-20.em-200.lh1(ng-class="{'security-red flex-end flex-center flex-justify-mobile': balanceMessage}")
-      .fork-warn.mr-10.flex-center.flex-end(ng-show="balanceMessage")
-        span.f-10 {{ balanceMessage }}
-      fiat(btc="getTotal()" eth="getEthTotal() > 0 ? getEthTotal() : null")
+.heavy.flex-column.flex-align-end.right-align.center-mobile.main-balance(ng-show="status.didUpgradeToHd")
+  span.f-20 Total Balance
+  .pointer(uib-dropdown)
+    .flex-row.flex-center
+      fiat.f-20.em-200(btc="btc.total()" eth="eth.total()" bch="bch.total()" uib-dropdown-toggle)
+      img.ml-5.arrow(src="img/select-arrow.png")
+    ul.dropdown-menu-right.pbn(uib-dropdown-menu)
+      li.flex-row.flex-between(ui-sref="wallet.common.btc")
+        span {{ btc.total() | convert:'btc':true }}
+        fiat.mid-grey(btc="btc.total()")
+      li.flex-row.flex-between(ui-sref="wallet.common.eth")
+        span {{ eth.total() | convert:'eth':true }}
+        fiat.mid-grey(eth="eth.total()")
+      li.flex-row.flex-between.pb-5(ui-sref="wallet.common.bch")
+        span {{ bch.total() * 1e8 | convert:'bch':true }}
+        fiat.mid-grey(bch="bch.total()")
+.mvn.f-20.em-200.lh1(ng-show="balanceMessage" ng-class="{'security-red flex-end flex-center flex-justify-mobile': balanceMessage}")
+  .fork-warn.mr-10.flex-center.flex-end
+    span.f-10 {{ balanceMessage }}
+  fiat(btc="btc.total()" eth="eth.total() > 0 ? getEthTotal() : null" bch="bch.total()")
