@@ -63,7 +63,7 @@
           i.ti-search
   .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed" translate-namespace="BITCOIN_CASH")
     .flex-center.flex-justify.flex-column(ng-hide="loading || getTotal(account) > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
-      .flex-column.flex-column.tablet.bg-footer-blue(ng-hide="hideEtherWelcome()")
+      .flex-column.flex-column.tablet.bg-footer-blue(ng-hide="hideWelcome()")
         .flex-end
           .hidden-sm.hidden-xs
             .pr-10.pt-5

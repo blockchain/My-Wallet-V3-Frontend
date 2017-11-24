@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('bitcoinCashTransactionsCtrl', bitcoinCashTransactionsCtrl);
 
-function bitcoinCashTransactionsCtrl ($scope, $translate, $q, $uibModal, AngularHelper, smartAccount, MyWallet, Wallet, BitcoinCash) {
+function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal, localStorageService, ShapeShift, AngularHelper, smartAccount, MyWallet, Wallet, BitcoinCash, Ethereum, modals) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -101,6 +101,17 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $q, $uibModal, Angular
     return coins
       .map(coin => $scope.checkLabelDiff(coin.label, coin.address))
       .join(', ').toLowerCase().search(search.toLowerCase()) > -1;
+  };
+
+  $scope.hideWelcome = () => localStorageService.get('hideBitcoinCashWelcome');
+  $scope.dismissWelcome = () => localStorageService.set('hideBitcoinCashWelcome', true);
+
+  $scope.onClickCta = () => {
+    if (ShapeShift.userHasAccess && (Wallet.total('') > 0 + Wallet.total('imported') || Ethereum.balance > 0)) {
+      $state.go('wallet.common.shift');
+    } else {
+      modals.openRequest(null, { asset: 'bch' });
+    }
   };
 
   $scope.filterByType = tx => {
