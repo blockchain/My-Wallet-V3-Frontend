@@ -2021,5 +2021,8 @@
   "RECURRING_BUY_WHATS_NEW": "You can now create recurring buy orders in your Blockchain Wallet!",
   "VIEW_ALL_BALANCES": "View All Balances",
   "BANK_TRANSFERS_DISABLED": "Bank transfers are disabled while identity verification is pending.<br><a>Click here to finish/complete verification</a>",
+  "REQUEST_BITCOIN": "Request Bitcoin",
+  "REQUEST_ETHER": "Request Ether",
+  "REQUEST_BITCOIN_CASH": "Request Bitcoin Cash",
   "": ""
 }

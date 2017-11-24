@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, tradeStatus, localStorageService, currency) {
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, tradeStatus, localStorageService, currency, modals) {
   $scope.btc = {
     total: () => Wallet.total('') + Wallet.total('imported'),
     accounts: MyWallet.wallet.hdwallet.accounts
@@ -42,4 +42,6 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, tradeStatus,
       return true;
     }
   };
+
+  $scope.openRequest = modals.openRequest;
 }

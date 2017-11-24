@@ -51,7 +51,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     }, options)
   );
 
-  service.openRequest = service.openOnce((destination = null) =>
+  service.openRequest = service.openOnce((destination = null, asset = null) =>
     open({
       templateUrl: 'partials/request/request.pug',
       windowClass: 'bc-modal initial',
@@ -59,6 +59,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
       controllerAs: 'vm',
       resolve: {
         destination: () => destination,
+        asset: () => asset,
         _initialize ($q, Ethereum) {
           return Ethereum.userHasAccess
             ? Ethereum.initialize()

@@ -10,14 +10,17 @@ blocket-loading(loading="!isWalletInitialized()")
           .flex-column.width-20.border-top-blue
             span Bitcoin
             fiat.em-200(btc="btc.total()")
-            a.f-10(ng-if="btc.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
+            a.f-10(ng-if="btc.total() == 0" translate="REQUEST_BITCOIN" ng-click="openRequest(null, { code: 'btc' })")
+            a.f-10(ng-if="btc.total() != 0 && btc.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
           .flex-column.width-20.border-top-primary
             span Ether
             fiat.em-200(eth="eth.total()")
+            a.f-10(ng-if="eth.total() == 0" translate="REQUEST_ETHER" ng-click="openRequest(null, { code: 'eth' })")
           .flex-column.width-20.border-top-light-blue
             span Bitcoin Cash
             fiat.em-200(bch="bch.total()")
-            a.f-10(ng-if="bch.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
+            a.f-10(ng-if="bch.total() == 0" translate="REQUEST_BITCOIN_CASH" ng-click="openRequest(null, { code: 'bch' })")
+            a.f-10(ng-if="bch.total() != 0 && bch.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
     activity-feed(data-preflight-tag="ActivityFeed")
   .col-md-6.col-sm-12.col-xs-12.col-home
     .border.flex-column.pal.chart-control(ng-controller="PriceChartController")

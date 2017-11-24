@@ -16,6 +16,9 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
       chart: {
         height: 230
       },
+      tooltip: {
+        enabled: total() > 0
+      },
       title: {
         y: 5,
         align: 'center',
@@ -27,12 +30,19 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
           allowPointSelect: true,
           dataLabels: { enabled: false },
           events: {
-            click: (evt) => $state.go('wallet.common.' + evt.point.id)
+            click: (evt) => total() > 0 && $state.go('wallet.common.' + evt.point.id)
           }
         },
         line: {
           marker: {
             enabled: false
+          }
+        },
+        series: {
+          states: {
+            hover: {
+              enabled: total() > 0
+            }
           }
         }
       },
@@ -43,7 +53,7 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
           name: 'Amount',
           innerSize: '70%',
           cursor: 'pointer',
-          data: [
+          data: total() > 0 ? [
             {
               y: fiatOf('eth'),
               id: 'eth',
@@ -61,6 +71,13 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
               id: 'bch',
               name: 'Bitcoin Cash',
               color: '#B2D5E5'
+            }
+          ] : [
+            {
+              y: 1,
+              id: null,
+              name: '',
+              color: '#dddddd'
             }
           ]
         }
