@@ -16,12 +16,13 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
   this.steps = enumify('state-select', 'create', 'confirm', 'receipt');
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => this.step = this.steps[s];
-  this.wallets = Wallet.accounts().concat(Ethereum.defaultAccount);
+  this.wallets = Wallet.accounts().concat(Ethereum.defaultAccount).concat(MyWallet.wallet.bch.accounts);
 
   if (Wallet.accounts().length < 2) {
     this.wallets = this.wallets.map(w => {
       if (w.coinCode === 'btc') w.altLabel = 'Bitcoin';
       if (w.coinCode === 'eth') w.altLabel = 'Ether';
+      if (w.coinCode === 'bch') w.altLabel = 'Bitcoin Cash';
       return w;
     });
   }
