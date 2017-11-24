@@ -1,19 +1,32 @@
 .heavy.flex-column.flex-align-end.right-align.center-mobile.main-balance(ng-show="status.didUpgradeToHd")
-  span.f-20 Total Balance
-  .pointer(uib-dropdown)
-    .flex-row.flex-center
-      fiat.f-20.em-200(btc="btc.total()" eth="eth.total()" bch="bch.total()" uib-dropdown-toggle)
+  span.f-20(ng-if="isViewingGlobal()") Total Balance
+  span.f-20(ng-if="isViewing('btc')") Bitcoin Balance
+  span.f-20(ng-if="isViewing('eth')") Ether Balance
+  span.f-20(ng-if="isViewing('bch')") Bitcoin Cash Balance
+  .pointer(uib-dropdown ng-class="{large: !isViewingGlobal()}")
+    .flex-row.flex-center.f-20.em-200(uib-dropdown-toggle)
+      span(ng-if="isViewing('btc')") {{ btc.total() | convert:'btc':true }}
+      span(ng-if="isViewing('eth')") {{ eth.total() | convert:'eth':true }}
+      span(ng-if="isViewing('bch')") {{ bch.total() * 1e8 | convert:'bch':true }}
+      span.mh-10(ng-if="!isViewingGlobal()") ·
+      fiat(btc="btc.total()" uib-dropdown-toggle ng-if="isViewing('btc')")
+      fiat(eth="eth.total()" uib-dropdown-toggle ng-if="isViewing('eth')")
+      fiat(bch="bch.total()" uib-dropdown-toggle ng-if="isViewing('bch')")
+      fiat(btc="btc.total()" eth="eth.total()" bch="bch.total()" ng-if="isViewingGlobal()")
       img.ml-5.arrow(src="img/select-arrow.png")
     ul.dropdown-menu-right.pbn(uib-dropdown-menu)
-      li.flex-row.flex-between(ui-sref="wallet.common.btc")
+      li.flex-row.flex-between(ui-sref="wallet.common.btc" ng-if="!isViewing('btc')")
         span {{ btc.total() | convert:'btc':true }}
         fiat.mid-grey(btc="btc.total()")
-      li.flex-row.flex-between(ui-sref="wallet.common.eth")
+      li.flex-row.flex-between(ui-sref="wallet.common.eth" ng-if="!isViewing('eth')")
         span {{ eth.total() | convert:'eth':true }}
         fiat.mid-grey(eth="eth.total()")
-      li.flex-row.flex-between.pb-5(ui-sref="wallet.common.bch")
+      li.flex-row.flex-between(ui-sref="wallet.common.bch" ng-if="!isViewing('bch')")
         span {{ bch.total() * 1e8 | convert:'bch':true }}
         fiat.mid-grey(bch="bch.total()")
+      li.flex-row.flex-between(ui-sref="wallet.common.home" ng-if="!isViewingGlobal()")
+        span Total Balance
+        fiat.mid-grey(btc="btc.total()" eth="eth.total()" bch="bch.total()")
 .mvn.f-20.em-200.lh1(ng-show="balanceMessage" ng-class="{'security-red flex-end flex-center flex-justify-mobile': balanceMessage}")
   .fork-warn.mr-10.flex-center.flex-end
     span.f-10 {{ balanceMessage }}

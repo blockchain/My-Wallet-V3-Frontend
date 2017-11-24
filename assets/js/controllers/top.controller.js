@@ -16,6 +16,9 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, BitcoinC
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = currency.isBitCurrency;
 
+  $scope.isViewing = assetContext.isViewing;
+  $scope.isViewingGlobal = () => !$scope.isViewing('btc') && !$scope.isViewing('eth') && !$scope.isViewing('bch');
+
   $scope.browser = browser;
 
   $scope.btc = {
