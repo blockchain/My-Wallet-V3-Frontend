@@ -2024,5 +2024,11 @@
   "REQUEST_BITCOIN": "Request Bitcoin",
   "REQUEST_ETHER": "Request Ether",
   "REQUEST_BITCOIN_CASH": "Request Bitcoin Cash",
+  "BALANCES": {
+    "TOTAL": "Total Balance",
+    "btc": "Bitcoin Balance",
+    "eth": "Ether Balance",
+    "bch": "Bitcoin Cash Balance"
+  },
   "": ""
 }

@@ -3,11 +3,7 @@ angular
   .controller('RequestController', RequestController);
 
 function RequestController ($scope, destination, asset, assetContext) {
-  let code = asset && asset.code ||
-             assetContext.isViewingBtc() && 'btc' ||
-             assetContext.isViewingEth() && 'eth' ||
-             assetContext.isViewingBch() && 'bch' ||
-             'btc';
+  let code = asset && asset.code || assetContext.activeAsset() || 'btc';
 
   this.destination = destination;
   this.asset = assetContext.getAssets().filter(a => a.code === code)[0];

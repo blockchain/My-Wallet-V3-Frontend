@@ -3,11 +3,7 @@ angular
   .controller('SendController', SendController);
 
 function SendController ($uibModalInstance, paymentRequest, asset, assetContext) {
-  let code = asset.code ||
-             assetContext.isViewingBtc() && 'btc' ||
-             assetContext.isViewingEth() && 'eth' ||
-             assetContext.isViewingBch() && 'bch' ||
-             'btc';
+  let code = asset && asset.code || assetContext.activeAsset() || 'btc';
 
   this.confirm = false;
   this.paymentRequest = paymentRequest;
