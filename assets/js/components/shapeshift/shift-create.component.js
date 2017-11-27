@@ -30,6 +30,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.origins = this.wallet ? [this.wallet] : this.wallets;
   this.destinations = this.wallets;
 
+  this.coinGroup = (c) => currency.cryptoCurrencyMap[c.coinCode].human;
+
   $scope.forms = $scope.state = {};
   $scope.dollars = Wallet.settings.currency;
   $scope.symbol = currency.conversions[$scope.dollars.code].symbol;
