@@ -9,9 +9,9 @@
     div.visible-xs(ng-click="cancel(trade); $event.stopPropagation();")
       i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
       i.ti-trash.fade(ng-hide="canCancel")
-    span.state.pl-25.mrl(class="{{classHelper(trade)}}" translate="{{displayHelper(trade) + '.DISPLAY'}}")
+    span.state.pl-25.mrl(ng-if="trade.state" class="{{classHelper(trade)}}" translate="{{displayHelper(trade) + '.DISPLAY'}}")
     span.hidden-xs.pl-25
-      a.type-sm.blue.underline(ng-click="inspectTrade(null, trade)" translate="{{displayHelper(trade) + '.ACTION'}}")
+      a.type-sm.blue.underline(ng-if="trade.state" ng-click="inspectTrade(null, trade)" translate="{{displayHelper(trade) + '.ACTION'}}")
   .exchange-date.pvml
     span {{ trade.createdAt | date:dateFormat }}
   .exchange-exchanged.pvml

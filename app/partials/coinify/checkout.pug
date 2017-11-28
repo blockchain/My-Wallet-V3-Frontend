@@ -24,7 +24,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile
       .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
         .flex-between
-          span.f-24.blue(translate="RECURRING_INTRO_HEADER")
+          span.f-24.blue.f-14-mobile(translate="RECURRING_INTRO_HEADER")
           .flex-center.pl-10
             i.pointer.ti-close.f-12.mid-grey(ng-click="dismissRecurringBuyIntro()")
         p.f-12.mt-10(translate="RECURRING_INTRO_1")
@@ -64,7 +64,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500.pl-25.ph-10-mobile(translate="STATUS")
           .pv-5
             span.em-500(translate="DATE")
-          .pv-5
+          .pv-5.hidden-xs
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
@@ -83,14 +83,14 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       .width-100
         .recurring-buy-header.border.bg-footer-blue
           .pv-5
-            span.em-500.pl-25.ph-10-mobile Recurring Order
+            span.em-500.pl-25.ph-5-mobile Recurring Order
           .pv-5
             span.em-500(translate="FREQUENCY")
           .pv-5
             span.em-500(translate="START")
           .pv-5
             span.em-500(translate="END")
-      exchange-recurring-trades(ng-repeat="subscription in subscriptions()"
+      exchange-recurring-trades(ng-repeat="subscription in subscriptions() | orderBy:'id':true"
                                 subscription="subscription"
                                 trades="recurringTrades"
                                 cancel-subscription="cancelSubscription(id)"
@@ -105,10 +105,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       .width-100
         .exchange-trade-header.border.bg-footer-blue
           .pv-5
-            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+            span.em-500.pl-25.ph-25-mobile(translate="STATUS")
           .pv-5
             span.em-500(translate="DATE")
-          .pv-5
+          .pv-5.hidden-xs
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
