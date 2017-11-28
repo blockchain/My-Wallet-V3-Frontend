@@ -4,6 +4,8 @@ angular
     bindings: {
       subscription: '<',
       buy: '<',
+      namespace: '<',
+      partnerService: '<',
       trades: '&',
       cancelSubscription: '&'
     },
@@ -12,31 +14,31 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeRecurringTradesController ($scope, coinify, $rootScope) {
+function ExchangeRecurringTradesController ($scope, $rootScope, Alerts, MyWallet, Exchange) {
   $scope.state = {};
-  $scope.subscription = this.subscription;
-  $scope.trades = this.trades()().filter((t) => t.tradeSubscriptionId === $scope.subscription.id);
+  $scope.trades = this.trades()().filter((t) => t.tradeSubscriptionId === this.subscription.id);
   $scope.recurringDateFormat = $rootScope.size.xs ? 'MMM d' : 'd MMMM yyyy';
   $scope.dateFormat = $rootScope.size.xs ? 'MMM d' : 'd MMMM yyyy, HH:mm';
+  $scope.canCancel = (t) => t.state === 'awaiting_transfer_in';
+  $scope.classHelper = Exchange.classHelper;
+  $scope.displayHelper = (trade) => `${this.namespace}.buy.${trade.state}.DISPLAY`;
 
   $scope.buyHandler = (trade) => {
     let { frequency, endTime } = this.subscription;
     this.buy(null, trade, frequency, endTime);
   };
 
-  $scope.getClass = (trade) => {
-    let c = '';
+  $scope.onCancel = (res) => this.subscription.isActive = res.isActive;
 
-    if (coinify.tradeStateIn(coinify.states.error)(trade)) c = 'state-danger-text';
-    else if (coinify.tradeStateIn(coinify.states.pending)(trade)) c = 'transfer';
-    else if (coinify.tradeStateIn(coinify.states.success)(trade)) c = 'success';
-    else c = '';
-
-    return c;
-  };
+  let message = this.subscription.isActive ? 'CONFIRM_CANCEL_RECURRING_TRADE' : 'CONFIRM_CANCEL_TRADE';
+  $scope.cancelTrade = (trade) => $scope.canCancel(trade) ? this.partnerService.cancelTrade(trade, message, this.subscription).then($scope.onCancel) : '';
 
   $scope.cancel = () => {
-    const onCancel = (res) => $scope.subscription.isActive = res.isActive;
-    this.cancelSubscription({ id: $scope.subscription.id }).then(onCancel);
+    Alerts.confirm('CONFIRM_CANCEL_RECURRING_SUBSCRIPTION', {
+      action: 'CANCEL_TRADE',
+      cancel: 'GO_BACK'
+    }).then(() => {
+      this.cancelSubscription({ id: this.subscription.id }).then($scope.onCancel);
+    });
   };
 }

@@ -24,7 +24,7 @@
                     "SK", "SI", "ES", "SE", "CH"
                   ],
       "partnerId": 24,
-      "iSignThisDomain": "https://verify.isignthis.com",
+      "iSignThisDomain": "https://stage-verify.isignthis.com",
       "surveyLinks": ["https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_205rqJvYy7mRxnn",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_ac9wCotxdlnCzU9",

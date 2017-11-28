@@ -48,6 +48,7 @@ describe('exchange-checkout.component', () => {
     provider: 'unocoin',
     fiat: {code: 'USD'},
     quote () { return mockQuote(); },
+    recurringBuyLimit () { return 100; },
     trading () { return mockTrading(); },
     limits () { return { min: {}, max: {} }; }
   };

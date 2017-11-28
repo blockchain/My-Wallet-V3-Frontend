@@ -6,19 +6,21 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
   .flex-column(ng-hide="error || status.creatingSellTrade")
     span.type-h5.em-500.flex-start.pts(translate="CONFIRM_YOUR_ORDER")
     p.mvm
-      span(translate="{{isBank ? 'ORDER_CONFIRMATION_BANK_COPY' : 'ORDER_CONFIRMATION_COPY'}}" ng-if="!summaryForm.fiat.$error.max && !summaryForm.fiat.$error.min")
-      span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.max" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempTrade.fiatCurrency, max: max, medium: vm.medium}")
-      span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max" translate="BELOW_MIN_LIMIT" translate-values="{code: tempTrade.fiatCurrency, min: min, medium: vm.medium}")
+      span(translate="{{isBank ? 'ORDER_CONFIRMATION_BANK_COPY' : 'ORDER_CONFIRMATION_COPY'}}" ng-if="(!summaryForm.fiat.$error.max && !summaryForm.fiat.$error.min) && (trade.fiatAmount <= max || tempTrade.fiatAmount <= max)" )
+      span.state-danger-text.mrs(ng-if="summaryForm.fiat.$error.max || (trade.fiatAmount > max && !state.editAmount)" translate="MAX_LIMIT_EXCEEDED" translate-values="{code: tempTrade.fiatCurrency, max: max, medium: vm.medium}")
+      span.state-danger-text.mrs(ng-if="(summaryForm.fiat.$error.min && !summaryForm.fiat.$error.max)" translate="BELOW_MIN_LIMIT" translate-values="{code: tempTrade.fiatCurrency, min: min, medium: vm.medium}")
     .flex-center.flex-between.flex-row-reverse
       .mvm
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = true" ng-hide="state.editAmount" translate="EDIT_ORDER")
         span.type-sm.blue.underline.pointer(ng-click="state.editAmount = false" ng-show="state.editAmount" translate="CANCEL")
     .border.pam(ng-class="{'bg-grey': state.editAmount}")
-      .flex-row.flex-between.pam
+      .flex-row.flex-between(ng-class="{ 'plm prm': trade.txFee === 0, 'pam': trade.txFee > 0 }")
         span(translate="{{isBank ? 'BTC_APPROX_RATE' : 'BTC Amount:'}}")
         span {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
-      .flex-row.flex-between.plm.prm
-        span.colon(translate="BTC_TX_FEE")
+      .flex-row.flex-between.plm.prm(ng-if="trade.txFee > 0")
+        span
+          span.colon(translate="BTC_TX_FEE")
+          helper-button(content="COINIFY.tx_fee_required")
         span -{{ format(fromSatoshi(trade.txFee || 0, bitcoin), bitcoin, true) }}
       .flex-row.flex-between.pam.border-bottom-light
         span.colon(translate="BTC_TO_BE_RECEIVED")
@@ -54,7 +56,7 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
       div
         label.mlm.em-300(translate="ACCEPT_COINIFY_RATE" for="rate")
     .mtl
-      exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars")
+      exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars" show-remove="state.editAmount" on-remove="vm.cancelSubscription()")
     .flex-row.flex-between.pt-20
       button.button-muted(type="button" ng-hide="inMobileBuy" ng-click="vm.goTo('select-payment-medium')" translate="GO_BACK")
       button.button-primary(type="submit" form="summaryForm" ng-disabled="summaryForm.$invalid || locked" translate="{{state.editAmount ? 'UPDATE' : 'CONFIRM'}}")
