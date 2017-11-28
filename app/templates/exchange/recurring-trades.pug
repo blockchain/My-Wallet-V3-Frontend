@@ -14,10 +14,10 @@
   .child-trades
     .exchange-trade.border.bg-grey
       .pvs
-        span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+        span.em-500.pl-25.ph-5-mobile(translate="STATUS")
       .pvs
         span.em-500(translate="DATE")
-      .pvs
+      .pvs.hidden-xs
         span.em-500(translate="BTC")
       .pvs.pr-50
         span.em-500(translate="TOTAL")
@@ -28,7 +28,7 @@
         a.hidden-xs(ng-show="trade.state === 'awaiting_transfer_in'" translate="FINISH_PAYMENT" ng-click="buyHandler(trade)")
       .exchange-date.pv-15
         span {{ trade.createdAt | date:dateFormat }}
-      .exchange-exchanged.pv-15
+      .exchange-exchanged.pv-15.hidden-xs
         span {{ trade.receiveAmount }}
         | &nbsp;
         span.hidden-xs BTC
