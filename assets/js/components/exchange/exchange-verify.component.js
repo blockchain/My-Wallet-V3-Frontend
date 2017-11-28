@@ -8,6 +8,7 @@ angular
       exchange: '<',
       initialStep: '<',
       verificationError: '<',
+      name: '<',
       onVerify: '&',
       onRestart: '&',
       onSetProfile: '&',

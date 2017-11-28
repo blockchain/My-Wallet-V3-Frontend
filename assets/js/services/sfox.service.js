@@ -118,13 +118,13 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
 
-    let amount = payment ? payment.amounts[0] : -tx.amount;
+    let amount = payment ? payment.amounts[0] : tx.amount;
     let fee = payment ? payment.finalFee : tx.fee;
     let totalAmount = amount + fee;
 
     let toBeReceived = quote
                        ? quote.baseCurrency === 'BTC' ? quote.quoteAmount : quote.baseAmount
-                       : trade.inAmount;
+                       : trade.receiveAmount;
 
     return {
       txAmt: {

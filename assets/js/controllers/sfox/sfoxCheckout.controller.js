@@ -32,7 +32,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     $scope.payment.updateFeePerKb(Exchange.sellFee);
     $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
 
-    return $scope.payment.sideEffect((payment) => {
+    $scope.payment.sideEffect((payment) => {
       $scope.quote = quote;
       $scope.goTo('confirm');
       $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
@@ -48,7 +48,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   let submitTx = (trade) => {
     $scope.trade = trade;
     // $scope.payment.to(trade.receiveAddress);
-    $scope.payment.to('n3PKdDhR8HG5wD23qiZtPQoq5GyGwcXN5h');
+    $scope.payment.to(Wallet.my.wallet.hdwallet.defaultAccount.receiveAddress);
     return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
       return $scope.payment.build().sign(pw).publish().payment;
     });
