@@ -1335,7 +1335,7 @@
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
-  "SELL_BTC_UNAVAIL_STATE": "Selling bitcoin is not yet available in your state. We'll be rolling out more states soon.",
+  "SELL_BTC_UNAVAIL_STATE": "Unfortunately selling bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "BTC_TX_FEE": "BTC Transaction Fee",
@@ -1501,13 +1501,14 @@
       "MOBILE": "Mobile",
       "PAN_CARD": "PAN Card",
       "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
-      "ADDRESS_LINE_1": "Address Line 1",
+      "ADDRESS_LINE_1": "Address Line 1 (Please use your primary billing address)",
       "ADDRESS_LINE_2": "Address Line 2",
       "STATE": "State",
       "CITY": "City",
       "PIN_CODE": "Pin Code",
       "BANK_ACCOUNT_NUMBER": "Bank Account Number",
-      "IFSC": "IFSC"
+      "IFSC": "IFSC",
+      "SETUP_PROFILE": "Setup your profile"
     },
     "ACTIONS": {
       "FINISH": "Finish Trade",
