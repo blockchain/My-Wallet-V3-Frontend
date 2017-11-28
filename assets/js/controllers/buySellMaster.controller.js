@@ -8,6 +8,8 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, 
   this.base = 'wallet.common.buy-sell';
   this.external = MyWallet.wallet.external;
 
+  $scope.defaultAccount = MyWallet.wallet.hdwallet.defaultAccount;
+
   this.resolveState = () => {
     if (this.external.coinify.user) {
       return '.coinify';
@@ -54,6 +56,7 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, 
     }
   });
 
+  $scope.$watch('defaultAccount.balance', (n, o) => { balance.amount = n; Exchange.setSellMax(balance); });
+
   this.toNextState();
-  Exchange.setSellMax(balance);
 }
