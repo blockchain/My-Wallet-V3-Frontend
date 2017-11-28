@@ -42,7 +42,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get balanceAboveMax () {
       return Exchange.sellMax && Exchange.sellMax > service.limits.blockchain.inRemaining['BTC'];
     },
-    get usercanTrade () {
+    get userCanBuy () {
       return service.userCanTrade;
     },
     get userCanSell () {
@@ -106,7 +106,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   service.buying = () => {
     return {
       reason: service.buyReason,
-      isDisabled: !service.usercanTrade,
+      isDisabled: !service.userCanBuy,
       launchOptions: service.buyLaunchOptions
     };
   };
