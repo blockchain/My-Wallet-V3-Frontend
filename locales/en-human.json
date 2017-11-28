@@ -1823,7 +1823,7 @@
       },
       "processing": {
         "DISPLAY": "Pending",
-        "ACTION": "@:EXCHANGE.ACTIONS.FINISH",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Initiated",
         "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days."
       },

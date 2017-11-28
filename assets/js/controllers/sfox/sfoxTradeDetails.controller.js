@@ -7,6 +7,8 @@ function SfoxTradeDetailsController ($scope, MyWallet, currency, sfox) {
   let format = currency.formatCurrencyForView;
   let fiat = currency.currencies.find((c) => c.code === 'USD');
   let tx = MyWallet.wallet.txList.transactions(0).find((t) => t.hash === trade.txHash);
+  // Testing
+  if (!tx) { tx = MyWallet.wallet.txList.transactions()[0]; }
 
   $scope.namespace = 'SFOX';
   $scope.state = '.' + trade.state;
