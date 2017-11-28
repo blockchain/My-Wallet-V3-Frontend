@@ -18,7 +18,9 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
         span(translate="{{isBank ? 'BTC_APPROX_RATE' : 'BTC Amount:'}}")
         span {{ format(fromSatoshi(trade.BTCAmount || 0, bitcoin), bitcoin, true) }}
       .flex-row.flex-between.plm.prm
-        span.colon(translate="BTC_TX_FEE")
+        span
+          span.colon(translate="BTC_TX_FEE")
+          helper-button(content="COINIFY.tx_fee_required")
         span -{{ format(fromSatoshi(trade.txFee || 0, bitcoin), bitcoin, true) }}
       .flex-row.flex-between.pam.border-bottom-light
         span.colon(translate="BTC_TO_BE_RECEIVED")
