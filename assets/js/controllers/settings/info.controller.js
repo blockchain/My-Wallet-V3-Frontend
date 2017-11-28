@@ -33,6 +33,4 @@ function SettingsInfoCtrl ($scope, $q, Wallet, Alerts, MyWallet) {
       .then(success, error)
       .then(() => $scope.loading.code = false);
   };
-
-  $scope.showBch = MyWallet.wallet.bch.balance || MyWallet.wallet.bch.txs.length;
 }

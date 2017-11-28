@@ -20,7 +20,7 @@ blocket-loading(loading="!isWalletInitialized()")
             span Bitcoin Cash
             fiat.em-200(bch="bch.total()")
             a.f-10(ng-if="bch.total() == 0" translate="REQUEST_BITCOIN_CASH" ng-click="openRequest(null, { code: 'bch' })")
-            a.f-10(ng-if="bch.total() != 0 && bch.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
+            a.f-10(ng-if="bch.total() != 0 && bch.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index({ filter: 'BITCOIN CASH' })")
     activity-feed(data-preflight-tag="ActivityFeed")
   .col-md-6.col-sm-12.col-xs-12.col-home
     .border.flex-column.pal.chart-control(ng-controller="PriceChartController")

@@ -554,6 +554,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     })
     .state('wallet.common.settings.accounts_index', {
       url: '/addresses',
+      params: { filter: null },
       views: {
         settings: {
           templateUrl: 'partials/settings/accounts.pug',
