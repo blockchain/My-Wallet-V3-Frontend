@@ -11,7 +11,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
-  this.orderHistoryCurrencies = ['btc', 'eth'];
+  this.orderHistoryCurrencies = ['btc', 'eth', 'bch'];
   this.human = {'BTC': 'bitcoin', 'ETH': 'ether', 'BCH': 'bitcoin cash'};
   this.steps = enumify('state-select', 'create', 'confirm', 'receipt');
   this.onStep = (s) => this.steps[s] === this.step;
