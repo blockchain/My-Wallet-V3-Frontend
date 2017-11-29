@@ -32,9 +32,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     get activeAccount () {
       return service.accounts[0] && service.accounts[0].status === 'active';
     },
-    // TODO: SFOX needs access to the sell exchange rate
     get balanceAboveMin () {
-      return Exchange.sellMax > 0;
+      return Exchange.sellMax > service.min;
     },
     get userCanSell () {
       return service.profile && service.verified && service.activeAccount && service.balanceAboveMin;
@@ -54,7 +53,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     init,
     selling,
     determineStep,
-    sellTradeDetails
+    sellTradeDetails,
+    setSellMin
   };
 
   angular.extend(service, Exchange);
@@ -75,6 +75,10 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
       if (sfox.trades) service.watchTrades(sfox.trades);
       sfox.monitorPayments();
     });
+  }
+
+  function setSellMin (min) {
+    service.min = min;
   }
 
   function determineStep (exchange, accounts) {
