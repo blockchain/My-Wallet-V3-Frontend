@@ -17,6 +17,7 @@ angular
       fiatOptions: '<',
       frequencies: '<',
       collapseSummary: '<',
+      recurringBuyLimit: '&',
       onSuccess: '&',
       fiatChange: '&',
       handleQuote: '&',
@@ -64,6 +65,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.resetFields = () => {
     state.fiat = state.btc = null;
     state.baseCurr = $scope.fiat;
+    state.frequency = this.frequencies && this.frequencies[0] || null;
+    state.endTime = null;
+    state.frequencyCheck = false;
   };
 
   $scope.getQuoteArgs = (state) => ({
@@ -163,6 +167,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
   $scope.$watch('state.fiat', () => state.baseFiat && $scope.refreshIfValid('fiat'));
   $scope.$watch('$ctrl.fiat', () => { $scope.fiat = this.fiat; $scope.resetFields(); $scope.getRate(); });
+  $scope.$watch('checkoutForm.fiat.$viewValue', (val) => { if (parseFloat(val) > this.recurringBuyLimit()) state.frequencyCheck = false; });
+  $scope.$watch('state.frequency', (n) => $scope.minDate = recurringTrade.setDate(n));
+  $scope.dateFormat = 'd MMMM yyyy';
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;

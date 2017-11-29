@@ -3,10 +3,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     span.mrs.type-sm Powered By
     a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
       img(src="img/coinify-logo.svg")
-.buy-sell.mbvl
+.buy-sell.mbvl.pv-10-mobile.ph-10-mobile
   .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
     //- BUY
-    .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
+    .width-60.border-desktop.pv-30.ph-30.no-padding-mobile.height-100
       exchange-checkout(
         type="'Buy'"
         fiat="buyFiat"
@@ -17,14 +17,23 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         fiat-limits="true"
         fiat-options="buyFiatOptions"
         fiat-change="buyFiatHandler(currency)"
-        frequencies="['Daily', 'Weekly', 'Monthly']"
+        frequencies="frequencyOptions"
         on-success="buyHandler(quote, null, frequency, endTime)"
+        recurring-buy-limit="recurringBuyLimit()"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
-    .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
+    .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile
+      .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
+        .flex-between
+          span.f-24.blue.f-14-mobile(translate="RECURRING_INTRO_HEADER")
+          .flex-center.pl-10
+            i.pointer.ti-close.f-12.mid-grey(ng-click="dismissRecurringBuyIntro()")
+        p.f-12.mt-10(translate="RECURRING_INTRO_1")
+        p.f-12(translate="RECURRING_INTRO_2")
+        p.f-12(translate="RECURRING_INTRO_3")
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="buyFiat.code")
   .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     //- SELL
-    .width-50.border-desktop.pv-30.ph-30.no-padding-mobile
+    .width-60.border-desktop.pv-30.ph-30.no-padding-mobile.height-100
       exchange-checkout(
         type="'Sell'"
         fiat="sellFiat"
@@ -36,7 +45,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         on-success="sellHandler(quote)"
         fiat-change="sellFiatHandler(currency)"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
-    .flex-column.col-md-5.col-md-offset-1.col-sm-12.col-xs-12.pln.prn
+    .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
   .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="trades.length")
@@ -55,7 +64,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500.pl-25.ph-10-mobile(translate="STATUS")
           .pv-5
             span.em-500(translate="DATE")
-          .pv-5
+          .pv-5.hidden-xs
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
@@ -74,17 +83,19 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       .width-100
         .recurring-buy-header.border.bg-footer-blue
           .pv-5
-            span.em-500.pl-25.ph-10-mobile Recurring Order
+            span.em-500.pl-25.ph-5-mobile Recurring Order
           .pv-5
             span.em-500(translate="FREQUENCY")
           .pv-5
             span.em-500(translate="START")
           .pv-5
             span.em-500(translate="END")
-      exchange-recurring-trades(ng-repeat="subscription in subscriptions()"
+      exchange-recurring-trades(ng-repeat="subscription in subscriptions() | orderBy:'id':true"
                                 subscription="subscription"
                                 trades="recurringTrades"
                                 cancel-subscription="cancelSubscription(id)"
+                                namespace="'COINIFY'"
+                                partner-service="coinifyService"
                                 buy="buyHandler")
     div(ng-show="completedTrades().length")
       .flex-row.flex-between.flex-center.mtl
@@ -94,10 +105,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       .width-100
         .exchange-trade-header.border.bg-footer-blue
           .pv-5
-            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+            span.em-500.pl-25.ph-25-mobile(translate="STATUS")
           .pv-5
             span.em-500(translate="DATE")
-          .pv-5
+          .pv-5.hidden-xs
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
