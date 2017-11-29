@@ -74,4 +74,7 @@
   .highcharts-point {
     cursor: pointer;
   }
+  & + div .f-10 {
+    white-space: nowrap;
+  }
 }
