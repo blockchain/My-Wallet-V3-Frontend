@@ -99,7 +99,7 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
         }
       },
       tooltip: {
-        pointFormat: '{series.name}(' + fiatCurrency + '): {point.y}'
+        pointFormat: fiatSymbol + '{point.y}'
       },
       credits: { enabled: false },
       legend: { enabled: false },

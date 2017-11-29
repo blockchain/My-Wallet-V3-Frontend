@@ -17,7 +17,8 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
         height: 230
       },
       tooltip: {
-        enabled: total() > 0
+        enabled: total() > 0,
+        pointFormat: symbol + '{point.y}'
       },
       title: {
         y: 5,
