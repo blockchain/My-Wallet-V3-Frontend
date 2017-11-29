@@ -59,6 +59,9 @@
                   div(ng-show="originsLoaded" ng-class="{'has-error': sendForm.destination.$invalid && sendForm.destination.$touched && transaction.destination.address !== ''}")
                     destination-input(
                       name="destination"
+                      accounts="accounts"
+                      addresses="addresses"
+                      address-book="addressBook"
                       ng-model="transaction.destination"
                       ng-model-options="{ updateOn: 'blur' }"
                       ng-change="checkForSameDestination()"

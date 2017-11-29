@@ -2,7 +2,7 @@
   i.ti-close.close-modal(ng-click="$close()")
   i.icon-send.f-20.pr-15
   span.f-24(translate=".SEND")
-#send.modal-body(translate-namespace="BITCOIN_CASH" ng-controller="SendBitcoinCashController")
+#send-bch.modal-body(translate-namespace="BITCOIN_CASH" ng-controller="SendBitcoinCashController")
   .flex(ng-if="onStep('send-cash')")
     form.bc-form(role="form" name="sendForm" autocomplete="off" novalidate)
       fieldset
@@ -48,18 +48,17 @@
             div
               .flex-column
                 div(ng-class="{'has-error': sendForm.destination.$invalid && sendForm.destination.$touched && transaction.destination.address !== ''}")
-                  .input-group(ng-click="focus()" ng-hide="selectOpen")
-                    input#address-field.form-control(
-                      type="text"
-                      tabindex="1"
-                      name="destination"
-                      autocomplete="off"
-                      ng-model="transaction.destination"
-                      is-valid="isValidAddress(transaction.destination)"
-                      placeholder="Paste or scan a Bitcoin Cash address"
-                      focus-when="true")
-                    .input-group-btn
-                      qr-scan(on-scan="onAddressScan")
+                  destination-input(
+                    name="destination"
+                    accounts="origins"
+                    ng-model="transaction.destination"
+                    ng-model-options="{ updateOn: 'blur' }"
+                    ng-change="checkForSameDestination()"
+                    ng-paste="handlePaste($event)"
+                    on-payment-request="applyPaymentRequest(request)"
+                    set-input-metric="$parent.inputMetric = metric"
+                    ignore="transaction.from"
+                    required)
                 .has-error
                   span.help-block.type-sm(translate="BCH_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValid && sendForm.destination.$touched")
                   span.help-block.type-sm(translate="SAME_DESTINATION" ng-show="sendForm.destination.$error.isNotEqual")

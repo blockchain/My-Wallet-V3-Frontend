@@ -14,7 +14,8 @@
 
 #send,
 #receive,
-#sign-msg {
+#sign-msg,
+#send-bch {
   .dropdown-menu {
     > li:first-child {
       .dropdown-header {
@@ -113,7 +114,8 @@
 
 // SEND
 
-#send {
+#send,
+#send-bch {
   .destination-input {
     input {
       @extend .brdrn;

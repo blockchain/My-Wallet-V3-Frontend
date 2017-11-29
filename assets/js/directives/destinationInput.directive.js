@@ -8,6 +8,9 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     require: '^ngModel',
     scope: {
       model: '=ngModel',
+      accounts: '=',
+      addresses: '=',
+      addressBook: '=',
       change: '&ngChange',
       onPaymentRequest: '&onPaymentRequest',
       ignore: '=',
@@ -19,9 +22,9 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
-    let accounts = Wallet.accounts().filter(a => !a.archived);
-    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
-    let addressBook = Wallet.addressBook().map(format.addressBook);
+    let accounts = scope.accounts || [];
+    let addresses = scope.addresses || [];
+    let addressBook = scope.addressBook || [];
 
     scope.selectOpen = false;
     scope.limit = 50;

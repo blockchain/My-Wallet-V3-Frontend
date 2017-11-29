@@ -66,6 +66,10 @@ describe('SendBitcoinController', () => {
         btcCurrency: currency.bitCurrencies[0],
         feePerKB: 10000
       };
+      
+      Wallet.addressBook = () => [
+        { address: '1abc', label: 'address_book_entry' }
+      ];
 
       askForSecondPassword = $q.defer();
       Wallet.askForSecondPasswordIfNeeded = () => askForSecondPassword.promise;
