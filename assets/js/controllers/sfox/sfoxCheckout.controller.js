@@ -97,7 +97,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
-    options: ['SELL_BITCOIN', 'ORDER_HISTORY'],
+    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
