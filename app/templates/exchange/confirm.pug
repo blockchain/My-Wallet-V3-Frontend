@@ -20,8 +20,9 @@ form.bc-form.pv-20(
             span.em-500 {{$ctrl.tradeAccount.name}} {{$ctrl.tradeAccount.accountType}} ending in {{$ctrl.tradeAccount.accountNumber}}
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.flex-between(ng-repeat="(row, field) in $ctrl.details track by $index" ng-class="{'pb-10': $first, 'pt-10': $last, 'pv-10': !$first && !$last, 'border-bottom-light': !$last}")
-          span(translate="{{namespace + type + field.key}}") {{field.key}}
-            helper-button(ng-show="field.key === '.TX_FEE'" content="{{namespace.TRANSACTION_FEE_HELPER}}")
+          div
+            span(translate="{{namespace + type + field.key}}") {{field.key}}
+            helper-button(ng-show="field.key === '.TX_FEE'" content="{{namespace + '.TRANSACTION_FEE_HELPER'}}")
           span {{ field.val }}
       .flex-row.flex-center.mb-15
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
