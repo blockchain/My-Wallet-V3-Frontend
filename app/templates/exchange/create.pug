@@ -31,7 +31,7 @@
               span.blue.pointer.hidden-sm.hidden-md.hidden-lg(translate=".CREATE.CHANGE_EMAIL" ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy")
             .flex-row.flex-center
               input.mr-15(ng-model="$ctrl.state.email" name="email" disabled)
-              i.icon-success.security-green.f-24(ng-if="$ctrl.state.verifiedEmail")
+              i.icon-success.security-green.f-24(ng-if="$ctrl.state.verifiedEmail && !accountForm.email.$error.registered")
           div(ng-show="accountForm.email.$error.registered")
             .help.mb-10
               span(ng-click="$ctrl.view('email')")
