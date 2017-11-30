@@ -281,7 +281,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         history.push(wallet.my.wallet.getHistory());
 
         let Ethereum = $injector.get('Ethereum');
-        if (Ethereum.eth && Ethereum.userHasAccess) history.push(Ethereum.fetchHistory());
+        if (Ethereum.eth) history.push(Ethereum.fetchHistory());
 
         let ShapeShift = $injector.get('ShapeShift');
         if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
