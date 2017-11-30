@@ -54,7 +54,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   let submitTx = (trade) => {
     $scope.trade = trade;
-    $scope.payment.to(trade.receiveAddress);
+    // $scope.payment.to(trade.receiveAddress);
+    $scope.payment.to(Wallet.my.wallet.hdwallet.defaultAccount.receiveAddress);
     return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
       return $scope.payment.build().sign(pw).publish().payment;
     });
@@ -88,8 +89,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
-
   $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
+  $scope.onClose = () => { $scope.goTo('create'); $scope.tabs.select('ORDER_HISTORY'); };
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',

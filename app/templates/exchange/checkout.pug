@@ -3,7 +3,7 @@ form.bc-form(
   ng-submit="trade()"
   novalidate
   autocomplete="off")
-  fieldset(ng-disabled="locked || trading().isDisabled || trading().verificationRequired")
+  fieldset(ng-disabled="locked || trading().isDisabled")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -95,6 +95,7 @@ form.bc-form(
           .flex-column.width-50.width-50-mobile.flex-justify
             span.ml-10-mobile(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
             span.ml-10-mobile(ng-show="!state.endTime") You can cancel anytime.
-    .group.mtl
-      button.btn.button-primary.full(ng-if="!trading().verificationRequired" type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
-      button.btn.button-primary.full(ng-if="trading().verificationRequired" type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")
+    .group.mtl(ng-if="!trading().verificationRequired")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
+  .group.mtl(ng-if="trading().verificationRequired")
+    button.btn.button-primary.full(type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")
