@@ -1874,7 +1874,8 @@
     "create": "Create Account",
     "verify": "Verify Identity",
     "upload": "Upload Documents",
-    "link": "Link Payment"
+    "link": "Link Payment",
+    "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
   },
   "HERE": "here",
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",

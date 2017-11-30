@@ -11,9 +11,17 @@ form.bc-form.pv-20(
     .ph-30.pt-20.ph-10-mobile.pv-20-mobile
       .f-13.mb-10
         span(translate=".BODY")
+      div(ng-if="$ctrl.tradeAccount")
+        .flex-end.flex-row.mb-5.mt-15
+          span.mid-grey.f-12 1 {{ bitcoin.code }} = {{ format($ctrl.rate, $ctrl.fiat, false) }} {{$ctrl.fiat.code}}
+        .mv-10.pv-10.ph-10.border
+          .flex-between
+            span.em-500(translate="Bank Account Receiving the USD")
+            span.em-500 {{$ctrl.tradeAccount.name}} {{$ctrl.tradeAccount.accountType}} ending in {{$ctrl.tradeAccount.accountNumber}}
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
         li.flex-between(ng-repeat="(row, field) in $ctrl.details track by $index" ng-class="{'pb-10': $first, 'pt-10': $last, 'pv-10': !$first && !$last, 'border-bottom-light': !$last}")
-          span(translate="{{namespace + type + field.key}}")
+          span(translate="{{namespace + type + field.key}}") {{field.key}}
+            helper-button(ng-show="field.key === '.TX_FEE'" content="{{namespace.TRANSACTION_FEE_HELPER}}")
           span {{ field.val }}
       .flex-row.flex-center.mb-15
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
