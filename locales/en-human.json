@@ -1869,6 +1869,7 @@
       "AMT": "Amount to Sell",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
+      "PAYMENT_FEE": "Payment Fee",
       "TO_BE_RECEIVED": "USD To Be Received"
     },
     "create": "Create Account",

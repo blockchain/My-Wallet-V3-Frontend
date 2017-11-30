@@ -4,6 +4,9 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
       img.mbs(src="img/sfox-logo-trans.png")
 .buy-sell.overflow-scroll.flex-1
+  .flex-column.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
+    .width-50.pv-30.ph-30.border-desktop.flex-center.flex-justify
+      span We're busy working on giving you the ability to buy bitcoin. Check back soon!
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
       type="'Sell'"
