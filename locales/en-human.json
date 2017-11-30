@@ -2027,5 +2027,6 @@
   "RECURRING_BUY": "Recurring Buy",
   "RECURRING_BUY_WHATS_NEW": "You can now create recurring buy orders in your Blockchain Wallet!",
   "BANK_TRANSFERS_DISABLED": "Bank transfers are disabled while identity verification is pending.<br><a>Click here to finish/complete verification</a>",
+  "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
   "": ""
 }
