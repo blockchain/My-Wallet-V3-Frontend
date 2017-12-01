@@ -10,6 +10,9 @@ function BitcoinCash (Wallet) {
     },
     get balance () {
       return this.bch.balance / 1e8;
+    },
+    get txs () {
+      return this.bch.txs;
     }
   };
 
