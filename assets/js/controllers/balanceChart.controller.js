@@ -29,6 +29,7 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
       plotOptions: {
         pie: {
           allowPointSelect: true,
+          animation: { duration: 0 },
           dataLabels: { enabled: false },
           events: {
             click: (evt) => total() > 0 && $state.go('wallet.common.' + evt.point.id)
@@ -86,5 +87,5 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
     };
   };
 
-  $scope.$watchGroup(['btc.total()', 'eth.total()', 'bch.total'], $scope.handleChart);
+  $scope.$watchGroup(['btc.total()', 'eth.total()', 'bch.total()'], $scope.handleChart);
 }
