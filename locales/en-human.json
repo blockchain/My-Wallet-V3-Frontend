@@ -1202,7 +1202,7 @@
   "SELECT_YOUR_COUNTRY": "Select your country",
   "SELECT_YOUR_STATE": "Select your state",
   "VERIFY_EMAIL": "Verify email:",
-  "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your purchase.",
+  "SENT_VERIFICATION": "We sent a verification link to <b>{{::email}}</b>. Click it and return here to continue with your transaction.",
   "ACCEPT_TERMS": "Coinify account terms:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
@@ -2037,5 +2037,6 @@
     "NOW_SUPPORTING": "Now Supporting Bitcoin Cash!",
     "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today."
   },
+  "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
   "": ""
 }
