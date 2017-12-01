@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('BitcoinCash', BitcoinCash);
 
-function BitcoinCash (Wallet) {
+function BitcoinCash (Wallet, localStorageService) {
   const service = {
     lastTxHash: null,
     get bch () {
@@ -13,6 +13,12 @@ function BitcoinCash (Wallet) {
     },
     get txs () {
       return this.bch.txs;
+    },
+    get hasSeen () {
+      return localStorageService.get('hasSeenBCH');
+    },
+    setHasSeen () {
+      localStorageService.set('hasSeenBCH', true);
     }
   };
 

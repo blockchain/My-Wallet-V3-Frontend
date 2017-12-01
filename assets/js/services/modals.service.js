@@ -234,20 +234,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openExchange = service.openOnce((asset) => {
-    return openMobileCompatible({
-      templateUrl: 'partials/shapeshift/modal.pug',
-      controller: 'ShapeShiftModalController',
-      controllerAs: 'vm',
-      windowClass: 'bc-modal buy',
-      backdrop: 'static',
-      keyboard: false,
-      resolve: {
-        asset: () => asset
-      }
-    });
-  });
-
   service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
       controllerAs: 'vm',
@@ -266,10 +252,18 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openEthLogin = service.openOnce(() => {
+  service.openCurrencyLogin = service.openOnce((currency) => {
     return openMobileCompatible({
       windowClass: 'bc-modal buy',
-      templateUrl: 'partials/first-login-modal-eth.pug'
+      templateUrl: 'partials/first-login-modal-currency.pug',
+      controller: function ($scope, $state, $uibModalInstance, ShapeShift) {
+        $scope.currency = currency;
+
+        $scope.cta = () => {
+          $uibModalInstance.dismiss();
+          ShapeShift.userHasAccess ? $state.go('wallet.common.shift') : service.openRequest(null, { code: currency });
+        };
+      }
     });
   });
 

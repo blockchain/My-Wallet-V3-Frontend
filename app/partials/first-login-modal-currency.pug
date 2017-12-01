@@ -1,11 +1,12 @@
-.modal-body.flex-column(data-preflight-tag="FirstLoginEth")
+.modal-body.flex-column(data-preflight-tag="FirstLoginCurrency")
+  i.ti-close.close-modal(ng-click="$close()")
   img.width-15.margin-0-auto.width-20-mobile.width-20-tablet(src="img/blue-rocket.svg")
   .flex-column.flex-between.pt-20
     .flex-column.flex-center
-      h3.blue.f-28.em-300.center.mb-15(translate="NOW_SUPPORTING_ETHER")
+      h3.blue.f-28.em-300.center.mb-15(translate="{{ currency + '.NOW_SUPPORTING' }}")
       p.mbl.f-18.width-80.em-300.mb-15.center
-        span(translate="WE_LISTENED")
+        span(translate="{{ currency + '.ANNOUNCEMENT' }}")
     .flex-justify
-      a.flex-row.flex-center(ui-sref="wallet.common.shift")
+      a.flex-row.flex-center(ng-click="cta()")
         span.upper.center.f-18.em-500(translate="GET_STARTED")
         i.primary.icon-right_arrow.ml-5
