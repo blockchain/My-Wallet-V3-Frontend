@@ -28,6 +28,6 @@ export default angular
   .factory('Activity', Mocks.Activity)
   .factory('Wallet', Mocks.Wallet)
   .factory('MyWallet', Mocks.MyWallet)
-  .factory('buyStatus', Mocks.buyStatus)
+  .factory('tradeStatus', Mocks.tradeStatus)
   .component('activityFeedPage', ActivityFeedPage)
   .name;
