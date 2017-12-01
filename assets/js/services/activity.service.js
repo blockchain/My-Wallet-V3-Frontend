@@ -100,9 +100,11 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   }
 
   function messageFactory (obj) {
+    let txType;
+    if (obj.coinCode === 'eth') { txType = obj.getTxType(Ethereum.eth.activeAccountsWithLegacy); }
     return angular.merge(txFactory(obj), {
-      message: getTxMessage(obj.hash, obj.txType, obj.coinCode),
-      labelClass: obj.txType.toLowerCase(),
+      message: getTxMessage(obj.hash, txType || obj.txType, obj.coinCode),
+      labelClass: txType || obj.txType.toLowerCase(),
       asset: obj.coinCode
     });
   }
