@@ -208,6 +208,17 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     doLogin(uid, sessionGuid, sessionToken);
   };
 
+  let recordCurrencyUsageStats = () => {
+    let Ethereum = $injector.get('Ethereum');
+    let BitcoinCash = $injector.get('BitcoinCash');
+
+    let btcBalance = wallet.total();
+    let ethBalance = Ethereum.ethInititalized ? parseFloat(Ethereum.balance) : 0;
+    let bchBalance = BitcoinCash.balance;
+
+    MyBlockchainApi.incrementCurrencyUsageStats(btcBalance, ethBalance, bchBalance);
+  };
+
   wallet.fetchAccountInfo = () => {
     return $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
       const accountInfo = wallet.my.wallet.accountInfo;
@@ -273,7 +284,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
           $rootScope.showBch = wallet.my.wallet.bch.balance > 0 || wallet.my.wallet.bch.txs.length > 0;
-          Ethereum.recordStats();
+          recordCurrencyUsageStats();
           AngularHelper.$safeApply();
         };
 
