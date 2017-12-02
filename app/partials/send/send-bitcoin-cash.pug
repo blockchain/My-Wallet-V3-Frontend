@@ -53,10 +53,7 @@
                     accounts="origins"
                     ng-model="transaction.destination"
                     ng-model-options="{ updateOn: 'blur' }"
-                    ng-change="checkForSameDestination()"
                     ng-paste="handlePaste($event)"
-                    on-payment-request="applyPaymentRequest(request)"
-                    set-input-metric="$parent.inputMetric = metric"
                     ignore="transaction.from"
                     required)
                 .has-error
@@ -118,4 +115,4 @@
         .group.mt-25
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-confirm')" ng-disabled="sendForm.$invalid || transaction.amount > transaction.maxAvailable")
   .flex-column.width-100(ng-if="onStep('send-confirm')")
-    send-confirm(tx="transaction" on-send="send()" asset="'bch'" on-go-back="goTo('send-cash')")
+    send-confirm(tx="transaction" on-send="send()" asset="'bch'" on-go-back="goTo('send-cash')" locked="locked")

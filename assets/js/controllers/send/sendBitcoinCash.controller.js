@@ -45,12 +45,16 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   };
 
   $scope.send = () => {
+    let addr;
     let tx = $scope.transaction;
     let payment = $scope.transaction.from.createPayment();
 
+    if (!tx.destination.label) addr = tx.destination.address;
+    else addr = MyWallet.wallet.bch.accounts[tx.destination.index].receiveAddress;
+
     $scope.lock();
 
-    payment.to(tx.destination);
+    payment.to(addr);
     payment.amount(tx.amount);
     payment.feePerByte(feePerByte);
     payment.build();
