@@ -11,7 +11,7 @@ describe('WalletCtrl', () => {
     angular.mock.inject(function ($injector, $rootScope, $controller) {
       let Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
-      let tradeStatus = $injector.get('tradeStatus');
+      let buyStatus = $injector.get('buyStatus');
       $httpBackend = $injector.get('$httpBackend');
       $rootScope.rootURL = "https://blockchain.info/";
       $rootScope.karma = true;
@@ -122,10 +122,10 @@ describe('WalletCtrl', () => {
   );
 
   describe('welcome modal', () =>
-    it('should open when firstTime goal is set', inject(function (Wallet, $rootScope, $timeout, $uibModal, tradeStatus, $q) {
-      tradeStatus.canTrade = () => $q.resolve().then($uibModal.open);
+    it('should open when firstTime goal is set', inject(function (Wallet, $rootScope, $timeout, $uibModal, buyStatus, $q) {
+      buyStatus.canBuy = () => $q.resolve().then($uibModal.open);
       spyOn($uibModal, 'open').and.returnValue(mockModalInstance);
-      spyOn(tradeStatus, 'canTrade').and.callThrough();
+      spyOn(buyStatus, 'canBuy').and.callThrough();
 
       $httpBackend.expectGET('/Resources/wallet-options.json').respond({showBuySellTab: true});
 

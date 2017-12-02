@@ -10,7 +10,6 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
     $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
   });
 
-  $scope.namespace = 'SFOX';
   $scope.types = ['checking', 'savings'];
   $scope.openHelper = modals.openHelper;
 
@@ -74,7 +73,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   $scope.verify = () => {
     $scope.lock();
     $q.resolve(state.accounts[0].verify($scope.fields.deposit1, $scope.fields.deposit2))
-      .then(() => $scope.vm.close(true))
+      .then(() => $scope.vm.goTo('buy'))
       .catch($scope.displayInlineError)
       .finally($scope.free);
   };
@@ -95,7 +94,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
     };
 
     $q.resolve(exchange.bankLink.setAccount(obj))
-      .then(() => $scope.vm.close(true))
+      .then(() => $scope.vm.goTo('buy'))
       .catch(sfox.displayError)
       .finally($scope.free);
   };

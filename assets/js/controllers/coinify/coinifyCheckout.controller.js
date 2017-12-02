@@ -2,11 +2,10 @@ angular
   .module('walletApp')
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
-function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals, localStorageService) {
+function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals) {
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
   $scope.subscriptions = () => coinify.subscriptions;
-  $scope.coinifyService = coinify;
 
   $scope.buyFiatOptions = currency.coinifyCurrencies;
   $scope.sellFiatOptions = currency.coinifyCurrencies.filter((c) => c.code !== 'USD');
@@ -22,7 +21,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     max: Math.max(coinify.limits.bank.inRemaining[$scope.buyFiat.code], coinify.limits.card.inRemaining[$scope.buyFiat.code]),
     min: Math.min(coinify.limits.bank.minimumInAmounts[$scope.buyFiat.code], coinify.limits.card.minimumInAmounts[$scope.buyFiat.code])
   });
-  $scope.recurringBuyLimit = () => $scope.exchange.user ? coinify.limits.card.inRemaining[$scope.buyFiat.code] : 300;
 
   $scope.selling = coinify.selling;
   $scope.sellHandler = modals.openSellView;
@@ -42,10 +40,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t) && !t.tradeSubscriptionId);
   $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && !t.tradeSubscriptionId);
   $scope.recurringTrades = () => coinify.trades.filter((t) => t.tradeSubscriptionId);
-  $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || !coinify.trades.length ? ['Weekly', 'Monthly'] : ['Daily', 'Weekly', 'Monthly'];
-
-  $scope.hasDismissedRecurringBuyIntro = () => localStorageService.get('dismissedRecurringBuyIntro');
-  $scope.dismissRecurringBuyIntro = () => localStorageService.set('dismissedRecurringBuyIntro', true);
 
   Env.then(env => {
     $scope.tabs = {
@@ -58,12 +52,6 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
         $state.params.selectedTab = this.selectedTab;
       }
     };
-    $scope.showRecurringBuy = env.partners.coinify.showRecurringBuy;
-
-    if (env.qaDebugger) {
-      $scope.qaDebugger = env.qaDebugger;
-      $scope.frequencyOptions = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
-    }
   });
 
   coinify.pollUserLevel();

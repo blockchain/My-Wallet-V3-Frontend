@@ -5,7 +5,6 @@ angular
       views: '<',
       exchange: '<',
       verificationError: '<',
-      needsEmailReminder: '<',
       onCreate: '&',
       clearVerificationError: '&',
       termsOfService: '@',
@@ -17,8 +16,6 @@ angular
   });
 
 function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localStorageService, Exchange, bcPhoneNumber, AngularHelper) {
-  let needsEmailReminder = this.needsEmailReminder;
-
   this.user = Wallet.user;
   this.name = this.exchange.constructor.name;
   this.view = (v) => { this.state.view = v; };
@@ -38,7 +35,7 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
 
   this.state = {
     terms: false,
-    needsEmailReminder: needsEmailReminder,
+    needsEmailReminder: true,
     get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
 

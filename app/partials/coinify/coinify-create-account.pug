@@ -6,7 +6,7 @@
         id="createAccountForm"
         name="createAccountForm"
         autocomplete="off"
-        ng-submit="$ctrl.viewInfo ? $ctrl.switchView() : $ctrl.onSubmit({bank: $ctrl.bank, profile: $ctrl.profile})"
+        ng-submit="$ctrl.onSubmit({bank: $ctrl.bank, profile: $ctrl.profile})"
         novalidate)
         div(ng-if="$ctrl.viewInfo")
           .flex-column.flex-center.phm.mv-10.pb-15
@@ -107,7 +107,6 @@
   .flex-1.flex-end
     button.button-muted.mrm(ng-click="$ctrl.close()" translate="CLOSE")
     button.button-primary(
-      type="button"
       ng-show="$ctrl.viewInfo"
       translate="CONTINUE"
       ng-click="$ctrl.switchView()"

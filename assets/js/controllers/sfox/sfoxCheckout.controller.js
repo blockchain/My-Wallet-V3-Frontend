@@ -2,57 +2,28 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile) {
-  sfox.accounts = accounts;
-
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout, buyMobile) {
   let exchange = $scope.vm.external.sfox;
-  let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
-
-  $scope.steps = enumify('state-select', 'create', 'confirm', 'receipt');
-  $scope.onStep = (s) => $scope.steps[s] === $scope.step;
-  $scope.goTo = (s) => $scope.step = $scope.steps[s];
 
   $scope.trades = exchange.trades;
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
+  $scope.buying = sfox.buying;
+  $scope.buyHandler = (...args) => sfox.buy(...args);
+  $scope.buyQuoteHandler = sfox.fetchQuote.bind(null, exchange);
+  $scope.buyLimits = () => ({
+    min: 10,
+    max: sfox.profile && sfox.profile.limits.buy || 100
+  });
+
   $scope.selling = sfox.selling;
+  $scope.sellHandler = (...args) => sfox.sell(...args);
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
-  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote).then((trade) => submitTx(trade));
   $scope.sellLimits = () => ({
     min: 10,
     max: sfox.profile && sfox.profile.limits.sell || 100
   });
-
-  $scope.buildPayment = (quote) => {
-    let amt = quote.baseCurrency === 'BTC' ? quote.baseAmount : quote.quoteAmount;
-
-    $scope.payment = Wallet.my.wallet.createPayment();
-    $scope.payment.amount(amt);
-    $scope.payment.updateFeePerKb(Exchange.sellFee);
-    $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
-
-    return $scope.payment.sideEffect((payment) => {
-      $scope.quote = quote;
-      $scope.goTo('confirm');
-      $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
-    });
-  };
-
-  $scope.sellRefresh = () => {
-    let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
-    let btc = baseCurrency === 'BTC' ? baseAmount : quoteAmount;
-    return $q.resolve($scope.sellQuoteHandler(btc, $scope.bitcoin.code, $scope.dollars.code).then($scope.buildPayment));
-  };
-
-  let submitTx = (trade) => {
-    $scope.trade = trade;
-    // $scope.payment.to(trade.receiveAddress);
-    $scope.payment.to('n3PKdDhR8HG5wD23qiZtPQoq5GyGwcXN5h');
-    return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
-      return $scope.payment.build().sign(pw).publish().payment;
-    });
-  };
 
   $scope.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
@@ -83,13 +54,28 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
 
-  $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
+  $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
+  $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
+
+  $scope.inspectTrade = modals.openTradeSummary;
 
   $scope.tabs = {
-    selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
-    options: ['SELL_BITCOIN', 'ORDER_HISTORY'],
+    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
+    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
-  $scope.goTo('create');
+  $scope.buySuccess = (trade) => {
+    sfox.watchTrade(trade);
+    $scope.tabs.select('ORDER_HISTORY');
+    modals.openTradeSummary(trade, 'initiated');
+    exchange.fetchProfile().then($scope.setState);
+    buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
+    // Send SFOX user identifier and trade id to Sift Science, inside an iframe:
+    if ($scope.qaDebugger) {
+      console.info('Load Sift Science iframe');
+    }
+    $scope.tradeId = trade.id;
+    $scope.siftScienceEnabled = true;
+  };
 }

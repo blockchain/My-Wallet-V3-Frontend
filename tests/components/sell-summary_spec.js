@@ -20,7 +20,7 @@ describe('sell-summary.component', () => {
     state: 'awaiting_transfer_in',
     inCurrency: 'BTC',
     outCurrency: 'EUR',
-    receiveAmount: 100,
+    outAmountExpected: 100,
     transferIn: {
       sendAmount: '.01527447',
       medium: 'blockchain'

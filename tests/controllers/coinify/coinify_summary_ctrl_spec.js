@@ -93,7 +93,6 @@ describe('CoinifySummaryController', () => {
       baseFiat () { return true; },
       watchAddress () {},
       fiatCurrency () { return 'USD'; },
-      transactionFee () { return .001; },
       fiatAmount () { return -100; },
       BTCAmount () { return 1; },
       goTo (state) {}

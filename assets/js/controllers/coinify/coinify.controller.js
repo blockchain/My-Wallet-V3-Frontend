@@ -18,7 +18,6 @@ function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalI
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
   this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
-  this.transactionFee = () => this.mediums ? this.mediums[this.medium].outFixedFees['BTC'] * 1e8 : 0;
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
   this.refreshQuote = () => {
     if (this.baseFiat()) return $q.resolve(coinify.getQuote(this.fiatAmount() * 100, this.quote.baseCurrency)).then((q) => this.quote = q);
@@ -65,12 +64,6 @@ function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalI
              .then((quote) => {
                $q.resolve(quote.getPaymentMediums()).then(() => this.goTo('select-payment-medium'));
              });
-  };
-
-  this.cancelSubscription = () => {
-    return Alerts.confirm('CONFIRM_CANCEL_RECURRING').then(() => {
-      this.frequency = false;
-    });
   };
 
   $scope.exitToNativeTx = () => {

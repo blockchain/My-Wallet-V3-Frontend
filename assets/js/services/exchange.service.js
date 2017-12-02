@@ -15,8 +15,7 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
     setSellMax,
     fetchQuote,
     watchTrades,
-    watchTrade,
-    classHelper
+    watchTrade
   };
 
   return service;
@@ -35,17 +34,6 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
 
   function displayError (error) {
     Alerts.displayError(service.interpretError(error));
-  }
-
-  function classHelper (trade) {
-    let success = ['completed', 'completed_test'];
-    let failure = ['cancelled', 'rejected', 'failed', 'expired'];
-    let pending = ['awaiting_transfer_in', 'awaiting_reference_number', 'processing', 'reviewing', 'pending', 'ready'];
-
-    if (success.indexOf(trade.state) > -1) return 'success';
-    else if (pending.indexOf(trade.state) > -1) return 'medium-blue';
-    else if (failure.indexOf(trade.state) > -1) return 'state-danger-text';
-    else return '';
   }
 
   function fetchProfile (exchange) {
@@ -89,6 +77,6 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
     watching[trade.receiveAddress] = true;
     $q.resolve(trade.watchAddress())
       .then(() => trade.refresh())
-      .then(() => { modals.openTradeDetails(trade, 'success'); });
+      .then(() => { modals.openTradeSummary(trade, 'success'); });
   }
 }

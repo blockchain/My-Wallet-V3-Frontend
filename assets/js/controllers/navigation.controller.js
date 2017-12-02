@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, tradeStatus, Env, Ethereum, ShapeShift) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, buyStatus, Env, Ethereum, ShapeShift) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.popover = { isOpen: false };
@@ -93,13 +93,12 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     }
   }
 
-  $q.all([Env, tradeStatus.canTrade()]).then(([env, canTrade]) => {
+  $q.all([Env, buyStatus.canBuy()]).then(([env, canBuy]) => {
     let now = Date.now();
 
     $scope.filterFeatures = (feat) => (
-      (feat.title !== 'RECURRING_BUY' || canTrade) &&
-      (feat.title !== 'BUY_BITCOIN' || canTrade) &&
-      (feat.title !== 'SELL_BITCOIN' || (canTrade && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
+      (feat.title !== 'BUY_BITCOIN' || canBuy) &&
+      (feat.title !== 'SELL_BITCOIN' || (canBuy && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&
       (feat.title !== 'ETHER_SEND_RECEIVE' || Ethereum.userHasAccess) &&
       (feat.title !== 'BTC_ETH_EXCHANGE' || ShapeShift.userHasAccess)
     );

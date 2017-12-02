@@ -9,7 +9,7 @@
                                     tooltip-placement="top")
           .flex-row.f-16.em-300
             span(ng-if="vm.quote") {{ vm.BTCAmount() / 1e8 }} BTC
-            span(ng-if="vm.trade && vm.trade.receiveAmount" ng-class="{'italic tilda': vm.state.trade.expired}") {{ vm.trade.receiveAmount }} BTC
+            span(ng-if="vm.trade && vm.trade.outAmountExpected" ng-class="{'italic tilda': vm.state.trade.expired}") {{ vm.trade.outAmountExpected / 100000000 }} BTC
             | &nbsp;
             span(ng-if="vm.quote") ({{ vm.fiatAmount().toFixed(2) }} {{ vm.fiatCurrency() }})
             span(ng-if="vm.trade && vm.trade.sendAmount") ({{ vm.trade.sendAmount / 100 | format }} {{ vm.trade.inCurrency }})

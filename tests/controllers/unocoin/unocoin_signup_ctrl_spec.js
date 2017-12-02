@@ -55,4 +55,15 @@ describe('UnocoinSignupController', () => {
       expect(ctrl.onStep('upload')).toBe(true);
     });
   });
+
+  describe('.close', () => {
+    let ctrl;
+    beforeEach(() => ctrl = getController());
+
+    it('should dismiss if skipConfirm', () => {
+      spyOn(Alerts, 'surveyCloseConfirm');
+      ctrl.close(true);
+      expect(Alerts.surveyCloseConfirm).not.toHaveBeenCalled();
+    });
+  });
 });

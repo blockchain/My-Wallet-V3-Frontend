@@ -1228,7 +1228,7 @@
   "SELL_AMT_LOW": "Minimale verkoopbedrag is {{::symbol}}{{::limit}}.",
   "SELL_AMT_HIGH": "Maximale verkoopbedrag is {{::symbol}}{{::limit}}.",
   "WHY": "Waarom?",
-  "TRADE_SUBSCRIBE": {
+  "BUY_SUBSCRIBE": {
     "BODY_MOBILE": "De populairste bitcoin-portemonnee ter wereld biedt nu veilig aankopen van bitcoin."
   },
   "ACCEPT_COINIFY_RATE": "Ik aanvaard dat bitcoins zullen worden verhandeld aan de huidige wisselkoers op het moment dat Coinify mijn order verwerkt, hetgeen kan verschillen van de hierboven getoonde koers.",

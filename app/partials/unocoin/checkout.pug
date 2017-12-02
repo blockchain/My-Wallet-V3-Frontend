@@ -23,7 +23,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       limits="state.limits"
       fiat-limits="true"
       provider="'Unocoin'"
-      handle-trade="buyHandler(quote)"
+      collapse-summary="true"
+      handle-trade="buyHandler(account, quote)"
       handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
       on-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
@@ -47,8 +48,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500(translate="TOTAL")
         div(ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
             user-action-required="trade.state === 'awaiting_reference_number'"
-            inspect-trade="inspectTrade"
-            namespace="'UNOCOIN'"
+            buy="inspectTrade"
             conversion="1"
             trade="trade"
             usa="true")
