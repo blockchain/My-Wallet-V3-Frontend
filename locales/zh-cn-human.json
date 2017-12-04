@@ -1625,7 +1625,6 @@
     "CONFIRM_EXCHANGE": "确认兑换订单",
     "QUOTE_EXPIRES_IN_HELPER": "这个汇率将会在10分钟后过期。如果出现过期，请重新进行交易。",
     "CONFIRM_DEPOSIT_AMOUNT": "<b>{{::deposit | format:input:true}}</b>将从{{::from}}发送，并兑换成  <b>{{::withdrawal | format:output:true}}</b>并存入到 {{::to}}。这个过程可能需要长达2个小时，您可以在订单历史中跟踪您的兑换进度。 ",
-    "CONFIRM_DEPOSIT_AMOUNT_BCH": "<b>{{::deposit | format:input:true}}</b> 将被直接从{{::from}} 发送，并兑换成<b>{{::withdrawal | format:output:true}}</b>并存入到 {{::to}}。 这个过程可能需要长达2个小时，你可以在设置中的Bitcoin Cash区域跟踪您的兑换进度。",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> 存入",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span>被接收",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> 被存入Deposited",
@@ -1655,13 +1654,11 @@
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
-        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "即将进行"
       },
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
-        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "正在进行中"
       },
       "resolved": {
