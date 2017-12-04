@@ -13,6 +13,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
 
   $scope.trades = exchange.trades;
+
+  $scope.completedTrades = exchange.trades.filter(t => t.state === 'completed');
+  $scope.pendingTrades = exchange.trades.filter(t => t.state === 'processing');
+
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
@@ -99,14 +103,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
-
-  $scope.hasSeenBuyAlert = () => localStorageService.get('hasSeenSfoxBuyAlert');
-  $scope.setHasSeenBuyAlert = () => localStorageService.set('hasSeenSfoxBuyAlert', true);
-
-  if (!$scope.hasSeenBuyAlert() && !$scope.selling().verificationRequired) {
-    modals.openSfoxBuyComingSoon();
-    $scope.setHasSeenBuyAlert();
-  }
 
   $scope.goTo('create');
 }

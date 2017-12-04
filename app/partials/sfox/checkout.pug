@@ -45,7 +45,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
           i.ti-direction-alt.h3.mrm
           h3.em-100(translate="NO_TRADES")
         p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('SELL_BITCOIN')")
-    div(ng-show="state.trades.length")
+    div(ng-show="pendingTrades.length")
       .width-100
         .exchange-trade-header.border.bg-footer-blue
           .pv-5
@@ -56,7 +56,24 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             span.em-500(translate="BTC")
           .pv-5
             span.em-500(translate="TOTAL")
-        div(ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
+        div(ng-repeat="trade in pendingTrades | orderBy:'createdAt':true track by $index"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
+            inspect-trade="inspectTrade"
+            namespace="'SFOX'"
+            conversion="1"
+            trade="trade")
+    div(ng-show="completedTrades.length")
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in completedTrades | orderBy:'createdAt':true track by $index"
             user-action-required="trade.state === 'awaiting_transfer_in'"
             inspect-trade="inspectTrade"
             namespace="'SFOX'"

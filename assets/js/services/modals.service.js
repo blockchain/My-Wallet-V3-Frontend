@@ -294,12 +294,5 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     })
   );
 
-  service.openSfoxBuyComingSoon = service.openOnce(() => {
-    return openMobileCompatible({
-      windowClass: 'bc-modal buy',
-      templateUrl: 'partials/sfox-buy-coming-soon.pug'
-    });
-  });
-
   return service;
 }
