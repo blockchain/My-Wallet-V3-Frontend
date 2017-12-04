@@ -7,7 +7,10 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
   let cryptoMap = currency.cryptoCurrencyMap;
 
   let total = () => (fiatOf('btc') + fiatOf('eth') + fiatOf('bch')).toFixed(2);
-  let fiatOf = (currency) => parseFloat((cryptoMap[currency].from($scope[currency].total(), fiat) || 0).toFixed(2));
+  let fiatOf = (curr) => {
+    let amt = cryptoMap[curr].from($scope[curr].total(), fiat) || 0;
+    return parseFloat(currency.commaSeparate((Math.floor(amt * 100) / 100).toFixed(2)));
+  };
 
   $scope.handleChart = () => {
     let symbol = currency.conversions[fiat.code].symbol;
