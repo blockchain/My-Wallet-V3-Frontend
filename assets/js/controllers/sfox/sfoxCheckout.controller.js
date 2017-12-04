@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService) {
   sfox.accounts = accounts;
 
   let exchange = $scope.vm.external.sfox;
@@ -99,6 +99,14 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
+
+  $scope.hasSeenBuyAlert = () => localStorageService.get('hasSeenSfoxBuyAlert');
+  $scope.setHasSeenBuyAlert = () => localStorageService.set('hasSeenSfoxBuyAlert', true);
+
+  if (!$scope.hasSeenBuyAlert() && !$scope.selling().verificationRequired) {
+    modals.openSfoxBuyComingSoon();
+    $scope.setHasSeenBuyAlert();
+  }
 
   $scope.goTo('create');
 }

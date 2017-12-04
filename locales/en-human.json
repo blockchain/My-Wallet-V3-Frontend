@@ -1876,7 +1876,9 @@
     "verify": "Verify Identity",
     "upload": "Upload Documents",
     "link": "Link Payment",
-    "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
+    "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX.",
+    "BUY_COMING_SOON": "Now you can sell bitcoin directly from your Blockchain wallet!",
+    "BUY_COMING_SOON_DETAILS": "Don't worry, we're hard at work and soon you'll be able to buy too."
   },
   "HERE": "here",
   "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
