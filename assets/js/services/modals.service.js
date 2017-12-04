@@ -261,7 +261,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
 
         $scope.cta = () => {
           $uibModalInstance.dismiss();
-          ShapeShift.userHasAccess ? $state.go('wallet.common.shift') : service.openRequest(null, { code: currency });
+          $state.go('wallet.common.' + currency + '.transactions');
         };
       }
     });
