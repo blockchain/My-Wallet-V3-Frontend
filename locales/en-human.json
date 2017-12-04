@@ -1845,7 +1845,7 @@
       "processing": {
         "DISPLAY": "Pending",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "HEADER": "Sell Order Initiated",
+        "HEADER": "Sell Order in Progress",
         "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days.",
         "TX_STATUS": "You can view the status of your transaction <a href='https://blockchain.info/tx/{{::txHash}}' target='_blank' rel='noopener noreferrer'>here</a>."
       },
@@ -1864,7 +1864,7 @@
       "completed": {
         "DISPLAY": "Completed",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "HEADER": "Sell Order Completed!",
+        "HEADER": "Sell Order Completed",
         "BODY": "Your sell trade has successfully completed. Thank you for using Blockchain to trade your bitcoin."
       },
       "AMT": "Amount to Sell",
