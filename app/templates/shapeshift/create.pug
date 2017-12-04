@@ -21,7 +21,7 @@ form.bc-form.shift-create(
               span {{ $ctrl.from.altLabel || $ctrl.from.label }}
             ui-select-choices(repeat="account in $ctrl.origins" group-by="$ctrl.coinGroup")
               i.pr-5(ng-class="cryptoCurrencyMap[account.coinCode].icon")
-              span {{ account.altLabel || account.label }}
+              span(ng-bind-html="account.label | highlight: $select.search") {{ account.altLabel || account.label }}
         .flex-center.flex-justify.pt-30
           .switch.fade(ng-if="$ctrl.wallet")
           .switch.pointer(ng-if="!$ctrl.wallet" ng-click="switch()")
@@ -35,7 +35,7 @@ form.bc-form.shift-create(
                 span {{ $ctrl.to.altLabel || $ctrl.to.label }}
               ui-select-choices(repeat="destination in $ctrl.destinations" group-by="$ctrl.coinGroup")
                 i.pr-5(ng-class="cryptoCurrencyMap[destination.coinCode].icon")
-                span {{ destination.altLabel || destination.label }}
+                span(ng-bind-html="destination.label | highlight: $select.search") {{ destination.altLabel || destination.label }}
       fieldset(ng-disabled="maxAvailable < state.rate.min")
         .group
           .item
