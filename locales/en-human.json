@@ -1846,8 +1846,8 @@
         "DISPLAY": "Pending",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Initiated",
-        "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days. ",
-        "TX_STATUS": "You can view your the status of your transaction <a href='https://blockchain.info/tx/{{::txHash}}' target='_blank' rel='noopener noreferrer'>here</a>."
+        "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days.",
+        "TX_STATUS": " You can view the status of your transaction <a href='https://blockchain.info/tx/{{::txHash}}' target='_blank' rel='noopener noreferrer'>here</a>."
       },
       "failed": {
         "DISPLAY": "Failed",
