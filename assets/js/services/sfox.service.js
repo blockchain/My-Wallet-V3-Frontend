@@ -124,15 +124,16 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
 
     let fee = payment ? payment.finalFee : tx.fee;
     let amount = payment ? payment.amounts[0] : -tx.amount;
-    let paymentFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : 0;
+    let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
     let totalAmount = amount + fee;
     let toBeReceived = quote
-                       ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - paymentFee).toFixed(2) : (quote.baseAmount - paymentFee).toFixed(2)
-                       : trade.receiveAmount;
+                       ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
+                       : (trade.receiveAmount - trade.feeAmount).toFixed(2);
+    let amountKey = quote || payment ? '.AMT' : '.AMT_SOLD';
 
     return {
       txAmt: {
-        key: '.AMT',
+        key: amountKey,
         val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
       },
       txFee: {
@@ -144,8 +145,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
         val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
       },
       sfoxFee: {
-        key: '.PAYMENT_FEE',
-        val: formatCurrencyForView(paymentFee, fiat, true)
+        key: '.TRADING_FEE',
+        val: formatCurrencyForView(tradingFee, fiat, true)
       },
       in: {
         key: '.TO_BE_RECEIVED',

@@ -12,9 +12,11 @@ function SfoxTradeDetailsController ($scope, MyWallet, Exchange, currency, sfox)
 
   $scope.classHelper = Exchange.classHelper;
 
+  $scope.tradeAccount = sfox.accounts[0];
   $scope.namespace = 'SFOX';
   $scope.state = '.' + trade.state;
   $scope.type = trade.isBuy ? '.buy' : '.sell';
   $scope.rate = format(1 / trade.outAmount * trade.inAmount, fiat, true);
   $scope.tradeDetails = sfox.sellTradeDetails(null, null, trade, tx);
+  $scope.txHash = tx.hash;
 }

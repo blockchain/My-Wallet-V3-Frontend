@@ -14,9 +14,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.trades = exchange.trades;
 
-  $scope.completedTrades = exchange.trades.filter(t => t.state === 'completed');
-  $scope.pendingTrades = exchange.trades.filter(t => t.state === 'processing');
-
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
@@ -61,7 +58,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   let submitTx = (trade) => {
     $scope.trade = trade;
-    $scope.payment.to(trade.receiveAddress);
+    $scope.payment.to(Wallet.my.wallet.hdwallet.defaultAccount.receiveAddress);
+    // $scope.payment.to(trade.receiveAddress);
     return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
       return $scope.payment.build().sign(pw).publish().payment;
     });
