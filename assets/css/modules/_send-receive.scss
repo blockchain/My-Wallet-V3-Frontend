@@ -7,6 +7,7 @@
     label-origin {
       display: block;
       overflow: hidden;
+      max-width: 200px;
       height: 1.428571429em;
     }
   }
@@ -14,8 +15,7 @@
 
 #send,
 #receive,
-#sign-msg,
-#send-bch {
+#sign-msg {
   .dropdown-menu {
     > li:first-child {
       .dropdown-header {
@@ -114,8 +114,7 @@
 
 // SEND
 
-#send,
-#send-bch {
+#send {
   .destination-input {
     input {
       @extend .brdrn;
