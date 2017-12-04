@@ -44,6 +44,12 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     Alerts.displayError(error.error || error.message);
   };
 
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
+    let numAccts = MyWallet.wallet.bch.accounts.filter(a => !a.archived).length;
+    let numAddrs = MyWallet.wallet.bch.importedAddresses.addresses.length;
+    return numAccts + numAddrs;
+  };
+
   $scope.send = () => {
     let addr;
     let tx = $scope.transaction;

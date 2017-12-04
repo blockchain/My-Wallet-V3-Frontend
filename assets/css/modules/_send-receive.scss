@@ -7,8 +7,10 @@
     label-origin {
       display: block;
       overflow: hidden;
-      max-width: 200px;
       height: 1.428571429em;
+      @media (max-width: 767px) {
+        max-width: 200px;
+      }
     }
   }
 }
