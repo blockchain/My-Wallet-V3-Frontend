@@ -47,31 +47,31 @@
       .mvvl(ng-if="!inMobileBuy")
         span.or-horizontal.flex-justify(translate="OR")
       button.btn.button-primary-inverse.full(translate="Manually Enter Account & Routing Numbers" ng-hide="state.enableBankAccountForm" ng-click="state.enableBankAccountForm = true")
-      form.bc-form(name="bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
+      form.bc-form(name="forms.bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
         fieldset(ng-disabled="locked")
           .group.full.mb-30
             .item
               label Name on Account
                 helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
               input(ng-model="fields.accountName" name="accountName" focus-when="state.enableBankAccountForm" required)
-              span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
+              span.error(ng-hide="forms.bankAccountForm.accountName.$error.value" translate="Required field")
           .group.full.mb-30
             .item
               label Routing Number
                 button.helper(ng-click="openHelper('bank-check-helper')" type="button" tabindex="-1")
                   span ?
-              input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(bankAccountForm, 'routingNumber')" required)
-              span.error(ng-hide="bankAccountForm.routingNumber.$error.value" translate="Required field")
-            .help(ng-show="bankAccountForm.routingNumber.$error.value")
+              input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(forms.bankAccountForm, 'routingNumber')" required)
+              span.error(ng-hide="forms.bankAccountForm.routingNumber.$error.value" translate="Required field")
+            .help(ng-show="forms.bankAccountForm.routingNumber.$error.value")
               span.state-danger-text Invalid routing number.
           .group.full.mb-30
             .item
               label Account Number
                 button.helper(ng-click="openHelper('bank-check-helper')" type="button" tabindex="-1")
                   span ?
-              input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(bankAccountForm, 'accountNumber')" required)
-              span.error(ng-hide="bankAccountForm.accountNumber.$error.value" translate="Required field")
-            .help(ng-show="bankAccountForm.accountNumber.$error.value")
+              input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(forms.bankAccountForm, 'accountNumber')" required)
+              span.error(ng-hide="forms.bankAccountForm.accountNumber.$error.value" translate="Required field")
+            .help(ng-show="forms.bankAccountForm.accountNumber.$error.value")
               span.state-danger-text Invalid account number.
           .group.full.mb-30
             label Account Type
