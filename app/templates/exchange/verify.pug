@@ -59,7 +59,7 @@
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('dob')")
             .mb-20.pos-rel
               label Date of Birth
-              input(ng-model="$ctrl.profile.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="isBeforeNow($ctrl.profile.state.dob)" ng-pattern="\d\d\/\d\d\/\d\d\d\d" required)
+              input(ng-model="$ctrl.profile.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="$ctrl.isBeforeNow($ctrl.profile.dob)" ng-pattern="\d\d\/\d\d\/\d\d\d\d" required)
               span.error(translate="Required field")
         .row
           .col-md-12(ng-if="$ctrl.showField('address')")
