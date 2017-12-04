@@ -1,13 +1,11 @@
-.flex-row.flex-column-tablet(ng-show="!state.accounts.length" translate-namespace="{{namespace + '.LINK_BANK'}}")
+.flex-row.flex-column-tablet(ng-show="!state.accounts.length")
   .width-40(ng-hide="state.bankAccounts")
     .width-80
-      h4.f-20.em-500.mvn.mb-10(translate=".HEADER")
+      h4.f-20.em-500.mvn.mb-10(translate="Link Bank Account")
       .mbl
-        span.f-16(translate=".COPY")
+        span.f-16(translate="Securely sign in to your bank (using your bank login information) to instantly link your account.")
       .mbl
-        span.f-16(translate=".COPY_2")
-      .mbl
-        span.f-14(translate=".COPY_SMALL")
+        span.f-16(translate="Alternatively, you can enter your routing and account numbers. SFOX will use that information to send two small deposits to verify your bank account. This can take up to 3 days.")
   .width-40(ng-show="state.bankAccounts")
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate="Select Payment Account")
@@ -18,7 +16,7 @@
     .width-90.width-100-tablet.width-100-mobile
       label.f-14.colon(translate="Select Account")
       form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
-        .radio-group.mb-10
+        .radio-group.mb-30
           .radio-label(ng-repeat="bankAccount in state.bankAccounts")
             input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
             label(for="{{bankAccount._id}}")
@@ -26,7 +24,7 @@
               .flex-column
                 span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
                 span.f-14.capitalize {{ bankAccount.institution_type }} Bank
-        .group.full.mb-10
+        .group.full.mb-30
           .item
             label Name on Account
               helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
@@ -86,11 +84,11 @@
   .width-40
     .width-80
       .flex-row.flex-center.mb-10
-        h4.f-20.em-500.mvn(translate="Verify Your Bank Account")
+        h4.f-20.em-500.mvn(translate="Verify Bank Account")
         button.helper(ng-click="openHelper('bank-deposit-helper')" type="button" tabindex="-1")
           span ?
       .mbl
-        span.f-16(translate="To verify your bank account details, SFOX will send two mirco-deposits to your account. These deposits will be in the amount of a few cents. Once received, you can return to this screen to enter the amounts.<br/><br/>Please note: Receiving these deposits can take 1-3 business days.")
+        span.f-16(translate="To protect against fraud, SFOX will send (and withdraw) 2 small deposits to your bank account. These amounts will appear in your account in 1-2 days. Please enter these amounts in any order to verify your account.")
   .width-60.flex-justify
     form.bc-form.width-90.width-100-tablet.width-100-mobile(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")

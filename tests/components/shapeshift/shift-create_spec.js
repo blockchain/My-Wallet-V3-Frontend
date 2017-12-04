@@ -80,7 +80,7 @@ describe('shift-create.component', () => {
       let currency = $injector.get('currency');
       let Exchange = $injector.get('Exchange');
       let MyWallet = $injector.get('MyWallet');
-      let tradeStatus = $injector.get('tradeStatus');
+      let buyStatus = $injector.get('buyStatus');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
       MyWallet.wallet = {
@@ -101,7 +101,7 @@ describe('shift-create.component', () => {
         return async;
       };
 
-      tradeStatus.canTrade = () => $q.resolve().then(scope.canTrade = true);
+      buyStatus.canBuy = () => $q.resolve().then(scope.canBuy = true);
     }));
 
   describe('.getSendAmount()', () => {

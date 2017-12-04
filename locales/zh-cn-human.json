@@ -1169,7 +1169,7 @@
   "SELL_AMT_HIGH": "最大购买额为 {{::symbol}}{{::limit}}",
   "WHY": "为什么?",
   "UPDATE": "更新",
-  "TRADE_SUBSCRIBE": {
+  "BUY_SUBSCRIBE": {
     "TITLE": "这个功能即将到来!",
     "BODY": "全球最受欢迎的比特币钱包现在让您安全购买比特币。注册以便当我们在您的地区推出服务时立即就能登录!",
     "BODY_MOBILE": "全球最受欢迎的比特币钱包现在让您安全购买比特币。",

@@ -1,7 +1,6 @@
 describe('exchange-verify.component', () => {
   let scope;
   let $rootScope;
-  let $q;
   $rootScope = undefined;
   let $compile;
   let $templateCache;
@@ -9,7 +8,7 @@ describe('exchange-verify.component', () => {
 
   let steps = ['address'];
   let fields = ['fullName', 'mobile', 'pancard', 'address', 'pincode', 'state'];
-  let onVerify = () => { $q.resolve(); };
+  let onVerify = () => { return true; };
   let onSetProfile = () => { return true; };
   let exchange = {
     constructor: {
@@ -45,7 +44,6 @@ describe('exchange-verify.component', () => {
     angular.mock.inject(function ($injector, _$rootScope_, _$compile_, _$templateCache_, _$componentController_, $httpBackend, _$q_) {
       $rootScope = _$rootScope_;
       $compile = _$compile_;
-      $q = _$q_;
       $templateCache = _$templateCache_;
       $componentController = _$componentController_;
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();

@@ -1,21 +1,21 @@
-.flex-row.flex-column-tablet(translate-namespace="{{$ctrl.name.toUpperCase()}}")
+.flex-row.flex-column-tablet
   .width-40
     .width-80
       div.mbl(ng-show="$ctrl.viewing('summary')")
-        h4.f-20.em-500.mvn.mb-10(translate=".CREATE.ACCOUNT" translate-values="{exchange: $ctrl.name}")
-        span.f-16(translate=".CREATE.ACCOUNT_EXPLAIN" translate-values="{exchange: $ctrl.name}")
+        h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CREATE_ACCOUNT" translate-values="{exchange: $ctrl.name}")
+        span.f-16(translate="EXCHANGE.CREATE_ACCOUNT_EXPLAIN" translate-values="{exchange: $ctrl.name}")
       div.mbl(ng-show="$ctrl.viewing('email')")
         div.mb-10(ng-show="$ctrl.state.sentEmailCode")
-          h4.f-20.em-500.mvn.mb-10(translate=".CREATE.VERIFY_EMAIL")
-          span.f-16(translate=".CREATE.VERIFY_EMAIL_EXPLAIN" translate-values="{exchange: $ctrl.name}")
+          h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.VERIFY_EMAIL")
+          span.f-16(translate="EXCHANGE.VERIFY_EMAIL_EXPLAIN" translate-values="{exchange: $ctrl.name}")
         div.f-12(ng-show="$ctrl.state.sentEmailCode && $ctrl.state.needsEmailReminder && !$ctrl.state.verificationError")
-          span(translate=".CREATE.VERIFY_EMAIL_REMINDER" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
+          span(translate="EXCHANGE.VERIFY_EMAIL_REMINDER" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
           | 
           a.period(ng-click="$ctrl.state.sentEmailCode = false; $ctrl.state.needsEmailReminder = false;" translate="HERE")
         div.mb-10(ng-hide="$ctrl.state.sentEmailCode")
-          h4.f-20.em-500.mvn.mb-10(translate=".CREATE.CHANGE_EMAIL")
-          span.f-16(ng-if="!$ctrl.state.verificationError" translate=".CREATE.CHANGE_EMAIL_EXPLAIN")
-          span.f-16(ng-if="$ctrl.state.verificationError"  translate=".CREATE.VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
+          h4.f-20.em-500.mvn.mb-10(translate="EXCHANGE.CHANGE_EMAIL")
+          span.f-16(ng-if="!$ctrl.state.verificationError" translate="EXCHANGE.CHANGE_EMAIL_EXPLAIN")
+          span.f-16(ng-if="$ctrl.state.verificationError"  translate="EXCHANGE.VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR" translate-values="{exchange: $ctrl.name, email: $ctrl.state.email}")
       div.mbl(ng-show="$ctrl.viewing('mobile')")
         h4.f-20.em-500.mvn.mb-10(translate="Verify Phone Number")
         span.f-16(ng-hide="$ctrl.state.sentMobileCode" translate="Please add your phone number to create your {{$ctrl.name}} exchange account.")
@@ -28,14 +28,14 @@
           .item
             .flex-between
               label(translate="EMAIL_ADDRESS")
-              span.blue.pointer.hidden-sm.hidden-md.hidden-lg(translate=".CREATE.CHANGE_EMAIL" ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy")
+              span.blue.pointer.hidden-sm.hidden-md.hidden-lg(translate="EXCHANGE.CHANGE_EMAIL" ng-click="$ctrl.view('email')" ng-show="accountForm.email.$error.registered && $ctrl.inMobileBuy")
             input(ng-model="$ctrl.state.email" name="email" disabled)
           div(ng-show="accountForm.email.$error.registered")
-            .help.mb-10
+            .help.mb-30
               span(ng-click="$ctrl.view('email')")
-                a.state-danger-text(translate=".CREATE.CHANGE_EMAIL_FAILED" translate-values="{exchange: $ctrl.name}")
+                a.state-danger-text(translate="EXCHANGE.CHANGE_EMAIL_FAILED" translate-values="{exchange: $ctrl.name}")
                 | &nbsp;
-                a(translate=".CREATE.CHANGE_EMAIL")
+                a(translate="EXCHANGE.CHANGE_EMAIL")
         .group.pb-20(ng-if="$ctrl.views.indexOf('mobile') > -1")
           .item
             label Phone Number
@@ -60,7 +60,7 @@
         div(ng-hide="$ctrl.state.sentEmailCode")
           .group
             .item
-              label.colon(translate=".CREATE.CONFIRM_EMAIL")
+              label.colon(translate="EXCHANGE.CONFIRM_EMAIL")
               input(ng-model="$ctrl.state.email" ng-change="$ctrl.state.sentEmailCode = false" name="email" type="email" required)
           .group.pt-25
             button.btn.button-primary.full.pb-15(type="submit" ng-disabled="emailForm.email.$invalid || ($ctrl.state.email === $ctrl.user.email)") Send Verification Email
@@ -68,7 +68,7 @@
         div(ng-show="$ctrl.state.sentEmailCode")
           .group
             .item
-              label.colon(translate=".CREATE.VERIFICATION_CODE")
+              label.colon(translate="EXCHANGE.VERIFICATION_CODE")
               input(ng-model="$ctrl.state.emailCode" name="emailCode" ng-change="$ctrl.clearInlineErrors()" focus-when="$ctrl.state.sentEmailCode || $ctrl.state.resentEmailCode" required)
             .item(ng-hide="emailForm.emailCode.$error.correct")
               span.f-14.mt-5(ng-hide="$ctrl.state.resentEmailCode")
@@ -76,12 +76,12 @@
                 a(ng-click="$ctrl.sendEmailCode(); $ctrl.state.resentEmailCode = true;" translate="RESEND")
                 | 
                 | {{ 'OR' | translate }} 
-                a(ng-click="$ctrl.state.sentEmailCode = false" translate=".CREATE.CHANGE_EMAIL_")
+                a(ng-click="$ctrl.state.sentEmailCode = false" translate="EXCHANGE.CHANGE_EMAIL_")
                 | .
-              span.f-14.mt-5(ng-show="$ctrl.state.resentEmailCode" translate=".CREATE.ANOTHER_CODE_SENT")
+              span.f-14.mt-5(ng-show="$ctrl.state.resentEmailCode" translate="EXCHANGE.ANOTHER_CODE_SENT")
             .help.mt-5.mb-15(ng-show="emailForm.emailCode.$error.correct")
               span.state-danger-text 
-                | {{ $ctrl.name.toUpperCase() + '.CREATE.VERIFICATION_CODE_INCORRECT' | translate }} 
+                | {{ 'EXCHANGE.VERIFICATION_CODE_INCORRECT' | translate }} 
                 a(ng-click="$ctrl.sendEmailCode(); $ctrl.clearInlineErrors(); $ctrl.state.resentEmailCode = true;" translate="RESEND")
           .group.pt-25
             button.btn.button-primary.full(type="submit" ng-disabled="emailForm.$invalid" translate="CONTINUE")

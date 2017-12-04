@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, tradeStatus, modals, Env) {
-  tradeStatus.canTrade().then((canTrade) => {
-    if (!canTrade) {
+function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, buyStatus, modals, Env) {
+  buyStatus.canBuy().then((canBuy) => {
+    if (!canBuy) {
       $state.go('wallet.common.home');
       if ($scope.inMobileBuy) {
         $timeout(() => modals.openFullScreen('partials/buy-subscribe-modal.pug', 'SubscribeCtrl'));
@@ -15,13 +15,12 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   let contains = (val, list) => list.indexOf(val) > -1;
   let accountInfo = MyWallet.wallet.accountInfo;
   let codeGuess = accountInfo && accountInfo.countryCodeGuess;
-  let stateCodeGuess = accountInfo && accountInfo.stateCodeGuess;
+
+  $scope.states = state.stateCodes;
+  $scope.state = $scope.states[0];
 
   $scope.countries = country.countryCodes;
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
-
-  $scope.states = state.stateCodes;
-  $scope.state = $scope.states.filter((s) => s.Code === stateCodeGuess)[0] || $scope.states[0];
 
   Env.then(env => {
     $scope.coinifyWhitelist = env.partners.coinify.countries;
@@ -34,21 +33,24 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   $scope.partners = {
     'coinify': {
-      namespace: 'COINIFY',
+      name: 'Coinify',
       logo: 'img/coinify-logo.svg',
       href: 'https://www.coinify.com/',
+      subtext: 'COINIFY_EXPLAIN',
       route: '.coinify'
     },
     'sfox': {
-      namespace: 'SFOX',
+      name: 'SFOX',
       logo: 'img/sfox-logo.png',
       href: 'https://www.sfox.com/',
+      subtext: 'SFOX_EXPLAIN',
       route: '.sfox'
     },
     'unocoin': {
-      namespace: 'UNOCOIN',
+      name: 'Unocoin',
       logo: 'img/unocoin-logo.png',
       href: 'https://www.unocoin.com/',
+      subtext: 'UNOCOIN_EXPLAIN',
       route: '.unocoin'
     }
   };

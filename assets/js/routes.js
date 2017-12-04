@@ -492,12 +492,20 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           return exchange.hasAccount
             ? $q.resolve([]).then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
             : $q.resolve([]);
+        },
+        showCheckout (Env, MyWallet) {
+          return Env.then(env => {
+            let email = MyWallet.wallet.accountInfo.email;
+            let fraction = env.partners.sfox.showCheckoutFraction;
+
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
+          });
         }
       },
-      onEnter ($state, $stateParams, MyWallet, modals) {
+      onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {
         let exchange = MyWallet.wallet.external.sfox;
 
-        if (exchange.profile == null) {
+        if (exchange.profile == null && !showCheckout) {
           $state.transition = null; // hack to prevent transition
           modals.openSfoxSignup(exchange);
         }

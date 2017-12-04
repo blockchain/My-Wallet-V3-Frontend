@@ -3,7 +3,7 @@ angular
   .controller('CoinifySummaryController', CoinifySummaryController);
 
 function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper, Wallet, coinify, currency, Alerts, Exchange, buyMobile) {
-  let { exchange, medium, fiatCurrency, endTime } = $scope.vm;
+  let { exchange, medium, fiatCurrency, frequency, endTime } = $scope.vm;
 
   let limits = $scope.limits = exchange.profile.limits;
   let accountIndex = MyWallet.wallet.hdwallet.defaultAccount.index;
@@ -23,14 +23,13 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
   };
 
   let setTrade = () => {
-    let { quote, fiatCurrency, fiatAmount, BTCAmount, transactionFee } = $scope.vm;
+    let { quote, fiatCurrency, fiatAmount, BTCAmount } = $scope.vm;
     $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
     $scope.dollars = currency.currencies.filter(c => c.code === fiatCurrency())[0];
 
     $scope.trade = {
       fee: (quote.paymentMediums[medium].fee).toFixed(2),
       total: (quote.paymentMediums[medium].total).toFixed(2),
-      txFee: transactionFee(),
       BTCAmount: BTCAmount(),
       fiatAmount: fiatAmount(),
       fiatCurrency: fiatCurrency()
@@ -59,7 +58,6 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
 
   $scope.buy = () => {
     $scope.lock();
-    let frequency = $scope.vm.frequency;
     let subscription = frequency ? { frequency: frequency.toLowerCase(), endTime: endTime } : undefined;
 
     let success = (trade) => {
@@ -67,6 +65,7 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
       $scope.vm.trade = trade;
       buyMobile.callMobileInterface(buyMobile.BUY_COMPLETED);
     };
+
     $q.resolve($scope.vm.quote.getPaymentMediums())
       .then((mediums) => mediums[medium].getAccounts())
       .then((accounts) => accounts[0].buy(subscription)).then(success)
@@ -83,17 +82,6 @@ function CoinifySummaryController ($scope, $q, $timeout, MyWallet, AngularHelper
 
   $scope.$watch('rateForm', () => {
     $scope.$parent.rateForm = $scope.rateForm;
-  });
-
-  $scope.$watchGroup(['trade.fiatAmount', 'state.editAmount', 'tempTrade.fiatAmount'], (next) => {
-    let max = limits[medium].inRemaining[fiatCurrency()];
-    if (($scope.trade.fiatAmount > max || $scope.tempTrade.fiatAmount > max) && !$scope.state.editAmount) {
-      $scope.max = limits[medium].inRemaining[fiatCurrency()];
-      $scope.min = limits[medium].minimumInAmounts[fiatCurrency()];
-      $scope.lock();
-    } else {
-      $scope.free();
-    }
   });
 
   AngularHelper.installLock.call($scope);

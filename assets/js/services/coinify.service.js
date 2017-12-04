@@ -42,7 +42,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get balanceAboveMax () {
       return Exchange.sellMax && Exchange.sellMax > service.limits.blockchain.inRemaining['BTC'];
     },
-    get usercanTrade () {
+    get userCanBuy () {
       return service.userCanTrade;
     },
     get userCanSell () {
@@ -106,7 +106,7 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   service.buying = () => {
     return {
       reason: service.buyReason,
-      isDisabled: !service.usercanTrade,
+      isDisabled: !service.userCanBuy,
       launchOptions: service.buyLaunchOptions
     };
   };
@@ -129,29 +129,16 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     return $q.resolve(service.exchange.getSellQuote(Math.trunc(amt), curr, quoteCurr));
   };
 
-  service.cancelTrade = (trade, message, subscription) => {
-    let msg = message || 'CONFIRM_CANCEL_TRADE';
+  service.cancelTrade = (trade) => {
+    let msg = 'CONFIRM_CANCEL_TRADE';
     if (!trade) trade = service.getPendingTrade();
     if (trade.medium === 'bank') msg = 'CONFIRM_CANCEL_BANK_TRADE';
-
-    let checkForSubAndFetch = () => {
-      let getSubs = (subs) => subs.filter(s => s.id === subscription.id)[0];
-      if (subscription) {
-        return service.getSubscriptions().then(subs => getSubs(subs));
-      }
-    };
 
     return Alerts.confirm(msg, {
       action: 'CANCEL_TRADE',
       cancel: 'GO_BACK'
-    }).then(() => trade.cancel())
-      .then(() => Exchange.fetchExchangeData(service.exchange))
-      .then(() => checkForSubAndFetch())
-      .catch((e) => {
-        if (e !== 'cancelled' && e !== 'escape key press' && e !== 'backdrop click') {
-          Alerts.displayError('ERROR_TRADE_CANCEL');
-        }
-      });
+    }).then(() => trade.cancel().then(() => Exchange.fetchExchangeData(service.exchange)), () => {})
+      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
   };
 
   service.getSubscriptions = () => {

@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('faqCtrl', faqCtrl);
 
-function faqCtrl ($scope, faq, Env, tradeStatus, languages, $uibModal, Ethereum, ShapeShift) {
+function faqCtrl ($scope, faq, Env, buyStatus, languages, $uibModal, Ethereum, ShapeShift) {
   Env.then(env => {
     if (env.webHardFork.faqMessage) {
       let a = languages.localizeMessage(env.webHardFork.faqMessage.answer);
@@ -38,7 +38,7 @@ function faqCtrl ($scope, faq, Env, tradeStatus, languages, $uibModal, Ethereum,
     });
   };
 
-  tradeStatus.canTrade().then((canTrade) => {
-    !tradeStatus.userHasAccount() && !canTrade && ($scope.questions[0] = {name: 'CAN_I_BUY_UNINVITED', values: {click: $scope.subscribe}});
+  buyStatus.canBuy().then((canBuy) => {
+    !buyStatus.userHasAccount() && !canBuy && ($scope.questions[0] = {name: 'CAN_I_BUY_UNINVITED', values: {click: $scope.subscribe}});
   });
 }

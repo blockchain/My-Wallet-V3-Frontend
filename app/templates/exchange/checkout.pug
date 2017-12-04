@@ -1,9 +1,9 @@
 form.bc-form(
   name="checkoutForm"
-  ng-submit="trade()"
+  ng-submit="$ctrl.tradeAccount ? enableTrade(): trade();"
   novalidate
   autocomplete="off")
-  fieldset(ng-disabled="locked || trading().isDisabled || trading().verificationRequired")
+  fieldset(ng-disabled="locked || trading().isDisabled")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -34,7 +34,6 @@ form.bc-form(
               prevent-event="mousewheel"
               focus-when="true"
               ng-model-options="{debounce: 250}"
-              ng-disabled="max.fiat <= 0"
               required)
             .input-dropdown(uib-dropdown)
               span.ph-10(uib-dropdown-toggle ng-class="{'arrow': fiatOptions.length}") {{fiat.code}}
@@ -53,53 +52,48 @@ form.bc-form(
               step="0.01"
               prevent-event="mousewheel"
               ng-model-options="{debounce: 250}"
-              ng-disabled="max.fiat <= 0"
               required)
             span.ph-10 {{bitcoin.code}}
         .f-12.mts
-          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}"
-               translate-values="{max: max.fiat.toFixed(2), min: min.fiat.toFixed(2), curr: fiat.code}"
-               ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}"
-               ng-click="!trading().isDisabled && setMax()"
-               uib-tooltip="{{::'SELL_MIN_TOOLTIP'|translate}}"
-               tooltip-enable="trading().reason === 'not_enough_funds_to_sell'")
+          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: max.fiat.toFixed(2), min: min.fiat.toFixed(2), curr: fiat.code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}" ng-click="!trading().isDisabled && setMax()")
           | &nbsp;
           span(ng-repeat="(option, action) in trading().launchOptions")
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
-    .group.mt-5.border-top(ng-if="trading().verificationRequired")
-      .item.mt-15(translate="{{provider + '.' + trading().reason + '.REQUIRED'}}")
-    .group.mt-20(ng-if="$ctrl.tradeAccount")
+    .group.mt-20(ng-if="$ctrl.collapseSummary")
       .item
         .mbm
-          span.f-14.em-300.colon Synced Bank Account
-        .border.flex-column.pv-5.ph-5.em-500
-          span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
-          span.f-12.capitalize Account Holder: {{ $ctrl.tradeAccount.name }}
-    .group.inline.mt-10(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
+          span.f-16.em-500.colon Order Summary
+        .border.flex-column.bg-grey
+          .flex-between.flex-center.form-control.bg-grey.no-border
+            span.colon BTC Order
+            span {{ format(state.btc || 0, bitcoin, true) }}
+          .border-bottom.mhm(ng-if="typeof($ctrl.tradeAccount) === 'object'")
+          .flex-between.flex-center.form-control.bg-grey.no-border(ng-if="typeof($ctrl.tradeAccount) === 'object'")
+            span.colon Payment Method
+            span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
+          .border-bottom.mhm
+          .flex-between.flex-center.form-control.bg-grey.no-border.em-500
+            span.colon Total Cost
+            span {{ format(state.total || 0, fiat, true) }}
+    .group.inline.mtl(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
-        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat")
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck")
         label(for="frequencyCheck") Make this a recurring order
-        helper-button(content="{{ provider + '.recurring_buy' + ($ctrl.recurringBuyLimit() < min.fiat ? '.disabled' : '.enabled') | translate:{cardLimit: $ctrl.recurringBuyLimit(), currency: fiat.code } }}" append="true")
-    .group.mt-10.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled && checkoutForm.fiat.$viewValue <= $ctrl.recurringBuyLimit()")
-      .group
-        span.colon.f-13.em-500(translate="FREQUENCY")
-        .flex-row.mt-5
-          .flex-column.width-50.width-50-mobile.mr-15
-            select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true" ng-init="state.frequency = $ctrl.frequencies.length === 3 ? $ctrl.frequencies[1] : $ctrl.frequencies[0]")
-          .flex-column.width-50.width-50-mobile.flex-justify
-            span.ml-10-mobile(ng-hide="state.frequency === 'hourly'" translate="FREQUENCY_INFO" translate-values="{timespan: recurringTimespan()}")
-            span.ml-10-mobile(ng-show="state.frequency === 'hourly'" translate="FREQUENCY_INFO_HOURLY" translate-values="{timespan: recurringTimespan()}")
+    .group(ng-if="state.frequencyCheck && !trading().isDisabled")
       .group.mtl
-        span.colon.f-13.em-500(translate="DURATION")
-        .flex-row.mt-5
-          .flex-column.width-50.width-50-mobile.mr-15
-            span.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: minDate}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" ng-model="state.endTime" clear-text="Until I Cancel" readonly)
-              p.pts.mbn {{ (state.endTime | date:dateFormat) || 'Until I Cancel' }}
-          .flex-column.width-50.width-50-mobile.flex-justify
-            span.ml-10-mobile(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
-            span.ml-10-mobile(ng-show="!state.endTime") You can cancel anytime.
+        .item.inline
+          span.colon.f-13.em-500(translate="FREQUENCY")
+          select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true")
+        .item.mtm
+          span(translate="FREQUENCY_INFO" translate-values="{timespan: recurringTimespan()}")
+      .group.mtl
+        .item.inline
+          span.colon.f-13.em-500(translate="DURATION")
+          input.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: date}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" ng-model="state.endTime" ng-value="state.endTime || 'Until I Cancel'" readonly)
+        .item.mtm
+          span(ng-show="!state.endTime") You can cancel anytime.
+          span(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
     .group.mtl
-      button.btn.button-primary.full(ng-if="!trading().verificationRequired" type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
-      button.btn.button-primary.full(ng-if="trading().verificationRequired" type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
