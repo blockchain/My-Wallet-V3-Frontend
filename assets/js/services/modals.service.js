@@ -289,5 +289,13 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     })
   );
 
+  service.openSubscribe = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/subscribe-modal.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'SubscribeCtrl'
+    })
+  );
+
   return service;
 }

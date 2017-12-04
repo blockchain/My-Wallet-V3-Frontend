@@ -10,7 +10,7 @@ blocket-loading(loading="!isWalletInitialized()")
           .flex-column.width-20.border-top-blue
             span Bitcoin
             fiat.em-200(btc="btc.total()")
-            span(ng-if="btc.total() === 0")
+            span.f-10(ng-if="btc.total() === 0")
               a.f-10(ng-if="canBuy"  translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell")
               a.f-10(ng-if="!canBuy && hasBalance(['eth', 'bch'])" translate="GET_STARTED" ui-sref="wallet.common.shift")
               a.f-10(ng-if="!canBuy && !hasBalance(['eth', 'bch'])" translate="REQUEST_BITCOIN" ng-click="openRequest(null, { code: 'btc' })")
