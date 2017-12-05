@@ -2024,7 +2024,8 @@
   },
   "btc": {
     "ALL_WALLETS": "All Bitcoin Wallets",
-    "IMPORTED_ADDRESSES": "Imported Bitcoin Addresses"
+    "IMPORTED_ADDRESSES": "Imported Bitcoin Addresses",
+    "ADDRESS_INVALID": "Invalid Bitcoin Address"
   },
   "eth": {
     "NOW_SUPPORTING": "Now Supporting Ether!",
@@ -2034,7 +2035,8 @@
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "IMPORTED_ADDRESSES": "Imported Bitcoin Cash Addresses",
     "NOW_SUPPORTING": "Now Supporting Bitcoin Cash!",
-    "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today."
+    "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today.",
+    "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
   },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
   "": ""

@@ -48,7 +48,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     let numAccts = MyWallet.wallet.bch.accounts.filter(a => !a.archived).length;
-    let numAddrs = MyWallet.wallet.bch.importedAddresses.addresses.length;
+    let numAddrs = MyWallet.wallet.bch.importedAddresses ? MyWallet.wallet.bch.importedAddresses.addresses.length : 0;
     return numAccts + numAddrs;
   };
 

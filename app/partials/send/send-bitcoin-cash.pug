@@ -55,6 +55,7 @@
                     ng-model-options="{ updateOn: 'blur' }"
                     ng-paste="handlePaste($event)"
                     ignore="transaction.from"
+                    coin-code="'bch'"
                     required)
                 .has-error
                   span.help-block.type-sm(translate="BCH_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValid && sendForm.destination.$touched")

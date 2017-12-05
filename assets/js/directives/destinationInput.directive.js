@@ -9,6 +9,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope: {
       model: '=ngModel',
       accounts: '=',
+      coinCode: '=',
       addresses: '=',
       addressBook: '=',
       change: '&ngChange',
@@ -22,6 +23,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
+    let coinCode = scope.coinCode;
     let accounts = scope.accounts || [];
     let addresses = scope.addresses || [];
     let addressBook = scope.addressBook || [];
@@ -35,14 +37,14 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
-      let address = Wallet.parsePaymentRequest(result);
+      let address = Wallet.parsePaymentRequest(result, coinCode);
       if (Wallet.isValidAddress(address.address)) {
         scope.model = format.destination(address, 'External');
         scope.onPaymentRequest({request: address});
         scope.setInputMetric({metric: 'qr'});
         $timeout(scope.change);
       } else {
-        throw new Error('BITCOIN_ADDRESS_INVALID');
+        throw new Error(coinCode + '.ADDRESS_INVALID');
       }
     };
 

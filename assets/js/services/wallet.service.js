@@ -677,16 +677,20 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
   };
 
-  wallet.parsePaymentRequest = (url) => {
+  wallet.parsePaymentRequest = (url, coinCode) => {
     let result = {
       address: null,
       amount: null,
       label: null,
       message: null
     };
+    let urlMap = {
+      btc: 'bitcoin',
+      bch: 'bitcoincash'
+    };
     result.isValid = true;
-    if (url.indexOf('bitcoin:') === 0) {
-      let withoutPrefix = url.replace('bitcoin://', '').replace('bitcoin:', '');
+    if (url.indexOf(urlMap[coinCode] + ':') === 0) {
+      let withoutPrefix = url.replace(urlMap[coinCode] + '://', '').replace(urlMap[coinCode] + ':', '');
       let qIndex = withoutPrefix.indexOf('?');
       if (qIndex !== -1) {
         result.address = withoutPrefix.substr(0, qIndex);

@@ -69,6 +69,7 @@
                       on-payment-request="applyPaymentRequest(request)"
                       set-input-metric="$parent.inputMetric = metric"
                       ignore="transaction.from"
+                      coin-code="'btc'"
                       required)
                   .has-error
                     span.help-block.type-sm(translate="BITCOIN_ADDRESS_INVALID" ng-show="sendForm.destination.$error.isValidAddress && sendForm.destination.$touched && transaction.destination.address !== ''")
