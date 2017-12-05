@@ -2022,11 +2022,17 @@
     "eth": "Ether Balance",
     "bch": "Bitcoin Cash Balance"
   },
+  "btc": {
+    "ALL_WALLETS": "All Bitcoin Wallets",
+    "IMPORTED_ADDRESSES": "Imported Bitcoin Addresses"
+  },
   "eth": {
     "NOW_SUPPORTING": "Now Supporting Ether!",
     "ANNOUNCEMENT": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!"
   },
   "bch": {
+    "ALL_WALLETS": "All Bitcoin Cash Wallets",
+    "IMPORTED_ADDRESSES": "Imported Bitcoin Cash Addresses",
     "NOW_SUPPORTING": "Now Supporting Bitcoin Cash!",
     "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today."
   },

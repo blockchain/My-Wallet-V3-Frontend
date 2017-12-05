@@ -66,7 +66,12 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
       activeIndex: () => {
         let idx = $scope.filterBy.account.index;
         return isNaN(idx) ? 'imported' : idx.toString();
-      }
+      },
+      accts: () => ({
+        accounts: $scope.activeWallets,
+        addresses: $scope.imported.addresses
+      }),
+      coinCode: () => 'bch'
     }
   });
 
