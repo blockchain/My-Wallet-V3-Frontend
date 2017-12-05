@@ -6,8 +6,16 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
 .buy-sell.overflow-scroll.flex-1
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
     .width-50.pv-30.ph-30.border-desktop.flex-center.flex-justify
-      span We're busy working on giving you the ability to buy bitcoin. Check back soon!
-  .flex-column.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
+      .flex-column
+        span.f-24.center.blue.pb-15(translate="Stay Tuned!")
+        span.f-18.center(translate="SFOX.buy.COMING_SOON")
+        form.bc-form.mt-30(ng-submit="signupForAccess()")
+          .mt-20
+            .group
+              .item
+                input(type="email" ng-model="email" placeholder="Add your email here" required)
+            button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
+  .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
       type="'Sell'"
       fiat="dollars"
@@ -35,6 +43,13 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       on-success="goTo('receipt')"
       on-expiration="sellRefresh()"
       handle-trade="sellHandler(quote)")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="onStep('create')")
+      .mb-20
+        .flex-between
+          span.f-24.blue.f-14-mobile(translate="SFOX.sell.INTRODUCING_HEADER")
+          .flex-center.pl-10
+            i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
+        p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
     div.width-50.border-desktop(
       ng-if="onStep('receipt')"
       ng-include="'partials/sfox/details.pug'")
