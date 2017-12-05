@@ -6,7 +6,9 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   let feePerByte;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  $scope.transaction = {};
+  $scope.transaction = {
+    amount: null
+  };
 
   $scope.steps = enumify('send-cash', 'send-confirm');
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
