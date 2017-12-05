@@ -70,7 +70,7 @@ describe('ExportHistory service', () => {
 
     it('should call API.exportHistory with correct arguments', () => {
       ExportHistory.fetch('01/01/2015', '01/01/2016', ['1asdf'], 'btc');
-      expect(MyBlockchainApi.exportHistory).toHaveBeenCalledWith(['1asdf'], 'USD', { start: '01/01/2015', end: '01/01/2016' }, 'btc');
+      expect(MyBlockchainApi.exportHistory).toHaveBeenCalledWith(['1asdf'], 'USD', { start: '01/01/2015', end: '01/01/2016', coinCode: 'btc' });
     });
 
     it('should convert to csv with notes and broadcast broadcast download event', function (done) {

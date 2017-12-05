@@ -124,7 +124,7 @@ describe('ExportHistoryController2', () => {
             spyOn(ExportHistory, 'fetch').and.callThrough();
             let controller = createController('');
             controller.submit();
-            expect(ExportHistory.fetch).toHaveBeenCalledWith('18/04/2017', '25/04/2017', ['xpub1', 'xpub2', { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }, { address: 'watch_address', archived: false, isWatchOnly: true }]);
+            expect(ExportHistory.fetch).toHaveBeenCalledWith('18/04/2017', '25/04/2017', ['xpub1', 'xpub2', { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }, { address: 'watch_address', archived: false, isWatchOnly: true }], 'btc');
             // expect(ExportHistory.fetch).toHaveBeenCalledTimes(1);
         });
 

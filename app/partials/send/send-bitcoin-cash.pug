@@ -50,7 +50,7 @@
                 div(ng-class="{'has-error': forms.sendForm.destination.$invalid && forms.sendForm.destination.$touched && transaction.destination.address !== ''}")
                   destination-input(
                     name="destination"
-                    accounts="origins"
+                    accounts="accounts"
                     ng-model="transaction.destination"
                     ng-model-options="{ updateOn: 'blur' }"
                     ng-paste="handlePaste($event)"

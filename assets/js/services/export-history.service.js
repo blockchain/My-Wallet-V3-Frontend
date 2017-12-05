@@ -22,7 +22,7 @@ function ExportHistory ($q, Wallet, MyBlockchainApi) {
 
   service.fetch = (start, end, active, coinCode) => {
     let currency = Wallet.settings.currency
-    return $q.resolve(MyBlockchainApi.exportHistory(active, currency.code, { start, end }, coinCode))
+    return $q.resolve(MyBlockchainApi.exportHistory(active, currency.code, { start, end, coinCode }))
       .then(history => {
         if (!history.length) return $q.reject('NO_HISTORY')
         return service.json2csv(history.map(service.addNoteToTx))

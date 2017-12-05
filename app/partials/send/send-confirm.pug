@@ -1,5 +1,5 @@
 .flex-column.f-16
-  .flex-row(ng-hide="$ctrl.asset === 'bch'")
+  .flex-row
     label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20 ' : 'width-30'" translate="FROM")
     .width-70.width-70-mobile.f-12-mobile {{ $ctrl.tx.from.label || $ctrl.tx.from.address || $ctrl.tx.label }}
   .flex-row.mt-10
