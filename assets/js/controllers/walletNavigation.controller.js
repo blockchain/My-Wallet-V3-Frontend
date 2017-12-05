@@ -8,7 +8,6 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $scope.security = SecurityCenter.security;
   $scope.userHasAccount = tradeStatus.userHasAccount();
   $scope.accountInfo = MyWallet.wallet.accountInfo;
-  $scope.external = MyWallet.wallet.external;
   $scope.showEthereum = () => Ethereum.userHasAccess;
   $scope.showShift = () => ShapeShift.userHasAccess;
 
@@ -66,9 +65,5 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
   $rootScope.supportModal = () => $uibModal.open({
     templateUrl: 'partials/support.pug',
     windowClass: 'bc-modal auto'
-  });
-
-  $scope.$watchGroup(['external.sfox.profile', 'external.coinify.profile', 'external.unocoin.profile'], () => {
-    tradeStatus.tradeLink().then(res => $scope.tradeLink = res);
   });
 }

@@ -23,7 +23,7 @@ form.bc-form.pv-20(
             helper-button(ng-show="field.key === '.TX_FEE'" content="{{namespace + '.TRANSACTION_FEE_HELPER'}}")
             helper-button(ng-show="field.key === '.TRADING_FEE'" content="{{namespace + '.TRADING_FEE_HELPER'}}")  
           span {{ field.val }}
-      .flex-row.flex-center.mb-5
+      .flex-row.flex-center
         input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
         label.mbn.f-13.em-300(for="terms" translate=".ACCEPT_TERMS")
       .flex-row.flex-end
