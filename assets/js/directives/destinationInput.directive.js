@@ -23,7 +23,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
-    let coinCode = scope.coinCode;
+    let coinCode = scope.coinCode || 'btc';
     let accounts = scope.accounts || [];
     let addresses = scope.addresses || [];
     let addressBook = scope.addressBook || [];

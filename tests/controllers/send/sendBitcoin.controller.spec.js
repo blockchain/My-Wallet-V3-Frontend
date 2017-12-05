@@ -582,7 +582,7 @@ describe('SendBitcoinController', () => {
     describe('applyPaymentRequest', () =>
 
       it('should succesfully apply a payment request', inject(function (Wallet) {
-        scope.result = Wallet.parsePaymentRequest('bitcoin://abcdefgh?amount=0.001');
+        scope.result = Wallet.parsePaymentRequest('bitcoin://abcdefgh?amount=0.001', 'btc');
         scope.applyPaymentRequest(scope.result, 0);
         expect(scope.transaction.amount).toBe(100000);
         expect(scope.transaction.destination.address).toBe("abcdefgh");

@@ -55,7 +55,7 @@ describe('HomeCtrl', () => {
   
   describe('totals', () => {
     it('should return total balance of currency', () => {
-      expect(scope.btc.total()).toBe(2)
+      expect(scope.btc.total()).toBe(1)
       expect(scope.eth.total()).toBe(null)
       expect(scope.bch.total()).toBe(1)
     });
