@@ -15,6 +15,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
   $scope.goTo('send-cash');
 
+  $scope.forms = {};
   $scope.originsLoaded = true;
   $scope.origins = MyWallet.wallet.bch.accounts.concat(MyWallet.wallet.bch.importedAddresses);
   $scope.transaction.from = MyWallet.wallet.bch.defaultAccount;
@@ -100,6 +101,12 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
     $scope.$watch('transaction.from', $scope.setMax);
   });
+
+  $scope.$watch('transaction.destination', (destination) => {
+    if (destination == null) return;
+    let valid = destination.index == null ? Wallet.isValidAddress(destination.address) : true;
+    $scope.forms.sendForm.destination.$setValidity('isValidAddress', valid);
+  }, true);
 
   AngularHelper.installLock.call($scope);
 }
