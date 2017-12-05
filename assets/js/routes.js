@@ -93,6 +93,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/public.pug',
           controller: function ($scope, $state, languages, Env) {
             Env.then(env => {
+              $scope.network = env.network;
               $scope.rootURL = env.rootURL;
               $scope.versionMyWallet = env.versionMyWallet;
               $scope.versionFrontend = env.versionFrontend;
