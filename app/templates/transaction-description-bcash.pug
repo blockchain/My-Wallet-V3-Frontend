@@ -14,7 +14,7 @@
       .flex-row
         span.f-14.em-300 To:
         | &nbsp;
-        span.overflow-scroll.f-14.em-300 {{ toIndex() ? 'Bitcoin Cash - ' + tx.to[0].label : tx.to[0].label }}
+        span.overflow-scroll.f-14.em-300 {{ toIndex() ? 'Bitcoin Cash - ' + tx.to[0].label : tx.to[0] ? tx.to[0].label : tx.processedOutputs[0].address }}
       .flex-row
         span.f-14.em-300 From:
         | &nbsp;
@@ -29,11 +29,11 @@
     .flex-row
       span.f-12.em-300 To:
       | &nbsp;
-      span.overflow-scroll.f-12.em-300 {{ tx.to[0].accountIndex ? 'Bitcoin Cash - ' + tx.to[0].accountIndex + 1 : tx.to[0].label }}
+      span.overflow-scroll.f-12.em-300 {{ toIndex() ? 'Bitcoin Cash - ' + tx.to[0].label : tx.to[0] ? tx.to[0].label : tx.processedOutputs[0].address }}
     .flex-row
       span.f-12.em-300 From:
       | &nbsp;
-      span.overflow-scroll.f-12.em-300 {{ tx.from.accountIndex ? 'Bitcoin Cash - ' + tx.from.label : tx.from.label }}
+      span.overflow-scroll.f-12.em-300 {{ fromIndex() ? 'Bitcoin Cash - ' + tx.from.label : tx.from.label }}
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
       transaction-status(transaction="tx")
