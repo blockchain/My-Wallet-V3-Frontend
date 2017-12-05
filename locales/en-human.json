@@ -1839,15 +1839,14 @@
     "sell": {
       "confirm": {
         "HEADER": "Confirm Sell Order",
-        "BODY": "Please review your trade details below. Click 'Confirm' to initiate your trade.",
+        "BODY": "Please review your trade details below. Click 'Confirm' to initiate.",
         "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
       },
       "processing": {
         "DISPLAY": "Pending",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order in Progress",
-        "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days.",
-        "TX_STATUS": "You can view the status of your transaction <a href='https://blockchain.info/tx/{{::txHash}}' target='_blank' rel='noopener noreferrer'>here</a>."
+        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days."
       },
       "failed": {
         "DISPLAY": "Failed",

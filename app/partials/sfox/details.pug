@@ -4,8 +4,6 @@ div(ng-controller="SfoxTradeDetailsController")
   .ph-30.pt-20.ph-10-mobile.pv-20-mobile
     .f-13.mb-10
       span(translate="{{namespace + type + state + '.BODY'}}")
-      | 
-      span(translate="{{namespace + type + state + '.TX_STATUS'}}" translate-values="{txHash: txHash}")
     div(ng-if="tradeAccount")
       .flex-end.flex-row.mb-5.mt-15
         span.mid-grey.f-12 1 BTC = {{ rate }}
