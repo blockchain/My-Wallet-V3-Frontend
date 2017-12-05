@@ -4,7 +4,7 @@ angular
 
 function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals) {
   $scope.btc = {
-    total: () => Wallet.total('') + Wallet.total('imported'),
+    total: () => Wallet.total(''),
     accounts: MyWallet.wallet.hdwallet.accounts
   };
 

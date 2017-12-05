@@ -20,7 +20,7 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, BitcoinC
   $scope.assets = {
     btc: {
       code: 'btc',
-      total: () => Wallet.total('') + Wallet.total('imported')
+      total: () => Wallet.total('')
     },
     eth: {
       code: 'eth',

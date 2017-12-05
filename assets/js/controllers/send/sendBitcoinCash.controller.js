@@ -16,7 +16,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.goTo('send-cash');
 
   $scope.originsLoaded = true;
-  $scope.origins = MyWallet.wallet.bch.accounts;
+  $scope.origins = MyWallet.wallet.bch.accounts.concat(MyWallet.wallet.bch.importedAddresses);
   $scope.transaction.from = MyWallet.wallet.bch.defaultAccount;
 
   $scope.toSatoshi = currency.convertToSatoshi;
