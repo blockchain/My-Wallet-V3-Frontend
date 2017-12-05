@@ -102,7 +102,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; }
   };
 
-  $scope.dismissSellIntro = () => localStorageService.set('hasSeenSellIntro', true);
+  $scope.dismissSellIntro = sfox.dismissSellIntro;
+  $scope.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
+  $scope.signupForBuyAccess = () => { let email = encodeURIComponent($scope.email); sfox.signupForAccess(email); $scope.email = ''; };
 
   $scope.goTo('create');
 }

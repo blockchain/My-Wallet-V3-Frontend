@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -54,7 +54,11 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     selling,
     determineStep,
     sellTradeDetails,
-    setSellMin
+    setSellMin,
+    dismissSellIntro,
+    hasDismissedSellIntro,
+    signupForBuyAccess,
+    signupForSellAccess
   };
 
   angular.extend(service, Exchange);
@@ -117,6 +121,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
       .then(mediums => mediums.ach.sell(account));
   }
 
+  function dismissSellIntro () {
+    localStorageService.set('hasSeenSfoxSellIntro', true);
+  }
+
+  function hasDismissedSellIntro () {
+    return localStorageService.get('hasSeenSfoxSellIntro');
+  }
+
   function sellTradeDetails (quote, payment, trade, tx) {
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
@@ -154,6 +166,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
         tip: () => console.log('Clicked tooltip')
       }
     };
+  }
+
+  function signupForBuyAccess (email, state) {
+    BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSdpnz-DBaeq3ZFx9rAMaJBWASFYNXnVS_g_5C6EmamZBcOxPA/viewform?entry.1192956638=${email}`);
+  }
+
+  function signupForSellAccess (email, state) {
+    BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSeBjqWrqNs5k-yAR8p35xBwZ_FfwWfjttL0WCf4Qa2Ev2CK8A/viewform?entry.1192956638=${email}&entry.387129390=${state}`);
   }
 
   return service;

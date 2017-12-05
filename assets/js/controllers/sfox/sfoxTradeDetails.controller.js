@@ -12,6 +12,7 @@ function SfoxTradeDetailsController ($scope, MyWallet, Exchange, currency, sfox)
 
   $scope.classHelper = Exchange.classHelper;
 
+  $scope.tradeId = trade.id;
   $scope.tradeAccount = sfox.accounts[0];
   $scope.namespace = 'SFOX';
   $scope.state = '.' + trade.state;

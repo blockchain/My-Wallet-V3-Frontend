@@ -1846,7 +1846,7 @@
         "DISPLAY": "Pending",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order in Progress",
-        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days."
+        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. Your order ID is: {{::tradeId}}"
       },
       "failed": {
         "DISPLAY": "Failed",
