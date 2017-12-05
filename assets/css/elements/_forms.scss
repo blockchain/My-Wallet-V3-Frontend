@@ -38,4 +38,9 @@ form.bc-form {
       }
     }
   }
+  .multi-line-check {
+    input[type="checkbox"] {
+      margin: 5px 10px 0px 0px !important;
+    }
+  }
 }
