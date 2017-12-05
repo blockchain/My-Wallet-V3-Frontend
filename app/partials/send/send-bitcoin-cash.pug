@@ -103,15 +103,12 @@
                 | :&nbsp;
                 span.type-sm.pointer {{ transaction.maxAvailable | convert:'bch' }}
               span.state-danger-text.type-sm(ng-show="transaction.maxAvailable <= 0" translate="You don't have enough funds to send from this wallet.")
-        .group
-          .group.inline.flex-center.mt-20
-            .item.width-60.width-60-mobile
-              label.mbn.colon(translate="TX_FEE")
-              span Estimated confirmation time 1+ hour
-            .flex-row.flex-end.width-40.width-40-mobile
-              span.f-14 {{ transaction.fee | convert:'bch':true }}
-              | &nbsp;
-              fiat.f-14(bch="fromSatoshi(transaction.fee, bchCurrency)" parens="true")
+          //- Fee
+          .item.mt-20
+            label
+              span(translate="TX_FEE")
+            .flex-1.f-14
+              span {{ transaction.fee || 0 | convert:'bch':true }} ({{ fromSatoshi(transaction.fee, bchCurrency) || 0 | convert:'fiat':true:'bch'}})
         .group.mt-25
           button.button-primary(translate="CONTINUE" ng-click="goTo('send-confirm')" ng-disabled="sendForm.$invalid || transaction.amount > transaction.maxAvailable")
   .flex-column.width-100(ng-if="onStep('send-confirm')")
