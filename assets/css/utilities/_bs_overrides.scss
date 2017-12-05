@@ -383,14 +383,23 @@ $tt-position-default: -4px !important;
         margin-left: 10px;
       }
     }
-    .ui-select-choices-row {
+    .ui-select-choices-row:not(:nth-child(3)) {
       > a {
-        padding: 2px 10px;
+        i { display: none;}
+      }
+    }
+    .ui-select-choices-row:nth-child(3) {
+      > a {
         i {
           top: 2px;
           left: 10px;
           position: absolute;
         }
+      }
+    }
+    .ui-select-choices-row {
+      > a {
+        padding: 2px 10px;
       }
       &.active {
         > a {
