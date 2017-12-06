@@ -2,6 +2,7 @@ angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
 function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats) {
   Env.then(env => {
+    $scope.network = env.network;
     $scope.rootURL = env.rootURL;
     $scope.showEth = env.ethereum.rolloutFraction === 1;
     $scope.apiDomain = env.apiDomain;
