@@ -12,7 +12,7 @@
   "NEW_ACCOUNT": "Ajouter +",
   "MY_TRANSACTIONS": "Transactions",
   "ALL": "Tout",
-  "SEND_FEEDBACK": "Envoyez-nous votre avis",
+  "SEND_FEEDBACK": "Donnez-nous votre avis",
   "BUYSELL": "Acheter/vendre",
   "FEEDBACK_SUBMIT_FAILED": "Une erreur s'est produite, veuillez réessayer.",
   "BACK": "Précédent",
@@ -80,17 +80,17 @@
   },
   "LOG_ME_OUT": "Me déconnecter",
   "CONFIRM_CANCEL_TRADE": {
-    "TITLE": "Annuler ce trade ?",
-    "BODY": "Êtes-vous sûr de vouloir annuler ce trade ?"
+    "TITLE": "Annuler cet échange ?",
+    "BODY": "Êtes-vous sûr de vouloir annuler cet échange ?"
   },
   "SAVING": "Sauvegarde en cours",
   "SAVING_DESC": "Veuillez patienter pendant la sauvegarde de votre portefeuille...",
-  "CANCEL_TRADE": "Annuler le trade",
+  "CANCEL_TRADE": "Annuler l'échange",
   "CLOSE": "Fermer",
   "TRANSACTIONS": "Transactions",
   "TRANSACTION": "Transaction",
   "WALLETS": "Portefeuilles",
-  "COUNTRIES_SERVED": "Pays inclus",
+  "COUNTRIES_SERVED": "Pays supportés",
   "TRANSACTIONS_AMT": "+ {{count}} millions",
   "WALLETS_AMT": "+ {{count}} millions",
   "COUNTRIES_SERVED_AMT": "+ 120",
@@ -127,7 +127,7 @@
   "YOU": "Vous avez",
   "RECEIVED_BITCOIN_FROM": "Reçu",
   "RECEIVED": "Reçu",
-  "GENERATED_ADDRESS": "Une nouvelle adresse est générée à chaque fois que vous recevez des Bitcoin. Ne vous inquiétez pas, vous pouvez continuer d'utiliser votre adresse habituelle. ",
+  "GENERATED_ADDRESS": "Une nouvelle adresse est générée à chaque fois que vous recevez des bitcoins. Ne vous inquiétez pas, vous pouvez continuer d'utiliser votre adresse habituelle. ",
   "LEARN_MORE": "En savoir plus",
   "SENT": "Envoyé",
   "MOVED_BITCOIN_TO": "Transféré",
@@ -138,7 +138,7 @@
   "PREFERENCES_EXPLAIN": "Personnalisez votre expérience portefeuille.",
   "MENU_ACCOUNTS_AND_ADDRESSES": "Adresses",
   "WALLET_INFO": "Informations du portefeuille",
-  "WALLET_INFO_EXPLAIN": "Utilisez votre identifiant de portefeuille en utilisant notre client Web ou en scannant simplement le code ci-dessous<i>(cliquer pour afficher le « code de jumelage »)</i>avec votre portefeuille mobile Blockchain (iOS ou Android) pour accéder à votre portefeuille via vos dispositifs mobiles.",
+  "WALLET_INFO_EXPLAIN": "Utilisez votre identifiant de portefeuille via notre client Web ou en scannant simplement le code ci-dessous<i>(cliquer pour afficher le « code de jumelage »)</i>avec votre portefeuille mobile Blockchain (iOS ou Android) pour accéder à votre portefeuille via vos appareils mobiles.",
   "PAIRING_CODE": "Code de jumelage pour application mobile",
   "SECURITY_BASIC_EXPLAIN": "Sécurité de base : assurez-vous que vos renseignements soient exacts et à jour afin que votre portefeuille soit protégé contre l'accès non autorisé et pour vous aider à rétablir l’accès à votre portefeuille en cas de perte de votre identifiant de portefeuille ou du mot de passe.",
   "SECURITY_ADVANCED_EXPLAIN": "Sécurité avancée : personnalisez encore plus vos paramètres de sécurité pour un contrôle et un suivi de l'accès granulaire. Ne modifiez pas ces paramètres, à moins que vous sachiez réellement ce que vous faites.",
@@ -150,8 +150,8 @@
   "ARE_YOU_SURE_LOGOUT": "Êtes-vous sûr de vouloir vous déconnecter ?",
   "FINISH_LATER": "Finir plus tard",
   "CONFIRM_CANCEL": {
-    "TITLE": "Annuler ce trade ?",
-    "BODY": "Vous êtes sur le point de recevoir des bitcoin."
+    "TITLE": "Annuler cet échange ?",
+    "BODY": "Vous êtes sur le point de recevoir des bitcoins."
   },
   "CONFIRM_CLOSE": {
     "TITLE": "Finir plus tard ?",
@@ -159,11 +159,11 @@
   },
   "CONFIRM_CLOSE_ACCT": {
     "TITLE": "Êtes-vous sûr ?",
-    "BODY": "Il ne vous reste plus que quelques étapes avant de recevoir des bitcoin, êtes-vous sûr de vouloir arrêter ?"
+    "BODY": "Il ne vous reste plus que quelques étapes avant de recevoir des bitcoins, êtes-vous sûr de vouloir arrêter ?"
   },
   "CONFIRM_CLOSE_AMT": {
     "TITLE": "Êtes-vous sûr ?",
-    "BODY": "Cliquer sur Fermer vous fera quitter le modal, mais vous pouvez acheter des bitcoin n'importe quand."
+    "BODY": "Cliquer sur Fermer vous fera quitter la fenêtre, mais vous pouvez acheter des bitcoins n'importe quand."
   },
   "LANGUAGE_EXPLAIN": "Définissez votre langue préférée.",
   "EMAIL_ADDRESS": "Adresse e-mail",
@@ -177,8 +177,8 @@
   "MOBILE_NUMBER_EXPLAIN": "Votre téléphone portable peut être utilisé pour activer l'authentification à deux facteurs, ce qui permet de sécuriser votre portefeuille contre tout accès non autorisé.",
   "ADD_MOBILE_NUMBER": "Lier le numéro de portable",
   "WALLET_PASSWORD": "Mot de passe de portefeuille",
-  "WALLET_PASSWORD_EXPLAIN": "Votre mot de passe n'est jamais partagé avec nos serveurs, ce qui signifie que nous ne pouvons pas vous aider à le réinitialiser si vous l'oubliez. Assurez-vous de noter votre phrase de récupération grâce à laquelle vous pouvez récupérer l'accès à votre portefeuille en cas de perte de votre mot de passe.",
-  "PASSWORD_SET": "Mot de passe établi",
+  "WALLET_PASSWORD_EXPLAIN": "Votre mot de passe n'est jamais enregistré sur nos serveurs, ce qui signifie que nous ne pouvons pas vous aider à le réinitialiser si vous l'oubliez. Assurez-vous de noter votre phrase de récupération grâce à laquelle vous pouvez récupérer l'accès à votre portefeuille en cas de perte de votre mot de passe.",
+  "PASSWORD_SET": "Mot de passe configuré",
   "CURRENT_PASSWORD": "Mot de passe actuel",
   "NEW_PASSWORD": "Nouveau mot de passe",
   "CONFIRM_PASSWORD": "Confirmer le mot de passe",
@@ -492,7 +492,7 @@
   "INCORRECT_PASSWORD": "Mot de passe incorrect",
   "TOO_WEAK": "Votre mot de passe n'est pas assez fort",
   "TOO_LONG": "Votre mot de passe est trop long.",
-  "WARN_AGAINST_IE": "Nous vous recommandons de vous connecter en utilisant un navigateur plus sûr, tel que Chrome ou Safari.",
+  "WARN_AGAINST_IE": "Nous vous recommandons de vous connecter en utilisant un navigateur plus sûr, comme Chrome ou Safari.",
   "MINIMUM_BROWSER": "{{ browser }} {{ userVersion }} n'est pas pris en charge. Veuillez installer {{ browser }} {{requiredVersion }} ou plus récent.",
   "UNKNOWN_BROWSER": "Soyez prudent lorsque vous utilisez un navigateur autre que Chrome, Firefox ou Safari. Assurez-vous qu'il prenne en charge la génération sécurisée de nombres aléatoires et qu'il offre une protection renforcée contre les attaques de type XSS. Sinon vous risquez de perdre vos bitcoins.",
   "UNSUITABLE_BROWSER": "Votre navigateur n'est pas pris en charge",
@@ -510,7 +510,7 @@
   "TRY_AGAIN": "Réessayez",
   "DESCRIBE_TRANSACTIONS": "Les transactions se produisent lorsque vous recevez et envoyez des bitcoins.",
   "HIT_RECEIVE": "Cliquez sur <b class='pointer black em-500'><i class='bc-icon-receive'></i> Recevoir </b> pour déposer des bitcoins dans votre portefeuille.",
-  "HIT_SEND": "Cliquez sur<b class='pointer black em-500'><i class='bc-icon-send'></i> Envoyer </b>pour envoyer instantanément des bitcoins partout dans le monde !",
+  "HIT_SEND": "Cliquez sur <b class='pointer black em-500'><i class='bc-icon-send'></i> Envoyer </b>pour envoyer instantanément des bitcoins partout dans le monde !",
   "FIRST_ACCOUNT_NAME": "Mon portefeuille bitcoin",
   "EMAIL_VERIFIED_SUCCESS": "Vous avez vérifié votre adresse e-mail avec succès ! Veuillez retourner sur votre navigateur/onglet précédent pour consulter votre portefeuille.",
   "UID_EXPLAIN": "L'identifiant du portefeuille est votre identifiant unique. Il est strictement individuel et vous permet d’accéder à votre portefeuille.",
@@ -536,7 +536,7 @@
   "USE_TOTAL": "Utiliser le total disponible moins les frais",
   "ENTER_VALID_AMOUNT": "Veuillez saisir un montant valide",
   "ESTIMATED_TX_TIME": "Temps de confirmation estimé : ~{{ confirmationTime }} minutes ({{ blockQueue }}",
-  "BALANCE_TOO_LOW": "Votre solde est trop bas pour rehausser ces frais",
+  "BALANCE_TOO_LOW": "Votre solde est trop bas pour augmenter ces frais",
   "GO_BACK": "Précédent",
   "CLICK_HERE_TO_CREATE_WALLET": "créer un portefeuille",
   "RESEND": "Renvoyer",
@@ -620,7 +620,7 @@
   "2FA_TOOLTIP": "La validation en 2 étapes permet d’empêcher l'accès non autorisé à votre portefeuille en exigeant un mot de passe à usage unique après chaque tentative de connexion.",
   "BLOCK_TOR_TOOLTIP": "Empêcher les adresses IP connues pour faire partie du réseau anonyme Tor d'accéder à votre portefeuille.",
   "NOTE_LC": "Remarque :",
-  "SECURE_WALLET_MSG_1": "Nous sommes ravis que vous utilisiez votre portefeuille bitcoin ! Mais il semblerait que la sécurité de votre portefeuille ne soit toujours pas optimale. Sécuriser votre portefeuille peut vous aider à garantir la sécurité de vos fonds.",
+  "SECURE_WALLET_MSG_1": "Nous sommes ravis que vous utilisiez votre portefeuille Bitcoin ! Mais il semblerait que la sécurité de votre portefeuille ne soit toujours pas optimale. Sécuriser votre portefeuille peut vous aider à garantir la sécurité de vos fonds.",
   "SECURE_WALLET_MSG_2": "N'oubliez pas de sécuriser votre portefeuille - Profitez de notre centre de sécurité et garantissez la sécurité de vos fonds",
   "NO_THANKS": "Non merci",
   "CONTINUE_LOGOUT": "Continuer pour se déconnecter",
@@ -823,7 +823,7 @@
     "ACCEPT_FEE": "Accepter des frais plus élevés"
   },
   "NO_UNSPENT_OUTPUTS": "Vous n'avez pas de pièces à dépenser",
-  "BELOW_DUST_THRESHOLD": "Un de vos montants est sous le montant minimum de {{ threshold }} satoshis requis",
+  "BELOW_DUST_THRESHOLD": "Un de vos soldes est sous le montant minimum de {{ threshold }} satoshis requis",
   "STRANGE_SCRIPT": "Le script est bizarre",
   "CANNOT_DECODE_OUTPUT_ADDRESS": "Impossible de décoder l'adresse de sortie du hachage de la transaction {{ tx_hash }}",
   "HD_ARCH": "Architecture de l'adresse déterministe hiérarchique :",
@@ -852,7 +852,7 @@
   "WHY_USE_BLOCKCHAIN": "Pourquoi utiliser Blockchain ?",
   "ACTIVITY_FEED": "Flux d’activités organisé",
   "NEW_USER": "Vous êtes un nouvel utilisateur de bitcoins ?",
-  "BLOCKCHAIN_MISSION": "Les bitcoins sont fantastiques pour ceux qui doivent envoyer de l'argent à l'étranger ou acheter quelque chose en ligne. Des centaines de milliers de marchands dans le monde entier acceptent les Bitcoin, et comme les frais sont bas, vous profiterez souvent de ristournes importantes lorsque vous payerez par Bitcoin plutôt que par carte de crédit.",
+  "BLOCKCHAIN_MISSION": "Les bitcoins sont parfait pour ceux qui doivent envoyer de l'argent à l'étranger ou acheter quelque chose en ligne. Des centaines de milliers de marchands dans le monde entier acceptent les Bitcoin, et comme les frais sont bas, vous profiterez souvent de ristournes importantes lorsque vous payerez par Bitcoin plutôt que par carte de crédit.",
   "SEND_AND_RECEIVE": "Envoyer et recevoir facilement des bitcoins.",
   "WE_MAKE_USING_BTC": "Nous faisons en sorte que l'utilisation de Bitcoin soit sûre, facile et marrante. Vous pouvez immédiatement effectuer des transactions avec quiconque dans le monde entier.",
   "IN_CONTROL": "Vous gardez le contrôle.",
