@@ -46,7 +46,11 @@ describe('SfoxCheckoutController', () => {
       MyWallet = $injector.get('MyWallet');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
-      MyWallet.wallet = {};
+      MyWallet.wallet = {
+        accountInfo: {
+          email: 'satoshi@gmail.com'
+        }
+      };
       Wallet.accounts = () => [];
       Wallet.getDefaultAccount = () => ({});
       MyWalletHelpers.asyncOnce = function (f) {
@@ -63,7 +67,7 @@ describe('SfoxCheckoutController', () => {
           }
         }
       };
-      
+
       sfox = $injector.get('sfox');
       let currency = $injector.get('currency');
       currency.conversions['USD'] = { conversion: 2 };
