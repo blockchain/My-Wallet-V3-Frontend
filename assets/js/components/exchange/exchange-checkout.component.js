@@ -177,4 +177,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   });
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
+
+  $scope.$watch('max', (n, o) => { !n ? $scope.lock() : $scope.free(); });
 }
