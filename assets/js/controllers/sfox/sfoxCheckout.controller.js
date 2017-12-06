@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet) {
   sfox.accounts = accounts;
 
   let exchange = $scope.vm.external.sfox;
@@ -104,7 +104,14 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.dismissSellIntro = sfox.dismissSellIntro;
   $scope.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
-  $scope.signupForBuyAccess = () => { let email = encodeURIComponent($scope.email); sfox.signupForAccess(email); $scope.email = ''; };
+  $scope.email = MyWallet.wallet.accountInfo.email;
+  $scope.signupForBuyAccess = () => {
+    let email = encodeURIComponent($scope.email);
+    sfox.signupForBuyAccess(email);
+    $scope.email = '';
+    localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
+  };
+  $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
 
   $scope.goTo('create');
 }
