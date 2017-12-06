@@ -4,6 +4,7 @@ angular
     bindings: {
       tx: '<',
       asset: '<',
+      locked: '<',
       onSend: '&',
       onGoBack: '&'
     },

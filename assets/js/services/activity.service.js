@@ -2,21 +2,22 @@ angular
   .module('walletApp')
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'coinify', 'Ethereum'];
+Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'coinify', 'Ethereum', 'BitcoinCash'];
 
-function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinify, Ethereum) {
+function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinify, Ethereum, BitcoinCash) {
   var txSub;
 
   const activity = {
     activities: [],
     btcTransactions: [],
     ethTransactions: [],
+    bchTransactions: [],
     logs: [],
     limit: 8,
     timeSort,
-    btcTxFactory,
-    ethTxFactory,
     logFactory,
+    messageFactory,
+    updateBchTxActivities,
     updateBtcTxActivities,
     updateEthTxActivities,
     updateLogActivities,
@@ -30,6 +31,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   setTxSub();
   $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
   $rootScope.$watch(() => Ethereum.txs, activity.updateEthTxActivities, true);
+  $rootScope.$watch(() => BitcoinCash.txs, activity.updateBchTxActivities, true);
   return activity;
 
   // Wait for wallet to be defined before subscribing to tx updates
@@ -47,20 +49,28 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   function updateAllActivities () {
     activity.updateBtcTxActivities();
     activity.updateEthTxActivities();
+    activity.updateBchTxActivities();
     activity.updateLogActivities();
   }
 
   function updateBtcTxActivities () {
     activity.btcTransactions = MyWallet.wallet.txList.transactions()
       .slice(0, activity.limit)
-      .map(btcTxFactory);
+      .map(messageFactory);
     combineAll();
   }
 
   function updateEthTxActivities () {
     activity.ethTransactions = Ethereum.txs
       .slice(0, activity.limit)
-      .map(ethTxFactory);
+      .map(messageFactory);
+    combineAll();
+  }
+
+  function updateBchTxActivities () {
+    activity.bchTransactions = BitcoinCash.txs
+      .slice(0, activity.limit)
+      .map(messageFactory);
     combineAll();
   }
 
@@ -81,6 +91,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   function combineAll () {
     activity.activities = activity.btcTransactions
       .concat(activity.ethTransactions)
+      .concat(activity.bchTransactions)
       .concat(activity.logs)
       .filter(hasTime)
       .sort(timeSort)
@@ -88,19 +99,13 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
     AngularHelper.$safeApply();
   }
 
-  function btcTxFactory (obj) {
+  function messageFactory (obj) {
+    let txType;
+    if (obj.coinCode === 'eth') { txType = obj.getTxType(Ethereum.eth.activeAccountsWithLegacy); }
     return angular.merge(txFactory(obj), {
-      message: getTxMessage(obj.hash, obj.txType, 'btc'),
-      labelClass: obj.txType.toLowerCase()
-    });
-  }
-
-  function ethTxFactory (obj) {
-    let txType = obj.getTxType(Ethereum.eth.activeAccountsWithLegacy);
-    return angular.merge(txFactory(obj), {
-      message: getTxMessage(obj.hash, txType, 'eth'),
-      labelClass: txType,
-      asset: 'eth'
+      message: getTxMessage(obj.hash, txType || obj.txType, obj.coinCode),
+      labelClass: txType || obj.txType.toLowerCase(),
+      asset: obj.coinCode
     });
   }
 

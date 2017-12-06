@@ -1,8 +1,8 @@
 angular
   .module('walletApp')
-  .controller('bitcoinTransactionsCtrl', bitcoinTransactionsCtrl);
+  .controller('bitcoinCashTransactionsCtrl', bitcoinCashTransactionsCtrl);
 
-function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibModal, Wallet, MyWallet, format, smartAccount) {
+function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal, localStorageService, ShapeShift, AngularHelper, smartAccount, MyWallet, Wallet, BitcoinCash, Ethereum, modals) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -22,13 +22,21 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
   $scope.isFilterOpen = false;
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
 
-  let all = { label: $translate.instant('ALL_BITCOIN_WALLETS'), index: '', type: 'Accounts' };
-  $scope.accounts = smartAccount.getOptions();
+  let all = { label: $translate.instant('BITCOIN_CASH.ALL_WALLETS'), index: '', type: 'Accounts' };
+  $scope.activeWallets = MyWallet.wallet.bch.accounts.filter(a => !a.archived);
+  $scope.imported = MyWallet.wallet.bch.importedAddresses;
+  $scope.accounts = $scope.imported ? $scope.activeWallets.concat([$scope.imported]) : $scope.activeWallets;
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
+  let txList = MyWallet.wallet.bch.txs;
 
-  let txList = MyWallet.wallet.txList;
-  $scope.transactions = txList.transactions(smartAccount.getDefaultIdx());
+  let setTxs = $scope.setTxs = () => {
+    $scope.transactions = txList.filter((tx) => {
+      if ($scope.filterBy.account.index === '') return true;
+      else return tx.belongsTo($scope.filterBy.account.index >= 0 ? $scope.filterBy.account.index : 'imported');
+    });
+    AngularHelper.$safeApply($scope);
+  };
 
   let fetchTxs = () => {
     $scope.loading = true;
@@ -37,6 +45,7 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
       .finally(() => $scope.loading = false);
   };
 
+  $scope.setTxs();
   if ($scope.transactions.length === 0) fetchTxs();
 
   $scope.nextPage = () => {
@@ -47,16 +56,6 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
   $scope.$watchCollection('accounts', newValue => {
     $scope.canDisplayDescriptions = $scope.accounts.length > 0;
   });
-
-  let setTxs = $scope.setTxs = () => {
-    let idx = $scope.filterBy.account.index;
-    let newTxs = idx === '' || !isNaN(idx)
-      ? txList.transactions(idx)
-      : $scope.filterByAddress($scope.filterBy.account);
-    if ($scope.transactions.length > newTxs.length) $scope.allTxsLoaded = false;
-    $scope.transactions = newTxs;
-    AngularHelper.$safeApply($scope);
-  };
 
   $scope.exportHistory = () => $uibModal.open({
     templateUrl: 'partials/export-history.pug',
@@ -69,15 +68,12 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
         return isNaN(idx) ? 'imported' : idx.toString();
       },
       accts: () => ({
-        accounts: Wallet.accounts().filter(a => !a.archived && a.index !== null),
-        addresses: Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address)
+        accounts: $scope.activeWallets,
+        addresses: $scope.imported.addresses
       }),
-      coinCode: () => 'btc'
+      coinCode: () => 'bch'
     }
   });
-
-  let unsub = txList.subscribe(setTxs);
-  $scope.$on('$destroy', unsub);
 
   // Searching and filtering
   if ($scope.$root.size.sm || $scope.$root.size.xs) {
@@ -112,6 +108,17 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
       .join(', ').toLowerCase().search(search.toLowerCase()) > -1;
   };
 
+  $scope.hideWelcome = () => localStorageService.get('hideBitcoinCashWelcome');
+  $scope.dismissWelcome = () => localStorageService.set('hideBitcoinCashWelcome', true);
+
+  $scope.onClickCta = () => {
+    if (ShapeShift.userHasAccess && (Wallet.total('') > 0 + Wallet.total('imported') || Ethereum.balance > 0)) {
+      $state.go('wallet.common.shift');
+    } else {
+      modals.openRequest(null, { code: 'bch' });
+    }
+  };
+
   $scope.filterByType = tx => {
     switch ($scope.filterBy.type) {
       case $scope.filterTypes[0]:
@@ -125,13 +132,6 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
     }
     return false;
   };
-
-  $scope.filterByAddress = (addr) => (
-    txList.transactions('imported').filter(tx =>
-      tx.processedOutputs.concat(tx.processedInputs)
-        .some(p => addr.address === p.address)
-    )
-  );
 
   $scope.$watch('filterBy.account', setTxs);
 }

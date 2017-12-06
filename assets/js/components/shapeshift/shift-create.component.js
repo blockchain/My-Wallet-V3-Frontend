@@ -30,6 +30,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.origins = this.wallet ? [this.wallet] : this.wallets;
   this.destinations = this.wallets;
 
+  this.coinGroup = (c) => currency.cryptoCurrencyMap[c.coinCode].human;
+
   $scope.forms = $scope.state = {};
   $scope.dollars = Wallet.settings.currency;
   $scope.symbol = currency.conversions[$scope.dollars.code].symbol;
@@ -138,8 +140,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.setWallet = (direction, change) => {
     state.rate.min = 0;
     let needsSelection = this.from.coinCode === this.to.coinCode;
-    let selection = needsSelection && this.wallets.filter((w) => w.coinCode !== this[direction].coinCode);
-    needsSelection && (this[change] = selection.length > 1 ? Wallet.getDefaultAccount() : selection[0]);
+    let selections = needsSelection && this.wallets.filter((w) => w.coinCode !== this[direction].coinCode);
+    needsSelection && (this[change] = selections[0]);
   };
 
   $scope.setMin = () => state.input.amount = state.rate.min;

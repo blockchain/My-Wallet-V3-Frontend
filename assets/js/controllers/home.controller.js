@@ -2,15 +2,25 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, Wallet, $uibModal, tradeStatus, localStorageService, Ethereum, currency) {
-  $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-  $scope.getLegacyTotal = () => Wallet.total('imported');
-  $scope.getTotal = () => Wallet.total('');
-  $scope.settings = Wallet.settings;
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals) {
+  $scope.btc = {
+    total: () => Wallet.total(''),
+    accounts: MyWallet.wallet.hdwallet.accounts
+  };
 
   $scope.eth = {
-    total: () => Ethereum.balance,
-    defaultAccount: Ethereum.defaultAccount
+    total: () => Ethereum.balance
+  };
+
+  $scope.bch = {
+    total: () => BitcoinCash.balance,
+    accounts: MyWallet.wallet.bch.accounts
+  };
+
+  $scope.hasBalance = (currencies) => {
+    let total = 0;
+    currencies.forEach((currency) => total += parseFloat($scope[currency].total()));
+    return total > 0;
   };
 
   $scope.isWalletInitialized = () => {
@@ -38,4 +48,12 @@ function HomeCtrl ($scope, Wallet, $uibModal, tradeStatus, localStorageService, 
       return true;
     }
   };
+
+  Env.then((env) => {
+    let accountInfo = MyWallet.wallet.accountInfo;
+    let sfox = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
+    $scope.canBuy = tradeStatus.canTrade() && !sfox;
+  });
+
+  $scope.openRequest = modals.openRequest;
 }

@@ -42,7 +42,7 @@ function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, Sh
     scope.bchCurrency = currency.bchCurrencies[0];
 
     scope.toIndex = () => {
-      let toIndex = scope.tx.to[0].accountIndex;
+      let toIndex = scope.tx.to[0] && scope.tx.to[0].accountIndex;
       if (toIndex >= 0) return toIndex === 0 ? ' ' : toIndex + 1;
       else return false;
     };

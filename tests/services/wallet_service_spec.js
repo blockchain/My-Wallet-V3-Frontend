@@ -90,6 +90,9 @@ describe('walletServices', () => {
         external: {
           sfox: { monitorPayments () {} }
         },
+        bch: {
+          getHistory: () => $q.resolve()
+        },
         loadExternal () { return $q.resolve(); }
       };
 

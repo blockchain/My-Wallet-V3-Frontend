@@ -1,3 +1,7 @@
+.modal-header.flex-row.flex-center.bc-modal-header(data-preflight-tag="Request")
+  i.icon-receive.f-20.pr-15
+  span.f-24(translate="REQUEST_BITCOIN")
+  i.ti-close.close-modal(ng-click="$close()")
 #receive.modal-body
   form.bc-form(role="form" name="requestForm" ng-hide="state.requestCreated || state.viewQR" ng-submit="nextStep()" novalidate)
     fieldset
