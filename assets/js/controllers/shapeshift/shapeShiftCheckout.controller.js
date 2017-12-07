@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ShapeShiftCheckoutController', ShapeShiftCheckoutController);
 
-function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper, MyWallet, Wallet, Ethereum, state, Env) {
+function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper, MyWallet, Wallet, Ethereum, BitcoinCash, state, Env) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
   this.destination = $stateParams.destination || null;
@@ -17,7 +17,7 @@ function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals,
   this.steps = enumify('state-select', 'create', 'confirm', 'receipt');
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => this.step = this.steps[s];
-  this.wallets = Wallet.accounts().concat(Ethereum.defaultAccount).concat(MyWallet.wallet.bch.accounts);
+  this.wallets = Wallet.accounts().filter(a => !a.archived).concat(BitcoinCash.accounts.filter((a) => !a.archived)).concat(Ethereum.defaultAccount);
 
   if (Wallet.accounts().length < 2) {
     this.wallets = this.wallets.map(w => {

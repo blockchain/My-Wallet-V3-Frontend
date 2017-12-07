@@ -14,7 +14,7 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
 
   $scope.bch = {
     total: () => BitcoinCash.balance,
-    accounts: MyWallet.wallet.bch.accounts
+    accounts: BitcoinCash.accounts
   };
 
   $scope.hasBalance = (currencies) => {

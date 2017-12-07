@@ -65,7 +65,7 @@
           translate="MANAGE_ADDRESS_BOOK"
           ng-show="addressBookPresent"
         )
-  div(ng-if="isFilterType('BITCOIN CASH')")
+  div(ng-if="isFilterType('BITCOIN CASH')" ng-controller="SettingsBchAccountsController")
     .row.account-settings(data-preflight-tag="BCHAccounts")
       .col-xs-12
         table.accounts-container.width-100(ng-if="status.isLoggedIn")
@@ -78,7 +78,17 @@
               span.display-inline-block.right-align
                 fiat-or-bch.pointer(bch="bchAccount.balance" ng-click="toggleDisplayCurrency()")
             td.col-md-3.right-align
-              a() Manage
+              span(uib-dropdown)
+                a.blue.pbl(href uib-dropdown-toggle id="manage" translate="Manage")
+                ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="manage")
+                  li
+                    a(translate="EDIT_NAME" ng-click="editAccount(bchAccount)")
+                  li
+                    a(translate="ARCHIVE" ng-click="bchAccount.archived = true" ng-hide="bchAccount.archived || isDefault(bchAccount)")
+                  li
+                    a(translate="UNARCHIVE" ng-click="bchAccount.archived = false" ng-show="bchAccount.archived")
+                  li
+                    a(translate="REVEAL_XPUB" ng-click="revealXpub(bchAccount)" ng-hide="bchAccount.archived")
           tr.responsive.width-100
             td.col-md-3
               span.type-md.em-500.mrm Imported Addresses

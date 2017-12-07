@@ -17,6 +17,9 @@ function BitcoinCash (Wallet, localStorageService) {
     get hasSeen () {
       return localStorageService.get('hasSeenBCH');
     },
+    get accounts () {
+      return this.bch.accounts;
+    },
     setHasSeen () {
       localStorageService.set('hasSeenBCH', true);
     }
