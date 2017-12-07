@@ -387,6 +387,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controllerAs: 'vm'
         }
       },
+      params: {
+        destination: null
+      },
       resolve: {
         _initialize ($injector, $q) {
           let Wallet = $injector.has('Wallet') && $injector.get('Wallet');

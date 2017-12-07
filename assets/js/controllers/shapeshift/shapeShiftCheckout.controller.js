@@ -5,6 +5,7 @@ angular
 function ShapeShiftCheckoutController ($scope, $stateParams, ShapeShift, modals, AngularHelper, MyWallet, Wallet, Ethereum, state, Env) {
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
+  this.destination = $stateParams.destination || null;
   this.tabs = {
     selectedTab: $stateParams.selectedTab || 'EXCHANGE',
     options: ['EXCHANGE', 'ORDER_HISTORY'],

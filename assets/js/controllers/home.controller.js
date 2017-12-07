@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals) {
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state) {
   $scope.btc = {
     total: () => Wallet.total(''),
     accounts: MyWallet.wallet.hdwallet.accounts
@@ -47,6 +47,10 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
     } else {
       return true;
     }
+  };
+
+  $scope.goToShiftWithDestination = (dest) => {
+    $state.go('wallet.common.shift', { destination: dest });
   };
 
   Env.then((env) => {
