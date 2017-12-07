@@ -35,7 +35,7 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
           animation: { duration: 0 },
           dataLabels: { enabled: false },
           events: {
-            click: (evt) => total() > 0 && $state.go('wallet.common.' + evt.point.id)
+            click: (evt) => total() > 0 && $state.go('wallet.common.' + evt.point.id + '.transactions')
           }
         },
         line: {
