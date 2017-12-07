@@ -6,6 +6,7 @@ angular
       asset: '<',
       wallet: '<',
       wallets: '<',
+      destination: '<',
       onComplete: '&',
       handleRate: '&',
       handleQuote: '&',
@@ -25,7 +26,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   });
 
   this.from = this.wallet || Wallet.getDefaultAccount();
-  this.to = this.wallet ? Wallet.getDefaultAccount() : Ethereum.defaultAccount;
+
+  this.to = null;
+  if (this.destination) this.to = this.wallets.filter(w => w.coinCode === this.destination)[0];
+  else if (this.wallet) this.to = Wallet.getDefaultAccount();
+  else this.to = Ethereum.defaultAccount;
 
   this.origins = this.wallet ? [this.wallet] : this.wallets;
   this.destinations = this.wallets;

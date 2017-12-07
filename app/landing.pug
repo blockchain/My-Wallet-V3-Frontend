@@ -1,5 +1,7 @@
 #landing-page(scroller pos-y="posY" elem-id="landing-page")
   public-header(i18n-loaded='i18nLoaded' pos-y="posY")
+  .testnet-banner.f-16.center.bg-red.pv-5.width-100(ng-show="network === 'testnet'")
+    span.white WARNING! This is the testnet3 blockchain. Your coins have no value here.
   .banner(data-preflight-tag="LandingPage")
     .flex-column.height-100.flex-center.flex-justify.container
       div.width-100

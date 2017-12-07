@@ -1,5 +1,7 @@
 .login-pg(ng-class="{'display-block': isUIOverflow}")
   include ./bc-logo-header
+  .testnet-banner.f-16.center.bg-red.pv-5.width-100(ng-show="network === 'testnet'")
+    span.white WARNING! This is the testnet3 blockchain. Your coins have no value here.
   .overflow-scroll.flex-justify.flex-center
     .flex-center.flex-justify.flex-column
       .flex.flex-justify
