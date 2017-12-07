@@ -7,23 +7,23 @@ blocket-loading(loading="!isWalletInitialized()")
           h5.mtn.mbn.f-24.em-300.blue.f-16-mobile(translate="YOUR_BALANCES")
         chart(ng-if="options" options="options" id="balance-chart")
         .flex-row.flex-around.flex-column.mobile.mt-15.f-14.em-300
-          .flex-column.width-20.border-top-blue
+          .flex-column.width-25.border-top-blue
             span Bitcoin
-            fiat.em-200(btc="btc.total()")
+            fiat-or-btc.em-200.pointer(btc="btc.total()" ng-click="toggleDisplayCurrency()")
             span.f-10(ng-if="btc.total() === 0")
               a.f-10(ng-if="canBuy"  translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell")
               a.f-10(ng-if="!canBuy && hasBalance(['eth', 'bch'])" translate="GET_STARTED" ng-click="goToShiftWithDestination('btc')")
               a.f-10(ng-if="!canBuy && !hasBalance(['eth', 'bch'])" translate="REQUEST_BITCOIN" ng-click="openRequest(null, { code: 'btc' })")
             a.f-10(ng-if="btc.total() !== 0 && btc.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
-          .flex-column.width-20.border-top-primary
+          .flex-column.width-25.border-top-primary
             span Ether
-            fiat.em-200(eth="eth.total()")
+            fiat-or-eth.em-200.pointer(eth="eth.total()" ng-click="toggleDisplayCurrency()")
             span.f-10(ng-if="eth.total() == 0")
               a.f-10(ng-if="hasBalance(['btc', 'bch'])" translate="GET_STARTED" ng-click="goToShiftWithDestination('eth')")
               a.f-10(ng-if="!hasBalance(['btc', 'bch'])" translate="REQUEST_ETHER" ng-click="openRequest(null, { code: 'eth' })")
-          .flex-column.width-20.border-top-light-blue
+          .flex-column.width-25.border-top-light-blue
             span Bitcoin Cash
-            fiat.em-200(bch="bch.total()")
+            fiat-or-bch.em-200.pointer(bch="bch.total()" ng-click="toggleDisplayCurrency()")
             span.f-10(ng-if="bch.total() === 0")
               a.f-10(ng-if="hasBalance(['btc', 'eth'])" translate="GET_STARTED" ng-click="goToShiftWithDestination('bch')")
               a.f-10(ng-if="!hasBalance(['btc', 'eth'])" translate="REQUEST_BITCOIN_CASH" ng-click="openRequest(null, { code: 'bch' })")

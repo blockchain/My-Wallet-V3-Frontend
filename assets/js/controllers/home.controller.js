@@ -53,6 +53,8 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
     $state.go('wallet.common.shift', { destination: dest });
   };
 
+  $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
+
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;
     let sfox = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
