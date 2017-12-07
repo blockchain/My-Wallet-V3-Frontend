@@ -62,7 +62,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
                    parseFloat((Math.floor(currency.convertFromEther(eth, curr) * 100) / 100).toFixed(2)) +
                    parseFloat((Math.floor(currency.convertFromBitcoinCash(bch, curr) * 100) / 100).toFixed(2));
 
-        scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
+        scope.fiat.amount = currency.commaSeparate(fiat.toFixed(2));
       }
     };
 
