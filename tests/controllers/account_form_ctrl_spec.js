@@ -43,6 +43,10 @@ describe('AccountFormCtrl', () => {
             }
           };
         },
+        
+        bch: {
+          fetch () {}
+        },
 
         txList: {
           fetchTxs () {}

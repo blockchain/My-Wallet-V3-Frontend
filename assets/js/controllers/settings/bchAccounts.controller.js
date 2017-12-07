@@ -14,10 +14,10 @@ function SettingsBchAccountsController ($scope, $stateParams, Wallet, Alerts, $u
       resolve: {
         account: () => account
       },
-      controller: ($scope, account, $uibModalInstance) => {
+      controller: ($scope, account, $uibModalInstance, BitcoinCash) => {
         $scope.name = account.label;
         $scope.status = { edit: true };
-        $scope.isNameUnused = (name) => $scope.bchAccounts().every(a => a.label !== name);
+        $scope.isNameUnused = (name) => BitcoinCash.accounts.every(a => a.label !== name);
 
         $scope.submit = () => {
           $scope.status.busy = true;
@@ -37,10 +37,5 @@ function SettingsBchAccountsController ($scope, $stateParams, Wallet, Alerts, $u
       },
       windowClass: 'bc-modal'
     });
-  };
-
-  $scope.makeDefault = (account) => {
-    Wallet.setDefaultAccount(account);
-    Wallet.saveActivity(3);
   };
 }
