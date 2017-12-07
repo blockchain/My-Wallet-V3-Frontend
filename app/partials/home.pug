@@ -54,7 +54,7 @@ blocket-loading(loading="!isWalletInitialized()")
             fiat(eth="1")
           span.highlight.pointer(ng-click="setCurrency('bch')" ng-class="{'active': isCurrency('bch')}")
             span BCH =&nbsp;
-            fiat(bch="1")
+            fiat(bch="1e8")
     .section.mt-15(ng-show="showMobileConversion()")
       web-to-mobile-conversion()
     .section.mt-15(ng-hide="showMobileConversion()")
