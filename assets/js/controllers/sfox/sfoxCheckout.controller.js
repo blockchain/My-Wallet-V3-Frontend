@@ -12,8 +12,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
 
-  $scope.trades = exchange.trades;
-
   $scope.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
@@ -71,12 +69,12 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.state = {
     account: accounts[0],
-    trades: exchange.trades,
+    trades: exchange.trades.filter((t) => t.txHash !== null),
     buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
   $scope.setState = () => {
-    $scope.state.trades = exchange.trades;
+    $scope.state.trades = exchange.trades.filter((t) => t.txHash !== null);
     $scope.state.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   };
 
