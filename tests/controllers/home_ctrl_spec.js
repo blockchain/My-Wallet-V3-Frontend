@@ -26,7 +26,7 @@ describe('HomeCtrl', () => {
           balance: 1
         },
         bch: {
-          balance: 1e8,
+          balance: 1,
           accounts: [
             { label: "Checking", index: 0, archived: false, balance: 0 }
           ]
