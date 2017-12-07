@@ -35,6 +35,7 @@ function fiat ($rootScope, $q, Wallet, currency) {
     scope.ethConversions = currency.ethConversions;
     scope.bchConversions = currency.bchConversions;
 
+
     scope.updateFiat = () => {
       scope.fiat = { currencySymbol: null, amount: null };
 

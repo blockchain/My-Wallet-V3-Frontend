@@ -9,7 +9,7 @@ function BitcoinCash (Wallet, localStorageService) {
       return Wallet.my.wallet.bch;
     },
     get balance () {
-      return this.bch.balance / 1e8;
+      return this.bch.balance;
     },
     get txs () {
       return this.bch.txs;

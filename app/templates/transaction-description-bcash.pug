@@ -46,5 +46,5 @@
         helper-button(content="{{ 'TX_FEE_EXPLAINATION_ETH' | translate }}" append="true")
         p.mbn(translate="TX_FEE")
         | &nbsp;
-        fiat.em-600(bch="fromSatoshi(tx.fee, bchCurrency)" ng-hide="isBitCurrency(settings.displayCurrency)")
+        fiat.em-600(bch="tx.fee" ng-hide="isBitCurrency(settings.displayCurrency)")
         span.em-600(ng-show="isBitCurrency(settings.displayCurrency)") {{ tx.fee | convert:'bch':true }}

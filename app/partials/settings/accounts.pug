@@ -76,18 +76,14 @@
               span.label.label-default.btn-xs.mrm(translate="ARCHIVED" ng-show="bchAccount.archived")
             td.col-md-3.center
               span.display-inline-block.right-align
-                span {{ bchAccount.balance | convert:'bch':true }}
+                fiat-or-bch.pointer(bch="bchAccount.balance" ng-click="toggleDisplayCurrency()")
             td.col-md-3.right-align
-              span.display-inline-block.right-align(ng-show="!bchAccount.archived && bchAccount.balance != null")
-                fiat.pointer(bch="bchAccount.balance / 1e8")
+              a() Manage
           tr.responsive.width-100
             td.col-md-3
               span.type-md.em-500.mrm Imported Addresses
               span.label.label-primary.btn-xs(translate="ALL_ADDRESSES")
             td.col-md-3.center
               span.display-inline-block.right-align
-                span {{ importedBch.balance | convert:'bch':true }}
-            td.col-md-3.right-align
-              span.display-inline-block.right-align
-                fiat.pointer(bch="importedBch.balance / 1e8")
+                fiat-or-bch.pointer(bch="importedBch.balance" ng-click="toggleDisplayCurrency()")
             

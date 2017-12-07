@@ -28,7 +28,7 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, BitcoinC
     },
     bch: {
       code: 'bch',
-      total: () => BitcoinCash.balance * 1e8
+      total: () => BitcoinCash.balance
     }
   };
 }
