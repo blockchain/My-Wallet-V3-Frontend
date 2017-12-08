@@ -20,6 +20,7 @@ angular
 
 function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, tradeStatus, MyWallet) {
   let UPPER_LIMIT;
+  let nAssets = Object.keys(currency.cryptoCurrencyMap).length;
   Env.then(env => {
     UPPER_LIMIT = env.shapeshift.upperLimit || 500;
     getRate().then(() => $scope.getAvailableBalance());
@@ -35,6 +36,7 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   this.origins = this.wallet ? [this.wallet] : this.wallets;
   this.destinations = this.wallets;
 
+  this.isGrouped = nAssets !== this.wallets.length;
   this.coinGroup = (c) => currency.cryptoCurrencyMap[c.coinCode].human;
 
   $scope.forms = $scope.state = {};

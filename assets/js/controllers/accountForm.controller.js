@@ -19,7 +19,7 @@ function AccountFormCtrl (AngularHelper, $scope, $q, $uibModalInstance, $timeout
     }
 
     let done = () => {
-      BitcoinCash.bch.fetch();
+      BitcoinCash.bch.fetch && BitcoinCash.bch.fetch();
       $scope.status.busy = false;
       $scope.$root.scheduleRefresh();
       AngularHelper.$safeApply();
