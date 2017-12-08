@@ -1079,7 +1079,7 @@
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
-    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 {{::time}}."
+    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 days."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
