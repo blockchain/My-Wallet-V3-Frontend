@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('faq', faq);
 
-function faq (MyWallet, Env, Ethereum, tradeStatus, modals) {
+function faq (MyWallet, Env, Ethereum, tradeStatus, ShapeShift, modals) {
   return Env.then((env) => {
     return tradeStatus.canTrade().then((canTrade) => {
       let questions = [
@@ -37,6 +37,14 @@ function faq (MyWallet, Env, Ethereum, tradeStatus, modals) {
           questions.unshift(
             { name: 'HOW_DO_I_BUY_OR_SELL',
               values: {'link': 'wallet.common.buy-sell', 'text': 'HERE'}
+            }
+          );
+        }
+        if (ShapeShift.userHasAccess) {
+          questions.unshift(
+            {
+              name: 'HOW_DO_I_BUY_OR_SELL_UNSUPPORTED_CURRS',
+              values: {'link': 'wallet.common.shift', 'text': 'Exchange tab'}
             }
           );
         }
