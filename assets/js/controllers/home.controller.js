@@ -4,16 +4,16 @@ angular
 
 function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state) {
   $scope.btc = {
-    total: () => Wallet.total(''),
+    total: () => Wallet.total('') || 0,
     accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
   };
 
   $scope.eth = {
-    total: () => Ethereum.balance
+    total: () => Ethereum.balance || 0
   };
 
   $scope.bch = {
-    total: () => BitcoinCash.balance,
+    total: () => BitcoinCash.balance || 0,
     accounts: BitcoinCash.accounts
   };
 
