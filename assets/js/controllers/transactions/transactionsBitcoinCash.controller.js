@@ -23,7 +23,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   $scope.toggleFilter = () => $scope.isFilterOpen = !$scope.isFilterOpen;
 
   let all = { label: $translate.instant('BITCOIN_CASH.ALL_WALLETS'), index: '', type: 'Accounts' };
-  $scope.activeWallets = MyWallet.wallet.bch.accounts.filter(a => !a.archived);
+  $scope.activeWallets = BitcoinCash.accounts.filter(a => !a.archived);
   $scope.imported = MyWallet.wallet.bch.importedAddresses;
   $scope.accounts = $scope.imported ? $scope.activeWallets.concat([$scope.imported]) : $scope.activeWallets;
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);

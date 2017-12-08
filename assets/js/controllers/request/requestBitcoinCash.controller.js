@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('RequestBitcoinCashController', RequestBitcoinCashController);
 
-function RequestBitcoinCashController ($scope, MyWallet, AngularHelper, browser, Env) {
+function RequestBitcoinCashController ($scope, MyWallet, AngularHelper, BitcoinCash, browser, Env) {
   Env.then(env => {
     $scope.rootURL = env.rootURL;
     $scope.isProduction = env.isProduction;
@@ -14,7 +14,7 @@ function RequestBitcoinCashController ($scope, MyWallet, AngularHelper, browser,
     address: ''
   };
 
-  $scope.destinations = MyWallet.wallet.bch.accounts;
+  $scope.destinations = BitcoinCash.accounts;
   $scope.state.to = MyWallet.wallet.bch.defaultAccount;
   $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
 

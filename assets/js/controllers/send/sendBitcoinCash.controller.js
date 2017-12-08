@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SendBitcoinCashController', SendBitcoinCashController);
 
-function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format) {
+function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format, BitcoinCash) {
   let feePerByte;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
@@ -17,7 +17,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   $scope.forms = {};
   $scope.originsLoaded = true;
-  $scope.accounts = MyWallet.wallet.bch.accounts;
+  $scope.accounts = BitcoinCash.accounts.filter((a) => !a.archived);
   $scope.origins = $scope.accounts.concat(MyWallet.wallet.bch.importedAddresses);
   $scope.transaction.from = MyWallet.wallet.bch.defaultAccount;
 
@@ -28,7 +28,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.isValidAddress = Wallet.isValidAddress;
 
   $scope.onAddressScan = (result) => {
-    let address = Wallet.parsePaymentRequest(result);
+    let address = Wallet.parsePaymentRequest(result, 'bch');
     if (Wallet.isValidAddress(address.address)) {
       $scope.transaction.destination = format.destination(address, 'External')['address'];
     } else {
@@ -45,11 +45,11 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   };
 
   const transactionFailed = (error) => {
-    Alerts.displayError(error.error || error.message);
+    Alerts.displayError(error || error.error || error.message);
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
-    let numAccts = MyWallet.wallet.bch.accounts.filter(a => !a.archived).length;
+    let numAccts = BitcoinCash.accounts.filter(a => !a.archived).length;
     let numAddrs = MyWallet.wallet.bch.importedAddresses ? MyWallet.wallet.bch.importedAddresses.addresses.length : 0;
     return numAccts + numAddrs;
   };
@@ -60,7 +60,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     let payment = $scope.transaction.from.createPayment();
 
     if (isNaN(tx.destination.index)) addr = tx.destination.address;
-    else addr = MyWallet.wallet.bch.accounts[tx.destination.index].receiveAddress;
+    else addr = BitcoinCash.accounts[tx.destination.index].receiveAddress;
 
     $scope.lock();
 

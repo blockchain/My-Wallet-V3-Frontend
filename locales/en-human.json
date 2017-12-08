@@ -35,6 +35,10 @@
       "Q": "How do I buy or sell bitcoin?",
       "A": "We partner with exchanges across the world to make buying and selling bitcoin easier for you. You can get started now by creating an account with our partner. Once your account has been verified, you can begin buying or selling bitcoin with a credit card or bank transfer <a>{{::text | translate}}</a>."
     },
+    "HOW_DO_I_BUY_OR_SELL_UNSUPPORTED_CURRS": {
+      "Q": "How do I buy ether or Bitcoin Cash?",
+      "A": "We’re working on that! In the meantime, you can exchange bitcoin for ether or Bitcoin Cash in the <a>{{ ::text }}</a> of your wallet."
+    },
     "CAN_I_BUY_UNINVITED": {
       "Q": "How do I buy bitcoin, ether, or Bitcoin Cash?",
       "A": "We’re working on that! In the meantime, you can exchange between bitcoin, ether, and Bitcoin Cash in the <a>{{ ::text }}</a> of your wallet."
@@ -593,6 +597,7 @@
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
   "TRY_AGAIN": "Try Again",
   "DESCRIBE_TRANSACTIONS" : " Transactions occur when you receive and send bitcoin.",
+  "DESCRIBE_TRANSACTIONS_BCH" : " Transactions occur when you receive and send Bitcoin Cash.",
   "DESCRIBE_TRANSACTIONS_ETH" : "Transactions occur when you receive and send ether",
   "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. Your transactions won't be visible in your mobile wallet.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
@@ -1973,6 +1978,8 @@
   "VIEW_DETAILS": "View Details",
   "GENERAL": "General",
   "BITCOIN_CASH": {
+    "TITLE": "Bitcoin Cash",
+    "WHATS_NEW": "You can now send, receive, exchange, and manage addresses with Bitcoin Cash!",
     "SEND": "Send Bitcoin Cash",
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "GET_STARTED": "Get Started With Bitcoin Cash",

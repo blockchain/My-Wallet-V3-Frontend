@@ -2,19 +2,19 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals) {
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state) {
   $scope.btc = {
-    total: () => Wallet.total(''),
-    accounts: MyWallet.wallet.hdwallet.accounts
+    total: () => Wallet.total('') || 0,
+    accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
   };
 
   $scope.eth = {
-    total: () => Ethereum.balance
+    total: () => Ethereum.balance || 0
   };
 
   $scope.bch = {
-    total: () => BitcoinCash.balance,
-    accounts: MyWallet.wallet.bch.accounts
+    total: () => BitcoinCash.balance || 0,
+    accounts: BitcoinCash.accounts
   };
 
   $scope.hasBalance = (currencies) => {
@@ -48,6 +48,12 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
       return true;
     }
   };
+
+  $scope.goToShiftWithDestination = (dest) => {
+    $state.go('wallet.common.shift', { destination: dest });
+  };
+
+  $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
 
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;

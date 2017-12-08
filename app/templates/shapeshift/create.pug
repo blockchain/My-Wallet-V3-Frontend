@@ -19,7 +19,7 @@ form.bc-form.shift-create(
             ui-select-match
               i.pr-5(ng-class="cryptoCurrencyMap[$ctrl.from.coinCode].icon")
               span {{ $ctrl.from.altLabel || $ctrl.from.label }}
-            ui-select-choices(repeat="account in $ctrl.origins" group-by="$ctrl.coinGroup")
+            ui-select-choices(repeat="account in $ctrl.origins" group-by="$ctrl.isGrouped && $ctrl.coinGroup" ng-class="{'is-grouped': $ctrl.isGrouped}")
               i.pr-5(ng-class="cryptoCurrencyMap[account.coinCode].icon")
               span(ng-bind-html="account.label | highlight: $select.search") {{ account.altLabel || account.label }}
         .flex-center.flex-justify.pt-30
@@ -33,7 +33,7 @@ form.bc-form.shift-create(
               ui-select-match
                 i.pr-5(ng-class="cryptoCurrencyMap[$ctrl.to.coinCode].icon")
                 span {{ $ctrl.to.altLabel || $ctrl.to.label }}
-              ui-select-choices(repeat="destination in $ctrl.destinations" group-by="$ctrl.coinGroup")
+              ui-select-choices(repeat="destination in $ctrl.destinations" group-by="$ctrl.isGrouped && $ctrl.coinGroup" ng-class="{'is-grouped': $ctrl.isGrouped}")
                 i.pr-5(ng-class="cryptoCurrencyMap[destination.coinCode].icon")
                 span(ng-bind-html="destination.label | highlight: $select.search") {{ destination.altLabel || destination.label }}
       fieldset(ng-disabled="maxAvailable < state.rate.min")

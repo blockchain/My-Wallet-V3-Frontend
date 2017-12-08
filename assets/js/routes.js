@@ -296,14 +296,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'SettingsCtrl',
           templateUrl: 'partials/settings/settings.pug'
         }
-      },
-      resolve: {
-        _loadBCH ($q, $injector) {
-          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
-          return MyWallet && MyWallet.wallet.bch
-            ? MyWallet.wallet.bch.getHistory()
-            : $q.resolve();
-        }
       }
     })
     .state('wallet.common.faq', {
@@ -386,6 +378,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'ShapeShiftCheckoutController',
           controllerAs: 'vm'
         }
+      },
+      params: {
+        destination: null
       },
       resolve: {
         _initialize ($injector, $q) {

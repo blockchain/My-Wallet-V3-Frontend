@@ -1,4 +1,4 @@
-describe('HomeCtrl', () => {
+fdescribe('HomeCtrl', () => {
   let scope;
 
   let Wallet;
@@ -26,7 +26,7 @@ describe('HomeCtrl', () => {
           balance: 1
         },
         bch: {
-          balance: 1e8,
+          balance: 1,
           accounts: [
             { label: "Checking", index: 0, archived: false, balance: 0 }
           ]
@@ -52,15 +52,15 @@ describe('HomeCtrl', () => {
       );
     });
   });
-  
+
   describe('totals', () => {
     it('should return total balance of currency', () => {
       expect(scope.btc.total()).toBe(1)
-      expect(scope.eth.total()).toBe(null)
+      expect(scope.eth.total()).toBe(0)
       expect(scope.bch.total()).toBe(1)
     });
   });
-  
+
   describe('isWalletInitialized()', () => {
     it('should return a boolean', () => {
       Wallet.status.isLoggedIn = true;

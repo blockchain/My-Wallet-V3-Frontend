@@ -278,7 +278,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
     if (isBchCurrency(currency)) {
       return amount / currency.conversion;
     } else if (bchConversions[currency.code] != null) {
-      return amount * bchConversions[currency.code].last;
+      return service.convertFromSatoshi(amount, service.bchCurrencies[0]) * bchConversions[currency.code].last;
     } else {
       return null;
     }

@@ -9,13 +9,16 @@ function BitcoinCash (Wallet, localStorageService) {
       return Wallet.my.wallet.bch;
     },
     get balance () {
-      return this.bch.balance / 1e8;
+      return this.bch && this.bch.balance;
     },
     get txs () {
-      return this.bch.txs;
+      return this.bch && this.bch.txs;
     },
     get hasSeen () {
       return localStorageService.get('hasSeenBCH');
+    },
+    get accounts () {
+      return this.bch && this.bch.accounts;
     },
     setHasSeen () {
       localStorageService.set('hasSeenBCH', true);
