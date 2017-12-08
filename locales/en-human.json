@@ -1973,6 +1973,8 @@
   "VIEW_DETAILS": "View Details",
   "GENERAL": "General",
   "BITCOIN_CASH": {
+    "TITLE": "Bitcoin Cash",
+    "WHATS_NEW": "You can now send, receive, exchange, and manage addresses with Bitcoin Cash!",
     "SEND": "Send Bitcoin Cash",
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "GET_STARTED": "Get Started With Bitcoin Cash",
