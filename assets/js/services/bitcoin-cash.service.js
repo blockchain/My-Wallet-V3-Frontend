@@ -1,0 +1,29 @@
+angular
+  .module('walletApp')
+  .factory('BitcoinCash', BitcoinCash);
+
+function BitcoinCash (Wallet, localStorageService) {
+  const service = {
+    lastTxHash: null,
+    get bch () {
+      return Wallet.my.wallet.bch;
+    },
+    get balance () {
+      return this.bch && this.bch.balance;
+    },
+    get txs () {
+      return this.bch && this.bch.txs;
+    },
+    get hasSeen () {
+      return localStorageService.get('hasSeenBCH');
+    },
+    get accounts () {
+      return this.bch && this.bch.accounts;
+    },
+    setHasSeen () {
+      localStorageService.set('hasSeenBCH', true);
+    }
+  };
+
+  return service;
+}

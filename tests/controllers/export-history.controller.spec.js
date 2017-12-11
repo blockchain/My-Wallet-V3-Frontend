@@ -51,7 +51,9 @@ describe('ExportHistoryController2', () => {
 
         return $controller('ExportHistoryController', {
             $scope: $rootScope.$new(),
-            activeIndex: activeIndex
+            activeIndex: activeIndex,
+            accts: { accounts: Wallet.accounts().filter((w) => !w.archived), addresses: Wallet.legacyAddresses().filter((w) => !w.archived) },
+            coinCode: 'btc'
         });
     };
 
@@ -76,12 +78,12 @@ describe('ExportHistoryController2', () => {
 
         it('should set all when "" ', () => {
             let controller = createController('');
-            expect(controller.active.address).toEqual(['xpub1', 'xpub2', 'some_address', 'watch_address']);
+            expect(controller.active.address).toEqual(['xpub1', 'xpub2', { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }, { address: 'watch_address', archived: false, isWatchOnly: true }]);
         });
 
         it('should set all addresses when "imported" ', () => {
             let controller = createController('imported');
-            expect(controller.active.address).toEqual(['some_address', 'watch_address']);
+            expect(controller.active.address).toEqual([{ address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }, { address: 'watch_address', archived: false, isWatchOnly: true }]);
         });
 
         it('should set the right account ', () => {
@@ -122,7 +124,7 @@ describe('ExportHistoryController2', () => {
             spyOn(ExportHistory, 'fetch').and.callThrough();
             let controller = createController('');
             controller.submit();
-            expect(ExportHistory.fetch).toHaveBeenCalledWith('18/04/2017', '25/04/2017', ['xpub1', 'xpub2', 'some_address', 'watch_address']);
+            expect(ExportHistory.fetch).toHaveBeenCalledWith('18/04/2017', '25/04/2017', ['xpub1', 'xpub2', { address: 'some_address', archived: false, isWatchOnly: false, label: 'some_label' }, { address: 'watch_address', archived: false, isWatchOnly: true }], 'btc');
             // expect(ExportHistory.fetch).toHaveBeenCalledTimes(1);
         });
 

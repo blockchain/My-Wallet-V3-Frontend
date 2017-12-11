@@ -5,11 +5,19 @@ describe('PriceChartController', () => {
   let $templateCache;
   let scope;
   let Wallet;
+  let $q;
+  
+  let chartData = [
+    {price: 11.916552130375024, volume: 7478080, timestamp: 1473724800},
+    {price: 11.943451796583545, volume: 11704300, timestamp: 1473811200},
+    {price: 11.926920062695926, volume: 5694820, timestamp: 1473897600},
+    {price: 11.917600786627334, volume: 7309090, timestamp: 1473984000}
+  ];
 
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() =>
-    angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$compile_, _$templateCache_, $httpBackend) {
+    angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$compile_, _$q_, _$templateCache_, $httpBackend) {
       // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();
 
@@ -17,22 +25,19 @@ describe('PriceChartController', () => {
       $controller = _$controller_;
       $compile = _$compile_;
       $templateCache = _$templateCache_;
+      $q = _$q_;
 
       Wallet = $injector.get('Wallet');
+      MyBlockchainApi = $injector.get('MyBlockchainApi');
 
       Wallet.settings = {
         currency: { code: 'USD' }
       }
+      
+      MyBlockchainApi.getPriceChartData = () => $q.resolve(chartData);
 
       let currency = $injector.get('currency');
       return currency.conversions['USD'] = { conversion: 2 }; }));
-
-  let chartData = [
-    {price: 11.916552130375024, volume: 7478080, timestamp: 1473724800},
-    {price: 11.943451796583545, volume: 11704300, timestamp: 1473811200},
-    {price: 11.926920062695926, volume: 5694820, timestamp: 1473897600},
-    {price: 11.917600786627334, volume: 7309090, timestamp: 1473984000}
-  ];
 
   let getControllerScope = function () {
     scope = $rootScope.$new();
@@ -117,24 +122,14 @@ describe('PriceChartController', () => {
     it('should extract the price data', () => {
       scope = getControllerScope();
       scope.handleChart(chartData);
-      expect(scope.options.data[0]).toBe(parseFloat(chartData[0].price));
-    });
-
-    it('should get UTC dates', () => {
-      scope = getControllerScope();
-      scope.handleChart(chartData);
-      let d = new Date(chartData[0].timestamp * 1000);
-      expect(scope.options.year).toBe(d.getFullYear());
-      expect(scope.options.month).toBe(d.getMonth());
-      expect(scope.options.day).toBe(d.getDate());
-      expect(scope.options.hour).toBe(d.getHours());
+      expect(scope.options.series[0].data[0]).toBe(parseFloat(chartData[0].price));
     });
 
     it('should set the interval', () => {
       scope = getControllerScope();
       scope.state.time = '1day';
       scope.handleChart(chartData);
-      expect(scope.options.interval).toBe((3600 * 1000) / 4);
+      expect(scope.options.series[0].pointInterval).toBe((3600 * 1000) / 4);
     });
   });
 });

@@ -1,6 +1,6 @@
 {
   "name": "angular-blockchain-wallet",
-  "version": "1.28.5",
+  "version": "1.29.2",
   "description": "AngularJS front-end to My-Wallet-V3.",
   "dependencies": {
     "@uirouter/angularjs": "^1.0.3",
@@ -22,7 +22,7 @@
     "browserify-istanbul": "^2.0.0",
     "compression": "^1.6.2",
     "css-loader": "~0.26.1",
-    "ejs": "~0.8.4",
+    "ejs": "^2.5.7",
     "eslint": "^3.19.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-angular": "^2.3.0",

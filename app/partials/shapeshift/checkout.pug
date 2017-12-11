@@ -10,7 +10,7 @@
         shift-state-select(next-step="vm.goTo('create')" states="vm.states")
       .flex-row(ng-if="vm.onStep('create')")
         div.width-60.border-desktop.pv-20.mr-25.no-margin-mobile.no-padding-mobile(ng-controller="ShapeShiftCreateController")
-          shift-create(on-complete="onComplete(payment, fee, quote, destination)" build-payment="buildPayment(quote, fee, from)" handle-approximate-quote="approximateQuoteHandler(from, to, amount)" handle-quote="quoteHandler(from, to, amount)" handle-rate="rateHandler(rate)" fees="{'btc': 'priority'}" wallets="vm.wallets")
+          shift-create(on-complete="onComplete(payment, fee, quote, destination)" build-payment="buildPayment(quote, fee, from)" handle-approximate-quote="approximateQuoteHandler(from, to, amount)" handle-quote="quoteHandler(from, to, amount)" handle-rate="rateHandler(rate)" fees="{'btc': 'priority', 'bch': 2}" wallets="vm.wallets" destination="vm.destination")
         div.width-40.ml-25.hidden-sm.hidden-xs
           p.blue.f-18.em-600(translate="SIMPLE_SEAMLESS_SECURE")
           p.f-13.em-300(translate="{{ vm.trades().length ? 'SHIFT.EXCHANGE_NOTICE' : 'SHIFT.WELCOME_INFO' }}")

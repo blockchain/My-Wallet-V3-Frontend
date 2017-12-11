@@ -14,6 +14,9 @@ describe('SettingsAccountsController', () => {
         addressBook: {},
         accountInfo: {
           countryCodeGuess: 'US'
+        },
+        bch: {
+          accounts: []
         }
       };
 

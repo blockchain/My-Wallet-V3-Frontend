@@ -12,8 +12,12 @@ describe('Activity', () => {
 
     MyWallet.wallet.txList = {
       subscribe: () => () => {},
-      transactions: () => [{ amount: 1, time: 25, txType: 'received' }]
+      transactions: () => [{ amount: 1, time: 25, txType: 'received', coinCode: 'btc' }]
     };
+    
+    MyWallet.wallet.bch = {
+      txs: [{ amount: 1, txType: 'received', coinCode: 'bch'}]
+    }
 
     Activity = $injector.get('Activity');
     coinify = $injector.get('coinify');
@@ -23,10 +27,12 @@ describe('Activity', () => {
     it('should update all activities', inject(function (Activity) {
       spyOn(Activity, 'updateBtcTxActivities').and.callThrough();
       spyOn(Activity, 'updateEthTxActivities').and.callThrough();
+      spyOn(Activity, 'updateBchTxActivities').and.callThrough();
       spyOn(Activity, 'updateLogActivities').and.callThrough();
       Activity.updateAllActivities();
       expect(Activity.updateBtcTxActivities).toHaveBeenCalled();
       expect(Activity.updateEthTxActivities).toHaveBeenCalled();
+      expect(Activity.updateBchTxActivities).toHaveBeenCalled();
       expect(Activity.updateLogActivities).toHaveBeenCalled();
     })
     )
@@ -46,7 +52,7 @@ describe('Activity', () => {
 
   describe('factory', () => {
     it('should produce a tx object when type is 0', () => {
-      let tx = Activity.btcTxFactory(MyWallet.wallet.txList.transactions()[0]);
+      let tx = Activity.messageFactory(MyWallet.wallet.txList.transactions()[0]);
       expect(tx).toEqual(jasmine.objectContaining({
         type: 0,
         icon: 'icon-tx',
@@ -59,7 +65,7 @@ describe('Activity', () => {
 
     it('should have the bought label for buy txs', () => {
       spyOn(coinify, 'getTxMethod').and.returnValue('buy');
-      let tx = Activity.btcTxFactory(MyWallet.wallet.txList.transactions()[0]);
+      let tx = Activity.messageFactory(MyWallet.wallet.txList.transactions()[0]);
       expect(tx).toEqual(jasmine.objectContaining({
         type: 0,
         icon: 'icon-tx',

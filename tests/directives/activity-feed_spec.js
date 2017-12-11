@@ -25,6 +25,9 @@ describe('Activity Feed directive', () => {
       txList: {
         subscribe () { return () => {}; }
       },
+      bch: {
+        txs: []
+      },
       eth: {
         defaultAccount: {
           txs: []

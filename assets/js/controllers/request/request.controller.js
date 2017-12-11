@@ -2,10 +2,8 @@ angular
   .module('walletApp')
   .controller('RequestController', RequestController);
 
-function RequestController ($scope, destination, assetContext) {
-  let code = assetContext.isViewingBtc() && 'btc' ||
-             assetContext.isViewingEth() && 'eth' ||
-             'btc';
+function RequestController ($scope, destination, asset, assetContext) {
+  let code = asset && asset.code || assetContext.activeAsset() || 'btc';
 
   this.destination = destination;
   this.asset = assetContext.getAssets().filter(a => a.code === code)[0];
