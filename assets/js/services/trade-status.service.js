@@ -1,14 +1,14 @@
 angular
   .module('walletApp')
-  .factory('buyStatus', buyStatus);
+  .factory('tradeStatus', tradeStatus);
 
-function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localStorageService, Alerts, $state, $q) {
+function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localStorageService, Alerts, $state, $q) {
   const service = {};
 
   let buySellDisabled = null;
-  let isCountryWhitelisted = null;
   let isCoinifyCountry = null;
-  let isSFOXCountry = null;
+  let isSFOXCountryState = null;
+  let isCountryWhitelisted = null;
 
   let sfoxInviteFraction = 0;
 
@@ -17,54 +17,55 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
   let processEnv = (env) => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
-    // Coinify countries are no longer invite-only
-    isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-    isSFOXCountry = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-
     let whitelist = env.showBuySellTab || [];
     isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
+    isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
+    isSFOXCountryState = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
 
     sfoxInviteFraction = (env.partners.sfox && env.partners.sfox.inviteFormFraction) || 0;
 
     buySellDisabled = env.buySell.disabled;
   };
 
-  service.canBuy = () => {
+  service.canTrade = () => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
     let isUserInvited = accountInfo && accountInfo.invited && (accountInfo.invited.unocoin || accountInfo.invited.sfox);
 
     // The user can buy if:
     // * they already have an account; or
     // * their IP is in a country supported by Coinify; or
-    // * their IP is in a country supported by SFOX AND their email is invited; or
+    // * their IP is in a country && state supported by SFOX AND their email is invited; or
     // * their IP is in a whitelisted country and their email is invited
-    let canBuy = () => service.userHasAccount() || isCoinifyCountry || (isUserInvited && isCountryWhitelisted);
+    let canTrade = () => service.userHasAccount() ||
+                         isCoinifyCountry ||
+                         (isUserInvited && isSFOXCountryState) ||
+                         (isUserInvited && isCountryWhitelisted);
 
-    return Env.then(processEnv).then(canBuy);
+    return Env.then(processEnv).then(canTrade);
   };
 
   service.shouldShowInviteForm = () => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
-    return service.canBuy().then((res) => {
+    return service.canTrade().then((res) => {
       if (res) {
         return false; // Don't show invite form for invited users
       } else {
-        if (!isSFOXCountry) { return false; }
+        if (!isSFOXCountryState) { return false; }
         if (!accountInfo.email) { return false; }
         return MyWalletHelpers.isStringHashInFraction(accountInfo.email, sfoxInviteFraction);
       }
     });
   };
 
-  service.buyLink = () => {
-    let buyLink = () => {
+  service.tradeLink = () => {
+    let tradeLink = () => {
       let { external } = MyWallet.wallet;
-      return external && (isCoinifyCountry || external.coinify.user)
-        ? 'BUY_AND_SELL_BITCOIN'
-        : 'BUY_BITCOIN';
+      if (external && (isCoinifyCountry || external.coinify.user)) return 'BUY_AND_SELL_BITCOIN';
+      else if (external && (isSFOXCountryState || external.sfox.user)) return 'SELL_BITCOIN';
+      else return 'BUY_BITCOIN';
     };
-    return Env.then(processEnv).then(buyLink);
+    return Env.then(processEnv).then(tradeLink);
   };
 
   service.shouldShowBuyReminder = () => {
@@ -86,7 +87,7 @@ function buyStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localSto
 
     let nextIndex = buyReminder ? buyReminder.index + 1 : 0;
 
-    Alerts.confirm('BUY_BITCOIN_REMINDER', options({cancel: 'NO_THANKS', action: 'GET_BITCOIN', iconClass: 'hide'}))
+    Alerts.confirm('TRADE_BITCOIN_REMINDER', options({cancel: 'NO_THANKS', action: 'GET_BITCOIN', iconClass: 'hide'}))
           .then(goToBuy, saidNoThanks);
 
     localStorageService.set('buy-bitcoin-reminder', {

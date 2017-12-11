@@ -48,7 +48,8 @@ describe('SfoxLinkController', () => {
           return $q.resolve(bankAccounts).then(account = bankAccounts[0]).then(scope.vm.exchange.getBuyMethods); }
         }
       },
-      goTo(state) {}
+      goTo(state) {},
+      close () { return $q.resolve(); }
     };
 
     $controller("SfoxLinkController",
@@ -90,7 +91,7 @@ describe('SfoxLinkController', () => {
   describe('verify()', function () {
     beforeEach(() =>
       scope.state.accounts = [
-        {verify() { return $q.resolve().then(scope.vm.goTo('buy')).finally(scope.free); }}
+        {verify() { return $q.resolve().then(scope.vm.close()).finally(scope.free); }}
       ]);
 
     it('should call lock', () => {
@@ -99,10 +100,10 @@ describe('SfoxLinkController', () => {
       return expect(scope.lock).toHaveBeenCalled();
     });
 
-    it('should goTo buy', () => {
-      spyOn(scope.vm, 'goTo');
+    it('should close', () => {
+      spyOn(scope.vm, 'close');
       scope.verify();
-      return expect(scope.vm.goTo).toHaveBeenCalled();
+      return expect(scope.vm.close).toHaveBeenCalled();
     });
 
     it('should call free', () => {

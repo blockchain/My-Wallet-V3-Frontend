@@ -19,7 +19,7 @@ function SfoxVerifyController (Env, $q, $scope, state, sfox, modals, QA) {
   $scope.openHelper = modals.openHelper;
 
   $scope.verifyProfile = () => {
-    $q.resolve($scope.exchange.profile.verify())
+    return $q.resolve($scope.exchange.profile.verify())
       .then(() => $scope.goTo('upload'))
       .catch(sfox.displayError)
       .finally($scope.free);

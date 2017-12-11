@@ -19,6 +19,6 @@ div(translate-namespace="BITCOIN_CASH")
       fiat.f-20(bch="vm.fromSatoshi(vm.balance, vm.bchCurr)")
     .flex-row.flex-between.mb-30
       a.f-14(translate=".KEEP" ng-click="vm.dismiss()")
-      a.f-14(translate=".EXCHANGE" ng-click="vm.dismiss(); vm.openExchange()")
+      a.f-14(translate=".EXCHANGE" ng-click="vm.dismiss(); vm.openExchange()" ng-if="vm.showExchange")
       a.f-14(translate=".SEND" ng-click="vm.dismiss(); vm.openSend()")
     

@@ -34,9 +34,9 @@ describe('Trade Directive', () => {
       bitcionReceived: false
     };
 
-    parentScope.buy = function () {};
+    parentScope.inspectTrade = function () {};
 
-    let html = '<trade trade="trade" buy="buy"></trade>';
+    let html = '<trade trade="trade" inspect-trade="inspectTrade"></trade>';
     element = $compile(html)(parentScope);
     parentScope.$digest();
     isoScope = element.isolateScope();
@@ -45,31 +45,5 @@ describe('Trade Directive', () => {
 
   it('should be passed a trade object', () => expect(isoScope.trade).toBeDefined());
 
-  it('should be passed a buy function', () => expect(isoScope.buy).toBeDefined());
-
-  describe('update()', () => {
-    it('should set the error state', () => {
-      isoScope.trade.state = 'cancelled';
-      isoScope.$digest();
-      expect(isoScope.error).toEqual(true);
-    });
-
-    it('should set the success state', () => {
-      isoScope.trade.state = 'completed';
-      isoScope.$digest();
-      expect(isoScope.completed).toEqual(true);
-    });
-
-    it('should set the pending state', () => {
-      isoScope.trade.state = 'awaiting_transfer_in';
-      isoScope.$digest();
-      expect(isoScope.pending).toEqual(true);
-    });
-
-    it('should set the completed state', () => {
-      isoScope.trade.state = 'expired';
-      isoScope.$digest();
-      expect(isoScope.completed).toEqual(true);
-    });
-  });
+  it('should be passed a details function', () => expect(isoScope.inspectTrade).toBeDefined());
 });

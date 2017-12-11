@@ -24,10 +24,10 @@ describe('NavigationCtrl', () => {
       Wallet = $injector.get('Wallet');
       let MyWallet = $injector.get('MyWallet');
       let Alerts = $injector.get('Alerts');
-      let buyStatus = $injector.get('buyStatus');
+      let tradeStatus = $injector.get('tradeStatus');
       mockFailure = false;
 
-      buyStatus.canBuy = () => $q.resolve(true);
+      tradeStatus.canTrade = () => $q.resolve(true);
 
       Alerts.confirm = msg => $q.resolve();
 

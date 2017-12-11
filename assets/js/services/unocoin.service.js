@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('unocoin', unocoin);
 
-function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet, $uibModalStack) {
+function unocoin ($q, $uibModalStack, Alerts, modals, Env, Exchange, MyWallet, currency) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.unocoin;
@@ -31,6 +31,7 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet, $uibModalStack) {
     buying,
     getTxMethod,
     determineStep,
+    buyTradeDetails,
     getPendingTrade,
     openPendingTrade,
     verificationRequired,
@@ -78,9 +79,35 @@ function unocoin ($q, Alerts, modals, Env, Exchange, MyWallet, $uibModalStack) {
     }
   }
 
-  function buy (account, quote) {
+  function buy (quote) {
     return $q.resolve(quote.getPaymentMediums())
              .then(mediums => mediums.bank.buy());
+  }
+
+  function buyTradeDetails (trade) {
+    let format = currency.formatCurrencyForView;
+    let fiat = currency.currencies.find((c) => c.code === 'INR');
+    let btc = currency.bitCurrencies.find((c) => c.code === 'BTC');
+
+    return {
+      id: {
+        key: '.ID',
+        val: '#' + trade.id
+      },
+      date: {
+        key: '.DATE',
+        val: new Date(trade.createdAt).toLocaleString()
+      },
+      in: {
+        key: '.TOTAL',
+        val: format(trade.receiveAmount, btc, true)
+      },
+      out: {
+        key: '.TOTAL_COST',
+        val: format(trade.inAmount, fiat, true),
+        tip: () => console.log('Clicked tooltip')
+      }
+    };
   }
 
   function getTxMethod (unocoin, hash) {

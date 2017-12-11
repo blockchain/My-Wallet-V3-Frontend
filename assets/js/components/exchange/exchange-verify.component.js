@@ -73,7 +73,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   let exchange = this.exchange;
 
   this.profile = exchange.profile;
-  this.name = exchange.constructor.name.toLowerCase();
+  this.name = exchange.constructor.name;
   this.showField = (field) => this.fields.indexOf(field) > -1;
 
   $scope.isValidMobileNumber = bcPhoneNumber.isValid;
@@ -85,8 +85,10 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   };
 
   this.setProfile = () => {
+    $scope.lock();
     this.onSetProfile();
-    this.step < Object.keys(this.steps).length - 1 ? this.step++ : this.onVerify();
+    if (this.step < Object.keys(this.steps).length - 1) { this.step++; $scope.free(); }
+    else $q.resolve(this.onVerify()).then($scope.free);
   };
 
   this.setBankInfo = () => {
@@ -99,11 +101,13 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.qa = () => {
     switch (true) {
       case this.onStep('address'):
-        angular.merge(exchange.profile, QA[this.name]['addressForm']());
+        angular.merge(this.profile, QA[this.name]['addressForm']());
         break;
       case this.onStep('info'):
-        angular.merge(exchange.profile, QA[this.name]['infoForm']());
+        angular.merge(this.profile, QA[this.name]['infoForm']());
         break;
     }
   };
+
+  AngularHelper.installLock.call($scope);
 }
