@@ -1,4 +1,4 @@
-fdescribe('HomeCtrl', () => {
+describe('HomeCtrl', () => {
   let scope;
 
   let Wallet;

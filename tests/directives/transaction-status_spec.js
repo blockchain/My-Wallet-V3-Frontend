@@ -5,7 +5,7 @@ describe('Transaction Status Directive', () => {
   let isoScope;
 
   beforeEach(module('walletDirectives'));
-  
+
   // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 
@@ -16,7 +16,7 @@ describe('Transaction Status Directive', () => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
 
-    $rootScope.transaction = {confirmations: 2};
+    $rootScope.transaction = {confirmations: 2, coinCode: 'btc'};
 
   })
   );
