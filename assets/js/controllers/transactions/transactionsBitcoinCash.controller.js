@@ -12,7 +12,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
     account: undefined
   };
 
-  $scope.getTotal = Wallet.total;
+  $scope.getTotal = () => BitcoinCash.balance;
 
   $scope.loading = false;
   $scope.allTxsLoaded = false;
