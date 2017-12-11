@@ -2,11 +2,11 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta, Ethereum, ShapeShift, Env, MyWallet) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, tradeStatus, cta, Ethereum, ShapeShift, Env, MyWallet) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
-  $scope.userHasAccount = buyStatus.userHasAccount();
+  $scope.userHasAccount = tradeStatus.userHasAccount();
   $scope.accountInfo = MyWallet.wallet.accountInfo;
   $scope.showEthereum = () => Ethereum.userHasAccess;
   $scope.showShift = () => ShapeShift.userHasAccess;
@@ -27,8 +27,8 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
     if ($scope.shouldShowBuyCta()) $scope.setBuyCtaDismissed();
   };
 
-  buyStatus.canBuy().then((res) => $scope.canBuy = res);
-  buyStatus.shouldShowInviteForm().then((res) => $scope.shouldShowInviteForm = res);
+  tradeStatus.canTrade().then((res) => $scope.canTrade = res);
+  tradeStatus.shouldShowInviteForm().then((res) => $scope.shouldShowInviteForm = res);
 
   $scope.showInviteForm = () => {
     $uibModal.open({
@@ -58,7 +58,7 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
     'wallet.common.settings.imported_addresses'
   ].indexOf($state.current.name) > -1;
 
-  buyStatus.buyLink().then(res => $scope.buyLink = res);
+  tradeStatus.tradeLink().then(res => $scope.tradeLink = res);
 
   $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
 

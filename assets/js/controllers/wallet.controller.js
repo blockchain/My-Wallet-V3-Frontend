@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, buyStatus, modals, MyBlockchainApi, Ethereum, ShapeShift, coinify, unocoin, sfox, Env) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, tradeStatus, modals, MyBlockchainApi, Ethereum, ShapeShift, coinify, unocoin, sfox, Env) {
   Env.then(env => {
     $scope.buySellDisabled = env.buySell.disabled;
     $scope.buySellDisabledReason = env.buySell.disabledReason;
@@ -213,8 +213,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Wallet.goal.auth = void 0;
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
-        buyStatus.canBuy().then((canBuy) => {
-          let template = canBuy && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+        tradeStatus.canTrade().then((canTrade) => {
+          let template = canTrade && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',
@@ -239,10 +239,10 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             modals.openEthLogin();
             Ethereum.setHasSeen();
           } else {
-            buyStatus.canBuy().then((canBuy) => {
-              if (buyStatus.shouldShowBuyReminder() &&
-                  !buyStatus.userHasAccount() &&
-                  canBuy) buyStatus.showBuyReminder();
+            tradeStatus.canTrade().then((canTrade) => {
+              if (tradeStatus.shouldShowBuyReminder() &&
+                  !tradeStatus.userHasAccount() &&
+                  canTrade) tradeStatus.showBuyReminder();
             });
           }
         }

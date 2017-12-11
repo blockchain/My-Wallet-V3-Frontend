@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('cta', cta);
 
-function cta (localStorageService, Wallet, buyStatus) {
+function cta (localStorageService, Wallet, tradeStatus) {
   const cookieJar = {};
   const ONE_WEEK = 604800000;
   const BUY_CTA_KEY = 'buy-alert-seen';
@@ -26,7 +26,7 @@ function cta (localStorageService, Wallet, buyStatus) {
   }
 
   function shouldShowBuyCta () {
-    let hasAccount = buyStatus.userHasAccount();
+    let hasAccount = tradeStatus.userHasAccount();
     let hasSeenCta = cookieJar[BUY_CTA_KEY];
     return !hasAccount && !hasSeenCta;
   }

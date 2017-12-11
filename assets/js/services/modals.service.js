@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('modals', modals);
 
-function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
+function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
   const service = {};
 
   let open = (defaults, options = {}) => {
@@ -71,13 +71,13 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
   service.openHelper = (helper, opts) => open({
     controller ($scope) {
       let helperImages = {
-        'id-id-helper': 'img/id-id-helper.png',
+        'SFOX.HELPER.id': 'img/id-helper.png',
+        'SFOX.HELPER.address': 'img/address-id-helper.png',
+        'UNOCOIN.HELPER.photo': 'img/unocoin-photo-id-helper.png',
+        'UNOCOIN.HELPER.address': 'img/unocoin-address-id-helper.png',
+        'UNOCOIN.HELPER.pancard': 'img/unocoin-pancard-id-helper.png',
         'bank-check-helper': 'img/bank-check-helper.png',
-        'address-id-helper': 'img/address-id-helper.png',
         'bank-deposit-helper': 'img/bank-deposit-helper.png',
-        'unocoin_photo-id-helper': 'img/unocoin-photo-id-helper.png',
-        'unocoin_address-id-helper': 'img/unocoin-address-id-helper.png',
-        'unocoin_pancard-id-helper': 'img/unocoin-pancard-id-helper.png',
         'expiring-exchange-helper': null,
         'coinify_after-trade': null
       };
@@ -116,13 +116,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     backdrop: false, windowClass: 'tray'
   }, options);
 
-  service.openSfoxSignup = (exchange, quote) => service.expandTray({
+  service.openSfoxSignup = (exchange) => service.expandTray({
     templateUrl: 'partials/sfox/signup.pug',
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
       exchange () { return exchange; },
-      quote () { return quote; },
       accounts: ($q) => {
         return exchange.profile
           ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
@@ -153,41 +152,33 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad) {
     if (goingToBuySellState) $state.go('wallet.common.buy-sell');
   });
 
-  service.openTradeSummary = service.dismissPrevious((trade, state) => {
-    let accounts = ($q, MyWallet) => {
-      let exchange = MyWallet.wallet.external.sfox;
-      return exchange.hasAccount
-        ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
-        : $q.resolve([]);
-    };
-    return openMobileCompatible({
-      templateUrl: 'partials/trade-summary.pug',
-      windowClass: 'bc-modal trade-summary',
-      controller ($scope, MyWallet, trade, formatTrade, accounts, $uibModalInstance, $timeout) {
-        let unocoin = MyWallet.wallet.external.unocoin.hasAccount;
+  service.openTradeDetails = service.dismissPrevious((trade, state) => {
+    let exchange = MyWallet.wallet.external.hasExchangeAccount;
+    let templates = { 'sfox': 'partials/sfox/details.pug', 'unocoin': 'partials/unocoin/details.pug' };
 
-        $scope.vm = {
-          trade: trade
-        };
-
-        $scope.tradeIsPending = () => (
-          $scope.vm.trade.state === 'awaiting_transfer_in' ||
-          $scope.vm.trade.state === 'awaiting_reference_number'
-        );
-
-        $scope.formattedTrade = formatTrade[state || trade.state](trade, accounts);
-        unocoin && trade.state === 'cancelled' && ($scope.formattedTrade.namespace = 'UNOCOIN_TX_ERROR_STATE');
-        $scope.editRef = () => {
-          $scope.disableLink = true;
-          service.openBankTransfer(trade, 'reference');
-          $uibModalInstance.dismiss();
-        };
-      },
-      resolve: {
-        trade: () => trade,
-        accounts
-      }
-    });
+    /* Coinify is still using buyView */
+    if (exchange === 'coinify') {
+      return service.openBuyView(null, trade);
+    } else {
+      return openMobileCompatible({
+        windowClass: 'bc-modal trade-summary',
+        templateUrl: templates[exchange],
+        controller: function ($scope, trade, state, sfoxAccounts) {
+          $scope.trade = trade;
+          $scope.state = state;
+          $scope.sfoxAccounts = sfoxAccounts;
+        },
+        resolve: {
+          trade () { return trade; },
+          state () { return state; },
+          sfoxAccounts ($q, sfox) {
+            return sfox.exchange.hasAccount
+              ? sfox.exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+              : $q.resolve([]);
+          }
+        }
+      });
+    }
   });
 
   service.openBankTransfer = service.dismissPrevious((trade, step) => {

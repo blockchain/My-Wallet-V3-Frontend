@@ -17,13 +17,10 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   let fiatAmount = baseFiat() ? Math.abs(quote.baseAmount) : Math.abs(quote.quoteAmount);
 
   $scope.belowCardMax = fiatAmount <= limits.card.inRemaining[fiatCurrency];
+  $scope.aboveCardMin = limits.card.inRemaining[fiatCurrency] >= limits.card.minimumInAmounts[fiatCurrency];
   // i.e card max is 300 and buy amount is 500
-  // $scope.belowCardMax = false;
   $scope.aboveBankMin = fiatAmount >= limits.bank.minimumInAmounts[fiatCurrency];
   // i.e bank min is 50 and buy amount is 30
-  // $scope.aboveBankMin = false;
-  // $scope.needsKYC = (medium) => fiatAmount > parseFloat($scope.limits[medium].yearlyMax[fiatCurrency()]);
-  // i.e bank max is 0 and buy amount is 100
   $scope.isBank = () => $scope.vm.medium === 'bank';
   $scope.needsKYC = () => +coinify.exchange.profile.level.name < 2;
   $scope.pendingKYC = () => coinify.kycs[0] && coinify.tradeStateIn(coinify.states.pending)(coinify.kycs[0]);
@@ -59,7 +56,7 @@ function CoinifyMediumController ($rootScope, $scope, $timeout, $q, AngularHelpe
   $scope.lock();
 
   quote.getPaymentMediums()
-       .then((mediums) => $scope.mediums = mediums)
+       .then((mediums) => $scope.vm.mediums = $scope.mediums = mediums)
        .then($scope.free).catch((err) => console.log(err));
 
   if ($rootScope.inMobileBuy) $scope.submit();

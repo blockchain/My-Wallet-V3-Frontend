@@ -18,7 +18,7 @@
     }
   }
   @media (max-width: 767px) {
-    padding: 10px 0px;
+    padding: 10px 10px;
   }
   &.loading {
     height: 100%;
@@ -380,6 +380,9 @@ input[type="radio"]:checked + label {
   padding: 0px 20px;
   .exchange-trade {
     grid-template-columns: 34.4% 26% 21% 15%;
+    @media(max-width: 768px) {
+      grid-template-columns: 34.4% 26% 35%;
+    }
     > div:first-child {
       span {
         padding-left: 5px;
@@ -390,13 +393,13 @@ input[type="radio"]:checked + label {
 
 @media(max-width: 768px) {
   .exchange-trade-header {
-    grid-template-columns: 25% 15% 30% 30%;
+    grid-template-columns: 35% 25% 40%;
     > div:last-child {
       padding-top: 5px;
       text-align: left;
     }
   }
-  .exchange-trade {
+  .exchange-trade { // shared with shapeshift
     grid-template-columns: 25% 15% 30% 30%;
     > div:last-child {
       text-align: inherit;
@@ -420,6 +423,15 @@ input[type="radio"]:checked + label {
   .recurring-trade {
     grid-template-columns: 35% 25% 20% 20%;
   }
+
+  .buy-sell {
+    .exchange-trade {
+      grid-template-columns: 35% 25% 40%;
+      .exchange-exchanged {
+        display: none;
+      }
+    }
+  }
 }
 
 .switch {
@@ -430,5 +442,11 @@ input[type="radio"]:checked + label {
   background-image: url('../img/switch-regular.svg');
   &:hover {
     background-image: url('../img/switch-hover.svg');
+  }
+}
+
+.recurring-buy {
+  .fake-select {
+    background-color: white !important;
   }
 }

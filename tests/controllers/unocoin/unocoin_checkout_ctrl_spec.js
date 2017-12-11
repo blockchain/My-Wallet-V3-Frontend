@@ -151,13 +151,13 @@ describe('UnocoinCheckoutController', () => {
       expect(modals.openBankTransfer).toHaveBeenCalledWith(trade);
     });
 
-    it('should openTradeSummary if state is not awaiting_reference_number', () => {
+    it('should openTradeDetails if state is not awaiting_reference_number', () => {
       scope = getControllerScope();
       let quote = {};
       let trade = { id: 10, state: 'processing' };
-      spyOn(modals, 'openTradeSummary');
+      spyOn(modals, 'openTradeDetails');
       scope.inspectTrade(quote, trade);
-      expect(modals.openTradeSummary).toHaveBeenCalledWith(trade);
+      expect(modals.openTradeDetails).toHaveBeenCalledWith(trade);
     });
   });
 });
