@@ -45,9 +45,9 @@ function fiat ($rootScope, $q, Wallet, currency) {
       let conversion = scope.conversions[curr.code] || null;
       if (!conversion || conversion.conversion <= 0) return;
 
-      let btc = scope.btc;
-      let eth = scope.eth;
-      let bch = scope.bch;
+      let btc = scope.btc || 0;
+      let eth = scope.eth || 0;
+      let bch = scope.bch || 0;
       if ((btc == null || isNaN(scope.btc)) && (eth == null || isNaN(scope.eth)) && (bch == null || isNaN(scope.bch))) return;
 
       if (attrs.abs != null && btc < 0) btc *= -1;
@@ -58,12 +58,11 @@ function fiat ($rootScope, $q, Wallet, currency) {
           .then((fiat) => { scope.fiat.amount = currency.commaSeparate(fiat); })
           .catch(() => { scope.loadFailed = true; });
       } else {
-        let fiat;
-        if (btc && eth) fiat = currency.convertFromSatoshi(btc, curr) + currency.convertFromEther(eth, curr);
-        else if (bch) fiat = currency.convertFromBitcoinCash(bch, curr);
-        else if (btc) fiat = currency.convertFromSatoshi(btc, curr);
-        else fiat = currency.convertFromEther(eth, curr);
-        scope.fiat.amount = currency.commaSeparate((Math.floor(fiat * 100) / 100).toFixed(2));
+        let fiat = parseFloat((Math.floor(currency.convertFromSatoshi(btc, curr) * 100) / 100).toFixed(2)) +
+                   parseFloat((Math.floor(currency.convertFromEther(eth, curr) * 100) / 100).toFixed(2)) +
+                   parseFloat((Math.floor(currency.convertFromBitcoinCash(bch, curr) * 100) / 100).toFixed(2));
+
+        scope.fiat.amount = currency.commaSeparate(fiat.toFixed(2));
       }
     };
 

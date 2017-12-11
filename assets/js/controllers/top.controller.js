@@ -2,9 +2,7 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetContext, MyBlockchainApi, Env, languages) {
-  let isUsingRequestQuickCopyExperiment = MyBlockchainApi.createExperiment(1);
-
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, BitcoinCash, assetContext, MyBlockchainApi, Env, languages) {
   Env.then(env => {
     if (env.webHardFork.balanceMessage) {
       $scope.balanceMessage = languages.localizeMessage(env.webHardFork.balanceMessage);
@@ -17,21 +15,20 @@ function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, assetCon
   $scope.isBitCurrency = currency.isBitCurrency;
 
   $scope.browser = browser;
+  $scope.activeAsset = assetContext.activeAsset;
 
-  $scope.toggleDisplayCurrency = () => Wallet.toggleDisplayCurrency();
-
-  $scope.getTotal = () => Wallet.total();
-  $scope.getEthTotal = () => Ethereum.balance;
-
-  $scope.showBtcClipboard = () => assetContext.getContext().defaultTo === 'btc';
-
-  $scope.resetCopy = () => $scope.copied = false;
-
-  $scope.nextAddress = () => {
-    if ($scope.copied) return;
-    $scope.copied = true;
-    isUsingRequestQuickCopyExperiment.recordB();
-    let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    return Wallet.getReceivingAddressForAccount(defaultIdx);
+  $scope.assets = {
+    btc: {
+      code: 'btc',
+      total: () => Wallet.total('') || 0
+    },
+    eth: {
+      code: 'eth',
+      total: () => Ethereum.balance || 0
+    },
+    bch: {
+      code: 'bch',
+      total: () => BitcoinCash.balance || 0
+    }
   };
 }

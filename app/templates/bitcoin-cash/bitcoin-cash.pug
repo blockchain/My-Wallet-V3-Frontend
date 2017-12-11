@@ -1,9 +1,0 @@
-.flex-row.flex-between.ptl.pb-30.flex-column-mobile(ng-class="{'border-bottom': !$ctrl.showWallets()}")
-  .flex-column.width-50
-    label.em-400.type-h5(translate="Bitcoin Cash")
-    p.alt-font.f-16.em-300.mbn(ng-show="$ctrl.showExchange" translate="BITCOIN_CASH_INFO")
-    p.alt-font.f-16.em-300.mbn(ng-show="!$ctrl.showExchange" translate="BITCOIN_CASH_INFO_NO_EXCHANGE")
-  .flex-column.pv-10-mobile(ng-if="!$ctrl.showWallets()")
-    button.button-primary(translate="Show Bitcoin Cash Balance" ng-click="$ctrl.showBitcoinCashAbout()")
-.flex-column.pbl(ng-if="$ctrl.showWallets()")
-  bitcoin-cash-wallet(ng-repeat="wallet in $ctrl.allWallets" ng-class="{'border-bottom': $last}" wallet="wallet" shift-loaded="$ctrl.shiftLoaded")

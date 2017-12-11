@@ -15,7 +15,6 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
       inspectTrade: '=',
       conversion: '=',
       namespace: '=',
-      disabled: '=',
       trade: '=',
       usa: '='
     },
@@ -41,9 +40,8 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
 
     scope.cancel = () => {
       if (!scope.canCancel) return;
-      scope.disabled = true;
       let exchange = MyWallet.wallet.external.coinify;
-      coinify.cancelTrade(scope.trade).then(() => Exchange.fetchProfile(exchange)).finally(() => scope.disabled = false);
+      coinify.cancelTrade(scope.trade).then(() => Exchange.fetchProfile(exchange));
     };
 
     scope.updateBTCExpected = () => {

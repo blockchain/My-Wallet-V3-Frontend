@@ -93,6 +93,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/public.pug',
           controller: function ($scope, $state, languages, Env) {
             Env.then(env => {
+              $scope.network = env.network;
               $scope.rootURL = env.rootURL;
               $scope.versionMyWallet = env.versionMyWallet;
               $scope.versionFrontend = env.versionFrontend;
@@ -295,14 +296,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'SettingsCtrl',
           templateUrl: 'partials/settings/settings.pug'
         }
-      },
-      resolve: {
-        _loadBCH ($q, $injector) {
-          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
-          return MyWallet && MyWallet.wallet.bch
-            ? MyWallet.wallet.bch.getHistory()
-            : $q.resolve();
-        }
       }
     })
     .state('wallet.common.faq', {
@@ -360,6 +353,21 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     });
 
   $stateProvider
+    .state('wallet.common.bch', {
+      url: '/bch',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin-cash.pug',
+          controller: 'bitcoinCashTransactionsCtrl'
+        }
+      }
+    }).state('wallet.common.bch.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
     .state('wallet.common.shift', {
       url: '/exchange',
       views: {
@@ -370,6 +378,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           controller: 'ShapeShiftCheckoutController',
           controllerAs: 'vm'
         }
+      },
+      params: {
+        destination: null
       },
       resolve: {
         _initialize ($injector, $q) {
@@ -539,6 +550,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     })
     .state('wallet.common.settings.accounts_index', {
       url: '/addresses',
+      params: { filter: null },
       views: {
         settings: {
           templateUrl: 'partials/settings/accounts.pug',

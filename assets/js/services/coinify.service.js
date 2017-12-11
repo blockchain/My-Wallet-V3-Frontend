@@ -147,7 +147,11 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     }).then(() => trade.cancel())
       .then(() => Exchange.fetchExchangeData(service.exchange))
       .then(() => checkForSubAndFetch())
-      .catch((e) => { Alerts.displayError('ERROR_TRADE_CANCEL'); });
+      .catch((e) => {
+        if (e !== 'cancelled' && e !== 'escape key press' && e !== 'backdrop click') {
+          Alerts.displayError('ERROR_TRADE_CANCEL');
+        }
+      });
   };
 
   service.getSubscriptions = () => {
