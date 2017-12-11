@@ -1830,11 +1830,14 @@
       "REQUIRED": "This bank account needs to be verified.",
       "CONTINUE": "Finalize Your Account Verification"
     },
+    "needs_exchange_rate_data": {
+      "EXPLAIN": "Loading exchange rates..."
+    },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
     },
     "can_sell": {
-      "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
+      "EXPLAIN": "Your remaining sell limit is <span class='pointer'>{{::max}} {{::curr}}</span>"
     },
     "sell": {
       "confirm": {

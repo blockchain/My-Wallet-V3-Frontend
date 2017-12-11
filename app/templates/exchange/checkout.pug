@@ -2,7 +2,8 @@ form.bc-form(
   name="checkoutForm"
   ng-submit="trade()"
   novalidate
-  autocomplete="off")
+  autocomplete="off"
+  ng-class="{busy: busy}")
   fieldset(ng-disabled="locked || trading().isDisabled")
     .group
       .item
@@ -65,13 +66,11 @@ form.bc-form(
             span(ng-if="!$last") or 
     .group.mt-5.border-top(ng-if="trading().verificationRequired")
       .item.mt-15(translate="{{provider + '.' + trading().reason + '.REQUIRED'}}")
-    .center(ng-show="locked")
-      img.ph-20.input-loading(src="img/puff.svg")
     .group.mt-20(ng-show="$ctrl.tradeAccount && !locked")
       .item
         .mbm
           span.f-14.em-300.colon Synced Bank Account
-        .border.flex-row.pv-5.ph-5.em-500
+        .border.flex-row.pv-5.ph-10.em-500
           .flex-center.f-20.mr-10
             i.icon-bank
           .flex-column

@@ -130,7 +130,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   };
 
   $scope.trade = () => {
-    $scope.lock();
+    $scope.busy = true;
     let quote = $scope.quote;
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
@@ -145,7 +145,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
           $scope.state.loadFailed = true;
           $scope.state.error = Exchange.interpretError(err);
         })
-        .finally($scope.resetFields).finally($scope.free);
+        .finally($scope.resetFields).finally(() => $scope.busy = false);
     } else {
       $q.resolve(this.onSuccess({quote, frequency, endTime}))
         .then($scope.resetFields).finally($scope.free);
