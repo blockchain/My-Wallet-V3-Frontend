@@ -106,7 +106,7 @@
               span.error(translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$error.required") Continue
+            button.btn.button-primary.full(type="submit" ng-disabled="$ctrl.addressForm.$error.required || $ctrl.addressForm.$invalid") Continue
     form.bc-form(ng-if="$ctrl.onStep('info')" name="$ctrl.infoForm" role="form" ng-submit="$ctrl.setBankInfo()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
         .row
