@@ -46,6 +46,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   const transactionFailed = (error) => {
     Alerts.displayError(error || error.error || error.message);
+    $scope.free();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
