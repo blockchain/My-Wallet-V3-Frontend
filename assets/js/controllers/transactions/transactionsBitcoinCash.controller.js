@@ -29,6 +29,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
   let txList = MyWallet.wallet.bch.txs;
+  txList.loadNumber = txList.length;
 
   let setTxs = $scope.setTxs = () => {
     $scope.transactions = txList.filter((tx) => {
