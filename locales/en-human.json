@@ -1984,6 +1984,7 @@
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "GET_STARTED": "Get Started With Bitcoin Cash",
     "WELCOME_TO": "Welcome to Bitcoin Cash",
+    "VERIFY_ADDRESS": "Are you sure this is a Bitcoin Cash address? Sending funds to a bitcoin address by accident will result in loss of funds.",
     "WHAT_IS_BCASH": {
       "HEADER": "What is Bitcoin Cash?",
       "BODY": "Bitcoin Cash is a form of peer-to-peer electronic cash that was created after a fork of the Bitcoin block chain in August 2017. Bitcoin Cash has since grown to be one of the top cryptocurrencies, along with bitcoin and ether."
@@ -1999,6 +2000,7 @@
   "EXCHANGE_STATUS": "Exchange Status",
   "SEND_ETHER": "Send Ether",
   "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
+  "TRANSFER_BITCOIN_CASH": "Transfer Bitcoin Cash",
   "REQUEST_BITCOIN": "Request Bitcoin",
   "REQUEST_ETHER": "Request Ether",
   "REQUEST_BITCOIN_CASH": "Request Bitcoin Cash",
