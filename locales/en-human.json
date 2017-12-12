@@ -1879,7 +1879,7 @@
     "link": "Link Payment"
   },
   "HERE": "here",
-  "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
+  "TESTNET_WARNING": "WARNING! This is the testnet3 blockchain. Your coins have no value here.",
   "YOUR_BALANCES": "Your Balances",
   "PRICE_CHARTS": "Price Charts",
   "WELCOME_TO_ETHER": "Welcome to ether!",
