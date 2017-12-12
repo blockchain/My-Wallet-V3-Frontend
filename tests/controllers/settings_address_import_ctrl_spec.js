@@ -2,6 +2,7 @@ describe('AddressImportCtrl', () => {
   let scope;
   let Wallet;
   let Alerts;
+  let BitcoinCash;
 
   let accounts = [{index: 0, label: "Spending", archived: false}];
 
@@ -21,6 +22,7 @@ describe('AddressImportCtrl', () => {
     angular.mock.inject(function ($injector, $rootScope, $controller, $compile, $templateCache) {
       Wallet = $injector.get('Wallet');
       Alerts = $injector.get('Alerts');
+      BitcoinCash = $injector.get('BitcoinCash');
 
       Wallet.addAddressOrPrivateKey = function (addressOrPrivateKey, bip38passphrase, success, error, cancel, _error) {
         if (_error) {
@@ -40,6 +42,9 @@ describe('AddressImportCtrl', () => {
           keys: [],
           hdwallet: {
             defaultAccountIndex: 0
+          },
+          bch: {
+            fetch () {}
           }
         }
       };
