@@ -8,7 +8,8 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
   });
 
   let exchange = $scope.vm.exchange;
-
+  let initialUploadStep = 0;
+  $scope.uploadSteps = exchange.profile.verificationStatus.required_docs.length;
   let getNextIdType = () => {
     let { required_docs = [] } = exchange.profile.verificationStatus;
 
@@ -57,6 +58,7 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
     if (level === 'verified') complete = true;
     if (level === 'pending' && !required_docs[0]) complete = true;
 
+    $scope.onUploadStep = initialUploadStep += 1;
     complete && $scope.vm.goTo('link');
   };
 

@@ -1887,8 +1887,8 @@
       "TOTAL": "Total Outgoing Bitcoin",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
-      "INTRODUCING_HEADER": "Introducing Sell Bitcoin",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX to bring you sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon."
+      "INTRODUCING_HEADER": "Introducing Sell",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon."
     },
     "buy": {
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon."

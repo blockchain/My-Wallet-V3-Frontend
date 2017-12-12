@@ -5,6 +5,8 @@ angular
       base: '@',
       locked: '=',
       idType: '=',
+      uploadSteps: '<',
+      onUploadStep: '<',
       autoFill: '&',
       handleUpload: '&'
     },
