@@ -91,7 +91,7 @@
                     a(translate="UNARCHIVE" ng-click="bchAccount.archived = false" ng-show="bchAccount.archived")
                   li
                     a(translate="REVEAL_XPUB" ng-click="revealXpub(bchAccount)" ng-hide="bchAccount.archived")
-          tr.responsive.width-100
+          tr.responsive.width-100(ng-if="importedBch && importedBch.addresses.length")
             td.col-md-3
               span.type-md.em-500.mrm Imported Addresses
               span.label.label-primary.btn-xs(translate="ALL_ADDRESSES")

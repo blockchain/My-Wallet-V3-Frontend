@@ -23,9 +23,6 @@ function SettingsAccountsController ($scope, $stateParams, Wallet, Alerts, $uibM
   $scope.getLegacyTotal = () => Wallet.total('imported');
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
 
-  $scope.isDefaultBch = (account) => BitcoinCash.bch.defaultAccountIdx === account.index;
-  $scope.makeDefaultBch = (account) => BitcoinCash.bch.defaultAccountIdx = account.index;
-
   $scope.newAccount = () => {
     Alerts.clear();
     $uibModal.open({
