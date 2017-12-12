@@ -35,8 +35,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.sellLimits = (rate) => {
     return {
-      min: 10 / rate,
-      max: Math.min(sfox.profile.limits.sell / rate, Exchange.sellMax)
+      min: parseFloat((10 / rate).toFixed(8)),
+      max: parseFloat(Math.min(sfox.profile.limits.sell / rate, Exchange.sellMax).toFixed(8))
     };
   };
 
