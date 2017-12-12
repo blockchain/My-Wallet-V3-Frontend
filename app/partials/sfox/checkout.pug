@@ -41,7 +41,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       fiat="dollars"
       rate="rate"
       ng-if="onStep('confirm')"
-      on-cancel="goTo('create')"
+      on-cancel="handleCancel()"
       on-success="goTo('receipt')"
       on-expiration="sellRefresh()"
       handle-trade="sellHandler(quote)")

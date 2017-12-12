@@ -2,7 +2,16 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet) {
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
+  Env.then(env => {
+    let links = env.partners.sfox.surveyLinks;
+
+    $scope.handleCancel = (skipConfirm) => {
+      if (skipConfirm) $scope.goTo('create');
+      else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { $scope.goTo('create'); }).catch(() => {});
+    };
+  });
+
   sfox.accounts = accounts;
 
   let exchange = $scope.vm.external.sfox;
