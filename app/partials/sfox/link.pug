@@ -32,7 +32,7 @@
               helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
             input(ng-model="fields.accountName" name="accountName" focus-when="state.bankAccounts" required)
             span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
-        button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
+        button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid || locked") Add Account
 
   .width-60.flex-justify(ng-hide="state.bankAccounts" id="wallet")
     .width-90.width-100-tablet.width-100-mobile
@@ -81,7 +81,7 @@
               ui-select-choices(repeat="type in types")
                 span.capitalize(ng-bind-html="type")
           .group.full
-            button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
+            button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid || locked") Add Account
 .flex-row.flex-column-tablet(ng-show="state.accounts.length")
   .width-40
     .width-80
@@ -109,5 +109,5 @@
               span.error(ng-hide="verifyBankAccountForm.deposit1.$error.value" translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid") Verify
+            button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid || locked") Verify
             a.display-block.center.mtl(ng-click="$dismiss()") Finish Later
