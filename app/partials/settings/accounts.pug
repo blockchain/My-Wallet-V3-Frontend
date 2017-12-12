@@ -72,7 +72,7 @@
           tr.responsive.width-100(ng-repeat="bchAccount in bchAccounts | filter:{label: searchText}")
             td.col-md-3
               span.type-md.em-500.mrm(ng-bind-html="bchAccount.label | escapeHtml | highlight:searchText" ng-class="{'o-3': bchAccount.archived}")
-              span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!bchAccount.archived && isDefault(bchAccount)")
+              span.label.label-primary.btn-xs(translate="DEFAULT", ng-show="!bchAccount.archived && isDefaultBch(bchAccount)")
               span.label.label-default.btn-xs.mrm(translate="ARCHIVED" ng-show="bchAccount.archived")
             td.col-md-3.center
               span.display-inline-block.right-align
@@ -84,7 +84,9 @@
                   li
                     a(translate="EDIT_NAME" ng-click="editAccount(bchAccount)")
                   li
-                    a(translate="ARCHIVE" ng-click="bchAccount.archived = true" ng-hide="bchAccount.archived || isDefault(bchAccount)")
+                    a(translate="MAKE_DEFAULT" ng-click="makeDefaultBch(bchAccount)" ng-hide="bchAccount.archived || isDefaultBch(bchAccount)")
+                  li
+                    a(translate="ARCHIVE" ng-click="bchAccount.archived = true" ng-hide="bchAccount.archived || isDefaultBch(bchAccount)")
                   li
                     a(translate="UNARCHIVE" ng-click="bchAccount.archived = false" ng-show="bchAccount.archived")
                   li

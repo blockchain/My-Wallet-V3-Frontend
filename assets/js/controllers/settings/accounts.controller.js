@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAccountsController', SettingsAccountsController);
 
-function SettingsAccountsController ($scope, $stateParams, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad, modals) {
+function SettingsAccountsController ($scope, $stateParams, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad, modals, BitcoinCash) {
   $scope.accounts = Wallet.accounts;
   $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
   $scope.openTransferAll = () => modals.openTransfer($scope.activeSpendableAddresses());
@@ -22,6 +22,9 @@ function SettingsAccountsController ($scope, $stateParams, Wallet, Alerts, $uibM
   $scope.unarchive = (account) => Wallet.unarchive(account);
   $scope.getLegacyTotal = () => Wallet.total('imported');
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
+
+  $scope.isDefaultBch = (account) => BitcoinCash.bch.defaultAccountIdx === account.index;
+  $scope.makeDefaultBch = (account) => BitcoinCash.bch.defaultAccountIdx = account.index;
 
   $scope.newAccount = () => {
     Alerts.clear();
