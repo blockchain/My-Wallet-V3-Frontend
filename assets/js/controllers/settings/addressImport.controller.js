@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AddressImportCtrl', AddressImportCtrl);
 
-function AddressImportCtrl ($scope, AngularHelper, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout) {
+function AddressImportCtrl ($scope, AngularHelper, $uibModal, Wallet, Alerts, $uibModalInstance, $state, $timeout, BitcoinCash) {
   $scope.settings = Wallet.settings;
   $scope.accounts = Wallet.accounts;
   $scope.alerts = [];
@@ -40,6 +40,7 @@ function AddressImportCtrl ($scope, AngularHelper, $uibModal, Wallet, Alerts, $u
   };
 
   $scope.importSuccess = (address) => {
+    BitcoinCash.bch.fetch && BitcoinCash.bch.fetch();
     $scope.status.busy = false;
     $scope.address = address;
     $scope.step = 2;

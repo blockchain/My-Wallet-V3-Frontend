@@ -307,6 +307,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/faq.pug',
           controller: 'faqCtrl'
         }
+      },
+      resolve: {
+        env: ($injector) => {
+          let Env = $injector.has('Env') && $injector.get('Env');
+          return Env && Env.then();
+        },
+        canTrade: ($injector) => {
+          let tradeStatus = $injector.has('tradeStatus') && $injector.get('tradeStatus');
+          return tradeStatus && tradeStatus.canTrade();
+        }
       }
     });
 
