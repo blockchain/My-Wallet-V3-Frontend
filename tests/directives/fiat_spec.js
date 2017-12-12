@@ -28,6 +28,9 @@ describe('Fiat Directive', () => {
         convertFromSatoshi: (btc, curr) => {
           return btc / 1000;
         },
+        convertFromBitcoinCash: (bch, curr) => {
+          return bch / 100000000;
+        },
         commaSeparate: (input) => {
           return input;
         },

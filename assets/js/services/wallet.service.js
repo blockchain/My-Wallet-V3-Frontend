@@ -208,6 +208,17 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     doLogin(uid, sessionGuid, sessionToken);
   };
 
+  let recordCurrencyUsageStats = () => {
+    let Ethereum = $injector.get('Ethereum');
+    let BitcoinCash = $injector.get('BitcoinCash');
+
+    let btcBalance = wallet.total();
+    let ethBalance = Ethereum.ethInititalized ? parseFloat(Ethereum.balance) : 0;
+    let bchBalance = BitcoinCash.balance;
+
+    MyBlockchainApi.incrementCurrencyUsageStats(btcBalance, ethBalance, bchBalance);
+  };
+
   wallet.fetchAccountInfo = () => {
     return $q.resolve(wallet.my.wallet.fetchAccountInfo()).then((result) => {
       const accountInfo = wallet.my.wallet.accountInfo;
@@ -273,7 +284,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
           wallet.status.didLoadTransactions = true;
           wallet.status.didLoadBalances = true;
           $rootScope.showBch = wallet.my.wallet.bch.balance > 0 || wallet.my.wallet.bch.txs.length > 0;
-          Ethereum.recordStats();
+          recordCurrencyUsageStats();
           AngularHelper.$safeApply();
         };
 
@@ -285,6 +296,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
 
         let ShapeShift = $injector.get('ShapeShift');
         if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
+
+        history.push(wallet.my.wallet.bch.getHistory());
 
         $q.all(history).then(didFetchTransactions);
       }
@@ -664,16 +677,20 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     }
   };
 
-  wallet.parsePaymentRequest = (url) => {
+  wallet.parsePaymentRequest = (url, coinCode) => {
     let result = {
       address: null,
       amount: null,
       label: null,
       message: null
     };
+    let urlMap = {
+      btc: 'bitcoin',
+      bch: 'bitcoincash'
+    };
     result.isValid = true;
-    if (url.indexOf('bitcoin:') === 0) {
-      let withoutPrefix = url.replace('bitcoin://', '').replace('bitcoin:', '');
+    if (url.indexOf(urlMap[coinCode] + ':') === 0) {
+      let withoutPrefix = url.replace(urlMap[coinCode] + '://', '').replace(urlMap[coinCode] + ':', '');
       let qIndex = withoutPrefix.indexOf('?');
       if (qIndex !== -1) {
         result.address = withoutPrefix.substr(0, qIndex);

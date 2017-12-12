@@ -51,7 +51,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     }, options)
   );
 
-  service.openRequest = service.openOnce((destination = null) =>
+  service.openRequest = service.openOnce((destination = null, asset = null) =>
     open({
       templateUrl: 'partials/request/request.pug',
       windowClass: 'bc-modal initial',
@@ -59,6 +59,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
       controllerAs: 'vm',
       resolve: {
         destination: () => destination,
+        asset: () => asset,
         _initialize ($q, Ethereum) {
           return Ethereum.userHasAccess
             ? Ethereum.initialize()
@@ -233,20 +234,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openExchange = service.openOnce((asset) => {
-    return openMobileCompatible({
-      templateUrl: 'partials/shapeshift/modal.pug',
-      controller: 'ShapeShiftModalController',
-      controllerAs: 'vm',
-      windowClass: 'bc-modal buy',
-      backdrop: 'static',
-      keyboard: false,
-      resolve: {
-        asset: () => asset
-      }
-    });
-  });
-
   service.openShiftTradeDetails = service.openOnce((trade) => {
     return openMobileCompatible({
       controllerAs: 'vm',
@@ -265,10 +252,18 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openEthLogin = service.openOnce(() => {
+  service.openCurrencyLogin = service.openOnce((currency) => {
     return openMobileCompatible({
       windowClass: 'bc-modal buy',
-      templateUrl: 'partials/first-login-modal-eth.pug'
+      templateUrl: 'partials/first-login-modal-currency.pug',
+      controller: function ($scope, $state, $uibModalInstance, ShapeShift) {
+        $scope.currency = currency;
+
+        $scope.cta = () => {
+          $uibModalInstance.dismiss();
+          $state.go('wallet.common.' + currency + '.transactions');
+        };
+      }
     });
   });
 
@@ -291,6 +286,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
       controllerAs: 'vm',
       backdrop: 'static',
       keyboard: false
+    })
+  );
+
+  service.openSubscribe = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/subscribe-modal.pug',
+      windowClass: 'bc-modal initial',
+      controller: 'SubscribeCtrl'
     })
   );
 

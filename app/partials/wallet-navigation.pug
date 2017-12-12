@@ -17,6 +17,11 @@
         i.icon-ethereum
         span.flex-row.flex-align-end
           span ETHER
+    li.scroll-parent.header(ui-sref-active="current" ng-click="hideMenu()")
+      a(ui-sref="wallet.common.bch.transactions")
+        i.icon-bitcoin-cash
+        span.flex-row.flex-align-end
+          span BITCOIN CASH
     div.border-solid.mb-15.mt-15.mh-15(ng-show="showEthereum()")
     // Don't forget to update controllers/coinifyCheckout.controller.js
     li.header(ui-sref-active="current" ng-click="hideMenu()" ng-show="canTrade || shouldShowInviteForm")

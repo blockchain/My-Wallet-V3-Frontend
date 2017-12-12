@@ -2,43 +2,29 @@ angular
   .module('walletApp')
   .controller('faqCtrl', faqCtrl);
 
-function faqCtrl ($scope, faq, Env, tradeStatus, languages, $uibModal, Ethereum, ShapeShift) {
-  Env.then(env => {
-    if (env.webHardFork.faqMessage) {
-      let a = languages.localizeMessage(env.webHardFork.faqMessage.answer);
-      let q = languages.localizeMessage(env.webHardFork.faqMessage.question);
-      let actions = env.webHardFork.faqMessage.actions;
-      $scope.questions.unshift({
-        translated: true,
-        actions: actions.map(a => ({
-          link: a.link,
-          title: a.title && languages.localizeMessage(a.title)
-        })),
-        question: q,
-        answer: a
-      });
-    }
-  });
-
+function faqCtrl ($scope, $timeout, faq, env, canTrade, tradeStatus, languages, $uibModal, Ethereum, ShapeShift) {
   let showEthereum = Ethereum.userHasAccess || void 0;
   let showShapeShift = ShapeShift.userHasAccess || void 0;
 
-  $scope.questions = faq.questions
+  $scope.questions = faq.getQuestions(env, canTrade)
     .filter(q => !q.eth || showEthereum)
     .filter(q => !q.shapeshift || showShapeShift)
     .map(q => angular.merge({ displayed: false, values: { showEthereum } }, q));
 
-  $scope.toggle = (q) => { q.displayed = !q.displayed; };
-
-  $scope.subscribe = () => {
-    $uibModal.open({
-      templateUrl: 'partials/subscribe-modal.pug',
-      windowClass: 'bc-modal initial',
-      controller: 'SubscribeCtrl'
+  if (env.webHardFork.faqMessage) {
+    let a = languages.localizeMessage(env.webHardFork.faqMessage.answer);
+    let q = languages.localizeMessage(env.webHardFork.faqMessage.question);
+    let actions = env.webHardFork.faqMessage.actions;
+    $scope.questions.unshift({
+      translated: true,
+      actions: actions.map(a => ({
+        link: a.link,
+        title: a.title && languages.localizeMessage(a.title)
+      })),
+      question: q,
+      answer: a
     });
-  };
+  }
 
-  tradeStatus.canTrade().then((canTrade) => {
-    !tradeStatus.userHasAccount() && !canTrade && ($scope.questions[0] = {name: 'CAN_I_BUY_UNINVITED', values: {click: $scope.subscribe}});
-  });
+  $scope.toggle = (q) => { q.displayed = !q.displayed; };
 }

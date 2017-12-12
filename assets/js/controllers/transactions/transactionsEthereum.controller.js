@@ -41,7 +41,7 @@ function ethereumTransactionsCtrl ($scope, $uibModal, $state, Wallet, Ethereum, 
     if (ShapeShift.userHasAccess) {
       $state.go('wallet.common.shift');
     } else {
-      modals.openRequest(null, { asset: 'eth' });
+      modals.openRequest(null, { code: 'eth' });
     }
   };
 

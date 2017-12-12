@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('AccountFormCtrl', AccountFormCtrl);
 
-function AccountFormCtrl (AngularHelper, $scope, $q, $uibModalInstance, Wallet, Alerts, account) {
+function AccountFormCtrl (AngularHelper, $scope, $q, $uibModalInstance, $timeout, Wallet, Alerts, BitcoinCash, account) {
   $scope.accounts = Wallet.accounts;
   $scope.status = {};
   $scope.isNameUnused = (name) => $scope.accounts().every(a => a.label !== name);
@@ -19,12 +19,14 @@ function AccountFormCtrl (AngularHelper, $scope, $q, $uibModalInstance, Wallet, 
     }
 
     let done = () => {
+      BitcoinCash.bch.fetch && BitcoinCash.bch.fetch();
       $scope.status.busy = false;
+      $scope.$root.scheduleRefresh();
       AngularHelper.$safeApply();
     };
 
     $scope.status.busy = true;
-    Wallet.createAccount($scope.name, () => $uibModalInstance.dismiss(), done, done);
+    Wallet.createAccount($scope.name, () => $uibModalInstance.dismiss(), done(), done());
   };
 
   $scope.updateAccount = () => {

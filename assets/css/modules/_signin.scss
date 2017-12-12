@@ -13,6 +13,10 @@ div.login-form {
   height: 100%;
   position: relative;
   background-color: $blue;
+  testnet-warning {
+    top: 100px;
+    position: relative;
+  }
   nav {
     position: fixed;
     width: 100%;

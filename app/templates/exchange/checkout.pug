@@ -58,7 +58,12 @@ form.bc-form(
               required)
             span.ph-10 {{bitcoin.code}}
         .f-12.mts
-          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}" translate-values="{max: max.fiat.toFixed(2), min: min.fiat.toFixed(2), curr: fiat.code}" ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}" ng-click="!trading().isDisabled && setMax()")
+          span(translate="{{ provider + '.' + trading().reason + '.EXPLAIN' }}"
+               translate-values="{max: max.fiat.toFixed(2), min: min.fiat.toFixed(2), curr: fiat.code}"
+               ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}"
+               ng-click="!trading().isDisabled && setMax()"
+               uib-tooltip="{{::'SELL_MIN_TOOLTIP'|translate}}"
+               tooltip-enable="trading().reason === 'not_enough_funds_to_sell'")
           | &nbsp;
           span(ng-repeat="(option, action) in trading().launchOptions")
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
