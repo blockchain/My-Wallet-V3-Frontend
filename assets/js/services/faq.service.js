@@ -21,6 +21,15 @@ function faq (MyWallet, Env, Ethereum, tradeStatus, ShapeShift, modals) {
         let sellOnly = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
         let buyOnly = env.partners.unocoin.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.unocoin.states.indexOf(accountInfo.stateCodeGuess) > -1;
 
+        if (ShapeShift.userHasAccess) {
+          questions.unshift(
+            {
+              name: 'HOW_DO_I_BUY_OR_SELL_UNSUPPORTED_CURRS',
+              values: {'link': 'wallet.common.shift', 'text': 'Exchange tab'}
+            }
+          );
+        }
+
         if (sellOnly) {
           questions.unshift(
             { name: 'HOW_DO_I_SELL',
@@ -37,14 +46,6 @@ function faq (MyWallet, Env, Ethereum, tradeStatus, ShapeShift, modals) {
           questions.unshift(
             { name: 'HOW_DO_I_BUY_OR_SELL',
               values: {'link': 'wallet.common.buy-sell', 'text': 'HERE'}
-            }
-          );
-        }
-        if (ShapeShift.userHasAccess) {
-          questions.unshift(
-            {
-              name: 'HOW_DO_I_BUY_OR_SELL_UNSUPPORTED_CURRS',
-              values: {'link': 'wallet.common.shift', 'text': 'Exchange tab'}
             }
           );
         }
