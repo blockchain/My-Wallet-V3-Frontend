@@ -141,7 +141,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let totalAmount = amount + fee;
     let toBeReceived = quote
                        ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
-                       : (trade.receiveAmount - trade.feeAmount).toFixed(2);
+                       : (trade.receiveAmount).toFixed(2);
     let amountKey = quote || payment ? '.AMT' : '.AMT_SOLD';
 
     return {
