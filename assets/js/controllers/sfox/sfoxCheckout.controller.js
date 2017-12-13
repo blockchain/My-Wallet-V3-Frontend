@@ -16,6 +16,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   let exchange = $scope.vm.external.sfox;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+  let enableSiftScience = (trade) => { $scope.tradeId = trade.id; $scope.siftScienceEnabled = true; };
 
   $scope.steps = enumify('state-select', 'create', 'confirm', 'receipt');
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
@@ -26,7 +27,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.selling = sfox.selling;
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
-  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote).then((trade) => submitTx(trade).then(() => $timeout(sfox.getTrades, 1000)));
+  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote)
+    .then((trade) => { submitTx(trade); enableSiftScience(trade); });
 
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
   $scope.getRate = () => $scope.sellQuoteHandler(1e8, 'BTC', $scope.dollars.code).then(setRate);

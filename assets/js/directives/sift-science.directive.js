@@ -29,13 +29,10 @@ function siftScience ($sce, Env, AngularHelper, $window) {
       console.error('sift-science(user-id) missing');
       return;
     }
-    if (!scope.tradeId) {
-      console.error('sift-science(trade-id) missing');
-      return;
-    }
 
     let processEnv = (env) => {
-      let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
+      let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${ scope.userId }`;
+      url += scope.tradeId ? `/trade/${ scope.tradeId }` : '';
       scope.url = $sce.trustAsResourceUrl(url);
 
       if (env.qaDebugger) {
