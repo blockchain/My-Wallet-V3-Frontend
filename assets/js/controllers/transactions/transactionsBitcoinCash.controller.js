@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('bitcoinCashTransactionsCtrl', bitcoinCashTransactionsCtrl);
 
-function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal, localStorageService, ShapeShift, AngularHelper, smartAccount, MyWallet, Wallet, BitcoinCash, Ethereum, modals) {
+function bitcoinCashTransactionsCtrl ($rootScope, $scope, $translate, $state, $q, $uibModal, localStorageService, ShapeShift, AngularHelper, smartAccount, MyWallet, Wallet, BitcoinCash, Ethereum, modals) {
   $scope.addressBook = Wallet.addressBook;
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
@@ -32,7 +32,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   txList.loadNumber = txList.length;
 
   let setTxs = $scope.setTxs = () => {
-    $scope.transactions = txList.filter((tx) => {
+    $scope.transactions = MyWallet.wallet.bch.txs.filter((tx) => {
       if ($scope.filterBy.account.index === '') return true;
       else return tx.belongsTo($scope.filterBy.account.index >= 0 ? $scope.filterBy.account.index : 'imported');
     });
@@ -135,4 +135,5 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   };
 
   $scope.$watch('filterBy.account', setTxs);
+  $rootScope.$on('refresh', setTxs);
 }

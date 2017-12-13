@@ -183,7 +183,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $q.all(tasks)
       .catch(() => console.log('error refreshing'))
       .finally(() => {
-        $scope.$broadcast('refresh');
+        $rootScope.$broadcast('refresh');
         $timeout(() => $scope.refreshing = false, 500);
       });
   };
