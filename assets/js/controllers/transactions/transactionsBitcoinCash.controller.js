@@ -114,7 +114,7 @@ function bitcoinCashTransactionsCtrl ($rootScope, $scope, $translate, $state, $q
 
   $scope.onClickCta = () => {
     if (ShapeShift.userHasAccess && (Wallet.total('') > 0 + Wallet.total('imported') || Ethereum.balance > 0)) {
-      $state.go('wallet.common.shift');
+      $state.go('wallet.common.shift', { destination: 'bch' });
     } else {
       modals.openRequest(null, { code: 'bch' });
     }
