@@ -15,13 +15,13 @@ function BitcoinCash (Wallet, localStorageService) {
       return this.bch && this.bch.txs;
     },
     get hasSeen () {
-      return localStorageService.get('hasSeenBCH');
+      return this.bch.hasSeen;
     },
     get accounts () {
       return this.bch && this.bch.accounts;
     },
     setHasSeen () {
-      localStorageService.set('hasSeenBCH', true);
+      this.bch.setHasSeen(true);
     }
   };
 
