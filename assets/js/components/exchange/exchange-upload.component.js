@@ -8,7 +8,8 @@ angular
       uploadSteps: '<',
       onUploadStep: '<',
       autoFill: '&',
-      handleUpload: '&'
+      handleUpload: '&',
+      onClose: '&'
     },
     templateUrl: 'templates/exchange/upload.pug',
     controller: ExchangeUploadController,
