@@ -29,17 +29,17 @@
             ng-click="setFilterType($index)"
             ng-class="{'active': isFilterType($index)}"
             translate="{{::f}}")
-      .flex-center.flex-end(ng-hide="legacyAccount")
-        a.f-12.pointer.mh-15.button-nowrap(ng-click="exportEthPriv({legacy: false})")
+      .flex-center.flex-end
+        a.f-12.pointer.mh-15.button-nowrap(ng-click="exportEthPriv({legacy: false})" ng-hide="legacyAccount")
           span Export Private Key
-      .flex-center.flex-end.dropdown(uib-dropdown ng-show="legacyAccount")
-        a.f-12.mh-15(href="#" uib-dropdown-toggle)
-          span Private Keys
-        ul(uib-dropdown-menu)
-          li
-            a(ng-click="exportEthPriv({legacy: false})") Export Private Key
-          li
-            a(ng-click="exportEthPriv({legacy: true})") Export Archived Private Key
+        .dropdown(uib-dropdown ng-show="legacyAccount")
+          a.f-12.mh-15(href="#" uib-dropdown-toggle)
+            span Private Keys
+          ul(uib-dropdown-menu)
+            li
+              a(ng-click="exportEthPriv({legacy: false})") Export Private Key
+            li
+              a(ng-click="exportEthPriv({legacy: true})") Export Archived Private Key
         .filter-search.input-group.width-60
           input.form-control(
             type="text"
