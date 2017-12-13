@@ -62,7 +62,7 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
     let tradeLink = () => {
       let { external } = MyWallet.wallet;
       if (external && (isCoinifyCountry || external.coinify.user)) return 'BUY_AND_SELL_BITCOIN';
-      else if (external && (isSFOXCountryState || external.sfox.user)) return 'SELL_BITCOIN';
+      else if (MyWallet.wallet.accountInfo.countryCodeGuess === 'US') return 'BUY_AND_SELL_BITCOIN';
       else return 'BUY_BITCOIN';
     };
     return Env.then(processEnv).then(tradeLink);

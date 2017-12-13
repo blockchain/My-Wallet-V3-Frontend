@@ -2,5 +2,5 @@ angular
   .module('walletApp')
   .constant('walletStats', {
     transactionsCountMillions: 100,
-    walletCountMillions: 17
+    walletCountMillions: 20
   });

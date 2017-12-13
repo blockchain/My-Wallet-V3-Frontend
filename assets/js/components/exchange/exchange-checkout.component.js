@@ -91,10 +91,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
       if (state.baseFiat) {
         state.btc = Math.abs($scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin));
-        state.rate = (1 / (Math.abs(quote.quoteAmount) / 1e8)) * Math.abs(quote.baseAmount);
+        state.rate = +((1 / (Math.abs(quote.quoteAmount) / 1e8)) * Math.abs(quote.baseAmount)).toFixed(2);
       } else {
         state.fiat = Math.abs(quote.quoteAmount);
-        state.rate = (1 / (Math.abs(quote.baseAmount) / 1e8)) * Math.abs(quote.quoteAmount);
+        state.rate = +((1 / (Math.abs(quote.baseAmount) / 1e8)) * Math.abs(quote.quoteAmount)).toFixed(2);
       }
     };
 
@@ -107,7 +107,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   $scope.getRate = () => {
     let args = { amount: 1e8, baseCurr: $scope.bitcoin.code, quoteCurr: $scope.fiat.code };
     let quoteP = $q.resolve(this.handleQuote(args));
-    quoteP.then(quote => { $scope.state.rate = Math.abs(quote.quoteAmount); });
+    quoteP.then(quote => { $scope.state.rate = +Math.abs(quote.quoteAmount).toFixed(2); });
   };
 
   $scope.refreshIfValid = (field) => {
@@ -125,12 +125,12 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
     let field = this.fiatLimits ? 'fiat' : 'btc';
 
     state.baseCurr = curr;
-    state[field] = this.limits().max;
+    state[field] = this.limits(state.rate).max;
     $timeout(() => $scope.refreshIfValid(field), 10);
   };
 
   $scope.trade = () => {
-    $scope.lock();
+    $scope.busy = true;
     let quote = $scope.quote;
     let endTime = state.endTime;
     let frequency = state.frequencyCheck && state.frequency;
@@ -145,7 +145,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
           $scope.state.loadFailed = true;
           $scope.state.error = Exchange.interpretError(err);
         })
-        .finally($scope.resetFields).finally($scope.free);
+        .finally($scope.resetFields).finally(() => $scope.busy = false);
     } else {
       $q.resolve(this.onSuccess({quote, frequency, endTime}))
         .then($scope.resetFields).finally($scope.free);
@@ -158,7 +158,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
 
     $scope.$$postDigest(() => {
       let rate = state.rate;
-      let limits = this.limits();
+      let limits = this.limits(rate);
       let baseFiat = this.fiatLimits;
       $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
       $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
@@ -177,4 +177,6 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   });
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
+
+  $scope.$watch('max', (n, o) => { !n ? $scope.lock() : $scope.free(); });
 }

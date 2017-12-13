@@ -4,8 +4,8 @@
       i.ti-search.pointer.blue(uib-dropdown-toggle)
       ul.dropdown-menu(uib-dropdown-menu)
         li.pointer.pas(ng-click="logDetails(trade)") Log Trade Details
-        li.pointer.pas(ng-click="trade.fakeAchSuccess()" ng-show="pending") Fake ACH Success
-        li.pointer.pas(ng-click="trade.fakeAchFail()" ng-show="pending") Fake ACH Fail
+        li.pointer.pas(ng-click="trade.fakeAchSuccess()") Fake Success
+        li.pointer.pas(ng-click="trade.fakeAchFail()") Fake Rejection
     div.visible-xs(ng-click="cancel(trade); $event.stopPropagation();")
       i.ti-trash.mls.pointer.state-danger-text(ng-show="canCancel")
       i.ti-trash.fade(ng-hide="canCancel")

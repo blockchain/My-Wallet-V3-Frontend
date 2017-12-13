@@ -8,10 +8,12 @@ angular
       exchange: '<',
       initialStep: '<',
       verificationError: '<',
+      name: '<',
       onVerify: '&',
       onRestart: '&',
       onSetProfile: '&',
       onSetBankInfo: '&',
+      onClose: '&',
       mobilePreferred: '@'
     },
     templateUrl: 'templates/exchange/verify.pug',

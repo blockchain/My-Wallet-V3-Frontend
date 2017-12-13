@@ -12,7 +12,9 @@ function bcFileUpload ($rootScope, Alerts, AngularHelper) {
       base: '=',
       locked: '=',
       idType: '=',
-      onUpload: '='
+      onUpload: '=',
+      uploadSteps: '=',
+      onUploadStep: '='
     },
     templateUrl: 'templates/bc-file-upload.pug',
     link: link

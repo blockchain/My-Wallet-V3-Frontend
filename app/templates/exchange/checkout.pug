@@ -2,8 +2,9 @@ form.bc-form(
   name="checkoutForm"
   ng-submit="trade()"
   novalidate
-  autocomplete="off")
-  fieldset(ng-disabled="locked || trading().isDisabled || trading().verificationRequired")
+  autocomplete="off"
+  ng-class="{busy: busy}")
+  fieldset(ng-disabled="locked || trading().isDisabled")
     .group
       .item
         .flex-between.flex-baseline.mbs
@@ -70,13 +71,16 @@ form.bc-form(
             span(ng-if="!$last") or 
     .group.mt-5.border-top(ng-if="trading().verificationRequired")
       .item.mt-15(translate="{{provider + '.' + trading().reason + '.REQUIRED'}}")
-    .group.mt-20(ng-if="$ctrl.tradeAccount")
+    .group.mt-20(ng-show="$ctrl.tradeAccount && !locked")
       .item
         .mbm
           span.f-14.em-300.colon Synced Bank Account
-        .border.flex-column.pv-5.ph-5.em-500
-          span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
-          span.f-12.capitalize Account Holder: {{ $ctrl.tradeAccount.name }}
+        .border.flex-row.pv-5.ph-10.em-500
+          .flex-center.f-20.mr-10
+            i.icon-bank
+          .flex-column
+            span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
+            span.f-12.capitalize Account Holder: {{ $ctrl.tradeAccount.name }}
     .group.inline.mt-10(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
         input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat")
@@ -100,6 +104,7 @@ form.bc-form(
           .flex-column.width-50.width-50-mobile.flex-justify
             span.ml-10-mobile(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
             span.ml-10-mobile(ng-show="!state.endTime") You can cancel anytime.
-    .group.mtl
-      button.btn.button-primary.full(ng-if="!trading().verificationRequired" type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
-      button.btn.button-primary.full(ng-if="trading().verificationRequired" type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")
+    .group.mtl(ng-if="!trading().verificationRequired")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
+  .group.mtl(ng-if="trading().verificationRequired")
+    button.btn.button-primary.full(type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")

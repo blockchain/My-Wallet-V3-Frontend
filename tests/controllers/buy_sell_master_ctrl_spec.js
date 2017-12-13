@@ -42,6 +42,21 @@ describe('BuySellMasterController', () => {
     });
   };
 
+  beforeEach(function () {
+    MyWallet.wallet = {
+      hdwallet: {
+        defaultAccount: {
+          balance: 50
+        }
+      },
+      external: {
+        coinify: { user: false },
+        sfox: { user: false },
+        unocoin: { user: false },
+      }
+    }
+  })
+
   it('should set buy cta dismissed', () => {
     spyOn(cta, 'setBuyCtaDismissed');
     let ctrl = getController();

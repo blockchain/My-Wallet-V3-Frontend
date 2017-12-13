@@ -211,6 +211,10 @@
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
     "BODY": "@:BUY_SURVEY_OPENED.BODY"
   },
+  "SFOX_SELL_SURVEY": {
+    "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
+    "BODY": "@:SELL_SURVEY_OPENED.BODY"
+  },
   "UNOCOIN_TRADE_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
     "BODY": "@:BUY_SURVEY_OPENED.BODY"
@@ -1031,6 +1035,7 @@
   "RATE_WILL_EXPIRE": "Complete this trade before the rate expires to receive the guaranteed amount of bitcoin.",
   "RATE_GUARANTEED": "Rate guaranteed: {{::count}}",
   "QUOTE_EXPIRES_IN": "Quote expires in: {{::count}}",
+  "QUOTE_REFRESHES_IN": "Quote will refresh in {{::count}}",
   "NOT_FINISHED": "Not Finished",
   "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
   "SEE_BITCOIN": "See Your Bitcoin",
@@ -1292,6 +1297,10 @@
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
+  "SFOX_SELL_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
   "SHIFT_TRADE_SURVEY_PROMPT": {
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
@@ -1353,7 +1362,7 @@
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
-  "SELL_BTC_UNAVAIL_STATE": "Selling bitcoin is not yet available in your state. We'll be rolling out more states soon.",
+  "SELL_BTC_UNAVAIL_STATE": "Unfortunately selling bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "BTC_TX_FEE": "BTC Transaction Fee",
@@ -1519,13 +1528,14 @@
       "MOBILE": "Mobile",
       "PAN_CARD": "PAN Card",
       "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
-      "ADDRESS_LINE_1": "Address Line 1",
+      "ADDRESS_LINE_1": "Address Line 1 <span class='mid-grey'>(Please use your primary billing address)</span>",
       "ADDRESS_LINE_2": "Address Line 2",
       "STATE": "State",
       "CITY": "City",
       "PIN_CODE": "Pin Code",
       "BANK_ACCOUNT_NUMBER": "Bank Account Number",
-      "IFSC": "IFSC"
+      "IFSC": "IFSC",
+      "SETUP_PROFILE": "Setup your profile"
     },
     "ACTIONS": {
       "FINISH": "Finish Trade",
@@ -1832,23 +1842,26 @@
       "REQUIRED": "This bank account needs to be verified.",
       "CONTINUE": "Finalize Your Account Verification"
     },
+    "needs_exchange_rate_data": {
+      "EXPLAIN": "Loading exchange rates..."
+    },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
     },
     "can_sell": {
-      "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
+      "EXPLAIN": "Your remaining sell limit is <span class='pointer'>{{::max}} {{::curr}}</span>"
     },
     "sell": {
       "confirm": {
         "HEADER": "Confirm Sell Order",
-        "BODY": "Please review your trade details below. Click 'Confirm' to initiate your trade.",
+        "BODY": "Please review your trade details below. Click 'Confirm' to initiate.",
         "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
       },
       "processing": {
         "DISPLAY": "Pending",
-        "ACTION": "@:EXCHANGE.ACTIONS.FINISH",
-        "HEADER": "Sell Order Initiated",
-        "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days."
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "Sell Order in Progress",
+        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. <b>Your order ID is:</b> {{::tradeId}}"
       },
       "failed": {
         "DISPLAY": "Failed",
@@ -1865,18 +1878,29 @@
       "completed": {
         "DISPLAY": "Completed",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "HEADER": "Sell Order Completed!",
+        "HEADER": "Sell Order Completed",
         "BODY": "Your sell trade has successfully completed. Thank you for using Blockchain to trade your bitcoin."
       },
       "AMT": "Amount to Sell",
+      "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
-      "TO_BE_RECEIVED": "USD To Be Received"
+      "TRADING_FEE": "Trading Fee",
+      "TO_BE_RECEIVED": "USD To Be Received",
+      "INTRODUCING_HEADER": "Introducing Sell",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon."
+    },
+    "buy": {
+      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon."
     },
     "create": "Create Account",
     "verify": "Verify Identity",
     "upload": "Upload Documents",
-    "link": "Link Payment"
+    "link": "Link Bank",
+    "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX.",
+    "TRADING_FEE_HELPER": "The fee charged to execute a trade through SFOX.",
+    "BUY_COMING_SOON": "Now you can sell bitcoin directly from your Blockchain wallet!",
+    "BUY_COMING_SOON_DETAILS": "Don't worry, we're hard at work and soon you'll be able to buy too."
   },
   "HERE": "here",
   "TESTNET_WARNING": "WARNING! This is the testnet3 blockchain. Your coins have no value here.",
