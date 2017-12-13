@@ -53,6 +53,7 @@
                     accounts="accounts"
                     ng-model="transaction.destination"
                     ng-model-options="{ updateOn: 'blur' }"
+                    on-payment-request="applyPaymentRequest(request)"
                     ng-paste="handlePaste($event)"
                     ignore="transaction.from"
                     coin-code="'bch'"
