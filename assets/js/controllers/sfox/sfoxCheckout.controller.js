@@ -78,12 +78,13 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.state = {
     account: accounts[0],
-    buyLevel: exchange.profile && exchange.profile.verificationStatus.level,
-    trades: () => exchange.trades.filter((t) => t.txHash !== null)
+    buyLevel: exchange.profile && exchange.profile.verificationStatus.level
   };
 
+  $scope.pendingTrades = () => exchange.trades.filter((t) => t.state === 'processing');
+  $scope.completedTrades = () => exchange.trades.filter((t) => t.state !== 'processing');
+
   $scope.setState = () => {
-    $scope.state.trades = exchange.trades.filter((t) => t.txHash !== null);
     $scope.state.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
   };
 
