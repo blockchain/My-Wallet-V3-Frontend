@@ -110,11 +110,9 @@ describe('exchange-checkout.component', () => {
       scope.quote = mockQuote();
     });
 
-    it('should lock the scope while buying', () => {
+    it('should busy the scope while buying', () => {
       scope.trade();
-      expect(scope.locked).toEqual(true);
-      scope.$digest();
-      expect(scope.locked).toEqual(false);
+      expect(scope.busy).toEqual(true);
     });
 
     it('should reset the form fields after buying', () => {

@@ -64,7 +64,8 @@ describe('SfoxCheckoutController', () => {
           profile: {
             limits: { buy: 100, sell: 100 },
             verificationStatus: { level: 'verified' }
-          }
+          },
+          trades: []
         }
       };
 
@@ -83,7 +84,8 @@ describe('SfoxCheckoutController', () => {
           profile: { verificationStatus: { level: 'unverified' } },
           getBuyQuote () { return $q.resolve(mockQuote()); },
           getSellQuote () { return $q.resolve(mockQuote()); },
-          fetchProfile () { return $q.resolve(); }
+          fetchProfile () { return $q.resolve(); },
+          trades: []
         }
       }
     };
