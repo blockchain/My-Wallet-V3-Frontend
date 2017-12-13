@@ -3,6 +3,7 @@ angular
   .controller('SettingsBchAccountsController', SettingsBchAccountsController);
 
 function SettingsBchAccountsController ($scope, $stateParams, Wallet, Alerts, $uibModal, modals, BitcoinCash) {
+  $scope.refresh = $scope.$root.scheduleRefresh;
   $scope.bchAccounts = Wallet.my.wallet.bch.accounts;
   $scope.importedBch = Wallet.my.wallet.bch.importedAddresses;
   $scope.isDefaultBch = (account) => BitcoinCash.bch.defaultAccountIdx === account.index;

@@ -86,9 +86,9 @@
                   li
                     a(translate="MAKE_DEFAULT" ng-click="makeDefaultBch(bchAccount)" ng-hide="bchAccount.archived || isDefaultBch(bchAccount)")
                   li
-                    a(translate="ARCHIVE" ng-click="bchAccount.archived = true" ng-hide="bchAccount.archived || isDefaultBch(bchAccount)")
+                    a(translate="ARCHIVE" ng-click="bchAccount.archived = true; refresh()" ng-hide="bchAccount.archived || isDefaultBch(bchAccount)")
                   li
-                    a(translate="UNARCHIVE" ng-click="bchAccount.archived = false" ng-show="bchAccount.archived")
+                    a(translate="UNARCHIVE" ng-click="bchAccount.archived = false; refresh()" ng-show="bchAccount.archived")
                   li
                     a(translate="REVEAL_XPUB" ng-click="revealXpub(bchAccount)" ng-hide="bchAccount.archived")
           tr.responsive.width-100(ng-if="importedBch && importedBch.addresses.length")
