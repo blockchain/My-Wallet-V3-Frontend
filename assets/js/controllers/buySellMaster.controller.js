@@ -56,7 +56,7 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, 
     }
   });
 
-  $scope.$watch('defaultAccount.balance', (n, o) => { balance.amount = n; Exchange.setSellMax(balance); });
+  $scope.$watch('defaultAccount.balance', (n, o) => { Exchange.setSellMax(balance); });
 
   this.toNextState();
 }
