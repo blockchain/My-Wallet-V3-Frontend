@@ -136,9 +136,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
 
     let fee = payment ? payment.finalFee : tx.fee;
-    let amount = payment ? payment.amounts[0] : tx.amount;
+    let amount = payment ? payment.amounts[0] : Math.abs(tx.amount) - fee;
     let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
-    let totalAmount = amount + fee;
+    let totalAmount = payment ? amount + fee : Math.abs(tx.amount);
     let toBeReceived = quote
                        ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
                        : (trade.receiveAmount).toFixed(2);
