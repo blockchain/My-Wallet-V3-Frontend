@@ -90,6 +90,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   };
 
   $scope.setBankAccount = () => {
+    $scope.lock();
     let obj = {
       token: $scope.token,
       name: $scope.fields.accountName,
