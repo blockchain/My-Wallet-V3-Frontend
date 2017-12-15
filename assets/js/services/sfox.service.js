@@ -44,7 +44,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       else if (!service.verified) reason = 'needs_id';
       else if (!service.accounts.length) reason = 'needs_bank';
       else if (!service.activeAccount) reason = 'needs_bank_active';
-      else if (!service.min) reason = 'needs_exchange_rate_data';
+      else if (!service.min || !Exchange.sellMax) reason = 'needs_data';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
       else reason = 'can_sell';
       return reason;

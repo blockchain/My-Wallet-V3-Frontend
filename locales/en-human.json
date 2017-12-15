@@ -1552,7 +1552,7 @@
       "KYC": "Increase your limit."
     },
     "not_enough_funds_to_sell": {
-      "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell.",
+      "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell, not including the transaction fee.",
       "REQUEST": "@:REQUEST",
       "BUY": "@:BUY"
     },
@@ -1842,8 +1842,8 @@
       "REQUIRED": "This bank account needs to be verified.",
       "CONTINUE": "Finalize Your Account Verification"
     },
-    "needs_exchange_rate_data": {
-      "EXPLAIN": "Loading exchange rates..."
+    "needs_data": {
+      "EXPLAIN": "Loading balance info..."
     },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"

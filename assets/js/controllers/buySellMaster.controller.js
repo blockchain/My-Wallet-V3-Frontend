@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellMasterController', BuySellMasterController);
 
-function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, cta, balance) {
+function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, cta) {
   cta.setBuyCtaDismissed();
 
   this.base = 'wallet.common.buy-sell';
@@ -56,7 +56,8 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, 
     }
   });
 
-  $scope.$watch('defaultAccount.balance', (n, o) => { Exchange.setSellMax(balance); });
+  $scope.$watch('defaultAccount.balance', () =>
+    $scope.defaultAccount.getAvailableBalance('priority').then((balance) => Exchange.setSellMax(balance)));
 
   this.toNextState();
 }
