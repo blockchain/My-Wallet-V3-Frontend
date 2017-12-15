@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('WalletCtrl', WalletCtrl);
 
-function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, tradeStatus, modals, MyBlockchainApi, Ethereum, ShapeShift, coinify, unocoin, sfox, Env) {
+function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $interval, $ocLazyLoad, $state, $uibModalStack, $q, localStorageService, MyWallet, currency, $translate, $window, tradeStatus, modals, MyBlockchainApi, Ethereum, BitcoinCash, ShapeShift, coinify, unocoin, sfox, Env) {
   Env.then(env => {
     $scope.buySellDisabled = env.buySell.disabled;
     $scope.buySellDisabledReason = env.buySell.disabledReason;
@@ -183,7 +183,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $q.all(tasks)
       .catch(() => console.log('error refreshing'))
       .finally(() => {
-        $scope.$broadcast('refresh');
+        $rootScope.$broadcast('refresh');
         $timeout(() => $scope.refreshing = false, 500);
       });
   };
@@ -235,9 +235,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           modals.openSend(send);
           Wallet.goal.send = void 0;
         } else if (!Wallet.goal.firstLogin && Wallet.status.didUpgradeToHd) {
-          if (ShapeShift.userHasAccess && !Ethereum.hasSeen && !$rootScope.inMobileBuy) {
-            modals.openEthLogin();
+          if (!Ethereum.hasSeen && !$rootScope.inMobileBuy) {
+            modals.openCurrencyLogin('eth');
             Ethereum.setHasSeen();
+          } else if (!BitcoinCash.hasSeen && !$rootScope.inMobileBuy) {
+            modals.openCurrencyLogin('bch');
+            BitcoinCash.setHasSeen();
           } else {
             tradeStatus.canTrade().then((canTrade) => {
               if (tradeStatus.shouldShowBuyReminder() &&

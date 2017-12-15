@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SettingsAccountsController', SettingsAccountsController);
 
-function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad, modals) {
+function SettingsAccountsController ($scope, $stateParams, Wallet, Alerts, $uibModal, filterFilter, $ocLazyLoad, modals, BitcoinCash) {
   $scope.accounts = Wallet.accounts;
   $scope.activeSpendableAddresses = () => Wallet.legacyAddresses().filter(a => a.active && !a.isWatchOnly && a.balance > 0);
   $scope.openTransferAll = () => modals.openTransfer($scope.activeSpendableAddresses());
@@ -10,6 +10,11 @@ function SettingsAccountsController ($scope, Wallet, Alerts, $uibModal, filterFi
   $scope.display = {
     archived: false
   };
+
+  $scope.filterTypes = ['BITCOIN', 'BITCOIN CASH'];
+  $scope.isFilterType = (f) => $scope.filterType === f;
+  $scope.setFilterType = (f) => $scope.filterType = f;
+  $scope.setFilterType($stateParams.filter || 'BITCOIN');
 
   $scope.addressBookPresent = Wallet.addressBook().length;
   $scope.numberOfActiveAccounts = () => Wallet.accounts().filter(a => !a.archived).length;

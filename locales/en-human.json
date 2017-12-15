@@ -23,17 +23,25 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
-    "CAN_I_BUY_BTC": {
+    "HOW_DO_I_BUY": {
       "Q": "How do I buy bitcoin?",
-      "A": "It’s simple, secure and seamless. <a>{{::text | translate}}</a>"
+      "A": "We partner with exchanges across the world to make buying bitcoin easier for you. You can get started now by creating an account with our partner. Once your account has been verified, you can begin buying bitcoin with a bank transfer <a>{{::text | translate}}</a>."
     },
-    "CAN_I_BUY_ETH": {
-      "Q": "How do I buy ether?",
-      "A": "We're working on that! In the meantime, you can exchange your bitcoin for ether in the 'Exchange' tab of your wallet."
+    "HOW_DO_I_SELL": {
+      "Q": "How do I sell bitcoin?",
+      "A": "We partner with exchanges across the world to make selling bitcoin easier for you. You can get started now by creating an account with our partner. Once your account has been verified, you can selling bitcoin with a credit card or bank transfer <a>{{::text | translate}}</a>."
+    },
+    "HOW_DO_I_BUY_OR_SELL": {
+      "Q": "How do I buy or sell bitcoin?",
+      "A": "We partner with exchanges across the world to make buying and selling bitcoin easier for you. You can get started now by creating an account with our partner. Once your account has been verified, you can begin buying or selling bitcoin with a credit card or bank transfer <a>{{::text | translate}}</a>."
+    },
+    "HOW_DO_I_BUY_OR_SELL_UNSUPPORTED_CURRS": {
+      "Q": "How do I buy ether or Bitcoin Cash?",
+      "A": "We’re working on that! In the meantime, you can exchange bitcoin for ether or Bitcoin Cash in the <a>{{ ::text }}</a> of your wallet."
     },
     "CAN_I_BUY_UNINVITED": {
-      "Q": "Can I buy bitcoin?",
-      "A": "Blockchain works with exchange partners all around the world to make buying bitcoin in your wallet both a seamless and secure experience. To be the first to know when we launch in your region, <a>click here</a>."
+      "Q": "How do I buy bitcoin, ether, or Bitcoin Cash?",
+      "A": "We’re working on that! In the meantime, you can exchange between bitcoin, ether, and Bitcoin Cash in the <a>{{ ::text }}</a> of your wallet."
     },
     "WALLET_SAFETY": {
       "Q": "What do I need to do to keep my wallet safe?",
@@ -41,35 +49,27 @@
     },
     "WALLET_ID_VS_ADDRESS": {
       "Q": "What is the difference between a wallet ID and an address?",
-      "A": "A wallet ID is like a username, and it contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or under Wallet Information in Settings. Bitcoin{{showEthereum ? ' and ether' : ''}} addresses are what you share with others when you want to receive funds. To find your bitcoin{{showEthereum ? ' or ether' : ''}} address click on Request."
+      "A": "You can think of your wallet ID as a username that contains numbers, letters, and dashes. It is only used to log into your wallet and should be kept private. Your wallet ID can be found in the welcome email we sent you when you created your wallet or in Settings -> General. Addresses are what you share with others when you want to receive funds. To find your bitcoin, ether, or Bitcoin Cash address click on Request."
     },
-    "HOW_TO_TRANSACT_BTC": {
-      "Q": "How do I receive/send bitcoin?",
-      "A": "To receive bitcoin, the sender needs your bitcoin address. Our wallet will automatically generate a new address for each transaction you want to make. Click on Request and copy the address to share with the sender. To send bitcoin, click Send, enter the recipient’s bitcoin address in the ‘To’ field and how much you want to send."
-    },
-    "HOW_TO_TRANSACT_ETH": {
-      "Q": "How do I receive/send ether?",
-      "A": "To receive ether, the sender needs your ether address (which is different from your bitcoin address). Simply click on ‘Request’ and select 'Ether' in the currency field to find your ether address. Copy the address and share it with the sender. To send ether, click ‘Send’ and select 'Ether' in the currency field, then enter the recipient’s ether address in the ‘To’ field along with how much you want to send."
+    "HOW_TO_TRANSACT": {
+      "Q": "How do I receive/send funds?",
+      "A": "To receive funds, the sender needs your address. Your wallet will automatically generate a new address for each bitcoin or Bitcoin Cash transaction you make. For all ether transactions, your address will remain the same. Click on ‘Request’, select the currency you’d like to receive from the dropdown, and copy the address to share with the sender. To send funds, click ‘Send’, select the currency you want to send from the dropdown, and enter the recipient’s address in the ‘To’ field and how much you want to send."
     },
     "HOW_MUCH_TO_SEND": {
-      "Q": "How much does it cost to send bitcoin{{showEthereum ? ' or ether' : ''}}?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin {{showEthereum ? 'and Ethereum networks' : 'network'}}. To ensure your transactions confirm consistently and reliably, our wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under Customize Fee."
+      "Q": "How much does it cost to send funds?",
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin, Ethereum, and Bitcoin Cash networks. To ensure your transactions confirm consistently and reliably, your wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under 'Customize Fee."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
-      "Q": "How do I know a transaction has been successfully received/sent?",
-      "A": "Transactions will appear almost instantly in your transaction feed which you can find in your bitcoin{{showEthereum ? ' and ether' : ''}} dashboards (by clicking on the corresponding currency on the left navigation of the wallet). {{showEthereum ? 'While your' : 'Your'}} bitcoin transaction is considered complete once it has 3 network confirmations{{showEthereum ? ', your ether transaction will be considered complete once it has 12 confirmations' : ''}}. This typically takes about 30 minutes{{showEthereum ? ' for bitcoin and 5 minutes for ether' : ''}}, but can vary. Until then your transaction will show up as pending."
+      "Q": "How do I know if a transaction has been successfully received/sent?",
+      "A": "Transactions will appear almost instantly in your transaction feed which you can find by clicking on the corresponding currency on the left navigation of your wallet. While your bitcoin and Bitcoin Cash transactions are considered complete once they have 3 network confirmations, your ether transactions will be considered complete after 12 confirmations. This typically takes about 30 minutes for bitcoin and Bitcoin Cash and 5 minutes for ether, but can vary. Until then your transaction will show up as pending."
     },
     "CAN_BC_SEE_FUNDS": {
       "Q": "Can Blockchain see or access my funds?",
-      "A": "We are a noncustodial wallet and do not have access to your funds. This means we cannot view your total balance, make payments on your behalf, or prevent you from accessing your wallet. With a Blockchain wallet, you retain complete ownership of your bitcoin{{showEthereum ? ' and ether' : ''}}."
+      "A": "We are a noncustodial wallet and therefore do not have access to your funds. This means we cannot view your balances, make payments on your behalf, or prevent you from accessing your wallet. With your Blockchain wallet, you retain complete ownership of your funds."
     },
     "CAN_BC_RESET_PW": {
       "Q": "Can Blockchain reset my password?",
-      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to our Security Center to get yours and make sure you store it somewhere secure and never share it."
-    },
-    "BITCOIN_CASH_ABOUT": {
-      "Q": "How can I access Bitcoin Cash?",
-      "A": "If you had Bitcoin in your wallet prior to the fork on August 1, 2017, you can access your Bitcoin Cash in Settings > General. If not, ignore this message. "
+      "A": "At Blockchain, we’re committed to letting customers maintain full control of their funds. In that spirit, we never see or store your password, so we can’t reset it for you. However, we do provide users a backup phrase that can be used to restore access to your funds. Head over to your <a>{{::text | translate}}</a> to find yours. Make sure you store it somewhere secure and never share it."
     }
   },
   "SETTINGS": "Settings",
@@ -138,6 +138,7 @@
   "RECEIVE_BITCOIN" : "Receive",
   "START_RECEIVING_ETHER": "start receiving ether",
   "RECEIVE_TO" : "Receive To:",
+  "REQUEST_TO": "Request To",
   "AMOUNT" : "Amount",
   "PAID" : "Paid:",
   "BITCOIN_ADDRESS" : "Bitcoin Address for Your Next Transaction",
@@ -266,7 +267,7 @@
   "CANCEL_EDIT_NOTE" : "Cancel",
   "WALLET_RECOVERY_PHRASE" : "Wallet Recovery Phrase",
   "RECOVERY_PHRASE" : "Recovery Phrase",
-  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing bitcoins{{showEthereum ? ' and ether' : ''}} as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
+  "RECOVERY_PHRASE_EXPLAIN" : "Your recovery phrase can be used to restore all your funds in the case of a lost password or a loss of service at Blockchain. Note, that the recovery phrase never changes and recovers all of your existing funds as well as newly received funds in this wallet. Please note that imported addresses are not backed up by the wallet recovery phrase. We strongly recommend to transfer funds from imported addresses into this wallet.",
   "CONFIRM_RECOVERY_PHRASE" : "Backup Phrase",
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
@@ -596,6 +597,7 @@
   "PLEASE_TRY_AGAIN" : "Please try different filtering criteria or drop us a line by <a>Contacting Support</a>",
   "TRY_AGAIN": "Try Again",
   "DESCRIBE_TRANSACTIONS" : " Transactions occur when you receive and send bitcoin.",
+  "DESCRIBE_TRANSACTIONS_BCH" : " Transactions occur when you receive and send Bitcoin Cash.",
   "DESCRIBE_TRANSACTIONS_ETH" : "Transactions occur when you receive and send ether",
   "WEB_ONLY_ETH" : "Note: Ether is currently only available in your web wallet. Your transactions won't be visible in your mobile wallet.",
   "HIT_RECEIVE" : "Click <b class='pointer black em-500'><i class='bc-icon-receive'></i> Receive </b> to deposit bitcoin into your wallet.",
@@ -620,7 +622,7 @@
   "RESET_FORM" : "Reset Form",
   "REGULAR_SEND" : "Regular Send",
   "TX_FEE" : "Transaction Fee",
-  "TX_FEE_REQUIRED": "Transaction Fee (required by Bitcoin miners)",
+  "TX_FEE_REQUIRED": "Transaction fees cover the mining network cost to ensure transaction confirmation. Blockchain recommends a fee based on current network conditions.",
   "TX_FEE_HELP": "Transaction fees impact how quickly the Bitcoin mining network will confirm your transactions, and depend on the current network conditions. We recommend the fee below for this transaction at this time.",
   "TX_FEE_EXPLAINATION": "Bitcoin miners receive fees for verifying transactions. We set fees dynamically based on network conditions and transaction size. You can customize your fee in advanced send.",
   "TX_FEE_EXPLAINATION_ETH": "Miners received this fee to process this transaction",
@@ -689,6 +691,7 @@
   "SCAN_QR_CODE" : {
     "TITLE": "Scan QR Code",
     "HELPER": "Ask the sender to scan this QR code with their bitcoin wallet.",
+    "BCH_HELPER": "Ask the sender to scan this QR code with their Bitcoin Cash wallet.",
     "ETH_HELPER": "Ask the sender to scan this QR code with their ether wallet"
   },
   "HINT_STORED" : "Hint Stored",
@@ -980,6 +983,7 @@
   "COPY_AND_SHARE_ADDRESS": {
     "TITLE": "Copy & Share Address",
     "HELPER": "Share this address with others, and they can send you BTC directly to your wallet. Your address changes with every payment. You can also create a request by attaching an amount below.",
+    "BCH_HELPER": "Share this address with others, and they can send you BCH directly to your wallet. Your address changes with every payment.",
     "ETH_HELPER": "Share this address with others, and they can send you ETH directly to your wallet. Your request address will not change."
   },
   "COPY_AND_SHARE_IMPORTED_ADDRESS": {
@@ -1080,7 +1084,7 @@
   },
   "TX_INITIATED": {
     "TITLE": "Trade Initiated",
-    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 {{::time}}."
+    "BODY": "An email confirmation will be sent to {{::email}}.<br>You can expect your BTC in 3-5 days."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "Bitcoin received!",
@@ -1875,8 +1879,9 @@
     "link": "Link Payment"
   },
   "HERE": "here",
-  "TESTNET_WARNING": "Warning! This is a Testnet wallet. Your coins have no value here.",
-  "YOUR_BALANCES": "YOUR BALANCES",
+  "TESTNET_WARNING": "WARNING! This is the testnet3 blockchain. Your coins have no value here.",
+  "YOUR_BALANCES": "Your Balances",
+  "PRICE_CHARTS": "Price Charts",
   "WELCOME_TO_ETHER": "Welcome to ether!",
   "WHAT_IS_ETH_HEADER": "What is ether?",
   "GET_STARTED_WITH_ETHER": "Get started with ether",
@@ -1910,7 +1915,6 @@
     "CONFIRM_EXCHANGE": "Confirm Exchange Order",
     "QUOTE_EXPIRES_IN_HELPER": "This rate will expire after 10 minutes. If that happens please restart your trade.",
     "CONFIRM_DEPOSIT_AMOUNT": "Review the details below and click 'Confirm' to begin your exchange. The exchanged funds will be deposited directly into {{::to}}.",
-    "CONFIRM_DEPOSIT_AMOUNT_BCH": "<b>{{::deposit | format:input:true}}</b> will be sent directly from {{::from}} and exchanged for <b>{{::withdrawal | format:output:true}}</b> to be deposited into {{::to}}. The process can take up to two hours and you can keep track of your Exchange progress in the Bitcoin Cash area of Settings.",
     "TO_DEPOSIT": "<span class='capitalize'>{{::input}}</span> to Deposit",
     "TO_RECEIVE": "<span class='capitalize'>{{::output}}</span> to be Received",
     "INPUT_DEPOSITED": "<span class='capitalize'>{{::input}}</span> Deposited",
@@ -1926,7 +1930,6 @@
     "NO_FUNDS_TO_EXCHANGE": "Not enough funds to exchange",
     "EXCHANGE_IN_PROGRESS": "Exchange In Progress",
     "EXCHANGE_IN_PROGRESS_EXPLAIN": "Thanks for placing your trade!  Exchange trades can take up to two hours, and you can keep track of your trade’s progress in the Order History tab.",
-    "EXCHANGE_IN_PROGRESS_EXPLAIN_BCH": "Thanks for placing your trade!  Exchange trades can take up to two hours, and you can keep track of your trade’s progress in the Bitcoin Cash area of Settings.",
     "ORDER_SUMMARY": "Order Summary",
     "SENDING_FUNDS": "Sending Funds",
     "FUNDS_SENT": "Funds Sent",
@@ -1945,13 +1948,11 @@
       "received": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
-        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "Pending"
       },
       "no_deposits": {
         "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
         "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
-        "BODY_BCH": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN_BCH",
         "STATE": "In Progress"
       },
       "resolved": {
@@ -1972,41 +1973,37 @@
     "KYC_REJECTED": "Your daily limit is {{ ::dailyLimit }} {{ ::currency }}. To try and verify your identification again, click here",
     "HOW_LVL_3": "To increase your daily limit further, you must complete a transaction of at least 1,000 EUR. 14 days after the transaction completes, your daily limit will increase and your yearly limit will be uncapped."
   },
-  "WE_LISTENED": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
-  "NOW_SUPPORTING_ETHER": "Now Supporting Ether!",
   "EXCHANGED": "Exchanged",
   "TO_BE_RECEIVED": "To Be Received",
   "VIEW_DETAILS": "View Details",
   "GENERAL": "General",
   "BITCOIN_CASH": {
-    "SEE_BALANCE": "See Bitcoin Cash Balance",
-    "ABOUT_1": "What is Bitcoin Cash?",
-    "ABOUT_1_ANSWER": "Bitcoin Cash was created after a hard fork in the Bitcoin block chain and implemented an increased block size of 8mb with the goal of confirming transactions even faster. All bitcoin holders as of August 1, 2017 (block 478558) became owners of an identical amount of Bitcoin Cash.",
-    "ABOUT_2": "How is Bitcoin Cash different from bitcoin?",
-    "ABOUT_2_ANSWER": "Bitcoin (BTC) and Bitcoin Cash (BCH) are two different currencies. However, the addresses used for transacting (sending and receiving BTC and BCH) look exactly the same. It’s important to confirm that you’re using the correct currency’s address when transacting BTC/BCH.",
-    "ABOUT_3": "What can I do with my Bitcoin Cash?",
-    "ABOUT_3_ANSWER": "You can use BCH like any other cryptocurrency. You can use your Blockchain wallet to store your BCH, send all of your funds to a BCH wallet, or exchange it for bitcoin and/or ether.",
-    "ABOUT_4": "Where can I see my Bitcoin Cash balance?",
-    "ABOUT_4_ANSWER": "You can see your balance at: Settings > General.",
-    "ABOUT_5": "Will Bitcoin Cash affect my bitcoin balance?",
-    "ABOUT_5_ANSWER": "No, bitcoin and Bitcoin Cash are two separate currencies, completely independent of each other. You can send or exchange your Bitcoin Cash without changing your bitcoin balance.",
-    "KEEP": "Keep Bitcoin Cash",
-    "EXCHANGE": "Exchange Bitcoin Cash",
+    "TITLE": "Bitcoin Cash",
+    "WHATS_NEW": "You can now send, receive, exchange, and manage wallets with Bitcoin Cash!",
     "SEND": "Send Bitcoin Cash",
-    "ADDRESSES": "Even though Bitcoin Cash addresses and bitcoin addresses look the same, they are different. <b>If you send Bitcoin Cash to a bitcoin address, your funds will be lost.</b><br><br><b>Are you sure the address below is a Bitcoin Cash address?</b>",
-    "YES_IT_IS": "Yes, it is",
-    "SENDING_ALL": "All of your Bitcoin Cash will be sent to the receiving address in a single transaction. Double check that you are using a Bitcoin Cash address and not a bitcoin address. Sending Bitcoin Cash to a bitcoin address will result in the permanent loss of your Bitcoin Cash funds.",
-    "FAQ_GET_STARTED": "Or click here to see the about and get started.",
-    "BCH_IN_WALLET": "Bitcoin Cash",
-    "BCH_WHATS_NEW": "If you had bitcoin in your wallet before August 1, 2017, you can now access Bitcoin Cash via Settings > General.",
-    "BCH_BALANCE": "Bitcoin Cash Balance",
-    "CONFIRM_ADDRESS": "Confirm Bitcoin Cash Address"
+    "ALL_WALLETS": "All Bitcoin Cash Wallets",
+    "GET_STARTED": "Get Started With Bitcoin Cash",
+    "WELCOME_TO": "Welcome to Bitcoin Cash",
+    "VERIFY_ADDRESS": "Are you sure this is a Bitcoin Cash address? Sending funds to a bitcoin address by accident will result in loss of funds.",
+    "WHAT_IS_BCASH": {
+      "HEADER": "What is Bitcoin Cash?",
+      "BODY": "Bitcoin Cash is a form of peer-to-peer electronic cash that was created after a fork of the Bitcoin block chain in August 2017. Bitcoin Cash has since grown to be one of the top cryptocurrencies, along with bitcoin and ether."
+    },
+    "HOW_TO_GET": {
+      "HEADER": "How Do I Get Bitcoin Cash?",
+      "BODY": "If you had bitcoin in your Blockchain wallet before the fork in August, you already have Bitcoin Cash. If you're new to Blockchain, you can get started with Bitcoin Cash by exchanging bitcoin or ether."
+    },
+    "PLEASE_NOTE": "<b>Please note:</b> For now, Bitcoin Cash will only be supported in your web wallet. Support in your mobile wallet is coming soon!"
   },
   "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
   "BITCOIN_CASH_INFO_NO_EXCHANGE": "You can use your Blockchain wallet to store your Bitcoin Cash, or send all of your funds to a Bitcoin Cash wallet.",
   "EXCHANGE_STATUS": "Exchange Status",
   "SEND_ETHER": "Send Ether",
   "SEND_BITCOIN_CASH": "Send Bitcoin Cash",
+  "TRANSFER_BITCOIN_CASH": "Transfer Bitcoin Cash",
+  "REQUEST_BITCOIN": "Request Bitcoin",
+  "REQUEST_ETHER": "Request Ether",
+  "REQUEST_BITCOIN_CASH": "Request Bitcoin Cash",
   "ALL_ADDRESSES": "All Addresses",
   "VIEW_TXS": "View Transactions",
   "HIDE_TXS": "Hide Transactions",
@@ -2026,7 +2023,30 @@
   "SUBSCRIPTION_ID": "Recurring Order ID",
   "RECURRING_BUY": "Recurring Buy",
   "RECURRING_BUY_WHATS_NEW": "You can now create recurring buy orders in your Blockchain Wallet!",
+  "VIEW_ALL_BALANCES": "View All Balances",
   "BANK_TRANSFERS_DISABLED": "Bank transfers are disabled while identity verification is pending.<br><a>Click here to finish/complete verification</a>",
+  "BALANCES": {
+    "TOTAL": "Total Balance",
+    "btc": "Bitcoin Balance",
+    "eth": "Ether Balance",
+    "bch": "Bitcoin Cash Balance"
+  },
+  "btc": {
+    "ALL_WALLETS": "All Bitcoin Wallets",
+    "IMPORTED_ADDRESSES": "Imported Bitcoin Addresses",
+    "ADDRESS_INVALID": "Invalid Bitcoin Address"
+  },
+  "eth": {
+    "NOW_SUPPORTING": "Now Supporting Ether!",
+    "ANNOUNCEMENT": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!"
+  },
+  "bch": {
+    "ALL_WALLETS": "All Bitcoin Cash Wallets",
+    "IMPORTED_ADDRESSES": "Imported Bitcoin Cash Addresses",
+    "NOW_SUPPORTING": "Now Supporting Bitcoin Cash!",
+    "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today.",
+    "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
+  },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
   "": ""
 }

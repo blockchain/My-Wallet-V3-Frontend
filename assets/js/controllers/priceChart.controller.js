@@ -11,6 +11,8 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   const FIVEDAY = 5 * 24 * 60 * 60;
   const BTCSTART = 1282089600;
   const ETHSTART = 1438992000;
+  const BCHSTART = 1500854400;
+  const startMap = { 'btc': BTCSTART, 'eth': ETHSTART, 'bch': BCHSTART };
 
   $scope.BTCCurrency = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
   $scope.cachedState = localStorageService.get('chart');
@@ -57,17 +59,59 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
       $scope.handleNoData();
       return;
     }
-    $scope.options = {};
 
-    $scope.options.data = chartData.map(data => parseFloat(data.price));
-
+    let fiatCurrency = Wallet.settings.currency.code;
+    let fiatSymbol = currency.conversions[fiatCurrency]['symbol'];
     let date = new Date(chartData[0]['timestamp'] * 1000);
 
-    $scope.options.year = date.getFullYear();
-    $scope.options.month = date.getMonth();
-    $scope.options.day = date.getDate();
-    $scope.options.hour = date.getHours();
-    $scope.options.interval = $scope.timeHelpers[$scope.state.time]['interval'];
+    $scope.options = {
+      title: { text: null },
+      chart: { height: 230 },
+      yAxis: {
+        title: {
+          text: null
+        },
+        labels: {
+          formatter: function () {
+            return fiatSymbol + this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          }
+        },
+        lineWidth: 1,
+        gridLineWidth: 0
+      },
+      xAxis: {
+        type: 'datetime',
+        tickWidth: 0,
+        labels: {
+          style: {
+            color: 'gray'
+          }
+        }
+      },
+      plotOptions: {
+        series: {
+          color: '#10ADE4'
+        },
+        line: {
+          marker: {
+            enabled: false
+          }
+        }
+      },
+      tooltip: {
+        pointFormat: fiatSymbol + '{point.y}'
+      },
+      credits: { enabled: false },
+      legend: { enabled: false },
+      series: [
+        {
+          name: 'Price',
+          data: chartData.map(data => parseFloat(data.price)),
+          pointStart: Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()),
+          pointInterval: $scope.timeHelpers[$scope.state.time]['interval']
+        }
+      ]
+    };
 
     $scope.options.timeFetched = Date.now();
     $scope.options.state = $scope.state;
@@ -93,21 +137,29 @@ function PriceChartController ($scope, MyBlockchainApi, Wallet, currency, localS
   const fetchChart = options => MyBlockchainApi.getPriceChartData(options).then($scope.handleChart, handleChartError);
 
   $scope.getStartDate = () => {
+    let base = $scope.state.base;
     let d = new Date();
+    let start;
 
     switch ($scope.state.time) {
       case '1month':
-        return d.setMonth(d.getMonth() - 1) / 1000 | 0;
+        start = d.setMonth(d.getMonth() - 1) / 1000 | 0;
+        break;
       case '1week':
-        return d.setDate(d.getDate() - 7) / 1000 | 0;
+        start = d.setDate(d.getDate() - 7) / 1000 | 0;
+        break;
       case '1day':
-        return d.setDate(d.getDate() - 1) / 1000 | 0;
+        start = d.setDate(d.getDate() - 1) / 1000 | 0;
+        break;
       case '1year':
-        return d.setFullYear(d.getFullYear() - 1) / 1000 | 0;
+        start = d.setFullYear(d.getFullYear() - 1) / 1000 | 0;
+        break;
       case 'all':
-        if ($scope.state.base === 'btc') return BTCSTART;
-        if ($scope.state.base === 'eth') return ETHSTART;
+        start = startMap[base];
+        break;
     }
+
+    return start >= startMap[base] ? start : startMap[base];
   };
 
   $scope.$watch('settings.currency', next => $scope.state.quote = next.code);

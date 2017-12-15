@@ -31,6 +31,10 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.hideAlert = () => $scope.showAlert = false;
   $scope.hideAlertBanner = () => $scope.showAlertBanner = false;
 
+  $scope.accounts = Wallet.accounts().filter(a => !a.archived);
+  $scope.addresses = Wallet.legacyAddresses().filter(a => !a.archived);
+  $scope.addressBook = Wallet.addressBook().map(format.addressBook);
+
   $scope.sending = false;
   $scope.advanced = false;
   $scope.building = false;

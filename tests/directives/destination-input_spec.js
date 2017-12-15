@@ -39,7 +39,7 @@ describe('Destination Input directive', () => {
   );
 
   beforeEach(function () {
-    element = $compile('<destination-input ng-model="transaction" ignore="ignore"></destination-input>')($rootScope);
+    element = $compile('<destination-input coin-code="btc" ng-model="transaction" ignore="ignore"></destination-input>')($rootScope);
     $rootScope.$digest();
     isoScope = element.isolateScope();
     return isoScope.$digest();
@@ -57,13 +57,14 @@ describe('Destination Input directive', () => {
   it('should trigger onPaymentRequest', inject(function ($timeout) {
     spyOn(isoScope, 'onPaymentRequest');
     let result = 'bitcoin:valid_btc_address';
+    isoScope.coinCode = 'btc';
     isoScope.onAddressScan(result);
     $timeout.flush();
     expect(isoScope.onPaymentRequest).toHaveBeenCalled();
   })
   );
 
-  it('should hide the dropdown when there is one account and no active addresses', () => expect(isoScope.dropdownHidden).toEqual(true));
+  it('should hide the dropdown when there is one account and no active addresses', () => expect(isoScope.dropdownHidden).toEqual(false));
 
-  it('should have the correct number of destinations', () => expect(isoScope.destinations.length).toEqual(2));
+  it('should have the correct number of destinations', () => expect(isoScope.destinations.length).toEqual(0));
 });

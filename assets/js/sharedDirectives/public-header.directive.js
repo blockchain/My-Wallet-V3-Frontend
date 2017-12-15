@@ -74,7 +74,6 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
   function link (scope, elem, attrs) {
     Env.then(env => {
       scope.rootURL = env.rootURL;
-      scope.isTestnet = env.network === 'testnet';
     });
 
     scope.$watch(languages.get, (code) => {

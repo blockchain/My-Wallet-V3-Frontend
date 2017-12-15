@@ -10,7 +10,7 @@ form.bc-form(
       .mv-20.ph-30.no-padding-mobile
         shift-progress(shift="trade")
       .f-13.mb-20
-        span(translate="{{ trade.error || 'SHIFT.TRADE.' + trade.status + (input === 'bch' ? '.BODY_BCH' : '.BODY') }}"
+        span(translate="{{ trade.error || 'SHIFT.TRADE.' + trade.status + '.BODY' }}"
              ng-show="isCheckout || trade.isResolved || trade.isFailed"
              translate-values="{output: human[output]}")
         span(translate="{{ 'SHIFT.TRADE.' + trade.status + '.BODY' }}"

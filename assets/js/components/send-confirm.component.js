@@ -4,6 +4,7 @@ angular
     bindings: {
       tx: '<',
       asset: '<',
+      locked: '<',
       onSend: '&',
       onGoBack: '&'
     },
@@ -24,9 +25,9 @@ function SendConfirmController (Wallet, currency, $rootScope) {
   this.btcCurr = currency.bitCurrencies[0];
 
   this.getButtonContent = () => {
-    if (this.asset === 'bch') return 'SEND_BITCOIN_CASH';
     if (this.asset === 'eth') return 'SEND_ETHER';
     if (this.asset === 'btc') return this.tx.destination.type !== 'External' ? 'TRANSFER_BITCOIN' : 'SEND_BITCOIN';
+    if (this.asset === 'bch') return this.tx.destination.type !== 'External' ? 'TRANSFER_BITCOIN_CASH' : 'SEND_BITCOIN_CASH';
   };
 
   this.size = $rootScope.size;

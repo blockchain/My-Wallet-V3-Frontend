@@ -29,17 +29,17 @@
             ng-click="setFilterType($index)"
             ng-class="{'active': isFilterType($index)}"
             translate="{{::f}}")
-      .flex-center.flex-end(ng-hide="legacyAccount")
-        a.f-12.pointer.mh-15.button-nowrap(ng-click="exportEthPriv({legacy: false})")
+      .flex-center.flex-end
+        a.f-12.pointer.mh-15.button-nowrap(ng-click="exportEthPriv({legacy: false})" ng-hide="legacyAccount")
           span Export Private Key
-      .flex-center.flex-end.dropdown(uib-dropdown ng-show="legacyAccount")
-        a.f-12.mh-15(href="#" uib-dropdown-toggle)
-          span Private Keys
-        ul(uib-dropdown-menu)
-          li
-            a(ng-click="exportEthPriv({legacy: false})") Export Private Key
-          li
-            a(ng-click="exportEthPriv({legacy: true})") Export Archived Private Key
+        .dropdown(uib-dropdown ng-show="legacyAccount")
+          a.f-12.mh-15(href="#" uib-dropdown-toggle)
+            span Private Keys
+          ul(uib-dropdown-menu)
+            li
+              a(ng-click="exportEthPriv({legacy: false})") Export Private Key
+            li
+              a(ng-click="exportEthPriv({legacy: true})") Export Archived Private Key
         .filter-search.input-group.width-60
           input.form-control(
             type="text"
@@ -56,25 +56,25 @@
               i.pointer.ti-close.f-14(ng-click="dismissWelcome()")
         .flex-row
           .flex-1.mr-25.hidden-sm.hidden-xs
-            img.half-eth.opacity-3.hidden-sm.hidden-md.hidden-xs(src="img/half-ether.svg")
+            img.half-curr.opacity-3.hidden-sm.hidden-md.hidden-xs(src="img/half-ether.svg")
           .flex-column
-            .flex.flex-justify-mobile
-              .get-started-ether.width-90.bg-primary.bg-primary.pv-10.ph-25-mobile.width-90-tablet
-                a.width-100.flex-center.flex-justify(ng-click="onClickCta()")
-                  i.icon-ExchangeTab.mr-10
-                  span.upper.em-600.f-16.white(translate="GET_STARTED_WITH_ETHER")
             .flex-row.flex-column-mobile.pv-20-mobile
               .flex-column.flex-center.col-md-3.col-xs-12.flex-baseline.flex-justify.pln.flex-center-mobile
                 span.upper.f-28.em-300.blue.pb-5(translate="WELCOME_TO_ETHER")
                 a(href="https://www.blockchain.com/ether-basics" target="_blank" rel="noopener noreferrer")
                   span.upper(translate="LEARN_MORE")
                   i.icon-right_arrow.f-12.pl-5
-              .flex-column.col-md-4.col-xs-12.pt-20.pb-25
-                span.border-bottom.upper.f-18.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHAT_IS_ETH_HEADER")
-                span.f-16.em-300(translate="WHAT_IS_ETHER")
-              .flex-column.col-md-4.col-xs-12.pt-20.pb-25
-                span.border-bottom.upper.f-18.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHY_SHOULD_I_USE_ETHER_HEADER")
-                span.f-16.em-300(translate="WHY_SHOULD_I_USE_ETHER")
+              .flex-column.col-md-4.col-xs-12.pt-10.pb-25
+                span.border-bottom.upper.f-16.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHAT_IS_ETH_HEADER")
+                span.f-12.em-300(translate="WHAT_IS_ETHER")
+              .flex-column.col-md-4.col-xs-12.pt-10.pb-25
+                span.border-bottom.upper.f-16.em-300.blue.mb-10.width-90.pb-5.pt-5(translate="WHY_SHOULD_I_USE_ETHER_HEADER")
+                span.f-12.em-300(translate="WHY_SHOULD_I_USE_ETHER")
+            .flex.flex-justify-mobile
+              .get-started.width-90.bg-primary.bg-primary.pv-10.ph-25-mobile.width-90-tablet.mb-25
+                a.width-100.flex-center.flex-justify(ng-click="onClickCta()")
+                  i.icon-ExchangeTab.mr-10
+                  span.upper.em-600.f-16.white(translate="GET_STARTED_WITH_ETHER")
       .flex-column.mbl.border-bottom.black.ph-25.center.mtvl
         .flex-center.flex-justify
           i.icon-tx.h3.mrm

@@ -6,5 +6,5 @@ div.amountTotal.em-400.amount.flex-center.flex-justify(
     'unconfirmed' : $ctrl.tx.confirmations < 3 \
   }" ng-click="$ctrl.toggle()")
   span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")
-  fiat(bch="$ctrl.fromSatoshi($ctrl.absolute($ctrl.tx.amount), $ctrl.bchCurrency)" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
-  span(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.absolute($ctrl.tx.amount) | convert:'bch':true }}
+  fiat(bch="$ctrl.absolute($ctrl.tx.amount)" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
+  span.no-wrap(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.absolute($ctrl.tx.amount) | convert:'bch':true }}

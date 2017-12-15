@@ -76,7 +76,7 @@ function transformCurrency (currency) {
         fiat = currency.convertFromEther(modelValue, scope.transformCurrency);
       } else if (currency.isBchCurrency(scope.baseCurrency)) {
         if (currency.isBchCurrency(scope.transformCurrency)) fiat = currency.convertFromSatoshi(modelValue, scope.transformCurrency);
-        else fiat = currency.convertFromBitcoinCash(modelValue / 1e8, scope.transformCurrency);
+        else fiat = currency.convertFromBitcoinCash(modelValue, scope.transformCurrency);
       } else {
         fiat = currency.convertFromSatoshi(modelValue, scope.transformCurrency);
       }

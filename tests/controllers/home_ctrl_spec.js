@@ -22,6 +22,15 @@ describe('HomeCtrl', () => {
             { label: "Partay", index: 3, archived: true, balance: 50 }
           ]
         },
+        eth: {
+          balance: 1
+        },
+        bch: {
+          balance: 1,
+          accounts: [
+            { label: "Checking", index: 0, archived: false, balance: 0 }
+          ]
+        },
         keys: [
           { label: 'Imported', archived: false, balance: 10 }
         ]
@@ -42,6 +51,23 @@ describe('HomeCtrl', () => {
       }
       );
     });
+  });
+
+  describe('totals', () => {
+    it('should return total balance of currency', () => {
+      expect(scope.btc.total()).toBe(1)
+      expect(scope.eth.total()).toBe(0)
+      expect(scope.bch.total()).toBe(1)
+    });
+  });
+
+  describe('isWalletInitialized()', () => {
+    it('should return a boolean', () => {
+      Wallet.status.isLoggedIn = true;
+      Wallet.status.didLoadSettings = true;
+      Wallet.status.didLoadTransactions = true;
+      expect(scope.isWalletInitialized()).toBe(true);
+    })
   });
 
   describe('activeAccounts()', () => {
@@ -75,8 +101,4 @@ describe('HomeCtrl', () => {
     })
     );
   });
-
-  describe('getTotal()', () =>
-    it('should return total', () => expect(scope.getTotal()).toEqual(1))
-  );
 });

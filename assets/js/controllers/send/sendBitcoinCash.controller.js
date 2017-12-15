@@ -2,42 +2,30 @@ angular
   .module('walletApp')
   .controller('SendBitcoinCashController', SendBitcoinCashController);
 
-function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format) {
+function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWallet, Wallet, Alerts, currency, format, BitcoinCash) {
   let feePerByte;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  Env.then((res) => {
-    feePerByte = res.bcash.feePerByte;
+  $scope.transaction = {
+    amount: null
+  };
 
-    $scope.wallet.getAvailableBalance(feePerByte).then((balance) => {
-      $scope.transaction.amount = balance.amount;
-      $scope.transaction.fee = balance.sweepFee;
-    });
-  });
-
-  $scope.steps = enumify('send-cash', 'send-address', 'send-confirm');
+  $scope.steps = enumify('send-cash', 'send-confirm');
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
   $scope.goTo('send-cash');
-  $scope.goBack = () => $scope.onStep('send-confirm') ? $scope.goTo('send-address') : $scope.goTo('send-cash');
 
-  $scope.isValidAddress = Wallet.isValidAddress;
-  $scope.wallet = $scope.vm.asset.account;
+  $scope.forms = {};
+  $scope.originsLoaded = true;
+  $scope.accounts = BitcoinCash.accounts.filter((a) => !a.archived);
+  $scope.origins = $scope.accounts.concat(MyWallet.wallet.bch.importedAddresses);
+  $scope.transaction.from = MyWallet.wallet.bch.defaultAccount;
 
-  $scope.transaction = {};
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.bchCurrency = currency.bchCurrencies[0];
   $scope.fiatCurrency = Wallet.settings.currency;
-
-  $scope.onAddressScan = (result) => {
-    let address = Wallet.parsePaymentRequest(result);
-    if (Wallet.isValidAddress(address.address)) {
-      $scope.transaction.destination = format.destination(address, 'External')['address'];
-    } else {
-      throw new Error('BITCOIN_ADDRESS_INVALID');
-    }
-  };
+  $scope.isValidAddress = Wallet.isValidAddress;
 
   const transactionSucceeded = (tx) => {
     $rootScope.scheduleRefresh();
@@ -48,16 +36,36 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   };
 
   const transactionFailed = (error) => {
-    Alerts.displayError(error.error || error.message);
+    Alerts.displayError(error || error.error || error.message);
+    $scope.free();
+  };
+
+  $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
+    let numAccts = BitcoinCash.accounts.filter(a => !a.archived).length;
+    let numAddrs = MyWallet.wallet.bch.importedAddresses ? MyWallet.wallet.bch.importedAddresses.addresses.length : 0;
+    return numAccts + numAddrs;
+  };
+
+  $scope.applyPaymentRequest = (paymentRequest, i) => {
+    let destination = {
+      address: paymentRequest.address || '',
+      label: paymentRequest.address || '',
+      type: 'External'
+    };
+    $scope.transaction.destination = destination;
   };
 
   $scope.send = () => {
+    let addr;
     let tx = $scope.transaction;
-    let payment = $scope.wallet.createPayment();
+    let payment = $scope.transaction.from.createPayment();
+
+    if (isNaN(tx.destination.index)) addr = tx.destination.address;
+    else addr = BitcoinCash.accounts[tx.destination.index].receiveAddress;
 
     $scope.lock();
 
-    payment.to(tx.destination);
+    payment.to(addr);
     payment.amount(tx.amount);
     payment.feePerByte(feePerByte);
     payment.build();
@@ -69,6 +77,38 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     Wallet.askForSecondPasswordIfNeeded().then(signAndPublish)
       .then(transactionSucceeded).catch(transactionFailed);
   };
+
+  $scope.getTransactionTotal = (includeFee) => {
+    let tx = $scope.transaction;
+    let fee = includeFee ? tx.fee : 0;
+    return parseInt(tx.amount, 10) + parseInt(fee, 10);
+  };
+
+  $scope.useAll = () => {
+    $scope.transaction.amount = $scope.transaction.maxAvailable;
+  };
+
+  Env.then((res) => {
+    feePerByte = res.bcash.feePerByte;
+
+    $scope.setMax = () => {
+      $scope.transaction.from.getAvailableBalance(feePerByte).then((balance) => {
+        $scope.transaction.fee = balance.sweepFee;
+        $scope.transaction.maxAvailable = balance.amount;
+      }).catch((err) => {
+        console.log(err);
+        $scope.transaction.maxAvailable = 0;
+      });
+    };
+
+    $scope.$watch('transaction.from', $scope.setMax);
+  });
+
+  $scope.$watch('transaction.destination', (destination) => {
+    if (destination == null) return;
+    let valid = destination.index == null ? Wallet.isValidAddress(destination.address) : true;
+    $scope.forms.sendForm.destination.$setValidity('isValidAddress', valid);
+  }, true);
 
   AngularHelper.installLock.call($scope);
 }

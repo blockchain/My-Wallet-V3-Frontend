@@ -16,7 +16,7 @@ describe('Transaction Status Directive', () => {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
 
-    $rootScope.transaction = {confirmations: 2};
+    $rootScope.transaction = {confirmations: 2, coinCode: 'btc'};
 
   })
   );

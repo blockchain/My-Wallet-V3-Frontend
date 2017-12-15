@@ -67,7 +67,12 @@ function bitcoinTransactionsCtrl ($scope, AngularHelper, $q, $translate, $uibMod
       activeIndex: () => {
         let idx = $scope.filterBy.account.index;
         return isNaN(idx) ? 'imported' : idx.toString();
-      }
+      },
+      accts: () => ({
+        accounts: Wallet.accounts().filter(a => !a.archived && a.index !== null),
+        addresses: Wallet.legacyAddresses().filter(a => !a.archived).map(a => a.address)
+      }),
+      coinCode: () => 'btc'
     }
   });
 

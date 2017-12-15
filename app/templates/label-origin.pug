@@ -4,5 +4,5 @@ span
     ng-bind-html="($ctrl.origin.label || $ctrl.origin.address) | escapeHtml | highlight:$ctrl.highlight"
     translate="no")
 span(ng-hide="$ctrl.simple && $ctrl.origin.type !== 'Accounts'")
-  span(ng-hide="$ctrl.origin.balance == null") &ensp;({{ $ctrl.origin.balance | convert }})&ensp;
+  span(ng-hide="$ctrl.origin.balance == null") &ensp;({{ $ctrl.origin.balance | convert:$ctrl.origin.coinCode }})&ensp;
   span.label.label-default(ng-show="$ctrl.origin.isWatchOnly" translate="WATCH_ONLY")

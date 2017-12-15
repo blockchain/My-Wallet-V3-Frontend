@@ -59,6 +59,7 @@ app.use(function (req, res, next) {
         rootURL,
         (webSocketURL || 'wss://ws.blockchain.info'),
         (webSocketURL || 'wss://ws.blockchain.info/inv').replace('/inv', '/eth/inv'),
+        (webSocketURL || 'wss://ws.blockchain.info/inv').replace('/inv', '/bch/inv'),
         (apiDomain || 'https://api.blockchain.info'),
         'https://api.sfox.com',
         'https://shapeshift.io',

@@ -1,4 +1,4 @@
-form.bc-form(
+form.bc-form.shift-create(
   name="forms.shiftForm"
   ng-submit="getSendAmount()"
   novalidate
@@ -12,20 +12,20 @@ form.bc-form(
       span.pr-30.flex-row.flex-center.no-padding-mobile(translate="Step 1 of 2")
     .ph-30.ph-10-mobile.pv-20-mobile
       .group.inline.mb-30
-        .item.width-50.width-50-tablet.width-50-mobile.pr-15.no-padding-mobile
+        .item.width-45.width-45-tablet.width-45-mobile.pr-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".EXCHANGE_FROM")
           ui-select.asset-select(ng-model="$ctrl.from" name="$ctrl.from" ng-change="setWallet('from', 'to')" ng-disabled="$ctrl.wallet")
             ui-select-match
               i.pr-5(ng-class="cryptoCurrencyMap[$ctrl.from.coinCode].icon")
               span {{ $ctrl.from.altLabel || $ctrl.from.label }}
-            ui-select-choices(repeat="account in $ctrl.origins")
+            ui-select-choices(repeat="account in $ctrl.origins" group-by="$ctrl.isGrouped && $ctrl.coinGroup" ng-class="{'is-grouped': $ctrl.isGrouped}")
               i.pr-5(ng-class="cryptoCurrencyMap[account.coinCode].icon")
-              span {{ account.altLabel || account.label }}
+              span(ng-bind-html="account.label | highlight: $select.search") {{ account.altLabel || account.label }}
         .flex-center.flex-justify.pt-30
           .switch.fade(ng-if="$ctrl.wallet")
           .switch.pointer(ng-if="!$ctrl.wallet" ng-click="switch()")
-        .item.width-50.width-50-tablet.width-50-mobile.ml-15.pl-15.no-padding-mobile
+        .item.width-45.width-45-tablet.width-45-mobile.ml-15.pl-15.no-padding-mobile
           .flex-between.flex-baseline.mbs
             span.f-16.em-600.colon(translate=".RECEIVE")
           .flex-center
@@ -33,9 +33,9 @@ form.bc-form(
               ui-select-match
                 i.pr-5(ng-class="cryptoCurrencyMap[$ctrl.to.coinCode].icon")
                 span {{ $ctrl.to.altLabel || $ctrl.to.label }}
-              ui-select-choices(repeat="destination in $ctrl.destinations")
+              ui-select-choices(repeat="destination in $ctrl.destinations" group-by="$ctrl.isGrouped && $ctrl.coinGroup" ng-class="{'is-grouped': $ctrl.isGrouped}")
                 i.pr-5(ng-class="cryptoCurrencyMap[destination.coinCode].icon")
-                span {{ destination.altLabel || destination.label }}
+                span(ng-bind-html="destination.label | highlight: $select.search") {{ destination.altLabel || destination.label }}
       fieldset(ng-disabled="maxAvailable < state.rate.min")
         .group
           .item
