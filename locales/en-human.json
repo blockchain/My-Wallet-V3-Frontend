@@ -209,7 +209,7 @@
   },
   "SFOX_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
-    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+    "BODY": "You're just a few steps away from verifying your account, are you sure you want to stop?"
   },
   "SFOX_SELL_SURVEY": {
     "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
