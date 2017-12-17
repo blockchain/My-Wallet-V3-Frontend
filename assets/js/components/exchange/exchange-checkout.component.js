@@ -120,13 +120,10 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   };
 
   $scope.setMax = () => {
-    let { fiat, bitcoin } = $scope;
-    let curr = this.fiatLimits ? fiat : bitcoin;
-    let field = this.fiatLimits ? 'fiat' : 'btc';
-
-    state.baseCurr = curr;
-    state[field] = this.limits(state.rate).max;
-    $timeout(() => $scope.refreshIfValid(field), 10);
+    let { fiat } = $scope;
+    state.baseCurr = fiat;
+    state['fiat'] = $scope.max.fiat;
+    $timeout(() => $scope.refreshIfValid('fiat'), 10);
   };
 
   $scope.trade = () => {
@@ -148,7 +145,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         .finally($scope.resetFields).finally(() => $scope.busy = false);
     } else {
       $q.resolve(this.onSuccess({quote, frequency, endTime}))
-        .then($scope.resetFields).finally($scope.free);
+        .then($scope.resetFields).finally(() => $scope.busy = false);
     }
   };
 
@@ -160,8 +157,9 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       let rate = state.rate;
       let limits = this.limits(rate);
       let baseFiat = this.fiatLimits;
-      $scope.min = { fiat: baseFiat ? limits.min : limits.min * rate, btc: baseFiat ? limits.min / rate : limits.min };
-      $scope.max = { fiat: baseFiat ? limits.max : limits.max * rate, btc: baseFiat ? limits.max / rate : limits.max };
+      let format = (amt, dec) => parseFloat(amt.toFixed(dec));
+      $scope.min = { fiat: baseFiat ? limits.min : format(limits.min * rate, 2), btc: baseFiat ? format(limits.min / rate, 8) : limits.min };
+      $scope.max = { fiat: baseFiat ? limits.max : format(limits.max * rate, 2), btc: baseFiat ? format(limits.max / rate, 8) : limits.max };
     });
   });
   $scope.$watch('state.btc', () => !state.baseFiat && $scope.refreshIfValid('btc'));
