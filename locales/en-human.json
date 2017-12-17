@@ -1507,7 +1507,7 @@
     "NOTIFY_ME_WHEN_AVAIL": "Notify Me When This Becomes Available",
     "CREATE": {
       "ACCOUNT": "Create Your {{::exchange}} Account",
-      "ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
+      "ACCOUNT_EXPLAIN": "Accept Terms & Conditions to create your {{::exchange}} account.",
       "VERIFY_EMAIL": "Verify Email Address",
       "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
       "VERIFY_EMAIL_REMINDER": "",
