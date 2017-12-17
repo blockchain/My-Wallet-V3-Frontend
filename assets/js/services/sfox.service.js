@@ -49,6 +49,11 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       else reason = 'can_sell';
       return reason;
     },
+    get sellLaunchOptions () {
+      let reason = service.sellReason;
+
+      if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest };
+    },
     buy,
     sell,
     init,

@@ -1552,7 +1552,7 @@
     },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell, not including the transaction fee.",
-      "REQUEST": "@:REQUEST",
+      "REQUEST": "@:REQUEST_BITCOIN",
       "BUY": "@:BUY"
     },
     "can_sell_max": {
@@ -1845,7 +1845,8 @@
       "EXPLAIN": "Loading balance info..."
     },
     "not_enough_funds_to_sell": {
-      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
+      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN",
+      "REQUEST": "@:REQUEST_BITCOIN"
     },
     "can_sell": {
       "EXPLAIN": "Your remaining sell limit is <span class='pointer'>{{::max}} {{::curr}}</span>"
