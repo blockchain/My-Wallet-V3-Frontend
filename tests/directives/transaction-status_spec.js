@@ -5,7 +5,7 @@ describe('Transaction Status Directive', () => {
   let isoScope;
 
   beforeEach(module('walletDirectives'));
-  
+
   // Load the myApp module, which contains the directive
   beforeEach(module('walletApp'));
 

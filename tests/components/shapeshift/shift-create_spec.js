@@ -222,5 +222,48 @@ describe('shift-create.component', () => {
         expect(scope.refreshIfValid).toHaveBeenCalled();
       });
     });
+
+    describe('switch()', () => {
+      it('should switch to and from', () => {
+        let temp = scope.$ctrl.from;
+        scope.switch();
+        expect(scope.state.rate.min).toBe(0);
+        expect(scope.$ctrl.to).toBe(temp);
+      });
+    });
+
+    describe('setWallet(direction, change)', () => {
+      it('should set the min rate to 0', () => {
+        scope.setWallet('to', 'from');
+        expect(scope.state.rate.min).toBe(0);
+      });
+
+      it('should determine selection', () => {
+        scope.setWallet('to', 'from');
+        expect(scope.$ctrl.from.coinCode).toBe('btc');
+      });
+    });
+
+    describe('setMin()', () => {
+      it('should set the input amount to the min rate', () => {
+        scope.setMin();
+        expect(scope.state.input.amount).toBe(scope.state.rate.min);
+      });
+    });
+
+    describe('setMax()', () => {
+      it('should set the input amount to the max available', () => {
+        scope.setMax();
+        expect(scope.state.input.amount).toBe(scope.state.rate.max);
+      });
+    });
+
+    describe('getAvailableBalance()', () => {
+      it('should call getAvailableBalance with a fee parameter', () => {
+        spyOn(scope.$ctrl.from, 'getAvailableBalance');
+        scope.getAvailableBalance();
+        expect(scope.$ctrl.from.getAvailableBalance).toHaveBeenCalledWith('priority');
+      });
+    });
   });
 });

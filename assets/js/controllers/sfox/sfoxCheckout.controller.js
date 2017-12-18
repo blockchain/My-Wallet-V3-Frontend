@@ -27,6 +27,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.selling = sfox.selling;
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
+
   $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote)
     .then(submitTx)
     .then(enableSiftScience)
@@ -35,6 +36,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
   $scope.getRate = () => $scope.sellQuoteHandler(1e8, 'BTC', $scope.dollars.code).then(setRate);
   $scope.getRate().then(() => sfox.setSellMin($scope.sellLimits($scope.rate).min));
+
   $scope.updateRate = (quote) => $scope.rate = quote.rate;
 
   $scope.sellLimits = (rate) => {
