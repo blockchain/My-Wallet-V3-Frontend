@@ -32,7 +32,7 @@
               helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
             input(ng-model="fields.accountName" name="accountName" focus-when="state.bankAccounts" required)
             span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
-        button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid") Add Account
+        button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid || locked") Add Account
 
   .width-60.flex-justify(ng-hide="state.bankAccounts" id="wallet")
     .width-90.width-100-tablet.width-100-mobile
@@ -47,31 +47,31 @@
       .mvvl(ng-if="!inMobileBuy")
         span.or-horizontal.flex-justify(translate="OR")
       button.btn.button-primary-inverse.full(translate="Manually Enter Account & Routing Numbers" ng-hide="state.enableBankAccountForm" ng-click="state.enableBankAccountForm = true")
-      form.bc-form(name="bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
+      form.bc-form(name="forms.bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
         fieldset(ng-disabled="locked")
           .group.full.mb-30
             .item
               label Name on Account
                 helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
               input(ng-model="fields.accountName" name="accountName" focus-when="state.enableBankAccountForm" required)
-              span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
+              span.error(ng-hide="forms.bankAccountForm.accountName.$error.value" translate="Required field")
           .group.full.mb-30
             .item
               label Routing Number
                 button.helper(ng-click="openHelper('bank-check-helper')" type="button" tabindex="-1")
                   span ?
-              input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(bankAccountForm, 'routingNumber')" required)
-              span.error(ng-hide="bankAccountForm.routingNumber.$error.value" translate="Required field")
-            .help(ng-show="bankAccountForm.routingNumber.$error.value")
+              input(ng-model="fields.routingNumber" name="routingNumber" ng-change="clearInlineErrors(forms.bankAccountForm, 'routingNumber')" required)
+              span.error(ng-hide="forms.bankAccountForm.routingNumber.$error.value" translate="Required field")
+            .help(ng-show="forms.bankAccountForm.routingNumber.$error.value")
               span.state-danger-text Invalid routing number.
           .group.full.mb-30
             .item
               label Account Number
                 button.helper(ng-click="openHelper('bank-check-helper')" type="button" tabindex="-1")
                   span ?
-              input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(bankAccountForm, 'accountNumber')" required)
-              span.error(ng-hide="bankAccountForm.accountNumber.$error.value" translate="Required field")
-            .help(ng-show="bankAccountForm.accountNumber.$error.value")
+              input(ng-model="fields.accountNumber" name="accountNumber" ng-change="clearInlineErrors(forms.bankAccountForm, 'accountNumber')" required)
+              span.error(ng-hide="forms.bankAccountForm.accountNumber.$error.value" translate="Required field")
+            .help(ng-show="forms.bankAccountForm.accountNumber.$error.value")
               span.state-danger-text Invalid account number.
           .group.full.mb-30
             label Account Type
@@ -81,7 +81,7 @@
               ui-select-choices(repeat="type in types")
                 span.capitalize(ng-bind-html="type")
           .group.full
-            button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid") Add Account
+            button.btn.button-primary.full(type="submit" ng-disabled="bankAccountForm.$invalid || locked") Add Account
 .flex-row.flex-column-tablet(ng-show="state.accounts.length")
   .width-40
     .width-80
@@ -90,7 +90,7 @@
         button.helper(ng-click="openHelper('bank-deposit-helper')" type="button" tabindex="-1")
           span ?
       .mbl
-        span.f-16(translate="To verify your bank account details, SFOX will send two mirco-deposits to your account. These deposits will be in the amount of a few cents. Once received, you can return to this screen to enter the amounts.<br/><br/>Please note: Receiving these deposits can take 1-3 business days.")
+        span.f-16(translate="To verify your bank account details, SFOX will send two micro-deposits to your account. These deposits will be in the amount of a few cents. Once received, you can return to this screen to enter the amounts.<br/><br/>Please note: Receiving these deposits can take 1-3 business days.")
   .width-60.flex-justify
     form.bc-form.width-90.width-100-tablet.width-100-mobile(name="verifyBankAccountForm" ng-submit="verify()" novalidate autocomplete="off")
       fieldset(ng-disabled="locked")
@@ -109,5 +109,5 @@
               span.error(ng-hide="verifyBankAccountForm.deposit1.$error.value" translate="Required field")
         .row
           .col-md-12
-            button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid") Verify
+            button.btn.button-primary.full(type="submit" ng-disabled="verifyBankAccountForm.$invalid || locked") Verify
             a.display-block.center.mtl(ng-click="$dismiss()") Finish Later

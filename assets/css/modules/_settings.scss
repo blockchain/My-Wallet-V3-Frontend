@@ -196,6 +196,12 @@ table.accounts-container {
   border-left: 5px solid $blue;
 }
 
+div.well {
+  margin-bottom: 0px;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
 .setting-result {
   @extend .prn;
 }

@@ -58,7 +58,7 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;
     let sfox = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
-    $scope.canBuy = tradeStatus.canTrade() && !sfox;
+    tradeStatus.canTrade().then(canTrade => { $scope.canBuy = canTrade && !sfox; });
   });
 
   $scope.openRequest = modals.openRequest;

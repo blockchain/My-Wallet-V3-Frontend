@@ -31,8 +31,10 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
     bankAccount: undefined
   };
 
+  $scope.forms = {};
+
   $scope.displayInlineError = (error) => {
-    let bankForm = $scope.$$childHead.bankAccountForm;
+    let bankForm = $scope.forms.bankAccountForm;
     let verifyForm = $scope.$$childHead.verifyBankAccountForm;
     switch (sfox.interpretError(error)) {
       case 'must provide routing number':
@@ -88,6 +90,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   };
 
   $scope.setBankAccount = () => {
+    $scope.lock();
     let obj = {
       token: $scope.token,
       name: $scope.fields.accountName,

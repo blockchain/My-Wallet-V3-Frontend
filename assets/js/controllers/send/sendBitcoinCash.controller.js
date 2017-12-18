@@ -27,15 +27,6 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.fiatCurrency = Wallet.settings.currency;
   $scope.isValidAddress = Wallet.isValidAddress;
 
-  $scope.onAddressScan = (result) => {
-    let address = Wallet.parsePaymentRequest(result, 'bch');
-    if (Wallet.isValidAddress(address.address)) {
-      $scope.transaction.destination = format.destination(address, 'External')['address'];
-    } else {
-      throw new Error('BITCOIN_ADDRESS_INVALID');
-    }
-  };
-
   const transactionSucceeded = (tx) => {
     $rootScope.scheduleRefresh();
     $scope.free();
@@ -46,12 +37,22 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   const transactionFailed = (error) => {
     Alerts.displayError(error || error.error || error.message);
+    $scope.free();
   };
 
   $scope.numberOfActiveAccountsAndLegacyAddresses = () => {
     let numAccts = BitcoinCash.accounts.filter(a => !a.archived).length;
     let numAddrs = MyWallet.wallet.bch.importedAddresses ? MyWallet.wallet.bch.importedAddresses.addresses.length : 0;
     return numAccts + numAddrs;
+  };
+
+  $scope.applyPaymentRequest = (paymentRequest, i) => {
+    let destination = {
+      address: paymentRequest.address || '',
+      label: paymentRequest.address || '',
+      type: 'External'
+    };
+    $scope.transaction.destination = destination;
   };
 
   $scope.send = () => {

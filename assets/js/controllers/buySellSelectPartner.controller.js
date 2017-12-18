@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('BuySellSelectPartnerController', BuySellSelectPartnerController);
 
-function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, tradeStatus, modals, Env) {
+function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWallet, coinify, country, state, tradeStatus, modals, Env, sfox) {
   tradeStatus.canTrade().then((canTrade) => {
     if (!canTrade) {
       $state.go('wallet.common.home');
@@ -61,6 +61,13 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     coinify.signupForAccess(email, country, state);
   };
 
+  $scope.signupForSellAccess = () => {
+    let email = encodeURIComponent($scope.email);
+    let state = $scope.country.Code === 'US' ? $scope.state.Name : undefined;
+
+    sfox.signupForSellAccess(email, state);
+  };
+
   $scope.selectPartner = (partner, countryCode) => {
     $scope.status = { busy: true };
     $state.go($scope.vm.base + partner.route, { countryCode })
@@ -76,6 +83,9 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
   $scope.onStateWhitelist = (stateCode) => (
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
+
+  $scope.dismissSellIntro = sfox.dismissSellIntro;
+  $scope.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
 
   Env.then(env => {
     let email = MyWallet.wallet.accountInfo.email;
