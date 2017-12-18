@@ -2,7 +2,7 @@ angular
   .module('walletDirectives')
   .directive('transactionDescription', transactionDescription);
 
-function transactionDescription ($translate, Wallet, MyWallet, coinify, unocoin, Labels, ShapeShift) {
+function transactionDescription ($translate, Wallet, MyWallet, coinify, unocoin, sfox, Labels, ShapeShift) {
   const directive = {
     restrict: 'E',
     replace: false,
@@ -73,11 +73,20 @@ function transactionDescription ($translate, Wallet, MyWallet, coinify, unocoin,
     scope.txWatchOnly = scope.getTxWatchOnly(scope.tx);
 
     if (external) {
-      if (external.coinify) scope.exchange = 'Coinify';
-      if (external.coinify) coinify.init(external.coinify).then(() => scope.txMethod = coinify.getTxMethod(scope.tx.hash));
+      if (external.coinify.user) {
+        scope.exchange = 'Coinify';
+        coinify.init(external.coinify).then(() => scope.txMethod = coinify.getTxMethod(scope.tx.hash));
+      }
 
-      if (external.unocoin) scope.exchange = 'Unocoin';
-      if (external.unocoin) unocoin.init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
+      if (external.unocoin.user) {
+        scope.exchange = 'Unocoin';
+        unocoin.init(external.unocoin).then(() => scope.txMethod = unocoin.getTxMethod(external.unocoin, scope.tx.hash));
+      }
+
+      if (external.sfox.user) {
+        scope.exchange = 'SFOX';
+        sfox.init(external.sfox).then(() => scope.txMethod = sfox.getTxMethod(scope.tx.hash));
+      }
     }
 
     scope.$watch('tx.confirmations', () => {

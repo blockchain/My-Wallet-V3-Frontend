@@ -64,7 +64,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     dismissSellIntro,
     hasDismissedSellIntro,
     signupForBuyAccess,
-    signupForSellAccess
+    signupForSellAccess,
+    getTxMethod
   };
 
   angular.extend(service, Exchange);
@@ -172,6 +173,11 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
         tip: () => console.log('Clicked tooltip')
       }
     };
+  }
+
+  function getTxMethod (hash) {
+    let trade = service.exchange.trades.filter((t) => t.txHash === hash)[0];
+    return trade && (trade.isBuy ? 'buy' : 'sell');
   }
 
   function signupForBuyAccess (email, state) {
