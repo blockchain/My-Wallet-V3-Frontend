@@ -1849,7 +1849,7 @@
       "REQUEST": "@:REQUEST_BITCOIN"
     },
     "can_sell": {
-      "EXPLAIN": "Your remaining sell limit is <span class='pointer'>{{::max}} {{::curr}}</span>"
+      "EXPLAIN": "Your remaining sell limit is <span class='pointer primary'>{{::max}} {{::curr}}</span>, not including the fee."
     },
     "sell": {
       "confirm": {
