@@ -36,7 +36,11 @@ describe('Transaction Description Directive', () => {
     MyWallet.wallet = {
       external: {
         addCoinify () {},
-        coinify: {}
+        coinify: {
+          user: '12ab'
+        },
+        unocoin: {},
+        sfox: {}
       }
     };
 
