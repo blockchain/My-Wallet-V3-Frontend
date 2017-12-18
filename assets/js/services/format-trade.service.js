@@ -56,11 +56,12 @@ function formatTrade ($rootScope, $filter, Wallet, MyWallet, currency, Env) {
   function pending (trade) { return service.reviewing(trade); }
 
   let addTradeDetails = (trade, account) => {
+    let tradeIdPrefix = trade.inCurrency === 'INR' ? 'UCN-' : 'CNY-';
     let showTradeID = !account;
     let showTradeSubscription = trade.tradeSubscriptionId;
     let transaction = {
-      'TRADE_ID': showTradeID ? '#' + trade.id : null,
-      'SUBSCRIPTION_ID': showTradeSubscription ? `#${trade.tradeSubscriptionId}` : null,
+      'TRADE_ID': showTradeID ? '#' + tradeIdPrefix + trade.id : null,
+      'SUBSCRIPTION_ID': showTradeSubscription ? `#CNYR-${trade.tradeSubscriptionId}` : null,
       'DATE_INITIALIZED': $filter('date')(trade.createdAt, 'd MMMM yyyy, HH:mm'),
       'BTC_PURCHASED': currency.formatCurrencyForView(trade.receiveAmount, currency.bitCurrencies[0], true),
       'PAYMENT_METHOD': account ? account.accountType + ' ' + account.accountNumber : null,

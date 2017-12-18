@@ -92,7 +92,7 @@ function unocoin ($q, $uibModalStack, Alerts, modals, Env, Exchange, MyWallet, c
     return {
       id: {
         key: '.ID',
-        val: '#' + trade.id
+        val: '#UCN-' + trade.id
       },
       date: {
         key: '.DATE',
