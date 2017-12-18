@@ -209,7 +209,7 @@
   },
   "SFOX_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
-    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+    "BODY": "You're just a few steps away from verifying your account, are you sure you want to stop?"
   },
   "SFOX_SELL_SURVEY": {
     "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
@@ -1266,7 +1266,6 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
-  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "SUBSCRIBE": "Subscribe",
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1508,7 +1507,7 @@
     "NOTIFY_ME_WHEN_AVAIL": "Notify Me When This Becomes Available",
     "CREATE": {
       "ACCOUNT": "Create Your {{::exchange}} Account",
-      "ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
+      "ACCOUNT_EXPLAIN": "Accept Terms & Conditions to create your {{::exchange}} account.",
       "VERIFY_EMAIL": "Verify Email Address",
       "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
       "VERIFY_EMAIL_REMINDER": "",
@@ -1553,7 +1552,7 @@
     },
     "not_enough_funds_to_sell": {
       "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell, not including the transaction fee.",
-      "REQUEST": "@:REQUEST",
+      "REQUEST": "@:REQUEST_BITCOIN",
       "BUY": "@:BUY"
     },
     "can_sell_max": {
@@ -1846,7 +1845,8 @@
       "EXPLAIN": "Loading balance info..."
     },
     "not_enough_funds_to_sell": {
-      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
+      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN",
+      "REQUEST": "@:REQUEST_BITCOIN"
     },
     "can_sell": {
       "EXPLAIN": "Your remaining sell limit is <span class='pointer'>{{::max}} {{::curr}}</span>"
