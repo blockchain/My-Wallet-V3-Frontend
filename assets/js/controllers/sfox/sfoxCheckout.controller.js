@@ -16,7 +16,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   let exchange = $scope.vm.external.sfox;
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
-  let enableSiftScience = () => { $scope.siftScienceEnabled = true; };
+  let enableSiftScience = () => $q.resolve($scope.siftScienceEnabled = true);
+  let fetchTransactions = () => MyWallet.wallet.getHistory();
 
   $scope.steps = enumify('state-select', 'create', 'confirm', 'receipt');
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
@@ -30,6 +31,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote)
     .then(submitTx)
+    .then(fetchTransactions)
     .then(enableSiftScience)
     .catch((e) => Alerts.displayError(e));
 

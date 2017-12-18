@@ -35,7 +35,7 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
     let quote = this.quote;
 
     this.handleTrade({quote: quote})
-      .then(this.onSuccess)
+      .then(() => this.onSuccess())
       .catch((err) => { Alerts.displayError(Exchange.interpretError(err)); })
       .finally($scope.free);
   };
