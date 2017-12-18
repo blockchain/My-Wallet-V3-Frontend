@@ -12,8 +12,6 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     completed: ['expired', 'rejected', 'cancelled', 'completed', 'completed_test']
   };
 
-  let txHashes = {};
-
   const service = {
     get exchange () {
       return MyWallet.wallet.external.coinify;
@@ -87,7 +85,10 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
       if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest, 'BUY': service.goToBuy };
     },
     states,
-    getTxMethod: (hash) => txHashes[hash] || null,
+    getTxMethod: (hash) => {
+      let trade = service.trades.filter((t) => t.txHash === hash)[0];
+      return trade && (trade.isBuy ? 'buy' : 'sell');
+    },
     tradeStateIn: (states) => (t) => states.indexOf(t.state) > -1,
     goToBuy: () => $state.go('wallet.common.buy-sell.coinify', {selectedTab: 'BUY_BITCOIN'})
   };
