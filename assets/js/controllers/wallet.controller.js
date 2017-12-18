@@ -183,7 +183,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
     $q.all(tasks)
       .catch(() => console.log('error refreshing'))
       .finally(() => {
-        $scope.$broadcast('refresh');
+        $rootScope.$broadcast('refresh');
         $timeout(() => $scope.refreshing = false, 500);
       });
   };
@@ -214,7 +214,8 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         tradeStatus.canTrade().then((canTrade) => {
-          let template = canTrade && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+          let countryGuess = MyWallet.wallet.accountInfo.countryCodeGuess;
+          let template = canTrade && !$scope.buySellDisabled && countryGuess !== 'US' ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',

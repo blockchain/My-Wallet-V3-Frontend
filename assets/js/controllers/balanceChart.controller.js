@@ -3,6 +3,10 @@ angular
   .controller('BalanceChartController', BalanceChartController);
 
 function BalanceChartController ($scope, $state, Wallet, currency) {
+  $scope.conversions = currency.conversions;
+  $scope.ethConversions = currency.ethConversions;
+  $scope.bchConversions = currency.bchConversions;
+
   let fiat = Wallet.settings.currency;
   let cryptoMap = currency.cryptoCurrencyMap;
 
@@ -91,4 +95,7 @@ function BalanceChartController ($scope, $state, Wallet, currency) {
   };
 
   $scope.$watchGroup(['btc.total()', 'eth.total()', 'bch.total()'], $scope.handleChart);
+  $scope.$watchCollection('conversions', () => $scope.handleChart());
+  $scope.$watchCollection('ethConversions', () => $scope.handleChart());
+  $scope.$watchCollection('bchConversions', () => $scope.handleChart());
 }

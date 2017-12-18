@@ -45,9 +45,9 @@
               bc-phone-number.mr-15(ng-model="$ctrl.state.mobile" name="mobile" preferred-countries="us ca gb au" ng-disabled="true")
               i.icon-success.security-green.f-24(ng-if="$ctrl.state.verifiedMobile")
         .group.pb-20
-          .item.check
+          .flex-row.multi-line-check
             input#terms(type="checkbox" ng-model="$ctrl.state.terms" name="terms" required)
-            label(for="terms")
+            label.em-300(for="terms")
               | I accept Blockchain's 
               a.em-500(href="https://www.blockchain.com/terms" translate="TERMS_OF_SERVICE" target="_blank" rel="noopener noreferrer")
               | , {{$ctrl.name}}'s 

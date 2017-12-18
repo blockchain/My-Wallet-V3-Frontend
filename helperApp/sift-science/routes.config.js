@@ -5,6 +5,10 @@ function RoutesConfig ($routeProvider) {
       controller: 'MainController',
       template: ''
     })
+    .when('/key/:apiKey/user/:userId', {
+      controller: 'SiftController',
+      template: ''
+    })
     .when('/key/:apiKey/user/:userId/trade/:tradeId', {
       controller: 'SiftController',
       template: ''

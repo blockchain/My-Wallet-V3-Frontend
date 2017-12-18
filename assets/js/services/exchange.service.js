@@ -38,6 +38,7 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
   }
 
   function classHelper (trade) {
+    if (!trade) return '';
     let success = ['completed', 'completed_test'];
     let failure = ['cancelled', 'rejected', 'failed', 'expired'];
     let pending = ['awaiting_transfer_in', 'awaiting_reference_number', 'processing', 'reviewing', 'pending', 'ready'];

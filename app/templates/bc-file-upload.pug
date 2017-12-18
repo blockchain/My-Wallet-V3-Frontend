@@ -2,7 +2,8 @@ div
   .flex-row.flex-between.flex-center(ng-hide="$root.inMobileBuy && !browserWithCamera")
     label.f-14.colon(ng-hide="state.webcam.active" translate="{{base + '.UPLOAD.' + idType}}.UPLOAD_SELECT")
     label.f-14.colon(ng-show="state.webcam.active" translate="{{base + '.UPLOAD.' + idType}}.UPLOAD_TITLE")
-    span.f-14.primary.pointer(ng-if="state.webcam.active || invalidFile" ng-click="reset()") Go Back
+    span.f-12.primary.pointer(ng-if="state.webcam.active || invalidFile" ng-click="reset()") Go Back
+    span.f-12(ng-hide="state.webcam.active || invalidFile || uploadSteps < 2 || !uploadSteps") Upload Step {{onUploadStep}} of {{uploadSteps}}
 
   div(ng-hide="state.webcam.active || file || invalidFile || ($root.inMobileBuy && !browserWithCamera)")
     div.file-upload(ngf-drop ng-model="file" ngf-model-invalid="invalidFile" ngf-drag-over-class="'dragover'" ngf-pattern="'image/*,application/pdf'")

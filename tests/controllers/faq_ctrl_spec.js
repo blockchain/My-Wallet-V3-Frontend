@@ -1,5 +1,18 @@
 describe('faqCtrl', () => {
   let scope;
+  
+  let env = {
+    partners: {
+      sfox: {
+        countries: ['US'],
+        states: ['NY']
+      },
+      unocoin: {
+        countries: ['IN']
+      }
+    },
+    webHardFork: { faqMessage: '' }
+  }
 
   beforeEach(angular.mock.module('walletApp'));
 
@@ -9,7 +22,7 @@ describe('faqCtrl', () => {
       // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
       $httpBackend.whenGET('/Resources/wallet-options.json').respond();
       return $controller('faqCtrl',
-        {$scope: scope});
+        {$scope: scope, env: env, canTrade: true});
     })
   );
 

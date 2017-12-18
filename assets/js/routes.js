@@ -307,6 +307,16 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/faq.pug',
           controller: 'faqCtrl'
         }
+      },
+      resolve: {
+        env: ($injector) => {
+          let Env = $injector.has('Env') && $injector.get('Env');
+          return Env && Env.then();
+        },
+        canTrade: ($injector) => {
+          let tradeStatus = $injector.has('tradeStatus') && $injector.get('tradeStatus');
+          return tradeStatus && tradeStatus.canTrade();
+        }
       }
     });
 
@@ -404,16 +414,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           templateUrl: 'partials/buy-sell-master.pug',
           controller: 'BuySellMasterController',
           controllerAs: 'vm'
-        }
-      },
-      resolve: {
-        balance ($injector, $q) {
-          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
-          let defaultAccount = MyWallet && MyWallet.wallet.hdwallet.defaultAccount;
-
-          return defaultAccount && defaultAccount.getAvailableBalance('priority')
-            .then((balance) => balance)
-            .catch(() => { return {amount: 0}; });
         }
       }
     })

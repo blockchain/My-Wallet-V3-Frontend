@@ -82,7 +82,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       if (ignore && typeof ignore === 'object') {
         let filterSame = (dest) => ignore.index != null
           ? dest.index !== ignore.index
-          : dest.address !== ignore.address;
+          : ignore.address ? dest.address !== ignore.address : true;
         scope.destinations = scope.destinations.filter(filterSame);
       }
     });

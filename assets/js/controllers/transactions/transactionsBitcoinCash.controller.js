@@ -12,7 +12,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
     account: undefined
   };
 
-  $scope.getTotal = Wallet.total;
+  $scope.getTotal = () => BitcoinCash.balance;
 
   $scope.loading = false;
   $scope.allTxsLoaded = false;
@@ -29,9 +29,10 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   if ($scope.accounts.length > 1) $scope.accounts.unshift(all);
   $scope.filterBy.account = $scope.accounts[0];
   let txList = MyWallet.wallet.bch.txs;
+  txList.loadNumber = txList.length;
 
   let setTxs = $scope.setTxs = () => {
-    $scope.transactions = txList.filter((tx) => {
+    $scope.transactions = MyWallet.wallet.bch.txs.filter((tx) => {
       if ($scope.filterBy.account.index === '') return true;
       else return tx.belongsTo($scope.filterBy.account.index >= 0 ? $scope.filterBy.account.index : 'imported');
     });
@@ -113,7 +114,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
 
   $scope.onClickCta = () => {
     if (ShapeShift.userHasAccess && (Wallet.total('') > 0 + Wallet.total('imported') || Ethereum.balance > 0)) {
-      $state.go('wallet.common.shift');
+      $state.go('wallet.common.shift', { destination: 'bch' });
     } else {
       modals.openRequest(null, { code: 'bch' });
     }
@@ -134,4 +135,5 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   };
 
   $scope.$watch('filterBy.account', setTxs);
+  $scope.$watch(() => BitcoinCash.txs, (txs) => setTxs(), true);
 }

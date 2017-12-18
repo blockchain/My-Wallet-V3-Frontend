@@ -14,8 +14,8 @@ function RequestBitcoinCashController ($scope, MyWallet, AngularHelper, BitcoinC
     address: ''
   };
 
-  $scope.destinations = BitcoinCash.accounts;
   $scope.state.to = MyWallet.wallet.bch.defaultAccount;
+  $scope.destinations = BitcoinCash.accounts.filter((a) => !a.archived);
   $scope.isToImportedAddress = () => $scope.state.to.type === 'Imported Addresses';
 
   $scope.copyAddress = () => {

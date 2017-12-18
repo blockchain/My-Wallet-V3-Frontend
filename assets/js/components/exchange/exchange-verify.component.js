@@ -13,6 +13,7 @@ angular
       onRestart: '&',
       onSetProfile: '&',
       onSetBankInfo: '&',
+      onClose: '&',
       mobilePreferred: '@'
     },
     templateUrl: 'templates/exchange/verify.pug',
