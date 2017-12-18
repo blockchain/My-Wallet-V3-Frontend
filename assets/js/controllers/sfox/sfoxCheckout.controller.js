@@ -31,6 +31,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
   $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote)
     .then(submitTx)
+    .then(recordNote)
     .then(fetchTransactions)
     .then(enableSiftScience)
     .catch((e) => Alerts.displayError(e));
@@ -77,6 +78,16 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
       return $scope.payment.build().sign(pw).publish().payment;
     });
+  };
+
+  const recordNote = (tx) => {
+    $timeout(() => {
+      Wallet.beep();
+      let message = 'BITCOIN_SENT';
+      Alerts.displaySentBitcoin(message);
+      let note = `SFOX Sell Order SFX-${$scope.trade.id}`;
+      if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
+    }, 500);
   };
 
   $scope.openSfoxSignup = (quote) => {

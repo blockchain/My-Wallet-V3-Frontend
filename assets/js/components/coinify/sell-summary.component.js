@@ -61,7 +61,7 @@ function CoinifySellSummaryController ($scope, $q, Wallet, currency, Alerts, $ti
       Wallet.beep();
       let message = 'BITCOIN_SENT';
       Alerts.displaySentBitcoin(message);
-      let note = `Coinify Sell Order ${this.sellResult.id}`;
+      let note = `Coinify Sell Order CNY-${this.sellResult.id}`;
       if (note !== '') Wallet.setNote({ hash: tx.txid }, note);
       this.waiting = false;
       this.onComplete();
