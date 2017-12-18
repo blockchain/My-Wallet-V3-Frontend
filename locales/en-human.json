@@ -1277,7 +1277,8 @@
   "FREQUENCY_INFO_HOURLY": "<b>Now</b> and every <b>{{::timespan}}</b>.",
   "DURATION": "Duration",
   "DURATION_INFO": "This order will repeat until {{::endTime}}. <span class='f-12'>(You can cancel anytime)</span>",
-  "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
+  "TRADE_BITCOIN_ALERT": "You can now trade bitcoin with your Blockchain wallet! Click below to get started.",
+  "TRADE_BITCOIN": "Trade Bitcoin",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "GENERAL_SURVEY_PROMPT": {
