@@ -1548,6 +1548,7 @@
     },
     "has_remaining_buy_limit": {
       "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
       "KYC": "Increase your limit."
     },
     "not_enough_funds_to_sell": {
@@ -1556,11 +1557,13 @@
       "BUY": "@:BUY"
     },
     "can_sell_max": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance.",
+      "EXPLAIN": "You can sell up to <span class='pointer primary'>{{::max}} {{::curr}}</span> of your balance.",
+      "ERROR_MAX": "@:COINIFY.can_sell_max.EXPLAIN",
       "KYC": "Increase your limit."
     },
     "can_sell_remaining_balance": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance."
+      "EXPLAIN": "You can sell up to <span class='pointer primary'>{{::max}} {{::curr}}</span> of your balance.",
+      "ERROR_MAX": "@:COINIFY.can_sell_remaining_balance.EXPLAIN"
     },
     "max_remaining_below_min": {
       "EXPLAIN": "🙁 You have reached your sell limit.",
@@ -1724,7 +1727,8 @@
       "FINISH": "Finish"
     },
     "user_can_trade": {
-      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}",
+      "ERROR_MAX": "@:UNOCOIN.user_can_trade.EXPLAIN"
     },
     "create": "Email Verification",
     "verify": "Setup Profile",
@@ -1848,8 +1852,9 @@
       "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN",
       "REQUEST": "@:REQUEST_BITCOIN"
     },
-    "can_sell": {
-      "EXPLAIN": "Your remaining sell limit is <span class='pointer primary'>{{::max}} {{::curr}}</span>, not including the fee."
+    "can_sell_remaining_balance": {
+      "EXPLAIN": "@:COINIFY.can_sell_remaining_balance.EXPLAIN",
+      "ERROR_MAX": "This amount is over your limit. <span class='text-color'>Sell</span> <span class='pointer primary'>maximum</span>"
     },
     "sell": {
       "confirm": {

@@ -46,7 +46,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       else if (!service.activeAccount) reason = 'needs_bank_active';
       else if (!service.min || isNaN(Exchange.sellMax)) reason = 'needs_data';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else reason = 'can_sell';
+      else reason = 'can_sell_remaining_balance';
       return reason;
     },
     get sellLaunchOptions () {
