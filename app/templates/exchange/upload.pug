@@ -1,10 +1,12 @@
 .flex-row.flex-start.flex-column-tablet
   .width-40
     .width-90
-      .flex-row.flex-center.mb-10
-        h4.f-20.em-500.mvn(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.TITLE")
-        button.helper(ng-click="$ctrl.openHelper($ctrl.base + '.HELPER.' + $ctrl.idType)" type="button" tabindex="-1")
-          span ?
+      .flex-column.mb-10
+        span.f-20.em-500.mb-20(translate="Upload Documents")
+        .flex-row.mv-5
+          h4.f-16.em-500.mvn(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.TITLE")
+          button.helper(ng-click="$ctrl.openHelper($ctrl.base + '.HELPER.' + $ctrl.idType)" type="button" tabindex="-1")
+            span ?
       .mbl
         span.f-16(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.COPY")
       .mbl(ng-show="qaDebugger")
