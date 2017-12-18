@@ -7,8 +7,8 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
 
   let buySellDisabled = null;
   let isCoinifyCountry = null;
+  let isUnocoinCountry = null;
   let isSFOXCountryState = null;
-  let isCountryWhitelisted = null;
 
   let sfoxInviteFraction = 0;
 
@@ -17,8 +17,7 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
   let processEnv = (env) => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
 
-    let whitelist = env.showBuySellTab || [];
-    isCountryWhitelisted = accountInfo && whitelist.indexOf(accountInfo.countryCodeGuess) > -1;
+    isUnocoinCountry = accountInfo && env.partners.unocoin.countries.indexOf(accountInfo.countryCodeGuess) > -1;
     isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
     isSFOXCountryState = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
 
@@ -29,7 +28,8 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
 
   service.canTrade = () => {
     let accountInfo = MyWallet.wallet && MyWallet.wallet.accountInfo;
-    let isUserInvited = accountInfo && accountInfo.invited && (accountInfo.invited.unocoin || accountInfo.invited.sfox);
+    let isSFOXInvited = accountInfo && accountInfo.invited && accountInfo.invited.sfox;
+    let isUnocoinInvited = accountInfo && accountInfo.invited && accountInfo.invited.unocoin;
 
     // The user can buy if:
     // * they already have an account; or
@@ -38,8 +38,8 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
     // * their IP is in a whitelisted country and their email is invited
     let canTrade = () => service.userHasAccount() ||
                          isCoinifyCountry ||
-                         (isUserInvited && isSFOXCountryState) ||
-                         (isUserInvited && isCountryWhitelisted);
+                         (isSFOXInvited && isSFOXCountryState) ||
+                         (isUnocoinInvited && isUnocoinCountry);
 
     return Env.then(processEnv).then(canTrade);
   };

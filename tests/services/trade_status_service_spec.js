@@ -68,7 +68,7 @@ describe('tradeStatus service', () => {
   });
 
   describe('canTrade', function () {
-    it('should be false in a non-coinify country by default', done => expect(tradeStatus.canTrade()).toBeResolvedWith(false, done));
+    it('should be false in a non-coinify country by default', done => expect(tradeStatus.canTrade()).toBeResolvedWith(undefined, done));
 
     // Coinify has been rolled out to 100%. Invite functionality will be pruned
     // from backend, so e.g. get-info's 'invited' will no longer have a coinify flag.
@@ -88,7 +88,7 @@ describe('tradeStatus service', () => {
     describe('in an SFOX country', function () {
       beforeEach(() => accountInfo.countryCodeGuess = 'US');
 
-      it('should be false when user is not invited', done => expect(tradeStatus.canTrade()).toBeResolvedWith(false, done));
+      it('should be falsey when user is not invited', done => expect(tradeStatus.canTrade()).toBeResolvedWith(undefined, done));
 
       it('should be true when user is invited', function (done) {
         accountInfo.invited.sfox = true;
@@ -100,7 +100,7 @@ describe('tradeStatus service', () => {
                                            // we'd show the tab to everyone in the US
         accountInfo.invited.sfox = false;
 
-        expect(tradeStatus.canTrade()).toBeResolvedWith(false, done);
+        expect(tradeStatus.canTrade()).toBeResolvedWith(undefined, done);
       });
     });
   });
@@ -111,7 +111,7 @@ describe('tradeStatus service', () => {
       expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done);
     });
 
-    it('canTrade should return false for these tests', done => expect(tradeStatus.canTrade()).toBeResolvedWith(false, done));
+    it('canTrade should return falsey for these tests', done => expect(tradeStatus.canTrade()).toBeResolvedWith(undefined, done));
 
     it('should not show for non-SFOX countries', done => expect(tradeStatus.shouldShowInviteForm()).toBeResolvedWith(false, done));
 
