@@ -13,7 +13,7 @@ form.bc-form.pv-20(
         span(translate=".BODY")
       div(ng-if="$ctrl.tradeAccount")
         .flex-end.flex-row.mb-5.mt-5
-          span.mid-grey.f-12 1 {{ bitcoin.code }} = {{ format($ctrl.rate, $ctrl.fiat, false) }} {{$ctrl.fiat.code}}
+          span.mid-grey.f-12 1 {{ bitcoin.code }} = {{ format(rate, $ctrl.fiat, false) }} {{$ctrl.fiat.code}}
         .mv-10.pv-10.ph-10.border
           span.em-500 Linked Account for Deposit: {{$ctrl.tradeAccount.accountType}} ending in {{$ctrl.tradeAccount.accountNumber}}
       ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-5

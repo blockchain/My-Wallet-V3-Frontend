@@ -3,12 +3,11 @@ angular
   .component('exchangeConfirm', {
     bindings: {
       type: '<',
+      fiat: '<',
       quote: '<',
       details: '<',
       namespace: '<',
       tradeAccount: '<',
-      fiat: '<',
-      rate: '<',
       onCancel: '&',
       onSuccess: '&',
       handleTrade: '&',
@@ -26,6 +25,7 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
   $scope.tradeState = '.confirm';
   $scope.namespace = this.namespace;
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+  $scope.rate = this.quote.rate;
 
   $scope.getTimeToExpiration = () => this.quote.expiresAt - new Date() - 5000;
   $scope.onExpiration = () => { $scope.lock(); this.quote = null; this.onExpiration().then($scope.free); };
