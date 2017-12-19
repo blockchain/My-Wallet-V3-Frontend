@@ -1772,6 +1772,9 @@
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
     "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
+    "NOW_SUPPORTING": "The Wait is Over!",
+    "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
+    "GET_STARTED": "Start Trading",
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -2068,13 +2071,15 @@
   },
   "eth": {
     "NOW_SUPPORTING": "Now Supporting Ether!",
-    "ANNOUNCEMENT": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!"
+    "ANNOUNCEMENT": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
+    "GET_STARTED": "Get Started"
   },
   "bch": {
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "IMPORTED_ADDRESSES": "Imported Bitcoin Cash Addresses",
     "NOW_SUPPORTING": "Now Supporting Bitcoin Cash!",
     "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today.",
+    "GET_STARTED": "@:eth.GET_STARTED",
     "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
   },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",

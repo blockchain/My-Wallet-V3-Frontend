@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper, tradeStatus) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -18,6 +18,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     },
     set accounts (val) {
       service._accounts = val;
+    },
+    get hasSeen () {
+      return service.exchange.hasSeen;
     },
     get verificationStatus () {
       return service.profile.verificationStatus;
@@ -60,7 +63,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     selling,
     determineStep,
     sellTradeDetails,
+    setHasSeen,
     setSellMin,
+    showAnnouncement,
     dismissSellIntro,
     hasDismissedSellIntro,
     signupForBuyAccess,
@@ -90,6 +95,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
 
   function setSellMin (min) {
     service.min = min;
+  }
+
+  function setHasSeen () {
+    service.exchange.setHasSeen(true);
+  }
+
+  function showAnnouncement (canTrade) {
+    return canTrade && tradeStatus.isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
   }
 
   function determineStep (exchange, accounts) {

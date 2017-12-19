@@ -24,6 +24,7 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
     sfoxInviteFraction = (env.partners.sfox && env.partners.sfox.inviteFormFraction) || 0;
 
     buySellDisabled = env.buySell.disabled;
+    service.isSFOXCountryState = isSFOXCountryState;
   };
 
   service.canTrade = () => {

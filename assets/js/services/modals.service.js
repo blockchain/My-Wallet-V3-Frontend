@@ -252,16 +252,16 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openCurrencyLogin = service.openOnce((currency) => {
+  service.openAnnouncement = service.openOnce((namespace, link) => {
     return openMobileCompatible({
       windowClass: 'bc-modal buy',
-      templateUrl: 'partials/first-login-modal-currency.pug',
+      templateUrl: 'partials/login-modal-announcement.pug',
       controller: function ($scope, $state, $uibModalInstance, ShapeShift) {
-        $scope.currency = currency;
+        $scope.namespace = namespace;
 
         $scope.cta = () => {
           $uibModalInstance.dismiss();
-          $state.go('wallet.common.' + currency + '.transactions');
+          $state.go(link);
         };
       }
     });

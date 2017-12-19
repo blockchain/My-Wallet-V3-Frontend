@@ -237,16 +237,21 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           Wallet.goal.send = void 0;
         } else if (!Wallet.goal.firstLogin && Wallet.status.didUpgradeToHd) {
           if (!Ethereum.hasSeen && !$rootScope.inMobileBuy) {
-            modals.openCurrencyLogin('eth');
+            modals.openAnnouncement('eth', 'wallet.common.eth.transactions');
             Ethereum.setHasSeen();
           } else if (!BitcoinCash.hasSeen && !$rootScope.inMobileBuy) {
-            modals.openCurrencyLogin('bch');
+            modals.openAnnouncement('bch', 'wallet.common.bch.transactions');
             BitcoinCash.setHasSeen();
           } else {
             tradeStatus.canTrade().then((canTrade) => {
-              if (tradeStatus.shouldShowBuyReminder() &&
-                  !tradeStatus.userHasAccount() &&
-                  canTrade) tradeStatus.showBuyReminder();
+              if (canTrade) {
+                if (!sfox.hasSeen && sfox.showAnnouncement(canTrade) && !$rootScope.inMobileBuy) {
+                  modals.openAnnouncement('SFOX', 'wallet.common.buy-sell');
+                  sfox.setHasSeen();
+                } else if (tradeStatus.shouldShowBuyReminder() && !tradeStatus.userHasAccount()) {
+                  tradeStatus.showBuyReminder();
+                }
+              }
             });
           }
         }
