@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper, tradeStatus) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -101,8 +101,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     service.exchange.setHasSeen(true);
   }
 
-  function showAnnouncement (canTrade) {
-    return canTrade && tradeStatus.isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
+  function showAnnouncement (canTrade, isSFOXCountryState) {
+    return canTrade && isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
   }
 
   function determineStep (exchange, accounts) {

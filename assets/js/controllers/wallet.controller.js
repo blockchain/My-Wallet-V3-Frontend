@@ -245,7 +245,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           } else {
             tradeStatus.canTrade().then((canTrade) => {
               if (canTrade) {
-                if (!sfox.hasSeen && sfox.showAnnouncement(canTrade) && !$rootScope.inMobileBuy) {
+                if (!sfox.hasSeen && sfox.showAnnouncement(canTrade, tradeStatus.isSFOXCountryState) && !$rootScope.inMobileBuy) {
                   modals.openAnnouncement('SFOX', 'wallet.common.buy-sell');
                   sfox.setHasSeen();
                 } else if (tradeStatus.shouldShowBuyReminder() && !tradeStatus.userHasAccount()) {
