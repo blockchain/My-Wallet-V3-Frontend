@@ -111,11 +111,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       return 'create';
     } else {
       if (!service.verified) {
-        if (!service.profile.setupComplete) {
-          return 'verify';
-        } else {
-          return 'upload';
-        }
+        if (!service.profile.setupComplete) return 'verify';
+        else if (service.requiredDocs.length) return 'upload';
+        else return 'link';
       } else {
         return 'link';
       }
