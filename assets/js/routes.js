@@ -11,6 +11,13 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     injector.has('Wallet') && injector.get('Wallet').status.isLoggedIn
   );
 
+  let initialize = (module, $injector) => {
+    let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+    if (Wallet && Wallet.status.isLoggedIn) {
+      return $injector.get(module).initialize();
+    }
+  };
+
   $urlRouterProvider.otherwise($injector => isAuthenticated($injector) ? '/home' : '/');
   $urlRouterProvider.when('/settings', '/settings/wallet');
 
@@ -348,9 +355,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        _initialize ($injector, $q) {
-          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
-          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
+        _initialize ($injector) {
+          return initialize('Ethereum', $injector);
         }
       },
       onEnter ($injector, $state) {
@@ -371,6 +377,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         right: {
           templateUrl: 'partials/transactions/transactions-bitcoin-cash.pug',
           controller: 'bitcoinCashTransactionsCtrl'
+        }
+      },
+      resolve: {
+        _initialize ($injector) {
+          return initialize('BitcoinCash', $injector);
         }
       }
     }).state('wallet.common.bch.transactions', {
@@ -393,9 +404,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         destination: null
       },
       resolve: {
-        _initialize ($injector, $q) {
-          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
-          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
+        _initialize ($injector) {
+          return initialize('ShapeShift', $injector);
         }
       },
       onEnter ($injector, $state) {

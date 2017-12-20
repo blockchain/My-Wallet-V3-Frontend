@@ -147,8 +147,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           featureDisabledWhen(sfox.disabled, sfox.disabledReason)
         );
         case 'wallet.common.shift': return (
-          featureDisabledWhen(ShapeShift.disabled, ShapeShift.disabledReason) ||
-          ensureMetadataReady()
+          featureDisabledWhen(ShapeShift.disabled, ShapeShift.disabledReason)
         );
       }
     }
