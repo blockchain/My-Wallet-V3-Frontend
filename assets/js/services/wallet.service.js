@@ -294,16 +294,22 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         let Ethereum = $injector.get('Ethereum');
         if (Ethereum.eth) history.push(Ethereum.fetchHistory());
 
+        let BitcoinCash = $injector.get('BitcoinCash');
+        if (BitcoinCash.bch) history.push(BitcoinCash.getHistory());
+
         let ShapeShift = $injector.get('ShapeShift');
         if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
-
-        history.push(wallet.my.wallet.bch.getHistory());
 
         $q.all(history).then(didFetchTransactions);
       }
 
       return result.guid;
     });
+  };
+
+  wallet.prepareMetadata = (secPass) => {
+    let myWallet = wallet.my.wallet;
+    return myWallet.cacheMetadataKey(secPass).then(() => myWallet.loadMetadata());
   };
 
   wallet.initExternal = () => {

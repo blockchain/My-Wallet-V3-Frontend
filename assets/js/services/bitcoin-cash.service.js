@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('BitcoinCash', BitcoinCash);
 
-function BitcoinCash (Wallet, localStorageService) {
+function BitcoinCash ($q, Wallet, localStorageService) {
   const service = {
     lastTxHash: null,
     get bch () {
@@ -22,6 +22,27 @@ function BitcoinCash (Wallet, localStorageService) {
     },
     setHasSeen () {
       this.bch.setHasSeen(true);
+    },
+    getHistory () {
+      return this.bch.getHistory();
+    },
+    initialize (_secPass) {
+      let wallet = Wallet.my.wallet;
+      let needsSecPass = _secPass == null && wallet.isDoubleEncrypted;
+
+      let initializeWithSecPass = () => (
+        Wallet.askForSecondPasswordIfNeeded().then(
+          (secPass) => service.initialize(secPass),
+          () => $q.reject('NEED_SECOND_PASSWORD_FOR_UPGRADE'))
+      );
+
+      if (!wallet.isMetadataReady) {
+        if (needsSecPass) return initializeWithSecPass();
+        return Wallet.prepareMetadata(_secPass)
+          .then(() => service.initialize(_secPass));
+      }
+
+      return $q.resolve();
     }
   };
 
