@@ -52,5 +52,5 @@ function UnocoinCheckoutController ($scope, $stateParams, Wallet, MyWalletHelper
     modals.openBankTransfer(trade);
   };
 
-  if (exchange.profile && exchange.profile.level < 3) unocoin.pollLevel();
+  if (exchange.profile && exchange.profile.level === 2) unocoin.pollLevel();
 }
