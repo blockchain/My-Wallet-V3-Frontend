@@ -20,7 +20,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       service._accounts = val;
     },
     get hasSeen () {
-      return service.exchange.hasSeen;
+      return localStorageService.get('sfox-has-seen');
     },
     get verificationStatus () {
       return service.profile.verificationStatus;
@@ -98,7 +98,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
   }
 
   function setHasSeen () {
-    service.exchange.setHasSeen(true);
+    localStorageService.set('sfox-has-seen', true);
   }
 
   function showAnnouncement (canTrade, isSFOXCountryState) {

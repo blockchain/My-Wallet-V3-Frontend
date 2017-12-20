@@ -120,10 +120,13 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   };
 
   $scope.setMax = () => {
-    let { fiat } = $scope;
-    state.baseCurr = fiat;
-    state['fiat'] = $scope.max.fiat;
-    $timeout(() => $scope.refreshIfValid('fiat'), 10);
+    let { bitcoin, fiat } = $scope;
+    let curr = this.fiatLimits ? fiat : bitcoin;
+    let field = this.fiatLimits ? 'fiat' : 'btc';
+
+    state.baseCurr = curr;
+    state[field] = $scope.max[field];
+    $timeout(() => $scope.refreshIfValid(field), 10);
   };
 
   $scope.trade = () => {
