@@ -28,7 +28,7 @@
                 span.f-14.capitalize {{ bankAccount.institution_type }} Bank
         .group.full.mb-10
           .item
-            label Name on Account
+            label Account Holder's Name
               helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
             input(ng-model="fields.accountName" name="accountName" focus-when="state.bankAccounts" required)
             span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
@@ -52,7 +52,7 @@
         fieldset(ng-disabled="locked")
           .group.full.mb-30
             .item
-              label Name on Account
+              label Account Holder's Name
                 helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
               input(ng-model="fields.accountName" name="accountName" focus-when="state.enableBankAccountForm" required)
               span.error(ng-hide="forms.bankAccountForm.accountName.$error.value" translate="Required field")
