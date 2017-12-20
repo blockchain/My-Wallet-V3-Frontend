@@ -24,6 +24,7 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
   this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => { this.step = this.steps[s]; };
+  this.checkStep = () => { this.goTo(sfox.determineStep(exchange, accounts)); };
 
   this.goTo(sfox.determineStep(exchange, accounts));
 }
