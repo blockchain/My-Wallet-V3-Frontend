@@ -58,8 +58,8 @@ form.bc-form(
               required)
             span.ph-10 {{bitcoin.code}}
         .f-12.mts
-          span(translate="{{ provider + '.' + trading().reason + (checkoutForm.$error.max ? '.ERROR_MAX' : '.EXPLAIN') }}"
-               translate-values="{max: max.fiat.toFixed(2), min: min.fiat.toFixed(2), curr: fiat.code}"
+          span(translate-values="{max: $ctrl.fiatLimits ? max.fiat.toFixed(2) : max.btc.toFixed(8), min: $ctrl.fiatLimits ? min.fiat.toFixed(2) : min.btc.toFixed(8), curr: $ctrl.fiatLimits ? fiat.code : bitcoin.code}"
+               translate="{{ provider + '.' + trading().reason + (checkoutForm.$error.max ? '.ERROR_MAX' : '.EXPLAIN') }}"
                ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}"
                ng-click="!trading().isDisabled && setMax()")
           | &nbsp;
