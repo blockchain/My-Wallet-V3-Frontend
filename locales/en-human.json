@@ -1652,7 +1652,7 @@
       "disabled": "Your credit card limit ({{::cardLimit}} {{::currency}}) is too low to create a recurring order.",
       "enabled": "Trades for {{::cardLimit}} {{::currency}} and below can become recurring orders."
     },
-    "tx_fee_required": "Coinify will use this fee to send the incoming funds to your wallet."
+    "tx_fee_required": "Transaction fees cover the mining network cost to ensure transaction confirmation. Blockchain recommends a fee based on current network conditions."
   },
   "UNOCOIN": {
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
