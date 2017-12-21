@@ -148,7 +148,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
         .finally($scope.resetFields).finally(() => $scope.busy = false);
     } else {
       $q.resolve(this.onSuccess({quote, frequency, endTime}))
-        .then($scope.resetFields).then(() => $timeout(() => $scope.busy = false, 1000));
+        .then($scope.resetFields).then(() => $timeout(() => $scope.busy = false, 300));
     }
   };
 
