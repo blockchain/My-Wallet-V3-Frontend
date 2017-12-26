@@ -5,18 +5,21 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       img.mbs(src="img/sfox-logo-trans.png")
 .buy-sell.overflow-scroll.flex-1
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
-    .width-50.pv-30.ph-30.border-desktop.flex-center.flex-justify
-      .flex-column
-        span.f-24.center.blue.pb-15(translate="Stay Tuned!")
-        span.f-18.center(translate="SFOX.buy.COMING_SOON")
-        .mt-30.center(ng-show="hasSignedUpForSfoxBuyAccess()")
-          span(translate="Thanks for submitting your email. We'll let you know when it's ready 📬")
-        form.bc-form.mt-50(ng-submit="signupForBuyAccess()" ng-hide="hasSignedUpForSfoxBuyAccess()")
-          .mt-20
-            .group
-              .item
-                input(type="email" ng-model="email" placeholder="Add your email here" required)
-            button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
+    .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController")
+      exchange-checkout(
+        type="'Buy'"
+        fiat="checkout.dollars"
+        user-id="checkout.userId"
+        conversion="100"
+        trading="buying"
+        fiat-limits="true"
+        limits="buyLimits"
+        provider="'sfox'"
+        ng-if="checkout.onStep('create')"
+        buy-level="checkout.state.buyLevel"
+        trade-account="checkout.state.account"
+        handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
+        on-success="buying().verificationRequired ? checkout.openSfoxSignup() : buyHandler(quote)")
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
       exchange-checkout(
@@ -30,8 +33,9 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         ng-if="checkout.onStep('create')"
         buy-level="checkout.state.buyLevel"
         trade-account="checkout.state.account"
-        handle-quote="QuoteHandler(amount, baseCurr, quoteCurr)"
+        handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
+    //- TODO probably need to make an exchange-confirm component for buy as well that sits within buy ctrl
     exchange-confirm.width-50.border-desktop(
       type="'sell'"
       quote="quote"

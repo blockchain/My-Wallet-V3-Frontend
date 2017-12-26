@@ -25,22 +25,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.goTo = (s) => $scope.step = $scope.steps[s];
 
   this.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
-  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-
-  $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, this.exchange);
-
-  const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
-  $scope.getRate = () => $scope.sellQuoteHandler(1e8, 'BTC', this.dollars.code).then(setRate);
-  $scope.getRate().then(() => sfox.setSellMin($scope.sellLimits($scope.rate).min));
-
-  $scope.updateRate = (quote) => $scope.rate = quote.rate;
-
-  $scope.sellLimits = (rate) => {
-    return {
-      min: parseFloat((10 / rate).toFixed(8)),
-      max: parseFloat(Math.min(sfox.profile.limits.sell / rate, Exchange.sellMax).toFixed(8))
-    };
-  };
+  this.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   this.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
@@ -56,7 +41,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.completedTrades = () => this.exchange.trades.filter((t) => t.state !== 'processing' && t.txHash);
 
   $scope.setState = () => {
-    $scope.state.buyLevel = this.exchange.profile && this.exchange.profile.verificationStatus.level;
+    this.state.buyLevel = this.exchange.profile && this.exchange.profile.verificationStatus.level;
   };
 
   $scope.stepDescription = () => {

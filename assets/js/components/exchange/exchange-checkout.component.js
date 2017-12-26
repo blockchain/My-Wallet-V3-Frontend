@@ -180,4 +180,5 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   AngularHelper.installLock.call($scope);
 
   $scope.$watch('max', (n, o) => { !n ? $scope.lock() : $scope.free(); });
+  console.log('ex checkout comp', $scope, quote, $scope.checkoutForm, $scope.state);
 }

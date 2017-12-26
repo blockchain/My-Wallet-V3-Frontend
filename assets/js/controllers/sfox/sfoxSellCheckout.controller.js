@@ -3,25 +3,14 @@ angular
   .controller('SfoxSellCheckoutController', SfoxSellCheckoutController);
 
 function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
-  // Env.then(env => {
-  //   let links = env.partners.sfox.surveyLinks;
-  //
-  //   $scope.handleCancel = (skipConfirm) => {
-  //     if (skipConfirm) $scope.goTo('create');
-  //     else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { $scope.goTo('create'); }).catch(() => {});
-  //   };
-  // });
   console.log('SfoxSellCheckoutController', $scope, $scope.checkout);
   let exchange = $scope.checkout.exchange;
   let enableSiftScience = () => $q.resolve($scope.siftScienceEnabled = true);
-  // $scope.checkout.fetchTransactions = () => MyWallet.wallet.getHistory();
-
-  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
 
   $scope.selling = sfox.selling;
   $scope.sellQuoteHandler = sfox.fetchSellQuote.bind(null, exchange);
 
-  $scope.sellHandler = (quote) => sfox.sell($scope.state.account, quote)
+  $scope.sellHandler = (quote) => sfox.sell($scope.checkout.state.account, quote)
     .then(submitTx)
     .then(recordNote)
     .then($scope.checkout.fetchTransactions)
@@ -51,7 +40,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
 
     $scope.payment.sideEffect((payment) => {
       $scope.quote = quote;
-      $scope.goTo('confirm');
+      $scope.checkout.goTo('confirm');
       $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
     });
 
@@ -61,7 +50,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
   $scope.sellRefresh = () => {
     let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
     let btc = baseCurrency === 'BTC' ? baseAmount : quoteAmount;
-    return $q.resolve($scope.sellQuoteHandler(btc, $scope.bitcoin.code, $scope.checkout.dollars.code).then($scope.buildPayment).then($scope.updateRate));
+    return $q.resolve($scope.sellQuoteHandler(btc, $scope.checkout.bitcoin.code, $scope.checkout.dollars.code).then($scope.buildPayment).then($scope.updateRate));
   };
 
   let submitTx = (trade) => {
@@ -82,36 +71,5 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
     }, 500);
   };
 
-  // $scope.openSfoxSignup = (quote) => {
-  //   $scope.modalOpen = true;
-  //   return modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
-  // };
-
-  // $scope.pendingTrades = () => exchange.trades.filter((t) => t.state === 'processing' && t.txHash);
-  // $scope.completedTrades = () => exchange.trades.filter((t) => t.state !== 'processing' && t.txHash);
-
-  // $scope.userId = exchange.user;
   $scope.siftScienceEnabled = false;
-  // $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
-  // $scope.onClose = () => { $scope.goTo('create'); $scope.tabs.select('ORDER_HISTORY'); };
-
-  // $scope.tabs = {
-  //   selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
-  //   options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
-  //   select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.goTo('create'); }
-  // };
-
-  $scope.dismissSellIntro = sfox.dismissSellIntro;
-  $scope.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
-  // $scope.email = MyWallet.wallet.accountInfo.email;
-  // $scope.signupForBuyAccess = () => {
-  //   let email = encodeURIComponent($scope.email);
-  //   sfox.signupForBuyAccess(email);
-  //   $scope.email = '';
-  //   localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
-  // };
-  // $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
-
-  // $scope.goTo('create');
-  // $scope.$watch('tabs.selectedTab', (t) => t === 'ORDER_HISTORY' && sfox.exchange.getTrades());
 }

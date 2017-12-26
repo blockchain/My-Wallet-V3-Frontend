@@ -35,11 +35,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     get activeAccount () {
       return service.accounts[0] && service.accounts[0].status === 'active';
     },
-    get balanceAboveMin () {
+    get balanceAboveSellMin () {
       return Exchange.sellMax > service.min;
     },
     get userCanSell () {
-      return service.profile && service.verified && service.activeAccount && service.balanceAboveMin;
+      return service.profile && service.verified && service.activeAccount && service.balanceAboveSellMin;
+    },
+    get userCanBuy () {
+      return service.profile && service.verified && service.activeAccount;
     },
     get sellReason () {
       let reason;
@@ -48,8 +51,19 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       else if (!service.accounts.length) reason = 'needs_bank';
       else if (!service.activeAccount) reason = 'needs_bank_active';
       else if (!service.min || isNaN(Exchange.sellMax)) reason = 'needs_data';
-      else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
+      else if (!service.balanceAboveSellMin) reason = 'not_enough_funds_to_sell';
       else reason = 'can_sell_remaining_balance';
+      return reason;
+    },
+    get buyReason () {
+      let reason;
+      if (!service.profile) reason = 'needs_account';
+      else if (!service.verified) reason = 'needs_id';
+      else if (!service.accounts.length) reason = 'needs_bank';
+      else if (!service.activeAccount) reason = 'needs_bank_active';
+      else if (!service.min) reason = 'needs_data';
+      // else if (!service.balanceAboveBuyMin) reason = 'not_enough_funds_to_buy';
+      else reason = 'has_remaining_buy_limit';
       return reason;
     },
     get sellLaunchOptions () {
@@ -61,6 +75,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     sell,
     init,
     selling,
+    buying,
     determineStep,
     sellTradeDetails,
     setHasSeen,
@@ -125,6 +140,15 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       reason: service.sellReason,
       isDisabled: !service.userCanSell,
       launchOptions: service.sellLaunchOptions,
+      verificationRequired: !service.activeAccount
+    };
+  }
+
+  function buying () {
+    return {
+      reason: service.buyReason,
+      isDisabled: !service.userCanBuy,
+      // launchOptions: service.buyLaunchOptions,
       verificationRequired: !service.activeAccount
     };
   }
