@@ -1861,7 +1861,8 @@
       "ERROR_MAX": "This amount is over your limit. <span class='text-color'>Sell</span> <span class='pointer primary'>maximum</span>"
     },
     "has_remaining_buy_limit": {
-      "EXPLAIN": "@:COINIFY.has_remaining_buy_limit.EXPLAIN"
+      "EXPLAIN": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
+      "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN"
     },
     "sell": {
       "confirm": {
