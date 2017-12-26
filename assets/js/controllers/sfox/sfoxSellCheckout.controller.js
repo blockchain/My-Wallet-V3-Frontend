@@ -3,7 +3,6 @@ angular
   .controller('SfoxSellCheckoutController', SfoxSellCheckoutController);
 
 function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
-  console.log('SfoxSellCheckoutController', $scope, $scope.checkout);
   let exchange = $scope.checkout.exchange;
   let enableSiftScience = () => $q.resolve($scope.siftScienceEnabled = true);
 

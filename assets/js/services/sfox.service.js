@@ -78,6 +78,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     buying,
     determineStep,
     sellTradeDetails,
+    buyTradeDetails,
     setHasSeen,
     setSellMin,
     showAnnouncement,
@@ -184,6 +185,45 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
                        ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
                        : (trade.receiveAmount).toFixed(2);
     let amountKey = quote || payment ? '.AMT' : '.AMT_SOLD';
+
+    return {
+      txAmt: {
+        key: amountKey,
+        val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
+      },
+      txFee: {
+        key: '.TX_FEE',
+        val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
+      },
+      out: {
+        key: '.TOTAL',
+        val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+      },
+      sfoxFee: {
+        key: '.TRADING_FEE',
+        val: formatCurrencyForView(tradingFee, fiat, true)
+      },
+      in: {
+        key: '.TO_BE_RECEIVED',
+        val: formatCurrencyForView(toBeReceived, fiat, true),
+        tip: () => console.log('Clicked tooltip')
+      }
+    };
+  }
+
+  function buyTradeDetails (quote, trade, tx) {
+    let { formatCurrencyForView, convertFromSatoshi } = currency;
+    let fiat = currency.currencies.find((curr) => curr.code === 'USD');
+    let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
+
+    let fee = quote ? quote.feeAmount : tx.fee;
+    let amount = quote ? quote.quoteAmount : Math.abs(tx.amount) - fee;
+    let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
+    let totalAmount = quote ? amount + fee : Math.abs(tx.amount);
+    let toBeReceived = quote
+                       ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
+                       : (trade.receiveAmount).toFixed(2);
+    let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
 
     return {
       txAmt: {

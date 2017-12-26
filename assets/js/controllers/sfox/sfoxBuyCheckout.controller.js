@@ -30,28 +30,26 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     };
   };
 
-  $scope.buyHandler = () => {
+  $scope.prepareBuy = (quote) => {
+    console.log('buyHandler', quote);
+    $scope.quote = quote;
+    $scope.checkout.goTo('confirm');
+    $scope.buyDetails = sfox.buyTradeDetails($scope.quote);
+  };
 
+  $scope.buyHandler = (quote) => {
     // let amt = quote.baseCurrency === 'BTC' ? quote.baseAmount : quote.quoteAmount;
-    //
-    // $scope.payment = Wallet.my.wallet.createPayment();
-    // $scope.payment.amount(amt);
-    // $scope.payment.updateFeePerKb(Exchange.sellFee || 2);
-    // $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
-    //
     // $scope.payment.sideEffect((payment) => {
     //   $scope.quote = quote;
     //   $scope.goTo('confirm');
     //   $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
     // });
-    //
-    // return quote;
   };
 
-  $scope.sellRefresh = () => {
+  $scope.buyRefresh = () => {
     let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
     let btc = baseCurrency === 'BTC' ? baseAmount : quoteAmount;
-    return $q.resolve($scope.sellQuoteHandler(btc, $scope.checkout.bitcoin.code, $scope.checkout.dollars.code).then($scope.buildPayment).then($scope.updateRate));
+    return $q.resolve($scope.buyQuoteHandler(btc, $scope.checkout.bitcoin.code, $scope.checkout.dollars.code).then($scope.updateRate));
   };
 
   $scope.siftScienceEnabled = false;

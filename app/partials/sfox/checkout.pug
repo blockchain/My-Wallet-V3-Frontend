@@ -19,7 +19,19 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         buy-level="checkout.state.buyLevel"
         trade-account="checkout.state.account"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
-        on-success="buying().verificationRequired ? checkout.openSfoxSignup() : buyHandler(quote)")
+        on-success="buying().verificationRequired ? checkout.openSfoxSignup() : prepareBuy(quote)")
+      exchange-confirm.width-50.border-desktop(
+        type="'buy'"
+        quote="quote"
+        namespace="'SFOX'"
+        details="buyDetails"
+        trade-account="state.account"
+        fiat="dollars"
+        ng-if="checkout.onStep('confirm')"
+        on-cancel="checkout.handleCancel()"
+        on-success="checkout.goTo('receipt')"
+        on-expiration="buyRefresh()"
+        handle-trade="buyHandler(quote)")
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
       exchange-checkout(
@@ -35,19 +47,18 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
-    //- TODO probably need to make an exchange-confirm component for buy as well that sits within buy ctrl
-    exchange-confirm.width-50.border-desktop(
-      type="'sell'"
-      quote="quote"
-      namespace="'SFOX'"
-      details="sellDetails"
-      trade-account="state.account"
-      fiat="dollars"
-      ng-if="checkout.onStep('confirm')"
-      on-cancel="handleCancel()"
-      on-success="goTo('receipt')"
-      on-expiration="sellRefresh()"
-      handle-trade="sellHandler(quote)")
+      exchange-confirm.width-50.border-desktop(
+        type="'sell'"
+        quote="quote"
+        namespace="'SFOX'"
+        details="sellDetails"
+        trade-account="state.account"
+        fiat="dollars"
+        ng-if="checkout.onStep('confirm')"
+        on-cancel="checkout.handleCancel()"
+        on-success="checkout.goTo('receipt')"
+        on-expiration="sellRefresh()"
+        handle-trade="sellHandler(quote)")
     .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !hasDismissedSellIntro()")
       .mb-20
         .flex-between
