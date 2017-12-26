@@ -25,7 +25,6 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
   $scope.tradeState = '.confirm';
   $scope.namespace = this.namespace;
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-  console.log('rate', this.quote.rate, this.quote);
   $scope.rate = this.quote.rate;
 
   $scope.getTimeToExpiration = () => this.quote.expiresAt - new Date() - 5000;

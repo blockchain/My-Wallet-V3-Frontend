@@ -8,8 +8,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     let links = env.partners.sfox.surveyLinks;
 
     $scope.handleCancel = (skipConfirm) => {
-      if (skipConfirm) this.goTo('create');
-      else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { this.goTo('create'); }).catch(() => {});
+      if (skipConfirm) $scope.checkout.goTo('create');
+      else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => {});
     };
   });
 
@@ -57,10 +57,10 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   this.userId = this.exchange.user;
   $scope.siftScienceEnabled = false;
   $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
-  $scope.onClose = () => { this.goTo('create'); $scope.tabs.select('ORDER_HISTORY'); };
+  $scope.onClose = () => { $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY'); };
 
   $scope.tabs = {
-    selectedTab: $stateParams.selectedTab || 'SELL_BITCOIN',
+    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
     options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.checkout.goTo('create'); }
   };
@@ -75,6 +75,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   };
   $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
 
-  this.goTo('create');
+  $scope.checkout.goTo('create');
   $scope.$watch('tabs.selectedTab', (t) => t === 'ORDER_HISTORY' && sfox.exchange.getTrades());
 }

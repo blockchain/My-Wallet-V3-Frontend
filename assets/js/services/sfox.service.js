@@ -220,7 +220,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let amount = quote ? quote.quoteAmount : Math.abs(tx.amount) - fee;
     let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
     let totalAmount = quote ? amount + fee : Math.abs(tx.amount);
-    let toBeReceived = quote
+    let toBeSpent = quote
                        ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
                        : (trade.receiveAmount).toFixed(2);
     let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
@@ -243,8 +243,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
         val: formatCurrencyForView(tradingFee, fiat, true)
       },
       in: {
-        key: '.TO_BE_RECEIVED',
-        val: formatCurrencyForView(toBeReceived, fiat, true),
+        key: '.TO_BE_SPENT',
+        val: formatCurrencyForView(toBeSpent, fiat, true),
         tip: () => console.log('Clicked tooltip')
       }
     };
