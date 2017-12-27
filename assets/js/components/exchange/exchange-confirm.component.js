@@ -42,5 +42,10 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
 
   AngularHelper.installLock.call($scope);
   Env.then(env => $scope.qaDebugger = env.qaDebugger);
-  console.log('exchange confirm ctrl', $scope, this);
+  this.$onChanges = (changes) => {
+    if (changes.quote.currentValue.rate !== changes.quote.previousValue.rate) {
+      $scope.rate = changes.quote.currentValue.rate;
+      this.details = changes.details.currentValue;
+    }
+  };
 }

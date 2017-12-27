@@ -20,19 +20,19 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="buying().verificationRequired ? checkout.openSfoxSignup() : prepareBuy(quote)")
-      exchange-confirm.width-50.border-desktop(
-        type="'buy'"
-        quote="quote"
-        namespace="'SFOX'"
-        details="buyDetails"
-        trade-account="state.account"
-        fiat="dollars"
-        ng-if="checkout.onStep('confirm')"
-        on-cancel="checkout.handleCancel()"
-        on-success="checkout.goTo('receipt')"
-        on-expiration="buyRefresh()"
-        handle-trade="buyHandler(quote)")
-  .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
+      //- exchange-confirm.width-50.border-desktop(
+      //-   type="'buy'"
+      //-   quote="quote"
+      //-   namespace="'SFOX'"
+      //-   details="buyDetails"
+      //-   trade-account="state.account"
+      //-   fiat="dollars"
+      //-   ng-if="checkout.onStep('confirm')"
+      //-   on-cancel="checkout.handleCancel()"
+      //-   on-success="checkout.goTo('receipt')"
+      //-   on-expiration="buyRefresh()"
+      //-   handle-trade="buyHandler(quote)")
+  .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN' && checkout.onStep('create')")
     .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
       exchange-checkout(
         type="'Sell'"
@@ -42,23 +42,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trading="selling"
         limits="sellLimits"
         provider="'sfox'"
-        ng-if="checkout.onStep('create')"
         buy-level="checkout.state.buyLevel"
         trade-account="checkout.state.account"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
-      exchange-confirm.width-50.border-desktop(
-        type="'sell'"
-        quote="quote"
-        namespace="'SFOX'"
-        details="sellDetails"
-        trade-account="state.account"
-        fiat="dollars"
-        ng-if="checkout.onStep('confirm')"
-        on-cancel="checkout.handleCancel()"
-        on-success="checkout.goTo('receipt')"
-        on-expiration="sellRefresh()"
-        handle-trade="sellHandler(quote)")
     .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !hasDismissedSellIntro()")
       .mb-20
         .flex-between
@@ -66,9 +53,21 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
           .flex-center.pl-10
             i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
         p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
-    div.width-50.border-desktop(
-      ng-if="checkout.onStep('receipt')"
-      ng-include="'partials/sfox/details.pug'")
+  .flex-row.pbvl(ng-if="checkout.onStep('confirm')")
+    exchange-confirm.width-50.border-desktop(
+      type="checkout.type"
+      quote="checkout.quote"
+      namespace="'SFOX'"
+      details="checkout.tradeDetails"
+      trade-account="checkout.state.account"
+      fiat="checkout.dollars"
+      on-cancel="checkout.handleCancel()"
+      on-success="checkout.goTo('receipt')"
+      on-expiration="checkout.type === 'sell' ? checkout.sellRefresh() : checkout.buyRefresh()"
+      handle-trade="checkout.type === 'sell' ? checkout.sellHandler(checkout.quote) : checkout.buyHandler(checkout.quote)")
+  div.width-50.border-desktop(
+    ng-if="checkout.onStep('receipt')"
+    ng-include="'partials/sfox/details.pug'")
   .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="completedTrades().length || pendingTrades().length")
       .flex-column.mbl.border-bottom.black

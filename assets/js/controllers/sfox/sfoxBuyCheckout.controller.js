@@ -37,7 +37,8 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     $scope.buyDetails = sfox.buyTradeDetails($scope.quote);
   };
 
-  $scope.buyHandler = (quote) => {
+  $scope.checkout.buyHandler = (quote) => {
+    console.log('buyHandler', quote);
     // let amt = quote.baseCurrency === 'BTC' ? quote.baseAmount : quote.quoteAmount;
     // $scope.payment.sideEffect((payment) => {
     //   $scope.quote = quote;
@@ -46,7 +47,7 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     // });
   };
 
-  $scope.buyRefresh = () => {
+  $scope.checkout.buyRefresh = () => {
     let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
     let btc = baseCurrency === 'BTC' ? baseAmount : quoteAmount;
     return $q.resolve($scope.buyQuoteHandler(btc, $scope.checkout.bitcoin.code, $scope.checkout.dollars.code).then($scope.updateRate));
