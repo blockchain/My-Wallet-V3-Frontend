@@ -4,7 +4,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
       img.mbs(src="img/sfox-logo-trans.png")
 .buy-sell.overflow-scroll.flex-1
-  .flex-column.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
+  .flex-row.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN' && checkout.onStep('create')")
     .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController")
       exchange-checkout(
         type="'Buy'"
@@ -15,7 +15,6 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         fiat-limits="true"
         limits="buyLimits"
         provider="'sfox'"
-        ng-if="checkout.onStep('create')"
         buy-level="checkout.state.buyLevel"
         trade-account="checkout.state.account"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"

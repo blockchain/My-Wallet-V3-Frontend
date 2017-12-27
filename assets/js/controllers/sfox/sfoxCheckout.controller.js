@@ -7,7 +7,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   Env.then(env => {
     let links = env.partners.sfox.surveyLinks;
 
-    $scope.handleCancel = (skipConfirm) => {
+    this.handleCancel = (skipConfirm) => {
       if (skipConfirm) $scope.checkout.goTo('create');
       else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => {});
     };

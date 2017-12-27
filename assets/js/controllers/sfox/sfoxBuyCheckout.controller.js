@@ -10,13 +10,6 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   $scope.buying = sfox.buying;
   $scope.buyQuoteHandler = sfox.fetchBuyQuote.bind(null, exchange);
 
-  // $scope.sellHandler = (quote) => sfox.sell($scope.checkout.state.account, quote)
-  //   .then(submitTx)
-  //   .then(recordNote)
-  //   .then($scope.checkout.fetchTransactions)
-  //   .then(enableSiftScience)
-  //   .catch((e) => Alerts.displayError(e));
-
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
   $scope.getRate = () => $scope.buyQuoteHandler(1e8, 'BTC', $scope.checkout.dollars.code).then(setRate);
   $scope.getRate();
@@ -31,10 +24,11 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.prepareBuy = (quote) => {
-    console.log('buyHandler', quote);
-    $scope.quote = quote;
+    $scope.checkout.quote = quote;
+    $scope.checkout.tradeDetails = sfox.buyTradeDetails($scope.checkout.quote);
+    $scope.checkout.type = 'buy';
     $scope.checkout.goTo('confirm');
-    $scope.buyDetails = sfox.buyTradeDetails($scope.quote);
+    return quote;
   };
 
   $scope.checkout.buyHandler = (quote) => {
@@ -48,9 +42,9 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.checkout.buyRefresh = () => {
-    let { baseAmount, quoteAmount, baseCurrency } = $scope.quote;
+    let { baseAmount, quoteAmount, baseCurrency } = $scope.checkout.quote;
     let btc = baseCurrency === 'BTC' ? baseAmount : quoteAmount;
-    return $q.resolve($scope.buyQuoteHandler(btc, $scope.checkout.bitcoin.code, $scope.checkout.dollars.code).then($scope.updateRate));
+    return $q.resolve($scope.buyQuoteHandler(btc, $scope.checkout.bitcoin.code, $scope.checkout.dollars.code).then($scope.prepareBuy).then($scope.updateRate));
   };
 
   $scope.siftScienceEnabled = false;
