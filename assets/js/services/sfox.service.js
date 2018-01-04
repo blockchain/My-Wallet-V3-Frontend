@@ -215,22 +215,23 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
-
-    let fee = quote ? quote.feeAmount : tx.fee;
-    let amount = quote ? quote.quoteAmount : trade.receiveAmount;
+    let fee = quote ? 0.001525 : tx.fee;
+    let amount = quote
+                    ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
+                    : trade.receiveAmount * 1e8;
 
     let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
     let totalAmount = quote ? amount + fee : Math.abs(tx.amount);
+
     let toBeSpent = quote
-                       ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
-                       : (trade.inAmount).toFixed(2);
+                       ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee).toFixed(2) : (+quote.baseAmount + +tradingFee).toFixed(2)
+                       : (trade.inAmount + trade.feeAmount).toFixed(2);
     let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
 
     return {
       txAmt: {
         key: amountKey,
-        val: amount + ' BTC'
-        // val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
+        val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
       },
       txFee: {
         key: '.TX_FEE',
