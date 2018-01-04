@@ -54,7 +54,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
   };
 
   let submitTx = (trade) => {
-    $scope.trade = trade;
+    $scope.checkout.trade = trade;
     $scope.payment.to(trade.receiveAddress);
     return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
       return $scope.payment.build().sign(pw).publish().payment;

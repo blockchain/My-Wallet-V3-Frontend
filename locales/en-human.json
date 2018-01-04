@@ -1909,6 +1909,12 @@
         "BODY": "@:SFOX.sell.confirm.BODY",
         "ACCEPT_TERMS": "@:SFOX.sell.confirm.ACCEPT_TERMS"
       },
+      "processing": {
+        "DISPLAY": "Pending",
+        "HEADER": "Buy Order in Progress",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-5 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
       "AMT": "Amount to Buy",
       "AMT_BOUGHT": "Amount Bought",
       "TOTAL": "Total Incoming Bitcoin",

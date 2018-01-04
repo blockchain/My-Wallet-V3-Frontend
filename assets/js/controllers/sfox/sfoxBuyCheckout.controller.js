@@ -3,7 +3,6 @@ angular
   .controller('SfoxBuyCheckoutController', SfoxBuyCheckoutController);
 
 function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
-  console.log('SfoxBuyCheckoutController', $scope, $scope.checkout);
   let exchange = $scope.checkout.exchange;
   let enableSiftScience = () => $q.resolve($scope.siftScienceEnabled = true);
 
@@ -31,15 +30,10 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     return quote;
   };
 
-  $scope.checkout.buyHandler = (quote) => {
-    console.log('buyHandler', quote);
-    // let amt = quote.baseCurrency === 'BTC' ? quote.baseAmount : quote.quoteAmount;
-    // $scope.payment.sideEffect((payment) => {
-    //   $scope.quote = quote;
-    //   $scope.goTo('confirm');
-    //   $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
-    // });
-  };
+  $scope.checkout.buyHandler = (quote) => sfox.buy($scope.checkout.state.account, quote)
+    .then(trade => { console.log('buyHandler', trade); $scope.checkout.trade = trade; })
+    .then(enableSiftScience)
+    .catch((e) => Alerts.displayError(e));
 
   $scope.checkout.buyRefresh = () => {
     let { baseAmount, quoteAmount, baseCurrency } = $scope.checkout.quote;
