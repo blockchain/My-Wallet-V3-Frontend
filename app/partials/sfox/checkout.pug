@@ -5,7 +5,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       img.mbs(src="img/sfox-logo-trans.png")
 .buy-sell.overflow-scroll.flex-1
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN' && checkout.onStep('create')")
-    .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController")
+    .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController")
       exchange-checkout(
         type="'Buy'"
         fiat="checkout.dollars"
@@ -32,7 +32,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       //-   on-expiration="buyRefresh()"
       //-   handle-trade="buyHandler(quote)")
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN' && checkout.onStep('create')")
-    .border-desktop.ph-30.pv-50.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
+    .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
       exchange-checkout(
         type="'Sell'"
         fiat="checkout.dollars"
