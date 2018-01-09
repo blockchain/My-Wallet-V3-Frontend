@@ -9,7 +9,7 @@ div(ng-controller="SfoxTradeDetailsController")
         span.mid-grey.f-12 1 BTC = {{ rate }}
       .mv-10.pv-10.ph-10.border.flex-row.flex-center
         i.f-18.mr-10.icon-bank
-        span.em-500(ng-show="type ==! '.buy'") Linked Account for Deposit: {{tradeAccount.accountType}} ending in {{tradeAccount.accountNumber}}
+        span.em-500(ng-show="type === '.sell'") Linked Account for Deposit: {{tradeAccount.accountType}} ending in {{tradeAccount.accountNumber}}
         span.em-500(ng-show="type === '.buy'") Linked Account for Spending: {{tradeAccount.accountType}} ending in {{tradeAccount.accountNumber}}
   .ph-30.ph-10-mobile
     ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
