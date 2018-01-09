@@ -215,13 +215,13 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
-    let fee = quote ? 0.001525 : tx.fee;
+    let fee = tx ? tx.fee : 16830; // TODO add real fee
     let amount = quote
                     ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
                     : trade.receiveAmount * 1e8;
 
     let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
-    let totalAmount = quote ? amount + fee : Math.abs(tx.amount);
+    let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
 
     let toBeSpent = quote
                        ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)

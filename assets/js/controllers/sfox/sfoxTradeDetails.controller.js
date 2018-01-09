@@ -3,12 +3,12 @@ angular
   .controller('SfoxTradeDetailsController', SfoxTradeDetailsController);
 
 function SfoxTradeDetailsController ($scope, MyWallet, Exchange, currency, sfox) {
-  let trade = $scope.$parent.trade || $scope.trade;
+  let trade = $scope.$parent.trade || $scope.checkout.trade || $scope.trade;
   let format = currency.formatCurrencyForView;
   let fiat = currency.currencies.find((c) => c.code === 'USD');
   let tx = MyWallet.wallet.txList.transactions(0).find((t) => t.hash === trade.txHash);
-  if (!tx) { tx = MyWallet.wallet.txList.transactions()[0]; }
-
+  if (!tx && !trade.isBuy) { tx = MyWallet.wallet.txList.transactions()[0]; }
+  // TODO change the above, since buy won't have a tx hash
   $scope.classHelper = Exchange.classHelper;
 
   $scope.tradeId = trade.id;
