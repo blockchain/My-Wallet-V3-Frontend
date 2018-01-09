@@ -1871,7 +1871,7 @@
         "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
       },
       "processing": {
-        "DISPLAY": "Pending",
+        "DISPLAY": "Pending Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order in Progress",
         "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. <b>Your order ID is: SFX-{{::tradeId}}</b>"
@@ -1889,7 +1889,7 @@
         "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "completed": {
-        "DISPLAY": "Completed",
+        "DISPLAY": "Completed Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Completed",
         "BODY": "Your sell trade has successfully completed.<b> The transaction will show in your bank account in 1-3 business days.</b> Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
@@ -1911,10 +1911,16 @@
         "ACCEPT_TERMS": "@:SFOX.sell.confirm.ACCEPT_TERMS"
       },
       "processing": {
-        "DISPLAY": "Pending",
+        "DISPLAY": "Pending Buy",
         "HEADER": "Buy Order in Progress",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-5 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
+      "completed": {
+        "DISPLAY": "Completed Buy",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "Buy Order Complete",
+        "BODY": "Your buy trade has successfully completed. Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "AMT": "Quote Amount",
       "AMT_BOUGHT": "Amount Bought",
