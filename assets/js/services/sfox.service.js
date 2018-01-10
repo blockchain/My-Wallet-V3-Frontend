@@ -86,7 +86,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     hasDismissedSellIntro,
     signupForBuyAccess,
     signupForSellAccess,
-    getTxMethod
+    getTxMethod,
+    fetchTrades
   };
 
   angular.extend(service, Exchange);
@@ -264,6 +265,10 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
 
   function signupForSellAccess (email, state) {
     BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSeBjqWrqNs5k-yAR8p35xBwZ_FfwWfjttL0WCf4Qa2Ev2CK8A/viewform?entry.1192956638=${email}&entry.387129390=${state}`);
+  }
+
+  function fetchTrades () {
+    return service.exchange.getTrades();
   }
 
   return service;
