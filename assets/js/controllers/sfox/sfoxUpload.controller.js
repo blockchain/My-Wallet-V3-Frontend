@@ -59,7 +59,7 @@ function SfoxUploadController (AngularHelper, Env, $scope, $q, state, $http, sfo
     if (level === 'pending' && !required_docs[0]) complete = true;
 
     $scope.onUploadStep = initialUploadStep += 1;
-    complete && $scope.vm.goTo('link');
+    complete && $scope.vm.goTo(sfox.determineStep(exchange));
   };
 
   AngularHelper.installLock.call($scope);
