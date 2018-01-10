@@ -1814,7 +1814,7 @@
         "OPTION2": "- First page and signature page of your lease",
         "OPTION3": "- First page of your bank statement",
         "OPTION4": "- DMV or voter registration form",
-        "WARNING": "⛔️ Uploading your passport or you driver's license is not sufficient to verify your address. Please upload one of the options above.",
+        "WARNING": "⛔️ Uploading your passport or your driver's license is not sufficient to verify your address. Please upload one of the options above.",
         "UPLOAD_TITLE": "Proof of Address",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Make sure the snapshot clearly displays your address."
