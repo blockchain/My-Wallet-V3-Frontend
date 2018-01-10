@@ -209,7 +209,11 @@
   },
   "SFOX_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
-    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+    "BODY": "You're just a few steps away from verifying your account, are you sure you want to stop?"
+  },
+  "SFOX_SELL_SURVEY": {
+    "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
+    "BODY": "@:SELL_SURVEY_OPENED.BODY"
   },
   "UNOCOIN_TRADE_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
@@ -1031,6 +1035,7 @@
   "RATE_WILL_EXPIRE": "Complete this trade before the rate expires to receive the guaranteed amount of bitcoin.",
   "RATE_GUARANTEED": "Rate guaranteed: {{::count}}",
   "QUOTE_EXPIRES_IN": "Quote expires in: {{::count}}",
+  "QUOTE_REFRESHES_IN": "Quote will refresh in {{::count}}",
   "NOT_FINISHED": "Not Finished",
   "COUNTRY_NOT_FOUND": "Sorry, you cannot create an account in the country you selected.",
   "SEE_BITCOIN": "See Your Bitcoin",
@@ -1261,7 +1266,6 @@
   "EDIT_NAME": "Edit Name",
   "NOT_BACKED_BY_RECOVERY": "Not backed up by your Recovery Phrase. Transfer into a wallet to secure funds.",
   "EXCHANGE_RATE_HELPER": "The rate offered by your region's exchange partner. May include fees.",
-  "EXCHANGE_RATE_HELPER_TWO": "The rate offered by your region's exchange partner may include fees.",
   "SUBSCRIBE": "Subscribe",
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
@@ -1273,7 +1277,8 @@
   "FREQUENCY_INFO_HOURLY": "<b>Now</b> and every <b>{{::timespan}}</b>.",
   "DURATION": "Duration",
   "DURATION_INFO": "This order will repeat until {{::endTime}}. <span class='f-12'>(You can cancel anytime)</span>",
-  "BUY_BITCOIN_ALERT": "You can now buy bitcoin with your Blockchain wallet! Click below to get started.",
+  "TRADE_BITCOIN_ALERT": "You can now trade bitcoin with your Blockchain wallet! Click below to get started.",
+  "TRADE_BITCOIN": "Trade Bitcoin",
   "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
   "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
   "GENERAL_SURVEY_PROMPT": {
@@ -1289,6 +1294,10 @@
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
   "SFOX_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SFOX_SELL_SURVEY_PROMPT": {
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
@@ -1353,7 +1362,7 @@
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
-  "SELL_BTC_UNAVAIL_STATE": "Selling bitcoin is not yet available in your state. We'll be rolling out more states soon.",
+  "SELL_BTC_UNAVAIL_STATE": "Unfortunately selling bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "BTC_TX_FEE": "BTC Transaction Fee",
@@ -1499,7 +1508,7 @@
     "NOTIFY_ME_WHEN_AVAIL": "Notify Me When This Becomes Available",
     "CREATE": {
       "ACCOUNT": "Create Your {{::exchange}} Account",
-      "ACCOUNT_EXPLAIN": "Please confirm your email and phone number to create your {{::exchange}} exchange account.",
+      "ACCOUNT_EXPLAIN": "Accept Terms & Conditions to create your {{::exchange}} account.",
       "VERIFY_EMAIL": "Verify Email Address",
       "VERIFY_EMAIL_EXPLAIN": "We just sent a verification code to your email address. Please enter the verification code to create your {{::exchange}} exchange account.",
       "VERIFY_EMAIL_REMINDER": "",
@@ -1519,13 +1528,14 @@
       "MOBILE": "Mobile",
       "PAN_CARD": "PAN Card",
       "FULL_RESIDENTIAL_ADDRESS": "Full Residential Address (you will need to provide proof of address)",
-      "ADDRESS_LINE_1": "Address Line 1",
+      "ADDRESS_LINE_1": "Address Line 1 <span class='mid-grey'>(Please use your primary billing address)</span>",
       "ADDRESS_LINE_2": "Address Line 2",
       "STATE": "State",
       "CITY": "City",
       "PIN_CODE": "Pin Code",
       "BANK_ACCOUNT_NUMBER": "Bank Account Number",
-      "IFSC": "IFSC"
+      "IFSC": "IFSC",
+      "SETUP_PROFILE": "Setup your profile"
     },
     "ACTIONS": {
       "FINISH": "Finish Trade",
@@ -1539,19 +1549,22 @@
     },
     "has_remaining_buy_limit": {
       "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
       "KYC": "Increase your limit."
     },
     "not_enough_funds_to_sell": {
-      "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell.",
-      "REQUEST": "@:REQUEST",
+      "EXPLAIN": "😢 Unfortunately, you need at least {{::min}} {{::curr}} to sell, not including the transaction fee.",
+      "REQUEST": "@:REQUEST_BITCOIN",
       "BUY": "@:BUY"
     },
     "can_sell_max": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance.",
+      "EXPLAIN": "You can sell up to <span class='pointer primary'>{{::max}} {{::curr}}</span> of your balance.",
+      "ERROR_MAX": "@:COINIFY.can_sell_max.EXPLAIN",
       "KYC": "Increase your limit."
     },
     "can_sell_remaining_balance": {
-      "EXPLAIN": "You can sell up to <span class='pointer'>{{::max}} {{::curr}}</span> of your balance."
+      "EXPLAIN": "You can sell up to <span class='pointer primary'>{{::max}} {{::curr}}</span> of your balance.",
+      "ERROR_MAX": "@:COINIFY.can_sell_remaining_balance.EXPLAIN"
     },
     "max_remaining_below_min": {
       "EXPLAIN": "🙁 You have reached your sell limit.",
@@ -1639,7 +1652,7 @@
       "disabled": "Your credit card limit ({{::cardLimit}} {{::currency}}) is too low to create a recurring order.",
       "enabled": "Trades for {{::cardLimit}} {{::currency}} and below can become recurring orders."
     },
-    "tx_fee_required": "Coinify will use this fee to send the incoming funds to your wallet."
+    "tx_fee_required": "Transaction fees cover the mining network cost to ensure transaction confirmation. Blockchain recommends a fee based on current network conditions."
   },
   "UNOCOIN": {
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
@@ -1715,7 +1728,8 @@
       "FINISH": "Finish"
     },
     "user_can_trade": {
-      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}"
+      "EXPLAIN": "Your remaining buy limit is {{::max}} {{::curr}}",
+      "ERROR_MAX": "@:UNOCOIN.user_can_trade.EXPLAIN"
     },
     "create": "Email Verification",
     "verify": "Setup Profile",
@@ -1758,6 +1772,9 @@
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
     "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
+    "NOW_SUPPORTING": "The Wait is Over!",
+    "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
+    "GET_STARTED": "Start Trading",
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1778,9 +1795,9 @@
       "id": {
         "TITLE": "Photo ID Verification",
         "COPY": "To verify your identity and confirm your country of residence, please upload one of the following government-issued forms of ID:",
-        "OPTION1": "- State issued driver’s license",
+        "OPTION1": "- State-issued driver’s license",
         "OPTION2": "- Passport",
-        "OPTION3": "- State/government issued identification card",
+        "OPTION3": "- State or government-issued identification card",
         "OPTION4": "",
         "UPLOAD_TITLE": "Photo ID",
         "UPLOAD_SELECT": "Select Upload Method",
@@ -1801,7 +1818,7 @@
     "HELPER": {
       "id": {
         "TITLE": "Acceptable Photo IDs",
-        "COPY": "You may submit a valid state issued driver license, state issued identification card, passport, or government issued identification. Make sure the identifation number is clearly visible."
+        "COPY": "You may submit a valid state-issued driver license, state-issued identification card, passport, or government-issued identification. Make sure the identifation number is clearly visible."
       },
       "address": {
         "TITLE": "Acceptable Proof of Address",
@@ -1832,51 +1849,67 @@
       "REQUIRED": "This bank account needs to be verified.",
       "CONTINUE": "Finalize Your Account Verification"
     },
-    "not_enough_funds_to_sell": {
-      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN"
+    "needs_data": {
+      "EXPLAIN": "Loading balance info..."
     },
-    "can_sell": {
-      "EXPLAIN": "Your remaining sell limit is {{::max}} {{::curr}}"
+    "not_enough_funds_to_sell": {
+      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN",
+      "REQUEST": "@:REQUEST_BITCOIN"
+    },
+    "can_sell_remaining_balance": {
+      "EXPLAIN": "@:COINIFY.can_sell_remaining_balance.EXPLAIN",
+      "ERROR_MAX": "This amount is over your limit. <span class='text-color'>Sell</span> <span class='pointer primary'>maximum</span>"
     },
     "sell": {
       "confirm": {
         "HEADER": "Confirm Sell Order",
-        "BODY": "Please review your trade details below. Click 'Confirm' to initiate your trade.",
+        "BODY": "Please review your trade details below. Click 'Confirm' to initiate.",
         "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
       },
       "processing": {
         "DISPLAY": "Pending",
-        "ACTION": "@:EXCHANGE.ACTIONS.FINISH",
-        "HEADER": "Sell Order Initiated",
-        "BODY": "Your sell trade has been initiated. You should receive your funds within 3 business days."
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "Sell Order in Progress",
+        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "failed": {
         "DISPLAY": "Failed",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Failed",
-        "BODY": "Your sell trade has failed. Please contact our support team with the Transaction ID for this trade if you have any questions."
+        "BODY": "Your sell trade has failed. Please contact our support team with the Transaction ID for this trade if you have any questions. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "rejected": {
         "DISPLAY": "Rejected",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Rejected",
-        "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection."
+        "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "completed": {
         "DISPLAY": "Completed",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "HEADER": "Sell Order Completed!",
-        "BODY": "Your sell trade has successfully completed. Thank you for using Blockchain to trade your bitcoin."
+        "HEADER": "Sell Order Completed",
+        "BODY": "Your sell trade has successfully completed.<b> The transaction will show in your bank account in 1-3 business days.</b> Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "AMT": "Amount to Sell",
+      "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
-      "TO_BE_RECEIVED": "USD To Be Received"
+      "TRADING_FEE": "Trading Fee",
+      "TO_BE_RECEIVED": "USD To Be Received",
+      "INTRODUCING_HEADER": "Introducing Sell",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon."
+    },
+    "buy": {
+      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon."
     },
     "create": "Create Account",
     "verify": "Verify Identity",
     "upload": "Upload Documents",
-    "link": "Link Payment"
+    "link": "Link Bank",
+    "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX.",
+    "TRADING_FEE_HELPER": "The fee charged to execute a trade through SFOX.",
+    "BUY_COMING_SOON": "Now you can sell bitcoin directly from your Blockchain wallet!",
+    "BUY_COMING_SOON_DETAILS": "Don't worry, we're hard at work and soon you'll be able to buy too."
   },
   "HERE": "here",
   "TESTNET_WARNING": "WARNING! This is the testnet3 blockchain. Your coins have no value here.",
@@ -2038,13 +2071,15 @@
   },
   "eth": {
     "NOW_SUPPORTING": "Now Supporting Ether!",
-    "ANNOUNCEMENT": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!"
+    "ANNOUNCEMENT": "You asked, we listened. We’re excited to announce that your Blockchain wallet will now allow you to seamlessly send and receive ether!",
+    "GET_STARTED": "Get Started"
   },
   "bch": {
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "IMPORTED_ADDRESSES": "Imported Bitcoin Cash Addresses",
     "NOW_SUPPORTING": "Now Supporting Bitcoin Cash!",
     "ANNOUNCEMENT": "We're excited to announce that your Blockchain wallet is now offering full support for Bitcoin Cash! You can get started sending, requesting, and exchanging today.",
+    "GET_STARTED": "@:eth.GET_STARTED",
     "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
   },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",

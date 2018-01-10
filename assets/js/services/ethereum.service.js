@@ -116,8 +116,7 @@ function Ethereum ($q, Wallet, MyWalletHelpers, Env) {
 
     if (!wallet.isMetadataReady) {
       if (needsSecPass) return initializeWithSecPass();
-      return wallet.cacheMetadataKey(_secPass)
-        .then(() => wallet.loadMetadata())
+      return Wallet.prepareMetadata(_secPass)
         .then(() => service.initialize(_secPass));
     }
 

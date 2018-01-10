@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('ShapeShift', ShapeShift);
 
-function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelper) {
+function ShapeShift ($q, Wallet, modals, MyWalletHelpers, Ethereum, BitcoinCash, Env, BrowserHelper) {
   const service = {
     get shapeshift () {
       return Wallet.my.wallet.shapeshift;
@@ -81,6 +81,27 @@ function ShapeShift (Wallet, modals, MyWalletHelpers, Ethereum, Env, BrowserHelp
 
   service.signupForShift = (email, state) => {
     BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSd0r6NU82pQNka87iUkQJc3xZq6y0UHYHo09eZH-6SQZlTZrg/viewform?entry.1192956638=${email}&entry.387129390=${state}`);
+  };
+
+  service.initialize = (_secPass) => {
+    let wallet = Wallet.my.wallet;
+    let needsSecPass = _secPass == null && wallet.isDoubleEncrypted;
+
+    let initializeWithSecPass = () => (
+      Wallet.askForSecondPasswordIfNeeded().then(
+        (secPass) => service.initialize(secPass),
+        () => $q.reject('NEED_SECOND_PASSWORD_FOR_UPGRADE'))
+    );
+
+    if (!wallet.isMetadataReady) {
+      if (needsSecPass) return initializeWithSecPass();
+      return Wallet.prepareMetadata(_secPass)
+        .then(() => service.initialize(_secPass));
+    }
+
+    return $q.resolve()
+      .then(() => Ethereum.initialize(_secPass))
+      .then(() => BitcoinCash.initialize(_secPass));
   };
 
   Env.then((options) => {

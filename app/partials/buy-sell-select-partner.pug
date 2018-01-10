@@ -1,6 +1,6 @@
 div
   bc-tabs(tab="tabs.options[0]" tab-options="tabs.options" disabled="true")
-.buy-sell.mh-15
+.buy-sell
   .flex-row.flex-column-tablet
     .find-partner.width-50.mrl.flex-column
       .pt-20.pb-20.pl-25.pr-25.phm.border-desktop
@@ -28,7 +28,7 @@ div
               img.partner-logo.mbm(ng-src="{{partner.logo}}")
             p.f-14(translate="{{partner.namespace + '.EXPLAIN'}}")
             button.btn.button-primary.full-width.mt-15(translate="CONTINUE" ng-click="selectPartner(partner, country.Code)" ng-disabled="status.busy")
-        form.bc-form.mt-5(ng-show="blacklisted" ng-submit="signupForAccess()")
+        form.bc-form.mt-5(ng-show="blacklisted" ng-submit="country.Code === 'US' ? signupForSellAccess() : signupForAccess()")
           span.f-12.state-danger-text(ng-show="blacklisted && country.Code !== 'US'" translate="BUY_BTC_UNAVAIL_COUNTRY")
           span.f-12.state-danger-text(ng-show="blacklisted && country.Code === 'US'" translate="SELL_BTC_UNAVAIL_STATE")
           .mt-20
@@ -36,3 +36,9 @@ div
               .item
                 input(type="email" ng-model="email" required)
             button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
+    .ml-30.width-40.hidden-xs(ng-if="!hasDismissedSellIntro() && (country.Code === 'US' || $parent.country.Code === 'US')")
+      .flex-between
+        span.f-24.blue.f-14-mobile(translate="SFOX.sell.INTRODUCING_HEADER")
+        .flex-center.pl-10
+          i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
+      p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")

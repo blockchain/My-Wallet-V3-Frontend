@@ -14,9 +14,30 @@ describe('Activity', () => {
       subscribe: () => () => {},
       transactions: () => [{ amount: 1, time: 25, txType: 'received', coinCode: 'btc' }]
     };
-    
+
     MyWallet.wallet.bch = {
       txs: [{ amount: 1, txType: 'received', coinCode: 'bch'}]
+    }
+
+    MyWallet.wallet.external = {
+      coinify: {
+        trades: [
+          {id: 1, txHash: '12345abcde'}
+        ],
+        profile: {
+          limits: {
+            blockchain: {
+              inRemaining: {
+                BTC: .05,
+              },
+              minimumInAmounts: {
+                BTC: .005
+              }
+            }
+          }
+        },
+        kycs: []
+      }
     }
 
     Activity = $injector.get('Activity');

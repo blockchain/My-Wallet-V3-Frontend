@@ -46,7 +46,11 @@ describe('SfoxCheckoutController', () => {
       MyWallet = $injector.get('MyWallet');
       let MyWalletHelpers = $injector.get('MyWalletHelpers');
 
-      MyWallet.wallet = {};
+      MyWallet.wallet = {
+        accountInfo: {
+          email: 'satoshi@gmail.com'
+        }
+      };
       Wallet.accounts = () => [];
       Wallet.getDefaultAccount = () => ({});
       MyWalletHelpers.asyncOnce = function (f) {
@@ -60,10 +64,11 @@ describe('SfoxCheckoutController', () => {
           profile: {
             limits: { buy: 100, sell: 100 },
             verificationStatus: { level: 'verified' }
-          }
+          },
+          trades: []
         }
       };
-      
+
       sfox = $injector.get('sfox');
       let currency = $injector.get('currency');
       currency.conversions['USD'] = { conversion: 2 };
@@ -79,7 +84,8 @@ describe('SfoxCheckoutController', () => {
           profile: { verificationStatus: { level: 'unverified' } },
           getBuyQuote () { return $q.resolve(mockQuote()); },
           getSellQuote () { return $q.resolve(mockQuote()); },
-          fetchProfile () { return $q.resolve(); }
+          fetchProfile () { return $q.resolve(); },
+          trades: []
         }
       }
     };

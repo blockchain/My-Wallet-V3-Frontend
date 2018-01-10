@@ -3,9 +3,11 @@ angular
   .component('exchangeConfirm', {
     bindings: {
       type: '<',
+      fiat: '<',
       quote: '<',
       details: '<',
       namespace: '<',
+      tradeAccount: '<',
       onCancel: '&',
       onSuccess: '&',
       handleTrade: '&',
@@ -18,11 +20,14 @@ angular
   });
 
 function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, Alerts, currency, Wallet, MyWalletHelpers, Exchange) {
+  $scope.format = currency.formatCurrencyForView;
   $scope.type = '.' + this.type;
   $scope.tradeState = '.confirm';
   $scope.namespace = this.namespace;
+  $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+  $scope.rate = this.quote.rate;
 
-  $scope.getTimeToExpiration = () => this.quote.expiresAt - new Date();
+  $scope.getTimeToExpiration = () => this.quote.expiresAt - new Date() - 5000;
   $scope.onExpiration = () => { $scope.lock(); this.quote = null; this.onExpiration().then($scope.free); };
 
   $scope.trade = () => {
@@ -30,8 +35,8 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
     let quote = this.quote;
 
     this.handleTrade({quote: quote})
-      .then(this.onSuccess)
-      .catch((err) => { Alerts.displayError(Exchange.interpretError(err)); this.onCancel(); })
+      .then(() => this.onSuccess())
+      .catch((err) => { Alerts.displayError(Exchange.interpretError(err)); })
       .finally($scope.free);
   };
 

@@ -49,7 +49,7 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.apiDomain = res.domains.api + '/';
 
-      env.walletHelperDomain = res.domains.walletHelper;
+      env.walletHelperDomain = res.domains.walletHelperUrl;
 
       env.buySell = res.buySell;
 

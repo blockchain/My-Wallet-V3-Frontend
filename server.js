@@ -149,7 +149,7 @@ rootApp.use(function (req, res, next) {
       root: process.env.ROOT_URL,
       webSocket: process.env.WEB_SOCKET_URL,
       api: process.env.API_DOMAIN,
-      walletHelper: walletHelperFrameDomain
+      walletHelperUrl: walletHelperFrameDomain
     };
     parsedJSON.network = process.env.NETWORK || 'bitcoin';
     parsedJSON.partners.sfox.production = sfoxProduction;

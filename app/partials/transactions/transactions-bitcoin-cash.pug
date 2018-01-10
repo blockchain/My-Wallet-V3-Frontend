@@ -62,7 +62,7 @@
             ng-model-options="{ debounce: 250 }")
           i.ti-search
   .transaction-feed.overflow-scroll(data-preflight-tag="TxsFeed" translate-namespace="BITCOIN_CASH")
-    .flex-center.flex-justify.flex-column(ng-hide="loading || getTotal() > 0 || filteredTransactions.length > 0")
+    .flex-center.flex-justify.flex-column(ng-hide="loading || transactions.length > 0")
       .flex-column.flex-column.tablet.bg-footer-blue(ng-hide="hideWelcome()")
         .flex-end
           .hidden-sm.hidden-xs
@@ -90,7 +90,7 @@
                   i.icon-ExchangeTab.mr-10
                   span.upper.em-600.f-16.white(translate=".GET_STARTED")
             span.f-12.pb-25(translate=".PLEASE_NOTE")
-    .flex-center.flex-justify.flex-column.mt-20(ng-hide="loading || getTotal() > 0 || filteredTransactions.length > 0 || selectedaccount == 'imported'")
+    .flex-center.flex-justify.flex-column.mt-20(ng-hide="loading || transactions.length > 0 || selectedaccount == 'imported'")
       .flex-column.mbl.border-bottom.black.ph-25.center
         .flex-center.flex-justify
           i.icon-tx.h3.mrm
@@ -104,7 +104,7 @@
           button.btn.button-default.button-short-wide.type-h5.pos-rel(ng-click="request()")
             i.mrs.media-middle.icon-receive
             span.em-300(translate="REQUEST")
-    .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && filteredTransactions.length == 0 && getTotal() > 0 ")
+    .flex-center.flex-justify.flex-column.mtl(ng-show="!loading && transactions.length > 0 && filteredTransactions.length == 0 && getTotal() > 0 ")
       i.ti-search.h1.mrm
       h3.em-300.mbl(translate="SORRY_ZERO_TXS")
       p.em-400(translate="PLEASE_TRY_AGAIN", ng-click="supportModal()")

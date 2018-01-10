@@ -1192,5 +1192,9 @@
     "PIN_CODE": "ПИН код",
     "BANK_ACCOUNT_NUMBER": "Номер банковского счета",
     "IFSC": "IFSC"
-  }
+  },
+  "UID_EXPLAIN_WARN": "Не сообщайте никому ID своего кошелька",
+  "PAIRING_CODE_EXPLAIN_WARN": "Не сообщайте никому код сопряжения своего кошелька",
+  "GENERAL": "Общее",
+  "DASHBOARD": "Главное"
 }

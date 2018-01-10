@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
+function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -19,6 +19,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     set accounts (val) {
       service._accounts = val;
     },
+    get hasSeen () {
+      return localStorageService.get('sfox-has-seen');
+    },
     get verificationStatus () {
       return service.profile.verificationStatus;
     },
@@ -32,9 +35,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     get activeAccount () {
       return service.accounts[0] && service.accounts[0].status === 'active';
     },
-    // TODO: SFOX needs access to the sell exchange rate
     get balanceAboveMin () {
-      return Exchange.sellMax > 0;
+      return Exchange.sellMax > service.min;
     },
     get userCanSell () {
       return service.profile && service.verified && service.activeAccount && service.balanceAboveMin;
@@ -45,16 +47,30 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
       else if (!service.verified) reason = 'needs_id';
       else if (!service.accounts.length) reason = 'needs_bank';
       else if (!service.activeAccount) reason = 'needs_bank_active';
+      else if (!service.min || isNaN(Exchange.sellMax)) reason = 'needs_data';
       else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
-      else reason = 'can_sell';
+      else reason = 'can_sell_remaining_balance';
       return reason;
+    },
+    get sellLaunchOptions () {
+      let reason = service.sellReason;
+
+      if (reason === 'not_enough_funds_to_sell') return { 'REQUEST': modals.openRequest };
     },
     buy,
     sell,
     init,
     selling,
     determineStep,
-    sellTradeDetails
+    sellTradeDetails,
+    setHasSeen,
+    setSellMin,
+    showAnnouncement,
+    dismissSellIntro,
+    hasDismissedSellIntro,
+    signupForBuyAccess,
+    signupForSellAccess,
+    getTxMethod
   };
 
   angular.extend(service, Exchange);
@@ -77,17 +93,27 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
     });
   }
 
+  function setSellMin (min) {
+    service.min = min;
+  }
+
+  function setHasSeen () {
+    localStorageService.set('sfox-has-seen', true);
+  }
+
+  function showAnnouncement (canTrade, isSFOXCountryState) {
+    return canTrade && isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
+  }
+
   function determineStep (exchange, accounts) {
     let profile = exchange.profile;
     if (!profile) {
       return 'create';
     } else {
       if (!service.verified) {
-        if (!service.profile.setupComplete) {
-          return 'verify';
-        } else {
-          return 'upload';
-        }
+        if (!service.profile.setupComplete) return 'verify';
+        else if (service.requiredDocs.length) return 'upload';
+        else return 'link';
       } else {
         return 'link';
       }
@@ -113,22 +139,31 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
       .then(mediums => mediums.ach.sell(account));
   }
 
+  function dismissSellIntro () {
+    localStorageService.set('hasSeenSfoxSellIntro', true);
+  }
+
+  function hasDismissedSellIntro () {
+    return localStorageService.get('hasSeenSfoxSellIntro');
+  }
+
   function sellTradeDetails (quote, payment, trade, tx) {
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
 
-    let amount = payment ? payment.amounts[0] : -tx.amount;
     let fee = payment ? payment.finalFee : tx.fee;
-    let totalAmount = amount + fee;
-
+    let amount = payment ? payment.amounts[0] : Math.abs(tx.amount) - fee;
+    let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
+    let totalAmount = payment ? amount + fee : Math.abs(tx.amount);
     let toBeReceived = quote
-                       ? quote.baseCurrency === 'BTC' ? quote.quoteAmount : quote.baseAmount
-                       : trade.inAmount;
+                       ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
+                       : (trade.receiveAmount).toFixed(2);
+    let amountKey = quote || payment ? '.AMT' : '.AMT_SOLD';
 
     return {
       txAmt: {
-        key: '.AMT',
+        key: amountKey,
         val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
       },
       txFee: {
@@ -139,12 +174,29 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency) {
         key: '.TOTAL',
         val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
       },
+      sfoxFee: {
+        key: '.TRADING_FEE',
+        val: formatCurrencyForView(tradingFee, fiat, true)
+      },
       in: {
         key: '.TO_BE_RECEIVED',
         val: formatCurrencyForView(toBeReceived, fiat, true),
         tip: () => console.log('Clicked tooltip')
       }
     };
+  }
+
+  function getTxMethod (hash) {
+    let trade = service.exchange.trades.filter((t) => t.txHash === hash)[0];
+    return trade && (trade.isBuy ? 'buy' : 'sell');
+  }
+
+  function signupForBuyAccess (email, state) {
+    BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSdpnz-DBaeq3ZFx9rAMaJBWASFYNXnVS_g_5C6EmamZBcOxPA/viewform?entry.1192956638=${email}`);
+  }
+
+  function signupForSellAccess (email, state) {
+    BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSeBjqWrqNs5k-yAR8p35xBwZ_FfwWfjttL0WCf4Qa2Ev2CK8A/viewform?entry.1192956638=${email}&entry.387129390=${state}`);
   }
 
   return service;

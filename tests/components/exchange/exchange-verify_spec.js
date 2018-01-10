@@ -86,4 +86,30 @@ describe('exchange-verify.component', () => {
       return expect(ctrl.isBeforeNow(future)).toEqual(false);
     });
   });
+
+  describe('displayInlineError', () => {
+    it('should go to address', () => {
+      let ctrl = getController(handlers);
+      spyOn(ctrl, 'goTo');
+      ctrl.displayInlineError('Please enter valid pincode');
+      expect(ctrl.goTo).toHaveBeenCalledWith('address');
+      ctrl.displayInlineError('Please enter valid pancard number');
+      expect(ctrl.goTo).toHaveBeenCalledWith('address');
+      ctrl.displayInlineError('This pancard number is already used on another account');
+      expect(ctrl.goTo).toHaveBeenCalledWith('address');
+      ctrl.displayInlineError('Please select valid State and City');
+      expect(ctrl.goTo).toHaveBeenCalledWith('address');
+    });
+
+    it('should go to info', () => {
+      let ctrl = getController(handlers);
+      scope.$ctrl.profile = { submittedBankInfo: false };
+      spyOn(ctrl, 'goTo');
+      ctrl.displayInlineError('You entered wrong account number');
+      expect(ctrl.goTo).toHaveBeenCalledWith('info');
+      ctrl.displayInlineError('You entered wrong IFSC');
+      expect(ctrl.goTo).toHaveBeenCalledWith('info');
+      ctrl.displayInlineError('unkown error');
+    });
+  });
 });
