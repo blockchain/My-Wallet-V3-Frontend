@@ -20,6 +20,8 @@
         span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION2")
         span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION3")
         span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION4")
+      .flex-column.mbm.f-16.em-600
+        span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.WARNING")
 
   .width-60
     bc-file-upload(file="$ctrl.file" id-type="$ctrl.idType" base="$ctrl.base" on-upload="$ctrl.onUpload" locked="$ctrl.locked" upload-steps="$ctrl.uploadSteps" on-upload-step="$ctrl.onUploadStep")
