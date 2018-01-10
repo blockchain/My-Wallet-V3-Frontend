@@ -89,6 +89,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
       state.error = null;
       state.loadFailed = false;
       $scope.refreshTimeout = $timeout($scope.refreshQuote, quote.timeToExpiration);
+      Wallet.api.incrementPartnerQuote($scope.provider, this.type, quote.baseCurrency, quote.quoteCurrency);
       if (state.baseFiat) {
         state.btc = Math.abs($scope.fromSatoshi(quote.quoteAmount, $scope.bitcoin));
         state.rate = +((1 / (Math.abs(quote.quoteAmount) / 1e8)) * Math.abs(quote.baseAmount)).toFixed(2);
