@@ -3,16 +3,8 @@ angular
   .controller('SendBitcoinController', SendBitcoinController);
 
 function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, currency, $uibModal, $timeout, $state, $filter, $stateParams, $translate, format, MyWalletHelpers, $q, $http, fees, smartAccount, Env, modals, blockAlert) {
-  let FEE_OPTIONS, FEE_ENABLED, FEE_TO_MINERS;
-  const COUNTRY_CODE = Wallet.my.wallet.accountInfo.countryCodeGuess;
-
   Env.then(env => {
     $scope.rootURL = env.rootURL;
-    FEE_OPTIONS = (env.service_charge || {})[COUNTRY_CODE];
-    window.FEE = FEE_OPTIONS;
-    FEE_ENABLED = MyWalletHelpers.guidToGroup(Wallet.my.wallet.guid) === 'b';
-    FEE_TO_MINERS = FEE_OPTIONS && FEE_OPTIONS.send_to_miner;
-    $scope.AB_TEST_FEE = FEE_OPTIONS != null;
     $scope.blockAlertConfig = env.web.serviceAlert.sendBtc;
     $scope.blockAlertBannerConfig = env.web.serviceAlert.sendBtcBanner;
     $scope.showAlert = $scope.blockAlertConfig != null;
@@ -152,7 +144,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
         $scope.unsetPaymentHandlers($scope.payment);
         $scope.payment = Wallet.my.wallet.createPayment(paymentCheckpoint);
         $scope.setPaymentHandlers($scope.payment);
-        $scope.payment.build(FEE_TO_MINERS);
+        $scope.payment.prebuild();
       }
 
       let msgText = typeof message === 'string' ? message : 'SEND_FAILED';
@@ -185,10 +177,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
 
         let message = MyWalletHelpers.tor() ? 'BITCOIN_SENT_TOR' : 'BITCOIN_SENT';
         Alerts.displaySentBitcoin(message);
-
-        if ($scope.AB_TEST_FEE) {
-          Wallet.api.pushTxStats(Wallet.my.wallet.guid, $scope.advanced);
-        }
       });
     };
 
@@ -309,9 +297,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
     let amount = $scope.transaction.amount;
     if (isNaN(amount) || amount <= 0) return;
     if ($scope.getTransactionTotal() > $scope.transaction.maxAvailable) return;
-    let fee = $scope.advanced && !reset ? $scope.transaction.fee : undefined;
-    let options = FEE_ENABLED && !$scope.advanced && !reset ? FEE_OPTIONS : null;
-    $scope.payment.amount($scope.transaction.amount, fee, options);
+    $scope.payment.amount($scope.transaction.amount);
     $scope.payment.updateFeePerKb($scope.transaction.satoshiPerByte);
   };
 
@@ -343,12 +329,8 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
 
     $scope.checkPriv()
       .then($scope.checkFee)
-      .then($scope.finalBuild)
       .then(() => {
         $scope.vm.toConfirmView();
-        if ($scope.AB_TEST_FEE) {
-          Wallet.api.confirmationScreenStats(Wallet.my.wallet.guid);
-        }
       })
       .catch(handleNextStepError)
       .finally(() => $scope.building = false);
@@ -374,20 +356,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
 
   $scope.checkFee = () => {
     let tx = $scope.transaction;
-    let maximumFee = tx.maxAvailable + tx.fee - $scope.getTransactionTotal();
-
-    const commitFee = (fee) => {
-      if (fee) {
-        if (fee > maximumFee) {
-          let feeDiff = fee - tx.fee;
-          tx.amount -= feeDiff;
-          $scope.setPaymentAmount();
-        }
-        tx.fee = fee;
-        $scope.payment.fee(fee);
-      }
-    };
-
     let max = tx.fees.limits.max;
     let min = tx.fees.limits.min;
     console.log(`Fees { max: ${max}, min: ${min} }`);
@@ -396,7 +364,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
       let feeUSD = currency.convertFromSatoshi(tx.fee, currency.currencies[0]);
       let feeRatio = tx.fee / tx.amount;
       if (feeUSD > 0.50 && tx.size > 1000 && feeRatio > 0.01) {
-        return fees.showLargeTxWarning(tx.size, tx.fee).then(commitFee);
+        return fees.showLargeTxWarning(tx.size, tx.fee);
       }
     }
     return $q.resolve();
@@ -415,15 +383,4 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
       $scope.setPaymentAmount(); // keep
     }, 250);
   };
-
-  $scope.finalBuild = () => $q((resolve, reject) => {
-    $scope.payment.build(FEE_TO_MINERS).then(p => {
-      p.blockchainFee = 0; // reset fee for next build
-      resolve(p.transaction);
-      return p;
-    }).catch(r => {
-      reject(r.error ? r.error.message || r.error : 'Error building transaction');
-      return r.payment;
-    });
-  });
 }

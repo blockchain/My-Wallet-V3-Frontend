@@ -5,10 +5,10 @@ describe('SendBitcoinController', () => {
   let MyWalletHelpers;
   let Alerts;
   let fees;
-  scope = undefined;
   let $q;
   let $httpBackend;
   let $timeout;
+  let currency;
 
   let askForSecondPassword;
 
@@ -26,7 +26,7 @@ describe('SendBitcoinController', () => {
       MyWallet = $injector.get('MyWallet');
       Wallet = $injector.get('Wallet');
       let MyWalletPayment = $injector.get('MyWalletPayment');
-      let currency = $injector.get('currency');
+      currency = $injector.get('currency');
       fees = $injector.get('fees');
       MyWalletHelpers = $injector.get('MyWalletHelpers');
       Alerts = $injector.get('Alerts');
@@ -348,37 +348,33 @@ describe('SendBitcoinController', () => {
     });
 
     describe('dynamic fee', function () {
-      let avgSize = 500;
-
-      let lowFee = 4999;
-      let midFee = 25000;
-      let highFee = 30001;
-      let lgSizeFee = 100000;
+      let fee = 100000
+      let size = 10000
 
       beforeEach(function () {
-        spyOn(fees, 'showFeeWarning').and.callFake(() => $q.resolve());
-        scope.transaction.feeBounds = [30000, 25000, 20000, 15000, 10000, 5000];
+        spyOn(fees, 'showLargeTxWarning').and.callFake(() => $q.resolve());
+        spyOn(currency, 'convertFromSatoshi').and.returnValue(1)
+        scope.transaction.amount = 200000
+        scope.transaction.fee = fee
+        scope.transaction.size = size
       });
 
-      it('should not warn when the tx fee is normal', function (done) {
-        scope.transaction.fee = midFee;
-        scope.transaction.size = avgSize;
-        scope.checkFee().then(function () {
-          expect(fees.showFeeWarning).not.toHaveBeenCalled();
-          return done();
+      it('should show a large tx warning', (done) => {
+        scope.checkFee().then(() => {
+          expect(fees.showLargeTxWarning).toHaveBeenCalledWith(size, fee);
+          done();
         });
-        return scope.$digest();
-      });
+        scope.$digest()
+      })
 
-      it('should take tx size into account when deciding to show warning', function (done) {
-        scope.transaction.fee = lgSizeFee;
-        scope.transaction.feeBounds[0] = 100000;
-        scope.checkFee().then(function () {
-          expect(fees.showFeeWarning).not.toHaveBeenCalled();
-          return done();
+      it('should not show a large tx warning in advanced mode', (done) => {
+        scope.advanced = true
+        scope.checkFee().then(() => {
+          expect(fees.showLargeTxWarning).not.toHaveBeenCalled()
+          done();
         });
-        return scope.$digest();
-      });
+        scope.$digest()
+      })
     });
 
     describe('note', () =>
@@ -658,10 +654,8 @@ describe('SendBitcoinController', () => {
 
       it('should build the payment before going to confirmation step', inject(function ($q) {
         spyOn(scope, 'checkFee').and.callFake(() => $q.resolve());
-        spyOn(scope, 'finalBuild').and.callFake(() => $q.resolve());
         scope.goToConfirmation();
         scope.$digest();
-        expect(scope.finalBuild).toHaveBeenCalled();
         expect(scope.vm.confirm).toEqual(true);
       })
       );
@@ -684,17 +678,6 @@ describe('SendBitcoinController', () => {
         expect(scope.advanced).toBeFalsy();
       });
     });
-
-    describe('finalBuild', () =>
-
-      it('should resolve with the payment transaction', function (done) {
-        scope.finalBuild().then(function (tx) {
-          expect(tx).toEqual('tx');
-          return done();
-        });
-        return scope.$digest();
-      })
-    );
 
     describe('checkPriv', () => {
 
