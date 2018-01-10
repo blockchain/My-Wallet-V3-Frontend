@@ -64,15 +64,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.checkout.goTo('create'); }
   };
 
-  $scope.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
-  $scope.email = MyWallet.wallet.accountInfo.email;
-  $scope.signupForBuyAccess = () => {
-    let email = encodeURIComponent($scope.email);
-    sfox.signupForBuyAccess(email);
-    $scope.email = '';
-    localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
-  };
-  $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
+  $scope.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 
   $scope.checkout.goTo('create');
   $scope.$watch('tabs.selectedTab', (t) => t === 'ORDER_HISTORY' && sfox.exchange.getTrades());

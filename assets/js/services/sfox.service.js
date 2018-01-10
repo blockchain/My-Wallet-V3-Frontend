@@ -82,8 +82,8 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     setHasSeen,
     setSellMin,
     showAnnouncement,
-    dismissSellIntro,
-    hasDismissedSellIntro,
+    dismissBuyIntro,
+    hasDismissedBuyIntro,
     signupForBuyAccess,
     signupForSellAccess,
     getTxMethod,
@@ -165,12 +165,12 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       .then(mediums => mediums.ach.sell(account));
   }
 
-  function dismissSellIntro () {
-    localStorageService.set('hasSeenSfoxSellIntro', true);
+  function dismissBuyIntro () {
+    localStorageService.set('hasSeenSfoxBuyIntro', true);
   }
 
-  function hasDismissedSellIntro () {
-    return localStorageService.get('hasSeenSfoxSellIntro');
+  function hasDismissedBuyIntro () {
+    return localStorageService.get('hasSeenSfoxBuyIntro');
   }
 
   function sellTradeDetails (quote, payment, trade, tx) {

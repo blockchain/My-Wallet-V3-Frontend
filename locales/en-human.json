@@ -1900,9 +1900,7 @@
       "TOTAL": "Total Outgoing Bitcoin",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
-      "INTRODUCING_HEADER": "Introducing Sell",
-      "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX.",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon."
+      "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
     },
     "buy": {
       "confirm": {
@@ -1935,7 +1933,10 @@
       "TRADING_FEE": "@:SFOX.sell.TRADING_FEE",
       "TX_FEE": "@:SFOX.sell.TX_FEE",
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
-      "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet."
+      "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
+      "INTRODUCING_HEADER": "Introducing Buy",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can buy bitcoin.<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, secure, and seamless."
+
     },
     "create": "Create Account",
     "verify": "Verify Identity",
