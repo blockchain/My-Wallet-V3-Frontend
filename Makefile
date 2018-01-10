@@ -1,6 +1,7 @@
 all: clean node_modules test pgp dist changelog
 
 node_modules:
+	npm install -g npm@4
 	npm install -g grunt-cli
 	npm update
 
