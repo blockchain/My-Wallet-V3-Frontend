@@ -1877,13 +1877,13 @@
         "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "failed": {
-        "DISPLAY": "Failed",
+        "DISPLAY": "Failed Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Failed",
         "BODY": "Your sell trade has failed. Please contact our support team with the Transaction ID for this trade if you have any questions. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "rejected": {
-        "DISPLAY": "Rejected",
+        "DISPLAY": "Rejected Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Rejected",
         "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection. <b>Your order ID is: SFX-{{::tradeId}}</b>"
@@ -1915,6 +1915,12 @@
         "HEADER": "Buy Order in Progress",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-5 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
+      "rejected": {
+        "DISPLAY": "Rejected Buy",
+        "HEADER": "Buy Order Rejected",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "Your buy trade has been rejected. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "completed": {
         "DISPLAY": "Completed Buy",
