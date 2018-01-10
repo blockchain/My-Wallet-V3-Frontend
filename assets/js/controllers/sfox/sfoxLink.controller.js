@@ -5,6 +5,7 @@ angular
 function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Env, $window) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
+  if (sfox.activeAccount) $scope.vm.close(true);
 
   Env.then(env => {
     $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
