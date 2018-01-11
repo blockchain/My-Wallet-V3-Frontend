@@ -64,7 +64,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.checkout.goTo('create'); }
   };
 
-  $scope.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
+  this.dismissBuyIntro = sfox.dismissBuyIntro;
+  this.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 
   $scope.checkout.goTo('create');
   $scope.$watch('tabs.selectedTab', (t) => t === 'ORDER_HISTORY' && sfox.exchange.getTrades());

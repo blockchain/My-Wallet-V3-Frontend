@@ -19,12 +19,12 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="buying().verificationRequired ? checkout.openSfoxSignup() : prepareBuy(quote)")
-    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !hasDismissedBuyIntro()")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedBuyIntro()")
       .mb-20
         .flex-between
           span.f-24.blue.f-14-mobile(translate="SFOX.buy.INTRODUCING_HEADER")
           .flex-center.pl-10
-            i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
+            i.pointer.ti-close.f-12.mid-grey(ng-click="checkout.dismissBuyIntro()")
         p.f-12.mt-10(translate="SFOX.buy.INTRODUCING_BODY")
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN' && checkout.onStep('create')")
     .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
