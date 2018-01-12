@@ -1548,7 +1548,7 @@
       "EXPLAIN": ""
     },
     "has_remaining_buy_limit": {
-      "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "EXPLAIN": "Your remaining buy limit is <a class='pointer'>{{::max}} {{::curr}}</a>.",
       "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
       "KYC": "Increase your limit."
     },
@@ -1935,7 +1935,7 @@
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
       "INTRODUCING_HEADER": "Introducing Buy",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can buy bitcoin.<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, secure, and seamless."
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can buy bitcoin.<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
 
     },
     "create": "Create Account",
