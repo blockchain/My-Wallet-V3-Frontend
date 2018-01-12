@@ -59,7 +59,7 @@
                     coin-code="'bch'"
                     required)
                 .has-error
-                  span.help-block.type-sm(translate="BCH_ADDRESS_INVALID" ng-show="forms.sendForm.destination.$invalid && forms.sendForm.destination.$touched")
+                  span.help-block.type-sm(translate="{{ bchAlternative ? 'BCH_ALTERNATIVE_AVAIL' : 'BCH_ADDRESS_INVALID' }}" translate-values="{alt: bchAlternative}" ng-show="forms.sendForm.destination.$invalid && forms.sendForm.destination.$touched")
           //- Amount
           .item.mt-20
             label.colon(translate="AMOUNT")

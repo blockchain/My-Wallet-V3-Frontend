@@ -22,7 +22,7 @@ function RequestBitcoinCashController ($scope, MyWallet, AngularHelper, BitcoinC
     $scope.state.isAddressCopied = true;
   };
 
-  $scope.address = () => $scope.state.to.receiveAddress;
+  $scope.address = () => BitcoinCash.toBitcoinCash($scope.state.to.receiveAddress, true);
   $scope.$watch('state.to', () => $scope.state.address = $scope.address());
 
   AngularHelper.installLock.call($scope);
