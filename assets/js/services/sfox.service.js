@@ -216,13 +216,17 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
-    let fee = tx ? tx.fee : 16830; // TODO add real fee
+    // let fee = tx ? tx.fee : 16830; // TODO add real fee
     let amount = quote
                     ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
                     : trade.receiveAmount * 1e8;
 
+    let fiatAmount = quote
+                      ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
+                      : trade.inAmount;
+
     let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
-    let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
+    // let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
 
     let toBeSpent = quote
                        ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
@@ -232,16 +236,16 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     return {
       txAmt: {
         key: amountKey,
-        val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
+        val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${fiatAmount})`
       },
-      txFee: {
-        key: '.TX_FEE',
-        val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
-      },
-      out: {
-        key: '.TOTAL',
-        val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
-      },
+      // txFee: {
+      //   key: '.TX_FEE',
+      //   val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
+      // },
+      // out: {
+      //   key: '.TOTAL',
+      //   val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+      // },
       sfoxFee: {
         key: '.TRADING_FEE',
         val: formatCurrencyForView(tradingFee.toFixed(2), fiat, true)

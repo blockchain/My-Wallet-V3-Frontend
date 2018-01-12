@@ -1926,7 +1926,7 @@
         "HEADER": "Buy Order Complete",
         "BODY": "Your buy trade has successfully completed. Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
-      "AMT": "Quote Amount",
+      "AMT": "Amount",
       "AMT_BOUGHT": "Amount Bought",
       "TOTAL": "Bitcoin Amount to be Received",
       "TO_BE_SPENT": "USD Spent",
