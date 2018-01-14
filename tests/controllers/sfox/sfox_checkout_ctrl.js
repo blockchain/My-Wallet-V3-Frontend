@@ -102,7 +102,7 @@ describe('SfoxCheckoutController', () => {
   it('should set scope.openSfoxSignup on init', () => {
     scope = getControllerScope([{status: 'active'}]);
     spyOn(modals, 'openSfoxSignup').and.returnValue($q.resolve());
-    scope.openSfoxSignup();
+    scope.checkout.openSfoxSignup();
     return expect(modals.openSfoxSignup).toHaveBeenCalledWith(scope.vm.external.sfox, undefined);
   });
 
@@ -110,7 +110,7 @@ describe('SfoxCheckoutController', () => {
     it('should set modalOpen to false', () => {
       scope = getControllerScope([{status: 'active'}], true);
       spyOn(modals, 'openSfoxSignup').and.returnValue($q.resolve());
-      scope.openSfoxSignup();
+      scope.checkout.openSfoxSignup();
       scope.$digest();
       return expect(scope.modalOpen).toBe(false);
     })
