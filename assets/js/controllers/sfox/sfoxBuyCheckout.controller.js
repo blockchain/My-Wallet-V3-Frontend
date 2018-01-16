@@ -31,7 +31,7 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.checkout.buyHandler = (quote) => sfox.buy($scope.checkout.state.account, quote)
-    .then(trade => { console.log('buyHandler', trade); $scope.checkout.trade = trade; })
+    .then(trade => $scope.checkout.trade = trade)
     .then(sfox.fetchTrades)
     .then(enableSiftScience)
     .catch((e) => Alerts.displayError(e));

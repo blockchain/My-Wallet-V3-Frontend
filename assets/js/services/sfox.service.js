@@ -62,7 +62,6 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       else if (!service.accounts.length) reason = 'needs_bank';
       else if (!service.activeAccount) reason = 'needs_bank_active';
       else if (!service.min) reason = 'needs_data';
-      // else if (!service.balanceAboveBuyMin) reason = 'not_enough_funds_to_buy';
       else reason = 'has_remaining_buy_limit';
       return reason;
     },
@@ -150,7 +149,6 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     return {
       reason: service.buyReason,
       isDisabled: !service.userCanBuy,
-      // launchOptions: service.buyLaunchOptions,
       verificationRequired: !service.activeAccount
     };
   }
