@@ -64,12 +64,12 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
     let promptSurvey = () =>
       Alerts.confirm('SURVEY_CONFIRM', options({ cancel: 'NO_THANKS' }))
-        .then(openSurvey, saidNoThanks).then(rememberChoice('logout-survey'));
+        .then(openSurvey, saidNoThanks).then(rememberChoice('logout-survey-1515433556478'));
 
     $q.resolve(isSynced || Alerts.saving())
       .then(() => {
         if (needsBackup && hasNotSeen('backup-reminder')) return remindBackup();
-        else if (hasNotSeen('logout-survey')) return promptSurvey();
+        else if (hasNotSeen('logout-survey-1515433556478')) return promptSurvey();
       })
       .then(() => Wallet.logout());
   };

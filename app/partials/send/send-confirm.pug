@@ -31,7 +31,6 @@
     fiat.f-20(btc="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'btc'")
     fiat.f-20(eth="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'eth'")
     fiat.f-20(bch="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'bch'")
-  div.well.em-400.type-h5.hidden-xs(translate="BITCOIN_CASH.VERIFY_ADDRESS" ng-if="$ctrl.asset === 'bch' && $ctrl.tx.destination.type === 'External'")
   .mt-30
     button.full.button-primary.upper(
       ladda-translate="{{$ctrl.getButtonContent()}}"

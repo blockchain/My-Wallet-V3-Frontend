@@ -60,7 +60,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     let tx = $scope.transaction;
     let payment = $scope.transaction.from.createPayment();
 
-    if (isNaN(tx.destination.index)) addr = tx.destination.address;
+    if (isNaN(tx.destination.index)) addr = BitcoinCash.fromBitcoinCash(tx.destination.address);
     else addr = BitcoinCash.accounts[tx.destination.index].receiveAddress;
 
     $scope.lock();
@@ -106,8 +106,14 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   $scope.$watch('transaction.destination', (destination) => {
     if (destination == null) return;
-    let valid = destination.index == null ? Wallet.isValidAddress(destination.address) : true;
-    $scope.forms.sendForm.destination.$setValidity('isValidAddress', valid);
+    let internal = destination.type === 'Accounts';
+    let isBTCAddress = Wallet.isValidAddress(destination.address);
+    let isBCHAddress = (addr) => { try { BitcoinCash.fromBitcoinCash(addr); } catch (e) { return false; } };
+
+    $scope.bchAlternative = isBTCAddress && BitcoinCash.toBitcoinCash(destination.address, true);
+
+    $scope.forms.sendForm.destination.$setValidity('isBTCAddress', internal || isBTCAddress);
+    $scope.forms.sendForm.destination.$setValidity('isValidAddress', internal || isBCHAddress(destination.address));
   }, true);
 
   AngularHelper.installLock.call($scope);

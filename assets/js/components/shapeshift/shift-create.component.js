@@ -97,9 +97,8 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     $scope.busy = true;
     state.baseCurr = this.from.coinCode;
     this.handleQuote($scope.getQuoteArgs(state)).then((quote) => {
-      $scope.busy = false;
       let payment = this.buildPayment({quote: quote, fee: $scope.cachedFee, from: this.from});
-      payment.getFee().then((fee) => this.onComplete({payment: payment, fee: fee, quote: quote, destination: this.to}));
+      payment.getFee().then((fee) => { $scope.busy = false; this.onComplete({payment: payment, fee: fee, quote: quote, destination: this.to}); });
     }).catch((err) => { console.log(err); $scope.busy = false; });
   };
 
