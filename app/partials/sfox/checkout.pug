@@ -79,7 +79,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             user-action-required="trade.state === 'awaiting_transfer_in'"
             inspect-trade="inspectTrade"
             namespace="'SFOX'"
-            conversion="1"
+            conversion="100000000"
             trade="trade")
     div(ng-show="completedTrades().length")
       .flex-row.flex-between.flex-center.mtl
@@ -98,7 +98,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             user-action-required="trade.state === 'awaiting_transfer_in'"
             inspect-trade="inspectTrade"
             namespace="'SFOX'"
-            conversion="1"
+            conversion="100000000"
             trade="trade")
 contact-support-footer(ng-hide="inMobileBuy")
 sift-science(ng-if='siftScienceEnabled' user-id='userId' trade-id='trade.id')
