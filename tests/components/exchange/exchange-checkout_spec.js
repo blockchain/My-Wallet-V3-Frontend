@@ -82,6 +82,7 @@ describe('exchange-checkout.component', () => {
       MyWallet.wallet = {};
       Wallet.accounts = () => [];
       Wallet.getDefaultAccount = () => ({});
+      Wallet.api = { incrementPartnerQuote: () => {} };
       MyWalletHelpers.asyncOnce = function (f) {
         let async = () => f();
         async.cancel = function () {};
