@@ -41,6 +41,8 @@ function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, Sh
     scope.fromSatoshi = currency.convertFromSatoshi;
     scope.bchCurrency = currency.bchCurrencies[0];
 
+    scope.toBitcoinCash = BitcoinCash.toBitcoinCash;
+
     scope.toIndex = () => {
       let toIndex = scope.tx.to[0] && scope.tx.to[0].accountIndex;
       if (!isNaN(toIndex)) return toIndex;
