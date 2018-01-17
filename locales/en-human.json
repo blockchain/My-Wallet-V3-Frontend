@@ -566,7 +566,7 @@
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
   "BCH_ADDRESS_INVALID": "Invalid Bitcoin Cash Address",
   "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
-  "BCH_ALTERNATIVE_AVAIL": "That's a bitcoin address, try: {{::alt}}",
+  "BCH_ALTERNATIVE_AVAIL": "That's a bitcoin address. Please use a <b>Bitcoin Cash address</b>",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
   "EMAIL_CONFIRMATION_SENT" : "Sent",
