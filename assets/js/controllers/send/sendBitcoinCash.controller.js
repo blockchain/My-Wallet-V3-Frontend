@@ -110,6 +110,8 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     let isBTCAddress = Wallet.isValidAddress(destination.address);
     let isBCHAddress = (addr) => { try { BitcoinCash.fromBitcoinCash(addr); } catch (e) { return false; } };
 
+    $scope.bchAlternative = isBTCAddress && BitcoinCash.toBitcoinCash(destination.address, true);
+
     $scope.forms.sendForm.destination.$setValidity('isBTCAddress', internal || isBTCAddress);
     $scope.forms.sendForm.destination.$setValidity('isValidAddress', internal || isBCHAddress(destination.address));
   }, true);
