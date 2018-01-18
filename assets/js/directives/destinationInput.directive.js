@@ -12,6 +12,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       coinCode: '=',
       addresses: '=',
       addressBook: '=',
+      isValidAddress: '=',
       change: '&ngChange',
       onPaymentRequest: '&onPaymentRequest',
       ignore: '=',
@@ -38,7 +39,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
 
     scope.onAddressScan = (result) => {
       let address = Wallet.parsePaymentRequest(result, coinCode);
-      if (Wallet.isValidAddress(address.address)) {
+      if (scope.isValidAddress(address.address)) {
         scope.model = format.destination(address, 'External');
         scope.onPaymentRequest({request: address});
         scope.setInputMetric({metric: 'qr'});

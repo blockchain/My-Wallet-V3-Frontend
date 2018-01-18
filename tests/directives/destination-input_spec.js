@@ -39,9 +39,10 @@ describe('Destination Input directive', () => {
   );
 
   beforeEach(function () {
-    element = $compile('<destination-input coin-code="btc" ng-model="transaction" ignore="ignore"></destination-input>')($rootScope);
+    element = $compile('<destination-input coin-code="btc" ng-model="transaction" is-valid-address="isValidAddress" ignore="ignore"></destination-input>')($rootScope);
     $rootScope.$digest();
     isoScope = element.isolateScope();
+    isoScope.isValidAddress = (addr) => addr;
     return isoScope.$digest();
   });
 

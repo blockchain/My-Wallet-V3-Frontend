@@ -51,6 +51,7 @@
                   destination-input(
                     name="destination"
                     accounts="accounts"
+                    is-valid-address="isValidAddress"
                     ng-model="transaction.destination"
                     ng-model-options="{ updateOn: 'blur' }"
                     on-payment-request="applyPaymentRequest(request)"
@@ -111,6 +112,6 @@
             .flex-1.f-14
               span {{ transaction.fee || 0 | convert:'bch':true }} ({{ transaction.fee || 0 | convert:'fiat':true:'bch'}})
         .group.mt-25
-          button.button-primary(translate="CONTINUE" ng-click="goTo('send-confirm')" ng-disabled="forms.sendForm.$invalid || transaction.amount > transaction.maxAvailable")
+          button.button-primary(translate="CONTINUE" ng-click="goTo('send-confirm')" ng-disabled="!bchAlternative && forms.sendForm.$invalid || transaction.amount > transaction.maxAvailable")
   .flex-column.width-100(ng-if="onStep('send-confirm')")
     send-confirm(tx="transaction" on-send="send()" asset="'bch'" on-go-back="goTo('send-cash')" locked="locked")
