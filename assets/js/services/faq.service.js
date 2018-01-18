@@ -54,6 +54,10 @@ function faq (MyWallet, Ethereum, tradeStatus, ShapeShift, modals) {
       );
     }
 
+    questions.unshift(
+      { name: 'BITCOIN_CASH_ADDRESS' }
+    );
+
     return questions;
   };
 
