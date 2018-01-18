@@ -137,5 +137,5 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
   $scope.$watch('filterBy.account', setTxs);
   $scope.$watch(() => BitcoinCash.txs, (txs) => setTxs(), true);
 
-  if (!BitcoinCash.hasSeenAddressChangeNotice && txList.length) modals.openBitcoinCashAddressChangeNotice();
+  if (!BitcoinCash.hasSeenAddressChangeNotice && txList.length) modals.openAnnouncement('BCH_ADDRESS_CHANGE', null, BitcoinCash.setHasSeenAddressChangeNotice(true));
 }

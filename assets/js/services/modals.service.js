@@ -252,7 +252,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openAnnouncement = service.openOnce((namespace, link) => {
+  service.openAnnouncement = service.openOnce((namespace, link, fn) => {
     return openMobileCompatible({
       windowClass: 'bc-modal buy',
       templateUrl: 'partials/login-modal-announcement.pug',
@@ -261,7 +261,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
 
         $scope.cta = () => {
           $uibModalInstance.dismiss();
-          $state.go(link);
+          link ? $state.go(link) : fn;
         };
       }
     });
@@ -283,19 +283,6 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
       templateUrl: 'partials/subscribe-modal.pug',
       windowClass: 'bc-modal initial',
       controller: 'SubscribeCtrl'
-    })
-  );
-
-  service.openBitcoinCashAddressChangeNotice = service.openOnce(() =>
-    open({
-      templateUrl: 'partials/bitcoin-cash-address-change.pug',
-      windowClass: 'bc-modal initial',
-      backdrop: 'static',
-      keyboard: false,
-      controller: function ($scope, BitcoinCash, $uibModalInstance) {
-        $scope.hasSeen = () => BitcoinCash.setHasSeenAddressChangeNotice(true);
-        $scope.onClose = () => { $uibModalInstance.dismiss(); $scope.hasSeen(); };
-      }
     })
   );
 
