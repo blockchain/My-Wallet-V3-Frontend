@@ -105,7 +105,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     return canTrade && isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
   }
 
-  function determineStep (exchange, accounts) {
+  function determineStep (exchange) {
     let profile = exchange.profile;
     if (!profile) {
       return 'create';
@@ -125,7 +125,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       reason: service.sellReason,
       isDisabled: !service.userCanSell,
       launchOptions: service.sellLaunchOptions,
-      verificationRequired: !service.activeAccount
+      verificationRequired: !service.verified || !service.activeAccount
     };
   }
 

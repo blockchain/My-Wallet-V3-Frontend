@@ -1687,6 +1687,7 @@
         "OPTION2": "",
         "OPTION3": "",
         "OPTION4": "",
+        "WARNING": "",
         "HELP": "Make sure the snapshot clearly displays your pancard number."
       },
       "photo": {
@@ -1698,6 +1699,7 @@
         "OPTION2": "",
         "OPTION3": "",
         "OPTION4": "",
+        "WARNING": "",
         "HELP": "Make sure the snapshot clearly displays your face."
       },
       "address": {
@@ -1709,6 +1711,7 @@
         "OPTION2": "- Driving License",
         "OPTION3": "- Passport (page showing address)",
         "OPTION4": "- Utility Bill",
+        "WARNING": "",
         "HELP": "Make sure the snapshot clearly displays your name and address."
       }
     },
@@ -1804,6 +1807,7 @@
         "OPTION2": "- Passport",
         "OPTION3": "- State or government-issued identification card",
         "OPTION4": "",
+        "WARNING": "",
         "UPLOAD_TITLE": "Photo ID",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Capture the front side of ID, clearly displaying your identification number."
@@ -1815,6 +1819,7 @@
         "OPTION2": "- First page and signature page of your lease",
         "OPTION3": "- First page of your bank statement",
         "OPTION4": "- DMV or voter registration form",
+        "WARNING": "⛔️ Uploading your passport or your driver's license is not sufficient to verify your address. Please upload one of the options above.",
         "UPLOAD_TITLE": "Proof of Address",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Make sure the snapshot clearly displays your address."
