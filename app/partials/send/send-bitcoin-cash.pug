@@ -24,10 +24,10 @@
                 tagging
                 required)
                 ui-select-match(placeholder="{{'SEARCH' | translate}}...")
-                  label-origin(origin="$select.selected" ng-class="{'state-danger-text': $select.selected.balance === 0}")
+                  label-origin(origin="$select.selected" ng-class="{'state-danger-text': $select.selected.balance === 0}" coin-code="'bch'")
                 ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
                   span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
-                    label-origin(origin="::origin" highlight="$select.search")
+                    label-origin(origin="::origin" highlight="$select.search" coin-code="'bch'")
 
               //- Private Key for Watch Only
               .input-group.pbm(ng-show="transaction.from.isWatchOnly")
