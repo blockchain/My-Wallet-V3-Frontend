@@ -108,12 +108,9 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     if (destination == null) return;
     let internal = destination.type === 'Accounts';
     let isBTCAddress = Wallet.isValidAddress(destination.address);
-    let isBCHAddress = (addr) => { try { BitcoinCash.fromBitcoinCash(addr); } catch (e) { return false; } };
 
     $scope.bchAlternative = isBTCAddress && BitcoinCash.toBitcoinCash(destination.address, true);
-
-    $scope.forms.sendForm.destination.$setValidity('isBTCAddress', internal || isBTCAddress);
-    $scope.forms.sendForm.destination.$setValidity('isValidAddress', internal || isBCHAddress(destination.address));
+    $scope.forms.sendForm.destination.$setValidity('isValidAddress', internal || $scope.isValidAddress(destination.address));
   }, true);
 
   AngularHelper.installLock.call($scope);

@@ -5,6 +5,7 @@ angular
       tx: '<',
       asset: '<',
       locked: '<',
+      warning: '<',
       onSend: '&',
       onGoBack: '&'
     },
