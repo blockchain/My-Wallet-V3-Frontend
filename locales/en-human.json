@@ -2037,7 +2037,7 @@
     },
     "PLEASE_NOTE": "<b>Please note:</b> For now, Bitcoin Cash will only be supported in your web wallet. Support in your mobile wallet is coming soon!",
     "ADDRESSES": "New Bitcoin Cash Address Format",
-    "WHATS_NEW": "Bitcoin Cash addresses now follow the CashAddr format."
+    "ADDR_FORMAT": "Bitcoin Cash addresses now follow the CashAddr format."
   },
   "BCH_ADDRESS_CHANGE": {
     "NOW_SUPPORTING": "News About Your Bitcoin Cash Addresses",
