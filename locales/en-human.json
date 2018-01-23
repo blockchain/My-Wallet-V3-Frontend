@@ -25,7 +25,7 @@
   "FAQ_QUESTIONS": {
     "BITCOIN_CASH_ADDRESS": {
       "Q": "Why have the Bitcoin Cash addresses been updated?",
-      "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/17/bitcoin-cash-address-update/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
+      "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
     },
     "HOW_DO_I_BUY": {
       "Q": "How do I buy bitcoin?",
@@ -2041,7 +2041,7 @@
   },
   "BCH_ADDRESS_CHANGE": {
     "NOW_SUPPORTING": "News About Your Bitcoin Cash Addresses",
-    "ANNOUNCEMENT": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? You can read more <a href='https://blog.blockchain.com/2018/01/17/bitcoin-cash-address-update/' target='_blank' rel='noopener noreferrer'>here.</a>",
+    "ANNOUNCEMENT": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? You can read more <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>here.</a>",
     "GET_STARTED": "Sounds good, take me to my transactions!"
   },
   "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
