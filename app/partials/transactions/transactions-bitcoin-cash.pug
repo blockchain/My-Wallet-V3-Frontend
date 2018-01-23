@@ -12,10 +12,10 @@
         name="accounts"
         tagging)
         ui-select-match
-          label-origin(origin="$select.selected")
+          label-origin(origin="$select.selected" coin-code="'bch'")
         ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
           span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
-            label-origin(origin="::account" highlight="$select.search")
+            label-origin(origin="::account" highlight="$select.search" coin-code="'bch'")
       ui-select.mbl(
         ng-model="filterBy.type"
         name="filters"
@@ -41,10 +41,10 @@
           name="accounts"
           tagging)
           ui-select-match
-            label-origin(origin="$select.selected")
+            label-origin(origin="$select.selected" coin-code="'bch'")
           ui-select-choices(repeat="account in accounts | filter:{label:$select.search} | limitTo:accountLimit" group-by="'type'")
             span(in-view="$last && account.type==='Imported Addresses' && increaseLimit()")
-              label-origin(origin="::account" highlight="$select.search")
+              label-origin(origin="::account" highlight="$select.search" coin-code="'bch'")
         .filter-buttons
           a.black.em-500.upper(
             ng-repeat="f in filterTypes track by f"
