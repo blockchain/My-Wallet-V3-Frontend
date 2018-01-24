@@ -4,7 +4,14 @@ angular
     bindings: {
       origin: '<',
       highlight: '<',
+      coinCode: '<',
       simple: '<'
     },
-    templateUrl: 'templates/label-origin.pug'
+    templateUrl: 'templates/label-origin.pug',
+    controller: function (Wallet, currency) {
+      let display = Wallet.settings.displayCurrency;
+
+      this.coin = this.coinCode || 'btc';
+      this.type = currency.isBitCurrency(display) ? this.coin : 'fiat';
+    }
   });

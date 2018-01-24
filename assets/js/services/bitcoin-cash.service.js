@@ -17,6 +17,9 @@ function BitcoinCash ($q, Wallet, MyWalletHelpers, localStorageService) {
     get hasSeen () {
       return this.bch.hasSeen;
     },
+    get hasSeenAddressChangeNotice () {
+      return localStorageService.get('hasSeenBchAddressChangeNotice');
+    },
     get accounts () {
       return this.bch && this.bch.accounts;
     },
@@ -31,6 +34,9 @@ function BitcoinCash ($q, Wallet, MyWalletHelpers, localStorageService) {
     },
     setHasSeen () {
       this.bch.setHasSeen(true);
+    },
+    setHasSeenAddressChangeNotice (bool) {
+      localStorageService.set('hasSeenBchAddressChangeNotice', true);
     },
     getHistory () {
       return this.bch.getHistory();

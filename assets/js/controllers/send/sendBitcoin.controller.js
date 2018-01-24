@@ -46,6 +46,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
   $scope.btcCurrency = Wallet.settings.btcCurrency;
   $scope.isBitCurrency = currency.isBitCurrency;
   $scope.isValidPrivateKey = Wallet.isValidPrivateKey;
+  $scope.isValidAddress = Wallet.isValidAddress;
 
   $scope.transactionTemplate = {
     fee: 0,

@@ -1,6 +1,7 @@
 angular.module('walletApp')
 .constant('whatsNew', [
   { title: 'BUY_BITCOIN', desc: 'BUY_BITCOIN_EXPLAIN', date: new Date('Jan 08 2018'), ref: 'wallet.common.buy-sell' },
+  { title: 'BITCOIN_CASH.ADDRESSES', desc: 'BITCOIN_CASH.ADDR_FORMAT', date: new Date('Jan 18 2018'), ref: 'wallet.common.faq' },
   { title: 'SELL_BITCOIN', desc: 'SELL_BITCOIN_EXPLAIN', date: new Date('Dec 15 2017'), ref: 'wallet.common.buy-sell' },
   { title: 'BITCOIN_CASH.TITLE', 'desc': 'BITCOIN_CASH.WHATS_NEW', date: new Date('December 12 2017'), ref: 'wallet.common.bch.transactions' },
   { title: 'RECURRING_BUY', 'desc': 'RECURRING_BUY_WHATS_NEW', date: new Date('November 16 2017'), ref: 'wallet.common.buy-sell' },

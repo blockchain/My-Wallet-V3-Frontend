@@ -121,7 +121,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     return canTrade && isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
   }
 
-  function determineStep (exchange, accounts) {
+  function determineStep (exchange) {
     let profile = exchange.profile;
     if (!profile) {
       return 'create';
@@ -141,7 +141,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       reason: service.sellReason,
       isDisabled: !service.userCanSell,
       launchOptions: service.sellLaunchOptions,
-      verificationRequired: !service.activeAccount
+      verificationRequired: !service.verified || !service.activeAccount
     };
   }
 
@@ -176,10 +176,10 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
 
-    let fee = payment ? payment.finalFee : tx.fee;
-    let amount = payment ? payment.amounts[0] : Math.abs(tx.amount) - fee;
+    let fee = payment ? payment.finalFee : tx ? tx.fee : 'Error: Please Refresh the Wallet';
+    let amount = payment ? payment.amounts[0] : tx ? Math.abs(tx.amount) - fee : 'Error: Please Refresh the Wallet';
     let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
-    let totalAmount = payment ? amount + fee : Math.abs(tx.amount);
+    let totalAmount = payment ? amount + fee : tx ? Math.abs(tx.amount) : 'Error: Please Refresh the Wallet';
     let toBeReceived = quote
                        ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
                        : (trade.receiveAmount).toFixed(2);
@@ -188,15 +188,15 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     return {
       txAmt: {
         key: amountKey,
-        val: formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
+        val: isNaN(amount) ? amount : formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
       },
       txFee: {
         key: '.TX_FEE',
-        val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
+        val: isNaN(fee) ? fee : formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
       },
       out: {
         key: '.TOTAL',
-        val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+        val: isNaN(totalAmount) ? fee : formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
       },
       sfoxFee: {
         key: '.TRADING_FEE',

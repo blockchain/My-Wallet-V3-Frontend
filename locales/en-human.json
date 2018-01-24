@@ -23,6 +23,10 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "BITCOIN_CASH_ADDRESS": {
+      "Q": "Why have the Bitcoin Cash addresses been updated?",
+      "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
+    },
     "HOW_DO_I_BUY": {
       "Q": "How do I buy bitcoin?",
       "A": "We partner with exchanges across the world to make buying bitcoin easier for you. You can get started now by creating an account with our partner. Once your account has been verified, you can begin buying bitcoin with a bank transfer <a>{{::text | translate}}</a>."
@@ -566,7 +570,6 @@
   "BITCOIN_ADDRESS_INVALID" : "Invalid Bitcoin Address",
   "BCH_ADDRESS_INVALID": "Invalid Bitcoin Cash Address",
   "ETHER_ADDRESS_INVALID" : "Invalid Ether Address",
-  "BCH_ALTERNATIVE_AVAIL": "That's a bitcoin address, try: {{::alt}}",
   "EMAIL_ADDRESS_REQUIRED" : "Required",
   "EMAIL_ADDRESS_INVALID" : "Invalid",
   "EMAIL_CONFIRMATION_SENT" : "Sent",
@@ -1683,6 +1686,7 @@
         "OPTION2": "",
         "OPTION3": "",
         "OPTION4": "",
+        "WARNING": "",
         "HELP": "Make sure the snapshot clearly displays your pancard number."
       },
       "photo": {
@@ -1694,6 +1698,7 @@
         "OPTION2": "",
         "OPTION3": "",
         "OPTION4": "",
+        "WARNING": "",
         "HELP": "Make sure the snapshot clearly displays your face."
       },
       "address": {
@@ -1705,6 +1710,7 @@
         "OPTION2": "- Driving License",
         "OPTION3": "- Passport (page showing address)",
         "OPTION4": "- Utility Bill",
+        "WARNING": "",
         "HELP": "Make sure the snapshot clearly displays your name and address."
       }
     },
@@ -1800,6 +1806,7 @@
         "OPTION2": "- Passport",
         "OPTION3": "- State or government-issued identification card",
         "OPTION4": "",
+        "WARNING": "",
         "UPLOAD_TITLE": "Photo ID",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Capture the front side of ID, clearly displaying your identification number."
@@ -1811,6 +1818,7 @@
         "OPTION2": "- First page and signature page of your lease",
         "OPTION3": "- First page of your bank statement",
         "OPTION4": "- DMV or voter registration form",
+        "WARNING": "⛔️ Uploading your passport or your driver's license is not sufficient to verify your address. Please upload one of the options above.",
         "UPLOAD_TITLE": "Proof of Address",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Make sure the snapshot clearly displays your address."
@@ -2053,6 +2061,7 @@
     "ALL_WALLETS": "All Bitcoin Cash Wallets",
     "GET_STARTED": "Get Started With Bitcoin Cash",
     "WELCOME_TO": "Welcome to Bitcoin Cash",
+    "VERIFY_ADDRESS": "Are you sure this is a Bitcoin Cash address? Sending funds to a bitcoin address by accident will result in loss of funds.",
     "WHAT_IS_BCASH": {
       "HEADER": "What is Bitcoin Cash?",
       "BODY": "Bitcoin Cash is a form of peer-to-peer electronic cash that was created after a fork of the Bitcoin block chain in August 2017. Bitcoin Cash has since grown to be one of the top cryptocurrencies, along with bitcoin and ether."
@@ -2061,7 +2070,14 @@
       "HEADER": "How Do I Get Bitcoin Cash?",
       "BODY": "If you had bitcoin in your Blockchain wallet before the fork in August, you already have Bitcoin Cash. If you're new to Blockchain, you can get started with Bitcoin Cash by exchanging bitcoin or ether."
     },
-    "PLEASE_NOTE": "<b>Please note:</b> For now, Bitcoin Cash will only be supported in your web wallet. Support in your mobile wallet is coming soon!"
+    "PLEASE_NOTE": "<b>Please note:</b> For now, Bitcoin Cash will only be supported in your web wallet. Support in your mobile wallet is coming soon!",
+    "ADDRESSES": "New Bitcoin Cash Address Format",
+    "ADDR_FORMAT": "Bitcoin Cash addresses now follow the CashAddr format."
+  },
+  "BCH_ADDRESS_CHANGE": {
+    "NOW_SUPPORTING": "News About Your Bitcoin Cash Addresses",
+    "ANNOUNCEMENT": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? You can read more <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>here.</a>",
+    "GET_STARTED": "Sounds good, take me to my transactions!"
   },
   "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
   "BITCOIN_CASH_INFO_NO_EXCHANGE": "You can use your Blockchain wallet to store your Bitcoin Cash, or send all of your funds to a Bitcoin Cash wallet.",

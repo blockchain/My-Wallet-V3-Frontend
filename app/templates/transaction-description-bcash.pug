@@ -18,7 +18,7 @@
       .flex-row
         span.f-14.em-300 From:
         | &nbsp;
-        span.overflow-scroll.f-14.em-300(uib-tooltip="{{tx.from.identity >= 0 && toBitcoinCash(tx.from.address, true)}}" tooltip-class="address" tooltip-enable="tx.from.identity >= 0" tooltip-append-to-body="true") {{ fromIndex() !== false ? accounts[fromIndex()].label : tx.from.label }}
+        span.overflow-scroll.f-14.em-300(uib-tooltip="{{tx.from.identity >= 0 && toBitcoinCash(tx.from.address, true)}}" tooltip-class="address" tooltip-enable="tx.from.identity >= 0" tooltip-append-to-body="true") {{ fromIndex() !== false ? accounts[fromIndex()].label : toBitcoinCash(tx.from.label, true) }}
     .flex-1.width-20.mrl.visible-lg.visible-sm.visible-xs
       asset-transaction-pending(tx-type="txType" tx-confirmations="tx.confirmations" confirmations="3" show-tooltip="false")
     .flex-1.width-20.amount.flex-end
@@ -33,7 +33,7 @@
     .flex-row
       span.f-12.em-300 From:
       | &nbsp;
-      span.overflow-scroll.f-12.em-300(uib-tooltip="{{tx.from.identity >= 0 && toBitcoinCash(tx.from.address, true)}}" tooltip-class="address" tooltip-enable="tx.from.identity >= 0" tooltip-append-to-body="true") {{ fromIndex() !== false ? accounts[fromIndex()].label : tx.from.label }}
+      span.overflow-scroll.f-12.em-300(uib-tooltip="{{tx.from.identity >= 0 && toBitcoinCash(tx.from.address, true)}}" tooltip-class="address" tooltip-enable="tx.from.identity >= 0" tooltip-append-to-body="true") {{ fromIndex() !== false ? accounts[fromIndex()].label : toBitcoinCash(tx.from.label, true) }}
   .flex-start.flex-between.basic-grey.status(ng-if="tx.toggled")
     .destination.flex-align-self-end.width-20
       transaction-status(transaction="tx")
