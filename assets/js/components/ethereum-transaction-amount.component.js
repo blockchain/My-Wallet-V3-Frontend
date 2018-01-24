@@ -20,6 +20,7 @@ function ethereumTransactionAmountController (MyBlockchainApi, Wallet, currency,
   this.toggleTx = () => this.showFiat = !this.showFiat;
   this.toggle = Wallet.toggleDisplayCurrency;
   this.absolute = (value) => Math.abs(value);
+  this.unconfirmed = () => this.tx.confirmations < this.confirmationsNeeded;
 
   this.txType === 'sent'
     ? this.totalAmount = parseFloat(this.tx.fee) + parseFloat(this.tx.amount)
