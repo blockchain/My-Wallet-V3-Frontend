@@ -41,7 +41,7 @@
           .pvs
             span.em-500(translate="TO_BE_RECEIVED")
         exchange-trade(
-          ng-repeat="trade in vm.trades() | orderBy:'-createdAt':false track by $index"
+          ng-repeat="trade in vm.trades() | orderBy:'-time':false track by $index"
           ng-if="trade.isProcessing || trade.isWaitingForDeposit"
           view-details="vm.openTradeDetails(trade)"
           namespace="'SHIFT'"
@@ -60,7 +60,7 @@
           .pvs
             span.em-500(translate="RECEIVED")
         exchange-trade(
-          ng-repeat="trade in vm.trades() | orderBy:'-createdAt':false track by $index"
+          ng-repeat="trade in vm.trades() | orderBy:'-time':false track by $index"
           ng-if="trade.isComplete || trade.isFailed || trade.isResolved"
           view-details="vm.openTradeDetails(trade)"
           namespace="'SHIFT'"

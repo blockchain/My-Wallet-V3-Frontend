@@ -34,6 +34,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     .then(recordNote)
     .then(fetchTransactions)
     .then(enableSiftScience)
+    .then(() => { Wallet.api.incrementPartnerTrade('sfox', 'sell', $scope.trade.inCurrency, $scope.trade.outCurrency, true); })
     .catch((e) => Alerts.displayError(e));
 
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
@@ -61,6 +62,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
       $scope.quote = quote;
       $scope.goTo('confirm');
       $scope.sellDetails = sfox.sellTradeDetails($scope.quote, payment);
+      Wallet.api.incrementPartnerTrade('sfox', 'sell', $scope.quote.baseCurrency, $scope.quote.quoteCurrency);
     });
 
     return quote;

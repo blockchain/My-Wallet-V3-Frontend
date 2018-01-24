@@ -23,6 +23,10 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "BITCOIN_CASH_ADDRESS": {
+      "Q": "Why have the Bitcoin Cash addresses been updated?",
+      "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
+    },
     "HOW_DO_I_BUY": {
       "Q": "How do I buy bitcoin?",
       "A": "We partner with exchanges across the world to make buying bitcoin easier for you. You can get started now by creating an account with our partner. Once your account has been verified, you can begin buying bitcoin with a bank transfer <a>{{::text | translate}}</a>."
@@ -57,7 +61,7 @@
     },
     "HOW_MUCH_TO_SEND": {
       "Q": "How much does it cost to send funds?",
-      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin, Ethereum, and Bitcoin Cash networks. To ensure your transactions confirm consistently and reliably, your wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under 'Customize Fee."
+      "A": "While our wallet is entirely free to use, the small fee included in your transaction goes to the miners, who help power the flow of transactions on the Bitcoin, Ethereum, and Bitcoin Cash networks. To ensure your transactions confirm consistently and reliably, your wallet will automatically include an appropriate fee based on your transaction’s size and the level of network traffic at the time. If you wish to specify your own fee for bitcoin transactions, you can do so under 'Customize Fee'."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
       "Q": "How do I know if a transaction has been successfully received/sent?",
@@ -2031,7 +2035,14 @@
       "HEADER": "How Do I Get Bitcoin Cash?",
       "BODY": "If you had bitcoin in your Blockchain wallet before the fork in August, you already have Bitcoin Cash. If you're new to Blockchain, you can get started with Bitcoin Cash by exchanging bitcoin or ether."
     },
-    "PLEASE_NOTE": "<b>Please note:</b> For now, Bitcoin Cash will only be supported in your web wallet. Support in your mobile wallet is coming soon!"
+    "PLEASE_NOTE": "<b>Please note:</b> For now, Bitcoin Cash will only be supported in your web wallet. Support in your mobile wallet is coming soon!",
+    "ADDRESSES": "New Bitcoin Cash Address Format",
+    "ADDR_FORMAT": "Bitcoin Cash addresses now follow the CashAddr format."
+  },
+  "BCH_ADDRESS_CHANGE": {
+    "NOW_SUPPORTING": "News About Your Bitcoin Cash Addresses",
+    "ANNOUNCEMENT": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? You can read more <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>here.</a>",
+    "GET_STARTED": "Sounds good, take me to my transactions!"
   },
   "BITCOIN_CASH_INFO": "You can use your Blockchain wallet to store your Bitcoin Cash, send all of your funds to a Bitcoin Cash wallet, or exchange it for bitcoin and/or ether.",
   "BITCOIN_CASH_INFO_NO_EXCHANGE": "You can use your Blockchain wallet to store your Bitcoin Cash, or send all of your funds to a Bitcoin Cash wallet.",

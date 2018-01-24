@@ -252,7 +252,7 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openAnnouncement = service.openOnce((namespace, link) => {
+  service.openAnnouncement = service.openOnce((namespace, link, fn) => {
     return openMobileCompatible({
       windowClass: 'bc-modal buy',
       templateUrl: 'partials/login-modal-announcement.pug',
@@ -261,20 +261,9 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
 
         $scope.cta = () => {
           $uibModalInstance.dismiss();
-          $state.go(link);
+          link ? $state.go(link) : fn;
         };
       }
-    });
-  });
-
-  service.openBitcoinCashAbout = service.openOnce(step => {
-    return openMobileCompatible({
-      templateUrl: 'partials/bitcoin-cash-about-modal.pug',
-      controller: 'BitcoinCashAboutController',
-      controllerAs: 'vm',
-      windowClass: 'bc-modal buy',
-      backdrop: 'static',
-      keyboard: false
     });
   });
 

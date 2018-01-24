@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('BitcoinCash', BitcoinCash);
 
-function BitcoinCash ($q, Wallet, localStorageService) {
+function BitcoinCash ($q, Wallet, MyWalletHelpers, localStorageService) {
   const service = {
     lastTxHash: null,
     get bch () {
@@ -17,11 +17,26 @@ function BitcoinCash ($q, Wallet, localStorageService) {
     get hasSeen () {
       return this.bch.hasSeen;
     },
+    get hasSeenAddressChangeNotice () {
+      return localStorageService.get('hasSeenBchAddressChangeNotice');
+    },
     get accounts () {
       return this.bch && this.bch.accounts;
     },
+    toBitcoinCash (addr, displayOnly) {
+      return displayOnly ? MyWalletHelpers.toBitcoinCash(addr).split('bitcoincash:')[1] : MyWalletHelpers.toBitcoinCash(addr);
+    },
+    fromBitcoinCash (addr) {
+      let base = 'bitcoincash:';
+      let prefixed = addr.includes(base);
+      if (!prefixed) addr = base + addr;
+      return MyWalletHelpers.fromBitcoinCash(addr);
+    },
     setHasSeen () {
       this.bch.setHasSeen(true);
+    },
+    setHasSeenAddressChangeNotice (bool) {
+      localStorageService.set('hasSeenBchAddressChangeNotice', true);
     },
     getHistory () {
       return this.bch.getHistory();

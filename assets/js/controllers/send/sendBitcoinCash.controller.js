@@ -25,7 +25,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
   $scope.fromSatoshi = currency.convertFromSatoshi;
   $scope.bchCurrency = currency.bchCurrencies[0];
   $scope.fiatCurrency = Wallet.settings.currency;
-  $scope.isValidAddress = Wallet.isValidAddress;
+  $scope.isValidAddress = (addr) => { try { return Wallet.isValidAddress(addr) || BitcoinCash.fromBitcoinCash(addr); } catch (e) { return false; } };
 
   const transactionSucceeded = (tx) => {
     $rootScope.scheduleRefresh();
@@ -60,7 +60,7 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
     let tx = $scope.transaction;
     let payment = $scope.transaction.from.createPayment();
 
-    if (isNaN(tx.destination.index)) addr = tx.destination.address;
+    if (isNaN(tx.destination.index)) addr = $scope.bchAlternative ? tx.destination.address : BitcoinCash.fromBitcoinCash(tx.destination.address);
     else addr = BitcoinCash.accounts[tx.destination.index].receiveAddress;
 
     $scope.lock();
@@ -106,8 +106,11 @@ function SendBitcoinCashController ($rootScope, $scope, AngularHelper, Env, MyWa
 
   $scope.$watch('transaction.destination', (destination) => {
     if (destination == null) return;
-    let valid = destination.index == null ? Wallet.isValidAddress(destination.address) : true;
-    $scope.forms.sendForm.destination.$setValidity('isValidAddress', valid);
+    let internal = destination.type === 'Accounts';
+    let isBTCAddress = Wallet.isValidAddress(destination.address);
+
+    $scope.bchAlternative = isBTCAddress && BitcoinCash.toBitcoinCash(destination.address, true);
+    $scope.forms.sendForm.destination.$setValidity('isValidAddress', internal || $scope.isValidAddress(destination.address));
   }, true);
 
   AngularHelper.installLock.call($scope);
