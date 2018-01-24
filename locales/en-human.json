@@ -219,6 +219,10 @@
     "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
     "BODY": "@:SELL_SURVEY_OPENED.BODY"
   },
+  "SFOX_BUY_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "You're just one step away from receiving bitcoin, are you sure you want to stop?"
+  },
   "UNOCOIN_TRADE_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
     "BODY": "@:BUY_SURVEY_OPENED.BODY"
@@ -1302,6 +1306,10 @@
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
   "SFOX_SELL_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SFOX_BUY_SURVEY_PROMPT": {
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },

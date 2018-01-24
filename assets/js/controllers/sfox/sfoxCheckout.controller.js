@@ -5,11 +5,14 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
   $scope.checkout = this;
   Env.then(env => {
-    let links = env.partners.sfox.surveyLinks;
+    let sellLinks = env.partners.sfox.surveyLinks;
+    let buyLinks = env.partners.sfox.buySurveyLinks;
 
-    this.handleCancel = (skipConfirm) => {
+    this.handleCancel = (skipConfirm, type, step) => {
+      console.log(`handleCancel params: ${skipConfirm} and ${type} and ${step}`)
       if (skipConfirm) $scope.checkout.goTo('create');
-      else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => {});
+      if (type === 'sell') Alerts.surveyCloseConfirm('sfox-sell-survey', sellLinks, sellLinks.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
+      if (type === 'buy') Alerts.surveyCloseConfirm('sfox-buy-survey', buyLinks, buyLinks.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
     };
   });
 
