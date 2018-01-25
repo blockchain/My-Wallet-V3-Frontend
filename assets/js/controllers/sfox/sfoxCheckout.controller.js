@@ -60,9 +60,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.siftScienceEnabled = false;
   $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
   $scope.onClose = () => {
-    if (!localStorageService.get('sfox-buy-survey') && this.type === 'buy') this.handleCancel(null, 'buy', 1);
-    $scope.checkout.goTo('create');
-    $scope.tabs.select('ORDER_HISTORY');
+    const seenBuySurvey = localStorageService.get('sfox-buy-survey');
+    if (seenBuySurvey.index < 1 && this.type === 'buy') this.handleCancel(null, 'buy', 1);
+    else $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY');
   };
 
   $scope.tabs = {
