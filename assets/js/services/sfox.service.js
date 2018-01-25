@@ -221,14 +221,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
 
     let fiatAmount = quote
                       ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
-                      : trade.inAmount;
+                      : trade.inAmount / 1e8;
 
     let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
     // let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
 
     let toBeSpent = quote
                        ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
-                       : (trade.inAmount + trade.feeAmount);
+                       : (trade.inAmount / 1e8 + trade.feeAmount);
     let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
 
     return {
