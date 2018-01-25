@@ -173,7 +173,7 @@ function currency ($q, MyBlockchainApi, MyWalletHelpers) {
 
     let key = time + amount + currencyCode;
     let cached = fiatConversionCache[key];
-    let cacheResult = fiat => fiatConversionCache[key] = parseFloat(fiat.replace(/,/g, "")).toFixed(2);
+    let cacheResult = fiat => fiatConversionCache[key] = parseFloat(fiat.replace(/,/g, '')).toFixed(2);
 
     let fiatValuePromise = cached !== undefined
       ? $q.resolve(cached) : MyBlockchainApi.getFiatAtTime(time, amount, currencyCode);
