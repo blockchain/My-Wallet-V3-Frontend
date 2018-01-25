@@ -12,6 +12,7 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
     fetchExchangeData,
     pollUserLevel,
     fetchSellQuote,
+    fetchBuyQuote,
     setSellMax,
     fetchQuote,
     watchTrades,
@@ -67,6 +68,11 @@ function Exchange ($q, Alerts, MyWalletHelpers, modals, Env) {
 
   function fetchSellQuote (exchange, amount, baseCurr, quoteCurr) {
     let quoteP = exchange.getSellQuote(amount, baseCurr, quoteCurr);
+    return $q.resolve(quoteP);
+  }
+
+  function fetchBuyQuote (exchange, amount, baseCurr, quoteCurr) {
+    let quoteP = exchange.getBuyQuote(amount, baseCurr, quoteCurr);
     return $q.resolve(quoteP);
   }
 

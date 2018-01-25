@@ -49,7 +49,9 @@
       "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_9BuZyJxdOT0Psb3",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_8cE4saqzhlLXngN",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_50v2ta2RiXMGx7v",
-                      "https://blockchain.co1.qualtrics.com/jfe/form/SV_4GEMndhhy58lapT"]
+                      "https://blockchain.co1.qualtrics.com/jfe/form/SV_4GEMndhhy58lapT"],
+      "buySurveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_8G431wYyJnciCHj",
+                         "https://blockchain.co1.qualtrics.com/jfe/form/SV_78S6RzM5ipN66fb"]
     },
     "unocoin": {
       "countries": ["IN"],
