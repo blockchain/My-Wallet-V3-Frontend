@@ -5,11 +5,14 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
   $scope.checkout = this;
   Env.then(env => {
-    let links = env.partners.sfox.surveyLinks;
+    let sellLinks = env.partners.sfox.surveyLinks;
+    let buyLinks = env.partners.sfox.buySurveyLinks;
 
-    this.handleCancel = (skipConfirm) => {
+    this.handleCancel = (skipConfirm, type, step) => {
+      console.log(`handleCancel params: ${skipConfirm} and ${type} and ${step}`)
       if (skipConfirm) $scope.checkout.goTo('create');
-      else Alerts.surveyCloseConfirm('sfox-sell-survey', links, links.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => {});
+      if (type === 'sell') Alerts.surveyCloseConfirm('sfox-sell-survey', sellLinks, sellLinks.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
+      if (type === 'buy') Alerts.surveyCloseConfirm('sfox-buy-survey', buyLinks, step).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
     };
   });
 
@@ -56,7 +59,11 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   this.userId = this.exchange.user;
   $scope.siftScienceEnabled = false;
   $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
-  $scope.onClose = () => { $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY'); };
+  $scope.onClose = () => {
+    const seenBuySurvey = localStorageService.get('sfox-buy-survey');
+    if (seenBuySurvey.index < 1 && this.type === 'buy') this.handleCancel(null, 'buy', 1);
+    else $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY');
+  };
 
   $scope.tabs = {
     selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',

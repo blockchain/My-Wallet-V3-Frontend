@@ -48,7 +48,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       details="checkout.tradeDetails"
       trade-account="checkout.state.account"
       fiat="checkout.dollars"
-      on-cancel="checkout.handleCancel()"
+      on-cancel="checkout.type === 'buy' ? checkout.handleCancel(null, checkout.type, 0) : checkout.handleCancel(null, checkout.type)"
       on-success="checkout.goTo('receipt')"
       on-expiration="checkout.type === 'sell' ? checkout.sellRefresh() : checkout.buyRefresh()"
       handle-trade="checkout.type === 'sell' ? checkout.sellHandler(checkout.quote) : checkout.buyHandler(checkout.quote)")
