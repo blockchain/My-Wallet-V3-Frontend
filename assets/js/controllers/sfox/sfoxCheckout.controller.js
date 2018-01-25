@@ -9,7 +9,6 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     let buyLinks = env.partners.sfox.buySurveyLinks;
 
     this.handleCancel = (skipConfirm, type, step) => {
-      console.log(`handleCancel params: ${skipConfirm} and ${type} and ${step}`)
       if (skipConfirm) $scope.checkout.goTo('create');
       if (type === 'sell') Alerts.surveyCloseConfirm('sfox-sell-survey', sellLinks, sellLinks.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
       if (type === 'buy') Alerts.surveyCloseConfirm('sfox-buy-survey', buyLinks, step).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
