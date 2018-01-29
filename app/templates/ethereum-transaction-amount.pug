@@ -3,7 +3,7 @@ div.ethAmountTotal.em-400.amount.flex-center.flex-justify(
     'button-transferred': $ctrl.txType === 'transfer',\
     'button-received'   : $ctrl.txType === 'received',\
     'button-sent'       : $ctrl.txType === 'sent',\
-    'unconfirmed' : $ctrl.tx.confirmations < $ctrl.confirmationsNeeded \
+    'unconfirmed' : $ctrl.unconfirmed() \
   }" ng-click="$ctrl.toggle()")
   span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")
   fiat(eth="$ctrl.totalAmount" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
