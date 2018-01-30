@@ -1761,7 +1761,7 @@
       "completed": {
         "DISPLAY": "Completed",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "HEADER": "Order Purchased",
+        "HEADER": "<span class='success'>Order Purchased</span>",
         "BODY": "Your purchase was successful! Bitcoins were sent to <b>{{::label}}</b>."
       },
       "cancelled": {
