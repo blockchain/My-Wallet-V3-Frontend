@@ -5,6 +5,7 @@
       .mbl.hidden-xs
         p.f-16.em-500(translate="EXCHANGE.VERIFY.SETUP_PROFILE")
         span.f-16(translate="EXCHANGE.VERIFY.VERIFY_ACCOUNT" translate-values="{partner: $ctrl.name}")
+        p.em-500.f-16.mt-10(translate="{{ $ctrl.name + '.VERIFY.PO_WARNING' }}")
       .mbl(ng-show="$ctrl.qaDebugger")
         div.type-h4.mbs.underline
           i.mrs.ti-search
@@ -71,7 +72,7 @@
           .col-md-12
             .mb-20.pos-rel
               label(translate="EXCHANGE.VERIFY.ADDRESS_LINE_1")
-              input(ng-model="$ctrl.profile.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+              input(ng-model="$ctrl.profile.addr1" name="addr1" placeholder="Street address" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr2')")
           .col-md-12
