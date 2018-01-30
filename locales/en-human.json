@@ -300,6 +300,7 @@
   "PENDING_TX_RECEIVER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain with the sending party.",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
+  "TRANSACTION_PENDING": "<b>Status:</b> Your transaction is awaiting confirmation from the network. The time it takes for a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected the funds will remain in the sender's wallet.",
   "OVERVIEW" : "Overview:",
   "NOTE" : "Note",
   "CREATE" : "Create",
