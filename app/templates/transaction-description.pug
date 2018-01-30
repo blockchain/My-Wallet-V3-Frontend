@@ -45,3 +45,5 @@
         p.mbn(translate="TX_FEE")
         | :&nbsp;
         fiat-or-btc.em-600(btc=":: tx.fee")
+  .f-12.mt-20(ng-if="tx.toggled && !complete" ng-click="tx.toggled = !tx.toggled")
+    p(translate="TRANSACTION_PENDING")
