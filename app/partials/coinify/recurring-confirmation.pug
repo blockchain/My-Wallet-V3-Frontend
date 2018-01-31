@@ -1,0 +1,8 @@
+div
+  .flex-column.pv-25.ph-25
+    p.f-18.em-400 You Are About To Set Up A Recurrent Order
+    span.f-14 This Recurrent Order will happen today and every 24 hours until your cancel or your reach your limit, whatever happens first. 
+  .border-top
+  .flex-end.flex-center.pv-25.ph-25
+    span(ng-click="$close()") Go Back
+    button.button-primary.mll(translate="Proceed with my Order" ng-click="openBuyFlow()")
