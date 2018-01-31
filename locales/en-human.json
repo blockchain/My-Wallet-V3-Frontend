@@ -2065,10 +2065,11 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
-  "RECURRING_INTRO_HEADER": "Introducing Recurring Orders",
+  "RECURRING_INTRO_HEADER": "About Recurring Orders",
   "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
-  "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime.",
+  "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime from ",
+  "RECURRING_INTRO_4": "Want to know more about Recurring Orders? ",
   "FINISH_PAYMENT": "Finish Payment",
   "SUBSCRIPTION_ID": "Recurring Order ID",
   "RECURRING_BUY": "Recurring Buy",

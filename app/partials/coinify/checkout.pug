@@ -29,7 +29,14 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             i.pointer.ti-close.f-12.mid-grey(ng-click="dismissRecurringBuyIntro()")
         p.f-12.mt-10(translate="RECURRING_INTRO_1")
         p.f-12(translate="RECURRING_INTRO_2")
-        p.f-12(translate="RECURRING_INTRO_3")
+        .flex-row
+          p.f-12(translate="RECURRING_INTRO_3")
+          | 
+          a.f-12(ng-click="tabs.select('ORDER_HISTORY')") Order History.
+        .flex-row  
+          span.f-12(translate="RECURRING_INTRO_4")
+          | 
+          a.f-12(ng-click="") Learn more here.
       kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="buyFiat.code")
   .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
     //- SELL
