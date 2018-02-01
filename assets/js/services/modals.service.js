@@ -196,11 +196,11 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     });
   });
 
-  service.openRecurringConfirmation = service.openOnce((trade) => {
+  service.openRecurringConfirmation = service.openOnce((quote, freq, end) => {
     return openMobileCompatible({
       templateUrl: 'partials/coinify/recurring-confirmation.pug',
-      controller: function ($scope, modals, $uibModalInstance) {
-        console.log('hi from recurring confirmation')
+      controller: function ($scope, modals, $uibModalInstance, recurringTrade) {
+        $scope.openBuy = () => { $uibModalInstance.dismiss(); service.openBuyView(quote, null, freq, end); }; 
       }
     });
   });

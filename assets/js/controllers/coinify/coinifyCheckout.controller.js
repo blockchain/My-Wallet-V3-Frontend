@@ -13,10 +13,16 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   let buyMatch = $scope.buyFiatOptions.filter(c => c.code === ($scope.exchange.user ? $scope.exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
   let sellMatch = $scope.sellFiatOptions.filter(c => c.code === ($scope.exchange.user ? $scope.exchange.profile.defaultCurrency : Wallet.settings.currency.code))[0];
 
+  const confirmOrBuyView = (q, n, f, e) => {
+    console.log('confirmOrBuyView', q, n, f, e);
+    f ? modals.openRecurringConfirmation(q, f, e) : modals.openBuyView(q, n, f, e);
+  };
+
   $scope.buying = coinify.buying;
   // TODO: buyHandler = if recurring open recurring confirm modal which will open BuyView on confirmation, else openBuyView
   // $scope.buyHandler = modals.openBuyView;
-  $scope.buyHandler = modals.openRecurringConfirmation;
+  // $scope.buyHandler = modals.openRecurringConfirmation;
+  $scope.buyHandler = confirmOrBuyView;
   $scope.buyQuoteHandler = coinify.getQuote;
   $scope.buyFiatHandler = (currency) => $scope.buyFiat = currency;
   $scope.buyFiat = buyMatch || $scope.buyFiatOptions.filter(c => c.code === 'EUR')[0];
