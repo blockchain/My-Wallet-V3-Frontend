@@ -26,6 +26,7 @@ function ExportHistoryController ($scope, $timeout, $translate, browser, format,
   // Public
   let vm = this;
   vm.limit = 50;
+  vm.coinCode = coinCode;
   vm.incLimit = () => vm.limit += 50;
   vm.canTriggerDownload = compatibleBrowsers.indexOf(currentBrowser) > -1;
   vm.format = DateHelper.format.shortDate;
