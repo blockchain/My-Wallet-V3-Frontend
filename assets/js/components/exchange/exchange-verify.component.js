@@ -81,9 +81,11 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   $scope.isValidMobileNumber = bcPhoneNumber.isValid;
   $scope.format = bcPhoneNumber.format;
 
-  this.isBeforeNow = (date) => {
-    let then = new Date(date).getTime();
-    return then < Date.now();
+  this.is18YearsOld = (date) => {
+    let today = new Date();
+    let validYear = today.getFullYear() - 18;
+    let eighteenYearsAgo = today.setYear(validYear);
+    return new Date(date).getTime() < eighteenYearsAgo;
   };
 
   this.setProfile = () => {

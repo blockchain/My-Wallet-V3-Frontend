@@ -5,6 +5,7 @@
       .mbl.hidden-xs
         p.f-16.em-500(translate="EXCHANGE.VERIFY.SETUP_PROFILE")
         span.f-16(translate="EXCHANGE.VERIFY.VERIFY_ACCOUNT" translate-values="{partner: $ctrl.name}")
+        p.em-500.f-16.mt-10(translate="{{ $ctrl.name + '.VERIFY.PO_WARNING' }}")
       .mbl(ng-show="$ctrl.qaDebugger")
         div.type-h4.mbs.underline
           i.mrs.ti-search
@@ -59,8 +60,9 @@
           .col-md-4.col-xs-12(ng-if="$ctrl.showField('dob')")
             .mb-20.pos-rel
               label Date of Birth
-              input(ng-model="$ctrl.profile.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="$ctrl.isBeforeNow($ctrl.profile.dob)" ng-pattern="\d\d\/\d\d\/\d\d\d\d" required)
-              span.error(translate="Required field")
+              input(ng-model="$ctrl.profile.dob" name="dob" placeholder="mm/dd/yyyy" format-input="xx/xx/xxxx" is-valid="$ctrl.is18YearsOld($ctrl.profile.dob)" ng-pattern="\d\d\/\d\d\/\d\d\d\d" required)
+              span.error(ng-if="$ctrl.addressForm.dob.$error.required" translate="Required field")
+              span.error(ng-if="!$ctrl.addressForm.dob.$error.required && $ctrl.addressForm.dob.$error.isValid" translate="Must be 18 years or older")
         .row
           .col-md-12(ng-if="$ctrl.showField('address')")
             .mb-20.pos-rel
@@ -71,7 +73,7 @@
           .col-md-12
             .mb-20.pos-rel
               label(translate="EXCHANGE.VERIFY.ADDRESS_LINE_1")
-              input(ng-model="$ctrl.profile.addr1" name="addr1" placeholder="Street address, P.O. box, etc." required)
+              input(ng-model="$ctrl.profile.addr1" name="addr1" placeholder="Street address" required)
               span.error(translate="Required field")
         .row(ng-if="$ctrl.showField('addr2')")
           .col-md-12

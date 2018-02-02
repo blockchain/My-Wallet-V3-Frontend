@@ -1661,6 +1661,9 @@
   },
   "UNOCOIN": {
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
+    "VERIFY": {
+      "PO_WARNING": ""
+    },
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1783,6 +1786,9 @@
     "NOW_SUPPORTING": "The Wait is Over!",
     "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
     "GET_STARTED": "Start Trading",
+    "VERIFY": {
+      "PO_WARNING": "⛔️ P.O. boxes are not sufficient for verifying your address information."
+    },
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1807,7 +1813,7 @@
         "OPTION2": "- Passport",
         "OPTION3": "- State or government-issued identification card",
         "OPTION4": "",
-        "WARNING": "",
+        "WARNING": "⛔️ Selfies are not a valid form of ID Verification",
         "UPLOAD_TITLE": "Photo ID",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Capture the front side of ID, clearly displaying your identification number."
