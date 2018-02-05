@@ -48,3 +48,5 @@
         | &nbsp;
         fiat.em-600(bch="tx.fee" ng-hide="isBitCurrency(settings.displayCurrency)")
         span.em-600(ng-show="isBitCurrency(settings.displayCurrency)") {{ tx.fee | convert:'bch':true }}
+  .f-12.mt-20(ng-if="tx.toggled && !complete" ng-click="tx.toggled = !tx.toggled")
+    p(translate="TRANSACTION_PENDING")

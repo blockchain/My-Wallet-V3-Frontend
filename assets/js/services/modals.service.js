@@ -208,7 +208,10 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
         quote () { return quote; },
         trade () { return trade; },
         endTime () { return endTime; },
-        frequency () { return frequency; }
+        frequency () { return frequency; },
+        mediums () {
+          return quote.getPaymentMediums().then(mediums => mediums);
+        }
       }
     });
   });

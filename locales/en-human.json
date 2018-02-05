@@ -304,6 +304,7 @@
   "PENDING_TX_RECEIVER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain with the sending party.",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
+  "TRANSACTION_PENDING": "<b>Status:</b> Your transaction is awaiting confirmation from the network. The time it takes for a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected the funds will remain in the sender's wallet.",
   "OVERVIEW" : "Overview:",
   "NOTE" : "Note",
   "CREATE" : "Create",
@@ -1668,6 +1669,9 @@
   },
   "UNOCOIN": {
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
+    "VERIFY": {
+      "PO_WARNING": ""
+    },
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1790,6 +1794,9 @@
     "NOW_SUPPORTING": "The Wait is Over!",
     "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
     "GET_STARTED": "Start Trading",
+    "VERIFY": {
+      "PO_WARNING": "⛔️ P.O. boxes are not sufficient for verifying your address information."
+    },
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1814,7 +1821,7 @@
         "OPTION2": "- Passport",
         "OPTION3": "- State or government-issued identification card",
         "OPTION4": "",
-        "WARNING": "",
+        "WARNING": "⛔️ Selfies are not a valid form of ID Verification",
         "UPLOAD_TITLE": "Photo ID",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Capture the front side of ID, clearly displaying your identification number."
@@ -1915,11 +1922,14 @@
       "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
+      "INTRODUCING_HEADER": "Introducing Sell",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon.",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
     },
     "buy": {
+      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "confirm": {
         "HEADER": "Confirm Buy Order",
         "BODY": "@:SFOX.sell.confirm.BODY",
