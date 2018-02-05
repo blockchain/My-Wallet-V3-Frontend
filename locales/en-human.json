@@ -1963,7 +1963,6 @@
       "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
       "INTRODUCING_HEADER": "Introducing Buy",
       "INTRODUCING_BODY": "We’ve partnered with SFOX so you can buy bitcoin.<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
-
     },
     "create": "Create Account",
     "verify": "Verify Identity",

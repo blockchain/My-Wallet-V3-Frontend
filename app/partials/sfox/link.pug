@@ -48,12 +48,11 @@
             id='plaid'
           )
           button.btn.button-primary.full(ng-if="state.plaid.enabled" ng-disabled="state.plaid.enabled") Sign In To Your Bank Account to Instantly Begin Trading
-        .flex-row.flex-between.flex-column-mobile.flex-center-mobile.mt-10.no-margin-mobile
+        .flex-row.flex-justify.flex-column-mobile.flex-center-mobile.mt-10.no-margin-mobile
           span.f-14.em-500.mv-10.hidden-sm.hidden-md.hidden-lg(translate="OR")
           a(translate="Manually Enter Account & Routing Information" ng-click="state.enableBankAccountForm = true")
-          span.hidden-xs
-            | &#8226;
-          span(translate="This can take up to 4 business days") 
+          | &nbsp;
+          span(translate="(This can take up to 4 business days)") 
       form.bc-form.pt-15(name="forms.bankAccountForm" ng-show="state.enableBankAccountForm" ng-submit="link()" novalidate autocomplete="off")
         fieldset(ng-disabled="locked")
           .group.full.mb-30
