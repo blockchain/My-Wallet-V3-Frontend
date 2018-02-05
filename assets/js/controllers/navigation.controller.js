@@ -97,6 +97,7 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
     let now = Date.now();
 
     $scope.filterFeatures = (feat) => (
+      (feat.title !== 'BUY_BITCOIN' || canTrade && MyWallet.wallet.accountInfo.countryCodeGuess === 'US') &&
       (feat.title !== 'SELL_BITCOIN' || canTrade && MyWallet.wallet.accountInfo.countryCodeGuess === 'US') &&
       (feat.title !== 'RECURRING_BUY' || canTrade) &&
       (feat.title !== 'BUY_BITCOIN' || canTrade) &&
