@@ -57,5 +57,11 @@ function transactionDescriptionBcash ($translate, Wallet, MyWallet, Ethereum, Sh
 
     scope.accounts = BitcoinCash.accounts;
     scope.settings = Wallet.settings;
+
+    scope.$watch('tx.confirmations', () => {
+      if (scope.tx && scope.tx.confirmations != null) {
+        scope.complete = scope.tx.confirmations >= 3;
+      }
+    });
   }
 }

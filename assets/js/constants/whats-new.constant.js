@@ -4,7 +4,7 @@ angular.module('walletApp')
   { title: 'BITCOIN_CASH.ADDRESSES', desc: 'BITCOIN_CASH.ADDR_FORMAT', date: new Date('Jan 18 2018'), ref: 'wallet.common.faq' },
   { title: 'SELL_BITCOIN', desc: 'SELL_BITCOIN_EXPLAIN', date: new Date('Dec 15 2017'), ref: 'wallet.common.buy-sell' },
   { title: 'BITCOIN_CASH.TITLE', 'desc': 'BITCOIN_CASH.WHATS_NEW', date: new Date('December 12 2017'), ref: 'wallet.common.bch.transactions' },
-  { title: 'RECURRING_BUY', 'desc': 'RECURRING_BUY_WHATS_NEW', date: new Date('November 16 2017'), ref: 'wallet.common.buy-sell' },
+  // { title: 'RECURRING_BUY', 'desc': 'RECURRING_BUY_WHATS_NEW', date: new Date('November 16 2017'), ref: 'wallet.common.buy-sell' },
   { title: 'BTC_ETH_EXCHANGE', desc: 'BTC_ETH_EXCHANGE_WHATS_NEW', date: new Date('August 11 2017'), ref: 'wallet.common.shift' },
   { title: 'ETHER_SEND_RECEIVE', desc: 'ETHER_SEND_RECEIVE_WHATS_NEW', date: new Date('July 24 2017'), ref: 'wallet.common.eth.transactions' },
   { title: 'SELL_BITCOIN', desc: 'SELL_BITCOIN_EXPLAIN', date: new Date('May 12 2017'), ref: 'wallet.common.buy-sell' },

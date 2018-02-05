@@ -93,10 +93,11 @@ function Ethereum ($q, Wallet, MyWalletHelpers, Env) {
     service.eth.setHasSeen(true);
   };
 
-  service.isWaitingOnTransaction = () => {
+  service.isWaitingOnTransaction = (lastTxFuse) => {
     return (
       service.eth.lastTx != null &&
-      service.txs.find(tx => tx.hash === service.eth.lastTx) == null
+      service.txs.find(tx => tx.hash === service.eth.lastTx) == null &&
+      service.eth.lastTxTimestamp + lastTxFuse * 1000 > new Date().getTime()
     );
   };
 

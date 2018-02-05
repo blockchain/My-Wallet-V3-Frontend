@@ -11,11 +11,13 @@ function SendEthereumController ($scope, $window, $q, currency, Alerts, Ethereum
   };
 
   let links;
-  Env.then(env => links = env.ethereum.surveyLinks);
+  Env.then((env) => {
+    links = env.ethereum.surveyLinks;
+    this.isWaitingOnTransaction = Ethereum.isWaitingOnTransaction(env.ethereum.lastTxFuse);
+  });
 
   this.account = Ethereum.defaultAccount;
   this.payment = this.account.createPayment();
-  this.isWaitingOnTransaction = Ethereum.isWaitingOnTransaction();
 
   Ethereum.fetchFees().then((fees) => {
     this.payment.setGasPrice(fees.regular);
