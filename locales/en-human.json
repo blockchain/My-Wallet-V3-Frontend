@@ -1922,11 +1922,14 @@
       "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
+      "INTRODUCING_HEADER": "Introducing Sell",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon.",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
     },
     "buy": {
+      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "confirm": {
         "HEADER": "Confirm Buy Order",
         "BODY": "@:SFOX.sell.confirm.BODY",

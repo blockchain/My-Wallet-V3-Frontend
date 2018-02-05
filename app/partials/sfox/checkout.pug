@@ -5,7 +5,19 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       img.mbs(src="img/sfox-logo-trans.png")
 .buy-sell.overflow-scroll.flex-1
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN' && checkout.onStep('create')")
-    .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController")
+    .width-50.pv-30.ph-30.border-desktop.flex-center.flex-justify(ng-if="!showBuy()")
+      .flex-column
+        span.f-24.center.blue.pb-15(translate="Stay Tuned!")
+        span.f-18.center(translate="SFOX.buy.COMING_SOON")
+        .mt-30.center(ng-show="hasSignedUpForSfoxBuyAccess()")
+          span(translate="Thanks for submitting your email. We'll let you know when it's ready 📬")
+        form.bc-form.mt-50(ng-submit="signupForBuyAccess()" ng-hide="hasSignedUpForSfoxBuyAccess()")
+          .mt-20
+            .group
+              .item
+                input(type="email" ng-model="email" placeholder="Add your email here" required)
+            button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
+    .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController" ng-if="showBuy()")
       exchange-checkout(
         type="'Buy'"
         fiat="checkout.dollars"
@@ -19,7 +31,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="buying().verificationRequired ? checkout.openSfoxSignup() : prepareBuy(quote)")
-    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedBuyIntro()")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && showBuy() && !checkout.hasDismissedBuyIntro()")
       .mb-20
         .flex-between
           span.f-24.blue.f-14-mobile(translate="SFOX.buy.INTRODUCING_HEADER")

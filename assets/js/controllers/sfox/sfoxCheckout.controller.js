@@ -5,13 +5,24 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
   $scope.checkout = this;
   Env.then(env => {
+    let email = MyWallet.wallet.accountInfo.email;
     let sellLinks = env.partners.sfox.surveyLinks;
     let buyLinks = env.partners.sfox.buySurveyLinks;
+    let internalEmail = email.indexOf('@blockchain.com') > -1 || email.indexOf('@sfox.com') > -1;
+    let invitedEmail = MyWalletHelpers.isStringHashInFraction(email, env.partners.sfox.showBuyFraction);
+
+    $scope.showBuy = () => internalEmail || invitedEmail;
 
     this.handleCancel = (skipConfirm, type, step) => {
       if (skipConfirm) $scope.checkout.goTo('create');
       if (type === 'sell') Alerts.surveyCloseConfirm('sfox-sell-survey', sellLinks, sellLinks.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
       if (type === 'buy') Alerts.surveyCloseConfirm('sfox-buy-survey', buyLinks, step).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
+    };
+
+    $scope.tabs = {
+      options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
+      selectedTab: $stateParams.selectedTab || $scope.showBuy() ? 'BUY_BITCOIN' : 'SELL_BITCOIN',
+      select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.checkout.goTo('create'); }
     };
   });
 
@@ -64,12 +75,14 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     else $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY');
   };
 
-  $scope.tabs = {
-    selectedTab: $stateParams.selectedTab || 'BUY_BITCOIN',
-    options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
-    select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.checkout.goTo('create'); }
+  $scope.email = MyWallet.wallet.accountInfo.email;
+  $scope.signupForBuyAccess = () => {
+    let email = encodeURIComponent($scope.email);
+    sfox.signupForBuyAccess(email);
+    $scope.email = '';
+    localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
   };
-
+  $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
   this.dismissBuyIntro = sfox.dismissBuyIntro;
   this.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 
