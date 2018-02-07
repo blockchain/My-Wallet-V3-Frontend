@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
+function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -21,6 +21,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     },
     get hasSeen () {
       return localStorageService.get('sfox-has-seen');
+    },
+    get hasSeenBuy () {
+      return localStorageService.get('sfox-has-seen-buy');
     },
     get verificationStatus () {
       return service.profile.verificationStatus;
@@ -79,8 +82,10 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     sellTradeDetails,
     buyTradeDetails,
     setHasSeen,
+    setHasSeenBuy,
     setSellMin,
     showAnnouncement,
+    showBuyAnnouncement,
     dismissBuyIntro,
     hasDismissedBuyIntro,
     signupForBuyAccess,
@@ -117,8 +122,17 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     localStorageService.set('sfox-has-seen', true);
   }
 
+  function setHasSeenBuy () {
+    localStorageService.set('sfox-has-seen-buy', true);
+  }
+
   function showAnnouncement (canTrade, isSFOXCountryState) {
     return canTrade && isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
+  }
+
+  function showBuyAnnouncement (canTrade, isSFOXCountryState, fraction) {
+    let email = MyWallet.wallet.accountInfo.email;
+    return canTrade && isSFOXCountryState && MyWalletHelpers.isStringHashInFraction(email, fraction);
   }
 
   function determineStep (exchange) {

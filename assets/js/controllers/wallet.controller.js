@@ -243,14 +243,20 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             BitcoinCash.setHasSeen();
           } else {
             tradeStatus.canTrade().then((canTrade) => {
-              if (canTrade) {
-                if (!sfox.hasSeen && sfox.showAnnouncement(canTrade, tradeStatus.isSFOXCountryState) && !$rootScope.inMobileBuy) {
-                  modals.openAnnouncement('SFOX', 'wallet.common.buy-sell');
-                  sfox.setHasSeen();
-                } else if (tradeStatus.shouldShowBuyReminder() && !tradeStatus.userHasAccount()) {
-                  tradeStatus.showBuyReminder();
+              modals.openAnnouncement('SFOX.buy', 'wallet.common.buy-sell');
+              Env.then((env) => {
+                if (canTrade) {
+                  if (!sfox.hasSeenBuy && sfox.showBuyAnnouncement(canTrade, tradeStatus.isSFOXCountryState, env.partners.sfox.showBuyFraction) && !$rootScope.inMobileBuy) {
+                    modals.openAnnouncement('SFOX.buy', 'wallet.common.buy-sell');
+                    sfox.setHasSeenBuy();
+                  } else if (!sfox.hasSeen && sfox.showAnnouncement(canTrade, tradeStatus.isSFOXCountryState) && !$rootScope.inMobileBuy) {
+                    modals.openAnnouncement('SFOX', 'wallet.common.buy-sell');
+                    sfox.setHasSeen();
+                  } else if (tradeStatus.shouldShowBuyReminder() && !tradeStatus.userHasAccount()) {
+                    tradeStatus.showBuyReminder();
+                  }
                 }
-              }
+              });
             });
           }
         }
