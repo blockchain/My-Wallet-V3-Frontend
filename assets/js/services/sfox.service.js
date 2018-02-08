@@ -86,6 +86,8 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
     setSellMin,
     showAnnouncement,
     showBuyAnnouncement,
+    dismissSellIntro,
+    hasDismissedSellIntro,
     dismissBuyIntro,
     hasDismissedBuyIntro,
     signupForBuyAccess,
@@ -175,6 +177,14 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
   function sell (account, quote) {
     return $q.resolve(quote.getPaymentMediums())
       .then(mediums => mediums.ach.sell(account));
+  }
+
+  function dismissSellIntro () {
+    localStorageService.set('hasSeenSfoxSellIntro', true);
+  }
+
+  function hasDismissedSellIntro () {
+    return localStorageService.get('hasSeenSfoxSellIntro');
   }
 
   function dismissBuyIntro () {

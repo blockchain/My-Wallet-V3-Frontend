@@ -83,6 +83,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
   };
   $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
+  this.dismissSellIntro = sfox.dismissSellIntro;
+  this.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
   this.dismissBuyIntro = sfox.dismissBuyIntro;
   this.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 
