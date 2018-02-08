@@ -218,6 +218,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       let fiat = currency.currencies.find((curr) => curr.code === 'USD');
       let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
       let fee = buyTxFee;
+      let fiatFee = currency.convertFromSatoshi(fee, fiat);
       let amount = quote
                       ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
                       : trade.receiveAmount * 1e8;
@@ -254,7 +255,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
 
         details.txFee = {
           key: '.TX_FEE',
-          val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
+          val: `${formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)} ($${formatCurrencyForView(fiatFee, fiat, false)})`
         };
         details.out = {
           key: '.TOTAL',

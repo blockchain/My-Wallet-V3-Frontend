@@ -1953,10 +1953,10 @@
         "HEADER": "Buy Order Complete",
         "BODY": "Your buy trade has successfully completed. Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
-      "AMT": "Amount",
-      "AMT_BOUGHT": "Amount Purchased",
+      "AMT": "BTC Amount To Purchase",
+      "AMT_BOUGHT": "BTC Amount Purchased",
       "TOTAL": "Bitcoin Amount to be Received",
-      "TO_BE_SPENT": "USD Spent",
+      "TO_BE_SPENT": "Total Cost",
       "TRADING_FEE": "@:SFOX.sell.TRADING_FEE",
       "TX_FEE": "@:SFOX.sell.TX_FEE",
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
