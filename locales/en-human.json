@@ -1375,7 +1375,7 @@
   "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
-  "SELL_BTC_UNAVAIL_STATE": "Unfortunately selling bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
+  "SELL_BTC_UNAVAIL_STATE": "Unfortunately trading bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "BTC_TX_FEE": "BTC Transaction Fee",
@@ -1790,7 +1790,7 @@
   },
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
-    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
+    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make buying & selling bitcoin in your wallet secure and seamless.",
     "NOW_SUPPORTING": "The Wait is Over!",
     "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
     "GET_STARTED": "Start Trading",
@@ -1961,8 +1961,8 @@
       "TX_FEE": "@:SFOX.sell.TX_FEE",
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
-      "INTRODUCING_HEADER": "Introducing Buy",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can buy bitcoin.<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
+      "INTRODUCING_HEADER": "Introducing Buy!",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can now buy bitcoin 🎉<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
     },
     "create": "Create Account",
     "verify": "Verify Identity",
