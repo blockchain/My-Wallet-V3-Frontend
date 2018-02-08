@@ -213,8 +213,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         tradeStatus.canTrade().then((canTrade) => {
-          let countryGuess = MyWallet.wallet.accountInfo.countryCodeGuess;
-          let template = canTrade && !$scope.buySellDisabled && countryGuess !== 'US' ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+          let template = canTrade && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',
