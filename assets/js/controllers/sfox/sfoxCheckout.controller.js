@@ -71,7 +71,7 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
   $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
   $scope.onClose = () => {
     const seenBuySurvey = localStorageService.get('sfox-buy-survey');
-    if (seenBuySurvey.index < 1 && this.type === 'buy') this.handleCancel(null, 'buy', 1);
+    if (seenBuySurvey && seenBuySurvey.index < 1 && this.type === 'buy') this.handleCancel(null, 'buy', 1);
     else $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY');
   };
 
@@ -83,6 +83,8 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
     localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
   };
   $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
+  this.dismissSellIntro = sfox.dismissSellIntro;
+  this.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
   this.dismissBuyIntro = sfox.dismissBuyIntro;
   this.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 

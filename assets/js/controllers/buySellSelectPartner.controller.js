@@ -84,8 +84,8 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     contains(stateCode, $scope.sfoxStateWhitelist) && 'sfox' || false
   );
 
-  $scope.dismissSellIntro = sfox.dismissSellIntro;
-  $scope.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
+  $scope.dismissBuyIntro = sfox.dismissBuyIntro;
+  $scope.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 
   Env.then(env => {
     let email = MyWallet.wallet.accountInfo.email;

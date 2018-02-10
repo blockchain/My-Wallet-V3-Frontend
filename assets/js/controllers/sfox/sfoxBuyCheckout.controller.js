@@ -24,10 +24,13 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.prepareBuy = (quote) => {
     $scope.checkout.quote = quote;
-    $scope.checkout.tradeDetails = sfox.buyTradeDetails($scope.checkout.quote);
-    $scope.checkout.type = 'buy';
-    $scope.checkout.goTo('confirm');
-    return quote;
+    return $q.resolve(sfox.buyTradeDetails($scope.checkout.quote))
+      .then(details => {
+        $scope.checkout.tradeDetails = details;
+        $scope.checkout.type = 'buy';
+        $scope.checkout.goTo('confirm');
+        return quote;
+      });
   };
 
   $scope.checkout.buyHandler = (quote) => sfox.buy($scope.checkout.state.account, quote)

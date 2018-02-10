@@ -52,6 +52,12 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedSellIntro()")
+      .flex-between
+        span.f-24.blue.f-14-mobile(translate="SFOX.sell.INTRODUCING_HEADER")
+        .flex-center.pl-10
+          i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
+      p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
   .flex-row.pbvl(ng-if="checkout.onStep('confirm')")
     exchange-confirm.width-50.border-desktop(
       type="checkout.type"
@@ -73,7 +79,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         .flex-center.flex-justify
           i.ti-direction-alt.h3.mrm
           h3.em-100(translate="NO_TRADES")
-        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('SELL_BITCOIN')")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
     div(ng-show="pendingTrades().length")
       .flex-row.flex-between.flex-center
         h4.type-h5 Pending Orders
