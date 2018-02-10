@@ -25,11 +25,14 @@ describe('NavigationCtrl', () => {
       let MyWallet = $injector.get('MyWallet');
       let Alerts = $injector.get('Alerts');
       let tradeStatus = $injector.get('tradeStatus');
+      let MyWalletHelpers = $injector.get('MyWalletHelpers');
       mockFailure = false;
 
       tradeStatus.canTrade = () => $q.resolve(true);
 
       Alerts.confirm = msg => $q.resolve();
+      
+      MyWalletHelpers.isStringHashInFraction = (str) => true
 
       Wallet.status = {
         isLoggedIn: true,
@@ -45,6 +48,9 @@ describe('NavigationCtrl', () => {
       };
 
       MyWallet.wallet = {
+        accountInfo: {
+          email: 'p@b.com'
+        },
         metadata (n) {
           return {
             fetch () { return mocked({lastViewed: 3}); },
@@ -72,7 +78,7 @@ describe('NavigationCtrl', () => {
       $controller('NavigationCtrl', {
         $scope: scope,
         whatsNew,
-        Env: $q.resolve({})
+        Env: $q.resolve({partners: {sfox: {}}})
       });
     });
   });

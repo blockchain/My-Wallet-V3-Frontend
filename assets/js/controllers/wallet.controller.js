@@ -242,7 +242,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             BitcoinCash.setHasSeen();
           } else {
             tradeStatus.canTrade().then((canTrade) => {
-              modals.openAnnouncement('SFOX.buy', 'wallet.common.buy-sell');
               Env.then((env) => {
                 if (canTrade) {
                   if (!sfox.hasSeenBuy && sfox.showBuyAnnouncement(canTrade, tradeStatus.isSFOXCountryState, env.partners.sfox.showBuyFraction) && !$rootScope.inMobileBuy) {
