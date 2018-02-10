@@ -11,6 +11,12 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
     reader.onloadend = (evt) => {
       if (evt.target.readyState === 2) {
         $scope.keystore = evt.target.result;
+        try {
+          JSON.parse($scope.keystore);
+          $scope.fileError = null;
+        } catch (e) {
+          $scope.fileError = e;
+        }
       }
     };
 
@@ -31,10 +37,11 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
         $scope.payment.sign(privateKey);
         return $scope.payment.publish().then(() => {
           $scope.$dismiss();
-          Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS');
+          Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS_MEW');
         }).catch((e) => {
           $scope.free();
-          Alerts.displayError(e.message);
+          if (e.message.toLowerCase().indexOf('insufficient funds') > -1) Alerts.displayError('MEW.fund_error');
+          else Alerts.displayError(e.message);
         });
       });
     } catch (err) {
