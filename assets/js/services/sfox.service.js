@@ -235,49 +235,60 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
   }
 
   function buyTradeDetails (quote, trade, tx) {
-    let { formatCurrencyForView, convertFromSatoshi } = currency;
-    let fiat = currency.currencies.find((curr) => curr.code === 'USD');
-    let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
-    // let fee = tx ? tx.fee : 16830; // TODO add real fee
-    let amount = quote
-                    ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
-                    : trade.receiveAmount * 1e8;
+    let buyTxFee;
+    return Env.then(env => {
+      buyTxFee = env.partners.sfox.buyTransactionFeeInSatoshi;
+      let { formatCurrencyForView, convertFromSatoshi } = currency;
+      let fiat = currency.currencies.find((curr) => curr.code === 'USD');
+      let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
+      let fee = buyTxFee;
+      let fiatFee = currency.convertFromSatoshi(fee, fiat);
+      let amount = quote
+                      ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
+                      : trade.receiveAmount * 1e8;
 
-    let fiatAmount = quote
-                      ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
-                      : trade.inAmount / 1e8;
+      let fiatAmount = quote
+                        ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
+                        : trade.inAmount / 1e8;
 
-    let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
-    // let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
+      let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
 
-    let toBeSpent = quote
-                       ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
-                       : (trade.inAmount / 1e8 + trade.feeAmount);
-    let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
+      let toBeSpent = quote
+                         ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
+                         : (trade.inAmount / 1e8 + trade.feeAmount);
+      let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
 
-    return {
-      txAmt: {
-        key: amountKey,
-        val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${fiatAmount})`
-      },
-      // txFee: {
-      //   key: '.TX_FEE',
-      //   val: formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)
-      // },
-      // out: {
-      //   key: '.TOTAL',
-      //   val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
-      // },
-      sfoxFee: {
-        key: '.TRADING_FEE',
-        val: formatCurrencyForView(tradingFee.toFixed(2), fiat, true)
-      },
-      in: {
-        key: '.TO_BE_SPENT',
-        val: formatCurrencyForView(toBeSpent.toFixed(2), fiat, true),
-        tip: () => console.log('Clicked tooltip')
+      let details = {
+        txAmt: {
+          key: amountKey,
+          val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${fiatAmount})`
+        },
+        sfoxFee: {
+          key: '.TRADING_FEE',
+          val: formatCurrencyForView(tradingFee.toFixed(2), fiat, true)
+        },
+        in: {
+          key: '.TO_BE_SPENT',
+          val: formatCurrencyForView(toBeSpent.toFixed(2), fiat, true),
+          tip: () => console.log('Clicked tooltip')
+        }
+      };
+
+      if (buyTxFee) {
+        let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
+
+        details.txFee = {
+          key: '.TX_FEE',
+          val: `${formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)} ($${formatCurrencyForView(fiatFee, fiat, false)})`
+        };
+        details.out = {
+          key: '.TOTAL',
+          val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+        };
       }
-    };
+
+      return details;
+    });
   }
 
   function getTxMethod (hash) {

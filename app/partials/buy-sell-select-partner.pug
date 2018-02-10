@@ -36,9 +36,11 @@ div
               .item
                 input(type="email" ng-model="email" required)
             button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
-    .ml-30.width-40.hidden-xs(ng-if="!hasDismissedSellIntro() && (country.Code === 'US' || $parent.country.Code === 'US')")
+    .ml-30.width-40.hidden-xs(ng-if="!hasDismissedBuyIntro() && (country.Code === 'US' || $parent.country.Code === 'US')")
       .flex-between
-        span.f-24.blue.f-14-mobile(translate="SFOX.sell.INTRODUCING_HEADER")
+        span.f-24.blue.f-14-mobile(translate="SFOX.buy.INTRODUCING_HEADER")
         .flex-center.pl-10
-          i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
-      p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
+          i.pointer.ti-close.f-12.mid-grey(ng-click="dismissBuyIntro()")
+      p.f-12.mt-10(translate="SFOX.buy.INTRODUCING_BODY")
+        
+        
