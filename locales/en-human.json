@@ -2151,5 +2151,15 @@
     "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
   },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
+  "MEW": {
+    "sweep_funds": "Sweep Funds",
+    "sweep_funds_mew": "Sweep Funds from My Ether Wallet",
+    "sweep_funds_explain": "Using your MyEtherWallet Keystore File (UTC / JSON) and your password, sweep all your funds directly into your Blockchain ether wallet.",
+    "sweep_funds_warn": "ERC 20 tokens associated with this address (if any) won't be swept.",
+    "select_keystore_file": "Select your Keystore File",
+    "keystore_file_explained": "You downloaded your Keystore File when you first created your MyEtherWallet. It is a UTC / JSON file.",
+    "select_wallet_file": "Select Wallet File",
+    "erc20_unsupported": "ERC 20 tokens associated with this address (if any) won't be swept."
+  },
   "": ""
 }

@@ -1,0 +1,27 @@
+form.bc-form(name="EthMewSweepForm" id="EthMewSweepForm" ng-submit="submit()")
+  .modal-header
+    .flex-center
+      h3.man.mrm(translate="Sweep from MyEtherWallet")
+  .modal-body
+    div.em-500.f-14.mb-5(translate="MEW.select_keystore_file")
+    p.mb-10(translate="MEW.keystore_file_explained")
+    button.btn.button-primary-inverse(type="button" ngf-select ng-model="file" ngf-model-invalid="invalidFile" ngf-pattern="")
+      i.mr-10.ti-upload
+      span(translate="MEW.select_wallet_file")
+    .group.mt-20(ng-show="keystore")
+      .item
+        label(translate="Enter your passphrase for the file")
+        input(
+          name="pw"
+          type="password"
+          ng-model="password"
+          focus-when="keystore"
+          required)
+    div.well.em-300.f-12(ng-if="keystore" translate="MEW.erc20_unsupported")
+  .modal-footer.pal.flex-end.flex-center
+    button.button-muted.mrm(
+      type="button"
+      translate="CLOSE"
+      ng-hide="status.busy"
+      ng-click="$dismiss()")
+    button.button-primary(type="submit" form="EthMewSweepForm" ng-disabled="!password || !keystore || locked" translate="MEW.sweep_funds")

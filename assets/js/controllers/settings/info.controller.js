@@ -2,10 +2,11 @@ angular
   .module('walletApp')
   .controller('SettingsInfoCtrl', SettingsInfoCtrl);
 
-function SettingsInfoCtrl ($scope, $q, Wallet, Alerts, MyWallet) {
+function SettingsInfoCtrl ($scope, $q, modals, Wallet, Alerts, MyWallet) {
   angular.extend($scope, Wallet.user);
   $scope.loading = {};
   $scope.pairingCode = null;
+  $scope.showMewSweep = modals.showMewSweep;
 
   $scope.removeAlias = () => {
     $scope.loading.alias = true;
