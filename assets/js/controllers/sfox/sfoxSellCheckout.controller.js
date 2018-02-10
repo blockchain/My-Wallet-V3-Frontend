@@ -14,6 +14,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
     .then(recordNote)
     .then($scope.checkout.fetchTransactions)
     .then(enableSiftScience)
+    .then(() => exchange.fetchProfile())
     .catch((e) => Alerts.displayError(e));
 
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
