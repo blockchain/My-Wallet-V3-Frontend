@@ -1991,6 +1991,7 @@
   "ETHER_SEND_RECEIVE": "Send & Receive Ether",
   "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
   "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
+  "ETHER_SEND_SUCCESS_MEW": "Successfully imported ether! Your balance will update soon.",
   "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
   "EXCHANGE_SIMPLE": "Exchange",
   "EXCHANGE_RATE": "Exchange Rate",
@@ -2154,5 +2155,16 @@
     "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
   },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
+  "MEW": {
+    "import_from_mew": "Import from MyEtherWallet",
+    "import_funds": "Import Funds",
+    "fund_error": "Not enough funds to import.",
+    "import_funds_mew": "Import Funds from MyEtherWallet",
+    "import_funds_explain": "Using your MyEtherWallet passphrase and Keystore File (UTC / JSON), import all your funds directly into your Blockchain ether wallet.",
+    "import_funds_warn": "ERC 20 tokens associated with this address (if any) won't be imported, but you can continue to access them through other services.",
+    "select_keystore_file": "Select your Keystore File",
+    "keystore_file_explained": "You downloaded your Keystore File when you first created your MyEtherWallet. It is a UTC / JSON file.",
+    "select_wallet_file": "Select Wallet File"
+  },
   "": ""
 }

@@ -283,6 +283,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     })
   );
 
+  service.showMewSweep = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/eth-mew-sweep.pug',
+      controller: 'EthMewSweepController',
+      windowClass: 'bc-modal initial'
+    })
+  );
+
   service.openSubscribe = service.openOnce(() =>
     open({
       templateUrl: 'partials/subscribe-modal.pug',

@@ -43,3 +43,12 @@
           span(ng-show="pairingCode")
             qr(text="pairingCode" size="180" image="true")
           
+    .form-group.mbn.border-bottom.clearfix.pvl(data-preflight-tag="MewSweep")
+      .col-sm-12.col-md-6
+        label.em-400.type-h5(translate="MEW.import_funds_mew")
+        p.alt-font.f-16.em-300
+          span(translate="MEW.import_funds_explain")
+          span &nbsp;
+          span.security-red(translate="MEW.import_funds_warn")
+      .col-sm-12.col-md-6.setting-result
+        button.button-primary(ng-click="showMewSweep()" translate="MEW.import_funds")

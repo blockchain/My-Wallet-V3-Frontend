@@ -1,5 +1,6 @@
 angular.module('walletApp')
 .constant('whatsNew', [
+  { title: 'MEW.import_funds_mew', desc: 'MEW.import_funds_explain', date: new Date('Feb 10 2018'), ref: 'wallet.common.settings.info' },
   { title: 'SFOX.BUY_BITCOIN', desc: 'SFOX.BUY_BITCOIN_EXPLAIN', date: new Date('Feb 08 2018'), ref: 'wallet.common.buy-sell' },
   { title: 'BITCOIN_CASH.ADDRESSES', desc: 'BITCOIN_CASH.ADDR_FORMAT', date: new Date('Jan 18 2018'), ref: 'wallet.common.faq' },
   { title: 'SFOX.SELL_BITCOIN', desc: 'SELL_BITCOIN_EXPLAIN', date: new Date('Dec 15 2017'), ref: 'wallet.common.buy-sell' },
