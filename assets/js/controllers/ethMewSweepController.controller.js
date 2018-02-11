@@ -20,7 +20,7 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
       }
     };
 
-    newVal && reader.readAsBinaryString(newVal.slice(0, newVal.size));
+    newVal && reader.readAsText(newVal);
   });
 
   $scope.submit = () => {
