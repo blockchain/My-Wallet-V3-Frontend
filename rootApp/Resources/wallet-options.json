@@ -74,6 +74,7 @@
     "walletHelperUrl": "REPLACED_BY_DEV_SERVER"
   },
   "ethereum": {
+    "mew": true,
     "countries": "*",
     "lastTxFuse": 600,
     "rolloutFraction": 1,
