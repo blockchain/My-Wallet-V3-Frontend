@@ -5,18 +5,18 @@ angular
 // TODO: Integrate moment.js later
 
 function DateHelper ($filter) {
-  let epochBitcoinStartDate = 1231024500000;
-
   // Properties
+  let bitcoinStartDate = new Date(1231024500000); // Jan 3, 2009
+  let bitcoinCashStartDate = new Date(1501628400000); // Aug 1, 2017
   let format = {
     shortDate: 'dd/MM/yyyy'
   };
 
-  let bitcoinStartDate = new Date(epochBitcoinStartDate);
-
-  let now = () => { return new Date(); };
-
   // Methods
+  let now = () => { return new Date(); };
+  let toShortDate = (d) => $filter('date')(d, format.shortDate);
+  let toCustomShortDate = (sep, d) => $filter('date')(d, `dd${sep}MM${sep}yyyy`);
+  
   let round = (d) => {
     d = new Date(d);
     d.setHours(0);
@@ -32,13 +32,10 @@ function DateHelper ($filter) {
     return d;
   };
 
-  let toShortDate = (d) => $filter('date')(d, format.shortDate);
-
-  let toCustomShortDate = (sep, d) => $filter('date')(d, `dd${sep}MM${sep}yyyy`);
-
   return {
     format: format,
     bitcoinStartDate: bitcoinStartDate,
+    bitcoinCashStartDate: bitcoinCashStartDate,
     now: now,
     round: round,
     subtractDays: subtractDays,

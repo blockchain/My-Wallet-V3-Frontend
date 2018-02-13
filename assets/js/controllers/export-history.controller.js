@@ -41,7 +41,7 @@ function ExportHistoryController ($scope, $timeout, $translate, browser, format,
   vm.active = vm.activeCount === 1 ? all_accounts : vm.targets.filter(t => t.index.toString() === activeIndex)[0];
 
   vm.options = {
-    minDate: DateHelper.bitcoinStartDate,
+    minDate: coinCode === 'btc' ? DateHelper.bitcoinStartDate : DateHelper.bitcoinCashStartDate,
     maxDate: DateHelper.now()
   };
 
