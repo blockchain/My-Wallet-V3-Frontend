@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('EthMewSweepController', EthMewSweepController);
 
-function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upload) {
+function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upload, Wallet) {
   let reader = new FileReader();
   AngularHelper.installLock.call($scope);
   $scope.form = {};
@@ -37,6 +37,7 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
         $scope.payment.sign(privateKey);
         return $scope.payment.publish().then(() => {
           $scope.$dismiss();
+          Wallet.api.incrementEventStat('mew_sweep_success');
           Alerts.displaySentBitcoin('ETHER_SEND_SUCCESS_MEW');
         }).catch((e) => {
           $scope.free();
