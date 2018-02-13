@@ -16,7 +16,7 @@ function DateHelper ($filter) {
   let now = () => { return new Date(); };
   let toShortDate = (d) => $filter('date')(d, format.shortDate);
   let toCustomShortDate = (sep, d) => $filter('date')(d, `dd${sep}MM${sep}yyyy`);
-  
+
   let round = (d) => {
     d = new Date(d);
     d.setHours(0);
