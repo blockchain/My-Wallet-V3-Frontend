@@ -31,7 +31,7 @@ gem install sass
 
 Install dependencies:
 ```sh
-yarn install
+npm install -g bower grunt-cli && yarn && bower install
 ```
 
 Create a file called `.env` in the root of the project. Put the following in it:
@@ -103,4 +103,4 @@ Bug fixes and feedback on our code is always appreciated.
 Security issues can be reported to us in the following venues:
 
  * Email: security@blockchain.info
- * Bug Bounty: https://hackerone.com/blockchain
+ * Bug Bounty: https://www.crowdcurity.com/blockchain-info
