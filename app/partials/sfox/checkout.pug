@@ -73,7 +73,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
   div.width-50.border-desktop(
     ng-if="checkout.onStep('receipt')"
     ng-include="'partials/sfox/details.pug'")
-  .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+  .flex-column.pbvl(ng-if="tabs.selectedTab === 'ORDER_HISTORY'")
     .flex-center.flex-justify.flex-column.mtvl(ng-hide="completedTrades().length || pendingTrades().length")
       .flex-column.mbl.border-bottom.black
         .flex-center.flex-justify
