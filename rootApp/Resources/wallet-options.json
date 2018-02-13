@@ -23,7 +23,7 @@
                     "MC", "NL", "NO", "PL", "PT", "RE", "BL", "MF", "PM", "SM",
                     "SK", "SI", "ES", "SE", "CH"
                   ],
-      "partnerId": 35,
+      "partnerId": 19,
       "iSignThisDomain": "https://stage-verify.isignthis.com",
       "surveyLinks": ["https://blockchain.co1.qualtrics.com/SE/?SID=SV_8pupOEQPGkXx8Kp",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_205rqJvYy7mRxnn",
@@ -41,7 +41,9 @@
       "production": "REPLACED_BY_DEV_SERVER",
       "states": ["AZ", "CA", "CO", "DE", "IN", "ID", "IL", "KS", "KY", "MA", "MD",
                  "ME", "MI", "MO", "MT", "OH", "NJ", "NY", "PA", "SC", "TN", "TX", "UT", "VA"],
+      "showBuyFraction": 1,
       "inviteFormFraction": 0.1,
+      "buyTransactionFeeInSatoshi": false,
       "apiKey": "6fbfb80536564af8bbedb7e3be4ec439",
       "plaid": "0b041cd9e9fbf1e7d93a0d5a39f5b9",
       "plaidEnv": "tartan",
@@ -49,7 +51,9 @@
       "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_9BuZyJxdOT0Psb3",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_8cE4saqzhlLXngN",
                       "https://blockchain.co1.qualtrics.com/jfe/form/SV_50v2ta2RiXMGx7v",
-                      "https://blockchain.co1.qualtrics.com/jfe/form/SV_4GEMndhhy58lapT"]
+                      "https://blockchain.co1.qualtrics.com/jfe/form/SV_4GEMndhhy58lapT"],
+      "buySurveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_8G431wYyJnciCHj",
+                         "https://blockchain.co1.qualtrics.com/jfe/form/SV_78S6RzM5ipN66fb"]
     },
     "unocoin": {
       "countries": ["IN"],
@@ -70,7 +74,9 @@
     "walletHelperUrl": "REPLACED_BY_DEV_SERVER"
   },
   "ethereum": {
+    "mew": true,
     "countries": "*",
+    "lastTxFuse": 600,
     "rolloutFraction": 1,
     "surveyLinks": ["https://blockchain.co1.qualtrics.com/jfe/form/SV_7Q987NPvIT4f6xn",
                     "https://blockchain.co1.qualtrics.com/jfe/form/SV_b8A9pKaGE30Qb9X"]

@@ -25,7 +25,6 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
   $scope.tradeState = '.confirm';
   $scope.namespace = this.namespace;
   $scope.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
-  $scope.rate = this.quote.rate;
 
   $scope.getTimeToExpiration = () => this.quote.expiresAt - new Date() - 5000;
   $scope.onExpiration = () => { $scope.lock(); this.quote = null; this.onExpiration().then($scope.free); };
@@ -42,4 +41,14 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
 
   AngularHelper.installLock.call($scope);
   Env.then(env => $scope.qaDebugger = env.qaDebugger);
+  this.$onChanges = (changes) => {
+    let curVal = changes.quote.currentValue;
+    if (curVal.rate !== changes.quote.previousValue.rate) {
+      $scope.rate = Number.isInteger(curVal.quoteAmount)
+        ? parseFloat(curVal.baseAmount) / (curVal.quoteAmount / 1e8)
+        : parseFloat(curVal.quoteAmount) / (curVal.baseAmount / 1e8);
+
+      this.details = changes.details.currentValue;
+    }
+  };
 }

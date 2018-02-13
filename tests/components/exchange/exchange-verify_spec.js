@@ -68,22 +68,22 @@ describe('exchange-verify.component', () => {
     });
   });
 
-  describe('isBeforeNow', () => {
+  describe('is18YearsOld', () => {
     beforeEach(function () {
       let mockNow = new Date('11/24/2016').getTime();
       return spyOn(Date, 'now').and.returnValue(mockNow);
     });
 
-    it('should return true if date is in past', () => {
+    it('should return true if date is < 18 years ago', () => {
       let ctrl = getController(handlers);
-      let past = '11/23/2016';
-      return expect(ctrl.isBeforeNow(past)).toEqual(true);
+      let past = '11/23/1999';
+      return expect(ctrl.is18YearsOld(past)).toEqual(true);
     });
 
-    it('should return false if date is in future', () => {
+    it('should return false if date > 18 years ago', () => {
       let ctrl = getController(handlers);
       let future = '11/25/2016';
-      return expect(ctrl.isBeforeNow(future)).toEqual(false);
+      return expect(ctrl.is18YearsOld(future)).toEqual(false);
     });
   });
 

@@ -213,8 +213,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
       if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
         tradeStatus.canTrade().then((canTrade) => {
-          let countryGuess = MyWallet.wallet.accountInfo.countryCodeGuess;
-          let template = canTrade && !$scope.buySellDisabled && countryGuess !== 'US' ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
+          let template = canTrade && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
             templateUrl: template,
             windowClass: 'bc-modal rocket-modal initial',
@@ -243,14 +242,19 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
             BitcoinCash.setHasSeen();
           } else {
             tradeStatus.canTrade().then((canTrade) => {
-              if (canTrade) {
-                if (!sfox.hasSeen && sfox.showAnnouncement(canTrade, tradeStatus.isSFOXCountryState) && !$rootScope.inMobileBuy) {
-                  modals.openAnnouncement('SFOX', 'wallet.common.buy-sell');
-                  sfox.setHasSeen();
-                } else if (tradeStatus.shouldShowBuyReminder() && !tradeStatus.userHasAccount()) {
-                  tradeStatus.showBuyReminder();
+              Env.then((env) => {
+                if (canTrade) {
+                  if (!sfox.hasSeenBuy && sfox.showBuyAnnouncement(canTrade, tradeStatus.isSFOXCountryState, env.partners.sfox.showBuyFraction) && !$rootScope.inMobileBuy) {
+                    modals.openAnnouncement('SFOX.buy', 'wallet.common.buy-sell');
+                    sfox.setHasSeenBuy();
+                  } else if (!sfox.hasSeen && sfox.showAnnouncement(canTrade, tradeStatus.isSFOXCountryState) && !$rootScope.inMobileBuy) {
+                    modals.openAnnouncement('SFOX', 'wallet.common.buy-sell');
+                    sfox.setHasSeen();
+                  } else if (tradeStatus.shouldShowBuyReminder() && !tradeStatus.userHasAccount()) {
+                    tradeStatus.showBuyReminder();
+                  }
                 }
-              }
+              });
             });
           }
         }

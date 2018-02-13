@@ -51,6 +51,7 @@ describe('CoinifyController', () => {
     let scope = $rootScope.$new();
     let endTime = new Date();
     let frequency = 'Daily';
+    let mediums = { card: {}, bank: {} }
 
     let ctrl = $controller('CoinifyController', {
 
@@ -60,6 +61,7 @@ describe('CoinifyController', () => {
       endTime: endTime || null,
       frequency: frequency || false,
       options: options || {},
+      mediums: mediums || false,
       $uibModalInstance: { close () {}, dismiss () {} }
     });
 

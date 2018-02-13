@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .factory('sfox', sfox);
 
-function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
+function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, currency, localStorageService, BrowserHelper) {
   const service = {
     get exchange () {
       return MyWallet.wallet.external.sfox;
@@ -22,6 +22,9 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     get hasSeen () {
       return localStorageService.get('sfox-has-seen');
     },
+    get hasSeenBuy () {
+      return localStorageService.get('sfox-has-seen-buy');
+    },
     get verificationStatus () {
       return service.profile.verificationStatus;
     },
@@ -35,11 +38,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     get activeAccount () {
       return service.accounts[0] && service.accounts[0].status === 'active';
     },
-    get balanceAboveMin () {
+    get balanceAboveSellMin () {
       return Exchange.sellMax > service.min;
     },
     get userCanSell () {
-      return service.profile && service.verified && service.activeAccount && service.balanceAboveMin;
+      return service.profile && service.verified && service.activeAccount && service.balanceAboveSellMin;
+    },
+    get userCanBuy () {
+      return service.profile && service.verified && service.activeAccount;
     },
     get sellReason () {
       let reason;
@@ -48,8 +54,18 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       else if (!service.accounts.length) reason = 'needs_bank';
       else if (!service.activeAccount) reason = 'needs_bank_active';
       else if (!service.min || isNaN(Exchange.sellMax)) reason = 'needs_data';
-      else if (!service.balanceAboveMin) reason = 'not_enough_funds_to_sell';
+      else if (!service.balanceAboveSellMin) reason = 'not_enough_funds_to_sell';
       else reason = 'can_sell_remaining_balance';
+      return reason;
+    },
+    get buyReason () {
+      let reason;
+      if (!service.profile) reason = 'needs_account';
+      else if (!service.verified) reason = 'needs_id';
+      else if (!service.accounts.length) reason = 'needs_bank';
+      else if (!service.activeAccount) reason = 'needs_bank_active';
+      else if (!service.min) reason = 'needs_data';
+      else reason = 'has_remaining_buy_limit';
       return reason;
     },
     get sellLaunchOptions () {
@@ -61,16 +77,23 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     sell,
     init,
     selling,
+    buying,
     determineStep,
     sellTradeDetails,
+    buyTradeDetails,
     setHasSeen,
+    setHasSeenBuy,
     setSellMin,
     showAnnouncement,
+    showBuyAnnouncement,
     dismissSellIntro,
     hasDismissedSellIntro,
+    dismissBuyIntro,
+    hasDismissedBuyIntro,
     signupForBuyAccess,
     signupForSellAccess,
-    getTxMethod
+    getTxMethod,
+    fetchTrades
   };
 
   angular.extend(service, Exchange);
@@ -101,8 +124,17 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     localStorageService.set('sfox-has-seen', true);
   }
 
+  function setHasSeenBuy () {
+    localStorageService.set('sfox-has-seen-buy', true);
+  }
+
   function showAnnouncement (canTrade, isSFOXCountryState) {
     return canTrade && isSFOXCountryState && MyWallet.wallet.hdwallet.defaultAccount.balance > 0;
+  }
+
+  function showBuyAnnouncement (canTrade, isSFOXCountryState, fraction) {
+    let email = MyWallet.wallet.accountInfo.email;
+    return canTrade && isSFOXCountryState && MyWalletHelpers.isStringHashInFraction(email, fraction);
   }
 
   function determineStep (exchange) {
@@ -111,7 +143,7 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       return 'create';
     } else {
       if (!service.verified) {
-        if (!service.profile.setupComplete) return 'verify';
+        if (!service.profile.setupComplete && !service.requiredDocs.length) return 'verify';
         else if (service.requiredDocs.length) return 'upload';
         else return 'link';
       } else {
@@ -126,6 +158,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
       isDisabled: !service.userCanSell,
       launchOptions: service.sellLaunchOptions,
       verificationRequired: !service.verified || !service.activeAccount
+    };
+  }
+
+  function buying () {
+    return {
+      reason: service.buyReason,
+      isDisabled: !service.userCanBuy,
+      verificationRequired: !service.activeAccount
     };
   }
 
@@ -145,6 +185,14 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
 
   function hasDismissedSellIntro () {
     return localStorageService.get('hasSeenSfoxSellIntro');
+  }
+
+  function dismissBuyIntro () {
+    localStorageService.set('hasSeenSfoxBuyIntro', true);
+  }
+
+  function hasDismissedBuyIntro () {
+    return localStorageService.get('hasSeenSfoxBuyIntro');
   }
 
   function sellTradeDetails (quote, payment, trade, tx) {
@@ -186,6 +234,63 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
     };
   }
 
+  function buyTradeDetails (quote, trade, tx) {
+    let buyTxFee;
+    return Env.then(env => {
+      buyTxFee = env.partners.sfox.buyTransactionFeeInSatoshi;
+      let { formatCurrencyForView, convertFromSatoshi } = currency;
+      let fiat = currency.currencies.find((curr) => curr.code === 'USD');
+      let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
+      let fee = buyTxFee;
+      let fiatFee = currency.convertFromSatoshi(fee, fiat);
+      let amount = quote
+                      ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
+                      : trade.receiveAmount * 1e8;
+
+      let fiatAmount = quote
+                        ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
+                        : trade.inAmount / 1e8;
+
+      let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
+
+      let toBeSpent = quote
+                         ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
+                         : (trade.inAmount / 1e8 + trade.feeAmount);
+      let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
+
+      let details = {
+        txAmt: {
+          key: amountKey,
+          val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${fiatAmount})`
+        },
+        sfoxFee: {
+          key: '.TRADING_FEE',
+          val: formatCurrencyForView(tradingFee.toFixed(2), fiat, true)
+        },
+        in: {
+          key: '.TO_BE_SPENT',
+          val: formatCurrencyForView(toBeSpent.toFixed(2), fiat, true),
+          tip: () => console.log('Clicked tooltip')
+        }
+      };
+
+      if (buyTxFee) {
+        let totalAmount = tx ? Math.abs(tx.amount) : amount - fee;
+
+        details.txFee = {
+          key: '.TX_FEE',
+          val: `${formatCurrencyForView(convertFromSatoshi(fee, btc), btc, true)} ($${formatCurrencyForView(fiatFee, fiat, false)})`
+        };
+        details.out = {
+          key: '.TOTAL',
+          val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+        };
+      }
+
+      return details;
+    });
+  }
+
   function getTxMethod (hash) {
     let trade = service.exchange.trades.filter((t) => t.txHash === hash)[0];
     return trade && (trade.isBuy ? 'buy' : 'sell');
@@ -197,6 +302,10 @@ function sfox ($q, MyWallet, Alerts, modals, Env, Exchange, currency, localStora
 
   function signupForSellAccess (email, state) {
     BrowserHelper.safeWindowOpen(`https://docs.google.com/forms/d/e/1FAIpQLSeBjqWrqNs5k-yAR8p35xBwZ_FfwWfjttL0WCf4Qa2Ev2CK8A/viewform?entry.1192956638=${email}&entry.387129390=${state}`);
+  }
+
+  function fetchTrades () {
+    return service.exchange.getTrades();
   }
 
   return service;
