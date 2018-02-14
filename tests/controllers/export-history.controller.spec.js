@@ -78,12 +78,12 @@ describe('ExportHistoryController2', () => {
     
       it('btc min start date should be Jan 3, 2009', () => {
         let controller = createController('', 'btc');
-        expect(controller.options.minDate.toString()).toEqual('Sat Jan 03 2009 18:15:00 GMT-0500 (EST)');
+        expect(controller.options.minDate.toString().startsWith('Sat Jan 03 2009')).toBeTruthy();
       });
   
       it('bch min start date should be Aug 1, 2017', () => {
         let controller = createController('', 'bch');
-        expect(controller.options.minDate.toString()).toEqual('Tue Aug 01 2017 19:00:00 GMT-0400 (EDT)');
+        expect(controller.options.minDate.toString().startsWith('Tue Aug 01 2017')).toBeTruthy();
       });
     });
     
