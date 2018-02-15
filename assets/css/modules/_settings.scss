@@ -202,6 +202,11 @@ div.well {
   font-size: 14px;
 }
 
+div.well.small {
+  font-size: 12px;
+  padding: 10px;
+}
+
 .setting-result {
   @extend .prn;
 }

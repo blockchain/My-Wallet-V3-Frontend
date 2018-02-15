@@ -15,9 +15,9 @@ form(role="form" name="exportForm" ng-submit="vm.submit()" autocomplete="off" no
             tagging
             required)
             ui-select-match(placeholder="{{'SEARCH' | translate}}...")
-              label-origin(origin="$select.selected")
+              label-origin(origin="$select.selected" coin-code="vm.coinCode")
             ui-select-choices(repeat="t in vm.targets | filter:{label:$select.search} | limitTo:vm.limit")
-              label-origin(origin="::t" in-view="$last && vm.isLast(t) && vm.incLimit()" highlight="$select.search")
+              label-origin(origin="::t" in-view="$last && vm.isLast(t) && vm.incLimit()" highlight="$select.search" coin-code="vm.coinCode")
         .flex-row.flex-center.flex-between.pal(ng-class="{'has-error':exportForm.$invalid || vm.start.date > vm.end.date}")
           p.input-group.flex-center
             input.form-control(

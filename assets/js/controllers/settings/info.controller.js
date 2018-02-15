@@ -2,10 +2,15 @@ angular
   .module('walletApp')
   .controller('SettingsInfoCtrl', SettingsInfoCtrl);
 
-function SettingsInfoCtrl ($scope, $q, Wallet, Alerts, MyWallet) {
+function SettingsInfoCtrl ($scope, $q, modals, Wallet, Alerts, MyWallet, Env) {
   angular.extend($scope, Wallet.user);
   $scope.loading = {};
   $scope.pairingCode = null;
+  $scope.showMewSweep = modals.showMewSweep;
+
+  Env.then((env) => {
+    $scope.showMew = env.ethereum.mew;
+  });
 
   $scope.removeAlias = () => {
     $scope.loading.alias = true;

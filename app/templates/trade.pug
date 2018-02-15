@@ -15,22 +15,22 @@
   .exchange-date.pvml
     span {{ trade.createdAt | date:dateFormat }}
   .exchange-exchanged.pvml
-    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || type === 'sell'")
+    span(ng-hide="status.gettingQuote || !trade.quoteExpireTime || expiredQuote || !pending || trade.bankAccount || type() === 'sell'")
       span.display-inline-block.left-align
       span(ng-if="qaDebugger")
         span.display-inline-block
           i.ti-search(ng-click="trade.expireQuote()") QA: Now
         br
-    span.display-inline-block(ng-show="type === 'sell'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
-    span.display-inline-block(ng-hide="type === 'sell'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ trade.receiveAmount }} {{ trade.outCurrency }}
+    span.display-inline-block(ng-show="type() === 'sell'") {{ trade.inAmount / 100000000 }} {{ trade.inCurrency }}
+    span.display-inline-block(ng-hide="type() === 'sell'" ng-class="{italic: pending && expiredQuote, 'tilda-before': pending && expiredQuote}") {{ trade.receiveAmount }} {{ trade.outCurrency }}
   .exchange-received.pvml.flex-row-mobile.flex-between-mobile
     span(ng-hide="status.gettingQuote")
-      span.em-600(ng-show="type === 'sell'") {{ (trade.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
-      span.em-600(ng-hide="type === 'sell'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
+      span.em-600(ng-show="type() === 'sell'") {{ (trade.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
+      span.em-600(ng-hide="type() === 'sell'") {{ (trade.sendAmount / conversion) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
     img(ng-show="status.gettingQuote" src="img/spinner.gif")
     .pr-10.visible-xs
       i.ti-angle-right
   div.hidden-xs.flex-center(ng-if="canCancel")
     span
-      i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel && type === 'buy'" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
+      i.ti-trash.mls.pointer.state-danger-text(ng-click="cancel(trade); $event.stopPropagation();" ng-show="canCancel && type() === 'buy'" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
       i.ti-trash.fade(ng-hide="canCancel")

@@ -219,6 +219,10 @@
     "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
     "BODY": "@:SELL_SURVEY_OPENED.BODY"
   },
+  "SFOX_BUY_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "You're just one step away from receiving bitcoin, are you sure you want to stop?"
+  },
   "UNOCOIN_TRADE_SURVEY": {
     "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
     "BODY": "@:BUY_SURVEY_OPENED.BODY"
@@ -300,6 +304,7 @@
   "PENDING_TX_RECEIVER": "Your transaction is awaiting confirmation from the network. The time it takes a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected, the funds will remain with the sending party.",
   "COMPLETE" : "Complete",
   "TRANSACTION_COMPLETE" : "Transaction Confirmed",
+  "TRANSACTION_PENDING": "<b>Status:</b> Your transaction is awaiting confirmation from the network. The time it takes for a transaction to be confirmed depends on the fee used and network traffic. If the transaction is rejected the funds will remain in the sender's wallet.",
   "OVERVIEW" : "Overview:",
   "NOTE" : "Note",
   "CREATE" : "Create",
@@ -1305,6 +1310,10 @@
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
+  "SFOX_BUY_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
   "SHIFT_TRADE_SURVEY_PROMPT": {
     "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
     "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
@@ -1363,10 +1372,10 @@
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
-  "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet!",
+  "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet! 💸💸💸",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
-  "SELL_BTC_UNAVAIL_STATE": "Unfortunately selling bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
+  "SELL_BTC_UNAVAIL_STATE": "Unfortunately trading bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
   "NO_TRADES": "Your Order History",
   "BTC_APPROX_RATE": "BTC (approximate rate):",
   "BTC_TX_FEE": "BTC Transaction Fee",
@@ -1552,7 +1561,7 @@
       "EXPLAIN": ""
     },
     "has_remaining_buy_limit": {
-      "EXPLAIN": "Your remaining buy limit is <span class='pointer'>{{::max}} {{::curr}}</span>.",
+      "EXPLAIN": "Your remaining buy limit is <a class='pointer'>{{::max}} {{::curr}}</a>.",
       "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
       "KYC": "Increase your limit."
     },
@@ -1660,6 +1669,9 @@
   },
   "UNOCOIN": {
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
+    "VERIFY": {
+      "PO_WARNING": ""
+    },
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1778,10 +1790,16 @@
   },
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
-    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make selling bitcoin in your wallet secure and seamless.",
+    "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make buying & selling bitcoin in your wallet secure and seamless.",
     "NOW_SUPPORTING": "The Wait is Over!",
     "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
     "GET_STARTED": "Start Trading",
+    "BUY_BITCOIN": "Buy Bitcoin!",
+    "SELL_BITCOIN": "Sell Bitcoin",
+    "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet! 💸💸💸",
+    "VERIFY": {
+      "PO_WARNING": "⛔️ P.O. boxes are not sufficient for verifying your address information."
+    },
     "CREATE": {
       "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
       "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
@@ -1806,7 +1824,7 @@
         "OPTION2": "- Passport",
         "OPTION3": "- State or government-issued identification card",
         "OPTION4": "",
-        "WARNING": "",
+        "WARNING": "⛔️ Selfies are not a valid form of ID Verification",
         "UPLOAD_TITLE": "Photo ID",
         "UPLOAD_SELECT": "Select Upload Method",
         "HELP": "Capture the front side of ID, clearly displaying your identification number."
@@ -1837,8 +1855,8 @@
     "LINK_BANK": {
       "HEADER": "Link Account",
       "COPY": "Sync your bank account instantly by securely signing into your bank directly.",
-      "COPY_2": "You can also manually add your account by typing your routing number and account information. Please note that manually adding your bank account could take up to 2 business days to process.",
-      "COPY_SMALL": "(PS: Your bank information will not be saved to your Blockchain wallet.)"
+      "COPY_2": "You can also manually add your account by typing your routing number and account information. Please note that manually adding your bank account could take up to 4 business days to process.",
+      "COPY_SMALL": "(PS: Your bank information will be sent directly to SFOX and will not be viewed by or saved to your Blockchain wallet.)"
     },
     "needs_account": {
       "EXPLAIN": ""
@@ -1869,6 +1887,10 @@
       "EXPLAIN": "@:COINIFY.can_sell_remaining_balance.EXPLAIN",
       "ERROR_MAX": "This amount is over your limit. <span class='text-color'>Sell</span> <span class='pointer primary'>maximum</span>"
     },
+    "has_remaining_buy_limit": {
+      "EXPLAIN": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
+      "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN"
+    },
     "sell": {
       "confirm": {
         "HEADER": "Confirm Sell Order",
@@ -1876,25 +1898,25 @@
         "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
       },
       "processing": {
-        "DISPLAY": "Pending",
+        "DISPLAY": "Pending Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order in Progress",
         "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "failed": {
-        "DISPLAY": "Failed",
+        "DISPLAY": "Failed Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Failed",
         "BODY": "Your sell trade has failed. Please contact our support team with the Transaction ID for this trade if you have any questions. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "rejected": {
-        "DISPLAY": "Rejected",
+        "DISPLAY": "Rejected Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Rejected",
         "BODY": "Your sell trade has been rejected. Unfortunately we cannot disclose the exact reason for this rejection. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "completed": {
-        "DISPLAY": "Completed",
+        "DISPLAY": "Completed Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order Completed",
         "BODY": "Your sell trade has successfully completed.<b> The transaction will show in your bank account in 1-3 business days.</b> Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
@@ -1903,19 +1925,52 @@
       "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
+      "INTRODUCING_HEADER": "Introducing Sell",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon.",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
-      "INTRODUCING_HEADER": "Introducing Sell",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon."
+      "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
     },
     "buy": {
-      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon."
+      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
+      "confirm": {
+        "HEADER": "Confirm Buy Order",
+        "BODY": "@:SFOX.sell.confirm.BODY",
+        "ACCEPT_TERMS": "@:SFOX.sell.confirm.ACCEPT_TERMS"
+      },
+      "processing": {
+        "DISPLAY": "Pending Buy",
+        "HEADER": "Buy Order in Progress",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-5 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
+      "rejected": {
+        "DISPLAY": "Rejected Buy",
+        "HEADER": "Buy Order Rejected",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "Your buy trade has been rejected. <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
+      "completed": {
+        "DISPLAY": "Completed Buy",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "Buy Order Complete",
+        "BODY": "Your buy trade has successfully completed. Thank you for using Blockchain to trade your bitcoin. <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
+      "AMT": "BTC Amount To Purchase",
+      "AMT_BOUGHT": "BTC Amount Purchased",
+      "TOTAL": "Bitcoin Amount to be Received",
+      "TO_BE_SPENT": "Total Cost",
+      "TRADING_FEE": "@:SFOX.sell.TRADING_FEE",
+      "TX_FEE": "@:SFOX.sell.TX_FEE",
+      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
+      "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
+      "INTRODUCING_HEADER": "Introducing Buy!",
+      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can now buy bitcoin 🎉<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
     },
     "create": "Create Account",
     "verify": "Verify Identity",
     "upload": "Upload Documents",
     "link": "Link Bank",
-    "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX.",
     "TRADING_FEE_HELPER": "The fee charged to execute a trade through SFOX.",
     "BUY_COMING_SOON": "Now you can sell bitcoin directly from your Blockchain wallet!",
     "BUY_COMING_SOON_DETAILS": "Don't worry, we're hard at work and soon you'll be able to buy too."
@@ -1936,6 +1991,7 @@
   "ETHER_SEND_RECEIVE": "Send & Receive Ether",
   "ETHER_SEND_RECEIVE_WHATS_NEW": "You can now send and receive ether from your Blockchain wallet!",
   "ETHER_SEND_SUCCESS": "Successfully sent ether! Your balance will update soon.",
+  "ETHER_SEND_SUCCESS_MEW": "Successfully imported ether! Your balance will update soon.",
   "WAIT_FOR_CONFIRM": "Please wait until your previous transaction confirms",
   "EXCHANGE_SIMPLE": "Exchange",
   "EXCHANGE_RATE": "Exchange Rate",
@@ -2099,5 +2155,18 @@
     "ADDRESS_INVALID": "Invalid Bitcoin Cash Address"
   },
   "SELL_MIN_TOOLTIP": "This minimum does not include the transaction fee.",
+  "MEW": {
+    "import_from_mew": "Import from MyEtherWallet",
+    "import_funds": "Import Funds",
+    "fund_error": "Not enough funds to import.",
+    "import_funds_mew": "Import Funds from MyEtherWallet",
+    "import_funds_explain": "You can now import your ether from your MyEtherWallet backup directly into your Blockchain wallet.",
+    "import_funds_explain_ext": "Use your MyEtherWallet Keystore file (UTC/JSON) and passphrase to import your ether directly into your Blockchain wallet.",
+    "import_funds_warn": "Please note: Any ERC20 tokens you have stored with MyEtherWallet will not be imported into your Blockchain wallet. You can continue using them as normal in MyEtherWallet or MyCrypto.com, but your ether will now be in your Blockchain Wallet.",
+    "select_keystore_file": "Select your Keystore File",
+    "by_clicking_import": "By clicking 'Import Funds', the ether currently stored in your MyEtherWallet will be imported to your Blockchain wallet.",
+    "keystore_file_explained": "You likely downloaded your Keystore file when you created your wallet on MyEtherWallet. If you don’t have that saved, you can navigate to 'View Your Wallet Info' on MyEtherWallet to download it again.",
+    "select_wallet_file": "Select Wallet File"
+  },
   "": ""
 }

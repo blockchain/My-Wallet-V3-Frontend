@@ -208,7 +208,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
         quote () { return quote; },
         trade () { return trade; },
         endTime () { return endTime; },
-        frequency () { return frequency; }
+        frequency () { return frequency; },
+        mediums () {
+          if (quote) {
+            return quote.getPaymentMediums().then(mediums => mediums);
+          }
+        }
       }
     });
   });
@@ -275,6 +280,14 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
       controllerAs: 'vm',
       backdrop: 'static',
       keyboard: false
+    })
+  );
+
+  service.showMewSweep = service.openOnce(() =>
+    open({
+      templateUrl: 'partials/eth-mew-sweep.pug',
+      controller: 'EthMewSweepController',
+      windowClass: 'bc-modal initial'
     })
   );
 

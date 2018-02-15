@@ -4,7 +4,7 @@ describe('SfoxSignupController', () => {
   let MyWallet;
   let sfox;
 
-  let profile = (status, docs) => ({verificationStatus: { level: status, required_docs: docs }});
+  let profile = (status, docs) => ({verificationStatus: { level: status, required_docs: docs || [] }});
   let accounts = function (first) { if (first) { return [first]; } else { return []; } };
 
   beforeEach(angular.mock.module('walletApp'));
@@ -60,7 +60,7 @@ describe('SfoxSignupController', () => {
 
     it('should be \'verify\' if profile is pending verification and needs docs', () => {
       let ctrl = getController(profile('pending', ['id']));
-      return expect(ctrl.onStep('verify')).toEqual(true);
+      return expect(ctrl.onStep('upload')).toEqual(true);
     });
 
     it('should be \'link\' if profile is pending verification and does not need docs', () => {
