@@ -119,6 +119,7 @@
       "browserDetection",
       "Blockchain",
       "Highcharts",
+      "FileReader",
       "compareVersions",
       "URL",
       "event",

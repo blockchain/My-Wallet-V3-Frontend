@@ -70,7 +70,7 @@ function bitcoinCashTransactionsCtrl ($scope, $translate, $state, $q, $uibModal,
       },
       accts: () => ({
         accounts: $scope.activeWallets,
-        addresses: $scope.imported.addresses
+        addresses: $scope.imported && $scope.imported.addresses
       }),
       coinCode: () => 'bch'
     }

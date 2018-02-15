@@ -71,7 +71,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
   };
 
   $scope.getQuoteArgs = (state) => ({
-    amount: state.baseFiat ? state.fiat * this.conversion | 0 : state.btc * 1e8,
+    amount: state.baseFiat ? state.fiat * this.conversion | 0 : state.btc * 1e8 | 0,
     baseCurr: state.baseCurr.code,
     quoteCurr: state.quoteCurr.code
   });

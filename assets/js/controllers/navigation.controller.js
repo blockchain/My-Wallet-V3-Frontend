@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('NavigationCtrl', NavigationCtrl);
 
-function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, tradeStatus, Env, Ethereum, ShapeShift) {
+function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $interval, $timeout, MyWalletHelpers, localStorageService, $q, $uibModal, Wallet, Alerts, currency, whatsNew, MyWallet, tradeStatus, Env, Ethereum, ShapeShift) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.popover = { isOpen: false };
@@ -95,9 +95,13 @@ function NavigationCtrl ($scope, $window, $rootScope, BrowserHelper, $state, $in
 
   $q.all([Env, tradeStatus.canTrade()]).then(([env, canTrade]) => {
     let now = Date.now();
+    let email = MyWallet.wallet.accountInfo.email;
+    let internalEmail = email.indexOf('@blockchain.com') > -1 || email.indexOf('@sfox.com') > -1;
+    let invitedEmail = MyWalletHelpers.isStringHashInFraction(email, env.partners.sfox.showBuyFraction);
 
     $scope.filterFeatures = (feat) => (
-      (feat.title !== 'SELL_BITCOIN' || canTrade && MyWallet.wallet.accountInfo.countryCodeGuess === 'US') &&
+      (feat.title !== 'SFOX.BUY_BITCOIN' || canTrade && MyWallet.wallet.accountInfo.countryCodeGuess === 'US' && (internalEmail || invitedEmail)) &&
+      (feat.title !== 'SFOX.SELL_BITCOIN' || canTrade && MyWallet.wallet.accountInfo.countryCodeGuess === 'US') &&
       (feat.title !== 'RECURRING_BUY' || canTrade) &&
       (feat.title !== 'BUY_BITCOIN' || canTrade) &&
       (feat.title !== 'SELL_BITCOIN' || (canTrade && MyWallet.wallet.external.shouldDisplaySellTab(Wallet.user.email, env, 'coinify'))) &&

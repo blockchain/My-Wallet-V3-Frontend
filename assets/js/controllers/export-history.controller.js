@@ -26,17 +26,18 @@ function ExportHistoryController ($scope, $timeout, $translate, browser, format,
   // Public
   let vm = this;
   vm.limit = 50;
+  vm.coinCode = coinCode;
   vm.incLimit = () => vm.limit += 50;
   vm.canTriggerDownload = compatibleBrowsers.indexOf(currentBrowser) > -1;
   vm.format = DateHelper.format.shortDate;
 
   vm.targets = [all_accounts].concat(accounts.map(format.origin));
-  if (addresses.length) {
+  if (addresses && addresses.length) {
     vm.targets.push(imported_addresses);
   }
 
   vm.isLast = (t) => t === vm.targets[vm.limit - 1];
-  vm.activeCount = accounts.length + addresses.length;
+  vm.activeCount = accounts.length + (addresses && addresses.length);
   vm.active = vm.activeCount === 1 ? all_accounts : vm.targets.filter(t => t.index.toString() === activeIndex)[0];
 
   vm.options = {
