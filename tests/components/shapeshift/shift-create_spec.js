@@ -199,9 +199,9 @@ describe('shift-create.component', () => {
     });
 
     describe('from', () => {
-      it('should getAvailableBalance when balance changes', () => {
+      it('should getAvailableBalance when coinCode changes', () => {
         spyOn(scope, 'getAvailableBalance');
-        scope.$ctrl.from.balance = 100;
+        scope.$ctrl.from.coinCode = 'bch';
         scope.$digest();
         expect(scope.getAvailableBalance).toHaveBeenCalled();
       });
