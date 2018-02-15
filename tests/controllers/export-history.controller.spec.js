@@ -53,7 +53,7 @@ describe('ExportHistoryController2', () => {
             $scope: $rootScope.$new(),
             activeIndex: activeIndex,
             accts: { accounts: Wallet.accounts().filter((w) => !w.archived), addresses: Wallet.legacyAddresses().filter((w) => !w.archived) },
-            coinCode: coinCode ? coinCode : 'btc'
+            coinCode: coinCode || 'btc'
         });
     };
 
