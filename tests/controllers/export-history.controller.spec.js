@@ -47,13 +47,13 @@ describe('ExportHistoryController2', () => {
 
     }));
 
-    let createController = (activeIndex) => {
+    let createController = (activeIndex, coinCode) => {
 
         return $controller('ExportHistoryController', {
             $scope: $rootScope.$new(),
             activeIndex: activeIndex,
             accts: { accounts: Wallet.accounts().filter((w) => !w.archived), addresses: Wallet.legacyAddresses().filter((w) => !w.archived) },
-            coinCode: 'btc'
+            coinCode: coinCode || 'btc'
         });
     };
 
@@ -73,7 +73,20 @@ describe('ExportHistoryController2', () => {
         let controller = createController('');
         expect(controller.active.address).toEqual(['xpub1']);
     });
-
+  
+    describe('startDateLimits', () => {
+    
+      it('btc min start date should be Jan 3, 2009', () => {
+        let controller = createController('', 'btc');
+        expect(controller.options.minDate.toString().startsWith('Sat Jan 03 2009')).toBeTruthy();
+      });
+  
+      it('bch min start date should be Aug 1, 2017', () => {
+        let controller = createController('', 'bch');
+        expect(controller.options.minDate.toString().startsWith('Tue Aug 01 2017')).toBeTruthy();
+      });
+    });
+    
     describe('activeIndex', () => {
 
         it('should set all when "" ', () => {
