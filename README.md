@@ -31,7 +31,7 @@ gem install sass
 
 Install dependencies:
 ```sh
-yarn install
+npm install -g bower grunt-cli && yarn && bower install
 ```
 
 Create a file called `.env` in the root of the project. Put the following in it:
