@@ -16,23 +16,27 @@
 
   .width-65.flex-justify(ng-show="state.bankAccounts")
     .width-90.width-100-tablet.width-100-mobile
-      label.f-14.colon(translate="Select Account")
-      form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
-        .radio-group.mb-10
-          .radio-label(ng-repeat="bankAccount in state.bankAccounts")
-            input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
-            label(for="{{bankAccount._id}}")
-              include ../banks
-              .flex-column
-                span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
-                span.f-14.capitalize {{ bankAccount.institution_type }} Bank
-        .group.full.mb-10
-          .item
-            label Account Holder's Name
-              helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
-            input(ng-model="fields.accountName" name="accountName" focus-when="state.bankAccounts" required)
-            span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
-        button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid || locked") Add Account
+      div(ng-hide="state.bankAccounts.length")
+        div.f-14.state-danger-text(translate="⚠️ Unfortunately we could not find any checking or savings accounts in your bank account.")
+        button.btn.button-primary.full.mt-15(ng-click="state.bankAccounts = null") Try Again
+      div(ng-show="state.bankAccounts.length")
+        label.f-14.colon(translate="Select Account")
+        form.bc-form(name="bankLinkForm" ng-submit="setBankAccount()")
+          .radio-group.mb-10
+            .radio-label(ng-repeat="bankAccount in state.bankAccounts")
+              input(type="radio" ng-model="$parent.fields.bankAccount" ng-value="bankAccount" id="{{bankAccount._id}}")
+              label(for="{{bankAccount._id}}")
+                include ../banks
+                .flex-column
+                  span.f-16 {{ bankAccount.meta.name }} ending in {{ bankAccount.meta.number }}
+                  span.f-14.capitalize {{ bankAccount.institution_type }} Bank
+          .group.full.mb-10
+            .item
+              label Account Holder's Name
+                helper-button(content="Enter the account holder's name exactly as it is appears on the bank account.")
+              input(ng-model="fields.accountName" name="accountName" focus-when="state.bankAccounts" required)
+              span.error(ng-hide="bankAccountForm.accountName.$error.value" translate="Required field")
+          button.btn.button-primary.full.mt-15(type="submit" ng-disabled="bankLinkForm.$invalid || locked") Add Account
 
   .width-65.flex-justify(ng-hide="state.bankAccounts" id="wallet")
     .width-90.width-100-tablet.width-100-mobile

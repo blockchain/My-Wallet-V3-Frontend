@@ -87,6 +87,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
     $q.resolve(exchange.bankLink.getAccounts($scope.token))
       .then((bankAccounts) => $scope.state.bankAccounts = bankAccounts)
       .then(() => $scope.fields.bankAccount = $scope.state.bankAccounts[0])
+      .then(() => $scope.disablePlaid())
       .catch(sfox.displayError);
   };
 
