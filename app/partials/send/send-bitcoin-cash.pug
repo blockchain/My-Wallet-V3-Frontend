@@ -25,9 +25,11 @@
                 required)
                 ui-select-match(placeholder="{{'SEARCH' | translate}}...")
                   label-origin(origin="$select.selected" ng-class="{'state-danger-text': $select.selected.balance === 0}" coin-code="'bch'")
-                ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
+                ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | orderBy:'-balance' | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
                   span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
-                    label-origin(origin="::origin" highlight="$select.search" coin-code="'bch'")
+                    label-origin(
+                      origin="::origin" highlight="$select.search" coin-code="'bch'" truncate-display="true"
+                      uib-tooltip="{{::origin.address}}" tooltip-append-to-body="true" tooltip-placement="top" tooltip-class="address" tooltip-popup-delay="500")
 
               //- Private Key for Watch Only
               .input-group.pbm(ng-show="transaction.from.isWatchOnly")

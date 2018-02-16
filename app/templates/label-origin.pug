@@ -1,7 +1,7 @@
 span
   span(
     ng-show="$ctrl.origin"
-    ng-bind-html="($ctrl.origin.label || $ctrl.origin.address) | escapeHtml | highlight:$ctrl.highlight"
+    ng-bind-html="($ctrl.displayValue || $ctrl.origin.label || $ctrl.origin.address) | escapeHtml | highlight:$ctrl.highlight"
     translate="no")
 span(ng-hide="$ctrl.simple && $ctrl.origin.type !== 'Accounts'")
   span(ng-hide="$ctrl.origin.balance == null") &ensp;({{ $ctrl.origin.balance | convert:$ctrl.type:true:$ctrl.coin }})&ensp;
