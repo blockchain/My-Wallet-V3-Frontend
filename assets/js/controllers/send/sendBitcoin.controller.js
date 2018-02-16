@@ -335,7 +335,7 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
 
     const handleNextStepError = error => {
       Alerts.clear($scope.alerts);
-      let errorMsg = error.error ? $translate.instant(error.error, error) : errorMsg = error;
+      let errorMsg = error.error ? $translate.instant(error.error, error) : error;
       if (modalErrors.indexOf(errorMsg) === -1) Alerts.displayError(errorMsg, false, $scope.alerts);
       if (error === 'cancelled') $scope.advancedSend();
       $scope.vm.toSendView();

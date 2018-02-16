@@ -37,7 +37,7 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats) 
       suffix = '';
     }
 
-    $scope.adUrl = $sce.trustAsResourceUrl(`https://storage.googleapis.com/bc_public_assets/video/blockchain-ad${ suffix }.mp4`);
+    $scope.adUrl = $sce.trustAsResourceUrl(`https://storage.googleapis.com/bc_public_assets/video/blockchain-ad${suffix}.mp4`);
   };
 
   $scope.firstLoad();

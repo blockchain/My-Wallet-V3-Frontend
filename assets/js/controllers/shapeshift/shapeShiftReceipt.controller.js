@@ -12,7 +12,6 @@ function ShapeShiftReceiptController ($scope, Alerts, Env, localStorageService) 
     let survey = 'shift-trade-survey';
     let surveyCache = localStorageService.get(survey);
     let shouldClose = surveyCache && surveyCache.index === links.length - 1;
-    if (shouldClose) { $scope.vm.tabs.select('ORDER_HISTORY'); $scope.vm.goTo('create'); }
-    else Alerts.surveyCloseConfirm(survey, links, 1).then(() => { $scope.vm.tabs.select('ORDER_HISTORY'); $scope.vm.goTo('create'); });
+    if (shouldClose) { $scope.vm.tabs.select('ORDER_HISTORY'); $scope.vm.goTo('create'); } else Alerts.surveyCloseConfirm(survey, links, 1).then(() => { $scope.vm.tabs.select('ORDER_HISTORY'); $scope.vm.goTo('create'); });
   };
 }

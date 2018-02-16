@@ -16,8 +16,6 @@ angular
   });
 
 function CoinifySellSummaryController ($scope, $q, Wallet, currency, Alerts, $timeout, Exchange, coinify) {
-  this.sellRateForm;
-
   this.baseFiat = () => !currency.isBitCurrency({code: this.quote.baseCurrency});
   this.fiatCurrency = () => this.baseFiat() ? this.quote.baseCurrency : this.quote.quoteCurrency;
   this.BTCAmount = () => !this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);

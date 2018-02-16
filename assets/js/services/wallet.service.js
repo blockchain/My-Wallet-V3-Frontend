@@ -726,7 +726,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     if (destinations.length === 0) return;
     function extractFromUri (URI) {
       let result = {};
-      const addressRegex = /(?=\:)(.*)(?=\?)/;
+      const addressRegex = /(?=:)(.*)(?=\?)/;
       const amountRegex = /amount=[0-9.]*/;
       const noteRegex = /message=.*/;
       const addressSlice = 1;
@@ -805,7 +805,6 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         } else {
           return wallet.my.wallet.balanceActiveLegacy;
         }
-        break;
       case 'imported':
         return wallet.my.wallet.balanceActiveLegacy;
       default:
