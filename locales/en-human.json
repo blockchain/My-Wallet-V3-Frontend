@@ -1944,6 +1944,12 @@
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-5 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
+      "failed": {
+        "DISPLAY": "Failed Buy",
+        "HEADER": "Buy Order Failed",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "Your buy trade has been rejected. <b>Your order ID is: SFX-{{::tradeId}}</b>"
+      },
       "rejected": {
         "DISPLAY": "Rejected Buy",
         "HEADER": "Buy Order Rejected",
