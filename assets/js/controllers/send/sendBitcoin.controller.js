@@ -108,10 +108,6 @@ function SendBitcoinController ($scope, AngularHelper, $log, Wallet, Alerts, cur
 
   $scope.hasZeroBalance = (origin) => origin.balance === 0;
   
-  $scope.orderGroups = (a,b) => {
-   // debugger;
-  }
-
   $scope.applyPaymentRequest = (paymentRequest, i) => {
     let destination = {
       address: paymentRequest.address || '',
