@@ -62,6 +62,13 @@ Grunt watches and compiles the pug view templates and CSS. Keep it running:
 grunt
 ```
 
+## Lint
+
+To run the file linter:
+```sh
+yarn lint
+```
+
 ## Test
 
 To run test and monitor for changes:

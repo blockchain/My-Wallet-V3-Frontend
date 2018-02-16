@@ -5,20 +5,9 @@ cache:
 - node_modules
 - bower_components
 before_install:
-- npm install -g grunt-cli snazzy
+- npm install -g grunt-cli
 before_script:
-- node_modules/.bin/semistandard --verbose | snazzy
-- ./node_modules/.bin/eslint assets/js/*.module.js
-- ./node_modules/.bin/eslint assets/js/components/*.js
-- ./node_modules/.bin/eslint assets/js/constants/*.js
-# - ./node_modules/.bin/eslint assets/js/controllers/*.js
-- # ./node_modules/.bin/eslint assets/js/core/*.js
-- # ./node_modules/.bin/eslint assets/js/directives/*.js
-- ./node_modules/.bin/eslint assets/js/filters/*.js
-- ./node_modules/.bin/eslint assets/js/services/*.js
-- ./node_modules/.bin/eslint assets/js/sharedDirectives/*.js
-- ./node_modules/.bin/eslint assets/js/sharedServices/*.js
-- # ./node_modules/.bin/eslint assets/js/**/*
+- npm run lint
 script:
 - make build
 - make test

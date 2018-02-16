@@ -1,0 +1,19 @@
+{
+  "globals": {
+    "$": false,
+    "angular": false,
+    "browserDetection": false
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "standard",
+  "rules": {
+    "indent": 0,
+    "semi": 0
+  }
+}
