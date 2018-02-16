@@ -32,7 +32,8 @@
                   span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
                     label-origin(
                       origin="::origin" highlight="$select.search" truncate-display="true"
-                      uib-tooltip="{{::origin.address}}" tooltip-append-to-body="true" tooltip-placement="top" tooltip-class="address" tooltip-popup-delay="500")
+                      uib-tooltip="{{::origin.address}}" tooltip-append-to-body="true" tooltip-placement="top"
+                      tooltip-class="address" tooltip-popup-delay="500")
 
               //- Private Key for Watch Only
               .input-group.pbm(ng-show="transaction.from.isWatchOnly")
