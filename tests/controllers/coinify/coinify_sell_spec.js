@@ -147,7 +147,8 @@ describe('CoinifySellController', () => {
     it('should return expiration time of quote', function () {
       let ctrl = getController(quote, trade);
       ctrl.timeToExpiration();
-      return expect(ctrl.timeToExpiration()).toEqual(Math.floor(100000000 - ctrl.now()));
+      // timeToExpiration must be within 3 milliseconds of current time
+      return expect(ctrl.timeToExpiration() - (Math.floor(100000000 - ctrl.now())) <= 3).toBeTruthy();
     });
   });
 
