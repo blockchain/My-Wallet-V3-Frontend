@@ -1372,7 +1372,7 @@
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
-  "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet! 💸💸💸",
+  "BUY_BITCOIN_EXPLAIN": "This just in: buy bitcoin has arrived! Begin buying ",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
   "SELL_BTC_UNAVAIL_STATE": "Unfortunately trading bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
@@ -1548,7 +1548,7 @@
       "PIN_CODE": "Pin Code",
       "BANK_ACCOUNT_NUMBER": "Bank Account Number",
       "IFSC": "IFSC",
-      "SETUP_PROFILE": "Setup your profile"
+      "SETUP_PROFILE": "Set up your profile"
     },
     "ACTIONS": {
       "FINISH": "Finish Trade",
@@ -1791,12 +1791,12 @@
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
     "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make buying & selling bitcoin in your wallet secure and seamless.",
-    "NOW_SUPPORTING": "The Wait is Over!",
-    "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
-    "GET_STARTED": "Start Trading",
+    "NOW_SUPPORTING": "This Just In!",
+    "ANNOUNCEMENT": "Buy has arrived. You can now swiftly buy bitcoin directly from within your Blockchain wallet!",
+    "GET_STARTED": "Begin Buying",
     "BUY_BITCOIN": "Buy Bitcoin!",
     "SELL_BITCOIN": "Sell Bitcoin",
-    "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet! 💸💸💸",
+    "BUY_BITCOIN_EXPLAIN": "Buy bitcoin has arrived! Begin buying",
     "VERIFY": {
       "PO_WARNING": "⛔️ P.O. boxes are not sufficient for verifying your address information."
     },
@@ -1925,8 +1925,8 @@
       "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
-      "INTRODUCING_HEADER": "Introducing Sell",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon.",
+      "INTRODUCING_HEADER": "Sell Bitcoin",
+      "INTRODUCING_BODY": "Selling bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can sell bitcoin directly from your Blockchain wallet.<br><br>Tips for getting started:<br>The minimum amount you can sell is $10. Your daily maximum can be found under the local currency field.<br><br>Currently, your Blockchain wallet supports linking only one bank account. If you would like to change your synced account, please email <a href=\"mailto:support@sfox.com\">support@sfox.com</a>. Please note: selling with a credit card is not supported at this time.",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
@@ -1964,8 +1964,8 @@
       "TX_FEE": "@:SFOX.sell.TX_FEE",
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
-      "INTRODUCING_HEADER": "Introducing Buy!",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can now buy bitcoin 🎉<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
+      "INTRODUCING_HEADER": "Buy Bitcoin",
+      "INTRODUCING_BODY": "Buying bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can buy bitcoin directly from your Blockchain wallet.<br><br>Tips for getting started:<br>The minimum amount you can buy is $10. Your daily maximum can be found under the local currency field.<br><br>Currently, your Blockchain wallet supports linking only one bank account. If you would like to change your synced account, please email <a href=\"mailto:support@sfox.com\">support@sfox.com</a>. Please note: credit card purchases are not supported at this time."
     },
     "create": "Create Account",
     "verify": "Verify Identity",
