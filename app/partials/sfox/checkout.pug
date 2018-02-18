@@ -56,7 +56,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
       .flex-between
         span.f-24.blue.f-14-mobile(translate="SFOX.sell.INTRODUCING_HEADER")
         .flex-center.pl-10
-          i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
+          i.pointer.ti-close.f-12.mid-grey(ng-click="checkout.dismissSellIntro()")
       p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
   .flex-row.pbvl(ng-if="checkout.onStep('confirm')")
     exchange-confirm.width-50.border-desktop(
