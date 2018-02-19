@@ -23,6 +23,7 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
           $scope.keystore = JSON.parse(input);
           $scope.fileError = null;
         } catch (e) {
+          $scope.keystore = null;
           $scope.fileError = e;
         }
       }
