@@ -2,10 +2,11 @@
   .width-35(ng-hide="state.bankAccounts")
     .width-80
       h4.f-20.em-500.mvn.mb-10(translate=".HEADER")
-      .mbl
+      .mbl(ng-hide="inMobileBuy")
         span.f-16(translate=".COPY")
       .mbl
-        span.f-16(translate=".COPY_2")
+        span.f-16(ng-hide="inMobileBuy" translate=".COPY_2")
+        span.f-16(ng-show="inMobileBuy" translate=".COPY_2_MOBILE_BUY")
       .mbl
         span.f-14(translate=".COPY_SMALL")
   .width-35(ng-show="state.bankAccounts")
@@ -36,7 +37,7 @@
 
   .width-65.flex-justify(ng-hide="state.bankAccounts" id="wallet")
     .width-90.width-100-tablet.width-100-mobile
-      .flex-column
+      .flex-column(ng-hide="inMobileBuy")
         span.em-500.f-14.pb-10(translate="Select Method to Link Your Bank Account:")
         .border-desktop.pv-35.ph-50.pv-10-mobile.ph-10-mobile
           iframe(

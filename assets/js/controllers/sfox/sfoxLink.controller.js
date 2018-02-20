@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Env, $window) {
+function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Env, $window, $rootScope) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
   if (sfox.activeAccount) $scope.vm.close(true);
@@ -14,6 +14,7 @@ function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, mo
   $scope.namespace = 'SFOX';
   $scope.types = ['checking', 'savings'];
   $scope.openHelper = modals.openHelper;
+  $scope.inMobileBuy = $rootScope.inMobileBuy;
 
   let state = $scope.state = {
     plaid: {},
