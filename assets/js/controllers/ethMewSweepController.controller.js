@@ -28,7 +28,6 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
         }
       }
     };
-
     newVal && reader.readAsText(newVal);
   });
 
@@ -58,6 +57,14 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
 
   $scope.submit = () => {
     $scope.lock();
+    if ($scope.fileError) {
+      Alerts.displayError('There was a problem with your file.');
+      return false;
+    }
+    if (!$scope.keystore) {
+      Alerts.displayError('File required.');
+      return false;
+    }
     try {
       Ethereum.eth.fromMew($scope.keystore, $scope.password, submitTx);
     } catch (err) {
