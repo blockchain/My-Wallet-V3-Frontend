@@ -29,9 +29,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   );
 
   setTxSub();
-  $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
-  $rootScope.$watch(() => Ethereum.txs, activity.updateEthTxActivities, true);
-  $rootScope.$watch(() => BitcoinCash.txs, activity.updateBchTxActivities, true);
+
   return activity;
 
   // Wait for wallet to be defined before subscribing to tx updates
@@ -41,6 +39,9 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
       return;
     } else if (w) {
       txSub = w.txList.subscribe(updateBtcTxActivities);
+      $rootScope.$watch(() => Ethereum.txs, activity.updateEthTxActivities, true);
+      $rootScope.$watch(() => BitcoinCash.txs, activity.updateBchTxActivities, true);
+      $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
     } else {
       $timeout(setTxSub, 250);
     }
