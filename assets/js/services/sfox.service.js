@@ -138,7 +138,6 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
   }
 
   function determineStep (exchange) {
-    // HERHERHEHRE
     let profile = exchange.profile;
     if (!profile) {
       return 'create';

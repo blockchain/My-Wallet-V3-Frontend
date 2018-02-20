@@ -503,7 +503,6 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
         _loadExchangeData ($q, MyWallet, Exchange) {
-          // HERE: do this on the homescreen
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
             ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
