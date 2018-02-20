@@ -88,16 +88,17 @@
     "webpack-dev-server": "^2.4.5"
   },
   "scripts": {
+    "build": "node_modules/grunt-cli/bin/grunt build",
+    "build-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack --config partsApp/webpack.config.dev.js",
+    "heroku-postbuild": "make build ; webpack --config partsApp/webpack.config.dev.js",
+    "heroku-start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --progress --colors --port $PORT --host 0.0.0.0",
     "lint": "node_modules/eslint/bin/eslint.js './assets/js/**/*.js'",
     "start": "node server.js",
     "start:dev": "node_modules/nodemon/bin/nodemon.js server.js",
+    "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
     "test": "node_modules/karma/bin/karma start karma.conf.js",
     "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
-    "build": "node_modules/grunt-cli/bin/grunt build",
-    "build-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack --config partsApp/webpack.config.dev.js",
-    "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
-    "heroku-postbuild": "make build ; webpack --config partsApp/webpack.config.dev.js",
-    "heroku-start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --progress --colors --port $PORT --host 0.0.0.0"
+    "vet": "npm run lint && npm run test-single-run"
   },
   "engines": {
     "node": ">= 7.5"

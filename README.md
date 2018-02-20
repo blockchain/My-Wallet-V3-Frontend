@@ -76,6 +76,13 @@ To run test and monitor for changes:
 yarn test
 ```
 
+## Vet
+
+To ensure builds will succeed (linting and unit tests passing):
+```sh
+yarn vet
+```
+
 A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.
 
 ## Run
