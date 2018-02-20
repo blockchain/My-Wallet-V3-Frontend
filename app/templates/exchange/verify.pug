@@ -86,15 +86,15 @@
               label(translate="EXCHANGE.VERIFY.STATE")
               input(ng-model="$ctrl.profile.state" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="state" required)
               span.error(translate="Required field")
-          .col-md-4.col-xs-6(ng-if="$ctrl.showField('state-US')")
-            .mb-20.pos-rel
-              label State
-              select(ng-model="$ctrl.profile.state" name="state" ng-options="s as s['Name'] for s in $ctrl.states" tabindex="" required)
-              span.error(translate="Required field")
           .col-md-4.col-xs-6
             .mb-20.pos-rel
               label(translate="EXCHANGE.VERIFY.CITY")
               input(ng-model="$ctrl.profile.city" ng-change="$ctrl.clearInlineErrors('addressForm', 'state'); $ctrl.clearInlineErrors('addressForm', 'city')" name="city" required)
+              span.error(translate="Required field")
+          .col-md-4.col-xs-6(ng-if="$ctrl.showField('state-US')")
+            .mb-20.pos-rel
+              label State
+              select(ng-model="$ctrl.profile.state" name="state" ng-options="s as s['Name'] for s in $ctrl.states" tabindex="" required)
               span.error(translate="Required field")
           .col-md-4(ng-if="$ctrl.showField('pincode')")
             .mb-20.pos-rel
