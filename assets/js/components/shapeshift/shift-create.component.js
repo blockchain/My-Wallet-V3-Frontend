@@ -18,7 +18,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ShiftCreateController(Env, AngularHelper, $translate, $scope, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, tradeStatus, MyWallet) {
+function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, currency, Wallet, MyWalletHelpers, $uibModal, Exchange, Ethereum, ShapeShift, tradeStatus, MyWallet) {
   let UPPER_LIMIT;
   let nAssets = Object.keys(currency.cryptoCurrencyMap).length;
   Env.then(env => {
@@ -158,7 +158,7 @@ function ShiftCreateController(Env, AngularHelper, $translate, $scope, $q, curre
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
   $scope.$watchGroup(['$ctrl.from.coinCode', '$ctrl.to.coinCode'], (n, o) => {
     $scope.blockFromEthShift = n[0] === 'eth' && Ethereum.isWaitingOnTransaction();
-    if (n !== o) { getRate().then($scope.getAvailableBalance); console.info(this.from.coinCode) }
+    if (n !== o) { getRate().then($scope.getAvailableBalance); }
   });
 
   // Stat: how often do users see the "max limit" error?
