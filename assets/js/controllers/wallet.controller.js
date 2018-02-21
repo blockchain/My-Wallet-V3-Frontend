@@ -14,6 +14,7 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $rootScope.isMock = Wallet.isMock;
+  $scope.hasRan = false;
   $rootScope.needsRefresh = false;
 
   $scope.menu = {
@@ -211,7 +212,9 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
         Alerts.clear();
         Wallet.goal.auth = void 0;
       }
-      if (Wallet.goal.firstTime && Wallet.status.didUpgradeToHd) {
+
+      if (Wallet.status.didUpgradeToHd && !$scope.hasRan) {
+        $scope.hasRan = true;
         tradeStatus.canTrade().then((canTrade) => {
           let template = canTrade && !$scope.buySellDisabled ? 'partials/buy-login-modal.pug' : 'partials/first-login-modal.pug';
           $uibModal.open({
