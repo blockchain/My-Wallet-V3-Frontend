@@ -2,7 +2,8 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state) {
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, exchange, accounts, sfox) {
+
   $scope.btc = {
     total: () => Wallet.total('') || 0,
     accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
@@ -54,6 +55,7 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
   };
 
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
+  $scope.openRequest = modals.openRequest;
 
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;
@@ -61,5 +63,19 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
     tradeStatus.canTrade().then(canTrade => { $scope.canBuy = canTrade && !sfox; });
   });
 
-  $scope.openRequest = modals.openRequest;
+  ////////////////////////////
+
+  let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+
+  $scope.provider = 'SFOX';
+  $scope.exchange = exchange;
+  $scope.accounts = accounts;
+  $scope.steps = enumify('create', 'verify', 'upload', 'link');
+  $scope.displaySteps = ['create', 'verify', 'upload', 'link'];
+  $scope.onOrAfterStep = (s) => $scope.afterStep(s) || $scope.onStep(s);
+  $scope.afterStep = (s) => $scope.step > $scope.steps[s];
+  $scope.onStep = (s) => $scope.steps[s] === $scope.step;
+  $scope.goTo = (s) => { $scope.step = $scope.steps[s]; };
+  $scope.checkStep = () => { $scope.goTo(sfox.determineStep(exchange, accounts)); };
+  $scope.goTo(sfox.determineStep(exchange, accounts));
 }

@@ -78,3 +78,34 @@
     white-space: nowrap;
   }
 }
+
+#sfox-signup {
+  background-color: #E4EFF5;
+}
+
+.step-arrow {
+  border-top: 1px solid  #727272;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    right: -2px;
+    background: #727272;
+    height: 1px;
+    width: 12px;
+    top: -5px;
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    background:  #727272;
+    height: 1px;
+    width: 12px;
+    top: 3px;
+    transform: rotate(-45deg);
+  }
+}
