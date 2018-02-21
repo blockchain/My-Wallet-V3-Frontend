@@ -1557,6 +1557,8 @@
   },
   "COINIFY": {
     "EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
+    "INTRODUCING_HEADER_UNREGISTERED": "Buy & Sell Bitcoin",
+    "INTRODUCING_BODY_UNREGISTERED": "Buying & selling bitcoin is simple, seamless, and secure. Thanks to our partnership with Coinify, you can buy and sell bitcoin directly from your Blockchain wallet.",
     "user_needs_account": {
       "EXPLAIN": ""
     },
@@ -1668,6 +1670,8 @@
     "tx_fee_required": "Transaction fees cover the mining network cost to ensure transaction confirmation. Blockchain recommends a fee based on current network conditions."
   },
   "UNOCOIN": {
+    "INTRODUCING_HEADER_UNREGISTERED": "Buy Bitcoin",
+    "INTRODUCING_BODY_UNREGISTERED": "Buying bitcoin is simple, seamless, and secure. Thanks to our partnership with Unocoin, you can buy bitcoin directly from your Blockchain wallet.",
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
     "VERIFY": {
       "PO_WARNING": ""
@@ -1797,6 +1801,8 @@
     "BUY_BITCOIN": "Buy Bitcoin!",
     "SELL_BITCOIN": "Sell Bitcoin",
     "BUY_BITCOIN_EXPLAIN": "Buy bitcoin has arrived! Begin buying",
+    "INTRODUCING_HEADER_UNREGISTERED": "Buy & Sell Bitcoin",
+    "INTRODUCING_BODY_UNREGISTERED": "Buying & selling bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can buy and sell bitcoin directly from your Blockchain wallet.",
     "VERIFY": {
       "PO_WARNING": "⛔️ P.O. boxes are not sufficient for verifying your address information."
     },
@@ -1932,7 +1938,6 @@
       "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
     },
     "buy": {
-      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "confirm": {
         "HEADER": "Confirm Buy Order",
         "BODY": "@:SFOX.sell.confirm.BODY",
