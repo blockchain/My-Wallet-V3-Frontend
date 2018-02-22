@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, exchange, accounts, sfox) {
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, sfox) {
 
   $scope.btc = {
     total: () => Wallet.total('') || 0,
@@ -57,25 +57,30 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
   $scope.openRequest = modals.openRequest;
 
-  Env.then((env) => {
-    let accountInfo = MyWallet.wallet.accountInfo;
-    let sfox = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
-    tradeStatus.canTrade().then(canTrade => { $scope.canBuy = canTrade && !sfox; });
-  });
-
-  ////////////////////////////
-
+  // SFOX signup steps functionality
   let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-  $scope.provider = 'SFOX';
-  $scope.exchange = exchange;
-  $scope.accounts = accounts;
   $scope.steps = enumify('create', 'verify', 'upload', 'link');
   $scope.displaySteps = ['create', 'verify', 'upload', 'link'];
   $scope.onOrAfterStep = (s) => $scope.afterStep(s) || $scope.onStep(s);
   $scope.afterStep = (s) => $scope.step > $scope.steps[s];
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
   $scope.goTo = (s) => { $scope.step = $scope.steps[s]; };
-  $scope.checkStep = () => { $scope.goTo(sfox.determineStep(exchange, accounts)); };
-  $scope.goTo(sfox.determineStep(exchange, accounts));
+
+  Env.then((env) => {
+    let accountInfo = MyWallet.wallet.accountInfo;
+    let sfoxAvailableToUser = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
+
+    tradeStatus.canTrade().then(canTrade => {
+      $scope.canBuy = canTrade && !sfoxAvailableToUser;
+
+      let sfoxRegCompleted = sfox.profile && sfox.verified;
+
+      if (!sfoxRegCompleted && canTrade && sfoxAvailableToUser) {
+          $scope.showSfoxRegistration = true;
+          // determine setup step
+          $scope.goTo(sfox.determineStep(MyWallet.wallet.external.sfox));
+      }
+    });
+  });
 }
