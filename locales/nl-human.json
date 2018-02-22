@@ -1242,7 +1242,7 @@
   "GET_BITCOIN": "Krijg bitcoin",
   "POWERED_BY": "Mogelijk gemaakt door",
   "EDIT_ORDER": "Bewerk order",
-  "TOTAL_COST:": "Totale kost:",
+  "TOTAL_COST": "Totale kost:",
   "ENTER_AMOUNT:": "Voer bedrag in:",
   "BUY_BITCOIN_ALERT": "U kunt nu bitcoins kopen met uw Bockchain-portemonnee! Klik hieronder om te beginnen.",
   "TX_RBF": "Deze transactie werd gemarkeerd als 'replace-by-fee' (vervang door tarief) (RBF).",
