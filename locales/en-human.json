@@ -2006,6 +2006,7 @@
     "WITHDRAWAL_FEE": "Network Transaction Fee",
     "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the incoming exchange funds to your wallet.",
     "TRANSACTION_FEE": "Transaction Fee",
+    "PENDING_ETH_TRANSACTION": "Please wait until your previous ether transaction is confirmed.",
     "RATE_EXPLAIN": "This rate may change depending on the market price at the time of your transaction.",
     "ORDER_ID": "Order ID",
     "EXPLAIN_QUOTE": "This quote may change depending on the market price at the time of your transaction.",

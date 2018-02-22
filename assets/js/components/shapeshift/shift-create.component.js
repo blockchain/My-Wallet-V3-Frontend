@@ -107,11 +107,11 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
     let upperLimit = input.to(UPPER_LIMIT, $scope.fiat);
 
     return $q.resolve(this.handleRate({rate: this.from.coinCode + '_' + this.to.coinCode}))
-              .then((rate) => {
-                let maxLimit = input.to(rate.maxLimit, input.currency);
-                state.rate.min = input.to(rate.minimum, input.currency);
-                state.rate.max = maxLimit < upperLimit ? maxLimit : upperLimit;
-              });
+      .then((rate) => {
+        let maxLimit = input.to(rate.maxLimit, input.currency);
+        state.rate.min = input.to(rate.minimum, input.currency);
+        state.rate.max = maxLimit < upperLimit ? maxLimit : upperLimit;
+      });
   };
 
   $scope.getAvailableBalance = () => {
@@ -156,7 +156,10 @@ function ShiftCreateController (Env, AngularHelper, $translate, $scope, $q, curr
   $scope.$watch('$ctrl.to.coinCode', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.input.amount', () => state.baseInput && $scope.refreshIfValid('input'));
   $scope.$watch('state.output.amount', () => !state.baseInput && $scope.refreshIfValid('output'));
-  $scope.$watchGroup(['$ctrl.from.coinCode', '$ctrl.to.coinCode'], (n, o) => { if (n !== o) { getRate().then($scope.getAvailableBalance); } });
+  $scope.$watchGroup(['$ctrl.from.coinCode', '$ctrl.to.coinCode'], (n, o) => {
+    $scope.blockFromEthShift = n[0] === 'eth' && Ethereum.isWaitingOnTransaction();
+    if (n !== o) { getRate().then($scope.getAvailableBalance); }
+  });
 
   // Stat: how often do users see the "max limit" error?
   let sawMaxLimit = false;
