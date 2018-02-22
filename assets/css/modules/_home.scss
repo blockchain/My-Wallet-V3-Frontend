@@ -82,3 +82,21 @@
 #sfox-signup {
   background-color: #E4EFF5;
 }
+
+.fade-in {
+  -webkit-animation: fadeIn 1.25s ease-in 1 forwards;
+  animation: fadeIn 1.25s ease-in 1 forwards;
+  opacity: 0;
+
+  @-webkit-keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+}

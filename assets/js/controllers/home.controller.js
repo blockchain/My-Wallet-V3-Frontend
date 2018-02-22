@@ -56,16 +56,7 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
 
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
   $scope.openRequest = modals.openRequest;
-
-  // SFOX signup steps functionality
-  let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
-
-  $scope.steps = enumify('create', 'verify', 'upload', 'link');
-  $scope.displaySteps = ['create', 'verify', 'upload', 'link'];
-  $scope.onOrAfterStep = (s) => $scope.afterStep(s) || $scope.onStep(s);
-  $scope.afterStep = (s) => $scope.step > $scope.steps[s];
-  $scope.onStep = (s) => $scope.steps[s] === $scope.step;
-  $scope.goTo = (s) => { $scope.step = $scope.steps[s]; };
+  $scope.exchange = MyWallet.wallet.external.sfox;
 
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;
@@ -77,9 +68,7 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
       let sfoxRegCompleted = sfox.profile && sfox.verified;
 
       if (!sfoxRegCompleted && canTrade && sfoxAvailableToUser) {
-          $scope.showSfoxRegistration = true;
-          // determine setup step
-          $scope.goTo(sfox.determineStep(MyWallet.wallet.external.sfox));
+        $scope.showSfoxRegistration = true;
       }
     });
   });
