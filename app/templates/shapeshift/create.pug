@@ -34,7 +34,7 @@ form.bc-form.shift-create(
               ui-select-choices(repeat="destination in $ctrl.destinations" group-by="$ctrl.isGrouped && $ctrl.coinGroup" ng-class="{'is-grouped': $ctrl.isGrouped}")
                 i.pr-5(ng-class="cryptoCurrencyMap[destination.coinCode].icon")
                 span(ng-bind-html="destination.label | highlight: $select.search") {{ destination.altLabel || destination.label }}
-      fieldset(ng-disabled="maxAvailable < state.rate.min")
+      fieldset(ng-disabled="maxAvailable < state.rate.min || blockFromEthShift")
         .group
           .item
             .flex-between.flex-baseline.mbs
@@ -101,7 +101,7 @@ form.bc-form.shift-create(
                     step="0.01"
                     required)
             .pos-rel.f-12.mts
-              span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min && state.rate.min > 0")
+              span.pos-abs.flex-row(ng-show="maxAvailable >= state.rate.min && state.rate.min > 0 && !blockFromEthShift")
                 span.state-danger-text.prs(ng-show="forms.shiftForm.input.$error.min" translate="Below the minimum limit.")
                 div(ng-hide="forms.shiftForm.input.$error.max")
                   span Use
@@ -115,7 +115,9 @@ form.bc-form.shift-create(
                   | &nbsp;
                   a.underline(ng-click="state.baseCurr = $ctrl.from.coinCode; setMax();") maximum
             .pos-rel.f-12.state-danger-text
-              span.pos-abs(ng-show="maxAvailable < state.rate.min && state.rate.min > 0")
+              span.pos-abs(ng-show="blockFromEthShift")
+                span(translate=".PENDING_ETH_TRANSACTION")
+              span.pos-abs(ng-show="maxAvailable < state.rate.min && state.rate.min > 0 && !blockFromEthShift")
                 span(translate=".MIN_NEEDED_TO_SHIFT" translate-values="{min: cryptoCurrencyMap[$ctrl.from.coinCode].from(state.rate.min, cryptoCurrencyMap[$ctrl.from.coinCode].currency), curr: $ctrl.from.coinCode.toUpperCase()}")
                 | &nbsp;
                 a(translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell" ng-show="canTrade && $ctrl.from.coinCode === 'btc'")
