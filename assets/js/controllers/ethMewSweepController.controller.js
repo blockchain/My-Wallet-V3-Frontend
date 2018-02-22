@@ -66,7 +66,8 @@ function EthMewSweepController ($q, $scope, Alerts, Ethereum, AngularHelper, Upl
       return false;
     }
     try {
-      Ethereum.eth.fromMew($scope.keystore, $scope.password, submitTx);
+      let account = Ethereum.eth.fromMew($scope.keystore, $scope.password);
+      submitTx(account);
     } catch (err) {
       $scope.free();
       Alerts.displayError(err.message);
