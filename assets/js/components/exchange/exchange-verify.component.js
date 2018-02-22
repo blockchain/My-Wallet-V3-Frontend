@@ -91,8 +91,7 @@ function ExchangeVerifyController (Env, $scope, bcPhoneNumber, QA, unocoin, stat
   this.setProfile = () => {
     $scope.lock();
     this.onSetProfile();
-    if (this.step < Object.keys(this.steps).length - 1) { this.step++; $scope.free(); }
-    else $q.resolve(this.onVerify()).then($scope.free);
+    if (this.step < Object.keys(this.steps).length - 1) { this.step++; $scope.free(); } else $q.resolve(this.onVerify()).then($scope.free);
   };
 
   this.setBankInfo = () => {

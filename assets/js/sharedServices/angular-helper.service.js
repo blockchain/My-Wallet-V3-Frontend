@@ -24,7 +24,6 @@ function AngularHelper ($rootScope, $window) {
   };
 
   function $safeApply (scope = $rootScope, before) {
-    before = before;
     if (!scope.$$phase && !$rootScope.$$phase) scope.$apply(before);
   }
 

@@ -51,7 +51,6 @@ function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $tr
           case 'SK':
           case 'SI':
           case 'ES':
-          // Euro de-facto currency:
           case 'MC': // Monaco
           case 'SM': // San Marino
           case 'VA': // Vatican City
@@ -61,7 +60,6 @@ function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $tr
           case 'BL': // Saint Barthélemy
           case 'XK': // Kosovo
           case 'ME': // Montenegro
-          // EUR is probably best alternative we support:
           case 'NO': // Norway
           case 'AL': // Albania
           case 'BA': // Bosnia and Herzegovina
