@@ -38,7 +38,7 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   function setTxSub () {
     let w = MyWallet.wallet;
     if (txSub) {
-      return;
+
     } else if (w) {
       txSub = w.txList.subscribe(updateBtcTxActivities);
     } else {

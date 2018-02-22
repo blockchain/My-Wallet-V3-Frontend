@@ -17,9 +17,9 @@ function publicHeader ($rootScope, $location, $window, AngularHelper, Env, langu
               <img src="img/white-blockchain.svg" alt="Blockchain" />
             </a>
             <button class="menu-button" ng-click="expandHeader()" ng-class="{'is-active': state.open}">
-    					<span></span>
-    				</button>
-    				<button class="search-button" type="button" ng-click="handleSearch()"></button>
+                <span></span>
+            </button>
+            <button class="search-button" type="button" ng-click="handleSearch()"></button>
           </li>
           <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
             <a href="{{rootURL}}wallet" id="wallet-link">Wallet</a>

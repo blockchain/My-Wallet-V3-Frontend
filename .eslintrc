@@ -1,0 +1,26 @@
+{
+  "globals": {
+    "$": false,
+    "angular": false,
+    "Blockchain": false,
+    "browserDetection": false,
+    "compareVersions": false,
+    "Highcharts": false
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": "standard",
+  "rules": {
+    "camelcase": 0,
+    "indent": 0,
+    "no-mixed-operators": 0,
+    "no-return-assign": 0,
+    "no-unused-expressions": 0,
+    "semi": 0
+  }
+}

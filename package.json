@@ -23,9 +23,12 @@
     "compression": "^1.6.2",
     "css-loader": "~0.26.1",
     "ejs": "^2.5.7",
-    "eslint": "^3.19.0",
-    "eslint-loader": "^1.7.1",
-    "eslint-plugin-angular": "^2.3.0",
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "~0.9.0",
@@ -77,7 +80,6 @@
     "pug-html-loader": "^1.1.4",
     "pug-lint": "^2.4.0",
     "sass-loader": "~4.1.1",
-    "semistandard": "7.0.*",
     "shelljs": "^0.3.0",
     "style-loader": "~0.13.1",
     "url-loader": "~0.5.7",
@@ -86,15 +88,17 @@
     "webpack-dev-server": "^2.4.5"
   },
   "scripts": {
-    "start": "node server.js",
-    "start:dev": "node_modules/nodemon/bin/nodemon.js server.js",
-    "test": "node_modules/karma/bin/karma start karma.conf.js",
-    "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
     "build": "node_modules/grunt-cli/bin/grunt build",
     "build-parts": "node_modules/grunt-cli/bin/grunt copy ; node_modules/grunt-cli/bin/grunt concat_css ; node_modules/grunt-cli/bin/grunt html2js ; webpack --config partsApp/webpack.config.dev.js",
-    "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
     "heroku-postbuild": "make build ; webpack --config partsApp/webpack.config.dev.js",
-    "heroku-start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --progress --colors --port $PORT --host 0.0.0.0"
+    "heroku-start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --progress --colors --port $PORT --host 0.0.0.0",
+    "lint": "node_modules/eslint/bin/eslint.js './assets/js/**/*.js'",
+    "start": "node server.js",
+    "start:dev": "node_modules/nodemon/bin/nodemon.js server.js",
+    "start-parts": "webpack-dev-server --config partsApp/webpack.config.dev.js --devtool eval  --progress --colors",
+    "test": "node_modules/karma/bin/karma start karma.conf.js",
+    "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
+    "vet": "npm run lint && npm run test-single-run"
   },
   "engines": {
     "node": ">= 7.5"
