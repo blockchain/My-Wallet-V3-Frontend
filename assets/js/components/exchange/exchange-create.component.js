@@ -16,8 +16,9 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localStorageService, Exchange, bcPhoneNumber, AngularHelper) {
+function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, $cookies, localStorageService, Exchange, bcPhoneNumber, AngularHelper) {
   let needsEmailReminder = this.needsEmailReminder;
+  const cookieIds = { SENT_EMAIL: 'sentEmailCode', SENT_MOBILE: 'sentMobileCode' };
 
   this.user = Wallet.user;
   this.name = this.exchange.constructor.name;
@@ -38,6 +39,8 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
 
   this.state = {
     terms: false,
+    sentEmailCode: $cookies.get(cookieIds.SENT_EMAIL),
+    sentMobileCode: $cookies.get(cookieIds.SENT_MOBILE),
     needsEmailReminder: needsEmailReminder,
     get verified () { return this.verifiedEmail && this.verifiedMobile; }
   };
@@ -119,15 +122,25 @@ function ExchangeCreateController ($scope, $q, Wallet, modals, $uibModal, localS
   $scope.$watch('$ctrl.state.view', (view) => {
     let shouldSendEmail =
       !this.state.verifiedEmail &&
+      !$cookies.get('sentEmailCode') &&
       this.state.email &&
       this.state.email.indexOf('@') > -1;
 
     let shouldSendMobile =
       !this.state.verifiedMobile &&
+      !$cookies.get('sentMobileCode') &&
       bcPhoneNumber.isValid(this.state.mobile);
 
     if (view === 'email' && shouldSendEmail) this.sendEmailCode();
     if (view === 'mobile' && shouldSendMobile) this.sendMobileCode();
+  });
+
+  $scope.$watch('$ctrl.state.sentEmailCode', $cookies.put.bind(null, cookieIds.SENT_EMAIL));
+  $scope.$watch('$ctrl.state.sentMobileCode', $cookies.put.bind(null, cookieIds.SENT_MOBILE));
+
+  $scope.$on('$destroy', () => {
+    $cookies.remove(cookieIds.SENT_EMAIL);
+    $cookies.remove(cookieIds.SENT_MOBILE);
   });
 
   this.createAccount = () => {
