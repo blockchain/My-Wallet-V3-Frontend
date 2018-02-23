@@ -22,6 +22,8 @@ function bcFileUpload ($rootScope, Alerts, AngularHelper) {
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.$root.inMobileBuy = true
+    scope.iosBrowser = browserDetection().browser === 'safari';
     scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.state = {
       webcam: {
