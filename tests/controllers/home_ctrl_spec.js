@@ -14,6 +14,9 @@ describe('HomeCtrl', () => {
       let MyWallet = $injector.get('MyWallet');
 
       MyWallet.wallet = {
+        external: {
+          sfox: {}
+        },
         hdwallet: {
           accounts: [
             { label: "Checking", index: 0, archived: false, balance: 100 },
