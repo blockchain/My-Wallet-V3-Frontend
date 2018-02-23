@@ -5,7 +5,6 @@ angular
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
 function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, sfox) {
-
   $scope.btc = {
     total: () => Wallet.total('') || 0,
     accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
