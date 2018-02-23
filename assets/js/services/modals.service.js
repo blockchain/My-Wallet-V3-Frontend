@@ -122,7 +122,12 @@ function modals ($rootScope, $state, $uibModal, $ocLazyLoad, MyWallet) {
     controllerAs: 'vm',
     controller: 'SfoxSignupController',
     resolve: {
-      exchange () { return exchange; }
+      exchange () { return exchange; },
+      accounts: ($q) => {
+        return exchange.profile
+          ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+          : $q.resolve([]);
+      }
     }
   }).result.then(() => {
     $state.go('wallet.common.buy-sell.sfox', { selectedTab: 'ORDER_HISTORY' });

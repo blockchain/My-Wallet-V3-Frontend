@@ -4,7 +4,7 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, Alerts, Env) {
+function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, accounts, Alerts, Env) {
   Env.then(env => {
     let links = env.partners.sfox.surveyLinks;
 
@@ -14,15 +14,17 @@ function SfoxSignupController ($stateParams, $uibModalInstance, sfox, exchange, 
     };
   });
 
-  // properties
+  this.provider = 'SFOX';
   this.exchange = exchange;
-  this.steps = enumify('create', 'verify', 'upload', 'link');
+  this.accounts = accounts;
 
-  // methods
+  this.steps = enumify('create', 'verify', 'upload', 'link');
+  this.displaySteps = ['create', 'verify', 'upload', 'link'];
+  this.onOrAfterStep = (s) => this.afterStep(s) || this.onStep(s);
+  this.afterStep = (s) => this.step > this.steps[s];
   this.onStep = (s) => this.steps[s] === this.step;
   this.goTo = (s) => { this.step = this.steps[s]; };
-  this.checkStep = () => { this.goTo(sfox.determineStep(exchange)); };
+  this.checkStep = () => { this.goTo(sfox.determineStep(exchange, accounts)); };
 
-  // init
-  this.goTo(sfox.determineStep(this.exchange));
+  this.goTo(sfox.determineStep(exchange, accounts));
 }

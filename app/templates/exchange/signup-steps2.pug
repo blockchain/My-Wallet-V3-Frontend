@@ -1,7 +1,0 @@
-.width-20.width-20-tablet(ng-repeat-start="step in vm.displaySteps track by $index")
-  .flex-column.flex-center.hidden-xs.fade-in(ng-class="{primary: vm.onOrAfterStep(step)}" ng-click="qaDebugger && vm.goTo(step)")
-    span.f-14.white(ng-if="!vm.afterStep(step)") {{ $index + 1 }}
-    span.f-14.white(ng-if="vm.afterStep(step)")
-      i.ti-check
-    span.mt-5.nowrap(ng-class="{primary: vm.onOrAfterStep(step)}" translate="{{ vm.provider + '.' + step }}")
-.width-20.width-20-tablet.step-arrow.flex-justify.hidden-xs(ng-repeat-end ng-hide="$last")
