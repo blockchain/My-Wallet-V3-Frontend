@@ -44,7 +44,6 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
     if (txSub) {
     } else if (w) {
       txSub = w.txList.subscribe(updateBtcTxActivities);
-
       $rootScope.$watch(() => Ethereum.txs, activity.updateEthTxActivities, true);
       $rootScope.$watch(() => BitcoinCash.txs, activity.updateBchTxActivities, true);
       $rootScope.$on('updateActivityFeed', activity.updateAllActivities);

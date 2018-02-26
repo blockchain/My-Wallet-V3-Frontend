@@ -67,6 +67,7 @@ form.bc-form(
             a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
             | 
             span(ng-if="!$last") or 
+          helper-button(ng-if="$ctrl.type === 'Sell' && trading().reason" content="The total you can sell is your balance minus the transaction fee used to send your coins.")
     .group.mt-5.border-top(ng-if="trading().verificationRequired")
       .item.mt-15(translate="{{provider + '.' + trading().reason + '.REQUIRED'}}")
     .group.mt-20(ng-show="$ctrl.tradeAccount && !locked")
