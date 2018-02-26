@@ -251,6 +251,23 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           resolve: {
             loadBcPhoneNumber: ($ocLazyLoad) => {
               return $ocLazyLoad.load('bcPhoneNumber');
+            },
+            _loadExchangeData ($injector, $q) {
+              let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+              let Exchange = $injector.has('Exchange') && $injector.get('Exchange');
+              let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
+
+              return sfox && sfox.user && !sfox.profile
+                ? $q.resolve().then(() => Exchange.fetchExchangeData(sfox))
+                : $q.resolve();
+            },
+            accounts ($injector, $q) {
+              let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+              let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
+
+              return sfox && sfox.hasAccount
+                ? $q.resolve([]).then(() => sfox.getBuyMethods()).then(methods => methods.ach.getAccounts())
+                : $q.resolve([]);
             }
           }
         }

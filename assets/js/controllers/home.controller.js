@@ -4,7 +4,7 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, sfox) {
+function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, sfox, accounts) {
   $scope.btc = {
     total: () => Wallet.total('') || 0,
     accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
@@ -65,15 +65,22 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
   $scope.onOrAfterStep = (s) => $scope.afterStep(s) || $scope.onStep(s);
   $scope.afterStep = (s) => $scope.step > $scope.steps[s];
   $scope.onStep = (s) => $scope.steps[s] === $scope.step;
-  $scope.goTo = (s) => { $scope.step = $scope.steps[s]; };
+  $scope.goTo = (s) => {
+    $scope.step = $scope.steps[s];
+  };
 
-  if ($scope.exchange.user && !$scope.exchange.profile) {
-    $scope.exchange.fetchProfile().then(() => {
-      $scope.goTo(sfox.determineStep($scope.exchange))
-    });
-  } else {
-    $scope.goTo(sfox.determineStep($scope.exchange))
-  }
+  sfox.accounts = accounts;
+
+  let calcSfoxStep = () => {
+    if (!$scope.sfoxAvailable || (sfox.activeAccount && sfox.profile.verificationStatus.level === 'pending' && !sfox.profile.verificationStatus.required_docs.length)) {
+      $scope.showSfoxRegistration = false;
+    } else {
+      $scope.showSfoxRegistration = true;
+      $scope.goTo(sfox.determineStep($scope.exchange));
+    }
+  };
+
+  calcSfoxStep();
 
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;
@@ -81,9 +88,10 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
 
     tradeStatus.canTrade().then(canTrade => {
       $scope.canBuy = canTrade && !sfoxAvailableToUser;
+      $scope.sfoxAvailable = canTrade && sfoxAvailableToUser;
 
-      if (canTrade && sfoxAvailableToUser && !(sfox.profile && sfox.verified)) {
-        $scope.showSfoxRegistration = true;
+      if ($scope.sfoxAvailable) {
+        calcSfoxStep();
       }
     });
   });

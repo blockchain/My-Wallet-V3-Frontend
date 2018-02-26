@@ -5,13 +5,10 @@ angular
 function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
   $scope.checkout = this;
   Env.then(env => {
-    let email = MyWallet.wallet.accountInfo.email;
     let sellLinks = env.partners.sfox.surveyLinks;
     let buyLinks = env.partners.sfox.buySurveyLinks;
-    let internalEmail = email.indexOf('@blockchain.com') > -1 || email.indexOf('@sfox.com') > -1;
-    let invitedEmail = MyWalletHelpers.isStringHashInFraction(email, env.partners.sfox.showBuyFraction);
 
-    $scope.showBuy = () => internalEmail || invitedEmail;
+    $scope.showBuy = () => MyWallet.wallet.accountInfo.invited.sfoxBuy;
 
     this.handleCancel = (skipConfirm, type, step) => {
       if (skipConfirm) $scope.checkout.goTo('create');
