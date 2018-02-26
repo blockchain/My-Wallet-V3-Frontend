@@ -1,6 +1,6 @@
-# Blockchain.info Wallet [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
+# Blockchain.info Wallet [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.svg?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
 
-Be Your Own Bank at [blockchain.info/wallet](https://blockchain.info/wallet). Please [contact support](http://blockchain.zendesk.com/) if you have any issues using the wallet.
+Be Your Own Bank at [blockchain.info/wallet](https://blockchain.info/wallet). Please [contact support](https://support.blockchain.com) if you have any issues using the wallet.
 
 ## Run the wallet on your own computer
 
