@@ -2,9 +2,10 @@ describe('Activity', () => {
   let Activity;
   let MyWallet;
   let coinify;
+  let sfox;
+  let unocoin;
 
   beforeEach(angular.mock.module('walletApp'));
-
   beforeEach(inject(($injector, $httpBackend) => {
     // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
     $httpBackend.whenGET('/Resources/wallet-options.json').respond();
@@ -17,7 +18,7 @@ describe('Activity', () => {
 
     MyWallet.wallet.bch = {
       txs: [{ amount: 1, txType: 'received', coinCode: 'bch'}]
-    }
+    };
 
     MyWallet.wallet.external = {
       coinify: {
@@ -37,11 +38,23 @@ describe('Activity', () => {
           }
         },
         kycs: []
+      },
+      sfox: {
+        trades: [
+          {id: 1, txHash: '12345ab32cde'}
+        ],
+      },
+      unocoin: {
+        trades: [
+          {id: 1, txHash: '1222345ab32cde'}
+        ],
       }
-    }
+    };
 
     Activity = $injector.get('Activity');
     coinify = $injector.get('coinify');
+    sfox = $injector.get('sfox');
+    unocoin = $injector.get('unocoin');
   }));
 
   describe('updateAllActivities', () =>
@@ -91,7 +104,20 @@ describe('Activity', () => {
         type: 0,
         icon: 'icon-tx',
         time: 25000,
-        message: 'BOUGHT',
+        message: 'Bought BTC',
+        amount: 1,
+        labelClass: 'received'
+      }));
+    });
+
+    it('should have the sell label for sell txs', () => {
+      spyOn(sfox, 'getTxMethod').and.returnValue('sell');
+      let tx = Activity.messageFactory(MyWallet.wallet.txList.transactions()[0]);
+      expect(tx).toEqual(jasmine.objectContaining({
+        type: 0,
+        icon: 'icon-tx',
+        time: 25000,
+        message: 'Sold BTC',
         amount: 1,
         labelClass: 'received'
       }));
