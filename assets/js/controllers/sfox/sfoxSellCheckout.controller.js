@@ -15,12 +15,6 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
     .then($scope.checkout.fetchTransactions)
     .then(enableSiftScience)
     .then(() => exchange.fetchProfile())
-    .then(() => {
-      $timeout(() => {
-        console.log('Update trades forced')
-        sfox.getTrades().then(() => AngularHelper.$safeApply())
-      }, 3000);
-    })
     .catch((e) => Alerts.displayError(e));
 
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };

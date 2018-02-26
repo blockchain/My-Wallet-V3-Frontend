@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state) {
+function HomeCtrl ($rootScope, $scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state) {
   $scope.btc = {
     total: () => Wallet.total('') || 0,
     accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
@@ -54,12 +54,14 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
   };
 
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
+  $scope.openRequest = modals.openRequest;
+
+  // ensure all recent transactions are reflected in activity widget
+  $rootScope.$emit('updateActivityFeed');
 
   Env.then((env) => {
     let accountInfo = MyWallet.wallet.accountInfo;
     let sfox = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
     tradeStatus.canTrade().then(canTrade => { $scope.canBuy = canTrade && !sfox; });
   });
-
-  $scope.openRequest = modals.openRequest;
 }
