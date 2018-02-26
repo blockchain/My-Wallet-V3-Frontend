@@ -36,7 +36,7 @@ div
               .item
                 input(type="email" ng-model="email" required)
             button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
-    .ml-30.width-40.hidden-xs(ng-show="!blacklisted")
+    .ml-30.width-40.hidden-xs(ng-show="showIntroductionBanner")
       .flex-between
         span.f-24.blue.f-14-mobile
           i.icon-buy-sell.h3.mrm
