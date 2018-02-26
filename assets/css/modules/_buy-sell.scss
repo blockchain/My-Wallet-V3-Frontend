@@ -201,6 +201,50 @@
 }
 
 .signup-steps {
+  .fade-in {
+    -webkit-animation: fadeIn 1.25s ease-in 1 forwards;
+    animation: fadeIn 1.25s ease-in 1 forwards;
+    opacity: 0;
+
+    @-webkit-keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  }
+
+  .step-arrow {
+    border-top: 1px solid  #727272;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      right: -2px;
+      background: #727272;
+      height: 1px;
+      width: 12px;
+      top: -5px;
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      right: -2px;
+      background:  #727272;
+      height: 1px;
+      width: 12px;
+      top: 3px;
+      transform: rotate(-45deg);
+    }
+  }
   span.f-14 {
     width: 30px;
     height: 30px;
@@ -215,22 +259,6 @@
   }
   .border-top {
     height: 5px;
-  }
-  @media (max-width: 991px) {
-    .pt-70 {
-      padding-top: 25px;
-      .width-80 {
-        margin-bottom: 30px;
-      }
-    }
-  }
-  @media (max-width: 767px) {
-    .pt-70 {
-      padding-top: 10px;
-      .width-80 {
-        padding: 0px 30px;
-      }
-    }
   }
 }
 
