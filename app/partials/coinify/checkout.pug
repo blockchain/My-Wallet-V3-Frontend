@@ -24,9 +24,11 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile.hidden-xs
       .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
         .flex-between
-          span.f-24.blue.f-14-mobile(translate="RECURRING_INTRO_HEADER")
-          .flex-center.pl-10
-            i.pointer.ti-close.f-12.mid-grey(ng-click="dismissRecurringBuyIntro()")
+          span.f-24.blue.f-14-mobile
+            i.icon-buy-sell.h3.mrm
+            span(translate="RECURRING_INTRO_HEADER")
+          span
+            i.pointer.ti-close.f-14.mid-grey(ng-click="dismissRecurringBuyIntro()")
         p.f-12.mt-10(translate="RECURRING_INTRO_1")
         p.f-12(translate="RECURRING_INTRO_2")
         p.f-12(translate="RECURRING_INTRO_3")

@@ -7,7 +7,6 @@ describe('BuySellSelectPartnerController', () => {
   let accountInfo;
 
   beforeEach(angular.mock.module('walletApp'));
-
   beforeEach(() => {
     module(($provide) => {
       $provide.factory('Env', ($q) => $q.resolve({
@@ -32,7 +31,12 @@ describe('BuySellSelectPartnerController', () => {
 
   beforeEach(function () {
     accountInfo = {
-      countryCodeGuess: "US"
+      countryCodeGuess: "US",
+      invited: {
+        sfox: true,
+        sfoxBuy: true,
+        unocoin: true
+      }
     };
 
     return angular.mock.inject(function ($injector, _$rootScope_, _$controller_, _$state_) {
@@ -54,8 +58,7 @@ describe('BuySellSelectPartnerController', () => {
   let getControllerScope = function () {
     let $scope = $rootScope.$new();
 
-    $scope.vm =
-      {base: "base"};
+    $scope.vm = { base: "base" };
 
     let options = {
       partners: {
