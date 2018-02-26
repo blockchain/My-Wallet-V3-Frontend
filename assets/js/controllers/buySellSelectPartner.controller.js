@@ -19,9 +19,9 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
 
   $scope.countries = country.countryCodes;
   $scope.country = $scope.countries.filter(c => c.Code === codeGuess)[0];
-
   $scope.states = state.stateCodes;
   $scope.state = $scope.states.filter((s) => s.Code === stateCodeGuess)[0] || $scope.states[0];
+  $scope.sfoxAvailable = accountInfo.invited.sfox && accountInfo.invited.sfoxBuy;
 
   Env.then(env => {
     $scope.coinifyWhitelist = env.partners.coinify.countries;
@@ -37,19 +37,22 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
       namespace: 'COINIFY',
       logo: 'img/coinify-logo.svg',
       href: 'https://www.coinify.com/',
-      route: '.coinify'
+      route: '.coinify',
+      invited: accountInfo.invited.coinify
     },
     'sfox': {
       namespace: 'SFOX',
       logo: 'img/sfox-logo.png',
       href: 'https://www.sfox.com/',
-      route: '.sfox'
+      route: '.sfox',
+      invited: accountInfo.invited.sfox && accountInfo.invited.sfoxBuy
     },
     'unocoin': {
       namespace: 'UNOCOIN',
       logo: 'img/unocoin-logo.png',
       href: 'https://www.unocoin.com/',
-      route: '.unocoin'
+      route: '.unocoin',
+      invited: accountInfo.invited.unocoin
     }
   };
 
@@ -115,5 +118,6 @@ function BuySellSelectPartnerController ($scope, $state, $timeout, Wallet, MyWal
     }
     $scope.blacklisted = !whitelisted;
     $scope.partner = whitelisted ? $scope.partners[whitelisted] : null;
+    $scope.showIntroductionBanner = $scope.partner && $scope.partner.namespace ? $scope.partners[$scope.partner.namespace.toLowerCase()].invited : false;
   });
 }
