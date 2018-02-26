@@ -110,8 +110,8 @@ function unocoin ($q, $uibModalStack, Alerts, modals, Env, Exchange, MyWallet, c
     };
   }
 
-  function getTxMethod (unocoin, hash) {
-    let trade = unocoin.trades.filter((t) => t.txHash === hash)[0];
+  function getTxMethod (hash) {
+    let trade = service.exchange.trades.filter((t) => t.txHash === hash)[0];
     return trade && (trade.isBuy ? 'buy' : 'sell');
   }
 

@@ -4,7 +4,7 @@ angular
 
 let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
 
-function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, sfox, accounts) {
+function HomeCtrl ($rootScope, $scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeStatus, localStorageService, currency, modals, $state, sfox, accounts) {
   $scope.btc = {
     total: () => Wallet.total('') || 0,
     accounts: MyWallet.wallet.hdwallet && MyWallet.wallet.hdwallet.accounts
@@ -57,6 +57,10 @@ function HomeCtrl ($scope, MyWallet, Wallet, Ethereum, BitcoinCash, Env, tradeSt
 
   $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
   $scope.openRequest = modals.openRequest;
+
+  // ensure all recent transactions are reflected in activity widget
+  $rootScope.$emit('updateActivityFeed');
+
   $scope.exchange = MyWallet.wallet.external.sfox;
 
   // SFOX signup
