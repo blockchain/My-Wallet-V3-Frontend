@@ -2,9 +2,8 @@ angular
   .module('walletApp')
   .factory('Activity', Activity);
 
-Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'coinify', 'Ethereum', 'BitcoinCash'];
-
-function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinify, Ethereum, BitcoinCash) {
+Activity.$inject = ['$rootScope', 'AngularHelper', '$timeout', 'Wallet', 'MyWallet', 'coinify', 'sfox', 'unocoin', 'Ethereum', 'BitcoinCash'];
+function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinify, sfox, unocoin, Ethereum, BitcoinCash) {
   var txSub;
 
   const activity = {
@@ -24,9 +23,15 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
     updateAllActivities
   };
 
-  let getTxMessage = (hash, type, asset) => (
-    coinify.getTxMethod(hash) === 'buy' ? 'BOUGHT' : `${type} ${asset.toUpperCase()}`
-  );
+  let getTxMessage = (hash, type, asset) => {
+    let exchangeTx = [coinify.getTxMethod(hash), sfox.getTxMethod(hash), unocoin.getTxMethod(hash)].filter(x => x)[0];
+
+    if (exchangeTx) {
+      return exchangeTx === 'buy' ? 'Bought BTC' : 'Sold BTC';
+    }
+
+    return `${type} ${asset.toUpperCase()}`;
+  };
 
   setTxSub();
 
@@ -35,10 +40,12 @@ function Activity ($rootScope, AngularHelper, $timeout, Wallet, MyWallet, coinif
   // Wait for wallet to be defined before subscribing to tx updates
   function setTxSub () {
     let w = MyWallet.wallet;
-    if (txSub) {
 
-    } else if (w) {
+    if (txSub) {}
+    else if (w) {
       txSub = w.txList.subscribe(updateBtcTxActivities);
+     // sfox.getTrades().then(() => console.log('FORCED SFOX UPDATE'))
+
       $rootScope.$watch(() => Ethereum.txs, activity.updateEthTxActivities, true);
       $rootScope.$watch(() => BitcoinCash.txs, activity.updateBchTxActivities, true);
       $rootScope.$on('updateActivityFeed', activity.updateAllActivities);
