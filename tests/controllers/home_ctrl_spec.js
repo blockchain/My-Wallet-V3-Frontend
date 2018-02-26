@@ -1,13 +1,9 @@
 describe('HomeCtrl', () => {
   let scope;
-
   let Wallet;
-
-  let modal =
-    {open() {}};
+  let modal = {open() {}};
 
   beforeEach(angular.mock.module('walletApp'));
-
   beforeEach(function () {
     angular.mock.inject(function ($injector, $rootScope, $controller) {
       Wallet = $injector.get('Wallet');
@@ -15,7 +11,10 @@ describe('HomeCtrl', () => {
 
       MyWallet.wallet = {
         external: {
-          sfox: {}
+          sfox: {
+            accounts: {}
+
+          }
         },
         hdwallet: {
           accounts: [
@@ -50,7 +49,8 @@ describe('HomeCtrl', () => {
 
       $controller('HomeCtrl', {
         $scope: scope,
-        $uibModal: modal
+        $uibModal: modal,
+        accounts: {}
       }
       );
     });
@@ -58,9 +58,9 @@ describe('HomeCtrl', () => {
 
   describe('totals', () => {
     it('should return total balance of currency', () => {
-      expect(scope.btc.total()).toBe(1)
-      expect(scope.eth.total()).toBe(0)
-      expect(scope.bch.total()).toBe(1)
+      expect(scope.btc.total()).toBe(1);
+      expect(scope.eth.total()).toBe(0);
+      expect(scope.bch.total()).toBe(1);
     });
   });
 

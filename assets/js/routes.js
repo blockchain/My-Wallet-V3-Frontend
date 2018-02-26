@@ -55,7 +55,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         loadWalletModule,
-        _initialize ($injector, $q) {
+        _initialize ($injector) {
           let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
           let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
           return Ethereum && Ethereum.needsTransitionFromLegacy().then((res) => Wallet.goal.needsTransitionFromLegacy = res);
@@ -425,7 +425,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           return initialize('ShapeShift', $injector);
         }
       },
-      onEnter ($injector, $state) {
+      onEnter ($injector) {
         let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
         ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
       }
@@ -487,7 +487,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           let exchange = MyWallet.wallet.external.unocoin;
           return $q.resolve(unocoin.fetchQuote(exchange, 1e8, 'BTC', 'INR'));
         },
-        mediums ($q, MyWallet, exchangeRate, _loadExchangeData) {
+        mediums ($q, MyWallet, exchangeRate) {
           let exchange = MyWallet.wallet.external.unocoin;
           return exchange.profile && exchange.profile.level > 2
                  ? $q.resolve(exchangeRate.getPaymentMediums())
