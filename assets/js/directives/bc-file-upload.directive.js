@@ -22,7 +22,6 @@ function bcFileUpload ($rootScope, Alerts, AngularHelper) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.$root.inMobileBuy = true
     scope.iosBrowser = ['ipod', 'ipad', 'iphone'].indexOf(browserDetection().os) > -1;
     scope.browserWithCamera = $rootScope.browserWithCamera;
     scope.state = {
