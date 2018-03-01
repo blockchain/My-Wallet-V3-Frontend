@@ -7,9 +7,9 @@ var compression = require('compression');
 
 loadEnv('.env');
 
-var port = parseInt(process.env.PORT, 10) || 8080;
-var walletHelperPort = port + 1;
-var runWalletHelper = !Boolean(process.env.WALLET_HELPER_URL);
+var port = 5000;
+var walletHelperPort = 8081;
+var runWalletHelper = true;
 var dist = parseInt(process.env.DIST, 10) === 1;
 var rootURL = process.env.ROOT_URL || 'https://blockchain.info';
 var webSocketURL = process.env.WEB_SOCKET_URL || false;
