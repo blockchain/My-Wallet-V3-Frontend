@@ -1520,7 +1520,7 @@
       "ANOTHER_CODE_SENT": "Another code has been sent!"
     },
     "VERIFY": {
-      "VERIFY_ACCOUNT": "To verify your identity we need to collect some personal information.<br/><br/>This information will be sent directly to {{::partner}} and will not be saved to your Blockchain wallet. Any information provided is secure and safe.",
+      "VERIFY_ACCOUNT": "Please enter the following information to verify your identity.<br/><br/>This information will be sent directly to {{::partner}} and will not be saved to your Blockchain wallet. Any information provided is confidential and secure.",
       "FULL_NAME": "Full Name",
       "MOBILE": "Mobile",
       "PAN_CARD": "PAN Card",
