@@ -23,33 +23,57 @@
   "NEED_MORE_HELP": "찾는 걸 못 찾겠나요?",
   "VISIT_SUPPORT": "지원 센터",
   "FAQ_QUESTIONS": {
+    "BITCOIN_CASH_ADDRESS": {
+      "Q": "왜 비트코인 캐시 주소가 업데이트 되었나요?",
+      "A": "귀하 비트코인 캐시 주소가 업데이트 되었고 앞으로는 지갑에서 좀 다르게 보일 겁니다. 보내거나 요청할 때 비트코인과 비트코인 캐시 주소 구별하는 데 도움 되기를 바랍니다.  이 업데이트에 대해 질문이 있나요? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>여기서 더 읽을 수 있습니다.</a>"
+    },
+    "HOW_DO_I_BUY": {
+      "Q": "비트코인을 어떻게 사나요?",
+      "A": "우리는 전 세계 거래소들과 파트너 관계를 맺어서 귀하가 손쉽게 비트코인을 살 수 있도록 합니다. 이제 우리 파트너에 계정을 만들어 시작할 수도 있습니다. 일단 계정 확인이 되면 은행 이체를 통해 비트코인을 사기 시작할 수 있습니다 <a>{{::text | translate}}</a>."
+    },
+    "HOW_DO_I_SELL": {
+      "Q": "비트코인은 어떻게 파나요?",
+      "A": "우리는 전 세계 거래소들과 파트너 관계를 맺어서 귀하가 손쉽게 비트코인을 팔 수 있도록 합니다. 이제 우리 파트너에 계정을 만들어 시작할 수도 있습니다. 일단 계정 확인이 되면 은행 이체를 통해 비트코인을 팔기 시작할 수 있습니다 <a>{{::text | translate}}</a>."
+    },
+    "HOW_DO_I_BUY_OR_SELL": {
+      "Q": "비트코인은 어떻게 사고 파나요?",
+      "A": "우리는 전 세계 거래소들과 파트너 관계를 맺어서 귀하가 손쉽게 비트코인을 사고 팔 수 있도록 합니다. 이제 우리 파트너에 계정을 만들어 시작할 수도 있습니다. 일단 계정 확인이 되면 은행 이체나 신용카드를 통해 비트코인 사기/팔기를 시작할 수 있습니다 <a>{{::text | translate}}</a>."
+    },
+    "HOW_DO_I_BUY_OR_SELL_UNSUPPORTED_CURRS": {
+      "Q": "에테르나 비트코인 캐시는 어떻게 사나요?",
+      "A": "그건 작업 중입니다! 그 동안은 귀하 지갑 <a>{{ ::text }}</a>에서 비트코인을 에테르나 비트코인 캐시로 교환할 수 있습니다."
+    },
+    "CAN_I_BUY_UNINVITED": {
+      "Q": "비트코인, 에테르, 비트코인 캐시는 어떻게 사나요?",
+      "A": "그건 작업 중입니다! 그 동안은 귀하 지갑 <a>{{ ::text }}</a>에서 비트코인, 에테르, 비트코인 캐시를 서로 교환할 수 있습니다."
+    },
     "WALLET_SAFETY": {
       "Q": "내 지갑을 안전하게 유지하려면 뭐가 필요한가요?",
-      "A": "우리 보안 센터가 5 분 이내에 지갑 안전 유지를 도와주며 귀하가 암호를 잃어버리더라도 자금에 접근하는 것을 보장합니다. 2 단계 인증 사용 설정을 해서 지갑에 대한 무단 접근을 방지하고 복구 구절을 써 놓아서 자금 접근이 안되는 일이 없도록 하기를 시작하기 좋은 곳 적어도 16 자 이상인 독특하고 임의인 암호 사용을 추천합니다."
+      "A": "우리 보안 센터가 5 분 이내에 지갑 안전 유지를 도와주며 귀하가 암호를 잃어버리더라도 자금에 접근하는 것을 보장합니다. 2-단계 인증 사용 설정을 해서 지갑에 대한 무단 접근을 방지하고 복구 구절을 써 놓아서 자금 접근이 안되는 일이 없도록 하기를 시작하기 좋은 곳 적어도 16 자 이상인 독특하고 임의인 암호 사용을 추천합니다."
     },
     "WALLET_ID_VS_ADDRESS": {
-      "Q": "지갑 아이디와 비트코인 주소는 뭐가 다른가요?",
-      "A": "지갑 아이디는 사용자 이름 같은 것으로 숫자, 문자, 대시를 포함합니다. 지갑 로그인에만 쓰이며 개인 정보로 보호해야 합니다. 지갑 아이디는 지갑을 만들었을 때 우리가 보내주는 환영 이메일 또는 \"설정\" 지갑 정보에 있습니다. 비트코인 주소는 자금을 받을 때 남과 공유하는 것입니다. 새 비트코인 주소를 생성하려면 \"받기\"를 클릭하세요."
+      "Q": "지갑 아이디와 지갑 주소는 뭐가 다른가요?",
+      "A": "지갑 아이디는 숫자, 문자, 대시로 이루어진 사용자 명이라고 생각하면 됩니다. 지갑 로그인에만 쓰이며 개인 정보로 보호해야 합니다. 지갑 아이디는 지갑 만들었을 때 우리가 보내준 이메일에 있으며 설정 -> 일반에도 있습니다. 주소는 돈을 받을 때 남과 공유하는 것입니다. 비트코인, 에테르, 비트코인 캐시 주소를 알려면 '요청'을 클릭하세요"
     },
     "HOW_TO_TRANSACT": {
-      "Q": "비트코인은 어떻게 받고/보내나요?",
-      "A": "비트코인을 받으려면 보내는 사람이 귀하 비트코인 주소를 알아야 합니다. 우리 지갑이 귀하가 만들려고 하는 각 거래에 대해 새 주소를 자동 생성할 겁니다. \"받기\"를 클릭한 후 주소를 복사해서 보내는 사람과 공유하세요. 비트코인을 보내려면 \"보내기\"를 클릭한 후 \"수신\" 필드에 있는 받는 사람 비트코인 주소와 보내려는 금액을 입력하세요."
+      "Q": "돈 보내기/받기는 어떻게 하나요?",
+      "A": "송금인이 귀하 주소를 알아야 돈을 보낼 수 있습니다. 비트코인이나 비트코인 캐시 거래를 하면 지갑이 자동으로 새 주소를 만듭니다. 에테르 거래에서 귀하 주소는 항상 같습니다. '요청'을 클릭하고, 드롭다운에서 받고 싶은 통화를 선택하고, 송금인과 공유할 주소를 복사하세요. 돈을 보내려면, '보내기'를 클릭하고, 드롭다운에서 보내고 싶은 통화를 선택하고, 수령인 주소를 '수신' 필드에 입력하고, 보내려는 금액을 입력하세요."
     },
     "HOW_MUCH_TO_SEND": {
-      "Q": "비트코인 보내는 데 드는 비용은 얼마인가요?",
-      "A": "우리 지갑 사용은 완전 무료이지만, 거래에 포함된 작은 수수료는 비트코인 네트워크에서 거래 흐름 진행에 도움을 주는 채굴자에게 지급됩니다. 우리 지갑은 귀하 거래가 일관성과 신뢰성 있게 확인되도록 거래 크기와 거래 당시 네트워크 부하 수준에 따른 적절한 수수료를 자동 포함 시킵니다. 귀하는 거래를 보내기 전에 우리가 추천해서 포함된 수수료를 볼 수 있습니다. 수수료를 직접 정하기 원하면 \"고급 보내기\"에서 그렇게 할 수 있습니다."
+      "Q": "돈 보내는 데 드는 비용은 얼마인가요?",
+      "A": "지갑 사용은 완전 무료지만, 비트코인, 에테르, 비트코인 캐시 네트워크에서 거래 흐름을 도와주는 채굴자에게 줄 작은 수수료가 있습니다. 거래가 믿을 수 있고 일관성 있게 되게 하기 위해, 귀하 지갑은 거래 크기와 거래 당시 네트워크 거래량 수준에 따른 적절한 수수료를 자동으로 포함합니다. 비트코인 거래에 대해 귀하가 수수료를 정하고 싶으면, '수수료 사용자 맞춤'에서 그렇게 할 수 있습니다."
     },
     "WHEN_IS_A_TX_CONFIRMED": {
-      "Q": "거래에서 받기/보내기가 성공했다는 걸 어떻게 아나요?",
-      "A": "거래는 지갑 왼쪽 내비게이션에 있는 거래 피드에 거의 즉시 나타납니다. 귀하 거래는 네트워크 확인 3 개를 받으면 완료된 걸로 간주됩니다. 이 과정은 보통 30 분 걸리는데 다를 수도 있습니다. 그 전까지는 거래가 \"미결\"로 나타날 겁니다."
+      "Q": "거래의 받기/보내기가 성공했는지 어떻게 아나요?",
+      "A": "지갑 왼쪽 내비게이션에서 해당 통화를 클릭하면 거래 피드에 거래가 즉시 나타납니다. 비트코인, 비트코인 캐시 거래는 네트워크 확인 3개가, 에테르 거래는 네트워크 확인 12개가 있어야 완료된 것으로 봅니다. 비트코인, 비트코인 캐시는 보통 30분, 에테르는 보통 5분이 걸리지만 이보다 길거나 짧을 수도 있습니다. 그 전까지는 거래가 \"미결\"로 나타날 겁니다."
     },
     "CAN_BC_SEE_FUNDS": {
       "Q": "블록체인이 내 자금을 보거나 내 자금에 접근할 수 있나요?",
-      "A": "블록체인은 귀하 지갑 접근 권한을 가지고 있지 않습니다. 귀하 총 잔액도 못 보고, 귀하 대신 지불도 못하고, 귀하가 지갑에 접근하는 것을 막을 수도 없습니다. 블록체인 지갑 속 비트코인은 오직 귀하만이 소유권이 있습니다."
+      "A": "우리 지갑은 비 관리 유형 지갑이므로 우리는 귀하 돈에 접근할 수 없습니다. 이 말은 우리가 귀하의 잔액을 볼 수도 없고, 귀하 대신 결제를 할 수도 없고, 귀하가 자기 지갑에 접근하는 것을 막을 수도 없다는 얘기입니다. 블록체인 지갑 속 돈은 귀하가 완전히 소유합니다."
     },
     "CAN_BC_RESET_PW": {
       "Q": "블록체인이 내 암호를 재 설정할 수 있나요?",
-      "A": "블록체인 방침은 고객이 자기 자금에 대한 완전한 통제를 하도록 하는 것입니다. 따라서 블록체인은 암호를 보거나 저장하지 않으므로 재 설정도 할 수 없습니다. 그러나 사용자가 비트코인 접근 복구를 할 때 쓸 수 있는 복구 구절은 우리가 제공하고 있습니다. 보안 센터로 가서 복구 구절을 알아낸 후 안전하고 남이 못 볼 곳에 보관하세요."
+      "A": "블록체인 방침은 고객이 자기 자금에 대한 완전한 통제를 하도록 하는 것입니다. 따라서 블록체인은 암호를 보거나 저장하지 않으므로 재 설정도 할 수 없습니다. 그러나 우리는 귀하가 자기 돈 접근 복구에 쓸 수 있는 복구 구문을 제공하고 있습니다. 복구 구문을 보려면 <a>{{::text | translate}}</a> 위에 커서가 있도록 하세요. 어디 안전한 곳에 따로 보관하고 절대 남과 공유하지 마세요."
     }
   },
   "SETTINGS": "설정",
@@ -65,6 +89,8 @@
   "EXPLORE": "둘러보기",
   "WHATS_NEW": "새로운 소식",
   "WHATS_NEW_EXPLAIN": "블록체인 지갑에 생긴 모든 변경 사항을 알 수 있는 \"새로운 소식\" 섹션을 만들었습니다.",
+  "WHATS_NEW_EMPTY": "모두 업데이트 됨!",
+  "WHATS_NEW_EMPTY_TEXT": "업데이트는 나중에 다시 와주세요.",
   "SIGN_VERIFY": "서명하고 확인하기",
   "SIGN_VERIFY_EXPLAIN": "메시지에 서명해서 비트코인 주소가 있음을 증명하세요. 다른 사람도 주소가 있음을 확인하세요.",
   "TRANSFER_ALL_EXPLAIN": "가져온 주소들에 있는 자금 모두를 HD 주소들로 옮겨서 보안 성을 높이고 개인정보를 보호하세요",
@@ -79,28 +105,46 @@
     "BODY": "{{::minutes}} 분 동안 활동이 없습니다. 자동 로그아웃이 안되려면, \"취소\"를 클릭하세요."
   },
   "LOG_ME_OUT": "로그아웃 요청",
+  "CONFIRM_CANCEL_BANK_TRADE": {
+    "TITLE": "거래 취소입니까?",
+    "BODY": "거래 취소가 확실합니까? <br><br> <strong>설명:</strong> 귀하 은행 계좌에서 Coinify로 이미 돈을 보냈으면, 그들은 돈을 받은 후 귀하에게 비트코인을 보내줄 겁니다."
+  },
   "CONFIRM_CANCEL_TRADE": {
     "TITLE": "거래 취소입니까?",
     "BODY": "거래 취소가 확실합니까?"
+  },
+  "CONFIRM_CANCEL_RECURRING": {
+    "TITLE": "반복 주문 취소입니다?",
+    "BODY": "이 반복 주문 취소가 확실합니까?"
+  },
+  "CONFIRM_CANCEL_RECURRING_SUBSCRIPTION": {
+    "TITLE": "반복 주문 취소입니까?",
+    "BODY": "취소가 확실합니까? 이렇게 하면 이 반복 주문에 대한 모든 미래 거래가 중지됩니다."
+  },
+  "CONFIRM_CANCEL_RECURRING_TRADE": {
+    "TITLE": "거래 취소입니까?",
+    "BODY": "취소가 확실합니까? 이 거래와 이 거래 일부인 반복 주문이 둘 다 취소될 겁니다."
   },
   "SAVING": "저장 중",
   "SAVING_DESC": "지갑 저장 중이니 기다려 주세요...",
   "CANCEL_TRADE": "거래 취소",
   "CLOSE": "닫기",
-  "TRANSACTIONS": "거래들",
+  "NUMBER_1_WALLET": "#1 비트코인 지갑",
+  "NUMBER_1_DIGITAL_WALLET": "#1 디지털 지갑",
   "TRANSACTION": "거래",
-  "WALLETS": "지갑들",
-  "COUNTRIES_SERVED": "서비스하는 국가들",
-  "TRANSACTIONS_AMT": "{{count}} 백만+",
-  "WALLETS_AMT": "{{count}} 백만+",
-  "COUNTRIES_SERVED_AMT": "120+",
-  "REQUEST": "받기",
+  "TRANSACTIONS_AMT": "{{count}} 백만+ 건 거래",
+  "WALLETS_AMT": "{{count}} 백만+ 개 지갑",
+  "REQUEST": "요청",
+  "REQUEST_CREATED": "요청 만들어짐",
+  "PAYMENT_ADDRESS": "결제 주소",
+  "VIEW_QR": "QR 코드 보기",
   "SEND": "보내기",
   "RECEIVE_BITCOIN": "받기",
+  "START_RECEIVING_ETHER": "에테르 받기 시작",
   "RECEIVE_TO": "다음으로부터 받기:",
+  "REQUEST_TO": "다음에게 요청",
   "AMOUNT": "금액",
-  "AMOUNT:": "금액:",
-  "PAID": "지불됨:",
+  "PAID": "결제됨:",
   "BITCOIN_ADDRESS": "다음 거래 비트코인 주소",
   "DEFAULT_NEW_ADDRESS_LABEL": "새 주소",
   "CANCEL": "취소",
@@ -122,30 +166,32 @@
   "CAMERA_PERMISSION_DENIED": "카메라 사용 허가 거절됨",
   "QR_CODE_NOT_BITCOIN": "비트코인 QR 코드가 아님",
   "SCAN_SUCCESS": "스캔 성공",
-  "SCAN_FAILED": "스캔 실패",
+  "SCAN_FAILED": "유효하지 않은 코드",
   "WALLET_NOT_FOUND": "지갑 없음",
   "YOU": "귀하",
   "RECEIVED_BITCOIN_FROM": "받음",
   "RECEIVED": "받음",
   "GENERATED_ADDRESS": "비트코인을 받을 때마다 새 주소가 생깁니다. 걱정 마세요, 전에 쓰던 주소를 써서 계속할 수 있습니다. ",
   "LEARN_MORE": "더 배우기",
+  "LEARN_MORE_LOWER": "더 배우기",
   "SENT": "보냄",
   "MOVED_BITCOIN_TO": "이체 됨",
   "TRANSFERRED": "이체 됨",
-  "SEND_BITCOIN": "보내기",
+  "TRANSFER_BITCOIN": "비트코인 이체",
+  "SEND_BITCOIN": "비트코인 보내기",
   "LANGUAGE": "지갑 언어",
   "PREFERENCES": "사용자 선택",
   "PREFERENCES_EXPLAIN": "지갑 체험 사용자 설정",
   "MENU_ACCOUNTS_AND_ADDRESSES": "주소들",
   "WALLET_INFO": "지갑 정보",
-  "WALLET_INFO_EXPLAIN": "웹 클라이언트를 써서 로그인하려면 지갑 아이디를 쓰고, 휴대 장치에서 지갑을 열려면 블록체인 모바일 지갑에 있는<i> (click on \"Show Paring Code\")</i> 코드를 스캔 하세요.",
+  "WALLET_INFO_EXPLAIN": "웹 클라이언트를 써서 로그인하려면 지갑 아이디를 쓰고, 휴대 장치에서 지갑을 열려면 블록체인 모바일 지갑에 있는<i> (click on \"Show Paring 코드\")</i> 코드를 스캔 하세요.",
   "PAIRING_CODE": "모바일 앱 페어링 코드",
   "SECURITY_BASIC_EXPLAIN": "기본 보안: 불법 사용이 없도록 지갑을 안전하게 보관하고 지갑 아이디 또는 암호 분실 시 지갑 복구를 위하여 개인 정보를 정확히 유지하세요.",
   "SECURITY_ADVANCED_EXPLAIN": "고급 보안: 더 정교한 접근 통제와 추적을 원하시면 보안을 더 많이 사용자 정의 설정하세요. 그러나 내용을 확실히 모르면 이 설정을 변경하지 마세요.",
   "ADVANCED_SETTINGS": "고급 설정",
   "SECURITY_CENTER": "보안 센터",
   "WALLET_RECOVERY": "지갑 복구",
-  "ADD_WALLET_RECOVERY": "보안 구절 백업",
+  "ADD_WALLET_RECOVERY": "백업 복구 구절",
   "PRINT_RECOVERY_SHEET": "복구 문서 인쇄",
   "ARE_YOU_SURE_LOGOUT": "로그아웃 하려는 게 확실합니까?",
   "FINISH_LATER": "나중에 끝내기",
@@ -153,28 +199,48 @@
     "TITLE": "거래 취소입니까?",
     "BODY": "곧 비트코인을 받을 단계입니다."
   },
-  "CONFIRM_CLOSE": {
-    "TITLE": "나중에 끝낼까요?",
-    "BODY": "나중에 지불을 마칠 수 있습니다."
-  },
-  "CONFIRM_CLOSE_ACCT": {
+  "BUY_SURVEY_OPENED": {
     "TITLE": "확실합니까?",
     "BODY": "곧 비트코인을 받을 단계인데 중단하는 게 확실합니까?"
   },
-  "CONFIRM_CLOSE_AMT": {
+  "SELL_SURVEY_OPENED": {
     "TITLE": "확실합니까?",
-    "BODY": "\"닫기\"를 클릭하면 이 모드에서 나가지만 언제든지 비트코인을 살 수 있습니다."
+    "BODY": "팔기 완료까지 한 클릭 남았습니다. 중단이 확실합니까?"
+  },
+  "SHIFT_TRADE_SURVEY": {
+    "TITLE": "확실합니까?",
+    "BODY": "코인 교환 완료까지 한 클릭 남았습니다. 중단이 확실합니까?"
+  },
+  "SFOX_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "계정 확인 완료까지 얼마 안 남았습니다. 중단이 확실합니까?"
+  },
+  "SFOX_SELL_SURVEY": {
+    "TITLE": "@:SELL_SURVEY_OPENED.TITLE",
+    "BODY": "@:SELL_SURVEY_OPENED.BODY"
+  },
+  "SFOX_BUY_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "비트코인 받기까지 한 단계 남았습니다. 중단이 확실합니까?"
+  },
+  "UNOCOIN_TRADE_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY": {
+    "TITLE": "@:BUY_SURVEY_OPENED.TITLE",
+    "BODY": "@:BUY_SURVEY_OPENED.BODY"
   },
   "LANGUAGE_EXPLAIN": "원하는 언어를 설정하세요",
   "EMAIL_ADDRESS": "이메일 주소",
   "NOT_VALID_EMAIL_ADDRESS": "유효한 이메일 주소를 입력하세요.",
-  "EMAIL_ADDRESS_EXPLAIN": "확인된 사용자 이메일 주소는 의심스러운 또는 비정상 활동이 탐지 되어 로그인 코드를 보낼 때, 지갑 로그인 아이디를 다시 알려줄 때, 비트코인 입금 알림을 보낼때 사용됩니다. 마케팅 목적으로 귀하의 이메일 주소를 사용하지 않습니다.",
+  "EMAIL_ADDRESS_EXPLAIN": "확인된 귀하 이메일 주소는 의심스럽거나 특이한 활동이 탐지 되어 귀하에게 로그인 코드를 보내주어야 할 경우, 귀하에게 지갑 로그인 아이디를 알려줄 경우, 돈이 들어왔을 때 이를 귀하에게 알려줄 경우에 쓰입니다.",
   "CHANGE_EMAIL_NOT_EXCHANGE": "이렇게 하면 지갑 이메일 주소가 바뀌지만, \"비트코인 사기\"에서 등록한 이메일 주소는 변하지 않습니다.",
   "MAIL_PROVIDER_WARN": "귀하 메일 서비스 제공자가 블록체인 이메일 받는 데 문제가 있을 수 있습니다.",
   "VERIFIED": "확인 됨",
   "UNVERIFIED": "확인 안됨",
   "MOBILE_NUMBER": "휴대 장치 번호",
-  "MOBILE_NUMBER_EXPLAIN": "휴대 장치는 지갑 보안 성을 높이는 2 단계 인증에 쓸 수 있습니다.",
+  "MOBILE_NUMBER_EXPLAIN": "귀하 휴대폰은 2-단계 인증 사용 설정하기, 불법 접근에서 귀하 지갑 보호하기, 돈이 들어왔을 때 이를 귀하에게 알려주기에 쓰입니다.",
   "ADD_MOBILE_NUMBER": "휴대 장치 번호 연결",
   "WALLET_PASSWORD": "지갑 암호",
   "WALLET_PASSWORD_EXPLAIN": "귀하의 암호는 저희 서버와 공유되지 않으므로 귀하가 암호를 잊더라도 우리가 암호 재 설정을 도와 줄 수 없습니다. 암호 분실 시 지갑 복구를 위해 복구 구절을 꼭 적어 놓으세요.",
@@ -189,10 +255,10 @@
   "CANT_USE_EMAIL": "귀하 이메일은 암호로 쓸 수 없습니다.",
   "CANT_USE_HINT": "귀하 암호 힌트는 암호로 쓸 수 없습니다.",
   "CANT_USE_CURRENT": "귀하 현 암호는 새 암호로 쓸 수 없습니다.",
-  "CANT_USE_MAIN": "귀하 주 암호는 쓸 수 없습니다",
+  "CANT_USE_MAIN": "귀하 주된 암호는 두 번째 암호로 쓸 수 없습니다.",
   "ADD_PASSWORD_HINT": "암호 힌트를 만드세요",
   "PASSWORD_HINT": "암호 힌트",
-  "PASSWORD_HINT_EXPLAIN": "귀하의 블록체인 지갑은 저희 서버와 암호에 대해 교신하지 않습니다. 즉 저희는 귀하 암호를 알 수 없고 잊어버렸을 때 재 설정도 못 합니다. 암호를 잊었을 때 확인된 이메일 주소로 보낼 기억 가능한 암호를 만드세요.",
+  "PASSWORD_HINT_EXPLAIN": "귀하의 블록체인 지갑은 저희 서버와 암호에 대해 교신하지 않습니다. 즉, 저희는 귀하 암호를 알 수 없고 잊어버렸을 때 재 설정도 못 합니다. 암호를 잊었을 때 확인된 이메일 주소로 보낼 기억 가능한 암호를 만드세요.",
   "PASSWORD_HINT_ERROR": "암호 힌트를 변경할 수 없습니다. 유효하지 않은 문자를 썼습니다.",
   "PASSWORD_HINT_NOPASSWORD": "귀하 주 지갑 암호는 암호 힌트로 설정할 수 없습니다.",
   "PASSWORD_HINT_NOPASSWORD2": "귀하 두 번째 암호는 암호 힌트로 설정할 수 없습니다.",
@@ -201,7 +267,8 @@
   "CHANGE_EMAIL_FAILED": "이메일 주소를 변경할 수 없습니다.",
   "CHANGE_PASSWORD_SUCCESS": "암호가 변경되었습니다.",
   "CHANGE_PASSWORD_FAILED": "암호를 변경할 수 없었습니다.",
-  "MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA": "먼저 보안 설정에서 문자를 써서 2 단계 인증 사용 해제를 하세요",
+  "MOBILE_NUMBER_CHANGE_DISABLED_BECAUSE_SMS_2FA": "먼저 보안 설정에서 문자를 써서 2-단계 인증 사용 해제를 하세요",
+  "CURR": "통화",
   "CURRENCY": "현지 통화",
   "CURRENCY_EXPLAIN": "현지 통화 선택",
   "SAVE_NOTE": "추가",
@@ -209,10 +276,11 @@
   "CANCEL_EDIT_NOTE": "취소",
   "WALLET_RECOVERY_PHRASE": "지갑 복구 구절",
   "RECOVERY_PHRASE": "복구 구절",
-  "RECOVERY_PHRASE_EXPLAIN": "귀하 복구 구절은 암호를 잊거나 블록체인 서비스가 안 될 때 자금 복구를 하는데 쓸 수 있습니다. 복구 구절은 절대 변경되지 않으며, 지갑에 있던 귀하 기존 비트코인과 새로 받은 자금을 복구합니다. 가져온 주소들은 지갑 복구 구절로 백업 되지 않습니다. 따라서 가져온 주소들에서 받은 자금을 이 지갑으로 이체하는 것을 강력히 추천합니다.",
+  "RECOVERY_PHRASE_EXPLAIN": "귀하 복구 구절은 암호를 잊거나 블록체인 서비스가 안 될 때 자금 복구를 하는데 쓸 수 있습니다. 복구 구절은 절대 바뀌지 않으며 복구 구절로 지갑 속에 있던 돈과 새로 받은 돈 모두를 복구할 수 있음을 기억하세요. 가져온 주소들은 지갑 복구 구절로 백업 되지 않습니다. 따라서 가져온 주소들에서 받은 자금을 이 지갑으로 이체하는 것을 강력히 추천합니다.",
   "CONFIRM_RECOVERY_PHRASE": "백업 구절",
   "RECOVERY_ERROR": "지금 가져올 수 없으니 다시 해 보세요",
-  "MAIN_PW_REQUIRED": "주 지갑 암호를 입력해서 복구 구절을 보세요",
+  "MAIN_PW_REQUIRED": "주된 지갑 암호를 입력해서 복구 구절을 보세요",
+  "SET_SECOND_PW_ANYWAY": "어쨌든 두 번째 암호를 설정하세요.",
   "NEXT_STEP": "다음 단계",
   "NEXT": "다음",
   "EMAIL": "이메일",
@@ -222,25 +290,33 @@
   "CREATE_ACCOUNT": "새 것 만들기",
   "CREATE_ADDRESS": "다음 주소",
   "ACCOUNT_NAME": "이름:",
+  "ACCOUNT": "계좌",
   "REVEAL_XPUB": "xPub 보이게 하기",
   "MANAGE_ADDRESSES": "관리",
   "ACCOUNT_XPUB_MODAL_TITLE": "공개 키 연장",
   "PENDING": "보류",
+  "PENDING_LOWERCASE": "보류",
+  "PENDING_TX": "블록체인이 귀하 거래를 확인하고 있습니다! 거래가 잠시 보류로 나오고 있어도 걱정 마세요. 사용한 수수료와 네트워크 부하 때문에 확인이 늦어질 때가 있습니다.",
+  "PENDING_TX_SENDER": "거래가 네트워크 확인을 기다리고 있습니다. 사용한 수수료와 네트워크 부하에 따라 거래 확인에 걸리는 시간은 달라집니다. 거래가 거부되어도 돈은 그대로 지갑에 남아 있습니다.",
+  "PENDING_TX_RECEIVER": "거래가 네트워크 확인을 기다리고 있습니다. 사용한 수수료와 네트워크 부하에 따라 거래 확인에 걸리는 시간은 달라집니다. 거래가 거부되어도 돈은 그대로 송금자 지갑에 남아 있습니다.",
   "COMPLETE": "완성하기",
   "TRANSACTION_COMPLETE": "거래 확인됨",
-  "OVERVIEW": "개관:",
-  "NOTE": "설명:",
+  "TRANSACTION_PENDING": "<b>현황:</b> 거래가 네트워크 확인을 기다리고 있습니다. 사용한 수수료와 네트워크 부하에 따라 거래 확인에 걸리는 시간은 달라집니다. 거래가 거부되어도 돈은 그대로 송금자 지갑에 남아 있습니다.",
+  "OVERVIEW": "개요:",
+  "NOTE": "설명",
   "CREATE": "만들기",
   "MAKE_PUBLIC": "공개하기",
   "FROM": "다음으로부터",
+  "FOR": "다음을 위해r",
   "TO": "다음에게",
   "FEE": "수수료",
   "TOTAL": "합계",
+  "PAYMENT": "결제",
   "GOOGLE_AUTH_CODE": "구글 인증 도구",
   "SMS_CODE": "문자 코드",
   "EMAIL_CODE": "이메일 코드",
   "YUBI_CODE": "Yubikey 코드",
-  "CONFIGURE_2FA": "되게 하기",
+  "CONFIGURE_2FA": "사용 설정",
   "TWO_STEP_VERIFICATION": "2-단계 인증",
   "TWO_STEP_EXPLAIN": "2-단계 인증이 되게 해서 지갑 보안 성을 높이세요. 무료 앱이나 휴대 장치 번호를 써서 지갑 보안을 할 수 있습니다.",
   "ENABLE_TWO_STEP": "2 단계 사용 설정",
@@ -248,10 +324,10 @@
   "2FA_YUBI": "Yubikey",
   "2FA_SMS": "문자",
   "2FA_GOOGLE_AUTH": "구글 인증 도구",
-  "2FA_NOT_SUPPORTED": "2 단계 인증 방법 지원이 안 됩니다",
+  "2FA_NOT_SUPPORTED": "2-단계 인증 방법 지원이 안 됩니다",
   "DISABLE": "안 되게 하기",
-  "CONFIRM_DISABLE_2FA": "2 단계 인증 안되게 하는 게 확실합니까?",
-  "IMPORTED_ADDRESSES": "가져온 주소들",
+  "CONFIRM_DISABLE_2FA": "2-단계 인증이 안되게 하는 게 확실합니까?",
+  "IMPORTED_ADDRESSES": "가져온 비트코인 주소들",
   "HD_ADDRESSES": "HD 주소들",
   "ADDRESS_BOOK": "주소록",
   "MANAGE_ADDRESS_BOOK": "주소록 관리",
@@ -267,7 +343,7 @@
   "ENABLED": "되게 하기",
   "ENABLE": "되게 하기",
   "HANDLE_BITCOIN_LINKS": "비트코인 연결 취급",
-  "HANDLE_BITCOIN_LINKS_EXPLAIN": "귀하 블록체인 지갑이 웹 브라우저에 있는 비트코인 지불 연결을 취급하도록 하려면 이것을 사용 설정 하세요. 그렇게 하면 온라인 거래를 할 때 더 편리하게 될 겁니다.",
+  "HANDLE_BITCOIN_LINKS_EXPLAIN": "귀하 블록체인 지갑이 웹 브라우저에 있는 비트코인 결제 연결을 취급하도록 하려면 이것을 사용 설정 하세요. 그렇게 하면 온라인 거래를 할 때 더 편리하게 될 겁니다.",
   "SET_HANDLE_BITCOIN_LINKS": "사용 설정",
   "HANDLE_BITCOIN_LINKS_STATUS_UNKNOWN": "비트코인 연결 취급이 되는지 탐지할 수 없습니다. 이미 사용 설정을 했으면, 아무 것도 일어나지 않을 겁니다.",
   "ACCOUNT_MANAGEMENT_EXPLAIN": "귀하 블록체인 지갑 속 비트코인 정리를 귀하가 설정할 수 있습니다. 개인 자금과 사업 경비를 구분하거나 저축 분을 따로 떼어 놓는데 유용합니다.",
@@ -275,10 +351,10 @@
   "ERR_FETCH_BALANCE": "잔액 인출이 안됩니다",
   "MAKE_DEFAULT": "디폴트로 하기",
   "RENAME": "이름 바꾸기",
-  "MY_ADDRESSES_EXPLAIN": "귀하 블록체인 지갑 속에는 세계 어디서나 자금을 받는 데 쓸 수 있는 비트코인 주소들이 무제한으로 들어 있습니다. 비트코인 주소들은 지갑이 자동 관리합니다. 다음 주소들이 라벨이 붙은 주소들의 하위 세트들입니다.",
+  "MY_ADDRESSES_EXPLAIN": "귀하 블록체인 지갑 속에는 세계 어디서나 자금을 받는 데 쓸 수 있는 비트코인 주소들이 무제한으로 들어 있습니다. 비트코인 주소들은 귀하 지갑이 자동 관리합니다. 다음 주소들이 라벨이 붙은 주소들의 하위 세트들입니다.",
   "NEW_ADDRESS": "새 주소",
   "ADD_NEXT_ADDRESS": "새 주소 추가",
-  "IMPORT_ADDRESS": "주소 가져오기",
+  "IMPORT_ADDRESS": "비트코인 주소 가져오기",
   "MORE_ACTIONS": "추가 액션",
   "CONFIRM_IMPORT_WATCH": {
     "TITLE": "\"보기만 하는 주소\"를 가져오겠습니까?",
@@ -290,21 +366,30 @@
     "TITLE": "라벨 제거?",
     "BODY": "이 액션은 되돌릴 수 없습니다. 라벨을 제거해도 주소는 삭제되지 않으며 귀하는 그 주소로 계속 안전하게 돈을 받을 수 있습니다."
   },
-  "DETAILS": "상세",
+  "CONFIRM_DELETE_BANK": {
+    "TITLE": "은행 계좌를 삭제합니까?",
+    "BODY": "은행 계좌 삭제가 확실합니까?"
+  },
+  "DETAILS": "상세 사항",
   "TRANSFER": "이체",
   "TRANSFER_ALL": "모두 이체",
   "ARCHIVE": "보관하기",
   "ARCHIVED": "보관 됨",
   "UNARCHIVE": "보관 해제",
   "DELETE": "삭제",
+  "MAIN_PASSWORD": "주된 암호",
+  "MAIN_PASSWORD_CANCEL": "귀하의 주된 암호가 필요합니다.",
   "SECOND_PASSWORD": "두 번째 암호",
   "CURRENT_SECOND_PASSWORD": "현 두 번째 암호",
-  "SECOND_PASSWORD_EXPLAIN": "비트코인 쓸 때마다 필요한 두 번째 암호를 만들어 보안 성을 높일 수 있습니다. 이 암호는 표준 지갑 암호와 다릅니다. 두 번째 지갑 암호를 설정했으면, 그 암호를 잊지 마세요!",
+  "SECOND_PASSWORD_EXPLAIN": "추가 보안을 위해 돈을 쓸 때마다 두 번째 암호를 입력해야 하도록 할 수도 있습니다. 이 암호는 표준 지갑 암호와 다릅니다. 두 번째 지갑 암호를 설정했으면, 그 암호를 잊지 마세요!",
   "SECOND_PASSWORD_WARNING": "이 암호는 표준 지갑 암호와 다릅니다. 두 번째 지갑 암호를 설정했으면, 그 암호를 잊지 마세요!",
-  "SECOND_PASSWORD_CANCEL": "비트코인을 보내려면 두 번째 암호가 필요합니다. 다시 해보세요.",
+  "SECOND_PASSWORD_CANCEL": "송금하려면 두 번째 암호가 필요합니다. 다시 해보세요.",
   "SECOND_PASSWORD_REMOVE_SUCCESS": "두 번째 암호가 제거되었습니다.",
   "SECOND_PASSWORD_REMOVE_LOGOUT": "계속하려면 로그아웃 했다가 다시 로그인 해야 합니다.",
-  "SECOND_PASSWORD_REMOVE_ERR": "두 번째 암호는 삭제할 수 없습니다. 지원에 연락하세요.",
+  "SECOND_PASSWORD_REMOVE_ERR": "두 번째 암호는 제거할 수 없습니다. 다시 해 보세요.",
+  "RECOVERY_BEFORE_SECOND_PASSWORD": "돈 백업부터 하세요!",
+  "RECOVERY_BEFORE_SECOND_EXPLAINER": "두 번째 암호 설정 전에 지갑 복구 구절 백업부터 하는 것을 강력히 추천합니다. 지갑을 백업하면 암호를 잊어버려도 비트코인이 안전합니다. 귀하 보안을 위해 우리는 암호를 보관하지 않습니다.",
+  "BACKUP_NOW": "지금 백업",
   "REMEMBER_2FA": "2-단계 인증을 기억하세요",
   "REMEMBER_2FA_EXPLAIN": "재 인증 없이 로그인이 되도록 귀하 브라우저는 잠시 동안 기억됩니다. 로그인 할 때마다 인증을 하고 싶으면 이 기능을 끄세요. 모든 쿠키를 삭제할 때까지 현 브라우저에 대한 영향은 없습니다.",
   "BLOCK_TOR": "Tor로 지갑 접근",
@@ -315,9 +400,10 @@
   "ALLOWED": "허용됨",
   "BLOCKED": "차단됨",
   "RENAME_ACCOUNT": "이름",
-  "TRANSACTION_WILL_COMPLETE_IN": "이 거래는 3 번 확인되고 {{ minutes }} 분 후에 완결될 것입니다.",
+  "TRANSACTION_WILL_COMPLETE_IN": "확인이 3 번 되면 거래가 완료됩니다.",
+  "TRANSACTION_WILL_COMPLETE_IN_ETH": "확인이 12 번 되면 거래가 완료됩니다.",
   "EXPORT_HISTORY": "내보내기 이력",
-  "EXPORT_HISTORY_EXPLAIN": "귀하 주소 거래 이력을 CSV 또는 XLS 형식으로 내보내세요",
+  "EXPORT_HISTORY_EXPLAIN": "귀하 주소 거래 이력을 CSV 형식으로 내보내기",
   "DEV_THEMES": "Dev 테마들",
   "DEV_THEMES_EXPLAIN": "이제 귀하 블록체인 지갑을 다른 테마로 맞춤 설정할 수 있습니다. 귀하 옵션을 보려면 \"선호\"로 가 보세요",
   "EXPORT": "내보내기",
@@ -332,20 +418,20 @@
   "DOWNLOAD": "파일 다운로드",
   "SPENDABLE_ADDRESSES": "쓸 수 있는 주소들",
   "UNUSED_ADDRESSES": "안 쓴 주소들",
-  "UNUSED_ADDRESSES_COPY": "귀하 블록체인 지갑 속에는 세계 모든 사람으로부터 자금을 받는데 쓸 수 있는 비트코인 주소들이 무제한으로 들어 있습니다. <br/>비트코인 주소들은 귀하 지갑이 자동 관리합니다. 다음 주소들은 라벨이 붙은 주소들의 하위 세트들입니다.",
+  "UNUSED_ADDRESSES_COPY": "귀하 블록체인 지갑 속에는 세계 모든 사람으로부터 자금을 받는데 쓸 수 있는 비트코인 주소들이 무제한으로 들어 있습니다. 비트코인 주소들은 귀하 지갑이 자동 관리합니다. 다음 주소들은 라벨이 붙은 주소들의 하위 세트들입니다.",
   "CONFIRM_SHOW_PAST": {
     "TITLE": "확실합니까?",
     "BODY": "이미 쓴 주소들을 보는 것은 디버깅 할 때 도움이 되지만 고급 사용자만 하는 게 좋습니다. 개인 정보 보호 관점에서 각 주소를 한 번 이상 쓰지 않기를 강력하게 추천합니다."
   },
   "PAST_ADDRESSES": "사용한 주소들",
-  "PAST_ADDRESSES_COPY": "이미 쓴 주소들은 디버깅 할 때와 관련 잔액을 볼 때 도움이 됩니다. 개인 정보 보호 <br> 관점에서 이 주소들을 다시 쓰는 것은 안 좋습니다.",
+  "PAST_ADDRESSES_COPY": "이미 쓴 주소들은 디버깅 할 때와 관련 잔액을 볼 때 도움이 됩니다. 개인 정보 보호 관점에서 이 주소들을 다시 쓰는 것은 안 좋습니다. 주소 변경은 여기 포함 안됩니다.",
   "TOTAL_RECEIVED": "받은 총액",
   "CURRENT_BALANCE": "현 잔액",
   "CURRENT_BALANCE_HELP": "비트코인을 보낼 때 귀하 블록체인 지갑은 돈을 쓸 주소를 자동 선택합니다. 따라서 어떤 주소의 현재 잔액은 총 수령 금액과 다를 수 있습니다.",
   "NO_TXS": "거래 없음",
   "WATCH_ONLY_ADDRESSES": "볼 수만 있는 주소들",
-  "ARCHIVED_ADDRESSES": "보관한 주소들",
-  "ARCHIVED_ADDRESSES_EXPLAIN": "보관한 주소들은 주 보기에서는 보이지 않는 것들로 더 이상 필요 없는 주소들이지만 아직 지갑의 일부입니다. 귀하는 언제든지 보관을 해제할 수 있습니다.",
+  "ARCHIVED_ADDRESSES": "보관된 비트코인 주소들",
+  "ARCHIVED_ADDRESSES_EXPLAIN": "보관한 주소들은 주된 보기에서는 보이지 않는 것들로 더 이상 필요 없는 주소들이지만 아직 지갑의 일부입니다. 귀하는 언제든지 보관을 해제할 수 있습니다.",
   "CONFIRM_LOSE_ACCESS": {
     "TITLE": "주소 삭제입니까?",
     "BODY": "주소는 다 쓰고 난 후에 삭제하세요. 앞으로 이 주소로 보낸 자금은 찾을 수 없습니다."
@@ -356,7 +442,8 @@
   },
   "HIDE_PAIRING_CODE": "페어링 코드 숨기기",
   "SHOW_PAIRING_CODE": "페어링 코드 보이게 하기",
-  "PAIRING_CODE_EXPLAIN": "지갑 연결을 원활하게 하고 싶으면 블록체인 지갑 (iOS or Android)으로 코드를 스캔 하세요<i>(\"페어링 코드 보이기\"를 클릭)</i>. ",
+  "PAIRING_CODE_EXPLAIN": "지갑 연결을 원활하게 하고 싶으면 블록체인 지갑 (iOS or Android)으로 코드를 스캔 하세요<i>(\"페어링 코드 보이기\"를 클릭)</i>.",
+  "PAIRING_CODE_EXPLAIN_WARN": "페어링 코드를 남에게 알려주지 마세요.",
   "SHOW_PAIRING_CODE_FAIL": "페어링 코드 로딩 실패",
   "DOWNLOAD_THE": "iOS 앱은",
   "IOS_APP_HERE": "여기로 다운로드 하고",
@@ -387,6 +474,7 @@
   "ADDRESS_VALID": "비트코인 주소가 유효합니다.",
   "ADDRESS_FOR_PRIVATE_KEY": "이 개인 키와 연관된 비트코인 주소는",
   "PRIVATE_KEY_WARNING": "<b>경고:</b>귀하의 개인 키에 대한 엑세스 권한이 있는 자들은 이 주소로부터 귀하의 비트코인을 보낼 수 있습니다. 그러므로 개인 키를 남에게 노출하는 건 비트코인을 잃을 수 있는 보안 위험입니다. 계속하기를 원하십니까?",
+  "PRIVATE_KEY_WARNING_ETH": "<b class='state-danger-text'><i class='icon-alert'></i>경고:</b> 개인 키를 남에게 알려주면 그 사람이 이 주소로부터 에테르를 보낼 수 있습니다. 개인 키를 남에게 알려주면 에테르를 잃는 보안 위험이 생깁니다. <b>계속하려면 주된 암호가 필요합니다.</b>",
   "BALANCE_FOR_ADDRESS": "이 주소 잔액은",
   "INPUT_NOT_RECOGNIZED": "입력한 값이 유효한 개인 키 또는 비트코인 주소가 아닌 것 같습니다.",
   "ALREADY_IN_WALLET": "이 주소는 이미 지갑에 있습니다.",
@@ -406,18 +494,20 @@
   "IP_WHITELIST_RESTRICT": "로그인 IP 제한",
   "IP_WHITELIST_RESTRICT_EXPLAIN": "화이트리스트에 있는 IP 주소로부터 로그인만 허용. 고정 IP 주소가 없으면 지갑에 들어가지 못할 수 있습니다. 이메일 주소를 확인하면 의심스러운 로그인 시도에 대한 알림을 받게 됩니다.",
   "IP_WHITELIST": "IP 화이트리스트",
-  "IP_WHITELIST_EXPLAIN": "쉼표로 구분되어 있는 다음 IP 주소들로부터 이메일 확인 없이 로그인 허용. %를 와일드 카드로 쓰시오.",
-  "IP_WHITELIST_ERROR": " IP 화이트리스트 업데이트 실패",
+  "IP_WHITELIST_EXPLAIN": "쉼표로 구분되어 있는 다음 IP 주소들은 이메일 인증 없이 로그인 허용하기 %를 와일드 카드로 쓰시오.",
+  "IP_WHITELIST_ERROR": "IP 화이트리스트 업데이트 실패",
   "IP_INVALID": "유효하지 않은 IP 주소",
   "IP_NOT_ALLOWED": "%.%.%.% 는 허용 안됨",
   "WALLET_SECOND_PASSWORD": "두 번째 지갑 암호",
-  "WALLET_SECOND_PASSWORD_EXPLAIN": "추가 보안을 위해 비트코인을 쓸 때마다 입력해야 하는 두 번째 암호를 선택할 수 있습니다. 암호 재 설정 기능은 없으니 주의하세요.",
-  "SECOND_PASSWORD_SET": "두 번째 암호 사용 가능",
+  "WALLET_SECOND_PASSWORD_EXPLAIN": "돈을 쓸 때마다 두 번째 암호를 입력하게 해서 보안성을 높일 수 있습니다. 암호 재 설정 기능은 없으니 주의하세요.",
+  "SECOND_PASSWORD_SET": "두 번째 암호 사용 설정",
   "REMOVE_SECOND_PASSWORD": "두 번째 암호 제거",
-  "SECOND_PASSWORD_INCORRECT": "두 번째 암호가 틀렸습니다. 다시 시도해 보세요",
+  "SECOND_PASSWORD_INCORRECT": "두 번째 암호가 틀렸습니다. 다시 해 보세요",
+  "SECOND_PASSWORD_INCORRECT_SHORT": "틀린 두 번째 암호",
   "SET_SECOND_PASSWORD": "두 번째 암호 설정",
   "SET_PASSWORD": "암호 설정",
   "UPGRADE_WALLET": "블록체인 지갑에 오신 것을 환영합니다.",
+  "WELCOME": "환영!",
   "NEED_SECOND_PASSWORD_FOR_UPGRADE": "지갑 업그레이드를 위해 귀하 두 번째 암호가 필요합니다.",
   "UPGRADE_WELCOME": "블록체인 지갑 새 버전에 오신 걸 환영합니다!",
   "UPGRADE_NEW_DESIGN": "완전히 업데이트 된 디자인과 사용자 체험",
@@ -439,7 +529,7 @@
   "SWEEP": "스윕",
   "VERIFY_RECOVERY_PHRASE": "백업 복구 구절",
   "SWEEP_FAIL": "어떤 주소는 자동 스윕 되지 않았습니다",
-  "SWEEP_LOW_BALANCE_WARN": "어떤 자금은 자동 이체 되지 않습니다.",
+  "SWEEP_LOW_BALANCE_WARN": "어떤 주소는 자동 이체에 필요한 잔액이 없었습니다.",
   "SECURITY_TIP": "보안 팁",
   "DO_NOT_STORE_ON_COMPUTER": "귀하 복구 구절을 컴퓨터나 온라인 상에 저장하지 마세요. 복구 구절은 반드시 오프라인 안전하고 개인적인 곳에 저장해야 합니다. 복구 구절을 얻은 사람은 귀하 자금에도 손을 댈 수 있습니다.",
   "PRINTABLE_SHEET": "복구 구절 안전 저장이 쉽도록 인쇄 가능 복구 구절을 만들었습니다. 공백 복구 문서를 인쇄한 후 다음 단계에서 적어 넣으세요.",
@@ -475,8 +565,10 @@
   "EMAIL_VERIFIED_MSG": "귀하 이메일 주소가 확인되었습니다.",
   "PLEASE_LOGIN_FIRST": "계속하려면 지갑에 로그인 하세요.",
   "API_ACCESS": "API 액세스",
-  "API_ACCESS_SUPPORT": "우리 API를 써서 귀하 지갑과 프로그램 소통하세요. 시작하려면 <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>여기</a> 단계를 따라 하세요.",
+  "API_ACCESS_SUPPORT": "지갑과 프로그램을 통해 상호작용 하려면 우리 API를 쓰세요. 시작하려면 <a href='https://github.com/blockchain/service-my-wallet-v3#installation' target='_blank' rel='noopener noreferrer'>여기</a> 단계를 따라 하세요.",
   "BITCOIN_ADDRESS_INVALID": "유효하지 않은 비트코인 주소",
+  "BCH_ADDRESS_INVALID": "유효하지 않은 비트코인 캐시 주소",
+  "ETHER_ADDRESS_INVALID": "유효하지 않은 에테르 주소",
   "EMAIL_ADDRESS_REQUIRED": "필요함",
   "EMAIL_ADDRESS_INVALID": "유효하지 않음",
   "EMAIL_CONFIRMATION_SENT": "보냄",
@@ -493,27 +585,34 @@
   "TOO_WEAK": "암호가 너무 단순합니다.",
   "TOO_LONG": "암호가 너무 깁니다.",
   "WARN_AGAINST_IE": "크롬이나 사파리 같이 보안 성이 더 좋은 브라우저로 로그인 해보시기 바랍니다.",
-  "MINIMUM_BROWSER": "{{ browser }} {{ userVersion }}은 지원하지 않습니다. {{ browser }} {{requiredVersion }} 이상을 설치하세요.",
+  "MINIMUM_BROWSER": "{{ browser }} {{ userVersion }}은 지원하지 않습니다. {{ browser }} {{필요Version }} 이상을 설치하세요.",
   "UNKNOWN_BROWSER": "크롬, 파이어폭스, 사파리가 아닌 브라우저는 조심하세요. 안전한 난수 숫자 생성을 지원하는지, 사이트 간 스크립팅 공격을 확실히 방어하는지 확인하세요. 비트코인을 잃을 수 있습니다.",
   "UNSUITABLE_BROWSER": "귀하 브라우저는 지원하지 않습니다",
   "SPONSORS": "지원 받는 링크",
   "BITCOIN_CURRENCY": "비트코인 유닛",
   "BITCOIN_CURRENCY_EXPLAIN": "원하는 비트코인 값 표시 정밀도를 조정하세요",
+  "ETHER_CURRENCY": "에테르 단위",
+  "ETHER_CURRENCY_EXPLAIN": "원하는 에테르 값 표시 정밀도를 조정하세요",
   "JUST_RECEIVED_BITCOIN": "방금 비트코인을 받았습니다!",
   "SUCCESS": "성공!",
   "COPY_SUCCESS": "귀하 클립보드에 복사 성공!",
-  "BITCOIN_SENT": "비트코인 보내기 성공",
-  "BITCOIN_SENT_TOR": "비트코인 보내기 성공. TOR 브라우저는 새로 고침 해야 보입니다.",
-  "NO_TRANSACTIONS_YET": "귀하의 거래들",
+  "BITCOIN_SENT": "귀하 거래 확인 중입니다!",
+  "BITCOIN_SENT_TOR": "비트코인 보내기 성공. TOR 브라우저는 새로 고침을 해야 보입니다.",
+  "BITCOIN_CASH_SENT": "귀하 비트코인 캐시 거래 확인 중입니다!",
+  "NO_TRANSACTIONS_YET": "귀하 거래들",
   "SORRY_ZERO_TXS": "미안합니다, 거래를 찾을 수 없습니다.",
-  "PLEASE_TRY_AGAIN": "다른 필터링 범주를 사용해 보거나 <b class='pointer blue em-500'>지원 부서에 연락</b>해 보세요.",
+  "PLEASE_TRY_AGAIN": "다른 필터링 범주를 사용해 보거나 <a>지원 부서에 연락</a>해 보세요.",
   "TRY_AGAIN": "다시 해 보세요",
-  "DESCRIBE_TRANSACTIONS": "비트코인을 받거나 보낼 때 거래가 생깁니다.",
-  "HIT_RECEIVE": "비트코인을 지갑에 예치하려면 <b class='pointer black em-500'><i class='bc-icon-receive'></i> 받기 </b>를 클릭하세요.",
+  "DESCRIBE_TRANSACTIONS": " 비트코인을 받거나 보낼 때 거래가 생깁니다.",
+  "DESCRIBE_TRANSACTIONS_BCH": " 비트코인 캐시를 받거나 보낼 때 거래가 생깁니다.",
+  "DESCRIBE_TRANSACTIONS_ETH": "에테르를 받거나 보낼 때 거래가 생깁니다.",
+  "WEB_ONLY_ETH": "설명: 현재 에테르는 귀하 웹 지갑에만 있습니다. 모바일 지갑에서는 거래가 보이지 않습니다.",
+  "HIT_RECEIVE": "비트코인을 지갑에 예치하려면 <b class='pointer black em-500'><i class='bc-icon-receive'></i>받기</b> 를 클릭하세요.",
   "HIT_SEND": "세계 어디든지 비트코인을 즉시 보내려면 <b class='pointer black em-500'><i class='bc-icon-send'></i>보내기</b> 를 클릭하세요!",
   "FIRST_ACCOUNT_NAME": "내 비트코인 지갑",
   "EMAIL_VERIFIED_SUCCESS": "귀하 이메일 확인 성공! 지갑을 보려면 이전 브라우저/탭으로 돌아가세요.",
-  "UID_EXPLAIN": "지갑 아이디는 유일무이한 식별자입니다. 귀하만 가지고 있어 지갑 여는데 씁니다.",
+  "UID_EXPLAIN": "지갑 아이디는 유일무이한 식별자입니다. 귀하만 가지고 있으며 로그인 할 때와 지갑 열 때 사용하게 됩니다. 보내기/받기 할 때 쓰는 주소가 <b>아닙니다</b>.",
+  "UID_EXPLAIN_WARN": "지갑 아이디를 남에게 알려주지 마세요.",
   "AUTHORIZED": "승인됨!",
   "AUTHORIZED_MESSAGE": "이 로그인 시도를 승인했습니다.",
   "ADVANCED_SEND": "고급 보내기",
@@ -530,9 +629,11 @@
   "RESET_FORM": "리셋 양식",
   "REGULAR_SEND": "일반 보내기",
   "TX_FEE": "거래 수수료",
-  "TX_FEE_REQUIRED": "거래 수수료 (비트코인 채굴자가 필요로 함)",
+  "TX_FEE_REQUIRED": "거래 수수료는 거래가 확인되게 하는 채굴 네트워크 비용으로 쓰입니다. 블록체인은 현재 네트워크 조건에 맞는 수수료를 추천합니다.",
   "TX_FEE_HELP": "거래 수수료에 따라 비트코인 채굴 네트워크가 귀하 거래를 확인하는 속도가 다릅니다. 현재 네트워크 조건도 속도에 영향을 미칩니다. 이번 거래에 다음 수수료를 추천합니다.",
   "TX_FEE_EXPLAINATION": "비트코인 채굴자는 모든 거래 확인에 대해 수수료를 받습니다. 수수료는 네트워크 조건과 거래 크기에 따라 달라집니다. 고급 보내기에서는 귀하가 수수료를 설정할 수 있습니다.",
+  "TX_FEE_EXPLAINATION_ETH": "채굴자들이 이 수수료를 받아 거래를 처리합니다.",
+  "TX_FEE_CONFIRM_EXPLAIN": "거래 수수료는 채굴 네트워크 수수료와 빠르고 믿을 수 있는 거래 확인 시간을 확보하는 데 필요한 블록체인 인프라 유지에 쓰입니다. 지금 우리는 다음 거래 수수료를 추천합니다.",
   "USE_TOTAL": "잔액 합계에서 수수료를 뺀 금액 사용",
   "ENTER_VALID_AMOUNT": "유효한 금액을 입력하세요",
   "ESTIMATED_TX_TIME": "추정 확인 시간: ~{{ confirmationTime }} 분 ({{ blockQueue }}",
@@ -540,7 +641,7 @@
   "GO_BACK": "뒤로 가기",
   "CLICK_HERE_TO_CREATE_WALLET": "지갑 만들기",
   "RESEND": "다시 보내기",
-  "FIND_GUID_EXPLAIN": "이메일에서 로그인 링크를 찾으세요, 예를 들면 <i>blockchain.info/wallet/1111-222-333...</i> 로그인 아이디는 링크 끝에 있는 숫자와 대시입니다.",
+  "FIND_GUID_EXPLAIN": "이메일에서 로그인 링크를 찾으세요, 예를 들면 <i>blockchain.info/wallet/1111-222-333...</i> 지갑 아이디는 링크 끝에 있는 숫자들과 대시들입니다.",
   "UNKNOWN_IDENTIFIER": "알 수 없는 지갑 식별자. 알림이 필요하면 <span class='underline pointer'>여기를 클릭</span>.",
   "WELCOME_BACK": "잘 돌아 오셨습니다",
   "LOGIN_BELOW": "아래 지갑에 등록하세요",
@@ -569,10 +670,9 @@
   "TRANSACTION_DETAILS": "거래 상세",
   "2FA_DISABLED": "2 인수 인증 사용을 해제 했습니다.",
   "2FA_SUCCESS": "축하합니다! 2 인수 인증이 성공적으로 사용 설정 되었습니다.",
-  "2FA_ERROR": "2FA 사용 설정 도중 오류가 발생했습니다. 나중에 다시 시도 해주세요.",
+  "2FA_ERROR": "2FA 사용 설정 도중 오류가 발생했습니다. 나중에 다시 해보세요.",
   "2FA_INVALID": "2 인수 인증 코드 확인 실패. 나중에 다시 해보세요.",
-  "SEND_STEP_1": "어떤 비트코인 주소든지 즉시 비트코인 보내기",
-  "SEND_STEP_1_ADVANCED": "하나 이상 주소로 비트코인 보내고 귀하 채굴 수수료 정의하기",
+  "SEND_STEP_1": "어떤 받는 비트코인 주소든지 즉시 비트코인 보내기",
   "SEND_STEP_2": "귀하 거래를 검토해 주세요",
   "STEP": "단계 ",
   "OF_2": " 2의",
@@ -582,8 +682,8 @@
   "RECEIVE_BITCOIN_MESSAGE_LEGACY_1": "이것은 가져온 주소입니다.",
   "CLICK_HERE": "개인 정보 보호 강화를 위해 새 주소를 쓰세요.",
   "COPY_ADDRESS": "위 주소를 복사해서 남과 공유!",
-  "SC_CONFIGURE_2FA": "2 단계 확인은 매 로그인 시도마다 1 회용 암호를 입력하게 하므로 귀하 지갑에 대한 불법 접근 방지에 도움이 됩니다. 이 옵션을 켜면 귀하 지갑에 대한 불법 접근을 방지할 수 있습니다.",
-  "OR": " 또는 ",
+  "SC_CONFIGURE_2FA": "2 단계 인증은 매 로그인 시도마다 1 회용 암호를 입력하게 하므로 귀하 지갑에 대한 불법 접근 방지에 도움이 됩니다. 이 옵션을 켜면 귀하 지갑에 대한 불법 접근을 방지할 수 있습니다.",
+  "OR": "또는",
   "DIDNT_RECEIVE_EMAIL": "이메일을 못 받았나요?",
   "YOUR_EMAIL_ADDRESS": "귀하 이메일 주소",
   "LINK_MOBILE_EXPLAIN": "확인 코드를 귀하 휴대폰으로 문자 송신했습니다. 휴대폰 번호 확인을 위해 코드를 아래 입력해 주세요.",
@@ -592,49 +692,62 @@
   "TOR_BLOCKED": "Tor 차단됨",
   "TWO_STEP_ENABLED": "2-단계 켬",
   "MOBILE_LINKED": "모바일 연결됨",
-  "SCAN_QR_CODE": "귀하 QR 코드 스캔:",
+  "SCAN_QR_CODE": {
+    "TITLE": "QR 코드 스캔",
+    "HELPER": "송금인에게 자기 비트코인 지갑으로 이 QR 코드를 스캔하라고 하세요.",
+    "BCH_HELPER": "송금인에게 자기 비트코인 캐시 지갑으로 이 QR 코드를 스캔하라고 하세요.",
+    "ETH_HELPER": "송금인에게 자기 에테르 지갑으로 이 QR 코드를 스캔하라고 하세요."
+  },
   "HINT_STORED": "힌트 저장됨",
   "NOT_STORED": "저장 안됨",
   "PHRASE_BACKED": "구절 백업 됨",
   "EMAIL_VERIFIED": "이메일 확인됨",
-  "THANK_YOU_FOR_JOINING": "환영! {{count}} 백만이 넘는 비트코인 사용자 중 하나가 되어주셔서 감사합니다.",
-  "FIRST_LOGIN_TEXT_1": " 우리 지갑은 거래를 쉽고 직관적으로 만들어서 공정하고, 접근 가능하고 개방적인 미래 금융 환경을 만드는데 기여하고자 합니다. 다음을 방문해 주시고  ",
+  "THANK_YOU_FOR_JOINING": "환영! {{count}} 백만이 넘는 블록체인 지갑 사용자 중 하나가 되어주셔서 감사합니다.",
+  "FIRST_LOGIN_TEXT_1": " 거래가 쉽고 직관적인 우리 지갑은 공정하고 개방적이고 접근하기 쉬운 재정 거래가 있는 미래를 만듭니다.  다음을 방문해 주시고  ",
   "FIRST_LOGIN_TEXT_2": " 지갑을 안전하게 보관하세요",
   "FIRST_LOGIN_ACTION": "시작하기",
+  "TRADE_FIRST_LOGIN_TEXT_1": "세계에서 가장 인기 있는 디지털 통화 지갑 플랫폼에 와주셔서 감사합니다. 우리는 소프트웨서 한 개 씩을 통해 공정하고 개방적이고 접근하기 쉬운 재정 거래가 있는 미래를 만듭니다.",
+  "TRADE_FIRST_LOGIN_TEXT_2": "첫 비트코인 거래를 지금 시작해 보세요!",
   "TOS": "ToS",
   "PRIVACY": "개인 정보 정책",
   "CREATE_NEW_ACCOUNT_MODAL": "지갑을 나누면 비트코인 관리, 추적, 배정이 쉬워집니다. 보통 쓰는 이름은 저축, 소비, 사업 경비 등입니다.",
   "TRANSACTION_DETAIL_STATUS": "귀하 거래가 비트코인 네트워크에 제출된 후 채굴자 확인 대기 중입니다. 3 개의 네트워크 확인이 있는 거래는 확인된 것으로 봅니다.",
   "SEND_BITOIN_STEP2B": "이 거래에 관한 내용을 나중에 알 수 있게 메모를 추가하세요. 이 설명은 귀하만 볼 수 있습니다.",
+  "REQUEST_BITCOIN_STEP2B": "이 거래에 관한 내용을 나중에 알 수 있게 메모를 추가하세요. 이 설명은 거래 탭 또는 설정 --> 주소 --> {{::walletLabel}} --> 관리에서 편집할 수 있습니다.",
   "BACK_TO_FEED": "거래 피드로 돌아가기",
   "VALUE_AT_SEND": "보냈을 때 가치",
   "VALUE_WHEN_RECEIVED": "받았을 때 가치",
   "VALUE_NOW": "지금 가치",
-  "VERIFY_ON_BCI": "Blockchain.info에서 확인하기",
+  "VERIFY_ON_BCI": "Blockchain.info에서 확인",
+  "VERIFY_ON_ETHERSCAN": "Etherscan.io에서 확인",
+  "VERIFY_ON_BLOCKCHAIR": "Blockchair.com에서 확인",
   "ARE_YOU_SURE": "이중 확인한 것이었습니다! 계속하는 게 확실하지요? 옛날 지갑으로 못 돌아가는 거 기억하세요 :)",
   "ACCOUNT_NAME_TAKEN": "그 이름은 이미 사용 중입니다",
-  "EMAIL_ADDRESS_TOOLTIP": "확인된 귀하 이메일 주소는 비정상 활동이 탐지 되어 로그인 코드를 보낼때 그리고 비트코인 입금 알림을 보낼때 사용됩니다.",
+  "EMAIL_ADDRESS_TOOLTIP": "귀하의 확인된 이메일 주소는 비정상적인 활동이 탐지되어 로그인 코드를 보내거나 돈이 들어왔을 때 결제 알림을 보내는 데 쓰입니다.",
   "RECOVERY_PHRASE_TOOLTIP": "귀하 복구 구절은 암호를 잃었거나 우리 서버가 상당 시간 동안 다운 되었을 때 지갑을 복구하는데 쓰입니다.",
   "PASSWORD_HINT_TOOLTIP": "암호를 잊었을 때 귀하의 확인된 이메일 주소로 암호를 보내는 걸 허용해 주십시오.",
-  "MOBILE_NUMBER_TOOLTIP": "휴대 장치는 허가되지 않은 액세스로부터 지갑을 확보하며 지갑 보안 성을 높이는 2 단계 인증에 쓸 수 있습니다.",
-  "2FA_TOOLTIP": "2 단계 확인은 매 로그인 시도마다 1 회용 암호를 입력하게 하므로 귀하 지갑에 대한 불법 접근 방지에 도움이 됩니다.",
+  "MOBILE_NUMBER_TOOLTIP": "@:MOBILE_NUMBER_EXPLAIN",
+  "2FA_TOOLTIP": "2 단계 인증은 매 로그인 시도마다 1 회용 암호를 입력하게 하므로 귀하 지갑에 대한 불법 접근 방지에 도움이 됩니다.",
   "BLOCK_TOR_TOOLTIP": "Tor 익명화 네트워크의 일부로 알려진 IP주소들이 귀하 지갑에 접근하는 걸 방지하세요",
+  "ALL_BITCOIN_WALLETS": "모든 비트코인 지갑들",
+  "ALL_TRANSACTIONS": "모든 거래들",
   "NOTE_LC": "설명:",
-  "SECURE_WALLET_MSG_1": "귀하가 비트코인 지갑을 써 주셔서 우리는 기쁩니다! 그러나 아직 보안이 완벽하지 않은 것 같네요. 지갑 보안을 잘 해야 자금이 안전합니다.",
+  "SECURE_WALLET_MSG_1": "귀하가 블록체인 지갑을 쓰신다니 기쁩니다! 그러나 아직 보안이 완벽하지 않은 것 같네요. 지갑 보안을 잘 해야 자금이 안전합니다.",
   "SECURE_WALLET_MSG_2": "지갑 보안에 유의하세요 - 우리 보안 센터를 이용해서 자금을 지키세요",
   "NO_THANKS": "괜찮습니다",
   "CONTINUE_LOGOUT": "싸인 아웃 계속",
   "SECURE_WALLET": "지갑 보안",
-  "MOST_RECENT_ACTIVITY": "가장 최근 활동",
+  "MOST_RECENT_ACTIVITY": "최근 활동",
   "DYK": "아셨나요?",
   "ACTIVITY_EMPTY": "귀하 활동 피드에 오신 걸 환영합니다",
-  "ACTIVITY_EMPTY_MSG": "여기서 최근 거래 스냅샷과 지갑 중요 활동을 볼 수 있습니다. 지갑으로 비트코인을 받으려면 주소 공유부터 시작하세요",
+  "ACTIVITY_EMPTY_MSG_1": "아직 거래가 없나요? 괜찮아요.",
+  "ACTIVITY_EMPTY_MSG_2": "지갑에 돈을 좀 넣는 것으로 시작해 보세요!",
   "RECEIVE_BTC": "비트코인 받기 시작",
   "FEATURE": "기능",
   "EDUCATIONAL": "교육 관련",
   "CONTRIBUTE": "기부",
   "SURVEY": "설문 조사",
-  "TAKE_SURVEY": "설문 조사에 응해 주세요",
+  "TAKE_SURVEY": "설문 조사 응답하기",
   "BEFORE_LEAVE": "귀하가 가기 전에...",
   "SURVEY_ASK": "우리 지갑 체험이 더 좋아지도록 짧은 설문 조사에 응해 주시겠습니까?<br>우리는 귀하 피드백을 가치 있게 여깁니다!",
   "SURVEY_CONFIRM": {
@@ -645,34 +758,39 @@
     "TITLE": "잠깐!",
     "BODY": "싸인 아웃 하기 전에 백업 구절 기록하는 것을 잊지 마세요. 그래야 암호를 잊었을 때 지갑 복구가 가능합니다."
   },
+  "TRADE_BITCOIN_REMINDER": {
+    "TITLE": "아셨어요?",
+    "BODY": "지갑에서 직접 비트코인을 거래할 수 있습니다! 잔액 보충이 되는 우리 사기 기능을 알아 보세요."
+  },
   "WHAT_DO_YOU_THINK": "블록체인 지갑을 어떻게 생각하세요?",
   "VIEW_OPTIONS": "보기 옵션들",
   "DEAUTH_BROWSER": "이제 로그 아웃 되었습니다!",
   "DEAUTH_EXPLAIN": "아래 단추를 클릭해서 이 브라우저로 다음에 로그인 할 때 이메일 권한 부여를 받으세요. 남과 공유하는 컴퓨터 또는 공용 컴퓨터를 쓰면 이렇게 하세요.",
   "DEAUTHORIZE": "브라우저 권한 회수",
-  "PENDING_REDIRECT": "{{time}} 초 후 다른 곳으로 보내짐",
+  "DEAUTH_SUCCESS": "이 부라우저 권한은 회수되었습니다.",
+  "PENDING_REFRESH": "{{time}} 초 후 새로 고침이 됩니다",
   "BOUGHT": "샀음",
-  "DYK_CUSTOM_FEES": "내 수수료 설정 하기를 원하세요? 그럴 수 있습니다! \"보내기\" 화면 중 \"고급 보내기\"를 클릭하면 됩니다.",
+  "DYK_CUSTOM_FEES": "비트코인 수수료를 직접 설정하겠습니까? 그럴 수 있습니다! 보내기 화면 '수수료 사용자 맞춤'을 클릭하세요.",
   "DYK_CUSTOM_FEES_TITLE": "내 수수료 설정",
-  "DYK_RECOVERY": "우리는 귀하 암호를 보지도 저장도 안 하므로 귀하가 암호를 잊어도 재 설정을 못해 드립니다. 귀하 비트코인 접근 못하는 일이 없도록 백업 복구 구절을 꼭 기록해 두세요. 보안 센터를 방문해서 어떻게 하는지 알아 보세요.",
+  "DYK_RECOVERY": "우리는 귀하 암호를 보지도 저장도 안 하므로 귀하가 암호를 잊어도 재 설정을 못해 드립니다. 백업 복구 구절을 기록해 두어서 돈 접근을 못하는 일이 없게 하세요. 보안 센터를 방문해서 어떻게 하는지 알아 보세요.",
   "DYK_RECOVERY_TITLE": "우리는 암호를 저장하지도 공유하지도 않습니다.",
-  "DYK_TX_FEES": "거래 수수료는 비트코인 네트워크 채굴자들이 수집한 비트코인을 보내는데 쓰입니다. 귀하 거래가 네트워크에서 확인되도록 하기 위해 우리는 네트워크 표준과 거래 크기에 따라 정한 적정 수수료를 자동 포함 시킵니다.",
+  "DYK_TX_FEES": "거래 수수료는 비트코인{{showEthereum ? ' and ether' : ''}}을 보내는 데 쓰입니다. 우리가 네트워크 표준에 따른 적정 수수료를 자동 포함시켜서 귀하 거래가 네트워크에서 확인되도록 합니다.",
   "DYK_TX_FEES_TITLE": "거래 수수료",
   "DYK_FEEDBACK": "우리 지갑은 귀하에게 달려 있습니다! 귀하가 좋아한 것, 싫어한 것을 우리 팀에 알려 주세요. 모든 피드백은 우리 개발 팀이 직접 수집하고 검토합니다.",
   "DYK_FEEDBACK_TITLE": "우리는 귀하 피드백을 중요하게 생각합니다.",
-  "DYK_BTC_VALUE": "귀하 비트코인 잔액은 절대 변하지 않습니다. 그러나 비트코인 환율이 계속 변하므로 지갑 잔액을 현지 통화로 환산한 잔액은 변합니다. 잔액을 비트코인으로 볼 건지 현지 통화로 볼 건지 선택하려면 잔액을 클릭하세요.",
+  "DYK_BTC_VALUE": "귀하 비트코인{{showEthereum ? ' and ether' : ''}} 잔액은 절대 안 바뀝니다. 그러나 지갑 잔액 중 현지 통화 추정 금액은 환율 변동 때문에 바뀝니다. 비트코인{{showEthereum ? ' or ether' : ''}} 과 현지 통화 스위치를 하려면 그냥 잔액을 클릭하면 됩니다.",
   "DYK_BTC_VALUE_TITLE": "왜 내 잔액이 계속 변하지요?",
-  "DYK_TOP_SECURITY_TIPS": "보안 센터에 가서 백업 구절을 기록하고 2 단계 인증 사용 설정을 해서 귀하 지갑을 안전하게 유지하세요. 16 자 이상이 되는 독특하고 임의적인 암호도 추천합니다.",
+  "DYK_TOP_SECURITY_TIPS": "보안 센터에 가서 백업 구절을 기록하고 2-단계 인증 사용 설정을 해서 귀하 지갑을 안전하게 유지하세요. 16 자 이상이 되는 독특하고 임의적인 암호도 추천합니다.",
   "DYK_TOP_SECURITY_TIPS_TITLE": "톱 보안 팁들",
-  "WALLET_ID_EXPLANATION": "귀하 지갑 아이디는 사용자 이름과 비슷한 것으로 지갑에 로그인 할 때 씁니다. 비트코인을 보내고/받으려면 비트코인 주소가 필요합니다.  새 비트코인 주소를 생성하려면 \"받기\"를 클릭하세요.",
-  "WALLET_ID_EXPLANATION_TITLE": "귀하 지갑 아이디는 비트코인 보내기/받기에 쓸 수 없습니다.",
-  "DYK_MOBILE": "우리 모바일 앱을 다운로드한 후 귀하 지갑과 페어링 하면 이동 중에도 비트코인 지불을 할 수 있습니다.",
+  "WALLET_ID_EXPLANATION": "귀하 지갑 아이디는 사용자 이름과 비슷한 것으로 지갑에 로그인 할 때 씁니다. 비트코인{{showEthereum ? ' or ether' : ''}} 보내기/받기를 하려면 주소가 필요합니다. 비트코인{{showEthereum ? ' or ether' : ''}} 주소를 알려면 '요청'을 클릭하세요.",
+  "WALLET_ID_EXPLANATION_TITLE": "돈 보내기/받기에는 귀하 지갑 아이디를 쓸 수 없습니다.",
+  "DYK_MOBILE": "우리 모바일 앱을 다운로드 한 후 지갑과 페어링 해서 이동 중에도 지갑을 쓰도록 하세요.",
   "DYK_MOBILE_TITLE": "블록체인 지갑을 휴대 장치에서도 쓰세요.",
   "DYK_HOW_IT_WORKS": "고객 측 암호화를 하면 귀하 자금을 완벽하게 통제할 수 있습니다. 우리도 접근 못 합니다. 귀하 지갑은 우리 서버로 보내지기 전에 귀하 브라우저에서 암호화 됩니다.",
   "DYK_HOW_IT_WORKS_TITLE": "작동 방법",
-  "DYK_HD_PRIVACY": "자금을 받을 때마다 같은 주소를 쓰면 다른 사람이 귀하 지불 이력을 추적하기 쉬워집니다. 그래서 우리는 매 거래마다 새 비트코인 주소를 만들어서 귀하 개인 정보를 더 보호해 드립니다.",
+  "DYK_HD_PRIVACY": "자금을 받을 때마다 같은 주소를 쓰면 다른 사람이 귀하 결제 이력을 추적하기 쉬워집니다. 그래서 우리는 매 거래마다 새 비트코인 주소를 만들어서 귀하 개인 정보를 더 보호해 드립니다.",
   "DYK_HD_PRIVACY_TITLE": "HD 주소의 개인 정보 이점",
-  "DYK_DYNAMIC_FEES": "우리는 네트워크 조건과 귀하 거래 크기에 따라 귀하 수수료를 계속 조정합니다.",
+  "DYK_DYNAMIC_FEES": "우리는 네트워크 조건과 거래 크기에 따라서 비트코인 수수료를 계속 조정합니다. ",
   "DYK_DYNAMIC_FEES_TITLE": "블록체인은 귀하 수수료를 적정화 합니다.",
   "DYK_OPEN_SOURCE": "우리 지갑 관련 모든 코드는 오픈 소스입니다. 우리 지갑 개발 활동에 기부하려면 https://github.com/blockchain에서 할 수 있습니다.",
   "DYK_OPEN_SOURCE_TITLE": "오픈 소스",
@@ -692,10 +810,9 @@
   "LOGGING": "활동 기록하기",
   "LOG": "기록",
   "LOGGING_EXPLAIN": "지갑 활동을 기록한 후 활동 피드에 디스플레이 하세요",
-  "ACTIVITY_1": "주소들",
-  "ACTIVITY_1_DESC": "내 비트코인 지갑 만듬",
-  "ACTIVITY_2_DESC": "암호 설정",
-  "ACTIVITY_3_DESC": "지갑 만듬!",
+  "ACTIVITY_1": "내 지갑 만들어짐",
+  "ACTIVITY_2": "암호 설정",
+  "ACTIVITY_3": "지갑 만들어짐!",
   "FEE_PER_KB": "KB 당 수수료",
   "FEE_PER_KB_EXPLAIN": "네트워크에 과부하가 걸렸을 때 kb 당 높은 수수료를 책정하면 거래 확인을 빨리 받을 수 있습니다.",
   "FEE_PER_KB_MORE_THAN_ZERO": "0 보다 커야 합니다",
@@ -705,11 +822,11 @@
   "EDIT_NOTE": "편집",
   "DELETE_NOTE": "삭제",
   "TERMS_OF_SERVICE": "서비스 조건",
-  "XPUB_WARNING": "믿을 수 있는 사람에게만 연장된 개인 키 (xPub)를 주세요. 이 키가 있는 사람은 귀하 지불을 추적할 수 잇고 귀하의 지갑 접근을 방해할 수도 있습니다.",
+  "XPUB_WARNING": "믿을 수 있는 사람에게만 연장된 개인 키 (xPub)를 주세요. 이 키가 있는 사람은 귀하 결제을 추적할 수 잇고 귀하의 지갑 접근을 방해할 수도 있습니다.",
   "LOST_WALLET_ID": "지갑 아이디를 잊었습니다",
   "LOST_WALLET_PWD": "지갑 암호를 잊었습니다",
   "LOST_2FA": "내 2FA 장치를 잃었습니다",
-  "LOST_ID_DESC": "내 확인된 이메일 주소로 내 지갑 아이디를 보내 주세요",
+  "LOST_ID_DESC": "내 이메일 주소로 내 지갑 아이드와 알림을 이메일 해 주세요",
   "LOST_PWD_DESC": "귀하의 12 단어 복구 암호 구절을 써서 자금을 복구하세요",
   "RESET_2FA": "2FA 리셋",
   "REMIND_ME": "나에게 알려주세요",
@@ -718,15 +835,15 @@
   "CAPTCHA": "Captcha (캡차: 인간 컴퓨터 구별 프로그램)",
   "CAPTCHA_EXPAIN": "귀하가 로봇이 아닌 걸 확인할 수 있도록",
   "CAPTCHA_INCORRECT": "입력한 캡차가 틀렸습니다. 다시 해 주세요",
-  "LOST_2FA_DESC": "지갑 엑세스을 위한 2 단계 인증 재 설정",
-  "RESET_2FA_HELP_1": "2 단계 인증 (2FA) 장치를 잃어 버렸거나 이메일 계정에 엑세스할 수가 없어서 지갑을 못 열고 있습니까?",
-  "RESET_2FA_HELP_2": "아래 양식을 제출한 후 이메일을 확인해서 다음 지시를 따르세요. 2 단계 인증 (2FA) 재 설정 요청은 일정 시간이 지난 후에 자동 승인됩니다. 우리에게 더 정확한 세부 사항을 주시면 이 과정이 더 빨리 될 것입니다. 양식 제출 시 귀하 IP 주소와 브라우저 정보가 기록됩니다.",
+  "LOST_2FA_DESC": "지갑 엑세스을 위한 2-단계 인증 재 설정",
+  "RESET_2FA_HELP_1": "2-단계 인증 (2FA) 장치를 잃어 버렸거나 이메일 계정에 엑세스할 수가 없어서 지갑을 못 열고 있습니까?",
+  "RESET_2FA_HELP_2": "아래 양식을 제출한 후 이메일을 확인해서 다음 지시를 따르세요. 2-단계 인증 (2FA) 재 설정 요청은 일정 시간이 지난 후에 자동 승인됩니다. 우리에게 더 정확한 세부 사항을 주시면 이 과정이 더 빨리 될 것입니다. 양식 제출 시 귀하 IP 주소와 브라우저 정보가 기록됩니다.",
   "RESET_2FA_WALLET_IDENTIFIER": "지갑 식별자",
   "RESET_2FA_WALLET_IDENTIFIER_EXPLAIN": "지갑 식별자 (4 개 대시 포함 36 개 글자)를 잊었으면, 다음을 해주세요",
   "RESET_2FA_REGISTERED_EMAIL": "등록된 이메일",
   "RESET_2FA_REGISTERED_EMAIL_EXPLAIN": "지갑과 연결된 이메일을 입력하세요. 이 이메일에 접근이 안되더라도 일단 입력하세요.",
   "RESET_2FA_NEW_EMAIL": "새 이메일",
-  "RESET_2FA_NEW_EMAIL_EXPLAIN": "지갑과 연결된 이메일에 접근이 안되면, 새 이메일을 입력하세요. 2 단계 인증 (2FA) 승인 후 새 이메일이 지갑 이메일로 자동 설정됩니다.",
+  "RESET_2FA_NEW_EMAIL_EXPLAIN": "지갑과 연결된 이메일에 접근이 안되면, 새 이메일을 입력하세요. 2-단계 인증 (2FA) 승인 후 새 이메일이 지갑 이메일로 자동 설정됩니다.",
   "RESET_2FA_SECRET_PHRASE": "비밀 구절",
   "RESET_2FA_SECRET_PHRASE_EXPLAIN": "귀하 지갑 비밀 구절이 있으면 입력하세요. 비밀 구절이 맞으면 승인이 훨씬 빨라집니다. 모르면 공란으로 두세요.",
   "RESET_2FA_MESSAGE": "메시지",
@@ -738,12 +855,12 @@
   "NEW_EMAIL": "등록된 이메일",
   "QUOTA_EXCEEDED": "로그인 시도가 허락된 최다 한도에 도달했습니다. 나중에 다시 해보세요.",
   "UNKNOWN_ERROR": "알 수 없는 오류 발생. 나중에 다시 해보세요.",
-  "CONTINUE_TO_LOGIN": "계속 로그인 하세요.",
+  "CONTINUE_TO_LOGIN": "로그인 계속",
   "RECOVER_FUNDS": "자금 복구",
   "RECOVER_FUNDS_WARNING": "지갑 아이디와 암호가 있으면 항상 페어링 또는 로그인 하세요. 자금을 복구하면 새 지갑 아이디가 생깁니다.",
   "STEP_2_RECOVER": "2 단계 중 2 단계: 새 지갑 만들기",
   "STEP_1_RECOVER": "2 단계 중 1 단계: 12 단어 암호 구절 입력",
-  "RECOVER_BTC_LOST": "잃어버린 지갑에서 비트코인 복구",
+  "RECOVER_BTC_LOST": "잃어버린 지갑 돈 복구하기",
   "YOUR_REC_PASS": "귀하의 복구 암호 구절",
   "YOUR_REC_PASS_EXPLAIN": "자금과 거래 복구를 위해 12 개 복구 단어를 공백과 같이 입력하세요",
   "RESTORE_SUCCESSFUL": "복구 성공",
@@ -767,12 +884,20 @@
   "BROWSER": "브라우저",
   "IP_ADDRESS": "IP 주소",
   "COUNTRY_OF_ORIGIN": "원산지 국가",
+  "COUNTRY": "국가",
+  "STATE": "주",
   "AUTHORIZE_REJECT_SUCCESS": "로그인 시도 거부됨! 귀하가 아니면 지원 부서에 연락하세요.",
   "CHECKING_LOGIN_ATTEMPT": "로그인 시도 확인 중",
   "ERROR": "오류",
   "SEARCH": "검색",
-  "BALANCES": "잔액",
-  "MUST_SELECT_ORIGIN": "다음에서 어디로 보낼지 선택해야 합니다",
+  "SEARCH_FOR_BLOCK_ETC": "블록 해시, 거래, 주소 등 검색",
+  "BALANCES": {
+    "TOTAL": "총 잔액",
+    "btc": "비트코인 잔액",
+    "eth": "에테르 잔액",
+    "bch": "비트코인 캐시 잔액"
+  },
+  "MUST_SELECT_ORIGIN": "다음으로부터 어디로 보낼지 선택해야 합니다",
   "ERR_ENABLE_IP_RESTRICT": "로그인 IP 제한을 하려면 하나 이상 IP 주소를 화이트리스트에 추가해야 합니다",
   "ITS_HERE": "여기 있습니다",
   "NEW_WALLET": "새 블록체인 지갑",
@@ -798,26 +923,26 @@
   },
   "YOU_WILL_LOSE": "귀하 비트코인이 모두 없어집니다. 확실합니까?",
   "SURGE_WARN": "아주 비싼 수수료를 권합니다",
-  "SURGE_EXPLAIN": "비트코인 네트워크가 아주 과부하 상태입니다. <b>확인 지연을 피하기 위해 아주 비싼 수수료 {{ suggested | convert }}를 권합니다.</b>",
+  "SURGE_EXPLAIN": "비트코인 네트워크가 아주 과부하 상태입니다. <b>확인 지연을 피하기 위해 아주 비싼 수수료 {{ suggested | convert:'btc' }}를 추천합니다.</b>",
   "HIGH_FEE_WARN": "비싼 수수료 필요 없음",
-  "HIGH_FEE_EXPLAIN": "귀하는 아주 비싼 수수료{{ fee | convert:false:true }}를 제시했습니다. <b>수수료를 {{ suggested | convert }} ({{ suggested | convert:true:false:true }})로 내려도 다음 ~10분 이내(1 블록)에 거래 확인을 받을 수 있습니다.",
+  "HIGH_FEE_EXPLAIN": "귀하는 아주 비싼 수수료 {{ fee | convert:'btc' }}를 택했습니다. <b>그러나 수수료를 {{ suggested | convert:'btc' }} ({{ suggested | convert:'fiat' }}) 수준으로 내려도 거래가 다음 10 분 이내 (1 블록)에 확인될 것 같습니다. ",
   "LOW_FEE_ERROR": "거래 수수료가 너무 작습니다",
   "LOW_FEE_WARN": "낮은 맞춤 수수료는 권하지 않습니다",
-  "LOW_FEE_EXPLAIN": "아주 작은 수수료 {{ fee | convert:false:true }}를 제시했습니다. 귀하 거래는 막혀서 승인이 안 날 수도 있습니다. 다음 1 시간 (6 블록)이내에 거래 승인이 될 확률을 높이려면 <b>거래 수수료를 적어도 {{ suggested | convert }} ({{ suggested | convert:true:false:true }}) 이상으로 하기 권합니다.</b>",
+  "LOW_FEE_EXPLAIN": "귀하는 아주 싼 수수료 {{ fee | convert:'btc' }}를 택했습니다. 귀하 거래는 막혀서 승인이 안 날 수도 있습니다. 귀하 거래가 다음 1 시간 (6 블록) 안에 확인될 가능성을 높이기 위해 <b>우리는 {{ suggested | convert:'btc' }} ({{ suggested | convert:'fiat' }}) 이상 수수료를 추천합니다.</b>",
   "BALANCE_OVERFLOW_EXPLAIN": "보내는 금액을 줄여야 할 겁니다. 다음 단계에서 변경을 검토할 수 있습니다.",
   "DYNAMIC_FEE_HELP": "대부분의 거래는 비트코인 채굴 네트워크에 거래 수수료를 내야 합니다. 거래 수수료 변경은 고급 사용자에게만 권합니다.",
   "CONTINUE_CURRENT_FEE": "현재 수수료로 계속",
-  "RAISE_TO": "{{ suggested | convert }}로 올리기",
-  "LOWER_TO": "{{ suggested | convert }}로 낮추기",
+  "RAISE_TO": "{{ suggested | convert:'btc' }}로 올리기",
+  "LOWER_TO": "{{ suggested | convert:'btc' }}로 내리기",
   "USE_VALUES": "추천 값 사용",
-  "CONTINUE_WITH": "{{ suggested | convert }}으로 계속",
+  "CONTINUE_WITH": "{{ suggested | convert:'btc' }}로 계속하기",
   "BLOCK": "블록",
   "BLOCKS": "블록들",
   "SMALL_FEE_WARNING": "수수료가 너무 작아 거래 확인이 안 될 수 있습니다.",
   "LARGE_TX": {
     "TITLE": "큰 거래",
     "BODY_1": "이 거래는 아주 큰 거래입니다!",
-    "BODY_2": "귀하 지갑 속 과거 수령 많은 작은 지불들을 통합할 필요가 있습니다. 이에 대해 확인을 빨리 받으려면 비교적 높은 수수료를 내야 합니다.",
+    "BODY_2": "귀하 지갑 속 과거 수령 많은 작은 결제들을 통합할 필요가 있습니다. 이에 대해 확인을 빨리 받으려면 비교적 높은 수수료를 내야 합니다.",
     "NORMAL_SIZE": "정상 크기",
     "RECOMMENDED_FEE": "추천 수수료",
     "ACCEPT_FEE": "높은 수수료 수용"
@@ -825,45 +950,12 @@
   "NO_UNSPENT_OUTPUTS": "쓸 코인이 없음",
   "BELOW_DUST_THRESHOLD": "금액 중 하나가 최소 한계 치 {{ threshold }} 사토시 (satoshis) 이하입니다.",
   "STRANGE_SCRIPT": "이상한 스크립트",
-  "CANNOT_DECODE_OUTPUT_ADDRESS": "거래 해쉬 {{ tx_hash }}로부터 출력 주소 해독 불가",
-  "HD_ARCH": "계층적 결정론적 주소 구조:",
-  "PRIVACY_IN_MIND": "우리가 HD 주소를 쓰는 이유는 주소 재 사용을 피해 개인 정보 보호를 하기 위해서 입니다.",
-  "SECURITY_AUDITS": "세계 수준 연구원들의 성공적인 보안 감사:",
-  "AES_ENCRYPTION": "Blockchain.info는 도둑과 해커들로부터 귀하 지갑을 보호하기 위해 AES 암호화 산업 표준을 쓰고 있습니다.",
-  "CLIENT_SIDE": "고객 쪽 암호화:",
-  "CLIENT_SIDE_ENCRYPTION": "놀라운 건 암호화가 우리 서버에 저장되기 전 모두 귀하 브라우저에서 되기 때문에 우리도 귀하 계정에 접근할 수 없다는 겁니다. 따라서 우리 사용자들은 자기 자금을 완벽하게 통제할 수 있습니다.",
-  "OPEN_SOURCE": "오픈 소스:",
-  "DYN_TX_FEE_ADJ": "동적(dynamic) 거래 수수료 조정:",
-  "DYN_TX_FEE_ADJ_DES": "현재 네트워크 조건을 기반으로 귀하 수수료 조정을 해드립니다. 귀하는 대신 맞춤 수수료를 쓸 옵션을 행사할 수 있습니다.",
-  "INTEROP": "상호 작용 가능성:",
-  "INTEROP_DES": "원한다면 다른 서비스로 넘어가거나 또는 다른 서비스로부터 넘어오는 게 쉽습니다.",
-  "DEDICATED_SUPPORT": "지원 전담 팀:",
-  "DEDICATED_SUPPORT_TEAM": "도움이 필요하면 우리 팀이 도와드립니다.",
+  "CANNOT_DECODE_OUTPUT_ADDRESS": "거래 해쉬 {{ tx_hash }}로부터 출력한 주소 해독 불가",
   "OTHER_FEATURES": "다른 기능:",
-  "CONVERSION_RATES": "20+ 통화 환전 요율",
-  "GLOBAL_INFO": "JPY, RUB, SGD, USD, CNY, EUR, GBP 포함 20+ 통화에 대한 환전 요율과 25+ 언어",
-  "LANGUAGES_FEAT": "25+ 언어",
-  "WATCH_ONLY_DESC": "모니터링과 볼 수만 있는 주소 소비",
-  "SECOND_PASSWORD_PROTECTION": "두 번째 암호 보호",
-  "LOGIN_IP_RESTRICTION": "로그인 IP 제한",
-  "NEW_TO_BITCOIN": "저는 비트코인이 처음입니다",
-  "WHY_USE": "왜 비트코인을 씁니까?",
-  "EXPERIENCED_USER": "저는 비트코인 사용 경험자입니다",
-  "WHY_USE_BLOCKCHAIN": "왜 블록체인을 씁니까?",
-  "ACTIVITY_FEED": "잘 정리된 활동 피드(feed)",
-  "NEW_USER": "비트코인이 처음이세요?",
-  "BLOCKCHAIN_MISSION": "해외 송금을 하거나 온라인 구매를 할 때 비트코인은 아주 유용합니다. 전 세계 수 십만 상인들이 비트코인으로 대금을 받고 수수료가 아주 낮으므로 신용카드 대신 비트코인으로 돈을 내면 큰 할인을 받는 수가 많습니다.",
-  "SEND_AND_RECEIVE": "비트코인을 손쉽게 주고 받으세요",
-  "WE_MAKE_USING_BTC": "우리는 비트코인을 안전하고, 단순하고, 재미있게 만듭니다. 세계 누구와도 즉시 거래할 수 있습니다.",
-  "IN_CONTROL": "귀하가 완전히 통제합니다.",
-  "ACCESS_TO_BITCOINS": "Blockchain에서 귀하 비트코인에 손댈 수 있는 사람은 귀하 뿐입니다. 아무도 귀하 지갑을 차단하거나 몰수할 수 없습니다.",
-  "PROTECTING_FUNDS": "귀하 자금을 불법 접근으로부터 보호",
-  "STATE_OF_THE_ART_SEC": "첨단 보안 센터가 귀하 자금을 불법 접근으로부터 보호해 드립니다. 단계 별 지침을 통해 귀하 지갑 보안을 도와 드립니다. 고급 2 단계 인증은 구글 인증 도구, 문자, Yubikey룰 통한 악당들 침입을 막아 줍니다.",
   "DONT_TRANSFER": "이체하지 마세요",
   "OK": "좋아요",
   "DESCRIPTION": "설명",
   "COPY_HELPER": "이 주소를 복사해서 보낸 사람과 이메일, 문자, 전서구(carrier pigeon)로 공유하세요.",
-  "QR_HELPER": "보낸 사람이 이 QR 코드를 스캔 하도록 하세요.",
   "CUSTOMIZE_HELPER": "이 거래 금액과 설명을 입력하세요",
   "SAVE_HELPER": "설정 -> 주소 -> {{ label }} -> 주소 관리에 있습니다.",
   "THANKS_FOR_ACCEPTING": "비트코인을 받아주셔서 감사합니다!",
@@ -875,7 +967,7 @@
   "NEW_USERS": "새 사용자",
   "NEW_USERS_COPY": "블록체인 지갑 만들기는 몇 초 정도 걸립니다. 즉시 자금 보내기/받기",
   "EXISTING_USERS": "기존 사용자들",
-  "EXISTING_USERS_COPY": "전에 블록체인 지갑을 만들었으면 여기를 클릭해서 로그인",
+  "EXISTING_USERS_COPY": "전에 비트코인 지갑을 만들었으면, 아래를 클릭해서 로그인 하세요.",
   "LOGIN_NOW": "지금 로그인",
   "OR_LOGIN": "또는 로그인",
   "HOW_IT_WORKS": "작동 방법",
@@ -884,55 +976,54 @@
   "LOGIN_LEGACY": "레거시 로그인",
   "SUPPORT_BUTTON": "지원 페이지",
   "CONFUSED_READ": "혼동되세요? 읽기",
-  "MY_WALLET_IS": "내 지갑은 세계에서 가장 인기 있는 비트코인 지갑입니다. 무료고, 개방 소스며 7 백만 이상 사용자로부터 신뢰 받고 있습니다.",
+  "MY_WALLET_IS": "내 지갑은 세계에서 가장 인기 있는 비트코인 지갑입니다. 무료고, 오픈 소스고, 천만 사용자가 믿고 쓰는 지갑입니다.",
   "MOST_POPULAR_WALLET": "세상에서 가장 인기 있는 비트코인 지갑",
-  "ABOUT_BLOCKCHAIN_WALLET": "우리는 은행이 아닙니다. 우리는 귀하 잔액을 볼 수도 없고, 귀하 거래를 볼 수도 없고 <br class='hidden-xs'/>대신 지불을 해 줄 수도 없습니다. 귀하는 귀하 돈을 완전히 소유하고 있습니다.",
+  "ABOUT_BLOCKCHAIN_WALLET": "우리는 은행이 아닙니다. 우리는 귀하 잔액을 볼 수도 없고, 귀하 거래를 볼 수도 없고 <br class='hidden-xs'/>대신 결제을 해 줄 수도 없습니다. 귀하는 귀하 돈을 완전히 소유하고 있습니다.",
   "CREATE_NEW": "무료 비트코인 지갑 만들기",
   "WALLET_USER": "지갑 사용자",
-  "QUOTE_0": "블록체인은 비트코인에 관한 한 단연 선두 주자입니다. 그들은 사실 전체 생태 시스템이 가능하도록 하고 있습니다. ",
-  "QUOTE_1": "비트코인 커뮤니티를 정말 좋아하는 것 같군요! 감사합니다!",
-  "QUOTE_2": "...비트코인...은 현재 은행 시스템에서 배제되어 있는 수십억 사람들이 직접 전자적으로 돈을 주고 받을 수 있게 해줍니다.",
-  "QUOTE_3": "정말 빠르고, 믿을수 있고, 정직한 서비스 [제공] 자군요. 정말 감사합니다.",
-  "QUOTE_4": "크게 보면 블록체인은 세계에서 가장 인기 있는 지갑을 개발하고 있으므로 거래 취급을 개선할 수 있는 기회를 가지고 있습니다.",
-  "QUOTE_5": "최고 보안 성을 가진 최신 블록체인 지갑 아주 만족스럽습니다",
-  "QUOTE_6": "\"소비자들은 자기 돈에 대한 더 큰 통제와 자유를 누릴 수 있습니다…\" 버진 그룹 (주) 창업자 [라차드] 브랜슨",
-  "QUOTE_7": "새 @blockchain 모바일 비트코인 지갑은 정말 돈 보내는 것도 간단하며 소셜 미디어, 메시지 앱, 이메일로 청구하기도 쉽습니다.",
-  "QUOTE_8": "정말 참신하고 쓰기 좋아요. 강추합니다! 문제가 있나요?",
-  "HAVING_TROUBLE": "레거시 지갑으로 로그인",
+  "HAVING_TROUBLE": "문제가 있습니까?",
   "LOGIN_TO_LEGACY": "레거시 지갑으로 로그인",
   "CONFIRMATIONS": "확인들",
   "ADD_A_DESCRIPTION": "복사 및 공유",
   "ADD_A_LABEL": "라벨 추가",
-  "COPY_AND_SHARE": "스캔",
+  "COPY_AND_SHARE": "복사 후 스캔",
+  "COPY_AND_SHARE_ADDRESS": {
+    "TITLE": "복사 후 주소 공유",
+    "HELPER": "이 주소를 남과 공유하면 남이 직접 귀하 지갑으로 BTC를 보낼 수 있습니다. 주소는 매 결제마다 달라집니다. 아래 금액을 첨부해서 요청을 만들 수도 있습니다.",
+    "BCH_HELPER": "이 주소를 남과 공유하면 남이 직접 귀하 지갑으로 BCH를 보낼 수 있습니다. 주소는 매 결제마다 달라집니다.",
+    "ETH_HELPER": "이 주소를 남과 공유하면 남이 직접 귀하 지갑으로 ETH를 보낼 수 있습니다. 귀하의 요청 주소는 달라지지 않습니다."
+  },
+  "COPY_AND_SHARE_IMPORTED_ADDRESS": {
+    "HELPER": "이 주소를 남과 공유하면 남이 직접 귀하 지갑으로 BTC를 보낼 수 있습니다."
+  },
   "SCAN": "스캔",
-  "SIMPLE": "간단한",
   "CROSS_PLATFORM": "크로스 플랫폼",
   "ACCESS_ANYWHERE": "데스크톱, iOS, 안드로이드 앱을 쓰면 언제 어디서나 모든 장치로 비트코인 지갑에 접근할 수 있습니다.",
-  "GLOBAL": "글로벌",
-  "SAFE_AND_SECURE": "안전하고 보안 성이 좋은",
-  "SECURITY_INFO": "우리 단계 별 보안 센터가 자금 백업을 도와주고 불법 접근으로부터 자금을 보호해 줍니다.",
-  "SUPPORTED": "지원됨",
-  "SOPHISTICATED": "복잡한",
-  "SOPHISTICATED_INFO": "계층 구조를 가진 결정 주소 역동적인 거래 수수료 \"보기만 하는 주소\" 지출과 모니터링",
+  "SECURITY_INFO": "우리 단계 별 보안 센터가 돈 백업을 돕고 불법 접근으로부터 돈을 보호합니다.",
   "PBKDF2_GREATER_THAN_1": "PBKDF2 는 1 보다 커야 합니다",
   "PBKDF2_LESS_THAN_20000": "PBKDF2 는 20000 보다 클 수 없습니다",
   "LOGOUT_GREATER_THAN_1": "자동 로그아웃 시간을 1 분 이상으로 설정해 주세요.",
   "LOGOUT_LESS_THAN_1440": "자동 로그아웃 시간을 1440 미만으로 설정해 주세요",
   "CREATE_A_WALLET": "귀하 지갑 만들기",
   "CREATE_FREE_WALLET": "아래 무료 지갑에 등록하세요",
-  "WHY_HD": "개인 정보 보호 강화를 위해 우리는 귀하가 지불을 받을 때마다 고유 주소를 생성합니다.",
+  "WHY_HD": "개인 정보 보호 강화를 위해 우리는 귀하가 결제을 받을 때마다 고유 주소를 생성합니다.",
   "PHONE_NUMBER": "전화 번호",
   "EDIT_PROFILE": "귀하 프로필 편집",
+  "BUY": "사기",
   "BUY_BITCOIN": "비트코인 사기",
+  "BUY_AND_SELL": "사기 & 팔기",
+  "BUY_AND_SELL_BITCOIN": "비트코인 사기 & 팔기",
   "SELL_BITCOIN": "비트코인 팔기",
-  "SENT_VERIFICATION": "방금 <span class='em-500'>{{::email}}</span>로 확인 이메일을 보냈습니다. 계속하려면 <b>확인 링크</b>를 클릭하세요.",
-  "CHANGE_EMAIL": "이메일 주소를 바꾸고 싶으세요? <span class='blue'>여기를 클릭하세요.</span>",
-  "PARTNER": "<span class='success'>이메일 확인됨!</span> 우리 파트너인 Coinfly가 귀하 비트코인 구매를 처리할 겁니다. \"계속\"을 클릭하면 Coinfly에 계정을 만들게 됩니다. 귀하 계정은 확인된 이메일 주소인 <span class='em-500'>{{::email}}</span>과 연결되게 됩니다.",
-  "ACCEPT_PARTNER_TOS_PRIVACY": "<a href='https://www.blockchain.com/assets/pdf/Blockchain_BuySellAlphaAgreement.pdf' target='_blank' rel='noopener noreferrer'>우리 \"알파 계약\"</a>, Coinfly의<a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'> 사용 조건</a>과 <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>개인 정보 정책</a>에 동의해 주세요.",
+  "ORDER_HISTORY": "주문 이력",
+  "BANK_TRANSFER_HEADING": "은행 이체",
+  "SENT_CONFIRMATION_CODE": "방금 <span class='em-500'>{{::email}}</span>로 확인 코드를 보냈습니다. 아래 코드를 입력해서 계속하세요.",
+  "CHANGE_EMAIL": "이메일 주소를 바꾸고 싶으세요? <a>여기를 클릭하세요.</a>",
+  "PARTNER": "<span class='success'>이메일 확인됨!</span> 우리 파트너 Coinify가 귀하 비트코인 거래를 처리할 겁니다. \"계속\"을 클릭하면 Coinfly에 계정을 만들게 됩니다. 귀하 계정은 확인된 이메일 주소인 <span class='em-500'>{{::email}}</span>과 연결되게 됩니다.",
+  "ACCEPT_PARTNER_TOS_PRIVACY": "우리 <a href='https://www.blockchain.com/terms' target='_blank' rel='noopener noreferrer'>서비스 조건</a>, Coinify <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>서비스 조건</a>과 <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>개인 정보 정책</a>에 동의해 주세요.",
   "EMAIL_IN_USE": "{{::email}} 은 이미 사용 중입니다. ",
   "CLICK_TO_CHANGE": "여기를 클릭해서 변경.",
   "METHOD": "방법",
-  "VERIFY_PAYMENT": "지불 확인",
+  "VERIFY_PAYMENT": "결제 확인",
   "PLEASE_CREATE_ACCOUNT": "<span class='underline pointer'>계정을 만들어서</span> 정확한 환율을 받으세요.",
   "TRADE_AMOUNT_TOO_LOW": "이 거래 금액은 너무 작습니다. 금액을 늘려 보세요.",
   "TRADE_EXCEEDS_LIMITS": "이 거래 금액은 귀하 허용 한계보다 더 큽니다.",
@@ -940,244 +1031,1117 @@
   "INVALID_REQUEST": "오류 발생. 나중에 다시 해 보거나 지원에 연락하세요.",
   "INTERNAL_ERROR": "내부 오류 발생. 이 문제는 블록체인 문제가 아닌 것 같습니다. 나중에 다시 해보거나 Coinfly 지원에 연락하세요.",
   "INVALID_TRUSTED_EMAIL_VALIDATION_TOKEN": "귀하 이메일 확인이 안 되고 있습니다. 나중에 다시 해 보거나 지원에 연락하세요.",
-  "OFFLINE_TOKEN_NOT_FOUND": "우리는 귀하 계정에 로그인 할 수 없습니다. 나중에 다시 해 보거나 지원에 연락하세요.",
-  "INVALID_OFFLINE_TOKEN": "우리는 귀하 계정에 로그인 할 수 없습니다. 지원에 연락해서 귀하 계정 번호 {{::user}}를 알려 주세요.",
-  "CANT_FIND_CURRENCY": "귀하 통화가 없나요?",
-  "CURRENCY_COMING_SOON": "앞으로 취급 통화를 더 늘릴 예정입니다. 기다려 주세요.",
-  "NOTIFY_ME": "나에게 알려 주세요.",
   "COUNTRY_COMING_SOON": "앞으로 서비스 국가를 더 늘릴 예정입니다. 기다려 주세요.",
   "AUTO_REFRESH": "이 요율은 15 분 후 자동 새로 고침 됩니다.",
   "EST_QUOTE_1": "이것은 추정 값이므로 계정을 만들어서 정확도를 올리세요.",
   "EST_QUOTE_2": "이것은 추정 값입니다. 이 거래에 대한 원래 값은 만료되었습니다. 받은 비트코인의 정확한 금액은 비트코인을 받은 시점에 따라 다릅니다.",
   "RATE_WILL_EXPIRE": "요율이 만료되기 전에 거래를 완료해서 비트코인 보증 금액을 받으세요.",
   "RATE_GUARANTEED": "보증 요율: {{::count}}",
+  "QUOTE_EXPIRES_IN": "다음 후 견적 만료: {{::count}}",
+  "QUOTE_REFRESHES_IN": "다음 후 견적 새로 고침: {{::count}}",
   "NOT_FINISHED": "끝나지 않음",
   "COUNTRY_NOT_FOUND": "미안하지만 귀하가 선택한 국가에서는 계정을 만들 수 없습니다.",
-  "awaiting_transfer_in": "보류",
-  "processing": "처리 중",
-  "reviewing": "검토 중",
-  "completed": "완료됨",
-  "completed_test": "완료된 테스트",
-  "cancelled": "취소됨",
-  "rejected": "거부됨",
-  "expired": "만료됨",
   "SEE_BITCOIN": "귀하 비트코인을 보세요",
   "SUMMARY": "요약:",
   "PROCESSED_BY_EXCHANGE": "이 거래는 Coinfly가 직접 처리합니다. 블록체인은 이 거래 당사자도 아니며 거래 정보도 받지 못했습니다. 비트코인은 항상 귀하 지갑으로 직접 보내집니다. 블록체인은 이 거래 중개인 역할을 하지 않습니다.",
-  "CARD_FEES": "카드 지불 처리자가 {{::fee}}% 수수료를 부과했습니다.",
-  "CURRENCY_NOT_SUPPORTED": "이 거래 통화는 선택한 지불 방법이 지원하지 않습니다. 다른 통화로 해 보든지 다른 지불 방법을 선택하세요.",
+  "CARD_FEES": "카드 결제 처리자가 {{::fee}}% 수수료를 부과했습니다.",
+  "CURRENCY_NOT_SUPPORTED": "이 거래 통화는 선택한 결제 방법이 지원하지 않습니다. 다른 통화로 해 보든지 다른 결제 방법을 선택하세요.",
   "SEND_FUNDS_TO": "다음 은행 계정으로 자금을 보내세요:",
   "BANK_ADDRESS": "은행 주소:",
   "VERIFY_IDENTITY": "신원 확인",
   "BANK_TRANSFER_PENDING": "은행 이체 대기 중",
   "BOUGHT_VIA": "{{exchange}}를 통해 샀음",
   "SOLD_VIA": "{{exchange}}를 통해 팔았음",
+  "DEPOSITED_TO": "{{exchange}}에 예치됨",
+  "RECEIVED_FROM": "{{exchange}}으로부터 받음",
   "TX_ERROR_STATE": {
     "TITLE": "거래 {{::state}}",
-    "BODY": "귀하 구매 <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b>는{{::state}} 였습니다."
+    "BODY": ""
+  },
+  "TX_CONFIRM": {
+    "TITLE": "구매 확인",
+    "BODY": "은행 이체를 시작하게 됩니다."
   },
   "TX_PENDING": {
     "TITLE": "주문 대기 중",
-    "BODY": "귀하 구매 <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b>는 현재 처리 중입니다. Coinify가 1 업무일 이내에 현황 업데이트를 보내줄 겁니다."
+    "BODY": "귀하 구매는 지금 처리 중입니다. 우리 교환 파트너가 1 업무일 내에 귀하에게 현황 업데이트를 보내줄 겁니다."
   },
   "TX_SUCCESS": {
     "TITLE": "구매한 주문",
-    "BODY": "귀하 구매 <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b>가 성공했습니다! 비트코인이 <b>{{::label}}</b>에게 보내짐."
+    "BODY": "구매 성공 비트코인이 {{::label}}에게 보내짐.<b></b>"
   },
   "TX_IN_REVIEW": {
     "TITLE": "검토 중인 거래.",
-    "BODY": "귀하 구매 <b>{{::btcAmt}} BTC ({{::fiatAmt | format}} {{::curr}})</b>는 현재 처리 중입니다. 모든 문제가 곧 해결될 겁니다. 기다려 주셔서 감사합니다."
+    "BODY": "귀하 카드에 청구했고 구매는 지금 검토 중입니다. 이 과정은 1 업무일 후 완료될 겁니다. 주문 처리가 안되면 환불이 되고 며칠 후 귀하 카드 명세서에 환불 사실이 나타날 겁니다. 기다려주셔서 감사합니다!"
   },
   "TX_EXPIRED": {
     "TITLE": "거래 만료.",
     "BODY": "이 거래는 만료되었습니다. \"다시 하기\"를 클릭해서 비트코인을 사세요."
   },
-  "TX_KYC_PENDING": {
-    "TITLE": "@:KYC_IN_REVIEW.TITLE",
-    "BODY": "귀하 인증 요청은 수동 검토 대상으로 대기 중입니다. Coinify가 1 업무일 이내에 현황 업데이트를 보내줄 겁니다. 불편을 드려 죄송하며 기다려 주셔서 감사합니다!"
+  "TX_CARD_REJECTED": {
+    "TITLE": "거래 {{::state}}",
+    "BODY": "귀하 구매는 자동 위험 평가 경고 때문에 거부되었습니다. 보안 규제 때문에 사유는 알려줄 수 없습니다. 자동 환불이 되고 며칠 후 귀하 카드 명세서에 환불 사실이 나타날 겁니다. 불편, 죄송합니다."
   },
   "TX_BANK_TRANSFER": {
-    "TITLE": "필요한 액션",
-    "BODY": "<b>{{::amt}} {{::curr}}</b>를 <b>48 시간</b> 이내에 아래 은행 계정으로 보내서 거래가 처리되게 하세요. 은행 이체는 하루 이상 걸립니다. 은행 이체가 끝나면 귀하 비트코인은 <b>{{::label}}</b>로 자동 송금됩니다. "
+    "TITLE": "",
+    "BODY": "<b>{{::amt}} {{::curr}}</b>를 Coinify 은행 계좌로 <b>다음 48 시간</b> 내에 보내주세요.<br/><br/><b>돈은 귀하 정부 발행 신분증 이름과 일치하는 은행 계좌에서 보내야 합니다.</b> 귀하 이름이 아닌 제3자 계좌에서 한 이체는 Coinify가 거부할 겁니다."
+  },
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "은행 이체",
+    "BODY": "{{::amount}}를 전자 이체(IMPS, NEFT, RTGS) 를 통해 아래 Unocoin 은행 계좌로 보낸 후 계속해 주세요. 다음, 은행 이체 조회 번호를 제공하셔야 합니다. <b>계정 만들 때 쓴 은행 계좌를 사용해야 합니다.</b>"
+  },
+  "TX_INITIATED": {
+    "TITLE": "거래 시작됨",
+    "BODY": "{{::email}}로 이메일 확인이 갈 겁니다.<br>BTC는3-5 일 후 올 겁니다."
   },
   "BITCOIN_RECEIVED": {
     "TITLE": "비트코인 받음!",
-    "BODY": "방금 Coinfly로부터 비트코인을 받았습니다! <br/>비트코인이<b> {{::label}}</b>에게 보내짐."
+    "BODY": "방금 구매한 비트코인을 받았습니다! <br/>비트코인이<b> {{::label}}</b>에게 보내짐."
   },
   "CLICK_TO_CANCEL": "거래 취소",
   "SPEND_IMPORTED_ADDRESS": "지출",
   "CARD": "신용/직불 카드",
   "BANK": "은행 이체",
   "CARD_TRANSFER": {
-    "TITLE": "즉시 거래 | 3% 지불 수수료",
-    "COPY": "지불 수수료는 체크 아웃 편의와 빠른 처리를 위해 부과됩니다. 귀하 지불을 비트코인으로 바꾸는 환율은 고정되어 있습니다."
+    "COPY1": "즉시 비트코인 받기",
+    "COPY2": "{{::fee}}% 편의 수수료",
+    "COPY3": "Visa 또는 Mastercard",
+    "HELPER": "결제 수수료는 체크 아웃 편의와 속도에 쓰입니다. 귀하 결제를 비트코인으로 바꾸는 환율은 고정되어 있습니다.",
+    "DISABLED": "귀하 신용 카드 한도 ({{::max}} {{::코드}})는 신용 카드 거래에 필요한 최소 금액보다 작습니다.",
+    "RECOMMENDATION": "{{::max}} {{::코드}}가 넘는 주문은 은행 이체로 해주십시오."
   },
   "BANK_TRANSFER": {
-    "TITLE": "2-3 일 | 지불 수수료 없음",
-    "COPY": "Coinfly는 귀하 지불을 받은 후 24 시간 내에 비트코인을 보내는데 은행에 따라 달라질 수 있습니다. 최종 환율은 귀하 은행 이체가 도착한 후 결정됩니다."
+    "COPY1": "1회 성 아이디 확인",
+    "COPY2": "2-3 일 후 비트코인 받기",
+    "COPY3": "결제 수수료 없음",
+    "COPY4": "{{::fee}}% 결제 수수료",
+    "RECOMMENDATION": "{{::min}} {{::코드}}가 안되는 주문은 신용 카드 또는 직불 카드 결제가 좋습니다.",
+    "PAY_VIA": "은행 이체로 결제하기 원합니다.",
+    "PAY_VIA_NEEDS_KYC": "은행 이체로 결제하기 원합니다. 구매 전에 KYC를 완료해야 합니다. ",
+    "CC_REQUIRED": "반복 주문을 내려면 신용 카드를 써야 합니다.",
+    "WANT_BANK": "대신 은행 이체를 원하시나요?",
+    "REMOVE_RECURRING": "반복 주문 제거"
   },
   "KYC_IN_REVIEW": {
     "TITLE": "신원 확인 검토 중",
-    "BODY": "확인이 되기 전에는 은행 이체가 안됩니다. 신용 카드 구매는 하루에 {{ccmax}} 번까지만 가능합니다.",
+    "BODY": "확인 되기 전에는 은행 이체가 안됩니다. 귀하 신용 카드 구매 한도 잔액은 {{ccmax}}입니다.",
     "LINK": "검토 현황"
   },
-  "KYC_DENIED": {
+  "KYC_FLAGGED": {
+    "TITLE": "@:KYC_IN_REVIEW.TITLE",
+    "BODY": "귀하 인증 요청은 제출되었으며 곧 검토될 것입니다. Coinify가 48 업무 시간 내에 현황 업데이트를 이메일 해 줄 겁니다. 제출 사항 현황이 궁금하면, Coinify <a href='https://www.coinify.com/support' target='_blank' rel='noopener noreferrer'>www.coinify.com/support</a>에 직접 문의해도 됩니다."
+  },
+  "KYC_REJECTED": {
     "TITLE": "신원 확인 거부됨",
     "BODY": "주신 문서로 귀하 신원을 확인하는데 문제가 있었습니다. 다른 신분증을 업로드 해 보세요. 귀하 신원 확인이 되어야 은행 이체가 됩니다.",
     "LINK": "다시 해 보세요"
+  },
+  "KYC_UPDATES_REQUESTED": {
+    "TITLE": "신원 확인 업데이트 요청됨",
+    "BODY": "주신 문서로 귀하 신원을 확인하는데 문제가 있었습니다. 정보가 더 필요합니다.",
+    "LINK": "확인 끝내기"
   },
   "KYC_PENDING": {
     "TITLE": "신원 확인 완료",
     "BODY": "@:KYC_IN_REVIEW.BODY",
     "LINK": "확인 끝내기"
   },
-  "COINIFY_TRADE": "Coinify 거래",
-  "ISX_ID": "iSignthis ID",
-  "VERIFY_CARD_NOTE": "카드가 귀하 소유라는 것을 증명해야 카드 거래를 할 수 잇습니다. 추가한 카드에 대해 각 한 번만 하면 됩니다.",
-  "VERIFY_ID_NOTE": "비트코인을 은행 이체로 사려면 신원을 증명해야 합니다. 증명은 한 번만 하면 됩니다.",
-  "KYC_APPROVED": "신원 확인 승인! 은행 이체로 비트코인을 사기 시작하려면 여기를 클릭하세요.",
-  "DATE_INITIALIZED": "날짜 시작됨",
+  "SELL_KYC_PENDING": {
+    "TITLE": "신원 확인 완료",
+    "BODY": "확인이 끝나면 귀하 하루 팔기 금액 한도가 올라갑니다.",
+    "LINK": "확인 끝내기"
+  },
+  "KYC_APPROVED": "신원 확인 승인! 귀하 교환 한도가 업데이트 되었습니다.",
+  "TRADE_ID": "거래 아이디",
+  "ISX_ID": "iSignthis 아이디",
+  "DATE_INITIALIZED": "주문 날짜",
+  "TOTAL_COST": "비용 합계",
+  "BTC_PURCHASED": "구매한 BTC",
+  "PAYMENT_METHOD": "결제 방법",
+  "SEND_TO": "다음에게 보내기",
   "RECEIVING_WALLET": "지갑 받는 중",
   "RECEIVING_ADDRESS": "QA: 주소 받는 중",
   "RECEIVE_BITCOIN_TO": "비트코인은 {{::label}}로 보내집니다.",
   "BLACKLISTED_COUNTRY": "귀하 국가에서는 아직 비트코인 사기가 안됩니다.<br>앞으로 서비스 국가를 더 늘릴 예정입니다.",
   "CONFIRM_YOUR_ORDER": "귀하 주문 확인:",
-  "ORDER_CONFIRMATION_COPY": "우리가 귀하를 안전한 지불 제공자에게 보내기 전에 귀하 주문 상세를 확인하세요.",
-  "ERROR_DAILY_LIMIT": "오류: 일일 한계 초과",
-  "ERROR_DAILY_LIMIT_COPY": "선택한 금액은 귀하 하루 구매 한계를 초과합니다. 은행 이체 경우, 귀하는 하루 {{max}} {{code}} 까지만 환전이 가능합니다. 주문을 업데이트 한 후 계속하세요.",
-  "ERROR_QUOTE_FETCH": "이번에는 값을 못 받았으니 나중에 다시 해 보세요.",
-  "ERROR_PAYMENT_METHODS_FETCH": "뭔가 잘못되었으니 나중에 다시 해 보세요.",
+  "ORDER_CONFIRMATION_COPY": "우리가 귀하를 안전한 결제 제공자에게 보내기 전에 귀하 주문 상세를 확인하세요.",
+  "ORDER_CONFIRMATION_BANK_COPY": "계속하기 전에 귀하 주문 상세 사항을 확인하세요. 은행 이체는 귀하 은행에 따라 하루 또는 그 이상 걸릴 수 있으며, 표시되는 비트코인 요율도 처리 당시 환율에 따라 변할 수 있습니다.",
+  "ERROR_QUOTE_FETCH": "이번에는 견적을 못 받았으니 나중에 다시 해 보세요.",
+  "ERROR_PAYMENT_MEDIUMS_FETCH": "뭔가 잘못되었으니 나중에 다시 해 보세요.",
   "ERROR_TRADE_CREATE": "이번에는 귀하 주문을 집행 못했으니 나중에 다시 해 보세요.",
   "ERROR_TRADE_CANCEL": "이번에는 귀하 거래를 취소 못했으니 나중에 다시 해 보세요.",
-  "ORDER_DETAILS": "주문 상세:",
-  "MAX_LIMIT_EXCEEDED": "귀하 잔여 구매 금액 {{::max}} {{::code}}을 초과합니다.",
-  "BELOW_MIN_LIMIT": "귀하 최소 구매 금액 {{::min}} {{::code}} 이하입니다.",
-  "MAX_MIN_HELPER": "최소 구매 금액은 {{::symbol}}{{::min}}입니다. 신용 카드 지불과 은행 이체 {{::symbol}}{{::bankMax}}에 대한 하루 최대 금액은 {{::symbol}}{{::cardMax}} 입니다.",
-  "BUY_AMT_LOW": "구매 금액이 너무 작습니다.",
-  "BUY_AMT_HIGH": "구매 금액이 너무 큽니다.",
+  "ORDER_DETAILS": "주문 상세 사항:",
+  "BANK_ORDER_DETAILS": "돈을 다음 은행 계좌로 보내세요:",
+  "ORDER_ID_REFERENCE": "*귀하 이체에 포함되어야 합니다*",
+  "MAX_LIMIT_EXCEEDED": "{{::medium}}로 결제하려면, 아래 귀하 금액 {{::max}} {{::코드}}을 줄이세요.",
+  "BELOW_MIN_LIMIT": "{{::medium }}로 결제하려면, 아래 귀하 금액을 {{::min}} {::코드}} 이상으로 늘리세요.",
+  "MAX_MIN_HELPER": "최소 사기 금액은 {{::min}} {{::코드}}입니다. 최대 사기 금액은 {{::max}} {{::코드}}입니다.",
+  "BUY_AMT_LOW": "최소 사기 금액은 {{::symbol}}{{::limit}}입니다.",
+  "BUY_AMT_HIGH": "최대 사기 금액은 {{::symbol}}{{::limit}}입니다.",
+  "BUY_AMT_IS": "귀하 한도는 {{::amount}} {{::코드}}입니다.",
+  "SELL_AMT_LOW": "최소 팔기 금액은 {{::symbol}}{{::limit}}입니다.",
+  "SELL_AMT_HIGH": "최대 팔기 금액은 {{::symbol}}{{::limit}}입니다.",
+  "WHY": "왜?",
   "UPDATE": "업데이트",
-  "SUBSCRIBE": {
+  "TRADE_SUBSCRIBE": {
     "TITLE": "이 기능은 앞으로 나올 예정입니다!",
-    "BODY": "세계에서 가장 인기 있는 비트코인 지갑이 귀하의 안전한 비트코인 구매를 가능하게 해 줍니다. 귀하 지역에 우리가 서비스를 하게 되면 곧 등록해 주세요!",
+    "BODY": "이제 세계에서 제일 인기 있는 비트코인 지갑으로 안전한 비트코인 거래가 가능합니다. 귀하 지역에 우리가 서비스를 하게 되면 곧 등록해 주세요!",
+    "BODY_MOBILE": "이제 세계에서 제일 인기 있는 비트코인 지갑으로 안전한 비트코인 거래가 가능합니다.",
     "BUTTON": "등록"
   },
+  "SUBSCRIBE_TITLE": "블록체인 업데이트에 등록하세요!",
+  "SUBSCRIBE_BODY": "블록체인 새 기능, 비트코인 뉴스 등 새 소식 업데이트 받기를 하세요. 귀하 이메일과 지역을 아래에서 확인하세요.",
+  "SUBSCRIBE_BUTTON": "가입",
   "BUY_FEEDBACK": {
     "PROMPT": "비트코인 사기가 매우 쉽네요",
     "DISAGREE": "절대 그렇지 않습니다",
     "AGREE": "정말 그렇습니다"
   },
-  "ACCEPT_TOS": "<a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>사용 조건</a>을 읽었고 동의합니다.",
-  "SIMPLE_SECURE_SEAMLESS": "간단합니다. 안전합니다. 매끄럽습니다.",
-  "BUY_SIMPLE_STEPS": "세계에서 가장 인기 있는 비트코인 지갑이 이제 <br>귀하가 비트코인을 간단하고 안전한 4<br> 단계로 살 수 있게 해 드립니다.",
-  "METADATA_DOWN_EXCHANGE": "귀하의 환전 상세를 로딩할 수 없습니다. 페이지 새로 고침을 해 보세요.",
-  "FETCHING_INFO_EXCHANGE": "귀하 환전 파트너로부터 정보 받는 중 몇 초 걸립니다.",
-  "ORDER_HISTORY": "주문 이력",
-  "STATUS": "상태",
-  "CHOOSE_EXCHANGE_AMOUNT": "환전할 금액 선택:",
+  "ACCEPT_TOS": "<a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>서비스 조건</a>을 읽었고 이에 동의합니다.",
+  "ACCEPT_COINIFY_RATE": "나는 비트코인이 위에 표시된 것과 다를 수 있는 Coinify의 내 주문 처리 당시 환율로 거래되는 것에 동의합니다.",
+  "SIMPLE_SEAMLESS_SECURE": "간단합니다. 매끄럽습니다. 안전합니다.",
+  "METADATA_DOWN": "지갑에 교환 상세 사항 로딩 하는 데 문제가 있습니다. 나중에 다시 해보세요.",
+  "EXCHANGE_DOWN": "귀하 교환 파트너 쪽에서 문제가 있었습니다. 페이지 새로 고침을 하든지 나중에 다시 해보세요.",
+  "FETCHING_INFO_EXCHANGE": "귀하 교환 파트너로부터 정보 받는 중 몇 초 걸립니다.",
+  "STATUS": "현황",
+  "CHOOSE_EXCHANGE_AMOUNT": "교환할 금액 선택:",
   "SELECT_COUNTRY": "거주 국가 선택:",
+  "SELECT_YOUR_COUNTRY": "귀하 국가 선택",
+  "SELECT_YOUR_STATE": "귀하 주 선택",
+  "SENT_VERIFICATION": "<b>{{::email}}</b>로 확인 링크를 보냈습니다. 클릭한 후 여기로 돌아와서 거래를 계속하세요.",
   "ACCEPT_TERMS": "Coinify 계정 조건:",
-  "SELECT_PAYMENT_METHOD": "선호 지불 방법 선택:",
-  "PAYMENT_FEE": "지불 수수료:",
+  "PAYMENT_FEE": "결제 수수료:",
   "NEEDS_REFRESH": "이 기능을 쓰려면 지갑을 새로 고침 하세요.",
-  "AMOUNT_FOR": "다음을 위한 {{::symbol}}{{::amount}} ",
   "LANDING": {
-    "NEW_TO_BITCOIN": "비트코인이 처음이세요?",
-    "WHAT_IS_BITCOIN": "비트코인이 뭐에요?",
-    "BITCOIN_IS": "비트코인은 종이 돈이나 황금 같이 당사자들이 가치를 교환하는 통화입니다. 화폐나 황금과 달리 비트코인은 디지탈이고 중앙 통제가 없이 운영됩니다. 사람들은 이제 역사상 처음으로 중간 매개자 없이 가치를 교환해서 자기 자금을 완전 통제하고 환전 수수료도 더 낮출 수 있게 되었습니다.",
-    "WHY_USE": "왜 그걸 쓰지요?",
-    "USE_BECAUSE": "비트코인을 쓰는 이유는 이메일을 쓰거나, 영화를 스트리밍으로 보거나, 노래를 다운로드 하는 것과 같습니다. 더 빠르고, 더 싸고, 더 안전하고, 더 불변이기 때문입니다. 비트코인 사용을 하면 개인 대 개인 지불 이상을 할 수 있습니다. 비트코인은 많은 곳에서 현지 통화보다 더 안정적이므로 사람들은 가치 저장을 위해 비트코인을 쓰며, 수 십만 판매 회사들은 전 세계와 온라인 거래를 하는데 비트코인을 쓰고 있습니다.",
+    "HEADER": "@:SIMPLE_SEAMLESS_SECURE",
+    "SUB_HEADER": "블록체인은 세계에서 제일 인기 있는 지갑입니다. 소프트웨어 하나로 더 열려 있고, 접근이 쉽고, 공정한 재정 미래를 만드는 것이 우리 목표입니다.",
+    "SUB_HEADER_ETH": "블록체인은 세계에서 제일 인기 있는 디지털 지갑입니다. 소프트웨어 하나로 더 열려 있고, 접근이 쉽고, 공정한 재정 미래를 만드는 것이 우리 목표입니다.",
+    "GET_STARTED_NOW": "지금 시작하세요",
+    "WHY_BLOCKCHAIN": "왜 블록체인 이지요?",
     "LOVED_BY_ALL": "사용자들이 좋아합니다. 괴짜들이 칭찬합니다. 언론이 인정합니다.",
+    "SIMPLE": {
+      "TITLE": "간단합니다",
+      "COPY": "우리는 비트코인 사용이 안전하고 간단하고 재미있게 합니다. 비트코인을 안전하게 보관하고 전 세계 누구나와 즉시 거래하세요.",
+      "COPY_ETH": "우리는 에테르 사용이 안전하고 간단하고 재미있게 합니다. 비트코인을 안전하게 보관하고 전 세계 누구나와 즉시 거래하세요."
+    },
+    "SAFE_AND_SECURE": {
+      "TITLE": "안전하고 보안 성이 좋은",
+      "COPY": "우리 단계 별 보안 센터가 자금 백업을 도와주고 불법 접근으로부터 자금을 보호해 줍니다."
+    },
+    "BUY_AND_SELL": {
+      "TITLE": "사기 & 팔기",
+      "COPY": "블록체인은 전 세계 교환 파트너와 제휴해서 귀하의 비트코인 사기가 매끄럽고 안전하도록 하고 있습니다."
+    },
+    "SOPHISTICATED": {
+      "TITLE": "복잡한",
+      "COPY": "계층 구조를 가진 결정 주소 역동적인 거래 수수료 \"보기만 하는 주소\" 지출과 모니터링"
+    },
+    "GLOBAL": {
+      "TITLE": "글로벌",
+      "COPY": "140+ 개 국가에서 서비스, 20+ 개 통화 환율, JPY, RUB, SGD, USD, CNY, EUR, GBP 등 포함. 25+ 개 언어"
+    },
+    "SUPPORTED": {
+      "TITLE": "항상 지원됨",
+      "COPY": "도움이 필요하거나 질문이 있으면 우리 지원 센터를 찾아 주세요."
+    },
+    "BITCOIN_ON_ALL_DEVICES": {
+      "HEADER": "귀하 모든 장치에 비트코인",
+      "SUB_TEXT": "어디를 가든지 안전하게 비트코인 지갑을 여세요"
+    },
+    "NEW_TO_BITCOIN": {
+      "HEADER": "비트코인이 처음이세요?",
+      "HEADER_ETH": "디지털 통화가 처음이세요?",
+      "SUB_TEXT": "비트코인은 이전 종이 돈이나 황금 같이 당사자들이 가치를 교환하는 통화입니다. 이전 다른 것들과 달리, 비트코인은 디지털이며 분산 형 통화입니다. 사람들은 이제 역사상 처음으로 중간 매개자 없이 가치를 교환해서 자기 자금을 완전 통제하고 교환 수수료도 더 낮출 수 있게 되었습니다.",
+      "SUB_TEXT_ETH": "비트코인은 이전 종이 돈이나 황금 같이 당사자들이 가치를 교환하는 통화입니다. 이전 다른 것들과 달리, 비트코인은 디지털이며 분산 형 통화입니다. 사람들은 이제 역사상 처음으로 중간 매개자 없이 가치를 교환해서 자기 자금을 완전 통제하고 교환 수수료도 더 낮출 수 있게 되었습니다."
+    },
+    "GET_WORLDS_MOST_POPULAR_WALLET": "세계에서 가장 인기 있는 <br/>비트코인 지갑을 만드세요",
+    "GET_WORLDS_MOST_POPULAR_WALLET_ETH": "세계에서 가장 인기 있는 <br/>디지털 통화 지갑을 만드세요",
     "": ""
   },
   "DOUBLE_SPEND": "이 거래는 두 배 지출 위험이 있습니다.",
   "SHOW": "보이기",
   "HIDE": "숨기기",
+  "FILTER": "필터",
   "EDIT_NAME": "이름 편집",
   "NOT_BACKED_BY_RECOVERY": "귀하 복구 구절로 백업 되지 않음 지갑으로 이체해서 자금 확보.",
-  "EXCHANGE_RATE_HELPER": "귀하 지역 환전 파트너가 제공한 환율. 수수료 포함 가능.",
-  "TX_AWAITING_REF_NUMBER": {
-    "TITLE": "은행 이체",
-    "BODY": "{{::amount}}를 아래 Unocoin 은행 계좌로 전자 이체 해 주세요(IMPS, NEFT, RTGS 등 이용). 다음 은행 이체 참조 번호를 제공해야 할 겁니다."
+  "EXCHANGE_RATE_HELPER": "귀하 지역 교환 파트너가 제공한 환율. 수수료 포함 가능.",
+  "SUBSCRIBE": "가입",
+  "GET_BITCOIN": "비트코인 받기",
+  "POWERED_BY": "다음이 제공",
+  "EDIT_ORDER": "주문 편집",
+  "TOTAL_COST:": "비용 합계:",
+  "ENTER_AMOUNT:": "금액 입력:",
+  "FREQUENCY": "빈도",
+  "FREQUENCY_INFO": "<b>오늘</b>과 매 <b>{{::timespan}}</b> 마다.",
+  "FREQUENCY_INFO_HOURLY": "<b>지금</b>과 매 <b>{{::timespan}}</b> 마다.",
+  "DURATION": "기간",
+  "DURATION_INFO": "이 주문은 {{::endTime}}까지 반복됩니다. <span class='f-12'>(언제든지 취소 가능합니다)</span>",
+  "TRADE_BITCOIN_ALERT": "이제 비트코인을 블록체인 지갑으로 거래할 수 있습니다! 아래를 클릭해서 시작하세요.",
+  "TRADE_BITCOIN": "비트코인 거래",
+  "TX_RBF": "이 거래는 replace-by-fee (RBF)로 표시되었습니다.",
+  "TX_RBF_AND_DOUBLE_SPEND": " 이 거래는 replace-by-fee (RBF)로 표시되어서 두 배 지출 위험이 있습니다.",
+  "GENERAL_SURVEY_PROMPT": {
+    "TITLE": "귀하가 가기 전에...",
+    "BODY": "오늘 느낀 걸 피드백으로 주시겠어요?"
   },
-  "EXCHANGE_RATE_HELPER_TWO": "귀하 지역 교환 파트너가 제시하는 요율은 수수료가 포함되어 있을 수 있습니다.",
-  "unocoin_pancard_ID": {
-     "TITLE": "1. PAN 카드",
-     "COPY": "PAN 카드를 업로드 하거나 사진을 찍으세요. 이름과 10 자리 영구 계좌 번호가 잘 보여야 합니다.",
-     "UPLOAD_TITLE": "PAN 카드",
-     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-     "HELP": "PAN 카드 번호가 스냅샷에서 확실히 보이게 하세요."
+  "BUY_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
-  "unocoin_photo_ID": {
-    "TITLE": "2. 귀하 사진",
-    "COPY": "Unocoin이 귀하 PAN 카드를 확인할 수 있게 PAN 카드를 업로드 하거나 사진을 찍으세요.",
-    "UPLOAD_TITLE": "사진",
-    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "HELP": "얼굴이 스냅샷에서 확실히 보이게 하세요."
+  "SELL_SURVEY_OPENED_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
-  "unocoin_address_ID": {
-    "TITLE": "3. 주소 증빙",
-    "COPY": "주소 증빙을 업로드 하거나 사진을 찍으세요. 처음 제공한 이름과 주소가 같은 다음 승인 문서 중 하나를 업로드 하세요.",
-    "UPLOAD_TITLE": "주소 증빙",
-    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
-    "OPTION1": "Aadhar 카드 (앞과 뒤)",
-    "OPTION2": "운전 면허",
-    "OPTION3": "여권 (주소가 나오는 페이지)",
-    "OPTION4": "전기나 수도 청구서",
-    "HELP": "이름과 주소가 스냅샷에서 확실히 보이게 하세요."
+  "SFOX_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
   },
+  "SFOX_SELL_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SFOX_BUY_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "SHIFT_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_SIGNUP_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "UNOCOIN_TRADE_SURVEY_PROMPT": {
+    "TITLE": "@:GENERAL_SURVEY_PROMPT.TITLE",
+    "BODY": "@:GENERAL_SURVEY_PROMPT.BODY"
+  },
+  "ETHEREUM_SURVEY_PROMPT": {
+    "TITLE": "계속하기 전에...",
+    "BODY": "오늘 에테르 지갑에서 느낀 걸 피드백 해주시겠어요?"
+  },
+  "UNOCOIN_IF_IMPS": "<span class='em-500'>IMPS 이체에서</span>, 조회 번호는 RRN 또는 외부 조회 번호로 \"7\"로 시작하는 12자리 숫자입니다. ",
+  "UNOCOIN_IF_NEFT_OR_RTGS": "<span class='em-500'>NEFT 또는 RTGS 이체에서</span>, 조회번호는 UTR NUMBER 입니다 (\"IR\" 또는 \"IZ\"로 시작하지 않습니다).",
+  "UNOCOIN_IF_CANT_ID": "<span class='em-500'>UTR 번호를 모르겠으면</span>, 은행 명세서 상에 나오는 모든 조회 번호들을 보내 주세요.",
+  "REF_NUMBER": "조회 번호",
   "BANK_NAME": "은행 이름",
-  "ACCOUNT_HOLDER_NAME": "계좌 소유자 이름",
+  "ACCOUNT_HOLDER_NAME": "계좌 보유자 이름",
   "ACCOUNT_NUMBER": "계좌 번호",
   "IFSC_CODE": "IFSC 코드",
   "ACCOUNT_TYPE": "계좌 유형",
-  "unocoin_pancard-id-helper": {
-    "TITLE": "유효한 PAN 카드",
-    "COPY": "미성년자 PAN 카드 <span class='state-danger-text'>유효하지 않음</span>.<br>PAN 카드는 정부 기록으로 유효해야 합니다."
+  "bank-check-helper": {
+    "TITLE": "라우팅/계좌 번호",
+    "COPY": "은행 라우팅/계좌 번호는 수표 맨 아래에 나와 있습니다. 또는 은행에 물어보세요."
   },
-  "unocoin_photo-id-helper": {
-    "TITLE": "유효한 사용자 사진",
-    "COPY": "고글이나 모자를 쓴 셀카는 <span class='state-danger-text'>안됩니다</span>."
+  "bank-deposit-helper": {
+    "TITLE": "은행 예치",
+    "COPY": "SFOX가 귀하 은행 계좌로 소액 예치 2 개를 했습니다. 1-2 일 후 “SFOX” 로 예치금이 귀하 계좌에 나타날 겁니다."
   },
-  "unocoin_address-id-helper": {
-    "TITLE": "유효한 주소 증빙",
-    "COPY": "주소 증빙 상세 내용에 카메라 플래시 자국이 겹치지 않게 하세요.<br>주소 증빙은 적어도 6 개월은 유효해야 합니다.<br>주소 증빙은 이전에 입력한 주소와 같아야 합니다.<br>투표자 아이디는 정부 웹사이트에서 유효해야 합니다.<br>영문으로 된 주소 증빙을 업로드 해야 합니다."
+  "sfox-identity": {
+    "ICON": "ti-id-badge",
+    "TITLE": "신원 검토 중",
+    "COPY": "SFOX가 지금 귀하 신원을 확인 중입니다. 2일 쯤 걸립니다. 확인되면 한도가 올라갈 겁니다."
   },
-  "UNOCOIN_EXPLAIN": "우리 파트너 Unocoin이 귀하 비트코인 구매를 처리할 겁니다. 귀하는 일정 정보를 제공하고 결제 방법을 연결해야 합니다.",
-  "UNOCOIN": {
-    "PENDING": "신원 확인 중",
-    "PENDING_EXPLAIN": "Unocoin이 현재 귀하 신원 확인 중입니다. 1 업무 일 안에 전화가 갈 겁니다. 전화로 귀하 <b>이름</b>, <b>주소의 우편 번호</b>, <b>PAN 카드 정보</b>를 확인하게 됩니다. 확인 후 비트코인을 살 수 있습니다."
+  "coinify_after-trade": {
+    "TITLE": "🔒 확인 필요",
+    "COPY": "우리 교환 파트너가 귀하 결제 정보를 확인하는 동안 좀 기다려 주세요. 이 확인은 한 번만 하면 되며 <b>{{::days}} 일 후면 비트코인 사기/팔기를 할 수 있습니다.</b>"
+  },
+  "expiring-exchange-helper": {
+    "TITLE": "👋 교환 주문을 확인하세요!",
+    "COPY": "교환 주문을 잊어버렸나요? 환율은 10 분 동안만 유효하며 만료되면 다시 시작해야 합니다."
+  },
+  "EXCHANGE_CONNECT_ERROR": "우리 교환 파트너에게 연결하는 데 오류 발생",
+  "unable to verify identity": "귀하 신원 확인을 할 수 없었습니다. 나중에 다시 해보세요.",
+  "error listing accounts: unauthorized product": "미안합니다, 우리 파트너가 귀하 정보를 확인하는 데 오류가 있었습니다. 이 문제가 계속되면 지원 센터에 연락 주세요.",
+  "PURCHASE_PENDING": "보류 중인 다음에 대한 귀하 주문",
+  "PURCHASE_PENDING_CANT_CANCEL": "보류 중인 거래가 완료될 때까지 기다려 주세요.",
+  "BUY_BITCOIN_EXPLAIN": "이제 블록체인 지갑으로 비트코인을 살 수 있습니다! 💸💸💸",
+  "SELL_BITCOIN_EXPLAIN": "이제 블록체인 지갑에서 직접 비트코인을 팔 수 있습니다!",
+  "BUY_BTC_UNAVAIL_COUNTRY": "귀하 국가에서는 아직 비트코인을 살 수 없습니다. 앞으로 서비스 국가를 더 늘릴 예정입니다.",
+  "SELL_BTC_UNAVAIL_STATE": "현재 귀하 주에서는 아직 비트코인 거래가 안됩니다. 귀하 지역 서비스가 될 때 연락 받으려면, 아래 등록해 주세요.",
+  "NO_TRADES": "귀하 주문 이력",
+  "BTC_APPROX_RATE": "BTC (대략 요율):",
+  "BTC_TX_FEE": "BTC 거래 수수료",
+  "BTC_TO_BE_RECEIVED": "받을 BTC",
+  "NO_TRADES_EXPLAIN": "아직 거래를 안했습니다. <span class='primary'>여기를 클릭해서 </span> 비트코인 거래를 시작하세요.",
+  "NEED_HELP": "도움이 필요하세요?",
+  "TRADING_SERVICE_IS_DISABLED": "Coinify 서비스가 일시적으로 안되고 있습니다. 자세한 내용은 <a href='https://support.coinify.com/' target='_blank' rel='noopener noreferrer'>https://support.coinify.com/</a>를 보세요.",
+  "TRADING_IS_DISABLED": "업데이트를 하느라고 거래가 일시 중단되었습니다.",
+  "PRODUCTS": "제품들",
+  "BUSINESS": "비즈니스",
+  "RESEARCH": "연구",
+  "TEAM": "팀",
+  "CAREERS": "경력",
+  "INTERVIEWING": "면접 중",
+  "PRESS": "언론",
+  "BLOG": "블로그",
+  "TRADE_COMPLETE": "거래 완료",
+  "FETCH_TRADE_ERROR": "지금 귀하 거래를 가져오는 데 문제가 있습니다. 나중에 다시 해보세요.",
+  "FETCH_KYC_ERROR": "지금 귀하 KYC 정보를 가져오는 데 문제가 있습니다. 나중에 다시 해보세요.",
+  "CLICK_TO_DELETE_ACCOUNT": "은행 계좌 삭제",
+  "BANK_ACCOUNT_CREATION_FAILED": "귀하 은행 계좌를 저장하는 데 문제가 있었습니다. 나중에 다시 해보세요.",
+  "SELL_RATE_ACCEPT": "나는 Coinify가 비트코인 거래 완료 후 내 주문 처리를 할 것이며 비트코인은 표시 환율과 다를 수 있는 처리 당시 환율로 거래되는 것에 동의합니다.",
+  "CREATE_SELL_TRADE_ERROR": "팔기 거래 만들기 오류 나중에 다시 해보세요.",
+  "NO_COMPLETED_TRADES": "아직 완료한 거래가 없습니다.",
+  "SELL_TERMS_CREATE_ACCOUNT": "우리 파트너 Coinify가 귀하 비트코인 팔기를 처리할 겁니다. Coinify 조건에 동의하고 '계속'을 클릭하면 귀하의 확인 이메일로 Coinify 계정을 만들게 됩니다.",
+  "CANNOT_COMPLETE_TRADE_ERROR": "{{::error}}. 나중에 다시 해보세요. 문제가 계속되면 <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>여기</a> 지원 팀으로 연락해 주세요.",
+  "UNABLE_TO_PROCESS": "귀하 거래 처리를 못했습니다.",
+  "SELL": {
+    "COINIFY_ACCOUNT": "Coinify 계좌",
+    "ADD_BANK_ACCOUNT": "은행 계좌 추가",
+    "ACCOUNT_HOLDER": "계좌 보유자",
+    "CONFIRM_SELL_ORDER": "팔기 주문 확인",
+    "ORDER_PLACED": "팔기 주문 냄",
+    "INCREASE_SELL_LIMIT": "팔기 한도 증액",
+    "LINKED_ACCOUNTS": "연결된 계좌들",
+    "PLACE_ORDER": "팔기 주문 내기",
+    "RECEIVE_EMAIL_CONFIRMATION": "Coinify가 1 업무일 내에 귀하 은행 계좌로 팔기 금액을 입금할 겁니다. 귀하는 Coinify가 귀하 계정으로 돈을 보낸 후 Coinify로부터 이체 확인 이메일을 받을 것입니다.",
+    "ORDER_DETAILS": "주문 상세 사항",
+    "1_2_DAYS": "*주의: 귀하 은행의 이체 정책에 따라 이체 1-2 업무일 후 귀하 계정에 이체 금액이 나타날 겁니다.",
+    "CREDIT_ISSUED": "크레딧 발급 됨",
+    "TRADE_ID": "Coinify 거래 아이디",
+    "DATE_INITIALIZED": "날짜 시작됨",
+    "BTC_SOLD": "비트코인 팔림",
+    "PAYOUT_DETAILS": "지불금 상세 사항",
+    "BANK_ACCOUNT": "은행 계좌",
+    "WHERE_FUNDS_SENT": "돈을 어디로 보낼까요? 다음 은행 계좌들이 연결되어 있습니다.",
+    "SELECT_ACCOUNT": "계좌 선택",
+    "DONE": "완료됨",
+    "ADD_NEW_ACCOUNT": "새 계좌 추가",
+    "WILL_BE_SENT": "'팔기 주문 내기'를 클릭하면 귀하 블록체인 지갑에서 Coinify로 직접 보내집니다.",
+    "CREDIT_OWED": "다음을 받게 됩니다",
+    "BTC_TO_SELL": "팔 비트코인",
+    "ID_REVIEW_STATUS": "검토 현황",
+    "BTC_TX_FEE": "비트코인 거래 수수료",
+    "CREATE_SELL_ERROR": "귀하 팔기 거래 만들기에 문제가 있었습니다. 나중에 다시 해보세요.",
+    "KYC_SUCCESS": "신청 성공",
+    "KYC_CANCELLED": "이 거래는 취소되었습니다.",
+    "KYC_EXPIRED": "귀하의 신원 확인이 만료되었습니다. 다른 신분증을 업로드 해 보세요. 귀하 신원 확인이 될 때까지는 은행 이체 한도가 올라가지 않습니다.",
+    "KYC_REJECTED": "귀하 신원 확인에 문제가 있었습니다. 나중에 다시 해보세요. 귀하 신원 확인이 될 때까지는 은행 이체 한도가 올라가지 않습니다.",
+    "MORE_THAN_BALANCE": "입력한 금액이 잔액보다 큽니다.",
+    "MORE_THAN_BALANCE_LABELS": "입력한 금액이 잔액 {{::account}} 보다 큽니다.",
+    "SELECT_CURRENCY": "통화 선택",
+    "SELL_ALL": "모든 마이너스 BTC 수수료 팔기",
+    "PARTNER": "<span class='success'>이메일 확인됨!</span> 우리 파트너 Coinify가 귀하 비트코인 팔기를 처리할 겁니다. \"계속\"을 클릭하면 Coinfly에 계정을 만들게 됩니다. 귀하 계정은 확인된 이메일 주소인 <span class='em-500'>{{::email}}</span>과 연결되게 됩니다.",
+    "WHO_OWNS": "이 은행 계좌 보유자가 누구에요? 이 정보는 계좌 보유자 은행 명세서와 같아야 합니다.",
+    "PLEASE_ADD_ACCOUNT": "저장한 은행 계좌가 없습니다. 돈 받을 계좌를 추가하세요.",
+    "MAX_DAILY": "하루 팔기 최대 금액은",
+    "RECEIVE_EMAIL_RECEIPT": "이 거래는 완료되었습니다. 돈이 귀하 계정으로 들어갔다는 확인 이메일을 Coinify가 보낼 겁니다.",
+    "PLEASE_NOTE_BANK_POLICIES": "*주의: 귀하 은행의 이체 정책에 따라 이체 1-2 업무일 후 귀하 계정에 이체 금액이 나타날 겁니다.",
+    "ENTER_DANISH_BANK": "귀하 덴마크 은행 계정 정보를 입력하세요.",
+    "ENTER_BANK_INFO": "은행 정보를 아래 입력하세요.",
+    "TRADE_COMPLETE": "@:TRADE_COMPLETE",
+    "SOLD": "팔림",
+    "FIRST_CONFIRMATION": "요율은 첫 확인 후 정해집니다.",
+    "WAIT_FOR_TRADE_COMPLETE": "보류 중인 거래가 완료될 때까지 다른 거래는 할 수 없습니다.",
+    "QUOTE_EXPIRED_ERROR": "{{::error}} 거래를 다시 시작해서 팔기를 완료하세요. 문제가 계속되면 <a href='https://support.blockchain.com' target='_blank' rel='noopener noreferrer'>여기</a> 지원 팀으로 연락하세요.",
+    "IBAN": "International Bank Account Number (IBAN)",
+    "BIC": "Bank identifier 코드 (SWIFT/BIC)",
+    "BBAN": "계좌 번호",
+    "REG": "REG Number",
+    "HOLDER_NAME": "계좌 보유자 이름 전체",
+    "HOLDER_STREET": "거리 이름과 번호",
+    "HOLDER_CITY": "도시",
+    "HOLDER_POSTAL": "우편 번호",
+    "SELL_BITCOIN": "비트코인 팔기",
+    "IDENTITY_VERIFICATION": "신원 확인",
+    "QUOTE_WILL_EXPIRE": "견적은 만료되면 새로 고침 됩니다. 귀하가 파는 비트코인 금액은 변하지 않습니다.",
+    "QUOTE_EXPIRES": "다음 후 견적 만료: {{::count}}",
+    "LIMIT_REMAINING": "귀하는 귀하의 연간 한도 {{::symbol}}{{::limit}} 중 {{::symbol}}{{::remaining}} 를 팔 수 있습니다. 한도를 늘리려면, 클릭",
+    "LEVEL_2_LIMIT_REMAINING": "귀하는 귀하의 하루 한도 {{::symbol}}{{::limit}} 중 {{::symbol}}{{::remaining}} 를 팔 수 있습니다.",
+    "AMOUNT_OVER": "이 금액은 최대 금액 {{ ::max }} BTC를 초과합니다. 더 작은 금액으로 다시 시작해 주세요.",
+    "ISX": {
+      "REVIEWING": "귀하 인증 요청은 제출되었으며 곧 검토될 것입니다. Coinify가 48 업무 시간 내에 현황 업데이트를 이메일 해 줄 겁니다. 제출 사항 현황이 궁금하면, Coinify <a href='https://www.coinify.com/support' target='_blank' rel='noopener noreferrer'>www.coinify.com/support</a>에 직접 문의해도 됩니다.",
+      "REJECTED": "신원 확인에 문제가 있었습니다. 나중에 다시 해보세요. 신원 확인이 될 때까지 귀하 한도는 증액되지 않습니다.",
+      "PROCESSING": "귀하의 인증 요청은 처리 중입니다. 나중에 확인해서 업데이트를 하세요.",
+      "CANCELLED": "귀하의 인증 요청은 취소되었습니다.",
+      "COMPLETED": "귀하 인증 요청이 처리되어 비트코인 팔기 한도가 증액되었습니다.",
+      "EXPIRED": "귀하의 인증 요청은 만료되었습니다."
+    }
+  },
+  "COPY_LINK": "링크 복사",
+  "LINK_COPIED": "링크 클립보드에 복사됨!",
+  "BUY_SELL_BITCOIN": "비트코인 사기",
+  "SHOW_MORE": "더 보기",
+  "RECEIVE_HELPER": "받기 주소를 클립보드에 복사",
+  "EMAIL_SENT": "이메일 보냄",
+  "regular": "보통",
+  "priority": "우선",
+  "regular_ESTIMATION_TIME": "추정 확인 시간은 1+ 시간입니다.",
+  "priority_ESTIMATION_TIME": "추정 확인 시간은 0 - 60 분입니다.",
+  "GO_MOBILE": "블록체인을 모바일로 하세요",
+  "PAIR_YOUR_WALLET": "귀하 지갑을 페어링 하세요",
+  "SHOW_QR_CODE": "QR 코드 보이게 하기",
+  "HIDE_CODE": "준비가 될 때까지 이 코드는 안 보이게 하세요.",
+  "DOWNLOAD_OUR_APP": "우리 모바일 앱을 Android 나 iOS 장치에 다운로드 해서 이동 중에도 지갑을 쓰세요,",
+  "PAIR_DEVICE": "장치 페어링",
+  "SYNC_WALLET": "장치에 앱을 다운로드 한 후 '로그인'을 탭하고 QR 코드를 스캔 하면 지갑 동기화가 됩니다.",
+  "RETRY": "다시 해 보기",
+  "LOGGING_IN_NOW": "로그인 중",
+  "APP_CTA": "앱이 없으세요?",
+  "DOWNLOAD_HERE": "여기서 다운로드 하세요.",
+  "MOBILE_LOGIN": {
+    "TITLE": "모바일 로그인",
+    "SUB_TEXT": "모바일 장치로 지갑 로그인을 하려면 다음 단계들을 따라 하세요.",
+    "STEPS_TITLE": "모바일로 로그인 하기",
+    "STEP_1": "휴대 장치에서 블록체인 앱을 연 후 설정으로 가세요.",
+    "STEP_2": "<i>웹 지갑 로그인</i>을 탭 하세요.",
+    "STEP_3": "컴퓨터 카메라로 장치에 나타난 QR 코드를 스캔 하세요,"
   },
   "REQUIRED_FIELD": "필요한 필드",
   "IFSC_INCORRECT": "IFSC 틀림",
-  "PIN_CODE_REQUIRED": "비밀 번호 필요",
-  "PIN_CODE_INCORRECT": "비밀 번호 틀림",
-  "PAN_CARD_REQUIRED": "PAN 카드 필요",
-  "PAN_CARD_INCORRECT": "PAN 카드 틀림",
+  "PIN_CODE_REQUIRED": "Pin Code 필요",
+  "PIN_CODE_INCORRECT": "Pin Code 틀림",
+  "PAN_CARD_REQUIRED": "Pan Card 필요",
+  "PAN_CARD_INCORRECT": "Pan Card 틀림",
+  "PAN_CARD_DUPLICATE": "PAN 이미 등록됨.",
+  "CLICK_HERE_TO_RESTART": "여기를 클릭해서 다시 시작.",
+  "CLICK_HERE_TO_CHANGE_IT": "여기를 클릭해서 변경.",
   "BANK_ACCOUNT_NUMBER_INCORRECT": "은행 계좌 번호 틀림",
   "EXCHANGE": {
-    "CREATE_ACCOUNT": "{{::exchange}} 계정 만들기",
-    "CREATE_ACCOUNT_EXPLAIN": "이메일과 전화 번호를 확인해서 {{::exchange}} 교환 계정을 만드세요.",
-    "VERIFY_EMAIL": "이메일 주소 확인",
-    "VERIFY_EMAIL_EXPLAIN": "귀하 이메일 주소로 확인 코드를 보냈습니다. 확인 코드를 입력해서 {{::exchange}} 교환 계정을 만드세요.",
-    "CHANGE_EMAIL": "이메일 변경",
-    "CHANGE_EMAIL_EXPLAIN": "이메일을 변경하면 연결된 귀하 지갑도 변경됩니다.",
-    "CHANGE_EMAIL_FAILED": "미안하지만 이 이메일은 이미 {{::exchange}}로 등록된 것입니다.",
-    "CONFIRM_EMAIL": "이메일 확인",
-    "VERIFICATION_CODE": "확인 코드",
-    "VERIFICATION_CODE_INCORRECT": "확인 코드 틀림. ",
-    "CHANGE_EMAIL_": "이메일 변경",
-    "ANOTHER_CODE_SENT": "다른 코드를 보냈습니다!",
-    "VERIFY_ACCOUNT": "귀하 신원 확인을 위해 개인 정보가 필요합니다. 이 정보는 {{::exchange}}에게 보낼 것이며 귀하 Blockchain 지갑과 직접 연결되지 않습니다.",
-    "FULL_NAME": "이름 전체",
-    "MOBILE": "모바일",
-    "PAN_CARD": "PAN 카드",
-    "FULL_RESIDENTIAL_ADDRESS": "거주 주소 전체 (주소 증빙도 보내야 합니다)",
-    "ADDRESS_LINE_1": "주소 줄 1",
-    "ADDRESS_LINE_2": "주소 줄 2",
-    "STATE": "주",
-    "CITY": "도시",
-    "PIN_CODE": "비밀 번호",
-    "BANK_ACCOUNT_NUMBER": "은행 계좌 번호",
-    "IFSC": "IFSC"
-  }
+    "BUY_SIMPLE_STEPS": "블록체인은 전 세계 교환 파트너와 제휴해서 귀하의 비트코인 사기가 매끄럽고 안전하도록 하고 있습니다.",
+    "NOTIFY_ME_WHEN_AVAIL": "이것이 가능해지면 알려 주세요",
+    "CREATE": {
+      "ACCOUNT": "{{::exchange}} 계정 만들기",
+      "ACCOUNT_EXPLAIN": "조건에 동의하고 {{::exchange}} 계정 만들기",
+      "VERIFY_EMAIL": "이메일 주소 확인",
+      "VERIFY_EMAIL_EXPLAIN": "방금 귀하 이메일 주소로 확인 코드를 보냈습니다. 확인 코드를 입력해서 {{::exchange}} 교환 계정을 만드세요",
+      "VERIFY_EMAIL_REMINDER": "",
+      "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "",
+      "CHANGE_EMAIL": "이메일 변경",
+      "CHANGE_EMAIL_EXPLAIN": "이메일을 업데이트 하면 지갑과 연결된 이메일 주소도 변경됩니다.",
+      "CHANGE_EMAIL_FAILED": "미안하지만 이 이메일은 이미 {{::exchange}}에 등록되어 있습니다.",
+      "CONFIRM_EMAIL": "이메일 확인",
+      "VERIFICATION_CODE": "확인 코드",
+      "VERIFICATION_CODE_INCORRECT": "확인 코드 틀림. ",
+      "CHANGE_EMAIL_": "이메일 변경",
+      "ANOTHER_CODE_SENT": "다른 코드를 보냈습니다!"
+    },
+    "VERIFY": {
+      "VERIFY_ACCOUNT": "신원 확인을 위해 개인 정보 몇 가지가 필요합니다.<br/><br/>이 정보는 {{::partner}}에게 직접 보내지며 귀하 블록체인 지갑에는 저장되지 않습니다. 제공된 모든 정보는 안전합니다.",
+      "FULL_NAME": "이름 전체",
+      "MOBILE": "모바일",
+      "PAN_CARD": "PAN Card",
+      "FULL_RESIDENTIAL_ADDRESS": "거주지 주소 전체 (주소 증빙도 보내게 됩니다)",
+      "ADDRESS_LINE_1": "주소 라인 1 <span class='mid-grey'>(주된 청구 주소를 써 주세요)</span>",
+      "ADDRESS_LINE_2": "주소 라인 2",
+      "STATE": "주",
+      "CITY": "도시",
+      "PIN_CODE": "Pin Code",
+      "BANK_ACCOUNT_NUMBER": "은행 계좌 번호",
+      "IFSC": "IFSC",
+      "SETUP_PROFILE": "프로필 설정"
+    },
+    "ACTIONS": {
+      "FINISH": "거래 끝내기",
+      "VIEW_DETAILS": "상세 사항 보기"
+    }
+  },
+  "COINIFY": {
+    "EXPLAIN": "우리 교환 파트너 Coinify가 귀하 비트코인 구매를 처리할 겁니다. '계속'을 클릭해서 비트코인 사기/팔기를 시작하세요.",
+    "user_needs_account": {
+      "EXPLAIN": ""
+    },
+    "has_remaining_buy_limit": {
+      "EXPLAIN": "남아 있는 사기 한도는 <a class='pointer'>{{::max}} {{::curr}}</a>입니다.",
+      "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
+      "KYC": "한도 올리기"
+    },
+    "not_enough_funds_to_sell": {
+      "EXPLAIN": "😢 미안하지만, 팔려면 거래 수수료를 제외하고 {{::min}} {{::curr}} 이상이 있어야 합니다.",
+      "REQUEST": "@:REQUEST_BITCOIN",
+      "BUY": "@:BUY"
+    },
+    "can_sell_max": {
+      "EXPLAIN": "귀하 잔액 중 <span class='pointer primary'>{{::max}} {{::curr}}</span>까지 팔 수 있습니다.",
+      "ERROR_MAX": "@:COINIFY.can_sell_max.EXPLAIN",
+      "KYC": "한도 올리기"
+    },
+    "can_sell_remaining_balance": {
+      "EXPLAIN": "귀하 잔액 중 <span class='pointer primary'>{{::max}} {{::curr}}</span>까지 팔 수 있습니다.",
+      "ERROR_MAX": "@:COINIFY.can_sell_remaining_balance.EXPLAIN"
+    },
+    "max_remaining_below_min": {
+      "EXPLAIN": "🙁 팔기 한도에 도달했습니다.",
+      "KYC": "한도 올리기"
+    },
+    "after_first_trade": {
+      "EXPLAIN": "귀하 한도는 0 {{::curr}}으로 설정되어 있습니다.",
+      "WHY": "왜?"
+    },
+    "awaiting_first_trade_completion": {
+      "EXPLAIN": "보류 중인 거래가 완료될 때까지 다른 거래는 할 수 없습니다.",
+      "CHECK_STATUS": "현황 확인",
+      "FINISH": "끝내기",
+      "CANCEL": "취소"
+    },
+    "buy": {
+      "awaiting_transfer_in": {
+        "DISPLAY": "돈 기다리는 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
+      },
+      "processing": {
+        "DISPLAY": "보류",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
+      },
+      "reviewing": {
+        "DISPLAY": "검토 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "completed": {
+        "DISPLAY": "완료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "completed_test": {
+        "DISPLAY": "완료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "cancelled": {
+        "DISPLAY": "취소됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "rejected": {
+        "DISPLAY": "거부됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "expired": {
+        "DISPLAY": "만료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      }
+    },
+    "sell": {
+      "awaiting_transfer_in": {
+        "DISPLAY": "돈 기다리는 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
+      },
+      "processing": {
+        "DISPLAY": "보류",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
+      },
+      "reviewing": {
+        "DISPLAY": "검토 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "completed": {
+        "DISPLAY": "완료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "completed_test": {
+        "DISPLAY": "완료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "cancelled": {
+        "DISPLAY": "취소됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "rejected": {
+        "DISPLAY": "거부됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      },
+      "expired": {
+        "DISPLAY": "만료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS"
+      }
+    },
+    "recurring_buy": {
+      "disabled": "귀하 신용 카드 한도 ({{::cardLimit}} {{::currency}})는 반복 주문 만들기에 부족합니다.",
+      "enabled": "{{::cardLimit}} {{::currency}} 이하 거래는 반복 주문이 됩니다."
+    },
+    "tx_fee_required": "거래 수수료는 거래가 확인되게 하는 채굴 네트워크 비용으로 쓰입니다. 블록체인은 현재 네트워크 조건에 맞는 수수료를 추천합니다."
+  },
+  "UNOCOIN": {
+    "EXPLAIN": "우리 파트너 Unocoin 이 귀하 비트코인 구매를 처리할 겁니다. 귀하는 일정 정보를 제공하고 결제 방법을 연결해야 합니다.",
+    "VERIFY": {
+      "PO_WARNING": ""
+    },
+    "CREATE": {
+      "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
+      "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
+      "VERIFY_EMAIL": "@:EXCHANGE.CREATE.VERIFY_EMAIL",
+      "VERIFY_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.VERIFY_EMAIL_EXPLAIN",
+      "VERIFY_EMAIL_REMINDER": "<b>프슷 (Psst) 👋. 이미 {{::exchange}} 계정이 있으세요?</b> 귀하 {{::exchange}} 게정과 블록체인 계정 둘 다 이메일이 {{::email}} 맞는지 확인해 주세요.  아니면, 블록체인 이메일을 업데이트 할 수 있습니다. ",
+      "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "여보세요 👋! 귀하 블록체인 이메일이 {{::exchange}} 이메일과 다릅니다. 같은 이메일 주소를 써야 합니다.",
+      "CHANGE_EMAIL": "@:EXCHANGE.CREATE.CHANGE_EMAIL",
+      "CHANGE_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.CHANGE_EMAIL_EXPLAIN",
+      "CHANGE_EMAIL_FAILED": "@:EXCHANGE.CREATE.CHANGE_EMAIL_FAILED",
+      "CONFIRM_EMAIL": "@:EXCHANGE.CREATE.CONFIRM_EMAIL",
+      "VERIFICATION_CODE": "@:EXCHANGE.CREATE.VERIFICATION_CODE",
+      "VERIFICATION_CODE_INCORRECT": "@:EXCHANGE.CREATE.VERIFICATION_CODE_INCORRECT",
+      "CHANGE_EMAIL_": "@:EXCHANGE.CREATE.CHANGE_EMAIL_",
+      "ANOTHER_CODE_SENT": "@:EXCHANGE.CREATE.ANOTHER_CODE_SENT"
+    },
+    "UPLOAD": {
+      "pancard": {
+        "TITLE": "1. PAN Card",
+        "COPY": "PAN Card를 업로드 하거나 사진을 찍으세요. 이름과 10 자리 영구 계좌 번호가 확실하게 나와야 합니다.",
+        "UPLOAD_TITLE": "PAN Card",
+        "UPLOAD_SELECT": "@:SFOX.UPLOAD.id.UPLOAD_SELECT",
+        "OPTION1": "",
+        "OPTION2": "",
+        "OPTION3": "",
+        "OPTION4": "",
+        "WARNING": "",
+        "HELP": "사진에서 PAN Card 번호가 잘 보여야 합니다."
+      },
+      "photo": {
+        "TITLE": "2. 귀하의 사진",
+        "COPY": "귀하의 사진을 올려야 Unocoin이 PAN Card를 확인할 수 있습니다.",
+        "UPLOAD_TITLE": "사진",
+        "UPLOAD_SELECT": "@:SFOX.UPLOAD.id.UPLOAD_SELECT",
+        "OPTION1": "",
+        "OPTION2": "",
+        "OPTION3": "",
+        "OPTION4": "",
+        "WARNING": "",
+        "HELP": "사진에서 얼굴이 잘 보여야 합니다."
+      },
+      "address": {
+        "TITLE": "3. 주소 증빙",
+        "COPY": "주소 증빙 사진을 올리세요. 이름과 주소과 이미 제공한 것과 일치하는 다음 문서들 중 하나를 업로드 하세요.",
+        "UPLOAD_TITLE": "주소 증빙",
+        "UPLOAD_SELECT": "@:SFOX.UPLOAD.id.UPLOAD_SELECT",
+        "OPTION1": "- Aadhar Card (앞면과 뒷면)",
+        "OPTION2": "- 운전 면허증",
+        "OPTION3": "- 여권 (주소가 나와 있는 페이지)",
+        "OPTION4": "- 전기 수도 가스 청구서",
+        "WARNING": "",
+        "HELP": "사진에서 이름과 주소가 잘 보여야 합니다."
+      }
+    },
+    "HELPER": {
+      "photo": {
+        "TITLE": "가능한 사용자 사진",
+        "COPY": "고글이나 모자를 쓰고 찍은 사진은 <span class='state-danger-text'>안됩니다</span>."
+      },
+      "pancard": {
+        "TITLE": "가능한 PAN Card",
+        "COPY": "미성년자 PAN Card는 <span class='state-danger-text'>안됩니다</span>.<br>PAN Card는 정부 규정에 따라 유효한 것이어야 합니다."
+      },
+      "address": {
+        "TITLE": "가능한 주소 증빙",
+        "COPY": "주소 증빙 상세 사항 부분에 카메라 플래시가 위치하지 않게 하세요.<br>주소 증빙은 6 개월 이상 유효한 것이어야 합니다.<br>주소 증빙 상 주소는 이미 제공한 주소와 일치해야 합니다.<br>투표자 아이디는 정부 웹사이트에서 유효한 것이어야 합니다.<br>업로드하는 주소 증빙은 영문이어야 합니다."
+      }
+    },
+    "PENDING": "신원 확인 보류 중",
+    "PENDING_EXPLAIN": "프로필 설정, 감사합니다. 귀하는 1 업무일 내에 귀하 계정 확인을 알려주는 문자나 전화를 받아야 합니다. 받았으면, 이제 비트코인을 살 수 있습니다!",
+    "awaiting_trade_completion": {
+      "EXPLAIN": "@:COINIFY.awaiting_first_trade_completion.EXPLAIN",
+      "FINISH": "끝내기"
+    },
+    "user_can_trade": {
+      "EXPLAIN": "귀하의 잔여 사기 한도는 {{::max}} {{::curr}}입니다.",
+      "ERROR_MAX": "@:UNOCOIN.user_can_trade.EXPLAIN"
+    },
+    "create": "이메일 확인",
+    "verify": "프로필 설정",
+    "upload": "문서 업로드",
+    "buy": {
+      "awaiting_transfer_in": {
+        "DISPLAY": "보류",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH",
+        "HEADER": "거래 시작됨",
+        "BODY": "{{::email}}로 이메일 확인이 갈 겁니다.<br>3-5 시간이면 귀하 BTC가 도착할 겁니다."
+      },
+      "awaiting_reference_number": {
+        "DISPLAY": "조회 번호 대기 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.FINISH"
+      },
+      "processing": {
+        "DISPLAY": "진행 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "거래 진행 중",
+        "BODY": "귀하 구매는 지금 처리 중입니다. 우리 교환 파트너가 1 업무일 내에 귀하에게 현황 업데이트를 보내줄 겁니다."
+      },
+      "completed": {
+        "DISPLAY": "완료됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "구매한 주문",
+        "BODY": "구매 성공 비트코인이 {{::label}}에게 보내짐.<b></b>"
+      },
+      "cancelled": {
+        "DISPLAY": "취소됨",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "주문 취소됨",
+        "BODY": "귀하 거래는 취소되었습니다. 돈이 귀하 계정에서 이미 인출되었으면, 같은 금액으로 새 거래를 만든 후 당초 조회 번호를 사용하세요."
+      },
+      "ID": "거래 아이디",
+      "DATE": "주문 날짜",
+      "TOTAL": "구매한 BTC",
+      "TOTAL_COST": "비용 합계"
+    }
+  },
+  "SFOX": {
+    "EXPLAIN": "우리 파트너 SFOX가 귀하 비트코인 거래를 처리할 겁니다. 귀하는 일정 정보를 제공하고 결제 방법을 연결해야 합니다.",
+    "BUY_SIMPLE_STEPS": "블록체인은 지갑 속 비트코인 사기/팔기가 안전하고 깔끔하게 이루어지도록 교환 파트너들과 같이 일하고 있습니다.",
+    "NOW_SUPPORTING": "이제 기다림이 끝났습니다!",
+    "ANNOUNCEMENT": "이제 귀하도 블록체인 지갑에서 직접 비트코인 거래를 할 수 있게 되었음을 알려드립니다. 귀하의 '비트코인 사기/팔기' 탭에 계정을 만드는 것으로 시작하세요. ",
+    "GET_STARTED": "거래 시작",
+    "BUY_BITCOIN": "비트코인 사기!",
+    "SELL_BITCOIN": "비트코인 팔기",
+    "BUY_BITCOIN_EXPLAIN": "이제 블록체인 지갑으로 비트코인을 살 수 있습니다! 💸💸💸",
+    "VERIFY": {
+      "PO_WARNING": "⛔️ 사서함은 주소 확인 용도로 못 씁니다."
+    },
+    "CREATE": {
+      "ACCOUNT": "@:EXCHANGE.CREATE.ACCOUNT",
+      "ACCOUNT_EXPLAIN": "@:EXCHANGE.CREATE.ACCOUNT_EXPLAIN",
+      "VERIFY_EMAIL": "@:EXCHANGE.CREATE.VERIFY_EMAIL",
+      "VERIFY_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.VERIFY_EMAIL_EXPLAIN",
+      "VERIFY_EMAIL_REMINDER": "@:EXCHANGE.CREATE.VERIFY_EMAIL_REMINDER",
+      "VERIFY_EMAIL_ACCOUNT_VERIFICATION_ERROR": "@:EXCHANGE.CREATE.VERIFY_EMAIL_ACCOUNT_확인_ERROR",
+      "CHANGE_EMAIL": "@:EXCHANGE.CREATE.CHANGE_EMAIL",
+      "CHANGE_EMAIL_EXPLAIN": "@:EXCHANGE.CREATE.CHANGE_EMAIL_EXPLAIN",
+      "CHANGE_EMAIL_FAILED": "@:EXCHANGE.CREATE.CHANGE_EMAIL_FAILED",
+      "CONFIRM_EMAIL": "@:EXCHANGE.CREATE.CONFIRM_EMAIL",
+      "VERIFICATION_CODE": "@:EXCHANGE.CREATE.확인_코드",
+      "VERIFICATION_CODE_INCORRECT": "@:EXCHANGE.CREATE.확인_코드_틀림",
+      "CHANGE_EMAIL_": "@:EXCHANGE.CREATE.CHANGE_EMAIL_",
+      "ANOTHER_CODE_SENT": "@:EXCHANGE.CREATE.ANOTHER_코드_SENT"
+    },
+    "UPLOAD": {
+      "id": {
+        "TITLE": "사진 있는 아이디 확인",
+        "COPY": "다음 정부 발행 신분증들 중 하나를 업로드 해서 귀하의 신원과 거주 국가를 확인 시켜 주세요. ",
+        "OPTION1": "- 주 시 도 발행 운전 면허",
+        "OPTION2": "- 여권",
+        "OPTION3": "- 주 또는 정부 발행 신분증",
+        "OPTION4": "",
+        "WARNING": "⛔️ 셀카 사진은 신원 확인이 안됩니다.",
+        "UPLOAD_TITLE": "사진 있는 신분증",
+        "UPLOAD_SELECT": "업로드 방법 선택",
+        "HELP": "신분증 번호가 잘 나오게 신분증 앞쪽 촬영"
+      },
+      "address": {
+        "TITLE": "주소 확인 증빙",
+        "COPY": "다음 문서들 중 하나를 업로드 해서 청구 주소 확인 문서는 최근 6 개월 이내의 것으로 주소가 잘 보여야 합니다.",
+        "OPTION1": "- 수도 전기 가스 청구서 (이동 통신사 청구서는 안됩니다)",
+        "OPTION2": "- 임대 계약서 첫 페이지와 서명 페이지",
+        "OPTION3": "- 은행 명세서 첫 페이지",
+        "OPTION4": "- 차량등록소 (DMV) 또는 투표자 등록 양식",
+        "WARNING": "⛔️ 여권이나 운전 면허 업로드는 주소 확인이 안됩니다. 위 옵션들 중 하나를 업로드 해주세요.",
+        "UPLOAD_TITLE": "주소 증빙",
+        "UPLOAD_SELECT": "업로드 방법 선택",
+        "HELP": "주소가 잘 나오게 찍어야 합니다."
+      }
+    },
+    "HELPER": {
+      "id": {
+        "TITLE": "가능한 사진 있는 신분증",
+        "COPY": "유효한 시 도 발행 운전 면허, 시 도 발행 신분증, 여권, 정부 발행 신분증을 내도 됩니다. 신분증 번호가 잘 보여야 합니다."
+      },
+      "address": {
+        "TITLE": "가능한 주소 증빙",
+        "COPY": "수도 가스 전기 청구서 (이동통신사 청구서는 안됨), 임대 계약서 첫 페이지와 마지막 페이지, 은행 명세서 첫 페이지, 차량등록소 (DMV) 또는 투표자 등록 양식을 내도 됩니다. 문서 날짜가 6 개월 이내고 주소가 잘 보여야 합니다."
+      }
+    },
+    "LINK_BANK": {
+      "HEADER": "계좌 연결",
+      "COPY": "은행에 직접 그리고 안전하게 로그인 해서 은행 계정을 즉시 동기화 해주세요",
+      "COPY_2": "귀하의 라우팅 번호와 계정 정보를 입력해서 계좌를 수동 추가해도 됩니다. 은행 계좌를 수동으로 추가하면 처리에 4 일이 걸립니다.",
+      "COPY_SMALL": "(추신: 귀하의 은행 정보는 직접 SFOX로 보내지며 블록체인 지갑에서는 저장되지 않고 지갑에서 볼 수도 없습니다)"
+    },
+    "needs_account": {
+      "EXPLAIN": ""
+    },
+    "needs_id": {
+      "EXPLAIN": "",
+      "REQUIRED": "SFOX 계좌 만들기가 끝나야 거래를 시작할 수 있습니다.",
+      "CONTINUE": "하다기 증딘힌 데부터 계속"
+    },
+    "needs_bank": {
+      "EXPLAIN": "",
+      "REQUIRED": "은행 계좌를 연결해야 거래를 시작할 수 있습니다.",
+      "CONTINUE": "은행 계좌 연결"
+    },
+    "needs_bank_active": {
+      "EXPLAIN": "",
+      "REQUIRED": "이 은행 계좌는 확인이 필요합니다.",
+      "CONTINUE": "계좌 확인 마치기"
+    },
+    "needs_data": {
+      "EXPLAIN": "잔액 정보 로딩 중..."
+    },
+    "not_enough_funds_to_sell": {
+      "EXPLAIN": "@:COINIFY.not_enough_funds_to_sell.EXPLAIN",
+      "REQUEST": "@:REQUEST_BITCOIN"
+    },
+    "can_sell_remaining_balance": {
+      "EXPLAIN": "@:COINIFY.can_sell_remaining_balance.EXPLAIN",
+      "ERROR_MAX": "한도 금액 초과입니다. <span class='text-color'>최대</span> <span class='pointer primary'>팔기</span>"
+    },
+    "has_remaining_buy_limit": {
+      "EXPLAIN": "@:COINIFY.has_remaining_buy_limit.EXPLAIN",
+      "ERROR_MAX": "@:COINIFY.has_remaining_buy_limit.EXPLAIN"
+    },
+    "sell": {
+      "confirm": {
+        "HEADER": "팔기 주문 확인",
+        "BODY": "아래 거래 상세 사항을 검토해 주세요. '계속'을 클릭해서 시작",
+        "ACCEPT_TERMS": "나는 SFOX <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>서비스 조건</a>에 동의합니다."
+      },
+      "processing": {
+        "DISPLAY": "보류 중인 팔기",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "팔기 주문 진행 중",
+        "BODY": "팔기 거래가 시작되었습니다. 3-5 업무 일 내에 돈이 귀하 은행 계정에 들어갈 겁니다. <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "failed": {
+        "DISPLAY": "실패한 팔기",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "팔기 주문 실패",
+        "BODY": "팔기 거래가 실패했습니다. 의문이 있으면 거래 아이디를 가지고 지원팀에 연락해 주세요. <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "rejected": {
+        "DISPLAY": "거부된 팔기",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "팔기 주문 거부됨",
+        "BODY": "팔기 주문이 거부되었습니다. 미안하지만 정확한 거부 이유는 밝힐 수 없습니다. <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "completed": {
+        "DISPLAY": "완료된 팔기",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "팔기 주문 완료됨",
+        "BODY": "팔기 주문 완료 성공<b> 1-3 업무 일 내에 귀하 은행 계정에 거래가 나타날 겁니다.</b> 비트코인 거래에 블록체인을 써주셔서 감사합니다. <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "AMT": "팔 금액",
+      "AMT_SOLD": "팔린 금액",
+      "TX_FEE": "거래 수수료",
+      "TOTAL": "나가는 비트코인 합계",
+      "INTRODUCING_HEADER": "팔기 소개",
+      "INTRODUCING_BODY": "귀하가 비트코인을 팔 수 있도록 우리는 SFOX와 제휴했습니다.<br><br>이제 지갑에서 직접 비트코인을 팔고 판 돈을 은행 계좌에 넣을 수 있습니다.<br><br>다음 소식도 계속 들어주세요! 우리는 지갑 기능을 더 좋게 하기 위해 노력하고 있습니다.",
+      "TRADING_FEE": "거래 수수료",
+      "TO_BE_RECEIVED": "받을 USD",
+      "TRANSACTION_FEE_HELPER": "수수료는 돈을 SFOX에 보내는 데 쓰입니다."
+    },
+    "buy": {
+      "COMING_SOON": "우리는 지갑에서 <strong>비트코인 사기</strong> 기능을 더 좋게하기 위해 노력하고 있습니다.",
+      "confirm": {
+        "HEADER": "사기 주문 확인",
+        "BODY": "@:SFOX.sell.confirm.BODY",
+        "ACCEPT_TERMS": "@:SFOX.sell.confirm.ACCEPT_TERMS"
+      },
+      "processing": {
+        "DISPLAY": "보류 중인 사기",
+        "HEADER": "사기 주문 진행 중",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "사기 거래가 시작되었습니다. 3-5 업무 일 내에 비트코인을 받게 될 겁니다.  <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "rejected": {
+        "DISPLAY": "거부된 사기",
+        "HEADER": "거부된 사기 주문",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "BODY": "귀하 사기 거래가 거부되었습니다. <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "completed": {
+        "DISPLAY": "완료된 사기",
+        "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
+        "HEADER": "사기 주문 완료",
+        "BODY": "귀하 사기 거래가 완료되었습니다. 비트코인 거래에 블록체인을 써주셔서 감사합니다. <b>귀하 주문 아이디: SFX-{{::tradeid}}</b>"
+      },
+      "AMT": "구매할 BTC 금액",
+      "AMT_BOUGHT": "구매된 BTC 금액",
+      "TOTAL": "받을 비트코인 금액",
+      "TO_BE_SPENT": "비용 합계",
+      "TRADING_FEE": "@:SFOX.sell.TRADING_FEE",
+      "TX_FEE": "@:SFOX.sell.TX_FEE",
+      "TRANSACTION_FEE_HELPER": "수수료는 SFOX에서 지갑으로 비트코인을 보내는 데 쓰입니다.",
+      "INTRODUCING_HEADER": "사기 소개!",
+      "INTRODUCING_BODY": "귀하의 비트코인 사기를 위해 우리는 SFOX와 제휴했습니다 🎉<br><br>이제 지갑에 은행 계좌를 연결해서 직접 비트코인을 살 수 있습니다. 간단하고 깔끔하고 안전합니다."
+    },
+    "create": "계좌 만들기",
+    "verify": "신원 확인",
+    "upload": "문서 업로드",
+    "link": "은행 연결",
+    "TRADING_FEE_HELPER": "수수료는 SFOX를 통해 거래를 집행하는 데 쓰입니다.",
+    "BUY_COMING_SOON": "이제 귀하 블록체인 지갑에서 직접 비트코인을 팔 수 있습니다!",
+    "BUY_COMING_SOON_DETAILS": "곧 귀하도 비트코인을 살 수 있도록 우리가 열심히 일하고 있으니 걱정 마세요."
+  },
+  "HERE": "여기",
+  "TESTNET_WARNING": "경고! 이것은 testnet3 블록체인입니다. 여기서 귀하의 코인은 가치가 없습니다.",
+  "YOUR_BALANCES": "귀하의 잔액",
+  "PRICE_CHARTS": "가격 차트",
+  "WELCOME_TO_ETHER": "에테르에 오신 걸 환영합니다!",
+  "WHAT_IS_ETH_HEADER": "에테르가 뭐에요?",
+  "GET_STARTED_WITH_ETHER": "에테르로 시작하기",
+  "GET_ETHER": "에테르 받기",
+  "WHY_SHOULD_I_USE_ETHER_HEADER": "왜 그걸 써야 하나요?",
+  "WHAT_IS_ETHER": "에테르는 디지털 통화입니다. 비트코인처럼 전 세계 사람들이 거래하고 저축하게 해서 더 좋은 재정 미래를 가지게 합니다. 에테르는 가치 보내기 뿐 아니라 에더리움 플랫폼을 작동 시킵니다.",
+  "WHY_SHOULD_I_USE_ETHER": "에더리움 플랫폼은 성장하면서 더 많은 지혜형 앱이 플랫폼 위에 만들어집니다. 귀하가 나중에 에테르 사용을 할 수 있도록 지금부터 에테르 사용 시작을 할 수 있는 기회를 드리고자 합니다. ",
+  "ETHER_DISABLE_SEND_TO_CONTRACT": "계약 주소로 보내기가 사용 해제되어 있습니다",
+  "ETHER_SECPASS_REQUIRED": "2 번째 암호를 입력해서 에테르 지갑을 시작해야 합니다.",
+  "ETHER_SEND_RECEIVE": "에테르 보내기/받기",
+  "ETHER_SEND_RECEIVE_WHATS_NEW": "이제 블록체인 지갑에서 에테르 보내기/받기가 됩니다.",
+  "ETHER_SEND_SUCCESS": "에테르 보내기 성공! 잔액이 곧 업데이트 됩니다.",
+  "ETHER_SEND_SUCCESS_MEW": "에테르 가져오기 성공! 잔액이 곧 업데이트 됩니다.",
+  "WAIT_FOR_CONFIRM": "이전 거래 확인이 될 때까지 기다리세요",
+  "EXCHANGE_SIMPLE": "교환",
+  "EXCHANGE_RATE": "환율",
+  "BTC_ETH_EXCHANGE": "교환 자산들",
+  "BTC_ETH_EXCHANGE_WHATS_NEW": "이제 비트코인과 에테르 상호 교환이 직접 블록체인 지갑에서 됩니다.",
+  "NEW": "새 기능",
+  "SHIFT": {
+    "WELCOME_INFO": "이제 비트코인과 에테르 상호 교환이 직접 블록체인 지갑에서 됩니다. 몇 개 간단한 단계만 거치면 교환이 진행됩니다. 설명: 교환은 20 분에서 2시간 정도 걸립니다.",
+    "EXCHANGE_NOTICE": "몇 개 간단한 단계만 거치면 교환이 진행됩니다. 설명: 교환은 20 분에서 2시간 정도 걸립니다.",
+    "NO_EXCHANGES": "@:NO_TRADES",
+    "NO_EXCHANGES_EXPLAIN": "한 교환이 아직 없습니다. <span class='primary'>여기를 클릭해서 시작하세요</span>.",
+    "EXCHANGE_DETAILS": "교환 상세 사항",
+    "EXCHANGE_FROM": "교환",
+    "RECEIVE": "받기",
+    "MAX_AVAILABLE_ERROR": "@:USE_TOTAL",
+    "MIN_NEEDED_TO_SHIFT": "😢 교환하는 데 {{::min}} {{::curr}}가 걸립니다.",
+    "BELOW_MIN_SHIFT_LIMIT": "최소 한도에 못 미칩니다. 최소 사용",
+    "EXCEEDED_MAX_SHIFT": "최대 한도 초과입니다. 최대 사용",
+    "CONFIRM_EXCHANGE": "교환 주문 확인",
+    "QUOTE_EXPIRES_IN_HELPER": "이 요율은 10 분 후 만료됩니다. 만료되면 거래를 다시 시작해 주세요.",
+    "CONFIRM_DEPOSIT_AMOUNT": "아래 상세 사항을 검토한 후 '계속'을 클릭해서 교환을 시작하세요. 교환된 돈은 직접 {{::to}}으로 들어갑니다.",
+    "TO_DEPOSIT": "예치될 <span class='capitalize'>{{::input}}</span>",
+    "TO_RECEIVE": "받을 <span class='capitalize'>{{::output}}</span>",
+    "INPUT_DEPOSITED": "예치된 <span class='capitalize'>{{::input}}</span>",
+    "OUTPUT_RECEIVED": "받은 <span class='capitalize'>{{::output}}</span>",
+    "TX_FEE_EXPLAIN": "수수료는 ShapeShift에게 나가는 교환 돈을 보내는 데 쓰입니다.",
+    "WITHDRAWAL_FEE": "네트워크 거래 수수료",
+    "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift는 이 수수료를 들어오는 교환 돈을 귀하 지갑으로 보내는 데 씁니다.",
+    "TRANSACTION_FEE": "거래 수수료",
+    "RATE_EXPLAIN": "요율은 거래 당시 시장 가격에 따라 변합니다.",
+    "ORDER_ID": "주문 아이디",
+    "EXPLAIN_QUOTE": "이 견적은 거래 당시 시장 가격에 따라 변합니다.",
+    "ACCEPT_TERMS": "나는 ShapeShift <a href='https://info.shapeshift.io/sites/default/files/ShapeShift_Terms_Conditions%20v1.1.pdf' target='_blank' rel='noopener noreferrer'>서비스 조건</a>에 동의합니다.",
+    "NO_FUNDS_TO_EXCHANGE": "교환할 수 있는 돈 부족",
+    "EXCHANGE_IN_PROGRESS": "교환 진행 중",
+    "EXCHANGE_IN_PROGRESS_EXPLAIN": "거래 해주셔서 고맙습니다!  교환 거래는 2 시간까지 걸릴 수 있습니다. 거래 진행 상황은 주문 이력 탭에서 알 수 있습니다.",
+    "ORDER_SUMMARY": "주문 요약",
+    "SENDING_FUNDS": "돈 보내는 중",
+    "FUNDS_SENT": "돈 보냄",
+    "SEE_YOUR_OUTPUT": "<span class='capitalize'>{{::output}}</span> 보기",
+    "PARTNERED": "블록체인은 지갑 코인 교환이 안전하고 매끄럽게 되도록 교환 파트너들과 같이 일하고 있습니다.",
+    "STATE_RESIDENCY": "거주하는 주 시 도 선택",
+    "PARTNER_PROCESS": "우리 파트너 ShapeShift가 교환을 처리할 겁니다.",
+    "STATE_NOT_SUPPORTED": "귀하 거주 주 시 도에서는 이 서비스가 안됩니다. 서비스 될 때 연락받고 싶으시면 아래에 등록해 주세요.",
+    "LEAVING_WALLET": "지갑에서 나가는 {{::input}} 합계",
+    "TRADE": {
+      "complete": {
+        "HEADER": "성공! 교환 완료",
+        "BODY": "교환 완료 돈이 잔액에 반영되려면 몇 분 걸립니다.",
+        "STATE": "완성하기"
+      },
+      "received": {
+        "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "STATE": "보류"
+      },
+      "no_deposits": {
+        "HEADER": "@:SHIFT.EXCHANGE_IN_PROGRESS",
+        "BODY": "@:SHIFT.EXCHANGE_IN_PROGRESS_EXPLAIN",
+        "STATE": "진행 중"
+      },
+      "resolved": {
+        "HEADER": "환불 된 거래",
+        "STATE": "환불 됨"
+      },
+      "failed": {
+        "HEADER": "실패한 거래",
+        "BODY": "이 거래는 실패했습니다. 지갑에서 브로드캐스트 된 돈은 거래 수수료 공제 후 환불됩니다. 새 거래를 시작하려면 교환 탭으로 돌아가세요",
+        "STATE": "실패함"
+      }
+    }
+  },
+  "UNOCOIN_AFTER_TRANSFER": "돈을 Unocoin으로 이체한 후 귀하의 IMPS/NEFT/RTGS/CHEQUE 조회 번호를 입력해 주세요.",
+  "COINIFY_LIMITS": {
+    "DAILY_LIMIT_IS": "귀하 하루 한도는 {{:: dailyLimit}} {{:: currency}}입니다.",
+    "KYC_PENDING": "신원 확인 진행 중의 귀하 하루 한도는 {{ ::dailyLimit }} {{ ::currency }}입니다.",
+    "KYC_REJECTED": "귀하 하루 한도는 {{ ::dailyLimit }} {{ ::currency }}입니다. 귀하 신원 확인을 다시 하려면, 여기를 클릭하세요ㅣ",
+    "HOW_LVL_3": "하루 한도를 올리려면 1,000 EUR 이상 거래를 완료해야 합니다. 거래 완료 14일 후 하루 한도가 올라가고 연간 한도도 없어집니다."
+  },
+  "EXCHANGED": "교환 됨",
+  "TO_BE_RECEIVED": "받을 예정",
+  "VIEW_DETAILS": "상세 사항 보기",
+  "GENERAL": "일반",
+  "BITCOIN_CASH": {
+    "TITLE": "비트코인 캐시",
+    "WHATS_NEW": "이제 비트코인 캐시도 지갑에서 보내기/받기/교환하기/관리하기 가 됩니다. ",
+    "SEND": "비트코인 캐시 보내기",
+    "ALL_WALLETS": "모든 비트코인 캐시 지갑들",
+    "GET_STARTED": "비트코인 캐시 시작하기",
+    "WELCOME_TO": "비트코인 캐시에 오신 걸 환영합니다",
+    "VERIFY_ADDRESS": "이거 비트코인 캐시 주소 맞습니까? 실수로 비트코인 주소로 보낸 돈은 찾을 수 없습니다.",
+    "WHAT_IS_BCASH": {
+      "HEADER": "비트코인 캐시가 뭔가요?",
+      "BODY": "비트코인 캐시는 피어투피어 전자 현금으로 2017년 8월 비트코인 블록체인의 파생 통화로 만들어졌습니다. 이후 비트코인 캐시는 비트코인나 에테르와 맞먹는 톱 암호화 화폐가 되었습니다."
+    },
+    "HOW_TO_GET": {
+      "HEADER": "비트코인 캐시는 어떻게 사나요?",
+      "BODY": "8월 이전에 비트코인을 지갑에 가지고 있었으면, 비트코인 캐시도 있는 것입니다. 블록체인이 처음이면, 비트코인이나 에테르를 비트코인 캐시로 바꾸어서 시작할 수 있습니다."
+    },
+    "PLEASE_NOTE": "<b>주의</b> 현재 비트코인 캐시는 웹 지갑에서만 지원됩니다. 모바일 지갑 지원은 곧 될 예정입니다!",
+    "ADDRESSES": "새 비트코인 캐시 주소 양식",
+    "ADDR_FORMAT": "이제 비트코인 캐시 주소는 CashAddr 양식을 따릅니다."
+  },
+  "BCH_ADDRESS_CHANGE": {
+    "NOW_SUPPORTING": "비트코인 캐시 주소에 대한 새 소식",
+    "ANNOUNCEMENT": "귀하 비트코인 캐시 주소가 업데이트 되었고 앞으로는 지갑에서 좀 다르게 보일 겁니다. 보내거나 요청할 때 비트코인과 비트코인 캐시 주소 구별하는 데 도움되기를 바랍니다. 이 업데이트에 대해 질문이 있나요? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>여기서 더 읽을 수 있습니다.</a>",
+    "GET_STARTED": "좋은 거 같네요, 거래하게 해 주세요!"
+  },
+  "BITCOIN_CASH_INFO": "블록체인 지갑에 비트코인 캐시를 저장할 수도 있고, 돈을 모두 비트코인 캐시 지갑으로 보낼 수도 있고, 모두 비트코인이나 에테르로 교환할 수도 있습니다.",
+  "BITCOIN_CASH_INFO_NO_EXCHANGE": "블록체인 지갑에 비트코인 캐시를 저장할 수도 있고, 돈을 모두 비트코인 캐시 지갑으로 보낼 수도 있습니다.",
+  "EXCHANGE_STATUS": "교환 현황",
+  "SEND_ETHER": "에테르 보내기",
+  "SEND_BITCOIN_CASH": "비트코인 캐시 보내기",
+  "TRANSFER_BITCOIN_CASH": "비트코인 캐시 이체",
+  "REQUEST_BITCOIN": "비트코인 요청",
+  "REQUEST_ETHER": "에테르 요청",
+  "REQUEST_BITCOIN_CASH": "비트코인 캐시 요청",
+  "ALL_ADDRESSES": "모든 주소들",
+  "VIEW_TXS": "거래들 보기",
+  "HIDE_TXS": "거래들 감추기",
+  "EDIT_REF": "조회 번호 편집",
+  "REF_NUMBER_UPDATED": "조회 번호 업로드 성공",
+  "START": "시작",
+  "END": "끝",
+  "FEATURE_DISABLED": {
+    "TITLE": "기능 사용 해제 됨",
+    "BODY": "이 기능 사용은 일시 해제되었습니다. 나중에 기능 사용이 되면 다시 와주세요!"
+  },
+  "RECURRING_INTRO_HEADER": "반복 주문 소개",
+  "RECURRING_INTRO_1": "이제 지갑에서 비트코인 반복 구매를 할 수 있습니다.",
+  "RECURRING_INTRO_2": "<b>'이것을 반복 주문으로 만들기'</b>를 선택한 후, 반복 선택 사항들을 설정하고, 보통 구매와 같은 방법으로 계속하세요. 매 주문이 처리될 때 마다 이메일 알림을 받게 될 겁니다.",
+  "RECURRING_INTRO_3": "반복 주문은 언제든지 취소할 수 있습니다.",
+  "FINISH_PAYMENT": "결제 끝내기",
+  "SUBSCRIPTION_ID": "반복 주문 아이디",
+  "RECURRING_BUY": "반복 사기",
+  "RECURRING_BUY_WHATS_NEW": "이제 블록체인 지갑에서 반복 사기 주문을 할 수 있습니다!",
+  "VIEW_ALL_BALANCES": "모든 잔액들 보기",
+  "BANK_TRANSFERS_DISABLED": "신원 확인이 안되었으면 은행 이체가 안됩니다.<br><a>여기를 클릭해서 확인 끝내기/완료하기 를 하세요.</a>",
+  "btc": {
+    "ALL_WALLETS": "모든 비트코인 지갑들",
+    "IMPORTED_ADDRESSES": "가져온 비트코인 주소들",
+    "ADDRESS_INVALID": "유효하지 않은 비트코인 주소"
+  },
+  "eth": {
+    "NOW_SUPPORTING": "이제 에테르도 지원합니다!",
+    "ANNOUNCEMENT": "귀하 요청을 경청 했습니다. 이제 블록체인 지갑에서 에테르 보내기/받기도 되는 걸 알려드리게 되어 기쁩니다!",
+    "GET_STARTED": "시작하기"
+  },
+  "bch": {
+    "ALL_WALLETS": "모든 비트코인 캐시 지갑들",
+    "IMPORTED_ADDRESSES": "가져온 비트코인 캐시 주소들",
+    "NOW_SUPPORTING": "이제 비트코인 캐시도 지원합니다!",
+    "ANNOUNCEMENT": "이제 블록체인 지갑에서 비트코인 캐시도 지원하게 된 걸 알려드리게 되어 기쁩니다! 오늘부터 보내기, 요청하기, 교환하기를 시작해도 됩니다.",
+    "GET_STARTED": "@:eth.GET_STARTED",
+    "ADDRESS_INVALID": "유효하지 않은 비트코인 캐시 주소"
+  },
+  "SELL_MIN_TOOLTIP": "이 최소 금액은 거래 수수료를 포함하지 않습니다.",
+  "MEW": {
+    "import_from_mew": "MyEtherWallet에서 가져오기",
+    "import_funds": "돈 가져오기",
+    "fund_error": "가져올 돈이 모자랍니다.",
+    "import_funds_mew": "MyEtherWallet에서 돈 가져오기",
+    "import_funds_explain": "이제 MyEtherWallet 백업에서 직접 블록체인 지갑으로 에테르를 가져올 수 있습니다.",
+    "import_funds_explain_ext": "MyEtherWallet Keystore file (UTC/JSON)과 암호구절 (passphrase)를 써서 에테르를 직접 블록체인 지갑으로 가져오세요.",
+    "import_funds_warn": "주의: MyEtherWallet에 저장되어 있는 ERC20 토큰은 블록체인 지갑로 못 가져 옵니다. ERC20 토큰은 그냥 MyEtherWallet 이나 MyCrypto.com에서 쓰세요. 그러나 에테르는 이제 블록체인 지갑에 있습니다.",
+    "select_keystore_file": "Keystore File 선택",
+    "by_clicking_import": "'돈 가져오기'를 클릭하면 지금 MyEtherWallet에 있는 에테르는 블록체인 지갑으로 넘어옵니다.",
+    "keystore_file_explained": "MyEtherWallet에 지갑을 만들었을 때 Keystore file을 다운로드 한 거 같습니다. 저장해 놓지 않았으면, MyEtherWallet '지갑 정보 보기'로 가서 다시 다운로드 하세요.",
+    "select_wallet_file": "지갑 파일 선택"
+  },
+  "": ""
 }
