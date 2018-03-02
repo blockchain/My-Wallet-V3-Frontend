@@ -19,7 +19,7 @@ function tradeStatus ($rootScope, Wallet, MyWallet, MyWalletHelpers, Env, localS
 
     isUnocoinCountry = accountInfo && env.partners.unocoin.countries.indexOf(accountInfo.countryCodeGuess) > -1;
     isCoinifyCountry = accountInfo && env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1;
-    isSFOXCountryState = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
+    isSFOXCountryState = accountInfo && env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && (env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1 || accountInfo.stateCodeGuess === undefined);
 
     sfoxInviteFraction = (env.partners.sfox && env.partners.sfox.inviteFormFraction) || 0;
 
