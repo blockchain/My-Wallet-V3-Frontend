@@ -44,10 +44,7 @@ function ExchangeConfirmController (Env, AngularHelper, $scope, $rootScope, $tim
   this.$onChanges = (changes) => {
     let curVal = changes.quote.currentValue;
     if (curVal.rate !== changes.quote.previousValue.rate) {
-      $scope.rate = Number.isInteger(curVal.quoteAmount)
-        ? parseFloat(curVal.baseAmount) / (curVal.quoteAmount / 1e8)
-        : parseFloat(curVal.quoteAmount) / (curVal.baseAmount / 1e8);
-
+      $scope.rate = curVal.rate;
       this.details = changes.details.currentValue;
     }
   };

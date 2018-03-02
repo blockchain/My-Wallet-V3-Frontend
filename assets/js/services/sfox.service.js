@@ -247,21 +247,22 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
                       ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
                       : trade.receiveAmount * 1e8;
 
-      let fiatAmount = quote
-                        ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
-                        : trade.inAmount / 1e8;
-
       let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
+      
+      let fiatAmount = quote
+                        ? quote.baseCurrency === 'USD' ? quote.baseAmount - tradingFee : quote.quoteAmount - tradingFee
+                        : trade.inAmount / 1e8 - trade.feeAmount;
 
       let toBeSpent = quote
-                         ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
-                         : (trade.inAmount / 1e8 + trade.feeAmount);
+                         ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount) : (+quote.baseAmount)
+                         : (trade.inAmount / 1e8);
+
       let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
 
       let details = {
         txAmt: {
           key: amountKey,
-          val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${fiatAmount})`
+          val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${formatCurrencyForView(fiatAmount.toFixed(2), fiat, true)})`
         },
         sfoxFee: {
           key: '.TRADING_FEE',

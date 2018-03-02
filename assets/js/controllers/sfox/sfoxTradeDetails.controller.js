@@ -25,6 +25,6 @@ function SfoxTradeDetailsController ($scope, MyWallet, Exchange, currency, sfox,
   }
 
   $scope.rate = $scope.type === '.buy'
-    ? format((trade.sendAmount / 1e8) / trade.receiveAmount, fiat, true)
-    : format(1 / (trade.sendAmount / 1e8) * (trade.receiveAmount + trade.feeAmount), fiat, true);
+    ? format(((trade.sendAmount / 1e8) - trade.feeAmount) / trade.receiveAmount, fiat, true)
+    : format(1 / (trade.sendAmount / 1e8) * (trade.receiveAmount - trade.feeAmount), fiat, true);
 }

@@ -26,7 +26,7 @@
   .exchange-received.pvml.flex-row-mobile.flex-between-mobile
     span(ng-hide="status.gettingQuote")
       span.em-600(ng-show="type() === 'sell'") {{ (trade.receiveAmount) | format:{code: trade.outCurrency} }} {{ trade.outCurrency }}
-      span.em-600(ng-hide="type() === 'sell'") {{ (trade.sendAmount / conversion) + trade.feeAmount | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
+      span.em-600(ng-hide="type() === 'sell'") {{ (trade.sendAmount / conversion) + (addFee ? trade.feeAmount : 0) | format:{code: trade.inCurrency} }} {{ trade.inCurrency }}
     img(ng-show="status.gettingQuote" src="img/spinner.gif")
     .pr-10.visible-xs
       i.ti-angle-right
