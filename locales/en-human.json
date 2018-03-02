@@ -1844,10 +1844,10 @@
     },
     "LINK_BANK": {
       "HEADER": "Link Account",
-      "COPY": "Sync your bank account instantly by securely signing into your bank directly.",
-      "COPY_2": "You can also manually add your account by typing your routing number and account information. Please note that manually adding your bank account could take up to 4 business days to process.",
-      "COPY_2_MOBILE_BUY": "You can add your account by typing your routing number and account information. This may take up to 4 business days to process.",
-      "COPY_SMALL": "(PS: Your bank information will be sent directly to SFOX and will not be viewed by or saved to your Blockchain wallet.)"
+      "COPY": "Sync and log in to your bank account to begin trading instantly.",
+      "COPY_2": "You can also manually add your account by entering your routing number and account information. Please note that manually adding your bank account could take up to 4 business days to process.",
+      "COPY_2_MOBILE_BUY": "You can add your account by entering your routing number and account information. This may take up to 4 business days to process.",
+      "COPY_SMALL": "(PS: Your bank information will be sent directly to SFOX.)"
     },
     "needs_account": {
       "EXPLAIN": ""
