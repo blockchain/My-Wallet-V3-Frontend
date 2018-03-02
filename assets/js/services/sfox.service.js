@@ -165,7 +165,7 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
     return {
       reason: service.buyReason,
       isDisabled: !service.userCanBuy,
-      verificationRequired: !service.activeAccount
+      verificationRequired: !service.verified || !service.activeAccount
     };
   }
 
@@ -205,7 +205,7 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
     let tradingFee = quote ? parseFloat(quote.feeAmount).toFixed(2) : parseFloat(trade.feeAmount).toFixed(2);
     let totalAmount = payment ? amount + fee : tx ? Math.abs(tx.amount) : 'Error: Please Refresh the Wallet';
     let toBeReceived = quote
-                       ? quote.baseCurrency === 'BTC' ? (quote.quoteAmount - tradingFee).toFixed(2) : (quote.baseAmount - tradingFee).toFixed(2)
+                       ? quote.baseCurrency === 'BTC' ? parseFloat(quote.quoteAmount).toFixed(2) : parseFloat(quote.baseAmount).toFixed(2)
                        : (trade.receiveAmount).toFixed(2);
     let amountKey = quote || payment ? '.AMT' : '.AMT_SOLD';
 
@@ -247,21 +247,22 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
                       ? quote.baseCurrency === 'USD' ? quote.quoteAmount : quote.baseAmount
                       : trade.receiveAmount * 1e8;
 
-      let fiatAmount = quote
-                        ? quote.baseCurrency === 'USD' ? quote.baseAmount : quote.quoteAmount
-                        : trade.inAmount / 1e8;
-
       let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
+      
+      let fiatAmount = quote
+                        ? quote.baseCurrency === 'USD' ? quote.baseAmount - tradingFee : quote.quoteAmount - tradingFee
+                        : trade.inAmount / 1e8 - trade.feeAmount;
 
       let toBeSpent = quote
-                         ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount + +tradingFee) : (+quote.baseAmount + +tradingFee)
-                         : (trade.inAmount / 1e8 + trade.feeAmount);
+                         ? quote.baseCurrency === 'BTC' ? (+quote.quoteAmount) : (+quote.baseAmount)
+                         : (trade.inAmount / 1e8);
+
       let amountKey = quote ? '.AMT' : '.AMT_BOUGHT';
 
       let details = {
         txAmt: {
           key: amountKey,
-          val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${fiatAmount})`
+          val: `${formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)} ($${formatCurrencyForView(fiatAmount.toFixed(2), fiat, true)})`
         },
         sfoxFee: {
           key: '.TRADING_FEE',
