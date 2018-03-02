@@ -195,6 +195,7 @@
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "FINISH_LATER": "Finish Later",
   "EXCHANGE_SIGNUP_STEPS": "Complete the following steps to buy & sell bitcoin.",
+  "EXCHANGE_SIGNUP_STEPS_MOBILE": "Click here to complete exchange signup.",
   "CONFIRM_CANCEL": {
     "TITLE": "Cancel Trade?",
     "BODY": "You're so close to receiving bitcoin."
