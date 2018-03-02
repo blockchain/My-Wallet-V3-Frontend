@@ -165,7 +165,7 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
     return {
       reason: service.buyReason,
       isDisabled: !service.userCanBuy,
-      verificationRequired: !service.activeAccount
+      verificationRequired: !service.verified || !service.activeAccount
     };
   }
 
