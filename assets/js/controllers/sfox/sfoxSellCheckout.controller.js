@@ -15,6 +15,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
     .then($scope.checkout.fetchTransactions)
     .then(enableSiftScience)
     .then(() => exchange.fetchProfile())
+    .then(() => Wallet.api.incrementPartnerTrade('sfox', 'sell', 'btc', 'usd', true))
     .catch((e) => Alerts.displayError(e));
 
   const setRate = (res) => { $scope.rate = Math.abs(res.quoteAmount); };
@@ -43,6 +44,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
       $scope.checkout.type = 'sell';
       $scope.checkout.goTo('confirm');
       $scope.checkout.tradeDetails = sfox.sellTradeDetails($scope.checkout.quote, payment);
+      Wallet.api.incrementPartnerTrade('sfox', 'sell', $scope.checkout.quote.baseCurrency, $scope.checkout.quote.quoteCurrency);
     });
 
     return quote;
