@@ -61,7 +61,7 @@ function HomeCtrl ($rootScope, $scope, MyWallet, Wallet, Ethereum, BitcoinCash, 
   // ensure all recent transactions are reflected in activity widget
   $rootScope.$emit('updateActivityFeed');
 
-  $scope.exchange = MyWallet.wallet.external.sfox;
+  $scope.exchange = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
 
   // SFOX signup
   $scope.steps = enumify('create', 'verify', 'upload', 'link');
