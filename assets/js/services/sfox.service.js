@@ -248,7 +248,6 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
                       : trade.receiveAmount * 1e8;
 
       let tradingFee = quote ? parseFloat(quote.feeAmount) : parseFloat(trade.feeAmount);
-      
       let fiatAmount = quote
                         ? quote.baseCurrency === 'USD' ? quote.baseAmount - tradingFee : quote.quoteAmount - tradingFee
                         : trade.inAmount / 1e8 - trade.feeAmount;
