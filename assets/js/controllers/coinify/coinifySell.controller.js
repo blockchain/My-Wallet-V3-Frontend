@@ -71,7 +71,6 @@ function CoinifySellController ($scope, Wallet, Alerts, Env, currency, $uibModal
     if ((this.trade && !this.trade.iSignThisID) && this.exchange.profile) {
       this.sellTrade = this.trade;
       this.goTo('trade-complete');
-      return;
     } else {
       if ((!this.user.isEmailVerified || this.rejectedEmail) && !this.exchange.user) {
         this.goTo('email');

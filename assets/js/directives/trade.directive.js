@@ -30,6 +30,7 @@ function trade (Env, Alerts, MyWallet, $timeout, $interval, coinify, Exchange) {
 
     scope.status = {};
     scope.classHelper = Exchange.classHelper;
+    scope.addFee = scope.namespace !== 'SFOX';
     scope.type = () => scope.trade.isBuy ? 'buy' : 'sell';
     scope.displayHelper = (trade) => scope.namespace + '.' + scope.type() + '.' + trade.state;
     scope.isTradingDisabled = scope.tradingDisabled && scope.tradingDisabledReason === 'disabled';

@@ -48,7 +48,7 @@ form.bc-form.modal-body.fade.clearfix(id="summaryForm" name="summaryForm" role="
         span() {{ trade.fee | format }} {{ dollars.code }}
       //- Transaction Totals
       .flex-row.flex-between.pam
-        span.em-500(translate="TOTAL_COST:")
+        span.em-500(translate="TOTAL_COST")
         span {{ currencySymbol.symbol }}{{ trade.total }} {{ dollars.code }}
     .flex-row.flex-start.mtl(ng-if="isBank")
       div

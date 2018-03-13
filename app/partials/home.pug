@@ -1,5 +1,22 @@
 blocket-loading(loading="!isWalletInitialized()")
 .home.width-100(data-preflight-tag="Home")
+
+  .signup-steps.border.pal.mb-15.pointer(ng-show="showSfoxRegistration" id="sfox-signup" ui-sref="wallet.common.buy-sell")
+    .flex-row.height-100
+      .flex-row.flex-column-tablet.width-100
+        .width-40.flex-row.flex-center.center-block
+          i.icon-buy-sell.title.mrm
+          span.f-20.em-200.hidden-xs(translate="EXCHANGE_SIGNUP_STEPS")
+          span.f-20.em-200.visible-xs(translate="EXCHANGE_SIGNUP_STEPS_MOBILE")
+        .width-60.flex-row.flex-between-mobile.center.mt-10.ml-15(ng-class="inMobileBuy ? 'flex-column-mobile' : 'flex-baseline'")
+          .width-20.width-20-tablet.hidden-xs(ng-repeat-start="step in displaySteps track by $index")
+            .flex-column.flex-center.fade-in(ng-class="{primary: onOrAfterStep(step)}")
+              span.f-14.white(ng-if="!afterStep(step)") {{ $index + 1 }}
+              span.f-14.white(ng-if="afterStep(step)")
+                i.ti-check
+              span.mt-5.nowrap(ng-class="{primary: onOrAfterStep(step)}" translate="{{ 'SFOX.' + step }}")
+          .width-20.width-20-tablet.step-arrow.flex-justify.hidden-xs(ng-repeat-end ng-hide="$last")
+
   .col-md-6.col-sm-12.col-xs-12.col-home.flex-column
     .border.flex-column.pal.chart-control(ng-controller="BalanceChartController")
       div

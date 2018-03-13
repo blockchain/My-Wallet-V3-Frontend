@@ -9,11 +9,11 @@ form.bc-form(name="EthMewSweepForm" id="EthMewSweepForm" ng-submit="submit()")
       button.btn.button-primary-inverse(type="button" ngf-select ng-model="file" ngf-model-invalid="invalidFile" ngf-pattern="")
         i.mr-10.ti-upload
         span(translate="MEW.select_wallet_file")
-      span(ng-show="keystore && fileError")
+      span(ng-show="fileError")
         i.ml-10.f-24.icon-alert.state-danger-text
       span(ng-show="keystore && !fileError")
         i.ml-10.f-24.icon-success.security-green
-    .group.mt-5(ng-show="keystore && fileError")
+    .group.mt-5(ng-show="fileError")
       span.state-danger-text(translate="File type unsupported. Please use your UTC / JSON file.")
     .group.mt-20(ng-show="keystore && !fileError")
       .item

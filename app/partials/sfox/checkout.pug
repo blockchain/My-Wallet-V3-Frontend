@@ -34,9 +34,11 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
     .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && showBuy() && !checkout.hasDismissedBuyIntro()")
       .mb-20
         .flex-between
-          span.f-24.blue.f-14-mobile(translate="SFOX.buy.INTRODUCING_HEADER")
-          .flex-center.pl-10
-            i.pointer.ti-close.f-12.mid-grey(ng-click="checkout.dismissBuyIntro()")
+          span.f-24.blue.f-14-mobile
+            i.icon-buy-sell.h3.mrm
+            span(translate="SFOX.buy.INTRODUCING_HEADER")
+          span
+            i.pointer.ti-close.f-14.mid-grey(ng-click="checkout.dismissBuyIntro()")
         p.f-12.mt-10(translate="SFOX.buy.INTRODUCING_BODY")
   .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN' && checkout.onStep('create')")
     .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
@@ -54,9 +56,11 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
     .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedSellIntro()")
       .flex-between
-        span.f-24.blue.f-14-mobile(translate="SFOX.sell.INTRODUCING_HEADER")
-        .flex-center.pl-10
-          i.pointer.ti-close.f-12.mid-grey(ng-click="dismissSellIntro()")
+        span.f-24.blue.f-14-mobile
+          i.icon-buy-sell.h3.mrm
+          span(translate="SFOX.sell.INTRODUCING_HEADER")
+        span
+          i.pointer.ti-close.f-14.mid-grey(ng-click="checkout.dismissSellIntro()")
       p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
   .flex-row.pbvl(ng-if="checkout.onStep('confirm')")
     exchange-confirm.width-50.border-desktop(

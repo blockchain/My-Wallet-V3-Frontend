@@ -31,7 +31,7 @@ gem install sass
 
 Install dependencies:
 ```sh
-yarn install
+npm install -g bower grunt-cli && yarn && bower install
 ```
 
 Create a file called `.env` in the root of the project. Put the following in it:
@@ -62,11 +62,25 @@ Grunt watches and compiles the pug view templates and CSS. Keep it running:
 grunt
 ```
 
+## Lint
+
+To run the file linter:
+```sh
+yarn lint
+```
+
 ## Test
 
 To run test and monitor for changes:
 ```sh
 yarn test
+```
+
+## Vet
+
+To ensure builds will succeed (linting and unit tests passing):
+```sh
+yarn vet
 ```
 
 A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.

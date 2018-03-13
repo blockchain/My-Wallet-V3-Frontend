@@ -157,7 +157,6 @@
   "QR" : "QR",
   "FEES" : "Fees",
   "CAMERA_OFF" : "Camera off",
-  "ADD_NOTE" : "Add note",
   "PUBLIC_NOTE" : "Public Note",
   "CONFIRM" : "Confirm",
   "UNCONFIRMED" : "Unconfirmed",
@@ -173,6 +172,7 @@
   "RECEIVED" : "Received",
   "GENERATED_ADDRESS": "A new address is generated every time you receive Bitcoin. Don’t worry, you can continue using your previously used addresses. ",
   "LEARN_MORE": "Learn More",
+  "LEARN_MORE_WALLET": "Learn More About Using Your Wallet",
   "LEARN_MORE_LOWER": "Learn more",
   "SENT" : "Sent",
   "MOVED_BITCOIN_TO" : "Transferred",
@@ -190,11 +190,12 @@
   "SECURITY_ADVANCED_EXPLAIN" : "Advanced security: Further customize your security settings for more granular access control and tracking. Do not modify these settings unless you know what you are doing.",
   "ADVANCED_SETTINGS" : "Advanced Settings",
   "SECURITY_CENTER" : "Security Center",
-  "WALLET_RECOVERY" : "Wallet Recovery",
   "ADD_WALLET_RECOVERY" : "Backup Recovery Phrase",
   "PRINT_RECOVERY_SHEET" : "Print Recovery Sheet",
   "ARE_YOU_SURE_LOGOUT" : "Are you sure you wish to logout?",
   "FINISH_LATER": "Finish Later",
+  "EXCHANGE_SIGNUP_STEPS": "Complete the following steps to buy & sell bitcoin.",
+  "EXCHANGE_SIGNUP_STEPS_MOBILE": "Click here to complete exchange signup.",
   "CONFIRM_CANCEL": {
     "TITLE": "Cancel Trade?",
     "BODY": "You're so close to receiving bitcoin."
@@ -271,8 +272,6 @@
   "CURR": "Currency",
   "CURRENCY" : "Local Currency",
   "CURRENCY_EXPLAIN" : "Select your local currency.",
-  "SETTINGS" : "Settings",
-  "SECURITY_CENTER" : "Security Center",
   "ADD_NOTE" : "Add Note",
   "SAVE_NOTE" : "Add",
   "UPDATE_NOTE" : "Update",
@@ -284,7 +283,6 @@
   "RECOVERY_ERROR": "Unable to import now, please try again.",
   "MAIN_PW_REQUIRED": "Enter your main wallet password to view your Recovery Phrase.",
   "SET_SECOND_PW_ANYWAY": "Set Second Password Anyway",
-  "NEXT_STEP" : "Next Step",
   "NEXT" : "Next",
   "EMAIL" : "Email",
   "NEW_ACCT_WELCOME" : "Create A New Blockchain Wallet",
@@ -328,7 +326,6 @@
   "2FA_SMS" : "SMS",
   "2FA_GOOGLE_AUTH" : "Google Authenticator",
   "2FA_NOT_SUPPORTED" : "This method of two factor authentication is not supported",
-  "DISABLE" : "Disable",
   "CONFIRM_DISABLE_2FA" : "Are you sure you wish to disable two step authentication?",
   "IMPORTED_ADDRESSES" : "Imported Bitcoin Addresses",
   "HD_ADDRESSES" : "HD Addresses",
@@ -354,7 +351,6 @@
   "BALANCE" : "Balance",
   "ERR_FETCH_BALANCE" : "Could not retrieve balance",
   "MAKE_DEFAULT" : "Make Default",
-  "RENAME" : "Rename",
   "MY_ADDRESSES_EXPLAIN" : "Your Blockchain Wallet contains an unlimited collection of bitcoin addresses that you can use to receive funds from anybody, globally. Your wallet will automatically manage your bitcoin addresses for you. The addresses below are the subset of addresses that are labeled.",
   "NEW_ADDRESS" : "New Address",
   "ADD_NEXT_ADDRESS": "Add Next Address",
@@ -651,7 +647,6 @@
   "UNKNOWN_IDENTIFIER" : "Unknown wallet identifier. <span class='underline pointer'>Click here</span> if you need a reminder.",
   "WELCOME_BACK" : "Welcome back",
   "LOGIN_BELOW" : "Sign in to your wallet below",
-  "HOME" : "Home",
   "ABOUT" : "About",
   "WALLET" : "Wallet",
   "BITCOIN_WALLET": "Bitcoin Wallet",
@@ -698,7 +693,6 @@
   "VERIFY" : "Verify",
   "NICELY_DONE" : "Nicely done!",
   "TOR_BLOCKED" : "Tor Blocked",
-  "BLOCKED" : "Blocked",
   "TWO_STEP_ENABLED" : "2-Step Enabled",
   "MOBILE_LINKED" : "Mobile Linked",
   "SCAN_QR_CODE" : {
@@ -715,8 +709,8 @@
   "FIRST_LOGIN_TEXT_1" : " Our wallet makes transacting easy and intuitive and is helping to create a fair, accessible and open financial future. Visit our  ",
   "FIRST_LOGIN_TEXT_2" : " and keep your wallet safe.",
   "FIRST_LOGIN_ACTION" : "Get Started",
-  "TRADE_FIRST_LOGIN_TEXT_1": "Thanks for joining the world’s most popular digital currency wallet platform. We’re helping to create an open, accessible, and fair financial future, one piece of software at a time.",
-  "TRADE_FIRST_LOGIN_TEXT_2": "Get started now by trading your first bitcoins!",
+  "BUY_FIRST_LOGIN_HEADER": "Welcome to your blockchain wallet!",
+  "BUY_FIRST_LOGIN_BODY": "We're glad you're here! Simply fund your wallet by creating an account with our exchange partner in your Buy & Sell tab.",
   "TOS" : "ToS",
   "PRIVACY" : "Privacy Policy",
   "CREATE_NEW_ACCOUNT_MODAL" : "Divide your wallet to better allocate, track and manage your bitcoins. Some common names include Savings, Spending, and Business Expenses.",
@@ -1203,14 +1197,12 @@
     "DISAGREE": "Strongly Disagree",
     "AGREE": "Strongly Agree"
   },
-  "SPEND_IMPORTED_ADDRESS": "Spend",
   "ACCEPT_TOS": "I have read and agree to the <a href='https://www.blockchain.com/terms', target='_blank' rel='noopener noreferrer'>Terms of Service</a>",
   "ACCEPT_COINIFY_RATE": "I accept that bitcoin will be traded at the current exchange rate at the time Coinify processes my order, which may differ from the rate displayed above.",
   "SIMPLE_SEAMLESS_SECURE": "Simple. Seamless. Secure.",
   "METADATA_DOWN": "The wallet is having some issues loading your exchange details. Please try again later.",
   "EXCHANGE_DOWN": "Something went wrong with your exchange partner. Please try refreshing the page or try again later.",
   "FETCHING_INFO_EXCHANGE": "Getting information from your exchange partner. This could take a few seconds.",
-  "ORDER_HISTORY": "Order History",
   "STATUS": "Status",
   "CHOOSE_EXCHANGE_AMOUNT": "Choose amount to exchange:",
   "SELECT_COUNTRY": "Select country of residence:",
@@ -1221,7 +1213,6 @@
   "ACCEPT_TERMS": "Coinify account terms:",
   "PAYMENT_FEE": "Payment Fee:",
   "NEEDS_REFRESH": "Please refresh your wallet to access this feature.",
-  "GO_BACK": "Go Back",
   "LANDING": {
     "HEADER": "@:SIMPLE_SEAMLESS_SECURE",
     "SUB_HEADER": "Blockchain is the world’s most popular bitcoin wallet. We are on a mission to build a more open, accessible, and fair financial future, one piece of software at a time.",
@@ -1279,7 +1270,6 @@
   "GET_BITCOIN": "Get Bitcoin",
   "POWERED_BY": "Powered By",
   "EDIT_ORDER": "Edit Order",
-  "TOTAL_COST:": "Total Cost:",
   "ENTER_AMOUNT:": "Enter amount:",
   "FREQUENCY": "Frequency",
   "FREQUENCY_INFO": "<b>Today</b> and every <b>{{::timespan}}</b>.",
@@ -1361,18 +1351,13 @@
     "TITLE": "👋 Confirm Exchange Order!",
     "COPY": "Did you forget about your exchange order? Exchange rates are only valid for 10 minutes, and once a rate expires, you'll have to start over."
   },
-  "GET_BITCOIN": "Get Bitcoin",
-  "POWERED_BY": "Powered By",
-  "EDIT_ORDER": "Edit Order",
-  "TOTAL_COST:": "Total Cost:",
-  "TX_RBF": "This transaction has been flagged as replace-by-fee (RBF).",
-  "TX_RBF_AND_DOUBLE_SPEND": "This transaction has been flagged as replace-by-fee (RBF) and may be at risk of a double spend.",
+  "TOTAL_COST": "Total Cost:",
   "EXCHANGE_CONNECT_ERROR": "Error connecting to our exchange partner",
   "unable to verify identity": "We were unable to verify your identity. Please try again.",
   "error listing accounts: unauthorized product": "Sorry, there was an error validating your information with our partner. If this issue persists please try contacting support.",
   "PURCHASE_PENDING": "your pending purchase for",
   "PURCHASE_PENDING_CANT_CANCEL": "Please wait for your pending trade to complete.",
-  "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet! 💸💸💸",
+  "BUY_BITCOIN_EXPLAIN": "This just in, buy bitcoin has arrived! Begin buying today.",
   "SELL_BITCOIN_EXPLAIN": "You can now sell bitcoin directly from your Blockchain wallet!",
   "BUY_BTC_UNAVAIL_COUNTRY": "Buying bitcoin is not yet available in your country. We'll be rolling out more countries soon.",
   "SELL_BTC_UNAVAIL_STATE": "Unfortunately trading bitcoin is not available in your state at this time. To be notified when we expand to your area, sign up below.",
@@ -1536,7 +1521,7 @@
       "ANOTHER_CODE_SENT": "Another code has been sent!"
     },
     "VERIFY": {
-      "VERIFY_ACCOUNT": "To verify your identity we need to collect some personal information.<br/><br/>This information will be sent directly to {{::partner}} and will not be saved to your Blockchain wallet. Any information provided is secure and safe.",
+      "VERIFY_ACCOUNT": "Please enter the following information to verify your identity.<br/><br/>This information will be sent directly to {{::partner}} and will not be saved to your Blockchain wallet. Any information provided is confidential and secure.",
       "FULL_NAME": "Full Name",
       "MOBILE": "Mobile",
       "PAN_CARD": "PAN Card",
@@ -1548,7 +1533,7 @@
       "PIN_CODE": "Pin Code",
       "BANK_ACCOUNT_NUMBER": "Bank Account Number",
       "IFSC": "IFSC",
-      "SETUP_PROFILE": "Setup your profile"
+      "SETUP_PROFILE": "Set up your profile"
     },
     "ACTIONS": {
       "FINISH": "Finish Trade",
@@ -1557,6 +1542,8 @@
   },
   "COINIFY": {
     "EXPLAIN": "Our exchange partner Coinify will process your bitcoin purchases. Click Continue to begin buying and selling bitcoin.",
+    "INTRODUCING_HEADER_UNREGISTERED": "Buy & Sell Bitcoin",
+    "INTRODUCING_BODY_UNREGISTERED": "Buying & selling bitcoin is simple, seamless, and secure. Thanks to our partnership with Coinify, you can buy and sell bitcoin directly from your Blockchain wallet.",
     "user_needs_account": {
       "EXPLAIN": ""
     },
@@ -1668,6 +1655,8 @@
     "tx_fee_required": "Transaction fees cover the mining network cost to ensure transaction confirmation. Blockchain recommends a fee based on current network conditions."
   },
   "UNOCOIN": {
+    "INTRODUCING_HEADER_UNREGISTERED": "Buy Bitcoin",
+    "INTRODUCING_BODY_UNREGISTERED": "Buying bitcoin is simple, seamless, and secure. Thanks to our partnership with Unocoin, you can buy bitcoin directly from your Blockchain wallet.",
     "EXPLAIN": "Our partner Unocoin will process your bitcoin purchases. You will need to provide some information and link a payment method.",
     "VERIFY": {
       "PO_WARNING": ""
@@ -1791,12 +1780,14 @@
   "SFOX": {
     "EXPLAIN": "Our partner SFOX will process your bitcoin trades. You will need to provide some information and link a payment method.",
     "BUY_SIMPLE_STEPS": "Blockchain works with exchange partners to make buying & selling bitcoin in your wallet secure and seamless.",
-    "NOW_SUPPORTING": "The Wait is Over!",
-    "ANNOUNCEMENT": "We’re excited to announce that you can now trade bitcoin directly from your Blockchain wallet! You can get started by creating an account in your 'Buy & Sell Bitcoin' tab.",
-    "GET_STARTED": "Start Trading",
+    "NOW_SUPPORTING": "This Just In!",
+    "ANNOUNCEMENT": "Buy has arrived. You can now swiftly buy bitcoin directly from within your Blockchain wallet!",
+    "GET_STARTED": "Begin Buying",
     "BUY_BITCOIN": "Buy Bitcoin!",
     "SELL_BITCOIN": "Sell Bitcoin",
-    "BUY_BITCOIN_EXPLAIN": "You can now buy bitcoin with your Blockchain wallet! 💸💸💸",
+    "BUY_BITCOIN_EXPLAIN": "Buy bitcoin has arrived! Begin buying",
+    "INTRODUCING_HEADER_UNREGISTERED": "Buy & Sell Bitcoin",
+    "INTRODUCING_BODY_UNREGISTERED": "Buying & selling bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can buy and sell bitcoin directly from your Blockchain wallet.",
     "VERIFY": {
       "PO_WARNING": "⛔️ P.O. boxes are not sufficient for verifying your address information."
     },
@@ -1854,9 +1845,10 @@
     },
     "LINK_BANK": {
       "HEADER": "Link Account",
-      "COPY": "Sync your bank account instantly by securely signing into your bank directly.",
-      "COPY_2": "You can also manually add your account by typing your routing number and account information. Please note that manually adding your bank account could take up to 4 business days to process.",
-      "COPY_SMALL": "(PS: Your bank information will be sent directly to SFOX and will not be viewed by or saved to your Blockchain wallet.)"
+      "COPY": "Sync and log in to your bank account to begin trading instantly.",
+      "COPY_2": "You can also manually add your account by entering your routing number and account information. Please note that manually adding your bank account could take up to 4 business days to process.",
+      "COPY_2_MOBILE_BUY": "You can add your account by entering your routing number and account information. This may take up to 4 business days to process.",
+      "COPY_SMALL": "(PS: Your bank information will be sent directly to SFOX.)"
     },
     "needs_account": {
       "EXPLAIN": ""
@@ -1925,14 +1917,13 @@
       "AMT_SOLD": "Amount Sold",
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
-      "INTRODUCING_HEADER": "Introducing Sell",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can sell bitcoin.<br><br>You can now sell bitcoin directly from your wallet and have the exchanged funds deposited into your bank account.<br><br>Stay tuned! We are working hard to bring buy bitcoin functionality to your wallet very soon.",
+      "INTRODUCING_HEADER": "Sell Bitcoin",
+      "INTRODUCING_BODY": "Selling bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can sell bitcoin directly from your Blockchain wallet.<br><br>Tips for getting started:<br>The minimum amount you can sell is $10. Your daily maximum can be found under the local currency field.<br><br>Currently, your Blockchain wallet supports linking only one bank account. If you would like to change your synced account, please email <a href=\"mailto:support@sfox.com?subject=Questions%20about%20my%20account%20-%20Blockchain\">support@sfox.com</a>. Please note: selling with a credit card is not supported at this time.",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the outgoing exchange funds to SFOX."
     },
     "buy": {
-      "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "confirm": {
         "HEADER": "Confirm Buy Order",
         "BODY": "@:SFOX.sell.confirm.BODY",
@@ -1962,10 +1953,13 @@
       "TO_BE_SPENT": "Total Cost",
       "TRADING_FEE": "@:SFOX.sell.TRADING_FEE",
       "TX_FEE": "@:SFOX.sell.TX_FEE",
+      "NOW_SUPPORTING": "This Just In!",
+      "ANNOUNCEMENT": "Buy has arrived. You can now swiftly buy bitcoin directly from within your Blockchain wallet!",
+      "GET_STARTED": "Begin Buying",
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
       "TRANSACTION_FEE_HELPER": "This fee is used to send the bitcoin from SFOX to your wallet.",
-      "INTRODUCING_HEADER": "Introducing Buy!",
-      "INTRODUCING_BODY": "We’ve partnered with SFOX so you can now buy bitcoin 🎉<br><br>You can now buy bitcoin directly from your wallet by linking your bank account - it's simple, seamless, and secure."
+      "INTRODUCING_HEADER": "Buy Bitcoin",
+      "INTRODUCING_BODY": "Buying bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can buy bitcoin directly from your Blockchain wallet.<br><br>Tips for getting started:<br>The minimum amount you can buy is $10. Your daily maximum can be found under the local currency field.<br><br>Currently, your Blockchain wallet supports linking only one bank account. If you would like to change your synced account, please email <a href=\"mailto:support@sfox.com?subject=Questions%20about%20my%20account%20-%20Blockchain\">support@sfox.com</a>. Please note: credit card purchases are not supported at this time."
     },
     "create": "Create Account",
     "verify": "Verify Identity",
@@ -2021,6 +2015,7 @@
     "WITHDRAWAL_FEE": "Network Transaction Fee",
     "WITHDRAWAL_FEE_EXPLAIN": "ShapeShift will use this fee to send the incoming exchange funds to your wallet.",
     "TRANSACTION_FEE": "Transaction Fee",
+    "PENDING_ETH_TRANSACTION": "Please wait until your previous ether transaction is confirmed.",
     "RATE_EXPLAIN": "This rate may change depending on the market price at the time of your transaction.",
     "ORDER_ID": "Order ID",
     "EXPLAIN_QUOTE": "This quote may change depending on the market price at the time of your transaction.",

@@ -38,6 +38,7 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
     .then(sfox.fetchTrades)
     .then(() => exchange.fetchProfile())
     .then(enableSiftScience)
+    .then(() => Wallet.api.incrementPartnerTrade('sfox', 'buy', 'usd', 'btc', true))
     .catch((e) => Alerts.displayError(e));
 
   $scope.checkout.buyRefresh = () => {

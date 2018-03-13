@@ -31,8 +31,8 @@ function siftScience ($sce, Env, AngularHelper, $window) {
     }
 
     let processEnv = (env) => {
-      let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${ scope.userId }`;
-      url += scope.tradeId ? `/trade/${ scope.tradeId }` : '';
+      let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${scope.userId}`;
+      url += scope.tradeId ? `/trade/${scope.tradeId}` : '';
       scope.url = $sce.trustAsResourceUrl(url);
 
       if (env.qaDebugger) {

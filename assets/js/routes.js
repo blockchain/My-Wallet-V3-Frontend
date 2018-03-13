@@ -55,7 +55,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         loadWalletModule,
-        _initialize ($injector, $q) {
+        _initialize ($injector) {
           let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
           let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
           return Ethereum && Ethereum.needsTransitionFromLegacy().then((res) => Wallet.goal.needsTransitionFromLegacy = res);
@@ -251,6 +251,23 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           resolve: {
             loadBcPhoneNumber: ($ocLazyLoad) => {
               return $ocLazyLoad.load('bcPhoneNumber');
+            },
+            _loadExchangeData ($injector, $q) {
+              let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+              let Exchange = $injector.has('Exchange') && $injector.get('Exchange');
+              let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
+
+              return sfox && sfox.user && !sfox.profile
+                ? $q.resolve().then(() => Exchange.fetchExchangeData(sfox))
+                : $q.resolve();
+            },
+            accounts ($injector, $q) {
+              let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+              let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
+
+              return sfox && sfox.hasAccount
+                ? $q.resolve([]).then(() => sfox.getBuyMethods()).then(methods => methods.ach.getAccounts())
+                : $q.resolve([]);
             }
           }
         }
@@ -408,7 +425,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           return initialize('ShapeShift', $injector);
         }
       },
-      onEnter ($injector, $state) {
+      onEnter ($injector) {
         let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
         ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
       }
@@ -470,7 +487,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
           let exchange = MyWallet.wallet.external.unocoin;
           return $q.resolve(unocoin.fetchQuote(exchange, 1e8, 'BTC', 'INR'));
         },
-        mediums ($q, MyWallet, exchangeRate, _loadExchangeData) {
+        mediums ($q, MyWallet, exchangeRate) {
           let exchange = MyWallet.wallet.external.unocoin;
           return exchange.profile && exchange.profile.level > 2
                  ? $q.resolve(exchangeRate.getPaymentMediums())
