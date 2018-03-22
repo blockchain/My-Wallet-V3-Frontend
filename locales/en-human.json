@@ -1933,7 +1933,7 @@
         "DISPLAY": "Pending Buy",
         "HEADER": "Buy Order in Progress",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-5 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
+        "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-7 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "rejected": {
         "DISPLAY": "Rejected Buy",
