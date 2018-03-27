@@ -291,18 +291,20 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         let history = [];
         history.push(wallet.my.wallet.getHistory());
 
-        let Ethereum = $injector.get('Ethereum');
-        if (Ethereum.eth) history.push(Ethereum.fetchHistory());
+        if (BlockchainConstants.NETWORK === 'testnet') {
+          didFetchTransactions()
+        } else {
+          let Ethereum = $injector.get('Ethereum');
+          if (Ethereum.eth) history.push(Ethereum.fetchHistory());
 
-        let BitcoinCash = $injector.get('BitcoinCash');
-        if (BitcoinCash.bch) history.push(BitcoinCash.getHistory());
+          let BitcoinCash = $injector.get('BitcoinCash');
+          if (BitcoinCash.bch) history.push(BitcoinCash.getHistory());
 
-        let ShapeShift = $injector.get('ShapeShift');
-        if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
-
-        $q.all(history).then(didFetchTransactions);
+          let ShapeShift = $injector.get('ShapeShift');
+          if (ShapeShift.shapeshift) ShapeShift.checkForCompletedTrades();
+          $q.all(history).then(didFetchTransactions);
+        }
       }
-
       return result.guid;
     });
   };
