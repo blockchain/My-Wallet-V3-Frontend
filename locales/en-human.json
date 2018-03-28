@@ -1927,7 +1927,8 @@
       "confirm": {
         "HEADER": "Confirm Buy Order",
         "BODY": "@:SFOX.sell.confirm.BODY",
-        "ACCEPT_TERMS": "@:SFOX.sell.confirm.ACCEPT_TERMS"
+        "ACCEPT_TERMS": "@:SFOX.sell.confirm.ACCEPT_TERMS",
+        "ACCEPT_TERMS_EXTENDED": "I authorize SFOX, Inc. to debit my linked bank account ending in {{::account}} via ACH and acknowledge that all transactions to/from my bank account comply with the SFOX <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, and are in accordance with US law and standard banking (including ACH) guidelines"
       },
       "processing": {
         "DISPLAY": "Pending Buy",
