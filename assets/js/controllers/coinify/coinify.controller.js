@@ -102,7 +102,8 @@ function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalI
   this.onStep = (...steps) => steps.some(s => this.step === this.steps[s]);
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
-  if (frequency) {
+
+  if (frequency && this.quote) {
     this.goTo('confirm-recurring')
   } else if (!this.user.isEmailVerified && !this.exchange.user) {
     this.goTo('email');

@@ -7,7 +7,8 @@ angular
       endTime: '<',
       frequency: '<',
       showRemove: '<',
-      onRemove: '&'
+      onRemove: '&',
+      onClose: '&'
     },
     templateUrl: 'templates/exchange/recurring.pug',
     controller: ExchangeRecurringController,
