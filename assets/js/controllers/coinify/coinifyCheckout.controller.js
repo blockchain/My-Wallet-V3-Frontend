@@ -42,7 +42,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.pendingTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.pending)(t) && !t.tradeSubscriptionId);
   $scope.completedTrades = () => coinify.trades.filter((t) => coinify.tradeStateIn(coinify.states.completed)(t) && !t.tradeSubscriptionId);
   $scope.recurringTrades = () => coinify.trades.filter((t) => t.tradeSubscriptionId);
-  $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || !coinify.trades.length ? ['Weekly', 'Monthly'] : ['Daily', 'Weekly', 'Monthly'];
+  $scope.frequencyOptions = coinify.buyReason === 'user_needs_account' || ['Weekly', 'Monthly'];
 
   $scope.hasDismissedRecurringBuyIntro = () => localStorageService.get('dismissedRecurringBuyIntro');
   $scope.dismissRecurringBuyIntro = () => localStorageService.set('dismissedRecurringBuyIntro', true);
@@ -58,13 +58,15 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
         $state.params.selectedTab = this.selectedTab;
       }
     };
-    $scope.showRecurringBuy = env.partners.coinify.showRecurringBuy;
+    $scope.showRecurringBuy = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK' && env.partners.coinify.showRecurringBuy;
 
     if (env.qaDebugger) {
       $scope.qaDebugger = env.qaDebugger;
-      $scope.frequencyOptions = ['Hourly', 'Daily', 'Weekly', 'Monthly'];
+      $scope.frequencyOptions = ['Hourly', 'Weekly', 'Monthly'];
     }
   });
+
+  $scope.goToFaq = () => $state.go('wallet.common.faq');
 
   coinify.pollUserLevel();
   AngularHelper.installLock.call($scope);
