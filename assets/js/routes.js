@@ -264,7 +264,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
             accounts ($injector, $q) {
               let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
               let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
-            
+
               return sfox && sfox.hasAccount
                 ? $q.resolve([])
                     .then(() => sfox.getBuyMethods()).catch(console.log)

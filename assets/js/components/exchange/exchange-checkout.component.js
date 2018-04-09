@@ -17,6 +17,7 @@ angular
       fiatOptions: '<',
       frequencies: '<',
       collapseSummary: '<',
+      showRecurring: '<',
       recurringBuyLimit: '&',
       onSuccess: '&',
       fiatChange: '&',
@@ -175,7 +176,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;
-    this.showRecurringBuy = env.partners.coinify.showRecurringBuy && MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK';
+    this.showRecurringBuy = this.showRecurring;
   });
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);
