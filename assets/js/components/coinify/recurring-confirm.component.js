@@ -4,6 +4,8 @@ angular
     bindings: {
       frequency: '<',
       endTime: '<',
+      exchange: '<',
+      needsKyc: '<',
       onCancel: '&',
       onProceed: '&'
     },

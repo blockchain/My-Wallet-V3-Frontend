@@ -8,7 +8,7 @@
     span.f-13(translate="RECURRING_REMINDER" translate-values="{time: $ctrl.frequency}")
   .flex-row.phm.pv-5
     span.flex-1.primary.colon(translate="AMOUNT")
-    span.flex-5.ph-5-mobile {{ format($ctrl.trade.fiatAmount, $ctrl.dollars, true) }}
+    span.flex-5.ph-5-mobile {{ format($ctrl.trade.fiatAmount, $ctrl.dollars, true) }} (+ {{ $ctrl.paymentFee | format }} {{ $ctrl.dollars.code }} Payment Fee)
   .flex-row.phm.pv-5
     span.flex-1.primary.colon(translate="FREQUENCY")
     span.flex-5.ph-5-mobile(translate="FREQUENCY_INFO" translate-values="{timespan: timespan}")

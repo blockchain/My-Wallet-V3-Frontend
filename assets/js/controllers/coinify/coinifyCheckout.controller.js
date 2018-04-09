@@ -58,7 +58,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
         $state.params.selectedTab = this.selectedTab;
       }
     };
-    $scope.showRecurringBuy = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK' && env.partners.coinify.showRecurringBuy && $scope.exchange.profile.tradeSubscriptionsAllowed;
+    $scope.showRecurringBuy = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK' && env.partners.coinify.showRecurringBuy && $scope.exchange.profile.email; /* && $scope.exchange.profile.tradeSubscriptionsAllowed */
 
     if (env.qaDebugger) {
       $scope.qaDebugger = env.qaDebugger;

@@ -23,6 +23,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         show-recurring="showRecurringBuy"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile.hidden-xs
+      exchange-recurring(ng-if="scheduledRecurring" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars" payment-fee="trade.fee")
       .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
         .flex-between
           span.f-24.blue.f-14-mobile

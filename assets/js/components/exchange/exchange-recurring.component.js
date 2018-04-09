@@ -7,6 +7,7 @@ angular
       endTime: '<',
       frequency: '<',
       showRemove: '<',
+      paymentFee: '<',
       onRemove: '&',
       onClose: '&'
     },

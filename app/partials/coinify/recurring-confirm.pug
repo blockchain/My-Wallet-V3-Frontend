@@ -1,9 +1,12 @@
 .pv-25.ph-25
   .flex-column
-    span.f-18.mb-15.em-400(translate="RECURRING_CONFIRM_HEADER")
-    span.f-14.em-300(ng-if="$ctrl.endTime" translate="RECURRING_CONFIRM_BODY_WITH_ENDTIME" translate-values="{timing: $ctrl.recurringTiming(), end: $ctrl.endTime.toDateString()}")
-    span.f-14.em-300(ng-if="!$ctrl.endTime" translate="RECURRING_CONFIRM_BODY" translate-values="{timing: $ctrl.recurringTiming()}")
+    span.f-18.mb-15.em-400(ng-hide="$ctrl.needsKyc" translate="RECURRING_CONFIRM_HEADER")
+    span.f-18.mb-15.em-400(ng-show="$ctrl.needsKyc" translate="RECURRING_CONFIRM_NEED_IDENTITY_HEADER")  
+    span.f-14.em-300(ng-if="$ctrl.endTime && !$ctrl.needsKyc" translate="RECURRING_CONFIRM_BODY_WITH_ENDTIME" translate-values="{timing: $ctrl.recurringTiming(), end: $ctrl.endTime.toDateString()}")
+    span.f-14.em-300(ng-if="!$ctrl.endTime && !$ctrl.needsKyc" translate="RECURRING_CONFIRM_BODY" translate-values="{timing: $ctrl.recurringTiming()}")
+    span.f-14.em-300(ng-if="$ctrl.needsKyc" translate="RECURRING_CONFIRM_NEED_IDENTITY_BODY")
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end
     button.button-muted.mrm(ng-click="$ctrl.onCancel()" translate="GO_BACK")
-    button.button-primary(translate="PROCEED_WITH_MY_ORDER" ng-click="$ctrl.onProceed()")
+    button.button-primary(ng-if="!$ctrl.needsKyc" translate="PROCEED_WITH_MY_ORDER" ng-click="$ctrl.onProceed()")
+    button.button-primary(ng-if="$ctrl.needsKyc" translate="PROCEED_TO_KYC" ng-click="$ctrl.onProceed()")
