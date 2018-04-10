@@ -220,8 +220,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
   };
 
   service.getNextRecurringTrade = () => {
-    if (service.subscriptions.length) {
-      let activeSub = service.subscriptions.filter(s => s.isActive);
+    let activeSub = service.subscriptions.filter(s => s.isActive);
+    if (activeSub.length) {
       let matchingTrades = service.trades.filter(t => t.tradeSubscriptionId === activeSub[0].id);
       let trade = matchingTrades.sort((a, b) => a.createdAt < b.createdAt);
       const fee = (trade[0].sendAmount / 100) - (trade[0].inAmount / 100);
