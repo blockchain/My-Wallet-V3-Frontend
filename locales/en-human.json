@@ -2116,18 +2116,34 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
+  "RECURRING_CONFIRM": {
+    "NEEDS_KYC_AND_TRADES": {
+      "HEADER": "Verify Your Identity and Complete 3 Orders",
+      "BODY": "To unlock the recurring buy feature, verify your identity and complete 3 credit card orders.",
+      "BUTTON": "Proceed To Verify My Identity"
+    },
+    "NEEDS_KYC": {
+      "HEADER": "Verify Your Identity",
+      "BODY": "To set up a recurring order, you first need to verify your identity",
+      "BUTTON": "Proceed To Verify My Identity"
+    },
+    "NEEDS_TRADES": {
+      "HEADER": "Complete 3 Orders",
+      "BODY": "To set up Recurring Orders you first need to complete 3 credit card orders with the same card.",
+      "BUTTON": "Close"
+    },
+    "PROCEED": {
+      "HEADER": "You're About To Set Up A Recurring Order",
+      "BODY": "This Recurring Order will happen today and every {{::timing}} until you cancel or reach your limit, whichever happens first.",
+      "BUTTON": "Proceed with my Order"
+    }
+  },
   "RECURRING_INTRO_HEADER": "About Recurring Orders",
   "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet after verifying your account.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
   "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime from",
   "RECURRING_INTRO_4": "Want to know more about Recurring Orders?",
-  "RECURRING_CONFIRM_HEADER": "You're About To Set Up A Recurring Order",
-  "RECURRING_CONFIRM_NEED_IDENTITY_HEADER": "Verify Your Identity",
   "RECURRING_CONFIRM_BODY_WITH_ENDTIME": "This Recurring Order will happen today and every {{::timing}} until {{::end}} or you reach your limit, whichever happens first.",
-  "RECURRING_CONFIRM_BODY": "This Recurring Order will happen today and every {{::timing}} until you cancel or reach your limit, whichever happens first.",
-  "RECURRING_CONFIRM_NEED_IDENTITY_BODY": "To set up a recurring order, you first need to verify your identity",
-  "PROCEED_WITH_MY_ORDER": "Proceed with my Order",
-  "PROCEED_TO_KYC": "Proceed To Verify My Identity",
   "ORDERS": "Orders.",
   "LEARN_MORE_HERE": "Learn more here.",
   "MAKE_RECURRING_ORDER": "Make this a recurring order",
