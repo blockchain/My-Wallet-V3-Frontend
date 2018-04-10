@@ -3,7 +3,8 @@
     .f-18.mb-15.em-400
       span.f-18.mb-15.em-400(translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'HEADER' }}")
     .f-14.em-300
-      span.f-14.em-300(translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BODY' }}" translate-values="{timing: $ctrl.recurringTiming()}")
+      span.f-14.em-300(ng-if="!$ctrl.endTime" translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BODY' }}" translate-values="{timing: $ctrl.recurringTiming()}")
+      span.f-14.em-300(ng-if="$ctrl.endTime" translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BODY_WITH_ENDTIME' }}" translate-values="{timing: $ctrl.recurringTiming(), end: $ctrl.endTime.toDateString()}")  
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end
     button.button-muted.mrm(ng-if="$ctrl.state !== 'NEEDS_TRADES'" ng-click="$ctrl.onCancel()" translate="GO_BACK")
