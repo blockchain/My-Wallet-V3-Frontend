@@ -2131,6 +2131,7 @@
   "ORDERS": "Orders.",
   "LEARN_MORE_HERE": "Learn more here.",
   "MAKE_RECURRING_ORDER": "Make this a recurring order",
+  "RECURRING_DISABLED_TOOLTIP": "Recurring orders are disabled while Identity Verificiation is pending.",
   "RECURRING_HELPER": "Recurring Orders will be placed automatically on a regular basis from your linked credit card",
   "RECURRING_REMINDER": "You are about to set up a {{time}} Recurring Order. To cancel a Recurring Order, visit the Order History tab.",
   "RECURRING_EMAIL_RECEIVE": "You will receive an email each time an order is completed. You can check or cancel your orders at any time in your",
