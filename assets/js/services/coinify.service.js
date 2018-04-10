@@ -231,8 +231,8 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
               frequency: activeSub[0].frequency,
               fee: fee.toFixed(2)};
     }
-    return false
-  }
+    return false;
+  };
 
   return service;
 }

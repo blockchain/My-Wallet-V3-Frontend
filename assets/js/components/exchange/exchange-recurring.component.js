@@ -26,5 +26,5 @@ function ExchangeRecurringController ($scope, currency, recurringTrade) {
 
   $scope.endTime = this.endTime && new Date(this.endTime).toDateString();
   $scope.timespan = recurringTrade.getTimespan($scope.date, frequency);
-  $scope.paymentFee = this.paymentFee || parseFloat((this.trade.sendAmount / 100).toFixed(2)) - this.trade.fiatAmount
+  $scope.paymentFee = this.paymentFee || parseFloat((this.trade.sendAmount / 100).toFixed(2)) - this.trade.fiatAmount;
 }

@@ -25,7 +25,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
   $scope.recurringBuyLimit = () => $scope.exchange.user ? coinify.limits.card.inRemaining[$scope.buyFiat.code] : 300;
 
   $scope.nextRecurring = () => coinify.getNextRecurringTrade();
-  $scope.nextRecurringTimespan = () => $scope.nextRecurring().date && recurringTrade.getTimespan(new Date($scope.nextRecurring().date), $scope.nextRecurring().frequency)
+  $scope.nextRecurringTimespan = () => $scope.nextRecurring().date && recurringTrade.getTimespan(new Date($scope.nextRecurring().date), $scope.nextRecurring().frequency);
 
   $scope.selling = coinify.selling;
   $scope.sellHandler = modals.openSellView;
