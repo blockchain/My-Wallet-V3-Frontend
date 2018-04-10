@@ -59,6 +59,7 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
       }
     };
     $scope.showRecurringBuy = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK' && env.partners.coinify.showRecurringBuy && $scope.exchange.profile.email; /* && $scope.exchange.profile.tradeSubscriptionsAllowed */
+    $scope.disableRecurring = coinify.getPendingKYC()
 
     if (env.qaDebugger) {
       $scope.qaDebugger = env.qaDebugger;

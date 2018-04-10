@@ -86,7 +86,7 @@ form.bc-form(
           a(href='mailto:support@sfox.com').f-12 support@sfox.com
     .group.inline.mt-10(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
-        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat")
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat || $ctrl.disableRecurring")
         label(for="frequencyCheck" translate="MAKE_RECURRING_ORDER")
     .group.mt-10.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled && checkoutForm.fiat.$viewValue <= $ctrl.recurringBuyLimit()")
       .group

@@ -18,6 +18,7 @@ angular
       frequencies: '<',
       collapseSummary: '<',
       showRecurring: '<',
+      disableRecurring: '<',
       recurringBuyLimit: '&',
       onSuccess: '&',
       fiatChange: '&',
