@@ -2138,6 +2138,8 @@
       "BUTTON": "Proceed with my Order"
     }
   },
+  "RECURRING_NEXT_SCHEDULED": "Your Next Recurring Order is Scheduled",
+  "RECURRING_NEXT_TRADE": "This order will happen every <span class='em-300'>{{::timespan}}</span>",
   "RECURRING_INTRO_HEADER": "About Recurring Orders",
   "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet after verifying your account.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",

@@ -219,5 +219,20 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     MyBlockchainApi.incrementBuyDropoff(step);
   };
 
+  service.getNextRecurringTrade = () => {
+    if (service.subscriptions.length) {
+      let activeSub = service.subscriptions.filter(s => s.isActive);
+      let matchingTrades = service.trades.filter(t => t.tradeSubscriptionId === activeSub[0].id);
+      let trade = matchingTrades.sort((a, b) => a.createdAt < b.createdAt);
+      const fee = (trade[0].sendAmount / 100) - (trade[0].inAmount / 100);
+      return {amount: trade[0].inAmount / 100,
+              currency: trade[0].inCurrency,
+              date: trade[0].createdAt,
+              frequency: activeSub[0].frequency,
+              fee: fee.toFixed(2)};
+    }
+    return false
+  }
+
   return service;
 }

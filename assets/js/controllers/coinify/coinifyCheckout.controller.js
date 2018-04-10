@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('CoinifyCheckoutController', CoinifyCheckoutController);
 
-function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals, localStorageService) {
+function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, AngularHelper, MyWallet, $state, Wallet, currency, coinify, Exchange, modals, localStorageService, recurringTrade) {
   $scope.trades = coinify.trades;
   $scope.exchange = coinify.exchange;
   $scope.subscriptions = () => coinify.subscriptions;
@@ -23,6 +23,9 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
     min: Math.min(coinify.limits.bank.minimumInAmounts[$scope.buyFiat.code], coinify.limits.card.minimumInAmounts[$scope.buyFiat.code])
   });
   $scope.recurringBuyLimit = () => $scope.exchange.user ? coinify.limits.card.inRemaining[$scope.buyFiat.code] : 300;
+
+  $scope.nextRecurring = () => coinify.getNextRecurringTrade();
+  $scope.nextRecurringTimespan = () => $scope.nextRecurring().date && recurringTrade.getTimespan(new Date($scope.nextRecurring().date), $scope.nextRecurring().frequency)
 
   $scope.selling = coinify.selling;
   $scope.sellHandler = modals.openSellView;
@@ -59,7 +62,10 @@ function CoinifyCheckoutController ($scope, $rootScope, $stateParams, Env, Angul
         $state.params.selectedTab = this.selectedTab;
       }
     };
-    $scope.showRecurringBuy = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK' && env.partners.coinify.showRecurringBuy && $scope.exchange.profile.email; /* && $scope.exchange.profile.tradeSubscriptionsAllowed */
+    $scope.showRecurringBuy = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK' &&
+                              env.partners.coinify.showRecurringBuy &&
+                              $scope.exchange.profile.email &&
+                              !coinify.getPendingKYC();
 
     if (env.qaDebugger) {
       $scope.qaDebugger = env.qaDebugger;

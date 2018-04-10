@@ -24,7 +24,18 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         disable-recurring="disableRecurring"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile.hidden-xs
-      exchange-recurring(ng-if="scheduledRecurring" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars" payment-fee="trade.fee")
+      .mb-20.flex-column.pv-20.ph-20.bg-footer-blue(ng-show="nextRecurring().frequency && nextRecurring().amount")
+        span.f-14(translate="RECURRING_NEXT_SCHEDULED")
+        .flex-row.pt-10
+          span.f-14 Amount:&nbsp;
+          span.f-14 {{ nextRecurring().amount }}
+          |&nbsp;
+          span.em-200.f-14 {{ nextRecurring().currency }} (+ {{ nextRecurring().fee }} {{ nextRecurring().currency }} Payment Fee)
+        .flex-row.pt-10
+          span.f-14 Frequency:&nbsp;
+          span.f-14.em-200(translate="RECURRING_NEXT_TRADE" translate-values="{timespan: nextRecurringTimespan()}")
+        .flex-row.pt-20.flex-end
+          a(translate="MANAGE_THIS_ORDER" ng-click="tabs.select('ORDER_HISTORY')")
       .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
         .flex-between
           span.f-24.blue.f-14-mobile
