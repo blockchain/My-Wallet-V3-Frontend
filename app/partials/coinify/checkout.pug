@@ -25,15 +25,15 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile.hidden-xs
       .mb-20.flex-column.pv-20.ph-20.bg-footer-blue(ng-show="nextRecurring().frequency && nextRecurring().amount")
-        span.f-14(translate="RECURRING_NEXT_SCHEDULED")
+        span.f-13(translate="RECURRING_NEXT_SCHEDULED")
         .flex-row.pt-10
-          span.f-14 Amount:&nbsp;
-          span.f-14 {{ nextRecurring().amount }}
+          span.f-13 Amount:&nbsp;
+          span.f-13 {{ nextRecurring().amount }}
           |&nbsp;
-          span.em-200.f-14 {{ nextRecurring().currency }} (+ {{ nextRecurring().fee }} {{ nextRecurring().currency }} Payment Fee)
+          span.em-200.f-13 {{ nextRecurring().currency }} (+ {{ nextRecurring().fee }} {{ nextRecurring().currency }} Payment Fee)
         .flex-row.pt-10
-          span.f-14 Frequency:&nbsp;
-          span.f-14.em-200(translate="RECURRING_NEXT_TRADE" translate-values="{timespan: nextRecurringTimespan()}")
+          span.f-13 Frequency:&nbsp;
+          span.f-13.em-200(translate="RECURRING_NEXT_TRADE" translate-values="{timespan: nextRecurringTimespan()}")
         .flex-row.pt-20.flex-end
           a(translate="MANAGE_THIS_ORDER" ng-click="tabs.select('ORDER_HISTORY')")
       .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro() && !disableRecurring")
