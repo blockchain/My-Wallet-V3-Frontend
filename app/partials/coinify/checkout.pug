@@ -36,7 +36,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
           span.f-14.em-200(translate="RECURRING_NEXT_TRADE" translate-values="{timespan: nextRecurringTimespan()}")
         .flex-row.pt-20.flex-end
           a(translate="MANAGE_THIS_ORDER" ng-click="tabs.select('ORDER_HISTORY')")
-      .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro()")
+      .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro() && !disableRecurring")
         .flex-between
           span.f-24.blue.f-14-mobile
             i.icon-buy-sell.h3.mrm
