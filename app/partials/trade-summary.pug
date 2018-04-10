@@ -14,7 +14,7 @@
     i.ti-search.mrm
     span(ng-click="fakeBankTransfer()" translate="QA: Click here to fake a bank transfer")
   .mtm
-    exchange-recurring(ng-if="vm.frequency" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars" on-close="$close()")
+    exchange-recurring(ng-if="vm.frequency && trade.sendAmount" frequency="vm.frequency" end-time="vm.endTime" t="trade" dollars="dollars" on-close="$close()")
   .flex-row.flex-between.pt-20
     .flex-start.flex-center
       a(ng-show="tradeIsPending()" ng-click="editRef()" ng-class="{ 'link-disabled mid-grey': disableLink }" translate="EDIT_REF")
