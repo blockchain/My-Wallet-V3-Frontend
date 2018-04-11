@@ -46,6 +46,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get userCanSell () {
       return service.balanceAboveMin && !service.remainingBelowMin;
     },
+    get needsMoreTradesForRecurring () {
+      return service.trades.filter((t) => service.tradeStateIn(states.completed)(t) && !t.tradeSubscriptionId && t.medium === 'card').length < 3;
+    },
     get buyReason () {
       let reason;
       let { profile, user } = service.exchange;
@@ -233,6 +236,17 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
               fee: fee.toFixed(2)};
     }
     return false;
+  };
+
+  service.showRecurringBuy = (env) => {
+    if (!service.exchange.profile.email) return false;
+
+    const showFlag = env.partners.coinify.showRecurringBuy;
+    const allowedCountry = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK';
+    const needsKYC = service.exchange.profile.level && +service.exchange.profile.level.name < 2;
+
+    if (!needsKYC && !service.needsMoreTradesForRecurring && !service.exchange.profile.tradeSubscriptionsAllowed) return false;
+    return showFlag && allowedCountry;
   };
 
   return service;
