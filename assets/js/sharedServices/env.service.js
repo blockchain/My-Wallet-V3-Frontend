@@ -63,6 +63,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.webHardFork = res.webHardFork || {};
 
+      env.maintenance = res.maintenance;
+
       defer.resolve(env);
     }
   );

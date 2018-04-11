@@ -17,6 +17,16 @@ div.login-form {
     top: 100px;
     position: relative;
   }
+  maintenance-warning {
+    top: 100px;
+    position: relative;
+    i {
+      color: $dandelion;
+    }
+    > div {
+      background-color: $moccasin;
+    }
+  }
   nav {
     position: fixed;
     width: 100%;
