@@ -23,6 +23,14 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "WHAT_ARE_RECURRING": {
+      "Q": "What are Recurring Orders?",
+      "A": "When you make a bitcoin purchase through our partner, Coinify, you can opt to have this same order be continuously and automatically placed. To create a recurring order, simply check the 'Make this a recurring order' checkbox after entering an amount, and choose how often and for how long you would like this order to continue. Pending recurring orders can be managed in the Order section of your Buy & Sell Bitcoin tab. <br><br><strong>Note:</strong> this feature is only available after verifying your identity and completing 3 credit card orders within 6 months."
+    },
+    "HOW_TO_CANCEL_RECURRING": {
+      "Q": "How do I cancel Recurring Orders?",
+      "A": "Recurring orders will be canceled automatically on the date you originally chose or when you reach your limits. If you'd like to manually cancel a recurring order, you can go to <strong>Buy & Sell</strong> &#x2192; <strong>Orders</strong> &#x2192; <strong>Manage This Order</strong> and click <strong>'Cancel Recurring Order'.</strong>"
+    },
     "BITCOIN_CASH_ADDRESS": {
       "Q": "Why have the Bitcoin Cash addresses been updated?",
       "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
