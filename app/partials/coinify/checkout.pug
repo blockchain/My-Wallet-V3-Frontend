@@ -25,7 +25,9 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
     .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile.hidden-xs
       .mb-20.flex-column.pv-20.ph-20.bg-footer-blue(ng-show="nextRecurring().frequency && nextRecurring().amount")
-        span.f-13(translate="RECURRING_NEXT_SCHEDULED")
+        .flex-center
+          i.flex-center.icon-recurring.f-16.mr-5
+          span.f-13(translate="RECURRING_NEXT_SCHEDULED")
         .flex-row.pt-10
           span.f-13 Amount:&nbsp;
           span.f-13 {{ nextRecurring().amount }}
@@ -98,8 +100,8 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
             trade="trade")
     div(ng-show="recurringTrades().length")
       .flex-row.flex-between.flex-center.mtl
-        .flex-row.flex-center
-          i.icon-recurring.mr-5
+        .flex-row
+          i.flex-center.icon-recurring.f-16.mr-5
           h4.type-h5 Recurring Orders
         div(ng-hide="pendingTrades().length")
           span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
