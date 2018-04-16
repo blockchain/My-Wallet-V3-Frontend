@@ -46,6 +46,9 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
     get userCanSell () {
       return service.balanceAboveMin && !service.remainingBelowMin;
     },
+    get needsMoreTradesForRecurring () {
+      return service.trades.filter((t) => service.tradeStateIn(states.completed)(t) && !t.tradeSubscriptionId && t.medium === 'card').length < 3;
+    },
     get buyReason () {
       let reason;
       let { profile, user } = service.exchange;
@@ -217,6 +220,33 @@ function coinify (Env, BrowserHelper, $timeout, $q, $state, $uibModal, $uibModal
 
   service.incrementBuyDropoff = (step) => {
     MyBlockchainApi.incrementBuyDropoff(step);
+  };
+
+  service.getNextRecurringTrade = () => {
+    if (!service.subscriptions) return false;
+    let activeSub = service.subscriptions && service.subscriptions.filter(s => s.isActive);
+    if (activeSub.length) {
+      let matchingTrades = service.trades.filter(t => t.tradeSubscriptionId === activeSub[0].id);
+      let trade = matchingTrades.sort((a, b) => a.createdAt < b.createdAt);
+      const fee = (trade[0].sendAmount / 100) - (trade[0].inAmount / 100);
+      return {amount: trade[0].inAmount / 100,
+              currency: trade[0].inCurrency,
+              date: trade[0].createdAt,
+              frequency: activeSub[0].frequency,
+              fee: fee.toFixed(2)};
+    }
+    return false;
+  };
+
+  service.showRecurringBuy = (env) => {
+    if (!service.exchange.profile.email) return false;
+
+    const showFlag = env.partners.coinify.showRecurringBuy;
+    const allowedCountry = MyWallet.wallet.accountInfo.countryCodeGuess !== 'UK';
+    const needsKYC = service.exchange.profile.level && +service.exchange.profile.level.name < 2;
+
+    if (!needsKYC && !service.needsMoreTradesForRecurring && !service.exchange.profile.tradeSubscriptionsAllowed) return false;
+    return showFlag && allowedCountry;
   };
 
   return service;

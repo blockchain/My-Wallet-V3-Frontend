@@ -292,7 +292,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         history.push(wallet.my.wallet.getHistory());
 
         if (BlockchainConstants.NETWORK === 'testnet') {
-          didFetchTransactions()
+          didFetchTransactions();
         } else {
           let Ethereum = $injector.get('Ethereum');
           if (Ethereum.eth) history.push(Ethereum.fetchHistory());

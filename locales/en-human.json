@@ -24,6 +24,14 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "WHAT_ARE_RECURRING": {
+      "Q": "What are Recurring Orders?",
+      "A": "When you make a bitcoin purchase through our partner, Coinify, you can opt to have this same order be continuously and automatically placed. To create a recurring order, simply check the 'Make this a recurring order' checkbox after entering an amount, and choose how often and for how long you would like this order to continue. Pending recurring orders can be managed in the Order section of your Buy & Sell Bitcoin tab. <br><br><strong>Note:</strong> this feature is only available after verifying your identity and completing 3 credit card orders within 6 months."
+    },
+    "HOW_TO_CANCEL_RECURRING": {
+      "Q": "How do I cancel Recurring Orders?",
+      "A": "Recurring orders will be canceled automatically on the date you originally chose or when you reach your limits. If you'd like to manually cancel a recurring order, you can go to <strong>Buy & Sell</strong> &#x2192; <strong>Orders</strong> &#x2192; <strong>Manage This Order</strong> and click <strong>'Cancel Recurring Order'.</strong>"
+    },
     "BITCOIN_CASH_ADDRESS": {
       "Q": "Why have the Bitcoin Cash addresses been updated?",
       "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
@@ -2117,10 +2125,47 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
-  "RECURRING_INTRO_HEADER": "Introducing Recurring Orders",
-  "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet.",
+  "RECURRING_CONFIRM": {
+    "NEEDS_KYC_AND_TRADES": {
+      "HEADER": "Verify Your Identity and Complete 3 Orders",
+      "BODY": "To unlock the recurring buy feature, verify your identity and complete 3 credit card orders.",
+      "BUTTON": "Proceed To Verify My Identity"
+    },
+    "NEEDS_KYC": {
+      "HEADER": "Verify Your Identity",
+      "BODY": "To set up a recurring order, you first need to verify your identity",
+      "BUTTON": "Proceed To Verify My Identity"
+    },
+    "NEEDS_TRADES": {
+      "HEADER": "Complete 3 Orders",
+      "BODY": "To set up Recurring Orders you first need to complete 3 credit card orders with the same card.",
+      "BUTTON": "Close"
+    },
+    "PROCEED": {
+      "HEADER": "You're About To Set Up A Recurring Order",
+      "BODY": "This Recurring Order will happen today and every {{::timing}} until you cancel or reach your limit, whichever happens first.",
+      "BODY_WITH_ENDTIME": "This Recurring Order will happen today and every {{::timing}} until {{::end}} or you reach your limit, whichever happens first.",
+      "BUTTON": "Proceed with my Order"
+    }
+  },
+  "RECURRING_NEXT_SCHEDULED": "Your Next Recurring Order is Scheduled",
+  "RECURRING_NEXT_TRADE": "This order will happen every <span class='em-300'>{{::timespan}}</span>",
+  "RECURRING_INTRO_HEADER": "About Recurring Orders",
+  "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet after verifying your account.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
-  "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime.",
+  "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime from",
+  "RECURRING_INTRO_4": "Want to know more about Recurring Orders?",
+  "ORDERS": "Orders.",
+  "LEARN_MORE_HERE": "Learn more here.",
+  "MAKE_RECURRING_ORDER": "Make this a recurring order",
+  "RECURRING_DISABLED_TOOLTIP": "Recurring orders are disabled while Identity Verificiation is pending.",
+  "RECURRING_HELPER": "Recurring Orders will be placed automatically on a regular basis from your linked credit card",
+  "RECURRING_REMINDER": "You are about to set up a {{time}} Recurring Order. To cancel a Recurring Order, visit the Order History tab.",
+  "RECURRING_EMAIL_RECEIVE": "You will receive an email each time an order is completed. You can check or cancel your orders at any time in your",
+  "TAB": "tab",
+  "AMOUNT_VARIATION_NOTE": "<strong>Note: </strong>The amount of bitcoin purchased will vary each time depending on the market price.",
+  "MANAGE_THIS_ORDER": "Manage This Order",
+  "CANCEL_RECURRING_ORDER": "Cancel Recurring Order",
   "FINISH_PAYMENT": "Finish Payment",
   "SUBSCRIPTION_ID": "Recurring Order ID",
   "RECURRING_BUY": "Recurring Buy",
