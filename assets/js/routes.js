@@ -258,15 +258,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
               let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
 
               return sfox && sfox.user && !sfox.profile
-                ? $q.resolve().then(() => Exchange.fetchExchangeData(sfox))
+                ? $q.resolve().then(() => Exchange.fetchExchangeData(sfox)).catch(console.log)
                 : $q.resolve();
             },
             accounts ($injector, $q) {
               let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
               let sfox = MyWallet.wallet && MyWallet.wallet.external && MyWallet.wallet.external.sfox;
-
+            
               return sfox && sfox.hasAccount
-                ? $q.resolve([]).then(() => sfox.getBuyMethods()).then(methods => methods.ach.getAccounts())
+                ? $q.resolve([])
+                    .then(() => sfox.getBuyMethods()).catch(console.log)
+                    .then(methods => methods.ach.getAccounts()).catch(console.log)
                 : $q.resolve([]);
             }
           }
