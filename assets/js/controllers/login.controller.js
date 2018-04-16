@@ -71,6 +71,7 @@ function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $s
   }
 
   Env.then((env) => {
+    $scope.underMaintenance = env.maintenance;
     $scope.showMobileLogin = env.showMobileLogin;
   });
 }

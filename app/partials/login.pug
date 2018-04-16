@@ -18,7 +18,7 @@
         .item
           label(translate="UID" for="UID_input")
           div
-            input#UID_input.form-control(type="text" ng-model="uid" name="UID_input" focus-when="!uidAvailable" ng-change="errors.uid = null" required)
+            input#UID_input.form-control(type="text" ng-model="uid" name="UID_input" focus-when="!uidAvailable" ng-change="errors.uid = null" ng-disabled="underMaintenance" required)
             .help-block.mbn.alt-font.f-14(ng-show="errors.uid" ui-sref="public.reminder")
               span(translate="{{ errors.uid }}")
             .help-block.mbn.alt-font.f-14.hidden-xs
@@ -27,7 +27,7 @@
         .item
           label(translate="PASSWORD" for="pass_input")
           div
-            input#pass_input.form-control(type="password" name="pass_input" ng-model="password" focus-when="uidAvailable" required)
+            input#pass_input.form-control(type="password" name="pass_input" ng-model="password" focus-when="uidAvailable" ng-disabled="underMaintenance" required)
             .help-block.mbn.alt-font.f-14
               span(translate="{{ errors.password }}")
       .group.mb-15(ng-show="settings.needs2FA" ng-class="{'has-error': errors.twoFactor || settings.twoFactorMethod == 3}")
@@ -50,7 +50,7 @@
           type="submit"
           ui-ladda="status.busy"
           ladda-translate="LOG_IN"
-          ng-disabled="loginForm.$invalid")
+          ng-disabled="loginForm.$invalid || underMaintenance")
   .ptl.flex-between
     div
       a(ng-show="showMobileLogin" ui-sref="public.mobile-login" translate="MOBILE_LOGIN.TITLE")
