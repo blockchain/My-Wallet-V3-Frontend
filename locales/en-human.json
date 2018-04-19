@@ -1896,7 +1896,7 @@
       "confirm": {
         "HEADER": "Confirm Sell Order",
         "BODY": "Please review your trade details below. Click 'Confirm' to initiate.",
-        "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
+        "ACCEPT_TERMS_EXTENDED": "I authorize SFOX, Inc. to credit my linked bank account ending in {{::account}} via ACH and acknowledge that all transactions to/from my bank account comply with the SFOX <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, and are in accordance with US law and standard banking (including ACH) guidelines"
       },
       "processing": {
         "DISPLAY": "Pending Sell",
