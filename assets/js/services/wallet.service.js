@@ -803,9 +803,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       case void 0:
         if (wallet.my.wallet.isUpgradedToHD) {
           if (wallet.my.wallet.balanceActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) return null;
-          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceActiveLegacy;
+          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
         } else {
-          return wallet.my.wallet.balanceActiveLegacy;
+          return wallet.my.wallet.balanceSpendableActiveLegacy;
         }
       case 'imported':
         return wallet.my.wallet.balanceActiveLegacy;

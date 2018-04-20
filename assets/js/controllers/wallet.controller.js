@@ -104,38 +104,12 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
       }
     };
 
-    let ensureMetadataReady = () => {
-      if (!wallet.isMetadataReady) {
-        Wallet.askForSecondPasswordIfNeeded()
-          .then(pw => Wallet.my.wallet.cacheMetadataKey(pw))
-          .then(() => {
-            Alerts.displaySuccess('NEEDS_REFRESH');
-            $rootScope.needsRefresh = true;
-          });
-        event.preventDefault();
-        return true;
-      } else if ($rootScope.needsRefresh) {
-        Alerts.displayError('NEEDS_REFRESH');
-        event.preventDefault();
-        return true;
-      } else if (wallet.external === null) {
-        // Metadata service connection failed
-        Alerts.displayError('POOR_CONNECTION');
-        event.preventDefault();
-        return true;
-      }
-    };
-
     if (Wallet.status.isLoggedIn && $scope.isPublicState(toState.name)) {
       event.preventDefault();
     } else {
       switch (toState.name) {
         case 'wallet.common.buy-sell': return (
-          featureDisabledWhen($scope.buySellDisabled, $scope.buySellDisabledReason) ||
-          ensureMetadataReady() ||
-          featureDisabledWhen(wallet.external.coinify.user && coinify.disabled, coinify.disabledReason) ||
-          featureDisabledWhen(wallet.external.unocoin.user && unocoin.disabled, unocoin.disabledReason) ||
-          featureDisabledWhen(wallet.external.sfox.user && sfox.disabled, sfox.disabledReason)
+          featureDisabledWhen($scope.buySellDisabled, $scope.buySellDisabledReason)
         );
         case 'wallet.common.buy-sell.coinify': return (
           featureDisabledWhen(coinify.disabled, coinify.disabledReason)
