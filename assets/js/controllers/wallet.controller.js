@@ -94,8 +94,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
   );
 
   $scope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
-    let wallet = MyWallet.wallet;
-
     let featureDisabledWhen = (disabled, reason) => {
       if (disabled) {
         Alerts.featureDisabled(reason);

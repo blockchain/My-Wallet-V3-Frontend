@@ -295,7 +295,7 @@ describe('walletServices', () => {
       it('should return the sum of all accounts and addresses', inject(function (Wallet) {
 
         Wallet.my.wallet.hdwallet.balanceActiveAccounts = 3;
-        Wallet.my.wallet.balanceActiveLegacy = 1;
+        Wallet.my.wallet.balanceSpendableActiveLegacy = 1;
 
         expect(Wallet.total("")).toBeGreaterThan(0);
         expect(Wallet.total("")).toBe(4);
