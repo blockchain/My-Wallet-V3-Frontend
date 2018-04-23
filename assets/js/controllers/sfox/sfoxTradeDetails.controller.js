@@ -28,7 +28,7 @@ function SfoxTradeDetailsController ($scope, MyWallet, Exchange, currency, sfox,
     $q.resolve(sfox.buyTradeDetails(null, trade, tx, expectedDelivery))
       .then(details => $scope.tradeDetails = details);
   } else {
-    $scope.tradeDetails = sfox.sellTradeDetails(null, null, trade, tx);
+    $scope.tradeDetails = sfox.sellTradeDetails(null, null, trade, tx, expectedDelivery);
   }
 
   $scope.rate = $scope.type === '.buy'
