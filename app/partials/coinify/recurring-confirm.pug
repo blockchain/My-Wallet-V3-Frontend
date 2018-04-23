@@ -10,7 +10,7 @@
     .flex-row.flex-align-start.mt-20(ng-if="$ctrl.state === 'PROCEED'")
       div
         input(type="checkbox" id="$ctrl.recurringCheck" name="$ctrl.recurringCheck" ng-model="$ctrl.recurringCheck")
-      label.pl-5.em-400(translate="ACCEPT_PARTNER_TOS_PRIVACY" for="$ctrl.recurringCheck")
+      label.pl-5.em-400(translate="ACCEPT_COINIFY_TOS" for="$ctrl.recurringCheck")
 .modal-footer.flex-end.flex-row
   .flex-1.flex-end
     button.button-muted.mrm(ng-if="$ctrl.state !== 'NEEDS_TRADES'" ng-click="$ctrl.onCancel()" translate="GO_BACK")
