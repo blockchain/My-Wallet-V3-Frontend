@@ -2129,16 +2129,19 @@
     "NEEDS_KYC_AND_TRADES": {
       "HEADER": "Verify Your Identity and Complete 3 Orders",
       "BODY": "To unlock the recurring buy feature, verify your identity and complete 3 credit card orders.",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_KYC_AND_TRADES.BODY",
       "BUTTON": "Proceed To Verify My Identity"
     },
     "NEEDS_KYC": {
       "HEADER": "Verify Your Identity",
       "BODY": "To set up a recurring order, you first need to verify your identity",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_KYC.BODY",
       "BUTTON": "Proceed To Verify My Identity"
     },
     "NEEDS_TRADES": {
       "HEADER": "Complete 3 Orders",
       "BODY": "To set up Recurring Orders you first need to complete 3 credit card orders with the same card.",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_TRADES.BODY",
       "BUTTON": "Close"
     },
     "PROCEED": {
