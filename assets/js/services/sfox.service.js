@@ -234,7 +234,7 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
     };
   }
 
-  function buyTradeDetails (quote, trade, tx) {
+  function buyTradeDetails (quote, trade, tx, expectedDelivery) {
     let buyTxFee;
     return Env.then(env => {
       buyTxFee = env.partners.sfox.buyTransactionFeeInSatoshi;
@@ -284,6 +284,13 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
         details.out = {
           key: '.TOTAL',
           val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+        };
+      }
+
+      if (expectedDelivery) {
+        details.expectedDelivery = {
+          key: '.EXPECTED_DELIVERY',
+          val: expectedDelivery
         };
       }
 

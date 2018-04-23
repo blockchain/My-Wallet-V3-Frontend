@@ -24,7 +24,10 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
 
   $scope.prepareBuy = (quote) => {
     $scope.checkout.quote = quote;
-    return $q.resolve(sfox.buyTradeDetails($scope.checkout.quote))
+    let minutesInADay = 1440;
+    let profile = exchange.profile;
+    let expectedDelivery = profile.processingTimes && profile.processingTimes.usd.buy / minutesInADay + ' Days';
+    return $q.resolve(sfox.buyTradeDetails($scope.checkout.quote, null, null, expectedDelivery))
       .then(details => {
         $scope.checkout.tradeDetails = details;
         $scope.checkout.type = 'buy';
@@ -34,7 +37,10 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
   };
 
   $scope.checkout.buyHandler = (quote) => sfox.buy($scope.checkout.state.account, quote)
-    .then(trade => $scope.checkout.trade = trade)
+    .then(trade => {
+      $scope.checkout.trade = trade
+      $scope.checkout.expectedDelivery = trade.expectedDelivery
+    })
     .then(sfox.fetchTrades)
     .then(() => exchange.fetchProfile())
     .then(enableSiftScience)

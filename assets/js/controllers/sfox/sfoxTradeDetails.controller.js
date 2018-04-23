@@ -17,8 +17,15 @@ function SfoxTradeDetailsController ($scope, MyWallet, Exchange, currency, sfox,
   $scope.state = '.' + trade.state;
   $scope.type = trade.isBuy ? '.buy' : '.sell';
 
+  let expectedDelivery;
+  if ($scope.checkout && $scope.checkout.expectedDelivery) {
+    expectedDelivery = new Date($scope.checkout.expectedDelivery).toDateString()
+  } else {
+    expectedDelivery = new Date(trade.expectedDelivery).toDateString()
+  }
+
   if ($scope.type === '.buy') {
-    $q.resolve(sfox.buyTradeDetails(null, trade, tx))
+    $q.resolve(sfox.buyTradeDetails(null, trade, tx, expectedDelivery))
       .then(details => $scope.tradeDetails = details);
   } else {
     $scope.tradeDetails = sfox.sellTradeDetails(null, null, trade, tx);
