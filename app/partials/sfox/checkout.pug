@@ -31,7 +31,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="buying().verificationRequired ? checkout.openSfoxSignup() : prepareBuy(quote)")
-    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && showBuy() && !checkout.hasDismissedBuyIntro()")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && showBuy() && !checkout.hasDismissedBuyIntro() && !pendingBuyTrades().length")
       .mb-20
         .flex-between
           span.f-24.blue.f-14-mobile
