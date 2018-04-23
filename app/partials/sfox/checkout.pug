@@ -58,7 +58,7 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         trade-account="checkout.state.account"
         handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
         on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
-    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedSellIntro()")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedSellIntro() && !pendingSellTrades().length")
       .flex-between
         span.f-24.blue.f-14-mobile
           i.icon-buy-sell.h3.mrm
@@ -66,6 +66,10 @@ bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select
         span
           i.pointer.ti-close.f-14.mid-grey(ng-click="checkout.dismissSellIntro()")
       p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
+    .width-50.pl-30.prn.pv-10-mobile.no-margin-mobile(ng-if="pendingSellTrades().length")
+      span You have {{ pendingSellTrades().length }} pending sell {{ pendingSellTrades().length === 1 ? 'transaction' : 'transactions' }} for a total of {{ pendingSellTradesTotal() }} USD. You can see more details in your
+      | &nbsp;
+      a(ng-click="tabs.select('ORDER_HISTORY')") Order History.
   .flex-row.pbvl(ng-if="checkout.onStep('confirm')")
     exchange-confirm.width-55.border-desktop(
       type="checkout.type"
