@@ -1029,6 +1029,7 @@
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<a>Click here.</a>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin transaction. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept our <a href='https://www.blockchain.com/terms' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
+  "ACCEPT_COINIFY_TOS": "Accept Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
   "METHOD": "Method",
@@ -2131,16 +2132,19 @@
     "NEEDS_KYC_AND_TRADES": {
       "HEADER": "Verify Your Identity and Complete 3 Orders",
       "BODY": "To unlock the recurring buy feature, verify your identity and complete 3 credit card orders.",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_KYC_AND_TRADES.BODY",
       "BUTTON": "Proceed To Verify My Identity"
     },
     "NEEDS_KYC": {
       "HEADER": "Verify Your Identity",
       "BODY": "To set up a recurring order, you first need to verify your identity",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_KYC.BODY",
       "BUTTON": "Proceed To Verify My Identity"
     },
     "NEEDS_TRADES": {
       "HEADER": "Complete 3 Orders",
       "BODY": "To set up Recurring Orders you first need to complete 3 credit card orders with the same card.",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_TRADES.BODY",
       "BUTTON": "Close"
     },
     "PROCEED": {
@@ -2148,7 +2152,8 @@
       "BODY": "This Recurring Order will happen today and every {{::timing}} until you cancel or reach your limit, whichever happens first.",
       "BODY_WITH_ENDTIME": "This Recurring Order will happen today and every {{::timing}} until {{::end}} or you reach your limit, whichever happens first.",
       "BUTTON": "Proceed with my Order"
-    }
+    },
+    "TERMS": "By scheduling this Recurring Order, you agree to and accept that your card will be charged each time a new order is due to be processed according to the amount, currency, and frequency settings chosen."
   },
   "RECURRING_NEXT_SCHEDULED": "Your Next Recurring Order is Scheduled",
   "RECURRING_NEXT_TRADE": "This order will happen every <span class='em-300'>{{::timespan}}</span>",
