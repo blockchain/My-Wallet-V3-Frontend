@@ -32,6 +32,7 @@ function SfoxBuyCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, 
         $scope.checkout.tradeDetails = details;
         $scope.checkout.type = 'buy';
         $scope.checkout.goTo('confirm');
+        Wallet.api.incrementPartnerTrade('sfox', 'buy', $scope.checkout.quote.baseCurrency, $scope.checkout.quote.quoteCurrency);
         return quote;
       });
   };
