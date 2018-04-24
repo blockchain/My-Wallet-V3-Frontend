@@ -10,7 +10,9 @@ function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyW
 
     $scope.showBuy = () => MyWallet.wallet.accountInfo.invited.sfoxBuy;
     $scope.pendingBuyTrades = () => $scope.pendingTrades().filter((t) => t.isBuy);
+    $scope.pendingSellTrades = () => $scope.pendingTrades().filter((t) => !t.isBuy);
     $scope.pendingBuyTradesTotal = () => $scope.pendingBuyTrades().map((t) => t.receiveAmount).reduce((acc, amt) => acc + amt);
+    $scope.pendingSellTradesTotal = () => $scope.pendingSellTrades().map((t) => t.receiveAmount).reduce((acc, amt) => acc + amt).toFixed(2);
 
     this.handleCancel = (skipConfirm, type, step) => {
       if (skipConfirm) $scope.checkout.goTo('create');

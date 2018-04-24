@@ -38,12 +38,15 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
     $scope.payment.amount(amt);
     $scope.payment.updateFeePerKb(Exchange.sellFee || 2);
     $scope.payment.from(Wallet.my.wallet.hdwallet.defaultAccountIndex);
+    let minutesInADay = 1440;
+    let profile = exchange.profile;
+    let expectedDelivery = profile.processingTimes && profile.processingTimes.usd.sell / minutesInADay + ' Days';
 
     $scope.payment.sideEffect((payment) => {
       $scope.checkout.quote = quote;
       $scope.checkout.type = 'sell';
       $scope.checkout.goTo('confirm');
-      $scope.checkout.tradeDetails = sfox.sellTradeDetails($scope.checkout.quote, payment);
+      $scope.checkout.tradeDetails = sfox.sellTradeDetails($scope.checkout.quote, payment, null, null, expectedDelivery);
       Wallet.api.incrementPartnerTrade('sfox', 'sell', $scope.checkout.quote.baseCurrency, $scope.checkout.quote.quoteCurrency);
     });
 
@@ -58,6 +61,7 @@ function SfoxSellCheckoutController ($scope, $timeout, $stateParams, $q, Wallet,
 
   let submitTx = (trade) => {
     $scope.checkout.trade = trade;
+    $scope.checkout.expectedDelivery = trade.expectedDelivery;
     $scope.payment.to(trade.receiveAddress);
     return Wallet.askForSecondPasswordIfNeeded().then((pw) => {
       return $scope.payment.build().sign(pw).publish().payment;
