@@ -1,0 +1,15 @@
+.flex-row.height-100.pt-70.pb-40.pl-40.pr-40
+  .flex-row.flex-column-tablet.center-mobile.width-100-tablet.width-100.width-100-mobile
+    .width-40.flex-row.flex-center.center-block
+      i.icon-buy-sell.title.mrm
+      span.f-20.em-200(translate="EXCHANGE_SIGNUP_STEPS")
+    .width-60.flex-row.flex-between-mobile.center.mt-10.ml-15(ng-class="inMobileBuy ? 'flex-column-mobile' : 'flex-baseline'")
+      .width-20.width-20-tablet(ng-repeat-start="step in vm.displaySteps track by $index")
+        .flex-column.flex-center.hidden-xs.fade-in(ng-class="{primary: vm.onOrAfterStep(step)}" ng-click="qaDebugger && vm.goTo(step)")
+          span.f-14.white(ng-if="!vm.afterStep(step)") {{ $index + 1 }}
+          span.f-14.white(ng-if="vm.afterStep(step)")
+            i.ti-check
+          span.mt-5.nowrap(ng-class="{primary: vm.onOrAfterStep(step)}" translate="{{ vm.provider + '.' + step }}")
+      .width-20.width-20-tablet.step-arrow.border-top.flex-justify.hidden-xs(ng-repeat-end ng-hide="$last")
+  .close-modal
+    i.ti-close.pointer(ng-click="vm.onStep('pending') ? $dismiss() : vm.close()")

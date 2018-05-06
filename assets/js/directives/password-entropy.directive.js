@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('passwordEntropy', passwordEntropy);
 
 function passwordEntropy (MyWalletHelpers) {
@@ -8,7 +8,7 @@ function passwordEntropy (MyWalletHelpers) {
     scope: {
       password: '='
     },
-    templateUrl: 'templates/password-entropy.jade',
+    templateUrl: 'templates/password-entropy.pug',
     controller: passwordEntropyController
   };
   return directive;

@@ -1,0 +1,12 @@
+div.ethAmountTotal.em-400.amount.flex-center.flex-justify(
+  ng-class="{\
+    'button-transferred': $ctrl.txType === 'transfer',\
+    'button-received'   : $ctrl.txType === 'received',\
+    'button-sent'       : $ctrl.txType === 'sent',\
+    'unconfirmed' : $ctrl.unconfirmed() \
+  }" ng-click="$ctrl.toggle()")
+  span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")
+  fiat(eth="$ctrl.totalAmount" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
+  span(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.absolute($ctrl.totalAmount) | format:'eth' }}
+  | &nbsp;
+  span(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") ETH

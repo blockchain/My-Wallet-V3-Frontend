@@ -1,0 +1,87 @@
+{
+  "TX_AWAITING_REF_NUMBER": {
+    "TITLE": "Bankoverførsel",
+    "BODY": "Send venligst {{::amount}} elektronisk (via IMPS, NEFT eller RTGS) til Unocoins bankkonto nedenfor. Derefter skal du oplyse bankoverførslens referencenummer."
+  },
+  "EXCHANGE_RATE_HELPER_TWO": "Taksten, der tilbydes af din regions vekslepartner, kan omfatte gebyrer.",
+  "unocoin_pancard_ID": {
+     "TITLE": "1. PAN-kort",
+     "COPY": "Upload eller tag et billede af dit PAN-kort, der tydeligt viser dit navn og det ticifrede kontonummer.",
+     "UPLOAD_TITLE": "PAN-kort",
+     "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+     "HELP": "Sørg for, at billedet viser dit PAN-kortnummer tydeligt."
+  },
+  "unocoin_photo_ID": {
+    "TITLE": "2. Dit billede",
+    "COPY": "Upload eller tag et billede af dig selv, så Unocoin kan verificere dit PAN-kort.",
+    "UPLOAD_TITLE": "Billede",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "HELP": "Sørg for, at billedet viser dit ansigt tydeligt."
+  },
+  "unocoin_address_ID": {
+    "TITLE": "3. Bevis for adresse",
+    "COPY": "Upload eller tag et billede af dit bevis for adresse. Du kan uploade et af de følgende godkendte dokumenter, der matcher navnet og adressen, som du opgav som udgangspunkt.",
+    "UPLOAD_TITLE": "Bevis for adresse",
+    "UPLOAD_SELECT": "@:id_ID.UPLOAD_SELECT",
+    "OPTION1": "Aadhar-kort (forside og bagside)",
+    "OPTION2": "Kørekort",
+    "OPTION3": "Pas (side der viser adresse)",
+    "OPTION4": "Forbrugsregning",
+    "HELP": "Sørg for, at billedet viser dit navn og adresse tydeligt."
+  },
+  "BANK_NAME": "Banknavn",
+  "ACCOUNT_HOLDER_NAME": "Kontoindehavers navn",
+  "ACCOUNT_NUMBER": "Kontonummer",
+  "IFSC_CODE": "IFSC-kode",
+  "ACCOUNT_TYPE": "Kontotype",
+  "unocoin_pancard-id-helper": {
+    "TITLE": "Acceptable PAN-kort",
+    "COPY": "Mindre PAN-kort <span class='state-danger-text'>ikke acceptable</span>.<br>PAN-kort skal være gyldige i henhold til statslige optegnelser."
+  },
+  "unocoin_photo-id-helper": {
+    "TITLE": "Acceptable brugerfotos",
+    "COPY": "Selfies med svømmebriller eller hatte er <span class='state-danger-text'>ikke acceptable</span>."
+  },
+  "unocoin_address-id-helper": {
+    "TITLE": "Acceptable bevis for adresse",
+    "COPY": "Undgå blitz på adressebevisets oplysninger.<br>Adressebevis skal være gyldigt i minimum 6 måneder.<br>Bevis for adresse skal være det samme som tidligere anførte adresse.<br>Stemme-ID skal være gyldigt på regerings websted.<br>Bevis for adresse skal være på engelsk."
+  },
+  "UNOCOIN_EXPLAIN": "Vores partner Unocoin vil behandle dine bitcoin-køb. Du skal oplyse nogle informationer og et link til en betalingsmetode.",
+  "UNOCOIN": {
+    "PENDING": "Bekræftelse af identitet under behandling",
+    "PENDING_EXPLAIN": "Unocoin er i gang med at bekræfte din identitet. Du vil modtage et telefonopkald inden for 1 arbejdsdag. Telefonopkaldet vil bekræfte dit <b>navn</b>, <b>postnummer</b> og <b>PAN-kortoplysninger</b>. Du vil kunne købe bitcoin, når du er bekræftet."
+  },
+  "REQUIRED_FIELD": "Påkrævet felt",
+  "IFSC_INCORRECT": "IFSC ikke korrekt",
+  "PIN_CODE_REQUIRED": "PIN-kode påkrævet",
+  "PIN_CODE_INCORRECT": "PIN-kode ikke korrekt",
+  "PAN_CARD_REQUIRED": "PAN-kort påkrævet",
+  "PAN_CARD_INCORRECT": "PAN-kort ikke korrekt",
+  "BANK_ACCOUNT_NUMBER_INCORRECT": "Bankkontonummer ikke korrekt",
+  "EXCHANGE": {
+    "CREATE_ACCOUNT": "Opret {{::exchange}} konto",
+    "CREATE_ACCOUNT_EXPLAIN": "Bekræft din e-mail og telefonnummer for at oprette din {{::exchange}} vekslekonto.",
+    "VERIFY_EMAIL": "Bekræft e-mailadresse",
+    "VERIFY_EMAIL_EXPLAIN": "Vi har lige sendt en bekræftelseskode til din e-mailadresse. Indtast venligst bekræftelseskode for at oprette din {{::exchange}} vekslekonto.",
+    "CHANGE_EMAIL": "Skift e-mail",
+    "CHANGE_EMAIL_EXPLAIN": "At opdatere din e-mail vil også ændre den e-mailadresse, der er knyttet til din pung.",
+    "CHANGE_EMAIL_FAILED": "Beklager, denne e-mail er allerede registreret hos {{::exchange}}.",
+    "CONFIRM_EMAIL": "Bekræft e-mail",
+    "VERIFICATION_CODE": "Bekræftelseskode",
+    "VERIFICATION_CODE_INCORRECT": "Bekræftelseskode ikke korrekt. ",
+    "CHANGE_EMAIL_": "skift e-mail",
+    "ANOTHER_CODE_SENT": "Der er blevet sendt en anden kode!",
+    "VERIFY_ACCOUNT": "Vi er nødt til at indsamle nogle personlige oplysninger for at kunne bekræfte din identitet. Bemærk, at disse oplysninger vil blive sendt til {{::exchange}} og vil ikke være direkte forbundet med din Blockchain-pung.",
+    "FULL_NAME": "Fulde navn",
+    "MOBILE": "Mobilnummer",
+    "PAN_CARD": "PAN-kort",
+    "FULL_RESIDENTIAL_ADDRESS": "Fulde bopælsadresse (du skal opgive bevis for adresse)",
+    "ADDRESS_LINE_1": "Adresselinje 1",
+    "ADDRESS_LINE_2": "Adresselinje 2",
+    "STATE": "Region",
+    "CITY": "By",
+    "PIN_CODE": "PIN-kode",
+    "BANK_ACCOUNT_NUMBER": "Bankkontonummer",
+    "IFSC": "IFSC"
+  }
+}

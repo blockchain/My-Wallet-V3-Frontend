@@ -1,0 +1,8 @@
+.modal-body.flex-column.width-100
+  .ptl.phl
+    span.f-20.em-500.flex-start(translate="{{helper}}.TITLE")
+    p.f-14.ptm(translate="{{helper}}.COPY" translate-values="{days: days}")
+  .center
+    img.width-80.mv-40(ng-src="{{image}}" ng-show="image")
+  .flex-end.pvl.prl
+    button.button.button-primary(ng-click="$close()") Close

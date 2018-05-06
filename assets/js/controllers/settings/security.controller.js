@@ -2,9 +2,12 @@ angular
   .module('walletApp')
   .controller('SettingsSecurityCtrl', SettingsSecurityCtrl);
 
-function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts) {
+function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts, Ethereum) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
+
+  let showEthereum = Ethereum.userHasAccess || void 0;
+  $scope.phraseTranslateValues = { showEthereum };
 
   $scope.processToggleRememberTwoFactor = null;
 
@@ -45,7 +48,7 @@ function SettingsSecurityCtrl ($scope, $uibModal, Wallet, Alerts) {
 
   $scope.changeTwoFactor = () => {
     $uibModal.open({
-      templateUrl: 'partials/settings/two-factor.jade',
+      templateUrl: 'partials/settings/two-factor.pug',
       windowClass: 'bc-modal initial',
       controller: 'TwoFactorCtrl',
       resolve: {

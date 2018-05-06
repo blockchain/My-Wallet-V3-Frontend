@@ -1,0 +1,163 @@
+#landing-page(scroller pos-y="posY" elem-id="landing-page")
+  public-header(i18n-loaded='i18nLoaded' pos-y="posY")
+  .banner(data-preflight-tag="LandingPage")
+    .flex-column.height-100.flex-center.flex-justify.container
+      div.width-100
+        h1.f-42.em-200.width-100.man.mb-15(translate="LANDING.HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate="{{showEth ? 'LANDING.SUB_HEADER_ETH' : 'LANDING.SUB_HEADER'}}")
+        button.header.round.button-white-inverse.upper.mr-20(translate="Log In" ui-sref="public.login-no-uid")
+        button.header.round.button-primary.upper(translate="Sign Up" ui-sref="public.signup")
+  .stats.upper.clearfix
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-mariner
+      span.em-300.f-24.em-300.white(translate="{{showEth ? 'NUMBER_1_DIGITAL_WALLET' : 'NUMBER_1_WALLET'}}")
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-blue
+      span.em-300.f-24.em-300.white(translate="TRANSACTIONS_AMT" translate-values="{count: txsCount}")
+    .flex-center.flex-justify.center.col-md-4.col-sm-12.col-xs-12.bg-primary
+      span.em-300.f-24.em-300.white(translate="WALLETS_AMT" translate-values="{count: walletCount}")
+  .container.mt-90.mb-70
+    h2.upper.f-36.em-200.mvn.center(translate="LANDING.WHY_BLOCKCHAIN")
+    p.f-16.em-300.mt-10.mbn.center(translate="LANDING.LOVED_BY_ALL")
+    uib-carousel.mt-50(active="active" interval="0")
+      uib-slide(index="0")
+        .clearfix
+          .col-md-4
+            i.f-60.icon-simple.blue
+            p.f-18.em-300.upper(translate="LANDING.SIMPLE.TITLE")
+            p.f-14.em-200.left-align(translate="{{showEth ? 'LANDING.SIMPLE.COPY_ETH' : 'LANDING.SIMPLE.COPY'}}")
+          .col-md-4
+            i.f-60.icon-safe-secure.blue
+            p.f-18.em-300.upper(translate="LANDING.SAFE_AND_SECURE.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.SAFE_AND_SECURE.COPY")
+          .col-md-4
+            i.f-60.icon-buy-sell.blue
+            p.f-18.em-300.upper(translate="LANDING.BUY_AND_SELL.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.BUY_AND_SELL.COPY")
+      uib-slide(index="1")
+        .clearfix
+          .col-md-4
+            i.f-60
+              img(height="50px;" src="img/sophisticated.svg")
+            p.f-18.em-300.upper.mt-5(translate="LANDING.SOPHISTICATED.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.SOPHISTICATED.COPY")
+          .col-md-4
+            i.f-60.icon-global.blue
+            p.f-18.em-300.upper(translate="LANDING.GLOBAL.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.GLOBAL.COPY")
+          .col-md-4
+            i.f-60.icon-always-supported.blue
+            p.f-18.em-300.upper(translate="LANDING.SUPPORTED.TITLE")
+            p.f-14.em-200.left-align(translate="LANDING.SUPPORTED.COPY")
+  .banner.sm(data-preflight-tag="LandingPage")
+    .flex-column.height-100.flex-center.flex-justify.container
+      div.width-100
+        h2.f-42.em-200.width-100.man.mb-15(translate="LANDING.BITCOIN_ON_ALL_DEVICES.HEADER")
+        p.width-60.f-16.em-300.man.mb-15(translate="LANDING.BITCOIN_ON_ALL_DEVICES.SUB_TEXT")
+        a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank" rel="noopener noreferrer")
+          img.app-store-badge(src="img/app-store-badge.svg")
+        a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank" rel="noopener noreferrer")
+          img.play-store-badge(src="img/google-play-badge.png")
+  .container.flex-center.hidden-xs.hidden-sm.mv-70
+    .col-md-6
+      h2.upper.f-36.em-200.mvn(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.HEADER_ETH' : 'LANDING.NEW_TO_BITCOIN.HEADER'}}")
+      p.f-16.em-300.mt-10.mb-15(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.SUB_TEXT_ETH' : 'LANDING.NEW_TO_BITCOIN.SUB_TEXT'}}")
+      a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
+        span(translate="LEARN_MORE")
+        i.icon-right_arrow.primary.ml-5
+    .col-md-6.center
+      img.width-80(src="img/bitcoin-network.svg")
+  .container.visible-xs.visible-sm.mv-30
+    .col-md-6
+      h2.upper.f-36.em-200.mvn(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.HEADER_ETH' : 'LANDING.NEW_TO_BITCOIN.HEADER'}}")
+      p.f-16.em-300.mt-10.mb-15(translate="{{showEth ? 'LANDING.NEW_TO_BITCOIN.SUB_TEXT_ETH' : 'LANDING.NEW_TO_BITCOIN.SUB_TEXT'}}")
+      a.f-16.em-500.upper.flex-center(href="https://blockchain.info/wallet/bitcoin-faq")
+        span(translate="LEARN_MORE")
+        i.icon-right_arrow.primary.ml-5
+    .col-md-6.center.mt-30
+      img.width-80(src="img/bitcoin-network.svg")
+  .pv-70.flex-center.flex-justify.bg-grey
+    .flex-column.flex-center
+      p.f-24.em-200.center.pt-10.mbn.upper(translate="{{showEth ? 'LANDING.GET_WORLDS_MOST_POPULAR_WALLET_ETH' : 'LANDING.GET_WORLDS_MOST_POPULAR_WALLET'}}")
+      p.mv-15
+        button.button-primary.round.upper(translate="LANDING.GET_STARTED_NOW" ui-sref="public.signup")
+      p.f-14.em-300.upper
+        | or&nbsp;
+        a(translate="LOGIN" ui-sref="public.login-no-uid")
+  footer
+    div.flex-container
+      div.footer-logo
+        img(alt="Blockchain Logo" src="img/bc-name-and-logo-dark-blue.svg")
+      div
+        h6(translate="PRODUCTS") Products
+        ol
+          li
+            a(href="{{rootURL}}wallet/") Wallet
+          li
+            a(href="{{rootURL}}api/") API
+          li
+            a(href="https://www.blockchain.com/enterprise" target="_blank" rel="noopener noreferrer" translate="BUSINESS")
+          li
+            a(href="https://www.blockchain.com/thunder" target="_blank" rel="noopener noreferrer" translate="THUNDER")
+          li
+            a(href="https://www.blockchain.com/research" target="_blank" rel="noopener noreferrer" translate="RESEARCH")
+          li
+            a(href="{{rootURL}}") Explorer
+          li
+            a(href="{{rootURL}}charts") Charts
+          li
+            a(href="{{rootURL}}markets") Markets
+          li
+            a(href="{{rootURL}}stats") Stats
+      div
+        h6 Company
+        ol
+          li
+            a(href="https://www.blockchain.com/about" target="_blank" rel="noopener noreferrer" translate="ABOUT")
+          li
+            a(href="https://www.blockchain.com/team" target="_blank" rel="noopener noreferrer" translate="TEAM")
+          li
+            a(href="https://www.blockchain.com/careers" target="_blank" rel="noopener noreferrer" translate="CAREERS")
+          li
+            a(href="https://www.blockchain.com/interview" target="_blank" rel="noopener noreferrer" translate="INTERVIEWING")
+          li
+            a(href="https://www.blockchain.com/faq" target="_blank" rel="noopener noreferrer") FAQ
+          li
+            a(href="https://www.blockchain.com/press" target="_blank" rel="noopener noreferrer") Press
+          li
+            a(href="https://blog.blockchain.com/" target="_blank" rel="noopener noreferrer") Blog
+      div
+        h6 Support
+        ol
+          li
+            a(href="https://support.blockchain.com/" target="_blank" rel="noopener noreferrer" translate="Help Center")
+          li
+            a(href="https://blog.blockchain.com/category/tutorials-and-guides/" target="_blank" rel="noopener noreferrer" translate="Tutorials")
+          li
+            a(href="https://blockchain.info/wallet/bitcoin-faq" target="_blank" rel="noopener noreferrer" translate="Learning Portal")
+          li
+            a(href="https://www.blockchain-status.com" target="_blank" rel="noopener noreferrer" translate="Status")
+      div
+        div.dropup(uib-dropdown)
+          a(href="#" uib-dropdown-toggle)
+            span.upper.f-12 {{language}}
+            i.icon-down_arrow.f-8.ml-5
+          ul.languages_select(uib-dropdown-menu)
+            li(ng-repeat="lang in languages")
+              a(ng-href="/{{lang.code}}/wallet/#{{path()}}") {{lang.name}}
+    div.flex-container
+      div.copyright
+        span &copy; 2017 Blockchain Luxembourg S.A. All Rights Reserved.
+        a(href="https://www.blockchain.com/privacy" target="_blank" rel="noopener noreferrer") Privacy
+        a(href="https://www.blockchain.com/terms" target="_blank" rel="noopener noreferrer") Terms
+        a(href="https://www.blockchain.com/legal" target="_blank" rel="noopener noreferrer") Law Enforcement Guide
+        a(href="https://blockchain.info/advertise" target="_blank" rel="noopener noreferrer") Advertise
+      div.social-media
+        a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android&hl=en" target="_blank" rel="noopener noreferrer")
+          img(alt="Android App Icon" src="img/android-footer-logo.svg")
+        a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309?mt=8" target="_blank" rel="noopener noreferrer")
+          img(alt="iOS App Icon" src="img/apple-footer-logo.svg")
+        a(href="https://twitter.com/blockchain" target="_blank" rel="noopener noreferrer")
+          img(alt="Twitter Icon" src="img/twitter-footer-logo.svg")
+        a(href="https://www.linkedin.com/company/blockchain" target="_blank" rel="noopener noreferrer")
+          img(alt="LinkedIn Icon" src="img/linkedin-footer-logo.svg")
+        a(href="https://www.facebook.com/blockchain/" target="_blank" rel="noopener noreferrer")
+          img(alt="Facebook Icon" src="img/facebook-footer-logo.svg")

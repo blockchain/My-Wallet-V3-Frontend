@@ -1,6 +1,6 @@
-# Blockchain.info Wallet [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.png?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
+# Blockchain.info Wallet [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.svg?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
 
-Be Your Own Bank at [blockchain.info/wallet](https://blockchain.info/wallet). Please [contact support](http://blockchain.zendesk.com/) if you have any issues using the wallet.
+Be Your Own Bank at [blockchain.info/wallet](https://blockchain.info/wallet). Please [contact support](https://support.blockchain.com) if you have any issues using the wallet.
 
 ## Run the wallet on your own computer
 
@@ -31,7 +31,7 @@ gem install sass
 
 Install dependencies:
 ```sh
-npm install
+npm install -g bower grunt-cli && yarn && bower install
 ```
 
 Create a file called `.env` in the root of the project. Put the following in it:
@@ -49,18 +49,38 @@ API_DOMAIN=https://api.blockchain.info
 WALLET_HELPER_URL=http://localhost:8081
 ```
 
+To inspect individual directives, run:
+
+```sh
+yarn run start-parts
+```
+
 ## Build
 
-Grunt watches and compiles the Jade view templates and CSS. Keep it running:
+Grunt watches and compiles the pug view templates and CSS. Keep it running:
 ```sh
 grunt
+```
+
+## Lint
+
+To run the file linter:
+```sh
+yarn lint
 ```
 
 ## Test
 
 To run test and monitor for changes:
 ```sh
-npm test
+yarn test
+```
+
+## Vet
+
+To ensure builds will succeed (linting and unit tests passing):
+```sh
+yarn vet
 ```
 
 A coverage report is generated after you run the test for the first time. Just open `coverage/index.html` in your browser.
@@ -69,7 +89,7 @@ A coverage report is generated after you run the test for the first time. Just o
 
 Run local http server:
 ```sh
-npm start
+yarn start
 ```
 
 Visit [localhost:8080](http://localhost:8080/).
@@ -97,4 +117,4 @@ Bug fixes and feedback on our code is always appreciated.
 Security issues can be reported to us in the following venues:
 
  * Email: security@blockchain.info
- * Bug Bounty: https://www.crowdcurity.com/blockchain-info
+ * Bug Bounty: https://hackerone.com/blockchain

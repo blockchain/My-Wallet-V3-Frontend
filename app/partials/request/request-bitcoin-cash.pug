@@ -1,0 +1,48 @@
+.modal-header.flex-row.flex-center.bc-modal-header(data-preflight-tag="Request")
+  i.icon-receive.f-20.pr-15
+  span.f-24(translate="REQUEST_BITCOIN_CASH")
+  i.ti-close.close-modal(ng-click="$close()")
+#receive.modal-body
+  form.bc-form
+    fieldset
+      .group.mb-20.inline
+        .item.width-30.width-50-mobile
+          label.colon(translate="CURR")
+          asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
+        .item.width-70.width-50-mobile.mb-20(ng-if="destinations.length > 1")
+          label.colon(translate="REQUEST_TO")
+          .flex-1
+            p.form-control-static(ng-hide="destinations")
+              img(src="img/spinner.gif")
+            ui-select(ng-model="state.to" ng-disabled="paymentRequest.amount > 0 || paymentRequest.label" tagging)
+              ui-select-match(placeholder="{{::'SEARCH' | translate}}...")
+                label-origin(origin="$select.selected" coin-code="'bch'")
+              ui-select-choices(repeat="destination in destinations | filter: {label:$select.search} | limitTo:destinationLimit" group-by="'type'")
+                span(in-view="$last && destination.type==='Imported Addresses' && increaseLimit()")
+                  label-origin(origin="::destination" highlight="$select.search" coin-code="'bch'")
+            span.help-block(ng-show="state.to.isWatchOnly" translate="WATCH_ONLY_REQUEST_WARN")
+      .group.mb-20
+        .item
+          label.flex-between.flex-baseline
+            span
+              span.colon(translate="COPY_AND_SHARE_ADDRESS.TITLE")
+              helper-button(content="COPY_AND_SHARE_ADDRESS.BCH_HELPER")
+          .flex-row.flex-column-mobile
+            span.f-14.bg-grey.ph-10.pv-10.width-100.font-1-mobile.ph-10-mobile(translate="no") {{ state.address }}
+            span.f-14.ph-25.pv-10.upper.pointer.white.bg-primary.pos-rel.center-mobile(single-click-select translate="COPY" ng-hide="state.isAddressCopied || !browser.canExecCommand" copy-content="{{ address() }}" ng-click="copyAddress()")
+            span.f-14.ph-25.pv-10.upper.white.bg-success.center-mobile(translate="COPIED" ng-show="state.isAddressCopied" ng-mouseleave="state.isAddressCopied = false")
+      .group.mb-20
+        .item
+          .or-horizontal Or
+  form.bc-form
+    fieldset
+      .group.mb-15
+        .item
+          label.flex-between.flex-justify
+            span
+              span.colon(translate="SCAN_QR_CODE.TITLE")
+              helper-button(content="SCAN_QR_CODE.BCH_HELPER")
+          .flex-justify.flex-center.flex-column.mv-20
+            qr(text="address(true)" ng-if="state.address" size=150 image="true")
+  div
+    button.full.button-primary.upper(ng-click="$close();") Done

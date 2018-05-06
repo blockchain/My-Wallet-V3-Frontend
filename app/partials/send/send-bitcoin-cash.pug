@@ -1,0 +1,120 @@
+.modal-header.flex-row.flex-center.bc-modal-header.tabbed(translate-namespace="BITCOIN_CASH")
+  i.ti-close.close-modal(ng-click="$close()")
+  i.icon-send.f-20.pr-15
+  span.f-24(translate=".SEND")
+#send.modal-body(translate-namespace="BITCOIN_CASH" ng-controller="SendBitcoinCashController")
+  .flex(ng-if="onStep('send-cash')")
+    form.bc-form.width-100(role="form" name="forms.sendForm" autocomplete="off" novalidate)
+      fieldset
+        .group.inline
+          .item.width-30.width-50-mobile.mb-20.mr-20
+            label.colon(translate="CURR")
+            asset-select(asset="vm.asset" on-select="vm.showTab(asset)")
+          //- From
+          .item.width-70.width-50-mobile.mb-20(ng-if="numberOfActiveAccountsAndLegacyAddresses() > 1")
+            label.colon(translate="FROM")
+            .flex-1(ng-class="{'has-error': (forms.sendForm.from.$invalid && forms.sendForm.destinations0.$touched) || (forms.sendForm.priv.$invalid && forms.sendForm.priv.$touched) }")
+              p.form-control-static(ng-hide="originsLoaded")
+                img(src="img/spinner.gif")
+              ui-select.send-from-dropdown(
+                ng-model="transaction.from"
+                name="from"
+                ng-show="originsLoaded"
+                ng-change="checkForSameDestination(); setPaymentFrom()"
+                tagging
+                required)
+                ui-select-match(placeholder="{{'SEARCH' | translate}}...")
+                  label-origin(origin="$select.selected" ng-class="{'state-danger-text': $select.selected.balance === 0}" coin-code="'bch'")
+                ui-select-choices(repeat="origin in origins | filter:{label:$select.search} | orderBy:'-balance' | limitTo:originLimit" group-by="'type'" ui-disable-choice="::hasZeroBalance(origin)")
+                  span(ng-class="::{aaa:hasZeroBalance(origin)}" in-view="$last && origin.type==='Imported Addresses' && increaseLimit()")
+                    label-origin(
+                      origin="::origin" highlight="$select.search" coin-code="'bch'" truncate-display="true"
+                      uib-tooltip="{{::origin.address}}" tooltip-append-to-body="true" tooltip-placement="top"
+                      tooltip-class="address" tooltip-popup-delay="500")
+
+              //- Private Key for Watch Only
+              .input-group.pbm(ng-show="transaction.from.isWatchOnly")
+                input.form-control(
+                  name="priv"
+                  placeholder="{{ 'ENTER_PRIV' | translate }}..."
+                  ng-model="transaction.priv"
+                  ng-required="transaction.from.isWatchOnly"
+                  is-valid="!transaction.from.isWatchOnly || isValidPrivateKey(transaction.priv)")
+                .input-group-btn
+                  qr-scan.form-control(on-scan="setPrivateKey")
+              span.help-block(ng-show="forms.sendForm.from.$invalid && forms.sendForm.destinations0.$touched", translate="MUST_SELECT_ORIGIN")
+              span.help-block.inprv(ng-show="forms.sendForm.priv.$invalid && forms.sendForm.priv.$touched" translate="INVALID_PRIV")
+        .group
+          //- To
+          .item
+            label.colon(translate="TO")
+            div
+              .flex-column
+                div(ng-class="{'has-error': forms.sendForm.destination.$invalid && forms.sendForm.destination.$touched && transaction.destination.address !== ''}")
+                  destination-input(
+                    name="destination"
+                    accounts="accounts"
+                    is-valid-address="isValidAddress"
+                    ng-model="transaction.destination"
+                    ng-model-options="{ updateOn: 'blur' }"
+                    on-payment-request="applyPaymentRequest(request)"
+                    ng-paste="handlePaste($event)"
+                    ignore="transaction.from"
+                    coin-code="'bch'"
+                    required)
+                .has-error
+                  span.help-block.type-sm(translate="BCH_ADDRESS_INVALID" ng-show="forms.sendForm.destination.$invalid && forms.sendForm.destination.$touched")
+          //- Amount
+          .item.mt-20
+            label.colon(translate="AMOUNT")
+            .flex-center
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="transaction.amount"
+                  name="amount"
+                  tabindex="1"
+                  transform-currency="bchCurrency"
+                  base-currency="bchCurrency"
+                  placeholder="0"
+                  min="1"
+                  max="2100000000000000"
+                  ng-change="setPaymentAmount()"
+                  required
+                )
+                span.mhm BCH
+              i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+              .flex-1.flex-center.border
+                input.form-control.no-border(
+                  type="number"
+                  ng-model="transaction.amount"
+                  name="fiatAmount"
+                  tabindex="1"
+                  base-currency="bchCurrency"
+                  transform-currency="fiatCurrency"
+                  placeholder="0"
+                  min="1"
+                  max="2100000000000000"
+                  ng-change="setPaymentAmount()"
+                  required
+                )
+                span.mhm {{ fiatCurrency.code }}
+            .has-error
+              span.state-danger-text(
+                ng-click="useAll()"
+                ng-class="{'pointer': transaction.destinations.length === 1}"
+                ng-show="transaction.maxAvailable > 0 && transaction.maxAvailable != null && getTransactionTotal() > transaction.maxAvailable && !failedToLoadUnspent")
+                span.type-sm(translate="USE_TOTAL")
+                | :&nbsp;
+                span.type-sm.pointer {{ transaction.maxAvailable | convert:'bch' }}
+              span.state-danger-text.type-sm(ng-show="transaction.maxAvailable <= 0" translate="You don't have enough funds to send from this wallet.")
+          //- Fee
+          .item.mt-20
+            label
+              span(translate="TX_FEE")
+            .flex-1.f-14
+              span {{ transaction.fee || 0 | convert:'bch':true }} ({{ transaction.fee || 0 | convert:'fiat':true:'bch'}})
+        .group.mt-25
+          button.button-primary(translate="CONTINUE" ng-click="goTo('send-confirm')" ng-disabled="!bchAlternative && forms.sendForm.$invalid || transaction.amount > transaction.maxAvailable")
+  .flex-column.width-100(ng-if="onStep('send-confirm')")
+    send-confirm(tx="transaction" on-send="send()" asset="'bch'" warning="bchAlternative" on-go-back="goTo('send-cash')" locked="locked")

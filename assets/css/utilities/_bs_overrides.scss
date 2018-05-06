@@ -5,9 +5,15 @@
 .btn-info {
   background: $mid-grey;
   border-color: $mid-grey;
-  font-size: 100%;
-  font-weight: normal;
 }
+
+ul.uib-datepicker-popup {
+  padding: 10px;
+  .uib-button-bar {
+    padding: 10px 0px 0px 0px;
+  }
+}
+
 
 .btn-info:hover, .btn-info:focus, .btn-info.focus, .btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
   background: darken($mid-grey, 5%);
@@ -53,7 +59,7 @@ $select-fg: #686868;
       border-radius: 0px !important;
     }
     .ui-select-container .ui-select-toggle {
-    height: 30px;
+      height: 30px;
     }
   }
 
@@ -62,6 +68,13 @@ $select-fg: #686868;
     background-color: transparent;
     border-color: none;
   }
+
+  &.asset-select {
+    .ui-select-choices-row > a {
+      padding: 8px 16px;
+    }
+  }
+
   &.ui-select-bootstrap.dropdown.open {
     input {
       border-radius: 0;
@@ -76,7 +89,7 @@ $select-fg: #686868;
   }
   .ui-select-choices-group-label.dropdown-header { //idk what you want to call these colors.
     color: $select-fg;
-    padding: .4em 1.25em;
+    padding: 4px 12px;
     background: #F4F4F4;
     text-shadow: 0px 1px 0px #FFFFFF;
     font-weight: 500;
@@ -198,6 +211,14 @@ $tt-position-default: -4px !important;
   box-shadow: 0 3px 8px 0 rgba(158, 158, 158, 0.65) !important;
 }
 
+.address {
+  .tooltip-inner {
+    max-width: none;
+    font-size: 12px !important;
+    font-family: 'Montserrat' !important;
+  }
+}
+
 .tooltip.in {
   opacity: 1 !important;
 }
@@ -264,4 +285,132 @@ $tt-position-default: -4px !important;
 .level-badge a .tooltip.top .tooltip-arrow {
   border-bottom: none !important;
   bottom: -4px !important;
+}
+
+.badge {
+  background-color: $regal-blue !important;
+  padding: 3px 6px 3px 7px !important;
+}
+
+// -------------- UIB-DATEPICKER -------------- //
+
+.uib-datepicker-popup {
+  table {
+    thead {
+      tr {
+        th {
+          button {
+            i {
+              color: #ccc;
+            }
+          }
+        }
+      }
+      strong {
+        font-weight: 300;
+      }
+      small {
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+    tbody {
+      tr {
+        td {
+          button {
+            border: none;
+          }
+          button.active {
+            background: $iris;
+            box-shadow: none;
+            span {
+              color: white;
+            }
+          }
+          button.active:hover {
+            background: $iris;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+  > .uib-button-bar {
+    > .btn-success {
+      @extend .button-primary;
+      @extend .button-sm;
+    }
+    > .btn-group.pull-left {
+      > .btn-danger, .btn-info {
+        @extend .button-muted;
+        color: $iris;
+      }
+      > .btn-danger:hover, .btn-info:hover {
+        background-color: white;
+        color: $iris;
+      }
+    }
+  }
+}
+
+.shift-create .ui-select-container {
+  &.asset-select {
+    .ui-select-choices-group-label.dropdown-header {
+      display: none;
+    }
+    .ui-select-choices-row {
+      > a {
+        padding: 2px 10px;
+      }
+      &.active {
+        > a {
+          background-color: #EEF4FA;
+        }
+      }
+    }
+    .is-grouped {
+      .ui-select-choices {
+        padding: 0;
+      }
+      .ui-select-choices-group {
+        margin-top: 5px;
+        position: relative;
+      }
+      .divider {
+        display: none;
+      }
+      .ui-select-choices-group-label.dropdown-header {
+        @extend .flex-row;
+        @extend .flex-center;
+        border: 0;
+        font-weight: 300;
+        background: white;
+        padding: 2px 15px 2px 30px;
+        text-shadow: none;
+        text-transform: uppercase;
+        &:after {
+          content: '';
+          width: 100%;
+          height: 1px;
+          @extend .flex;
+          background: #DDD;
+          margin-left: 10px;
+        }
+      }
+      .ui-select-choices-row:not(:nth-child(3)) {
+        > a {
+          i { display: none;}
+        }
+      }
+      .ui-select-choices-row:nth-child(3) {
+        > a {
+          i {
+            top: 2px;
+            left: 10px;
+            position: absolute;
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,78 @@
+blocket-loading(loading="!isWalletInitialized()")
+.home.width-100(data-preflight-tag="Home")
+
+  .signup-steps.border.pal.mb-15.pointer(ng-show="showSfoxRegistration" id="sfox-signup" ui-sref="wallet.common.buy-sell")
+    .flex-row.height-100
+      .flex-row.flex-column-tablet.width-100
+        .width-40.flex-row.flex-center.center-block
+          i.icon-buy-sell.title.mrm
+          span.f-20.em-200.hidden-xs(translate="EXCHANGE_SIGNUP_STEPS")
+          span.f-20.em-200.visible-xs(translate="EXCHANGE_SIGNUP_STEPS_MOBILE")
+        .width-60.flex-row.flex-between-mobile.center.mt-10.ml-15(ng-class="inMobileBuy ? 'flex-column-mobile' : 'flex-baseline'")
+          .width-20.width-20-tablet.hidden-xs(ng-repeat-start="step in displaySteps track by $index")
+            .flex-column.flex-center.fade-in(ng-class="{primary: onOrAfterStep(step)}")
+              span.f-14.white(ng-if="!afterStep(step)") {{ $index + 1 }}
+              span.f-14.white(ng-if="afterStep(step)")
+                i.ti-check
+              span.mt-5.nowrap(ng-class="{primary: onOrAfterStep(step)}" translate="{{ 'SFOX.' + step }}")
+          .width-20.width-20-tablet.step-arrow.flex-justify.hidden-xs(ng-repeat-end ng-hide="$last")
+
+  .col-md-6.col-sm-12.col-xs-12.col-home.flex-column
+    .border.flex-column.pal.chart-control(ng-controller="BalanceChartController")
+      div
+        .flex-row.flex-center.flex-between.upper
+          h5.mtn.mbn.f-24.em-300.blue.f-16-mobile(translate="YOUR_BALANCES")
+        chart(ng-if="options" options="options" id="balance-chart")
+        .flex-row.flex-around.flex-column.mobile.mt-15.f-14.em-300
+          .flex-column.width-25.border-top-blue
+            span Bitcoin
+            fiat-or-btc.em-200.pointer(btc="btc.total()" ng-click="toggleDisplayCurrency()")
+            span.f-10(ng-if="btc.total() === 0")
+              a.f-10(ng-if="canBuy"  translate="BUY_BITCOIN" ui-sref="wallet.common.buy-sell")
+              a.f-10(ng-if="!canBuy && hasBalance(['eth', 'bch'])" translate="GET_STARTED" ng-click="goToShiftWithDestination('btc')")
+              a.f-10(ng-if="!canBuy && !hasBalance(['eth', 'bch'])" translate="REQUEST_BITCOIN" ng-click="openRequest(null, { code: 'btc' })")
+            a.f-10(ng-if="btc.total() !== 0 && btc.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index")
+          .flex-column.width-25.border-top-primary
+            span Ether
+            fiat-or-eth.em-200.pointer(eth="eth.total()" ng-click="toggleDisplayCurrency()")
+            span.f-10(ng-if="eth.total() == 0")
+              a.f-10(ng-if="hasBalance(['btc', 'bch'])" translate="GET_STARTED" ng-click="goToShiftWithDestination('eth')")
+              a.f-10(ng-if="!hasBalance(['btc', 'bch'])" translate="REQUEST_ETHER" ng-click="openRequest(null, { code: 'eth' })")
+          .flex-column.width-25.border-top-light-blue
+            span Bitcoin Cash
+            fiat-or-bch.em-200.pointer(bch="bch.total()" ng-click="toggleDisplayCurrency()")
+            span.f-10(ng-if="bch.total() === 0")
+              a.f-10(ng-if="hasBalance(['btc', 'eth'])" translate="GET_STARTED" ng-click="goToShiftWithDestination('bch')")
+              a.f-10(ng-if="!hasBalance(['btc', 'eth'])" translate="REQUEST_BITCOIN_CASH" ng-click="openRequest(null, { code: 'bch' })")
+            a.f-10(ng-if="bch.total() !== 0 && bch.accounts.length > 1" translate="VIEW_ALL_BALANCES" ui-sref="wallet.common.settings.accounts_index({ filter: 'BITCOIN CASH' })")
+    activity-feed(data-preflight-tag="ActivityFeed")
+  .col-md-6.col-sm-12.col-xs-12.col-home
+    .border.flex-column.pal.chart-control(ng-controller="PriceChartController")
+      div(ng-class="{'disabled': useCache}")
+        .flex-row.flex-center.flex-between.mb-20.upper
+          h5.mtn.mbn.f-24.em-300.blue.f-16-mobile(translate="PRICE_CHARTS")
+          .flex-row.flex-justify.f-12
+            a.blue.opacity-5.mr-15(ng-click="setTime('all')" ng-class="{'opacity-10 underline-blue': isTime('all'), 'disabled': useCache }") All
+            a.blue.opacity-5.mr-15(ng-click="setTime('1year')" ng-class="{'opacity-10 underline-blue': isTime('1year'), 'disabled': useCache }") Year
+            a.blue.opacity-5.mr-15(ng-click="setTime('1month')" ng-class="{'opacity-10 underline-blue': isTime('1month'), 'disabled': useCache }") Month
+            a.blue.opacity-5.mr-15(ng-click="setTime('1week')" ng-class="{'opacity-10 underline-blue': isTime('1week'), 'disabled': useCache }") Week
+            a.blue.opacity-5(ng-click="setTime('1day')" ng-class="{'opacity-10 underline-blue': isTime('1day'), 'disabled': useCache }") Day
+        .flex-column.flex-center.flex-justify(ng-if="!options")
+          img(src="img/spinner.gif" width="35")
+        .flex-column.flex-align-end.blue.pos-rel(ng-if="useCache || noData")
+          a.disabled.f-10.opacity-5.pos-abs Last Updated: {{ options.timeFetched | date:dateFormat }}
+        chart(ng-if="options" options="options" id="price-chart")
+        .flex-row.flex-around.f-14.mt-15
+          span.highlight.pointer(ng-click="setCurrency('btc')" ng-class="{'active': isCurrency('btc')}")
+            span BTC =&nbsp;
+            fiat(btc="1e8")
+          span.highlight.pointer(ng-click="setCurrency('eth')" ng-class="{'active': isCurrency('eth')}")
+            span ETH =&nbsp;
+            fiat(eth="1")
+          span.highlight.pointer(ng-click="setCurrency('bch')" ng-class="{'active': isCurrency('bch')}")
+            span BCH =&nbsp;
+            fiat(bch="1e8")
+    .section.mt-15(ng-show="showMobileConversion()")
+      web-to-mobile-conversion()
+    .section.mt-15(ng-hide="showMobileConversion()")
+      did-you-know(data-preflight-tag="DidYouKnow")

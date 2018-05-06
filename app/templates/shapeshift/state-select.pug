@@ -1,0 +1,21 @@
+form.bc-form.ph-30.ph-10-mobile
+  .f-20.blue.lh1.center(translate="SIMPLE_SEAMLESS_SECURE")
+  .f-14.mt-20(translate=".PARTNERED")
+  .mt-20(ng-class="{'ui-select-border-red': !$ctrl.onStateWhitelist($ctrl.state)}")
+    span.f-14.em-500.colon(translate=".STATE_RESIDENCY")
+    ui-select.mtm(ng-model="$ctrl.state" tagging)
+      ui-select-match(placeholder="Select state") {{$select.selected.Name}}
+      ui-select-choices(repeat="s in $ctrl.states | filter:$select.search track by s.Name") {{s.Name}}
+  .pt-20.flex-column(ng-show="$ctrl.onStateWhitelist()")
+    a(href="https://www.shapeshift.io/" target="_blank" rel="noopener noreferrer")
+      img.mbs.partner-logo(src="img/shapeshift-logo.png")
+    span(translate=".PARTNER_PROCESS")
+  button.btn.button-primary.full-width.mt-30(ng-show="$ctrl.onStateWhitelist()" translate="CONTINUE" ng-click="$ctrl.nextStep(); $ctrl.saveState();" ng-disabled="!$ctrl.onStateWhitelist($ctrl.state) || !$ctrl.state")
+  .mt-20(ng-show="!$ctrl.onStateWhitelist($ctrl.state)")
+    form.bc-form
+      span.state-danger-text(translate=".STATE_NOT_SUPPORTED")
+      .mtm
+        .group
+          .item
+            input(type="email" ng-model="$ctrl.email" placeholder="Email Address" required)
+        button.btn.button-primary.full-width.mt-20(translate="Notify Me" ng-click="$ctrl.signupForShift()" ng-disabled="!$ctrl.email")

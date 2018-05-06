@@ -62,7 +62,7 @@
   border-radius: 100%;
   animation: pulse-alert 3s linear infinite;
   &.green {
-    background: $received;
+    background: $jade;
     animation: pulse-success 3s linear infinite;
   }
 }

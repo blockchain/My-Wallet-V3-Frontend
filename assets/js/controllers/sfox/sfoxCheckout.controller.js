@@ -2,67 +2,89 @@ angular
   .module('walletApp')
   .controller('SfoxCheckoutController', SfoxCheckoutController);
 
-function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Alerts, currency, modals, sfox, accounts, $rootScope, showCheckout) {
-  let exchange = $scope.vm.external.sfox;
+function SfoxCheckoutController ($scope, $timeout, $stateParams, $q, Wallet, MyWalletHelpers, Exchange, Alerts, currency, modals, sfox, accounts, $rootScope, buyMobile, localStorageService, MyWallet, Env) {
+  $scope.checkout = this;
+  Env.then(env => {
+    let sellLinks = env.partners.sfox.surveyLinks;
+    let buyLinks = env.partners.sfox.buySurveyLinks;
 
-  $scope.openSfoxSignup = (quote) => {
+    $scope.showBuy = () => MyWallet.wallet.accountInfo.invited.sfoxBuy;
+
+    this.handleCancel = (skipConfirm, type, step) => {
+      if (skipConfirm) $scope.checkout.goTo('create');
+      if (type === 'sell') Alerts.surveyCloseConfirm('sfox-sell-survey', sellLinks, sellLinks.length - 1).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
+      if (type === 'buy') Alerts.surveyCloseConfirm('sfox-buy-survey', buyLinks, step).then(() => { $scope.checkout.goTo('create'); }).catch(() => { });
+    };
+
+    $scope.tabs = {
+      options: ['BUY_BITCOIN', 'SELL_BITCOIN', 'ORDER_HISTORY'],
+      selectedTab: $stateParams.selectedTab || $scope.showBuy() ? 'BUY_BITCOIN' : 'SELL_BITCOIN',
+      select (tab) { this.selectedTab = this.selectedTab ? tab : null; $scope.checkout.goTo('create'); }
+    };
+  });
+
+  sfox.accounts = this.accounts = accounts;
+
+  this.exchange = $scope.vm.external.sfox;
+  let enumify = (...ns) => ns.reduce((e, n, i) => angular.merge(e, {[n]: i}), {});
+  this.fetchTransactions = () => MyWallet.wallet.getHistory();
+
+  $scope.steps = enumify('state-select', 'create', 'confirm', 'receipt');
+  this.onStep = (s) => $scope.steps[s] === $scope.step;
+  this.goTo = (s) => $scope.step = $scope.steps[s];
+
+  this.dollars = currency.currencies.filter(c => c.code === 'USD')[0];
+  this.bitcoin = currency.bitCurrencies.filter(c => c.code === 'BTC')[0];
+
+  this.openSfoxSignup = (quote) => {
     $scope.modalOpen = true;
-    return modals.openSfoxSignup(exchange, quote).finally(() => { $scope.modalOpen = false; });
+    return modals.openSfoxSignup(this.exchange, quote).finally(() => { $scope.modalOpen = false; });
   };
 
-  $scope.state = {
+  this.state = {
     account: accounts[0],
-    trades: exchange.trades,
-    buyLimit: exchange.profile && exchange.profile.limits.buy || 100,
-    buyLevel: exchange.profile && exchange.profile.verificationStatus.level
+    buyLevel: this.exchange.profile && this.exchange.profile.verificationStatus.level
   };
+
+  $scope.pendingTrades = () => this.exchange.trades.filter((t) => t.state === 'processing' && t.inAmount);
+  $scope.completedTrades = () => this.exchange.trades.filter((t) => t.state !== 'processing' && t.inAmount);
 
   $scope.setState = () => {
-    $scope.state.trades = exchange.trades;
-    $scope.state.buyLimit = exchange.profile && exchange.profile.limits.buy;
-    $scope.state.buyLevel = exchange.profile && exchange.profile.verificationStatus.level;
+    this.state.buyLevel = this.exchange.profile && this.exchange.profile.verificationStatus.level;
   };
 
   $scope.stepDescription = () => {
     let stepDescriptions = {
       'verify': { text: 'Verify Identity', i: 'ti-id-badge' },
+      'upload': { text: 'Verify Identity', i: 'ti-id-badge' },
       'link': { text: 'Link Payment', i: 'ti-credit-card bank bank-lrg' }
     };
-    let step = sfox.determineStep(exchange, accounts);
+    let step = sfox.determineStep(this.exchange, accounts);
     return stepDescriptions[step];
   };
 
-  $scope.userId = exchange.user;
+  this.userId = this.exchange.user;
   $scope.siftScienceEnabled = false;
-
-  $scope.signupCompleted = accounts[0] && accounts[0].status === 'active';
-  $scope.showCheckout = $scope.signupCompleted || (showCheckout && !$scope.userId);
-
-  $scope.inspectTrade = modals.openTradeSummary;
-
-  $scope.tabs = ['BUY_BITCOIN', /* 'SELL_BITCOIN', */ 'ORDER_HISTORY'];
-  $scope.selectedTab = $stateParams.selectedTab || 'BUY_BITCOIN';
-
-  $scope.selectTab = (tab) => {
-    $scope.selectedTab = $scope.selectedTab ? tab : null;
+  $scope.inspectTrade = (quote, trade) => modals.openTradeDetails(trade);
+  $scope.onClose = () => {
+    const seenBuySurvey = localStorageService.get('sfox-buy-survey');
+    if (seenBuySurvey && seenBuySurvey.index < 1 && this.type === 'buy') this.handleCancel(null, 'buy', 1);
+    else $scope.checkout.goTo('create'); $scope.tabs.select('ORDER_HISTORY');
   };
 
-  $scope.moveTab = (offset) => (event) => {
-    let nextTab = $scope.tabs[$scope.tabs.indexOf($scope.selectedTab) + offset];
-    if (nextTab) $scope.selectTab(nextTab);
+  $scope.email = MyWallet.wallet.accountInfo.email;
+  $scope.signupForBuyAccess = () => {
+    let email = encodeURIComponent($scope.email);
+    sfox.signupForBuyAccess(email);
+    $scope.email = '';
+    localStorageService.set('hasSignedUpForSfoxBuyAccess', true);
   };
+  $scope.hasSignedUpForSfoxBuyAccess = () => localStorageService.get('hasSignedUpForSfoxBuyAccess');
+  this.dismissSellIntro = sfox.dismissSellIntro;
+  this.hasDismissedSellIntro = sfox.hasDismissedSellIntro;
+  this.dismissBuyIntro = sfox.dismissBuyIntro;
+  this.hasDismissedBuyIntro = sfox.hasDismissedBuyIntro;
 
-  $scope.account = accounts[0];
-  $scope.trades = exchange.trades;
-  $scope.quoteHandler = sfox.fetchQuote.bind(null, exchange);
-
-  $scope.buySuccess = (trade) => {
-    $scope.selectTab('ORDER_HISTORY');
-    modals.openTradeSummary(trade, 'initiated');
-    exchange.fetchProfile().then($scope.setState);
-  };
-
-  $scope.buyError = () => {
-    Alerts.displayError('Error connecting to our exchange partner');
-  };
+  $scope.checkout.goTo('create');
+  $scope.$watch('tabs.selectedTab', (t) => t === 'ORDER_HISTORY' && sfox.exchange.getTrades());
 }

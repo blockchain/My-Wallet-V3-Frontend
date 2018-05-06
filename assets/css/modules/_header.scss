@@ -1,31 +1,3 @@
-.bc-header {
-  z-index: 1030;
-  .dropdown-menu > li {
-    &:hover {
-      background: #EBEBEB;
-    }
-  }
-  .dropdown {
-    .ti-menu {
-      line-height: 1;
-      float: right;
-    }
-    a {
-      @extend .clearfix;
-      > span, > i {
-        display: inline-block;
-        float: left;
-      }
-    }
-  }
-  span.ti-menu { font-weight: 900; font-size: 1.5em; position: relative; top: 0px; }
-  .navbar-toggle {  padding: 0; margin: 0 10px 0 20px; }
-
-  .search-query {
-    width: 210px;
-  }
-}
-
 #wallet-nav-toggle {
   span.ti-close, span.ti-angle-down, span.ti-angle-up {
     display: none;
@@ -39,229 +11,70 @@
 }
 
 .whats-new {
-  .whats-new-popover {
-    width: 400px;
-    .popover-content {
-      max-height: 300px;
-      overflow: scroll;
-      @extend .pts;
-      > div > li {
-        border-bottom: 1px solid $border-grey;
-        small, p {
-          font-size: 12px;
-        }
-        &:last-child {
-          border-bottom: 0px;
-        }
-      }
-    }
-  }
   .whats-new-icon {
     background-color: $security-red;
     position: absolute;
     text-align: center;
-    top: 0;
-    right: 0;
-    height: 1.45em;
-    width: 1.5em;
+    top: -14px;
+    right: -14px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    font-weight: 300;
+    font-size: 12px;
   }
 }
 
-//bootstrap overrides
-
-.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-  background-color: $blue;
-  border-color: $blue;
-}
-
-.navbar {
-  .container-fluid {
-    padding-left: 10px;
+.whats-new-popover {
+  width: 400px;
+  .popover-content {
+    li {
+      list-style-type: none !important;
+    }
+    max-height: 300px;
+    overflow: scroll;
+    @extend .pts;
+    > div > li {
+      border-bottom: 1px solid $border-grey;
+      small, p {
+        font-size: 12px;
+      }
+      &:last-child {
+        border-bottom: 0px;
+      }
+    }
   }
 }
 
-.container-fluid {
-  .navbar-header {
-    margin: 0;
-  }
-}
-
-.navbar-inverse .navbar-toggle { border: none; }
-
-.navbar-inverse .navbar-nav > li > a {
-  color: white;
-  padding: 10px 15px 10px;
-}
-
-.navbar-left {
-  @media (min-width: 768px) {
-    margin-left: 26px;
-  }
-}
-
-.navbar-inverse {
-  background-color: $blue;
-  border:none;
-  border-radius: 0px;
-  z-index: 1030;
-  @media (min-width: 768px) {
+nav.short {
+  height: 60px;
+  .igation {
     height: 60px;
+    padding: 0 25px;
   }
-  .navbar-brand {
-    color: white;
-    margin-left: 0px !important;
-    img {
-      padding-left: 0px;
-    }
+  .refresh img {
+    width: 15px;
+    height: 15px;
+    margin-bottom: 2px;
   }
-  .navbar-nav {
-    > li {
-      margin-left: 2px;
-      padding-top: 10px;
-      a {
-        &.refresh {
-          img {
-            display: inline-block;
-            margin-bottom: 3px;
-            margin-top: 2px;
-            height: 15px;
-          }
-        }
-      }
-    }
-    > li > a:hover {
-      background-color: transparent;
-    }
-
-    > .open > a {
-      &:hover, &:focus {
-        background: #0face5;
-      }
-    }
-
-    li.active {
-     a {
-        background-color: transparent;
-      }
-      a:hover {
-        background-color: transparent;
-      }
-      a:focus, a:active {
-        background-color: transparent;
-      }
-
-    }
-    > li {
-      a:focus, a:active {
-        background-color: transparent;
-      }
-    }
-    li.open{
-      a {background-color: transparent;}
-    }
-    // The dropdown on the top right:
-    .dropdown-menu a {
-      color: $black;
-      text-transform: none;
+  @media (max-width: 767px) {
+    .igation {
+      padding: 0px 5px;
     }
   }
-
-}
-
-@media (max-width: 620px) {
-  .navbar-inverse {
-    .container-fluid { padding: 0px 15px; }
-  }
-}
-
-img#logo {
-  height: 18px;
-  padding-left: 15px;
-}
-
-.bc-public-header {
-  img#logo {
-    height: 30px;
-    padding-left: 5px;
-  }
-  @media (max-width: 620px) {
-    img#logo { height: 18px; margin-top: 0; }
-  }
-}
-
-.navbar-header {
-  .navbar-brand{
-    padding: 0;
-  }
-  &:before, &:after {
-    content: none;
-    display: block;
-  }
-  .navbar-brand {
-    line-height: 60px;
-    @media (max-width: 767px) {
-      line-height: 50px;
-    }
-    img {
-      display: inline-block;
-    }
-  }
-}
-
-.navbar-collapse {
-  border: none;
-  box-shadow: none;
-}
-
-
-@media (min-width: 768px){
-  .navbar-collapse{
-    display: block !important;
-  }
-  ul.navbar-nav{
-    .container-fluid{
-      padding: 10px 30px;
-    }
-   li.active{
-     a {
-      border-bottom: none;
-      margin-bottom: 1px;
-      color: #d3edfb;
-     }
-   }
-  }
-}
-
-// language dropdown
-.language {
-  min-width: 120px;
-  min-height: 20px;
-  position: relative;
-  .ui-select-container {
-    width: 100%;
-    position: absolute;
-    background: transparent;
-    &.open {
-      .ui-select-match {
-        display: block !important;
-      }
-    }
-    input[type="text"].ui-select-search {
+  @media (max-width: 1024px) {
+    .hidden-sm.hidden-xs {
       display: none !important;
     }
-    .btn-default-focus, .btn-default:hover {
-      background: transparent;
-      border: 0px !important;
-    }
-    .ui-select-toggle {
-      height: 100%;
-      padding: 0px;
-      border: 0px !important;
-      background: transparent;
-    }
-    .ui-select-match-text {
-      color: #fff;
-      font-size: 13px;
-    }
+  }
+}
+
+nav.logo {
+  .display-block {
+    display: block !important;
+  }
+  @media (max-width: 767px) {
+    position: relative;
   }
 }

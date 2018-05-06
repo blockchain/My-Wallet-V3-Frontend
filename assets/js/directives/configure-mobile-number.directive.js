@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('configureMobileNumber', configureMobileNumber);
 
 configureMobileNumber.$inject = ['Wallet', 'bcPhoneNumber'];
@@ -13,7 +13,7 @@ function configureMobileNumber (Wallet, bcPhoneNumber) {
       onCancel: '&',
       onSuccess: '&'
     },
-    templateUrl: 'templates/configure-mobile-number.jade',
+    templateUrl: 'templates/configure-mobile-number.pug',
     link: link
   };
   return directive;
@@ -29,15 +29,11 @@ function configureMobileNumber (Wallet, bcPhoneNumber) {
     if (attrs.buttonLg) scope.buttonLg = true;
     if (attrs.fullWidth) scope.fullWidth = true;
 
-    let previousNumber = bcPhoneNumber.format(Wallet.user.mobileNumber);
-
-    scope.fields.newMobile = previousNumber;
-
     scope.numberChanged = () =>
-      scope.fields.newMobile !== previousNumber;
+      scope.fields.newMobile !== scope.previousNumber;
 
     scope.cancel = () => {
-      scope.fields.newMobile = previousNumber;
+      scope.fields.newMobile = scope.previousNumber;
       scope.onCancel();
     };
 
@@ -56,5 +52,10 @@ function configureMobileNumber (Wallet, bcPhoneNumber) {
 
       Wallet.changeMobile(scope.fields.newMobile.split('-').join(''), success, error);
     };
+
+    scope.$watch(() => Wallet.user.mobileNumber, () => {
+      scope.previousNumber = bcPhoneNumber.format(Wallet.user.mobileNumber);
+      scope.fields.newMobile = scope.previousNumber;
+    });
   }
 }

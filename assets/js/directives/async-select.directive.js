@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('asyncSelect', asyncSelect);
 
 function asyncSelect ($translate, Alerts) {
@@ -14,7 +14,7 @@ function asyncSelect ($translate, Alerts) {
       displayOptional: '@',
       onChange: '='
     },
-    templateUrl: 'templates/async-select.jade',
+    templateUrl: 'templates/async-select.pug',
     link: link
   };
   return directive;

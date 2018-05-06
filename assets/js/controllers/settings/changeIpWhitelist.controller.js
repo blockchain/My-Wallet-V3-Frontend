@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('ChangeIpWhitelistCtrl', ChangeIpWhitelistCtrl);
 
-function ChangeIpWhitelistCtrl ($scope, Wallet, Alerts) {
+function ChangeIpWhitelistCtrl ($scope, $q, Wallet, Alerts) {
   const ipRegex = /^\s?(?:(?:(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|%)\.){3}(?:(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|%)\s?$/;
 
   $scope.reset = () => {
@@ -39,7 +39,14 @@ function ChangeIpWhitelistCtrl ($scope, Wallet, Alerts) {
 
   $scope.setIPWhitelist = () => {
     $scope.status.waiting = true;
-    Wallet.setIPWhitelist($scope.fields.ipWhitelist)
+    let list = ($scope.fields.ipWhitelist || '').trim();
+
+    let disableRestrict = list === '' && Wallet.settings.restrictToWhitelist
+      ? Wallet.disableRestrictToWhiteListedIPs()
+      : $q.resolve();
+
+    disableRestrict
+      .then(() => Wallet.setIPWhitelist(list))
       .then($scope.deactivate, () => { Alerts.displayError('IP_WHITELIST_ERROR'); })
       .then(() => $scope.status.waiting = false);
   };
