@@ -1,6 +1,6 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
-function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats) {
+function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, ComMigration) {
   Env.then(env => {
     $scope.network = env.network;
     $scope.rootURL = env.rootURL;
@@ -49,4 +49,8 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats) 
   $scope.$watch(languages.get, (code) => {
     $scope.language = languages.mapCodeToName(code);
   });
+
+  ComMigration.whenRedirectsEnabled(() => {
+    ComMigration.redirectFromDotInfoTo('https://blockchain.com/wallet')
+  })
 }
