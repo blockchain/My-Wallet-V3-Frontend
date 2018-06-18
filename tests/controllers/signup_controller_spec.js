@@ -7,13 +7,15 @@ describe('SignupCtrl', () => {
   let $httpBackend;
 
   beforeEach(angular.mock.module('walletDirectives'));
-  
+
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(() => {
     module(($provide) => {
       $provide.factory('Env', ($q) => $q.resolve({
         rootURL: 'https://blockchain.info/',
+        domains: {
+        },
         webHardFork: {
           balanceMessage: { 'en': 'Balance message' }
         }
