@@ -74,8 +74,8 @@ function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $s
     $scope.showMobileLogin = env.showMobileLogin;
   });
 
-  $scope.$on(ComMigration.events.TRANSFERRED_COOKIES, () => {
+  $scope.$on(ComMigration.events.TRANSFERRED_COOKIES, () => $timeout(() => {
     let guid = localStorageService.get('guid')
     if (guid != null) $scope.uid = guid
-  })
+  }))
 }
