@@ -2,9 +2,9 @@ angular
   .module('shared')
   .factory('ComMigration', ComMigration)
 
-ComMigration.$inject = ['$rootScope', '$window', 'localStorageService']
+ComMigration.$inject = ['$rootScope', '$window', 'localStorageService', 'Env']
 
-function ComMigration ($rootScope, $window, localStorageService) {
+function ComMigration ($rootScope, $window, localStorageService, Env) {
   const events = {
     TRANSFERRED_COOKIES: 'ComMigration.TRANSFERRED_COOKIES'
   }
@@ -12,11 +12,32 @@ function ComMigration ($rootScope, $window, localStorageService) {
   return {
     events,
     isOnDotCom,
+    isOnDotInfo,
+    whenRedirectsEnabled,
+    redirectFromDotInfoTo,
     transferCookiesFromDotInfo
   }
 
   function isOnDotCom () {
     return $window.location.origin === 'https://login.blockchain.com'
+  }
+
+  function isOnDotInfo () {
+    return $window.location.origin === 'https://blockchain.info'
+  }
+
+  function whenRedirectsEnabled (runCallback) {
+    Env.then((env) => {
+      if (isOnDotInfo() && env.enableDomainMigrationRedirects) {
+        runCallback()
+      }
+    })
+  }
+
+  function redirectFromDotInfoTo (target) {
+    if (isOnDotInfo()) {
+      $window.location = target
+    }
   }
 
   function transferCookiesFromDotInfo () {

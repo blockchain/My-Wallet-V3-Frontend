@@ -78,4 +78,8 @@ function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $s
     let guid = localStorageService.get('guid')
     if (guid != null) $scope.uid = guid
   })
+
+  ComMigration.whenRedirectsEnabled(() => {
+    ComMigration.redirectFromDotInfoTo('https://login.blockchain.com/#/login')
+  })
 }

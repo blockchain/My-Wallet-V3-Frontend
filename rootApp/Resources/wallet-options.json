@@ -1,4 +1,5 @@
 {
+  "enableDomainMigrationRedirects": false,
   "showBuySellTab": ["GB", "NL", "DE", "US"],
   "service_charge": {
     "US": {
