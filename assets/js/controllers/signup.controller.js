@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .controller('SignupCtrl', SignupCtrl);
 
-SignupCtrl.$inject = ['$scope', '$state', 'localStorageService', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet', '$http', 'Env', 'Ethereum', 'ComMigration'];
+SignupCtrl.$inject = ['$scope', '$state', 'localStorageService', '$filter', '$timeout', '$translate', 'Wallet', 'currency', 'languages', 'MyWallet', '$http', 'Env', 'Ethereum'];
 
-function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet, $http, Env, Ethereum, ComMigration) {
+function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $translate, Wallet, currency, languages, MyWallet, $http, Env, Ethereum) {
   $scope.working = false;
   $scope.browser = {disabled: true};
 
@@ -195,8 +195,4 @@ function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $tr
     $scope.fields.acceptedAgreement = true;
     $scope.fields.email = `${$scope.autoCreate}+${Date.now()}@blockchain.com`;
   }
-
-  ComMigration.whenRedirectsEnabled(() => {
-    ComMigration.redirectFromDotInfoTo('https://login.blockchain.com/#/signup')
-  })
 }
