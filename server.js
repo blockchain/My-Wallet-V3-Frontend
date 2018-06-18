@@ -17,6 +17,7 @@ var apiDomain = process.env.API_DOMAIN;
 var production = Boolean(rootURL === 'https://blockchain.info');
 var iSignThisDomain = production ? 'https://verify.isignthis.com/' : 'https://stage-verify.isignthis.com/';
 var walletHelperFrameDomain = process.env.WALLET_HELPER_URL || `http://localhost:${ walletHelperPort }`;
+var cookieTransferDomain = process.env.COOKIE_TRANSFER_DOMAIN
 var sfoxProduction = parseInt(process.env.SFOX_USE_PRODUCTION, 10) === 1;
 var unocoinProduction = parseInt(process.env.UNOCOIN_USE_PRODUCTION, 10) === 1;
 
@@ -51,8 +52,8 @@ app.use(function (req, res, next) {
       // Safari throws the same error, but without suggesting an hash to whitelist.
       // Firefox appears to just allow unsafe-inline CSS
       "style-src 'self' 'uD+9kGdg1SXQagzGsu2+gAKYXqLRT/E07bh4OhgXN8Y=' '4IfJmohiqxpxzt6KnJiLmxBD72c3jkRoQ+8K5HT5K8o='",
-      `child-src ${ walletHelperFrameDomain } ${ iSignThisDomain} `,
-      `frame-src ${ walletHelperFrameDomain } ${ iSignThisDomain} `,
+      `child-src ${walletHelperFrameDomain} ${iSignThisDomain} ${cookieTransferDomain} `,
+      `frame-src ${walletHelperFrameDomain} ${iSignThisDomain} ${cookieTransferDomain} `,
       "script-src 'self'",
       'connect-src ' + [
         "'self'",

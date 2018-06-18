@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork, Env) {
+function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $stateParams, $timeout, $q, Alerts, Wallet, WalletNetwork, Env, ComMigration) {
   $scope.settings = Wallet.settings;
   $scope.user = Wallet.user;
 
@@ -73,4 +73,9 @@ function LoginCtrl ($scope, $rootScope, $window, localStorageService, $state, $s
   Env.then((env) => {
     $scope.showMobileLogin = env.showMobileLogin;
   });
+
+  $scope.$on(ComMigration.events.TRANSFERRED_COOKIES, () => {
+    let guid = localStorageService.get('guid')
+    if (guid != null) $scope.uid = guid
+  })
 }
