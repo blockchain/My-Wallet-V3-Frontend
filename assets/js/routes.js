@@ -104,6 +104,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
               $scope.rootURL = env.rootURL;
               $scope.versionMyWallet = env.versionMyWallet;
               $scope.versionFrontend = env.versionFrontend;
+
+              $scope.publicBannerConfig = ComMigration.isOnDotCom()
+                ? env.web.serviceAlert.publicDotCom
+                : env.web.serviceAlert.publicDotInfo
+              $scope.showPublicBanner = $scope.publicBannerConfig != null
             });
 
             let overflows = ['/reset-2fa'];

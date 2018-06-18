@@ -95,6 +95,25 @@
   },
   "web": {
     "serviceAlert": {
+      "__publicDotInfo": {
+        "type": "info",
+        "header": {
+          "en": "We’re packing our bags and preparing to move…domains!"
+        },
+        "sections": [
+          {
+            "body": {
+              "en": "To make way for our new and exciting products coming this year, we’re saying hello to our new home. Your Blockchain Wallet will soon be changing URLs as it's combined with our company site, blockchain.com."
+            }
+          }
+        ],
+        "action": {
+          "title": {
+            "en": "Read more about what to expect here."
+          },
+          "link": "https://www.example.com/"
+        }
+      },
       "__global": {
         "type": "warning",
         "hideType": "collapse",

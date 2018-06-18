@@ -13,9 +13,22 @@ div.login-form {
   height: 100%;
   position: relative;
   background-color: $blue;
-  testnet-warning {
+  .banners-container {
     top: 100px;
     position: relative;
+  }
+  .public-block-alert-overrides {
+    .block-alert {
+      border: none;
+      padding: 10px 40px;
+    }
+    * {
+      margin: 0px !important;
+    }
+    span, p {
+      font-weight: 300 !important;
+      margin-bottom: 10px !important;
+    }
   }
   nav {
     position: fixed;
