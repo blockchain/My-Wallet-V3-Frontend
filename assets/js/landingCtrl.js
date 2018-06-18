@@ -50,7 +50,7 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, 
     $scope.language = languages.mapCodeToName(code);
   });
 
-  ComMigration.whenRedirectsEnabled(() => {
-    ComMigration.redirectFromDotInfoTo('https://blockchain.com/wallet')
+  ComMigration.whenRedirectsEnabled((env) => {
+    ComMigration.redirectFromDotInfoTo(`${env.domains.comRoot}/wallet`)
   })
 }

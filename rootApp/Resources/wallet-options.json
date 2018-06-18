@@ -70,6 +70,8 @@
   },
   "domains": {
     "root": "REPLACED_BY_DEV_SERVER",
+    "comRoot": "REPLACED_BY_DEV_SERVER",
+    "comWalletApp": "REPLACED_BY_DEV_SERVER",
     "webSocket": "REPLACED_BY_DEV_SERVER",
     "api": "REPLACED_BY_DEV_SERVER",
     "walletHelperUrl": "REPLACED_BY_DEV_SERVER"

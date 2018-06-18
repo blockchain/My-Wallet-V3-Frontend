@@ -105,7 +105,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
               $scope.versionMyWallet = env.versionMyWallet;
               $scope.versionFrontend = env.versionFrontend;
 
-              $scope.publicBannerConfig = ComMigration.isOnDotCom()
+              $scope.publicBannerConfig = ComMigration.isOnDotCom(env)
                 ? env.web.serviceAlert.publicDotCom
                 : env.web.serviceAlert.publicDotInfo
               $scope.showPublicBanner = $scope.publicBannerConfig != null
@@ -124,9 +124,9 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
               $scope.isUIOverflow = overflows.indexOf(newVal) > -1;
             });
 
-            ComMigration.whenRedirectsEnabled(() => {
+            ComMigration.whenRedirectsEnabled((env) => {
               let url = $location.url()
-              ComMigration.redirectFromDotInfoTo(`https://login.blockchain.com/#${url}`)
+              ComMigration.redirectFromDotInfoTo(`${env.domains.comWalletApp}/#${url}`)
             })
           }
         }

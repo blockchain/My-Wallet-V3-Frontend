@@ -31,6 +31,8 @@ function Env ($rootScope, $location, $q, $http) {
       env.showBuySellTab = res.showBuySellTab;
       env.service_charge = res.service_charge;
 
+      env.domains = res.domains
+
       env.rootURL = res.domains.root + '/';
 
       env.showMobileLogin = !!res.showMobileLogin;

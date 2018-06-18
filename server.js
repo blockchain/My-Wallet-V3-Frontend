@@ -148,6 +148,8 @@ rootApp.use(function (req, res, next) {
     var parsedJSON = require('./rootApp/Resources/wallet-options.json');
     parsedJSON.domains = {
       root: process.env.ROOT_URL,
+      comRoot: process.env.BLOCKCHAIN_COM_ROOT_URL,
+      comWalletApp: process.env.BLOCKCHAIN_COM_WALLET_APP_URL,
       webSocket: process.env.WEB_SOCKET_URL,
       api: process.env.API_DOMAIN,
       walletHelperUrl: walletHelperFrameDomain

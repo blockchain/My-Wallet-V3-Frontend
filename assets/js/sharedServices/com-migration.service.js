@@ -18,26 +18,30 @@ function ComMigration ($rootScope, $window, localStorageService, Env) {
     transferCookiesFromDotInfo
   }
 
-  function isOnDotCom () {
-    return $window.location.origin === 'https://login.blockchain.com'
+  function isOnDotCom (env) {
+    if (env == null) throw new Error('isOnDotCom expects an environment')
+    return $window.location.origin === env.domains.comWalletApp
   }
 
-  function isOnDotInfo () {
-    return $window.location.origin === 'https://blockchain.info'
+  function isOnDotInfo (env) {
+    if (env == null) throw new Error('isOnDotInfo expects an environment')
+    return $window.location.origin === env.domains.root
   }
 
   function whenRedirectsEnabled (runCallback) {
     Env.then((env) => {
-      if (isOnDotInfo() && env.enableDomainMigrationRedirects) {
-        runCallback()
+      if (isOnDotInfo(env) && env.enableDomainMigrationRedirects) {
+        runCallback(env)
       }
     })
   }
 
   function redirectFromDotInfoTo (target) {
-    if (isOnDotInfo()) {
-      $window.location = target
-    }
+    Env.then((env) => {
+      if (isOnDotInfo(env)) {
+        $window.location = target
+      }
+    })
   }
 
   function transferCookiesFromDotInfo () {
@@ -52,21 +56,25 @@ function ComMigration ($rootScope, $window, localStorageService, Env) {
       return frame
     }
 
-    if (isOnDotCom() && shouldTransfer) {
-      let frame = createFrame('https://blockchain.info/transfer_cookies.html')
+    Env.then((env) => {
+      if (isOnDotCom(env) && shouldTransfer) {
+        let frame = createFrame(`${env.domains.root}/transfer_cookies.html`)
 
-      $window.addEventListener('message', (event) => {
-        if (event.data.type === 'cookie') {
-          let cookie = event.data.payload
-          localStorageService.set(cookie.id, cookie.data)
-        }
+        $window.addEventListener('message', (event) => {
+          if (event.data.type === 'cookie') {
+            let cookie = event.data.payload
+            localStorageService.set(cookie.id, cookie.data)
+          }
 
-        if (event.data.type === 'cookies-sent') {
-          frame.remove()
-          localStorageService.set(alreadyTransferredCookiesKey, 'yes')
-          $rootScope.$broadcast(events.TRANSFERRED_COOKIES)
-        }
-      })
-    }
+          if (event.data.type === 'cookies-sent') {
+            frame.remove()
+            localStorageService.set(alreadyTransferredCookiesKey, 'yes')
+            $rootScope.$broadcast(events.TRANSFERRED_COOKIES)
+          }
+        })
+      }
+    }).catch((error) => {
+      console.error('Error transferring cookies', error);
+    })
   }
 }
