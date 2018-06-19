@@ -105,9 +105,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
               $scope.versionMyWallet = env.versionMyWallet;
               $scope.versionFrontend = env.versionFrontend;
 
-              $scope.publicBannerConfig = ComMigration.isOnDotCom(env)
-                ? env.web.serviceAlert.publicDotCom
-                : env.web.serviceAlert.publicDotInfo
+              $scope.publicBannerConfig = env.web.serviceAlert.public
               $scope.showPublicBanner = $scope.publicBannerConfig != null
             });
 

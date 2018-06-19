@@ -97,7 +97,7 @@
   },
   "web": {
     "serviceAlert": {
-      "__publicDotInfo": {
+      "__public": {
         "type": "info",
         "header": {
           "en": "We’re packing our bags and preparing to move…domains!"
