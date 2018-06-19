@@ -16,6 +16,9 @@ div.login-form {
   .banners-container {
     top: 100px;
     position: relative;
+    @media (max-height: 700px) {
+      top: 0px;
+    }
   }
   .public-block-alert-overrides {
     .block-alert {
