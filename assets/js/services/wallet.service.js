@@ -292,7 +292,7 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
         history.push(wallet.my.wallet.getHistory());
 
         if (BlockchainConstants.NETWORK === 'testnet') {
-          didFetchTransactions()
+          didFetchTransactions();
         } else {
           let Ethereum = $injector.get('Ethereum');
           if (Ethereum.eth) history.push(Ethereum.fetchHistory());
@@ -802,10 +802,10 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       case '':
       case void 0:
         if (wallet.my.wallet.isUpgradedToHD) {
-          if (wallet.my.wallet.balanceActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) return null;
-          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceActiveLegacy;
+          if (wallet.my.wallet.balanceSpendableActiveLegacy == null || wallet.my.wallet.hdwallet.balanceActiveAccounts == null) return null;
+          return wallet.my.wallet.hdwallet.balanceActiveAccounts + wallet.my.wallet.balanceSpendableActiveLegacy;
         } else {
-          return wallet.my.wallet.balanceActiveLegacy;
+          return wallet.my.wallet.balanceSpendableActiveLegacy;
         }
       case 'imported':
         return wallet.my.wallet.balanceActiveLegacy;

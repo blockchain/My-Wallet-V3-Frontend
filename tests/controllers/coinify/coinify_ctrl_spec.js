@@ -191,7 +191,7 @@ describe('CoinifyController', () => {
       Wallet.user.isEmailVerified = true;
       MyWallet.wallet.external.coinify = ({ profile: {}, user: 1 });
       let ctrl = getController(quote, null);
-      expect(ctrl.currentStep()).toBe('select-payment-medium');
+      expect(ctrl.currentStep()).toBe('email');
     }));
 
     it('should ask user to complete isx after a trade is created', inject(function (Wallet, MyWallet) {

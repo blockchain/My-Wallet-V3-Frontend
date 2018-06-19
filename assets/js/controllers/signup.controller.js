@@ -21,6 +21,7 @@ function SignupCtrl ($scope, $state, localStorageService, $filter, $timeout, $tr
   $scope.language_guess = language_guess;
 
   Env.then(env => {
+    $scope.underMaintenance = env.maintenance;
     // Get country code from server:
     $http.get(env.rootURL + 'wallet/browser-info')
       .success(data => {

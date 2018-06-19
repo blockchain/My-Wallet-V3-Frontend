@@ -12,6 +12,7 @@
   "NEW_ACCOUNT": "Add +",
   "MY_TRANSACTIONS": "Transactions",
   "ALL": "All",
+  "DOWN_FOR_MAINTENANCE": "Our systems are currently down for planned maintenance. We'll be back shortly and apologize for the inconvenience.",
   "SEND_FEEDBACK": "Send Feedback",
   "BUYSELL": "Buy/Sell",
   "FEEDBACK_SUBMIT_FAILED" : "Something went wrong, please try again.",
@@ -23,6 +24,14 @@
   "NEED_MORE_HELP": "Can't find what you're looking for?",
   "VISIT_SUPPORT": "Support Center",
   "FAQ_QUESTIONS": {
+    "WHAT_ARE_RECURRING": {
+      "Q": "What are Recurring Orders?",
+      "A": "When you make a bitcoin purchase through our partner, Coinify, you can opt to have this same order be continuously and automatically placed. To create a recurring order, simply check the 'Make this a recurring order' checkbox after entering an amount, and choose how often and for how long you would like this order to continue. Pending recurring orders can be managed in the Order section of your Buy & Sell Bitcoin tab. <br><br><strong>Note:</strong> this feature is only available after verifying your identity and completing 3 credit card orders within 6 months."
+    },
+    "HOW_TO_CANCEL_RECURRING": {
+      "Q": "How do I cancel Recurring Orders?",
+      "A": "Recurring orders will be canceled automatically on the date you originally chose or when you reach your limits. If you'd like to manually cancel a recurring order, you can go to <strong>Buy & Sell</strong> &#x2192; <strong>Orders</strong> &#x2192; <strong>Manage This Order</strong> and click <strong>'Cancel Recurring Order'.</strong>"
+    },
     "BITCOIN_CASH_ADDRESS": {
       "Q": "Why have the Bitcoin Cash addresses been updated?",
       "A": "Your Bitcoin Cash addresses have been updated and will look a little different in your wallet from now on. We hope it helps you differentiate between your bitcoin and Bitcoin Cash addresses when sending and requesting. Have questions about this update? <a href='https://blog.blockchain.com/2018/01/23/cashaddr-bitcoin-cash-addresses/' target='_blank' rel='noopener noreferrer'>You can read more here.</a>"
@@ -1020,6 +1029,7 @@
   "CHANGE_EMAIL": "Want to change your email address?&nbsp;<a>Click here.</a>",
   "PARTNER": "<span class='success'>Email Verified!</span> Our partner Coinify will process your bitcoin transaction. By clicking 'Continue' you will create an account with Coinify. Your account will be associated with your verified email address <span class='em-500'>{{::email}}</span>.",
   "ACCEPT_PARTNER_TOS_PRIVACY": "Accept our <a href='https://www.blockchain.com/terms' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
+  "ACCEPT_COINIFY_TOS": "Accept Coinify's <a href='https://www.coinify.com/legal' target='_blank' rel='noopener noreferrer'>Terms of Service</a> and <a href='https://www.coinify.com/legal/policy' target='_blank' rel='noopener noreferrer'>Privacy Policy</a>",
   "EMAIL_IN_USE": "{{::email}} is already in use. ",
   "CLICK_TO_CHANGE": "Click here to change it.",
   "METHOD": "Method",
@@ -1887,13 +1897,13 @@
       "confirm": {
         "HEADER": "Confirm Sell Order",
         "BODY": "Please review your trade details below. Click 'Confirm' to initiate.",
-        "ACCEPT_TERMS": "I agree to SFOX's <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>terms and conditions</a>."
+        "ACCEPT_TERMS_EXTENDED": "I authorize SFOX, Inc. to credit my linked bank account ending in {{::account}} via ACH and acknowledge that all transactions to/from my bank account comply with the SFOX <a href='https://www.sfox.com/terms.html' target='_blank' rel='noopener noreferrer'>Terms of Service</a>, and are in accordance with US law and standard banking (including ACH) guidelines"
       },
       "processing": {
         "DISPLAY": "Pending Sell",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
         "HEADER": "Sell Order in Progress",
-        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account within 3-5 business days. <b>Your order ID is: SFX-{{::tradeId}}</b>"
+        "BODY": "Your sell trade has been initiated. Your funds will be deposited into your bank account by {{::expectedDelivery}}. <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "failed": {
         "DISPLAY": "Failed Sell",
@@ -1918,6 +1928,7 @@
       "TX_FEE": "Transaction Fee",
       "TOTAL": "Total Outgoing Bitcoin",
       "INTRODUCING_HEADER": "Sell Bitcoin",
+      "EXPECTED_DELIVERY": "Estimated Delivery of Funds",
       "INTRODUCING_BODY": "Selling bitcoin is simple, seamless, and secure. Thanks to our partnership with SFOX, you can sell bitcoin directly from your Blockchain wallet.<br><br>Tips for getting started:<br>The minimum amount you can sell is $10. Your daily maximum can be found under the local currency field.<br><br>Currently, your Blockchain wallet supports linking only one bank account. If you would like to change your synced account, please email <a href=\"mailto:support@sfox.com?subject=Questions%20about%20my%20account%20-%20Blockchain\">support@sfox.com</a>. Please note: selling with a credit card is not supported at this time.",
       "TRADING_FEE": "Trading Fee",
       "TO_BE_RECEIVED": "USD To Be Received",
@@ -1934,7 +1945,7 @@
         "DISPLAY": "Pending Buy",
         "HEADER": "Buy Order in Progress",
         "ACTION": "@:EXCHANGE.ACTIONS.VIEW_DETAILS",
-        "BODY": "Your buy trade has been initiated. You will receive your bitcoin in 3-7 business days.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
+        "BODY": "Your buy trade has been initiated. You will receive your bitcoin on {{::expectedDelivery}}.  <b>Your order ID is: SFX-{{::tradeId}}</b>"
       },
       "rejected": {
         "DISPLAY": "Rejected Buy",
@@ -1955,6 +1966,7 @@
       "TRADING_FEE": "@:SFOX.sell.TRADING_FEE",
       "TX_FEE": "@:SFOX.sell.TX_FEE",
       "NOW_SUPPORTING": "This Just In!",
+      "EXPECTED_DELIVERY": "@:SFOX.sell.EXPECTED_DELIVERY",
       "ANNOUNCEMENT": "Buy has arrived. You can now swiftly buy bitcoin directly from within your Blockchain wallet!",
       "GET_STARTED": "Begin Buying",
       "COMING_SOON": "We are working hard to bring <strong>buy bitcoin</strong> functionality to your wallet very soon.",
@@ -2116,10 +2128,51 @@
     "TITLE": "Feature Disabled",
     "BODY": "This feature has been temporarily disabled. Please check back later when we are back up and running!"
   },
-  "RECURRING_INTRO_HEADER": "Introducing Recurring Orders",
-  "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet.",
+  "RECURRING_CONFIRM": {
+    "NEEDS_KYC_AND_TRADES": {
+      "HEADER": "Verify Your Identity and Complete 3 Orders",
+      "BODY": "To unlock the recurring buy feature, verify your identity and complete 3 credit card orders.",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_KYC_AND_TRADES.BODY",
+      "BUTTON": "Proceed To Verify My Identity"
+    },
+    "NEEDS_KYC": {
+      "HEADER": "Verify Your Identity",
+      "BODY": "To set up a recurring order, you first need to verify your identity",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_KYC.BODY",
+      "BUTTON": "Proceed To Verify My Identity"
+    },
+    "NEEDS_TRADES": {
+      "HEADER": "Complete 3 Orders",
+      "BODY": "To set up Recurring Orders you first need to complete 3 credit card orders with the same card.",
+      "BODY_WITH_ENDTIME": "@:RECURRING_CONFIRM.NEEDS_TRADES.BODY",
+      "BUTTON": "Close"
+    },
+    "PROCEED": {
+      "HEADER": "You're About To Set Up A Recurring Order",
+      "BODY": "This Recurring Order will happen today and every {{::timing}} until you cancel or reach your limit, whichever happens first.",
+      "BODY_WITH_ENDTIME": "This Recurring Order will happen today and every {{::timing}} until {{::end}} or you reach your limit, whichever happens first.",
+      "BUTTON": "Proceed with my Order"
+    },
+    "TERMS": "By scheduling this Recurring Order, you agree to and accept that your card will be charged each time a new order is due to be processed according to the amount, currency, and frequency settings chosen."
+  },
+  "RECURRING_NEXT_SCHEDULED": "Your Next Recurring Order is Scheduled",
+  "RECURRING_NEXT_TRADE": "This order will happen every <span class='em-300'>{{::timespan}}</span>",
+  "RECURRING_INTRO_HEADER": "About Recurring Orders",
+  "RECURRING_INTRO_1": "You can now create recurring bitcoin purchases from within your wallet after verifying your account.",
   "RECURRING_INTRO_2": "Select <b>'Make this a recurring order'</b>, set your recurring preferences, and continue with your purchase as normal. Each time an order is processed you will receive an email to notify you.",
-  "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime.",
+  "RECURRING_INTRO_3": "Recurring orders can be canceled at anytime from",
+  "RECURRING_INTRO_4": "Want to know more about Recurring Orders?",
+  "ORDERS": "Orders.",
+  "LEARN_MORE_HERE": "Learn more here.",
+  "MAKE_RECURRING_ORDER": "Make this a recurring order",
+  "RECURRING_DISABLED_TOOLTIP": "Recurring orders are disabled while Identity Verificiation is pending.",
+  "RECURRING_HELPER": "Recurring Orders will be placed automatically on a regular basis from your linked credit card",
+  "RECURRING_REMINDER": "You are about to set up a {{time}} Recurring Order. To cancel a Recurring Order, visit the Order History tab.",
+  "RECURRING_EMAIL_RECEIVE": "You will receive an email each time an order is completed. You can check or cancel your orders at any time in your",
+  "TAB": "tab",
+  "AMOUNT_VARIATION_NOTE": "<strong>Note: </strong>The amount of bitcoin purchased will vary each time depending on the market price.",
+  "MANAGE_THIS_ORDER": "Manage This Order",
+  "CANCEL_RECURRING_ORDER": "Cancel Recurring Order",
   "FINISH_PAYMENT": "Finish Payment",
   "SUBSCRIPTION_ID": "Recurring Order ID",
   "RECURRING_BUY": "Recurring Buy",

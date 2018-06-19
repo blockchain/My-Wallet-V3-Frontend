@@ -190,5 +190,6 @@
     }
   },
   "showMobileLogin": true,
-  "network": "bitcoin"
+  "network": "bitcoin",
+  "maintenance": false
 }

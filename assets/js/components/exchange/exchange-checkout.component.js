@@ -17,6 +17,8 @@ angular
       fiatOptions: '<',
       frequencies: '<',
       collapseSummary: '<',
+      showRecurring: '<',
+      disableRecurring: '<',
       recurringBuyLimit: '&',
       onSuccess: '&',
       fiatChange: '&',
@@ -28,7 +30,7 @@ angular
     controllerAs: '$ctrl'
   });
 
-function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, recurringTrade, Exchange) {
+function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $timeout, $q, currency, Wallet, MyWalletHelpers, modals, $uibModal, formatTrade, recurringTrade, Exchange, MyWallet) {
   $scope.date = new Date();
   $scope.toSatoshi = currency.convertToSatoshi;
   $scope.format = currency.formatCurrencyForView;
@@ -175,7 +177,7 @@ function ExchangeCheckoutController (Env, AngularHelper, $scope, $rootScope, $ti
 
   Env.then(env => {
     $scope.qaDebugger = env.qaDebugger;
-    this.showRecurringBuy = env.partners.coinify.showRecurringBuy;
+    this.showRecurringBuy = this.showRecurring;
   });
   $scope.$on('$destroy', $scope.cancelRefresh);
   AngularHelper.installLock.call($scope);

@@ -195,7 +195,7 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
     return localStorageService.get('hasSeenSfoxBuyIntro');
   }
 
-  function sellTradeDetails (quote, payment, trade, tx) {
+  function sellTradeDetails (quote, payment, trade, tx, expectedDelivery) {
     let { formatCurrencyForView, convertFromSatoshi } = currency;
     let fiat = currency.currencies.find((curr) => curr.code === 'USD');
     let btc = currency.bitCurrencies.find((curr) => curr.code === 'BTC');
@@ -209,7 +209,7 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
                        : (trade.receiveAmount).toFixed(2);
     let amountKey = quote || payment ? '.AMT' : '.AMT_SOLD';
 
-    return {
+    let details = {
       txAmt: {
         key: amountKey,
         val: isNaN(amount) ? amount : formatCurrencyForView(convertFromSatoshi(amount, btc), btc, true)
@@ -232,9 +232,18 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
         tip: () => console.log('Clicked tooltip')
       }
     };
+
+    if (expectedDelivery) {
+      details.expectedDelivery = {
+        key: '.EXPECTED_DELIVERY',
+        val: expectedDelivery
+      };
+    }
+
+    return details;
   }
 
-  function buyTradeDetails (quote, trade, tx) {
+  function buyTradeDetails (quote, trade, tx, expectedDelivery) {
     let buyTxFee;
     return Env.then(env => {
       buyTxFee = env.partners.sfox.buyTransactionFeeInSatoshi;
@@ -284,6 +293,13 @@ function sfox ($q, MyWallet, MyWalletHelpers, Alerts, modals, Env, Exchange, cur
         details.out = {
           key: '.TOTAL',
           val: formatCurrencyForView(convertFromSatoshi(totalAmount, btc), btc, true)
+        };
+      }
+
+      if (expectedDelivery) {
+        details.expectedDelivery = {
+          key: '.EXPECTED_DELIVERY',
+          val: expectedDelivery
         };
       }
 
