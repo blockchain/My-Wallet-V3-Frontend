@@ -27,7 +27,8 @@ form.bc-form.form-horizontal.mt-30(
             type="email"
             ng-model="fields.email"
             required
-            focus-when="!fields.email.length")
+            focus-when="!fields.email.length"
+            ng-disabled="underMaintenance")
           span.error(ng-show="signupForm.email.$touched")
             span(ng-show="signupForm.email.$error.required" translate="EMAIL_ADDRESS_REQUIRED")
             span(ng-show="signupForm.email.$error.email" translate="EMAIL_ADDRESS_INVALID")
@@ -43,6 +44,7 @@ form.bc-form.form-horizontal.mt-30(
             min-entropy="25"
             focus-when="fields.emailIsFromState"
             ng-change="fields.confirmation = ''"
+            ng-disabled="underMaintenance"
             required)
           span.error(ng-show="signupForm.password.$touched")
             span(ng-show="signupForm.password.$error.minEntropy && fields.password != undefined" translate="TOO_WEAK")
@@ -57,6 +59,7 @@ form.bc-form.form-horizontal.mt-30(
             type="password"
             ng-model="fields.confirmation"
             is-valid="fields.confirmation == fields.password"
+            ng-disabled="underMaintenance"
             required)
           span.error(ng-show="signupForm.confirmation.$touched")
             span(ng-show="signupForm.confirmation.$error.isValid" translate="NO_MATCH")
@@ -71,6 +74,6 @@ form.bc-form.form-horizontal.mt-30(
     .group.mb-15.full
       button.button-primary.button-heavy(
         type="submit"
-        ng-disabled="signupForm.$invalid || !currency_guess"
+        ng-disabled="signupForm.$invalid || !currency_guess || underMaintenance"
         ladda-translate="CONTINUE"
         ui-ladda="working")

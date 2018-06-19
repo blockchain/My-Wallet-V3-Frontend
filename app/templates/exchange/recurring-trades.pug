@@ -3,6 +3,7 @@
     span.pl-25.ph-10-mobile.flex-row.flex-center.pointer(ng-click="state.toggled = !state.toggled")
       i.icon-down_arrow.f-8.mr-5(ng-class="{rotated: !state.toggled}")
       span(class="{{$ctrl.subscription.isActive ? 'transfer' : 'state-danger-text'}}") {{ $ctrl.subscription.isActive ? 'Active' : 'Inactive' }}
+    a.em-400(translate="MANAGE_THIS_ORDER" ng-click="state.toggled = !state.toggled" ng-class="{'opacity-5': state.toggled}")
   .exchange-date.pv-15
     span.capitalize {{ $ctrl.subscription.frequency }}
   .exchange-exchanged.pv-15
@@ -36,5 +37,5 @@
         span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
         span(ng-if="canCancel(trade)")
           i.ti-trash.mls.pointer.state-danger-text(ng-click="cancelTrade(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
-    .width-100.flex-end(ng-show="state.toggled")
-      .span.pv-15.state-danger-text.pointer(ng-show="$ctrl.subscription.isActive" ng-click="cancel()") Cancel Recurring Order
+    .width-100.flex-end.mv-20(ng-show="state.toggled")
+      .button-danger.f-13(ng-show="$ctrl.subscription.isActive" ng-click="cancel()" translate="CANCEL_RECURRING_ORDER")

@@ -1,4 +1,5 @@
-#buy(ng-class="{rendered:rendered}" data-preflight-tag="BuyModal")
+coinify-recurring-confirm(ng-if="vm.onStep('confirm-recurring')" end-time="vm.endTime" frequency="vm.frequency" on-proceed="vm.needsKYCForRecurring ? vm.triggerKYCForRecurring() : vm.goTo('select-payment-medium')" on-cancel="vm.cancel()" exchange="vm.exchange" needs-kyc="vm.needsKYCForRecurring")
+#buy(ng-if="!vm.onStep('confirm-recurring')" ng-class="{rendered:rendered}" data-preflight-tag="BuyModal")
   .modal-header.bc-modal-header.flex-between.flex-center(ng-class="{'no-border': isPendingBankTransfer()}")
     .flex-1(ng-class="inMobileBuy ? 'flex-row-reverse flex-center flex-between' : 'flex-column'")
       .flex-row.flex-between.flex-center

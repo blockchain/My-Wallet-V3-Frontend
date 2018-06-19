@@ -23,13 +23,14 @@ form.bc-form.pv-20(
           div
             span(translate="{{namespace + type + field.key}}") {{field.key}}
             helper-button(ng-show="field.key === '.TX_FEE'" content="{{namespace + type + '.TRANSACTION_FEE_HELPER'}}")
-            helper-button(ng-show="field.key === '.TRADING_FEE'" content="{{namespace + '.TRADING_FEE_HELPER'}}")  
+            helper-button(ng-show="field.key === '.TRADING_FEE'" content="{{namespace + '.TRADING_FEE_HELPER'}}")
           span {{ field.val }}
       .flex-row.flex-align-start
         .pts
           input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
         label.mbn.f-13.em-300(ng-if="!$ctrl.tradeAccount" for="terms" translate=".ACCEPT_TERMS")
-        label.mt-15.mb-20.ml-5.f-11.em-300(ng-if="$ctrl.tradeAccount" for="terms" translate=".ACCEPT_TERMS_EXTENDED" translate-values="{account: $ctrl.tradeAccount.accountNumber}")
+        label.mt-15.mb-20.ml-5.f-11.em-300(ng-if="$ctrl.tradeAccount && type === '.buy'" for="terms" translate=".ACCEPT_TERMS_EXTENDED" translate-values="{account: $ctrl.tradeAccount.accountNumber}")
+        label.mt-15.mb-20.ml-5.f-11.em-300(ng-if="$ctrl.tradeAccount && type === '.sell'" for="terms" translate=".ACCEPT_TERMS_EXTENDED" translate-values="{account: $ctrl.tradeAccount.accountNumber}")
       .flex-row.flex-end
         button.button-muted(type="button" translate="CANCEL" ng-click="$ctrl.onCancel()")
         button.button-primary.ml-20(

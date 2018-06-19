@@ -67,6 +67,8 @@ function Env ($rootScope, $location, $q, $http) {
 
       env.enableDomainMigrationRedirects = res.enableDomainMigrationRedirects || false
 
+      env.maintenance = res.maintenance;
+
       defer.resolve(env);
     }
   );

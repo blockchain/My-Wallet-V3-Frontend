@@ -19,6 +19,7 @@ function faq (MyWallet, Ethereum, tradeStatus, ShapeShift, modals) {
       let accountInfo = MyWallet.wallet.accountInfo;
       let sellOnly = env.partners.sfox.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.sfox.states.indexOf(accountInfo.stateCodeGuess) > -1;
       let buyOnly = env.partners.unocoin.countries.indexOf(accountInfo.countryCodeGuess) > -1 && env.partners.unocoin.states.indexOf(accountInfo.stateCodeGuess) > -1;
+      let coinifyRecurring = env.partners.coinify.countries.indexOf(accountInfo.countryCodeGuess) > -1 && accountInfo.countryCodeGuess !== 'UK';
 
       if (ShapeShift.userHasAccess) {
         questions.unshift(
@@ -27,6 +28,13 @@ function faq (MyWallet, Ethereum, tradeStatus, ShapeShift, modals) {
             values: {'link': 'wallet.common.shift', 'text': 'Exchange tab'}
           }
         );
+      }
+
+      if (coinifyRecurring) {
+        questions.unshift(
+          { name: 'WHAT_ARE_RECURRING' },
+          { name: 'HOW_TO_CANCEL_RECURRING' }
+        )
       }
 
       if (sellOnly) {

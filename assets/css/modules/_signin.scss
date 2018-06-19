@@ -30,6 +30,16 @@ div.login-form {
       margin-bottom: 10px !important;
     }
   }
+  maintenance-warning {
+    top: 100px;
+    position: relative;
+    i {
+      color: $dandelion;
+    }
+    > div {
+      background-color: $moccasin;
+    }
+  }
   nav {
     position: fixed;
     width: 100%;

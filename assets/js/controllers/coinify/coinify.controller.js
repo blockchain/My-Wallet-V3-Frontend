@@ -21,6 +21,12 @@ function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalI
   this.fiatAmount = () => this.baseFiat() ? Math.abs(this.quote.baseAmount) : Math.abs(this.quote.quoteAmount);
   this.transactionFee = () => this.mediums ? this.mediums[this.medium || 'card'].outFixedFees['BTC'] * 1e8 : 0;
   this.timeToExpiration = () => this.quote ? this.quote.expiresAt - this.now() : this.trade.expiresAt - this.now();
+  this.needsKYCForRecurring = this.exchange.profile.level && this.exchange.profile.level.name < 2;
+  this.triggerKYCForRecurring = () => {
+    $q.resolve(coinify.getOpenKYC())
+      .then(() => this.trade = exchange.kycs[0])
+      .then(() => this.goTo('isx'))
+  };
   this.refreshQuote = () => {
     if (this.baseFiat()) return $q.resolve(coinify.getQuote(this.fiatAmount() * 100, this.quote.baseCurrency)).then((q) => this.quote = q);
     else return $q.resolve(coinify.getQuote(this.BTCAmount(), this.quote.baseCurrency, this.quote.quoteCurrency)).then((q) => this.quote = q);
@@ -103,7 +109,9 @@ function CoinifyController ($rootScope, $scope, $q, $state, $timeout, $uibModalI
   this.currentStep = () => Object.keys(this.steps).filter(this.onStep)[0];
   this.goTo = (step) => this.step = this.steps[step];
 
-  if (!this.user.isEmailVerified && !this.exchange.user) {
+  if (frequency && this.quote) {
+    this.goTo('confirm-recurring');
+  } else if (!this.user.isEmailVerified && !this.exchange.user) {
     this.goTo('email');
   } else if (!this.exchange.user) {
     this.goTo('signup');

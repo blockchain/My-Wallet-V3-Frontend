@@ -1,6 +1,6 @@
 describe('faqCtrl', () => {
   let scope;
-  
+
   let env = {
     partners: {
       sfox: {
@@ -9,6 +9,9 @@ describe('faqCtrl', () => {
       },
       unocoin: {
         countries: ['IN']
+      },
+      coinify: {
+        countries: ['UK', 'FR']
       }
     },
     webHardFork: { faqMessage: '' }

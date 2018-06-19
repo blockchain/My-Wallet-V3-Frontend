@@ -86,9 +86,8 @@ form.bc-form(
           a(href='mailto:support@sfox.com').f-12 support@sfox.com
     .group.inline.mt-10(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
       .item.inline.check
-        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat")
-        label(for="frequencyCheck") Make this a recurring order
-        helper-button(content="{{ provider + '.recurring_buy' + ($ctrl.recurringBuyLimit() < min.fiat ? '.disabled' : '.enabled') | translate:{cardLimit: $ctrl.recurringBuyLimit(), currency: fiat.code } }}" append="true")
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat || $ctrl.disableRecurring")
+        label(for="frequencyCheck" translate="MAKE_RECURRING_ORDER" uib-tooltip="{{'RECURRING_DISABLED_TOOLTIP'|translate}}" tooltip-enable="$ctrl.disableRecurring" tooltip-placement="top")
     .group.mt-10.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled && checkoutForm.fiat.$viewValue <= $ctrl.recurringBuyLimit()")
       .group
         span.colon.f-13.em-500(translate="FREQUENCY")
