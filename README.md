@@ -1,4 +1,7 @@
-# Blockchain.info Wallet [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.svg?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
+# Blockchain.info Wallet 
+[![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.svg?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) 
+[![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 Be Your Own Bank at [blockchain.info/wallet](https://blockchain.info/wallet). Please [contact support](https://support.blockchain.com) if you have any issues using the wallet.
 
