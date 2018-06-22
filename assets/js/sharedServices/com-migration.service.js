@@ -58,7 +58,7 @@ function ComMigration ($rootScope, $window, localStorageService, Env) {
 
     Env.then((env) => {
       if (isOnDotCom(env) && shouldTransfer) {
-        let frame = createFrame(`${env.domains.root}/transfer_cookies.html`)
+        let frame = createFrame(`${env.domains.root}/Resources/transfer_stored_values.html`)
 
         $window.addEventListener('message', (event) => {
           if (event.data.type === 'cookie') {
