@@ -56,6 +56,14 @@ function ComMigration ($rootScope, $window, localStorageService, Env) {
       return frame
     }
 
+    let tryJsonParse = (value) => {
+      try {
+        return JSON.parse(value)
+      } catch (e) {
+        return value
+      }
+    }
+
     Env.then((env) => {
       if (isOnDotCom(env) && shouldTransfer) {
         let frame = createFrame(`${env.domains.root}/Resources/transfer_stored_values.html`)
@@ -63,7 +71,7 @@ function ComMigration ($rootScope, $window, localStorageService, Env) {
         $window.addEventListener('message', (event) => {
           if (event.data.type === 'cookie') {
             let cookie = event.data.payload
-            localStorageService.set(cookie.id, cookie.data)
+            localStorageService.set(cookie.id, tryJsonParse(cookie.data))
           }
 
           if (event.data.type === 'cookies-sent') {
@@ -74,7 +82,7 @@ function ComMigration ($rootScope, $window, localStorageService, Env) {
         })
       }
     }).catch((error) => {
-      console.error('Error transferring cookies', error);
+      console.error('Error transferring cookies', error)
     })
   }
 }
