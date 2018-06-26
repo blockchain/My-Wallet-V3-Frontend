@@ -124,7 +124,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
 
             ComMigration.whenRedirectsEnabled((env) => {
               let url = $location.url()
-              ComMigration.redirectFromDotInfoTo(`${env.domains.comWalletApp}/#${url}`)
+              let langPath = languages.getLangUrlPath()
+              ComMigration.redirectFromDotInfoTo(`${env.domains.comWalletApp}${langPath}/#${url}`)
             })
           }
         }

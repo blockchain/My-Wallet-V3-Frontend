@@ -44,6 +44,7 @@ function languages ($translate, $location) {
     mapCodeToName: (code) => languageCodes[code],
     isLocalizedMessage,
     localizeMessage,
+    getLangUrlPath,
     parseFromUrl
   };
 
@@ -71,6 +72,11 @@ function languages ($translate, $location) {
       return name0 < name1 ? -1 : 1;
     };
     return Object.keys(langs).map(langFormat).sort(langSort);
+  }
+
+  function getLangUrlPath () {
+    let code = parseFromUrl($location.absUrl())
+    return code ? ('/' + code) : ''
   }
 
   function parseFromUrl (url) {

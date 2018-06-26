@@ -51,6 +51,7 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, 
   });
 
   ComMigration.whenRedirectsEnabled((env) => {
-    ComMigration.redirectFromDotInfoTo(`${env.domains.comRoot}/wallet`)
+    let langPath = languages.getLangUrlPath()
+    ComMigration.redirectFromDotInfoTo(`${env.domains.comRoot}${langPath}/wallet`)
   })
 }
