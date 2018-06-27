@@ -1,6 +1,8 @@
 angular.module('walletApp').controller('LandingCtrl', LandingCtrl);
 
 function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, ComMigration) {
+  $scope.loadedEnv = false
+
   Env.then(env => {
     $scope.network = env.network;
     $scope.rootURL = env.rootURL;
@@ -10,6 +12,12 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, 
     $http.get($scope.apiDomain + 'charts/my-wallet-n-users?cors=true')
       .then((res) => $scope.walletCount = Math.floor(res.data.values[res.data.values.length - 1].y / 1e6))
       .catch(() => $scope.walletCount = walletStats.walletCountMillions);
+
+    if (ComMigration.isOnDotCom(env)) {
+      $state.go('public.login-no-uid')
+    } else {
+      $scope.loadedEnv = true
+    }
   });
 
   $scope.fields = {
@@ -49,12 +57,6 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, 
   $scope.$watch(languages.get, (code) => {
     $scope.language = languages.mapCodeToName(code);
   });
-
-  Env.then((env) => {
-    if (ComMigration.isOnDotCom(env)) {
-      $state.go('public.login-no-uid')
-    }
-  })
 
   ComMigration.whenRedirectsEnabled((env) => {
     let langPath = languages.getLangUrlPath()
