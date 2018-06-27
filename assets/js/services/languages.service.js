@@ -81,7 +81,7 @@ function languages ($translate, $location) {
 
   function parseFromUrl (url) {
     let codes = service.codes.join('|');
-    let regex = new RegExp(`\\/(${codes})\\`);
+    let regex = new RegExp(`\\/(${codes})`);
     let matches = url.match(regex);
     return matches && matches.length ? matches[1] : null;
   }
