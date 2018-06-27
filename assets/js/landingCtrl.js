@@ -50,6 +50,12 @@ function LandingCtrl ($scope, $http, $state, $sce, languages, Env, walletStats, 
     $scope.language = languages.mapCodeToName(code);
   });
 
+  Env.then((env) => {
+    if (ComMigration.isOnDotCom(env)) {
+      $state.go('public.login-no-uid')
+    }
+  })
+
   ComMigration.whenRedirectsEnabled((env) => {
     let langPath = languages.getLangUrlPath()
     ComMigration.redirectFromDotInfoTo(`${env.domains.comRoot}${langPath}/wallet`)
