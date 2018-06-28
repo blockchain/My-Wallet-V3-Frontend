@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .factory('languages', languages);
 
-languages.$inject = ['$translate', '$location'];
+languages.$inject = ['$window', '$translate', '$location'];
 
-function languages ($translate, $location) {
+function languages ($window, $translate, $location) {
   const languageCodes = {
     'de': 'German',
     // 'cs': 'Czech', // Pending backend support
@@ -48,7 +48,7 @@ function languages ($translate, $location) {
     parseFromUrl
   };
 
-  let code = parseFromUrl($location.absUrl());
+  let code = parseFromUrl($window.location.pathname);
   if (code) $translate.use(code);
 
   return service;
@@ -75,13 +75,13 @@ function languages ($translate, $location) {
   }
 
   function getLangUrlPath () {
-    let code = parseFromUrl($location.absUrl())
+    let code = parseFromUrl($window.location.pathname)
     return code ? ('/' + code) : ''
   }
 
   function parseFromUrl (url) {
     let codes = service.codes.join('|');
-    let regex = new RegExp(`\\/(${codes})`);
+    let regex = new RegExp(`^\\/(${codes})`);
     let matches = url.match(regex);
     return matches && matches.length ? matches[1] : null;
   }
