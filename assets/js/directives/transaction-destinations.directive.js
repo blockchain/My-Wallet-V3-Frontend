@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('transactionDestinations', transactionDestinations);
 
 function transactionDestinations ($rootScope, Wallet, $translate) {
@@ -11,7 +11,7 @@ function transactionDestinations ($rootScope, Wallet, $translate) {
       transaction: '=',
       search: '='
     },
-    templateUrl: 'templates/transaction-destinations.jade',
+    templateUrl: 'templates/transaction-destinations.pug',
     link: link
   };
   return directive;

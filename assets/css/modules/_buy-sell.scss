@@ -1,7 +1,7 @@
 .buy-sell {
   position: relative;
-  padding: 20px 30px 0 30px;
-  margin-bottom: 60px;
+  padding: 30px 30px 0 30px;
+  flex: 1;
   @media (max-width: 991px) {
     padding: 10px 10px 0 10px;
     .width-50 {
@@ -12,12 +12,19 @@
     }
     .quick-start {
       margin-top: 0px;
+      fieldset .btc {
+        padding-right: 16px;
+      }
     }
+  }
+  @media (max-width: 767px) {
+    padding: 10px 10px;
   }
   &.loading {
     height: 100%;
     overflow: hidden;
   }
+  .disabled,
   &.disabled {
     &:after {
       top: 0;
@@ -50,11 +57,19 @@
   .kyc-status {
     background-color: $grey;
   }
+  @media(max-width: 991px) {
+    .kyc-status {
+      margin-top: 25px;
+    }
+  }
 }
 
 .currency-dropdown {
   max-height: 210px;
+  min-width: auto;
   overflow: scroll;
+  right: 0;
+  left: auto;
 }
 
 .bc-modal.coinify {
@@ -72,159 +87,26 @@
   }
 }
 
-.coinify-logo {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  img {
-    width: 60px;
-    & + span {
-      top: 0;
-      left: 0;
-    }
-  }
-  &.coinify-logo-left {
-    left: 0px;
-    right: auto;
-    bottom: 0px;
-  }
-}
-
 .sfox-logo {
   img { width: 60px; }
+  @media(max-width: 425px) {
+    display: none;
+  }
 }
 
 .partner-logo {
   height: 44px;
 }
 
-.payment-methods {
-  input {
-    & ~ .flex-row img {
-      width: 30px;
-      &.checked { display: none; }
-    }
-  }
-  input:checked ~ .flex-row img:not(.cc-shadow) {
-    display: none;
-    &.checked { display: inline-block; }
+.bank-link {
+  img {
+    width: 25px;
   }
 }
 
 #buy {
   .modal-body {
-    @media (max-width: 768px) {
-      opacity: 1 !important;
-    }
-    &.fade {
-      opacity: 1;
-      @include bc-ng-animate('summary', 'height', '260px', '325px');
-      @include bc-ng-animate('result', 'height', '500px', '335px');
-      @include bc-ng-animate('isx', 'height', '320px', '450px');
-      @include bc-ng-animate('capture', 'height', '250px', '500px', '!important');
-      @include bc-ng-animate('secret', 'height', '500px', '400px', '!important');
-      @include bc-ng-animate('otp', 'height', '400px', '415px', '!important');
-      @include bc-ng-animate('otp-pin', 'height', '415px', '500px', '!important');
-      @include bc-ng-animate('pin', 'height', '500px', '366px', '!important');
-      @include bc-ng-animate('verify-pin', 'height', '366px', '347px', '!important');
-      @include bc-ng-animate('kyc', 'height', '347px', '500px', '!important');
-      @include bc-ng-animate('documents', 'height', '500px', '500px', '!important');
-      #isx-iframe {
-        margin-bottom: -5px;
-      }
-      &.isx {
-        height: 500px;
-        #isx-iframe {
-          height: 500px;
-        }
-      }
-      &.capture {
-        height: 500px;
-        #isx-iframe {
-          height: 650px;
-          @media (max-width: 767px) {
-            height: 950px;
-          }
-        }
-      }
-      &.secret {
-        height: 400px;
-        #isx-iframe {
-          height: 400px;
-          @media (max-width: 767px) {
-            height: 700px;
-          }
-        }
-      }
-      &.otp {
-        height: 415px;
-        #isx-iframe {
-          height: 445px;
-          @media (max-width: 767px) {
-            height: 745px;
-          }
-        }
-      }
-      &.otp-pin {
-        height: 500px;
-        #isx-iframe {
-          height: 632px;
-          @media (max-width: 767px) {
-            height: 930px;
-          }
-        }
-      }
-      &.pin {
-        height: 366px;
-        #isx-iframe {
-          height: 366px;
-          @media (max-width: 767px) {
-            height: 600px;
-          }
-        }
-      }
-      &.verify-pin {
-        height: 347px;
-        #isx-iframe {
-          height: 347px;
-          @media (max-width: 767px) {
-            height: 650px;
-          }
-        }
-      }
-      &.kyc {
-        height: 500px;
-        #isx-iframe {
-          height: 700px;
-          @media (max-width: 767px) {
-            height: 1460px;
-          }
-        }
-      }
-      &.documents {
-        height: 500px;
-        #isx-iframe {
-          height: 520px;
-          @media (max-width: 767px) {
-            height: 1450px;
-          }
-        }
-      }
-      // default height
-      min-height: 260px;
-      @supports (overflow:-webkit-marquee) and (justify-content:inherit) {
-        min-height: 260px !important;
-        &.summary {
-          height: 325px !important;
-        }
-        &.result {
-          height: 335px !important;
-        }
-        &.isx {
-          height: 450px !important;
-        }
-      }
-    }
+    opacity: 1 !important;
   }
 }
 
@@ -243,87 +125,21 @@
   }
 }
 
-i.ti-credit-card.bank {
-  position: relative;
-  &.bank-lrg {
-    &:after {
-      width: 39px;
-      height: 39px;
-    }
-  }
-  &:before {
-    opacity: 0;
-  }
-  &:after {
-    content: '';
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url('../img/bank.png');
-  }
-}
-
-.sfox-signup {
-  i.ti-credit-card.bank {
-    &:after {
-      top: 0px;
-    }
-  }
-}
-
-.blue {
-  i.ti-credit-card.bank {
-    &:after {
-      background-image: url('../img/bank-blue.png');
-    }
-  }
-}
-.success {
-  i.ti-credit-card.bank {
-    &:after {
-      background-image: url('../img/bank-success.png');
-    }
-  }
-}
-
 .isx {
   padding: 0px;
 }
 
 .iframe {
-  isignthis {
+  height: 560px;
+  #isx-iframe {
     position: absolute;
     overflow: auto;
     height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
-  #isx-iframe {
-    position: relative;
     width: 100%;
     border: 0;
     left: 0;
     top: 0;
   }
-}
-
-.buy-sell {
-  .sell,
-  .sell > * {
-    opacity: 0.6;
-    cursor: no-drop;
-  }
-}
-
-.o-3 {
-  opacity: 0.3;
-  @include transition(opacity $fast);
 }
 
 .modal .buy-steps {
@@ -351,18 +167,21 @@ i.ti-credit-card.bank {
   }
 }
 
-.buy-sell {
-  table th:last-child {
-    padding-right: 36px;
-  }
-}
-
 .copy-bar {
   top: 0;
   left: 0;
   width: 100%;
   height: 80px;
   position: absolute;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &.full {
+    height: 100%;
+    padding-top: 64px;
+    align-items: flex-start;
+  }
 }
 
 .bank-transfer {
@@ -381,12 +200,22 @@ i.ti-credit-card.bank {
   height: 350px;
 }
 
-.cc-shadow {
-  box-shadow: 0px 4px 5px 1px #CCC;
-  width: 30px;
-}
-
 .signup-steps {
+  span.f-14 {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    background: $basic-grey;
+  }
+  .primary {
+    span.f-14 {
+      background: $primary;
+    }
+  }
+  .border-top {
+    height: 5px;
+  }
   @media (max-width: 991px) {
     .pt-70 {
       padding-top: 25px;
@@ -397,6 +226,7 @@ i.ti-credit-card.bank {
   }
   @media (max-width: 767px) {
     .pt-70 {
+      padding-top: 10px;
       .width-80 {
         padding: 0px 30px;
       }
@@ -406,7 +236,8 @@ i.ti-credit-card.bank {
 
 #plaid {
   border-width: 0px;
-  height: 42px;
+  display: block;
+  height: 40px;
   width: 100%;
   &.enabled {
     position: fixed;
@@ -508,4 +339,114 @@ input[type="radio"]:checked + label {
   }
 }
 
+.input-error {
+  border-color: #a94442 !important;
+}
+
 .primary { color: $iris; }
+
+.tabs-partner-logo { max-width: 60px; }
+
+.shift-history {
+  display: grid;
+  grid-template-columns: 35% 25% 20% 20%;
+}
+
+.exchange-trade {
+  display: grid;
+  grid-template-columns: 35% 25% 20% 15% 5%;
+  font-size: 13px;
+}
+
+.exchange-trade-header {
+  display: grid;
+  grid-template-columns: 35% 25% 20% 20%;
+}
+
+.recurring-buy-header {
+  @extend .exchange-trade-header;
+}
+
+.recurring-trade {
+  @extend .exchange-trade;
+}
+
+.exchange-status {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.child-trades {
+  padding: 0px 20px;
+  .exchange-trade {
+    grid-template-columns: 34.4% 26% 21% 15%;
+    @media(max-width: 768px) {
+      grid-template-columns: 34.4% 26% 35%;
+    }
+    > div:first-child {
+      span {
+        padding-left: 5px;
+      }
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .exchange-trade-header {
+    grid-template-columns: 35% 25% 40%;
+    > div:last-child {
+      padding-top: 5px;
+      text-align: left;
+    }
+  }
+  .exchange-trade { // shared with shapeshift
+    grid-template-columns: 25% 15% 30% 30%;
+    > div:last-child {
+      text-align: inherit;
+    }
+  }
+  .exchange-received {
+    display: flex;
+  }
+  .exchange-status {
+    grid-template-columns: 15% 85%;
+    span {
+      padding-left: 5px;
+    }
+  }
+  .shift-history {
+    grid-template-columns: 25% 15% 30% 30%;
+  }
+  .recurring-buy-header {
+    grid-template-columns: 35% 25% 20% 20%;
+  }
+  .recurring-trade {
+    grid-template-columns: 35% 25% 20% 20%;
+  }
+
+  .buy-sell {
+    .exchange-trade {
+      grid-template-columns: 35% 25% 40%;
+      .exchange-exchanged {
+        display: none;
+      }
+    }
+  }
+}
+
+.switch {
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  transition: background-image $fast;
+  background-image: url('../img/switch-regular.svg');
+  &:hover {
+    background-image: url('../img/switch-hover.svg');
+  }
+}
+
+.recurring-buy {
+  .fake-select {
+    background-color: white !important;
+  }
+}

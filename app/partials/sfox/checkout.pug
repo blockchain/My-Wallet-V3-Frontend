@@ -1,0 +1,61 @@
+bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
+  .sfox-logo
+    span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
+    a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
+      img.mbs(src="img/sfox-logo-trans.png")
+.buy-sell.overflow-scroll.flex-1
+  .flex-column.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
+    exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+      type="'Sell'"
+      fiat="dollars"
+      user-id="userId"
+      conversion="100"
+      trading="selling"
+      limits="sellLimits"
+      fiat-limits="true"
+      provider="'sfox'"
+      ng-if="onStep('create')"
+      buy-level="state.buyLevel"
+      trade-account="state.account"
+      handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
+      on-success="selling().verificationRequired ? openSfoxSignup() : buildPayment(quote)")
+    exchange-confirm.width-50.border-desktop(
+      type="'sell'"
+      quote="quote"
+      namespace="'SFOX'"
+      details="sellDetails"
+      ng-if="onStep('confirm')"
+      on-cancel="goTo('create')"
+      on-success="goTo('receipt')"
+      on-expiration="sellRefresh()"
+      handle-trade="sellHandler(quote)")
+    div.width-50.border-desktop(
+      ng-if="onStep('receipt')"
+      ng-include="'partials/sfox/details.pug'")
+  .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('SELL_BITCOIN')")
+    div(ng-show="state.trades.length")
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
+            inspect-trade="inspectTrade"
+            namespace="'SFOX'"
+            conversion="1"
+            trade="trade"
+            usa="true")
+contact-support-footer(ng-hide="inMobileBuy")
+sift-science(ng-if='siftScienceEnabled' user-id='$ctrl.userId' trade-id='tradeId')

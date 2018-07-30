@@ -1,0 +1,32 @@
+.main-balance {
+  .arrow {
+    height: 12px;
+    width: auto;
+  }
+  .fork-warn {
+    line-height: 12px;
+    flex: 0 250px;
+    text-align: right;
+  }
+  .dropdown-menu {
+    top: -10%;
+    right: -10px;
+    font-size: 12px;
+    min-width: auto;
+    > li {
+      background: white;
+      padding-left: 10px;
+      padding-right: 27px;
+      white-space: nowrap;
+      &:first-child {
+        top: -5px;
+        padding-right: 9px;
+        position: relative;
+      }
+      &:last-child {
+        @extend .pb-5;
+        border-radius: 3px;
+      }
+    }
+  }
+}

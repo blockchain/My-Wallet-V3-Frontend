@@ -1,0 +1,55 @@
+bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
+  .unocoin-logo
+    span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
+    a(href="https://www.unocoin.com/" target="_blank" rel="noopener noreferrer")
+      img.mbs.tabs-partner-logo(src="img/unocoin-logo.png")
+.buy-sell.overflow-scroll.flex-1
+  .flex-row.flex-column-tablet(ng-show="!showCheckout() && tabs.selectedTab === 'BUY_BITCOIN'")
+    .width-50.border.mrl.pal.flex-column.flex-between.flex-center
+      span.type-h4.width-100 Just a few steps away!
+      .mvl.flex-column.flex-center.primary.type-h4
+        i.type-lrg(ng-class="stepDescription().i")
+        span(translate="{{stepDescription().text}}")
+      form.width-100(ng-submit="openUnocoinSignup()")
+        button.btn.button-primary.full(type="submit" focus-when="!tabs.selectedTab" ng-disabled="modalOpen") Continue
+  .flex-column.pbvl(ng-show="showCheckout() && tabs.selectedTab === 'BUY_BITCOIN'")
+    exchange-checkout.width-50.border-desktop.pv-30.ph-30.no-padding-mobile(
+      type="'Buy'"
+      fiat="rupees"
+      user-id="userId"
+      conversion="1"
+      trading="buying"
+      trade-enabled="true"
+      limits="state.limits"
+      fiat-limits="true"
+      provider="'Unocoin'"
+      handle-trade="buyHandler(quote)"
+      handle-quote="quoteHandler(amount, baseCurr, quoteCurr)"
+      on-success="userId ? buySuccess(trade) : openUnocoinSignup(quote)")
+  .flex-column.pbvl(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="state.trades.length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
+    span.hidden-xs.right-align.pbs(ng-show="userId") Unocoin Account: {{ userId }}
+    div(ng-show="state.trades.length")
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in state.trades | orderBy:'createdAt':true track by $index"
+            user-action-required="trade.state === 'awaiting_reference_number'"
+            inspect-trade="inspectTrade"
+            namespace="'UNOCOIN'"
+            conversion="1"
+            trade="trade"
+            usa="true")
+contact-support-footer(ng-hide="inMobileBuy")

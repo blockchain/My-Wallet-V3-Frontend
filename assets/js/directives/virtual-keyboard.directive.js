@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('virtualKeyboard', virtualKeyboard);
 
 function virtualKeyboard ($document, $window) {
@@ -11,7 +11,7 @@ function virtualKeyboard ($document, $window) {
     scope: {
       ngModel: '='
     },
-    templateUrl: 'templates/virtual-keyboard.jade',
+    templateUrl: 'templates/virtual-keyboard.pug',
     link: link
   };
   return directive;

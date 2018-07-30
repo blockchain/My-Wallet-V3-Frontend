@@ -31,7 +31,7 @@ function format () {
 
     formatted.type = o.index != null ? 'Accounts' : 'Imported Addresses';
     if (o.index == null) formatted.isWatchOnly = o.isWatchOnly;
-    else formatted.xpub = o.extendedPublicKey;
+    else formatted.xpub = o.extendedPublicKey || o.xpub;
     return formatted;
   }
 

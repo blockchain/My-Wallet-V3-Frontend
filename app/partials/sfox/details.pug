@@ -1,0 +1,13 @@
+div(ng-controller="SfoxTradeDetailsController")
+  .border-bottom.pv-20.ph-10-mobile
+    span.f-16.em-500.pl-30.no-padding-mobile(translate="{{namespace + type + state + '.HEADER'}}")
+  .ph-30.pt-20.ph-10-mobile.pv-20-mobile
+    .f-13.mb-10
+      span(translate="{{namespace + type + state + '.BODY'}}")
+  .ph-30
+    ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+      li.flex-between(ng-repeat="(row, field) in tradeDetails track by $index" ng-class="{'pb-10': $first, 'pt-10': $last, 'pv-10': !$first && !$last, 'border-bottom-light': !$last}")
+        span(translate="{{namespace + type + field.key}}")
+        span {{ field.val }}
+    .flex-row.flex-end.pb-20
+      button.button-primary(translate="CLOSE" ng-click="$close()")

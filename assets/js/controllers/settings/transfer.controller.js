@@ -2,7 +2,15 @@ angular
   .module('walletApp')
   .controller('TransferController', TransferController);
 
-function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wallet, Alerts, address) {
+function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wallet, Alerts, address, Env) {
+  Env.then(env => {
+    $scope.blockAlertConfig = env.web.serviceAlert.sendBtc || env.web.serviceAlert.sendBtcBanner;
+    $scope.showAlert = $scope.blockAlertConfig != null;
+    $scope.obscureForm = $scope.blockAlertConfig === env.web.serviceAlert.sendBtc;
+  });
+
+  $scope.hideAlert = () => $scope.showAlert = false;
+
   $scope.accounts = Wallet.accounts;
   $scope.selectedAccount = Wallet.my.wallet.hdwallet.defaultAccount;
   $scope.addresses = Array.isArray(address) ? address : [address];
@@ -11,14 +19,17 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
   $scope.status = { loading: true };
   $scope.nfailed = 0;
   $scope.ncomplete = 0;
-  $scope.archivable = [];
   $scope.ntotal = $scope.addresses.length;
+  $scope.archivable = [];
+  $scope.unsweepable = [];
+
+  $scope.isUnsweepable = (a) => $scope.unsweepable.indexOf(a) > -1;
 
   $scope.wait = (t) => $q(r => $timeout(r, t));
 
   $scope.initializePayments = () => {
     let paymentsP = $scope.addresses.reduce((chain, a) => chain.then(payments => $q(resolve => {
-      let p = new Wallet.Payment().from(a.address).useAll();
+      let p = Wallet.my.wallet.createPayment().from(a.address).useAll();
       p.sideEffect(() => resolve(payments.concat(p)));
     })), $q.resolve([]));
 
@@ -30,6 +41,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
     paymentsDataP.then(paymentsData => {
       $scope.totalAmount = paymentsData.filter(p => p.amounts[0] > 0).reduce((t, p) => t + p.amounts[0], 0);
       $scope.totalFees = paymentsData.filter(p => p.finalFee > 0).reduce((t, p) => t + p.finalFee, 0);
+      $scope.unsweepable = paymentsData.filter(p => p.amounts[0] == null).map(p => p.from[0]);
       $scope.status.loading = false;
     });
   };
@@ -48,7 +60,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
         values: {
           archivable: $scope.archivable.length,
           account: $scope.selectedAccount.label,
-          total: $scope.ncomplete + $scope.nfailed
+          total: $scope.ncomplete
         },
         action: 'ARCHIVE',
         friendly: true
@@ -76,7 +88,7 @@ function TransferController ($scope, $state, $timeout, $q, $uibModalInstance, Wa
 
       return $scope.wait(250).then(signAndPublish)
         .then(() => {
-          $scope.selectedAccount.incrementReceiveIndex();
+          $scope.selectedAccount.lastUsedReceiveIndex = $scope.selectedAccount.receiveIndex;
           $scope.archivable.push($scope.addresses[i]);
         })
         .catch(e => $scope.nfailed++)

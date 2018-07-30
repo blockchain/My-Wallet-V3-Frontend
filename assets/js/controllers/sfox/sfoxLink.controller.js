@@ -2,27 +2,23 @@ angular
   .module('walletApp')
   .controller('SfoxLinkController', SfoxLinkController);
 
-function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, $rootScope) {
+function SfoxLinkController ($scope, AngularHelper, $q, $sce, $timeout, sfox, modals, Env, $window) {
   let exchange = $scope.vm.exchange;
   let accounts = $scope.vm.accounts;
 
-  let processOptions = (options) => {
-    $scope.plaidUrl = $sce.trustAsResourceUrl(`http://localhost:8081/wallet-helper/plaid/#/key/${options.partners.sfox.plaid}/env/${$rootScope.sfoxPlaidEnv || options.partners.sfox.plaidEnv}`);
-  };
+  Env.then(env => {
+    $scope.plaidUrl = $sce.trustAsResourceUrl(`${env.walletHelperDomain}/wallet-helper/plaid/#/key/${env.partners.sfox.plaid}/env/${ env.partners.sfox.plaidEnv}`);
+  });
 
-  if (Options.didFetch) {
-    processOptions(Options.options);
-  } else {
-    Options.get().then(processOptions);
-  }
-
+  $scope.namespace = 'SFOX';
   $scope.types = ['checking', 'savings'];
   $scope.openHelper = modals.openHelper;
 
   let state = $scope.state = {
     plaid: {},
     terms: false,
-    accounts: accounts
+    accounts: accounts,
+    enableBankAccountForm: !!$scope.$root.inMobileBuy
   };
 
   $scope.fields = {
@@ -78,7 +74,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
   $scope.verify = () => {
     $scope.lock();
     $q.resolve(state.accounts[0].verify($scope.fields.deposit1, $scope.fields.deposit2))
-      .then(() => $scope.vm.goTo('buy'))
+      .then(() => $scope.vm.close(true))
       .catch($scope.displayInlineError)
       .finally($scope.free);
   };
@@ -99,7 +95,7 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
     };
 
     $q.resolve(exchange.bankLink.setAccount(obj))
-      .then(() => $scope.vm.goTo('buy'))
+      .then(() => $scope.vm.close(true))
       .catch(sfox.displayError)
       .finally($scope.free);
   };
@@ -108,18 +104,20 @@ function SfoxLinkController ($scope, $q, $sce, $timeout, sfox, modals, Options, 
   $scope.disablePlaid = () => $scope.state.plaid = {};
   $scope.plaidWhitelist = ['enablePlaid', 'disablePlaid', 'getBankAccounts'];
 
-  let receiveMessage = (e) => {
-    if (!e.data.command) return;
-    if (e.data.from !== 'plaid') return;
-    if (e.data.to !== 'exchange') return;
-    if (e.origin !== 'http://localhost:8081') return;
-    if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
+  Env.then(env => {
+    let receiveMessage = (e) => {
+      if (!e.data.command) return;
+      if (e.data.from !== 'plaid') return;
+      if (e.data.to !== 'exchange') return;
+      if (e.origin !== env.walletHelperDomain) return;
+      if ($scope.plaidWhitelist.indexOf(e.data.command) < 0) return;
 
-    e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
-    $scope.$safeApply();
-  };
+      e.data.msg ? $scope[e.data.command](e.data.msg) : $scope[e.data.command]();
+      AngularHelper.$safeApply($scope);
+    };
 
-  window.addEventListener('message', receiveMessage, false);
+    $window.addEventListener('message', receiveMessage, false);
+  });
 
-  $scope.installLock();
+  AngularHelper.installLock.call($scope);
 }

@@ -1,5 +1,5 @@
 angular
   .module('walletApp')
   .component('contactSupportFooter', {
-    templateUrl: 'templates/contact-support-footer.jade'
+    templateUrl: 'templates/contact-support-footer.pug'
   });

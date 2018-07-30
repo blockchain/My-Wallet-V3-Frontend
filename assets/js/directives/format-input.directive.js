@@ -1,5 +1,5 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('formatInput', formatInput);
 
 function formatInput () {

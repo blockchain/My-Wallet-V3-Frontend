@@ -2,8 +2,8 @@ angular
   .module('walletApp')
   .controller('BuySellMasterController', BuySellMasterController);
 
-function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies) {
-  $cookies.put('buy-alert-seen', true);
+function BuySellMasterController ($scope, $timeout, $state, MyWallet, Exchange, cta, balance) {
+  cta.setBuyCtaDismissed();
 
   this.base = 'wallet.common.buy-sell';
   this.external = MyWallet.wallet.external;
@@ -13,6 +13,8 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies) 
       return '.coinify';
     } if (this.external.sfox.user) {
       return '.sfox';
+    } if (this.external.unocoin.user) {
+      return '.unocoin';
     } else {
       return '.select';
     }
@@ -53,4 +55,5 @@ function BuySellMasterController ($scope, $timeout, $state, MyWallet, $cookies) 
   });
 
   this.toNextState();
+  Exchange.setSellMax(balance);
 }

@@ -8,8 +8,9 @@ function ChangePbkdf2Ctrl ($scope, Wallet, $translate, Alerts) {
   };
 
   $scope.setPbkdf2 = () => {
-    let error = () => Alerts.displayError('Failed to update PBKDF2 iterations');
+    let done = () => $scope.status.waiting = false;
+    let error = () => { Alerts.displayError('Failed to update PBKDF2 iterations'); done(); };
     $scope.status.waiting = true;
-    Wallet.setPbkdf2Iterations($scope.fields.pbkdf2, $scope.deactivate, error);
+    Wallet.setPbkdf2Iterations($scope.fields.pbkdf2, $scope.deactivate, error, done);
   };
 }

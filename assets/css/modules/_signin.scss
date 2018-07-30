@@ -10,9 +10,14 @@ div.login-form {
 }
 
 .login-pg {
+  height: 100%;
+  position: relative;
   background-color: $blue;
-  height: calc(100% + 50px); //offset margin from bootstrap
-  .navbar {
+  testnet-warning {
+    top: 100px;
+    position: relative;
+  }
+  nav {
     position: fixed;
     width: 100%;
     left: 0;
@@ -20,16 +25,15 @@ div.login-form {
   }
 }
 
-@media (max-height: 700px) {
-  html, body {
-    position: relative;
+@mixin block-login {
+  height: 100%;
+  overflow: auto !important;
+  display: block !important;
+  nav {
+    position: relative !important;
   }
-  .login-pg {
-    height: 100%;
+  > div {
     display: block !important;
-    .navbar {
-      position: relative;
-    }
   }
   .login-box-container {
     margin-top: 0px;
@@ -37,6 +41,24 @@ div.login-form {
   .login-box {
     max-height: none !important;
   }
+}
+
+body {
+  .login-pg {
+    &.display-block {
+      @include block-login;
+    }
+    @media (max-height: 700px) {
+      @include block-login;
+    }
+    @media (max-width: 767px) {
+      @include block-login;
+    }
+  }
+}
+
+html, body {
+  position: relative;
 }
 
 .login-box {
@@ -47,7 +69,10 @@ div.login-form {
   max-height: 600px;
   overflow: auto;
   header {
-    border-bottom: 1px solid rgb(240, 236, 236);
+    border-bottom: 1px solid $border-grey;
+  }
+  footer {
+    border-top: 1px solid $border-grey;
   }
   .form-horizontal .form-group {
     margin-top: 15px;
@@ -73,19 +98,21 @@ div.login-form {
 .versions {
   position: absolute;
   bottom: 10px;
-  opacity: 0.8;
   right: 15px;
-  &:hover {
-    opacity: 1;
-  }
   a {
+    opacity: 0.6;
     color: white !important;
     text-decoration: none !important;
+    &:hover {
+      opacity: 1;
+    }
   }
-  @media (max-width: 768px) and (max-height: 600px) {
+  @media screen and (max-width: 767px), screen and (max-height: 600px) {
     position: relative;
-    bottom: -10px;
-    right: -15px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    bottom: initial;
+    right: initial;
   }
 }
 

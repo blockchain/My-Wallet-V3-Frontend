@@ -1,12 +1,12 @@
-'use strict';
-
 describe('currency', () => {
-
   beforeEach(angular.mock.module('walletApp'));
 
   beforeEach(done => {
-    inject(($rootScope, currency) => {
-      currency.fetchExchangeRate().then(done);
+    inject(($rootScope, currency, $httpBackend) => {
+      // TODO: use Wallet mock, so we don't need to mock this $httpBackend call
+      $httpBackend.whenGET('/Resources/wallet-options.json').respond();
+
+      currency.fetchExchangeRate({code: 'EUR'}).then(done);
       $rootScope.$apply();
     });
   });
@@ -15,11 +15,10 @@ describe('currency', () => {
     it('should fetch the currency exchange rates', (done) => {
       inject((currency) => {
         let checkForConversions = () => {
-          expect(currency.conversions.USD).toBeDefined();
           expect(currency.conversions.EUR).toBeDefined();
           done();
         };
-        currency.fetchExchangeRate().then(checkForConversions);
+        currency.fetchExchangeRate({code: 'EUR'}).then(checkForConversions);
       });
     });
   });
@@ -156,6 +155,11 @@ describe('currency', () => {
     it('should convert to EUR', inject((currency) => {
       let conversion = currency.convertFromSatoshi(10000, currency.currencies[1]);
       expect(conversion).toEqual(0.025);
+    }));
+
+    it('should return null if currency conversion is 0', inject((currency) => {
+      let conversion = currency.convertFromSatoshi(10000, currency.currencies[2]);
+      expect(conversion).toEqual(null);
     }));
   });
 

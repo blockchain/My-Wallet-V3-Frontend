@@ -1,0 +1,14 @@
+.dyk.border.pal
+  .pull-right
+    i.pointer.ti-close.f-12(ng-click="$ctrl.dismiss()")
+  .flex-between.flex-center.mb-10
+    h5.mvn.f-24.em-300.blue.upper(translate="DYK")
+  .flex-center
+    i.icon-mobile.f-36.blue.pr-15
+    h6.mvn.f-18.em-300.blue(translate="GO_MOBILE")
+  .mt-5
+    p.f-14.em-300
+      | {{ 'DOWNLOAD_OUR_APP' | translate }}
+    div.flex-row.flex-align-start
+      a.upper.em-500(ng-click="$ctrl.openModal()" translate="PAIR_DEVICE")
+      i.icon-right_arrow.ml-5.pointer.pts.primary.f-10(ng-click="$ctrl.openModal()")

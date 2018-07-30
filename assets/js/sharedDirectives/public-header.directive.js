@@ -1,50 +1,70 @@
 angular
-  .module('sharedDirectives')
+  .module('shared')
   .directive('publicHeader', publicHeader);
 
-publicHeader.$inject = ['$rootScope', '$location', 'languages'];
+publicHeader.$inject = ['$rootScope', '$location', '$window', 'AngularHelper', 'Env', 'languages'];
 
-function publicHeader ($rootScope, $location, languages) {
+function publicHeader ($rootScope, $location, $window, AngularHelper, Env, languages) {
   const directive = {
     restrict: 'E',
     replace: true,
     template: `
-    <div role="navigation" class="navbar navbar-default navbar-inverse bc-header bc-public-header" data-preflight-tag="PublicHeader">
-      <div class="container-fluid container-max-width">
-        <div class="navbar-header flex-between"><a href="{{rootURL}}" class="navbar-brand"><img id="logo" src="img/blockchain-info-vector.svg" alt="Blockchain"/></a>
-          <button type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span ng-show="navCollapsed" class="ti-angle-down white h4"></span><span ng-show="!navCollapsed" class="ti-angle-up white h4"></span></button>
-        </div>
-        <div ng-class="{'in bg-blue' : !navCollapsed}" ng-click="navCollapsed=true" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-left" ng-show="i18nLoaded">
-            <li class="item"><a href="{{rootURL}}" translate="HOME" class="pam"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}charts" translate="CHARTS" class="pam"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}stats" translate="STATS" class="pam"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="https://markets.blockchain.info" translate="MARKETS" class="pam"></a></li>
-            <li class="item" ng-hide="isTestnet"><a href="{{rootURL}}api" translate="API" class="pam"></a></li>
-            <li class="item active"><a href="#" translate="WALLET" class="pam"></a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right hidden-sm">
-            <li class="hidden-md">
-              <form action="{{searchUrl}}" method="GET">
-                <input type="text" name="search" class="form-control input-sm search-query" placeholder="{{'SEARCH'|translate}}">
-              </form>
-            </li>
-            <li class="dropdown" uib-dropdown>
-              <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" uib-dropdown-toggle>
-                <div class="flex-center">
-                  {{language}}<span class="caret mlm"></span>
-                </div>
-              </a>
-              <ul class="dropdown-menu" uib-dropdown-menu>
-                <li ng-repeat="lang in languages"><a ng-href="/{{lang.code}}/wallet/#{{path()}}">{{lang.name}}</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="wrapper" data-preflight-tag="PublicHeader" ng-mouseleave="collapseHeader()">
+      <nav role="navigation" ng-class="{'open': state.open, 'searching': state.searching, 'scrolling': state.scrolling}">
+        <ul class="igation">
+          <li>
+            <a class="bc-logo" href="https://blockchain.com">
+              <img src="img/white-blockchain.svg" alt="Blockchain" />
+            </a>
+            <button class="menu-button" ng-click="expandHeader()" ng-class="{'is-active': state.open}">
+    					<span></span>
+    				</button>
+    				<button class="search-button" type="button" ng-click="handleSearch()"></button>
+          </li>
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
+            <a href="{{rootURL}}wallet" id="wallet-link">Wallet</a>
+            <ul>
+              <li><a ui-sref="public.login-no-uid">Login</a></li>
+            </ul>
+          </li>
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
+            <a href="{{rootURL}}">Data</a>
+            <ul>
+              <li><a href="{{rootURL}}charts">Charts</a></li>
+              <li><a href="{{rootURL}}stats">Stats</a></li>
+              <li><a href="{{rootURL}}markets">Markets</a></li>
+            </ul>
+          </li>
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
+            <a href="{{rootURL}}api">API</a>
+            <ul>
+              <li><a href="https://www.blockchain.com/enterprise">Business</a></li>
+            </ul>
+          </li>
+          <li class="with-children" ng-mouseenter="!size().mobile && expandHeader()" ng-mouseleave="collapseHeader($event)">
+            <a href="https://www.blockchain.com/about">About</a>
+            <ul>
+              <li><a href="https://www.blockchain.com/team">Team</a></li>
+              <li><a href="https://www.blockchain.com/careers">Careers</a></li>
+              <li><a href="https://www.blockchain.com/press">Press</a></li>
+              <li><a href="https://blog.blockchain.com">Blog</a></li>
+            </ul>
+          </li>
+          <li class="flex-space"></li>
+          <li>
+            <form action="https://blockchain.info/search" class="search-form" method="GET">
+              <input class="search-bar" name="search" placeholder="block, hash, transaction, etc..." type="text" />
+            </form>
+          </li>
+          <li>
+            <a class="wallet-button" ui-sref="public.signup">Get A Free Wallet</a>
+          </li>
+        </ul>
+      </nav>
     </div>
     `,
     scope: {
+      posY: '=',
       i18nLoaded: '='
     },
     link: link
@@ -52,13 +72,53 @@ function publicHeader ($rootScope, $location, languages) {
   return directive;
 
   function link (scope, elem, attrs) {
-    scope.rootURL = $rootScope.rootURL;
-    scope.languages = languages.languages;
-    scope.path = () => $location.path();
-    scope.isTestnet = $rootScope.network === 'testnet';
+    Env.then(env => {
+      scope.rootURL = env.rootURL;
+    });
+
     scope.$watch(languages.get, (code) => {
-      scope.language = languages.mapCodeToName(code);
       scope.searchUrl = code === 'en' ? '/search' : `/${code}/search`;
     });
+
+    scope.size = () => $rootScope.size;
+
+    scope.expandHeader = () => {
+      scope.state.searching = false;
+      if (scope.size().mobile) {
+        scope.state.searching = false;
+        scope.state.open = !scope.state.open;
+      } else {
+        scope.state.open = true;
+      }
+    };
+
+    scope.collapseHeader = ($event) => {
+      let toElement = $event && $event.toElement;
+      if (scope.size().mobile) {
+
+      } else {
+        if (!toElement) {
+          scope.state.open = false;
+        } else if (toElement.getAttribute('class') === 'igation') {
+          scope.state.open = false;
+        }
+      }
+    };
+
+    scope.handleSearch = () => {
+      scope.state.searching = !scope.state.searching;
+    };
+
+    scope.handleHeader = (posY) => {
+      if (posY > 0) scope.state.scrolling = true;
+      else scope.state.scrolling = false;
+    };
+
+    scope.state = {
+      open: false,
+      searching: false
+    };
+
+    scope.$watch('posY', scope.handleHeader);
   }
 }

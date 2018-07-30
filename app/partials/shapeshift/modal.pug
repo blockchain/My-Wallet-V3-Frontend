@@ -1,0 +1,9 @@
+.pv-30
+  i.ti-close.close-modal.alt.low.pos-abs.pointer(ng-click="$close()")
+  div(ng-if="vm.asset.code === 'bch'" ng-controller="BitcoinCashExchangeController")
+    .width-100(ng-if="onStep('exchange-create') && fees")
+      shift-create(on-complete="onCreateComplete(payment, fee, quote, destination)" asset="'bch'" fees="fees" wallet="wallet" wallets="wallets" build-payment="buildPayment(quote, fee, from)" handle-approximate-quote="approximateQuoteHandler(from, to, amount)" handle-quote="quoteHandler(from, to, amount)" handle-rate="rateHandler(rate)")
+    .width-100(ng-if="onStep('exchange-confirm')")
+      shift-confirm(on-complete="onConfirmComplete(trade)" on-cancel="goTo('exchange-create')" on-expiring="openHelper('expiring-exchange-helper')" on-expiration="onExpiration()" payment="payment" fee="fee" quote="quote" handle-shift="shiftHandler(payment)" wallet="wallet" destination="destination")
+    .width-100(ng-if="onStep('exchange-receipt')")
+      shift-receipt(shift="trade" is-checkout="true" on-close="$close()")

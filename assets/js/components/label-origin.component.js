@@ -6,5 +6,5 @@ angular
       highlight: '<',
       simple: '<'
     },
-    templateUrl: 'templates/label-origin.jade'
+    templateUrl: 'templates/label-origin.pug'
   });

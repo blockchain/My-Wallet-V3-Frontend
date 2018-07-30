@@ -7,66 +7,74 @@ angular
 AppRouter.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function AppRouter ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise(function ($injector, $location) {
-    if (!$injector.has('Wallet')) {
-      return '/';
-    } else {
-      let Wallet = $injector.get('Wallet');
-      if (!Wallet.status.isLoggedIn) {
-        return '/';
-      } else {
-        return '/home';
-      }
-    }
-  });
+  let isAuthenticated = (injector) => (
+    injector.has('Wallet') && injector.get('Wallet').status.isLoggedIn
+  );
 
+  $urlRouterProvider.otherwise($injector => isAuthenticated($injector) ? '/home' : '/');
   $urlRouterProvider.when('/settings', '/settings/wallet');
 
   let top = {
-    templateUrl: 'partials/top.jade',
+    templateUrl: 'partials/top.pug',
     controller: 'TopCtrl'
   };
 
   let walletNav = {
-    templateUrl: 'partials/wallet-navigation.jade',
+    templateUrl: 'partials/wallet-navigation.pug',
     controller: 'WalletNavigationCtrl'
   };
 
   let commonViews = {
     navigation: {
-      templateUrl: 'partials/navigation.jade',
+      templateUrl: 'partials/navigation.pug',
       controller: 'NavigationCtrl'
     },
     common: {
-      templateUrl: 'partials/common.jade'
+      templateUrl: 'partials/common.pug'
     }
   };
 
-  let transactionsViews = {
-    top: top,
-    left: walletNav,
-    right: {
-      templateUrl: 'partials/transactions.jade',
-      controller: 'TransactionsCtrl'
-    }
-  };
+  let loadWalletModule = ($ocLazyLoad) => (
+    $ocLazyLoad.load('walletLazyLoad')
+  );
 
   $stateProvider
     .state('wallet', {
       views: {
         body: {
-          templateUrl: 'partials/wallet.jade',
+          templateUrl: 'partials/wallet.pug',
           controller: 'WalletCtrl'
         }
       },
       resolve: {
-        loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
+        loadWalletModule,
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+          return Ethereum && Ethereum.needsTransitionFromLegacy().then((res) => Wallet.goal.needsTransitionFromLegacy = res);
         }
       }
     })
     .state('wallet.common', {
       views: commonViews
+    });
+
+  $stateProvider
+    .state('intermediate', {
+      url: '/intermediate',
+      views: {
+        body: {
+          template: '<blocket-loading loading="true"></blocket-loading>',
+          controller (buyMobile, Wallet) {
+            if (!Wallet.status.isLoggedIn) {
+              buyMobile.callMobileInterface(buyMobile.FRONTEND_INITIALIZED);
+            }
+          }
+        }
+      },
+      resolve: {
+        loadWalletModule
+      }
     });
 
   $stateProvider
@@ -82,20 +90,36 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
     .state('public', {
       views: {
         body: {
-          templateUrl: 'partials/public.jade'
+          templateUrl: 'partials/public.pug',
+          controller: function ($scope, $state, languages, Env) {
+            Env.then(env => {
+              $scope.network = env.network;
+              $scope.rootURL = env.rootURL;
+              $scope.versionMyWallet = env.versionMyWallet;
+              $scope.versionFrontend = env.versionFrontend;
+            });
+            let overflows = ['/reset-2fa'];
+            $scope.state = $state;
+            $scope.path = $state.current.url;
+            $scope.languages = languages.languages;
+            $scope.$watch(languages.get, (code) => {
+              $scope.language = languages.mapCodeToName(code);
+            });
+            $scope.$watch('state.current.url', (newVal) => {
+              $scope.isUIOverflow = overflows.indexOf(newVal) > -1;
+            });
+          }
         }
       },
       resolve: {
-        loadWalletModule: ($ocLazyLoad) => {
-          return $ocLazyLoad.load('walletLazyLoad');
-        }
+        loadWalletModule
       }
     })
     .state('public.login-no-uid', {
       url: '/login',
       views: {
         contents: {
-          templateUrl: 'partials/login.jade',
+          templateUrl: 'partials/login.pug',
           controller: 'LoginCtrl'
         }
       }
@@ -104,7 +128,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/login/:uid',
       views: {
         contents: {
-          templateUrl: 'partials/login.jade',
+          templateUrl: 'partials/login.pug',
           controller: 'LoginCtrl'
         }
       }
@@ -113,7 +137,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/logout',
       views: {
         contents: {
-          templateUrl: 'partials/logout.jade',
+          templateUrl: 'partials/logout.pug',
           controller: 'LogoutController'
         }
       }
@@ -122,7 +146,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/signup',
       views: {
         contents: {
-          templateUrl: 'partials/signup.jade',
+          templateUrl: 'partials/signup.pug',
           controller: 'SignupCtrl'
         }
       },
@@ -134,7 +158,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/help',
       views: {
         contents: {
-          templateUrl: 'partials/help.jade'
+          templateUrl: 'partials/help.pug'
         }
       }
     })
@@ -142,7 +166,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/recover',
       views: {
         contents: {
-          templateUrl: 'partials/recover-funds.jade',
+          templateUrl: 'partials/recover-funds.pug',
           controller: 'RecoverFundsCtrl'
         }
       }
@@ -151,7 +175,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/reminder',
       views: {
         contents: {
-          templateUrl: 'partials/lost-guid.jade',
+          templateUrl: 'partials/lost-guid.pug',
           controller: 'LostGuidCtrl'
         }
       }
@@ -160,7 +184,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/reset-2fa',
       views: {
         contents: {
-          templateUrl: 'partials/reset-two-factor.jade',
+          templateUrl: 'partials/reset-two-factor.pug',
           controller: 'ResetTwoFactorCtrl'
         }
       }
@@ -169,7 +193,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/authorize-approve/{token:.*}',
       views: {
         contents: {
-          templateUrl: 'partials/authorize-approve.jade',
+          templateUrl: 'partials/authorize-approve.pug',
           controller: 'AuthorizeApproveCtrl'
         }
       }
@@ -179,7 +203,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       views: {
         contents: {
           controller: 'VerifyEmailCtrl',
-          templateUrl: 'partials/verify-email.jade'
+          templateUrl: 'partials/verify-email.pug'
         }
       }
     })
@@ -187,9 +211,21 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/reset-two-factor/{token:.*}',
       views: {
         contents: {
-          templateUrl: 'partials/reset-two-factor-token.jade',
+          templateUrl: 'partials/reset-two-factor-token.pug',
           controller: 'ResetTwoFactorTokenCtrl'
         }
+      }
+    })
+    .state('public.mobile-login', {
+      url: '/mobile-login',
+      views: {
+        contents: {
+          templateUrl: 'partials/mobile-login.pug',
+          controller: 'MobileLoginController'
+        }
+      },
+      resolve: {
+        _bcQrReader: ($ocLazyLoad) => $ocLazyLoad.load('bcQrReader')
       }
     });
 
@@ -199,12 +235,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       views: {
         top: top,
         left: {
-          templateUrl: 'partials/wallet-navigation.jade',
+          templateUrl: 'partials/wallet-navigation.pug',
           controller: 'WalletNavigationCtrl'
         },
         right: {
-          templateUrl: 'partials/home.jade',
-          controller: 'HomeCtrl'
+          templateUrl: 'partials/home.pug',
+          controller: 'HomeCtrl',
+          resolve: {
+            loadBcPhoneNumber: ($ocLazyLoad) => {
+              return $ocLazyLoad.load('bcPhoneNumber');
+            }
+          }
         }
       }
     })
@@ -217,7 +258,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         top: top,
         left: walletNav,
         right: {
-          templateUrl: 'partials/security-center.jade',
+          templateUrl: 'partials/security-center.pug',
           controller: 'SettingsSecurityCenterCtrl',
           resolve: {
             loadBcPhoneNumber: ($ocLazyLoad) => {
@@ -227,15 +268,11 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         }
       }
     })
-    .state('wallet.common.transactions', {
-      url: '/transactions',
-      views: transactionsViews
-    })
     .state('wallet.common.open', {
       url: '/open/{uri:.*}',
       views: {
         top: {
-          templateUrl: 'partials/open-link.jade',
+          templateUrl: 'partials/open-link.pug',
           controller: 'OpenLinkController'
         }
       }
@@ -257,7 +294,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         left: walletNav,
         right: {
           controller: 'SettingsCtrl',
-          templateUrl: 'partials/settings/settings.jade'
+          templateUrl: 'partials/settings/settings.pug'
         }
       }
     })
@@ -267,9 +304,103 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         top: top,
         left: walletNav,
         right: {
-          templateUrl: 'partials/faq.jade',
+          templateUrl: 'partials/faq.pug',
           controller: 'faqCtrl'
         }
+      },
+      resolve: {
+        env: ($injector) => {
+          let Env = $injector.has('Env') && $injector.get('Env');
+          return Env && Env.then();
+        },
+        canTrade: ($injector) => {
+          let tradeStatus = $injector.has('tradeStatus') && $injector.get('tradeStatus');
+          return tradeStatus && tradeStatus.canTrade();
+        }
+      }
+    });
+
+  $stateProvider
+    .state('wallet.common.btc', {
+      url: '/btc',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin.pug',
+          controller: 'bitcoinTransactionsCtrl'
+        }
+      }
+    })
+    .state('wallet.common.btc.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.eth', {
+      url: '/eth',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-ethereum.pug',
+          controller: 'ethereumTransactionsCtrl'
+        }
+      },
+      resolve: {
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
+        }
+      },
+      onEnter ($injector, $state) {
+        let Ethereum = $injector.has('Ethereum') && $injector.get('Ethereum');
+        if (!Ethereum) $state.transition = null;
+      }
+    })
+    .state('wallet.common.eth.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.bch', {
+      url: '/bch',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/transactions/transactions-bitcoin-cash.pug',
+          controller: 'bitcoinCashTransactionsCtrl'
+        }
+      }
+    }).state('wallet.common.bch.transactions', {
+      url: '/transactions'
+    });
+
+  $stateProvider
+    .state('wallet.common.shift', {
+      url: '/exchange',
+      views: {
+        top: top,
+        left: walletNav,
+        right: {
+          templateUrl: 'partials/shapeshift/checkout.pug',
+          controller: 'ShapeShiftCheckoutController',
+          controllerAs: 'vm'
+        }
+      },
+      params: {
+        destination: null
+      },
+      resolve: {
+        _initialize ($injector, $q) {
+          let Wallet = $injector.has('Wallet') && $injector.get('Wallet');
+          return Wallet && Wallet.status.isLoggedIn ? $injector.get('Ethereum').initialize() : $q.resolve();
+        }
+      },
+      onEnter ($injector, $state) {
+        let ShapeShift = $injector.has('ShapeShift') && $injector.get('ShapeShift');
+        ShapeShift.userHasAccess && ShapeShift.fetchFullTrades();
       }
     });
 
@@ -280,59 +411,114 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
         top: top,
         left: walletNav,
         right: {
-          templateUrl: 'partials/buy-sell-master.jade',
+          templateUrl: 'partials/buy-sell-master.pug',
           controller: 'BuySellMasterController',
           controllerAs: 'vm'
+        }
+      },
+      resolve: {
+        balance ($injector, $q) {
+          let MyWallet = $injector.has('MyWallet') && $injector.get('MyWallet');
+          let defaultAccount = MyWallet && MyWallet.wallet.hdwallet.defaultAccount;
+
+          return defaultAccount && defaultAccount.getAvailableBalance('priority')
+            .then((balance) => balance)
+            .catch(() => { return {amount: 0}; });
         }
       }
     })
     .state('wallet.common.buy-sell.select', {
-      templateUrl: 'partials/buy-sell-select-partner.jade',
-      controller: 'BuySellSelectPartnerController',
-      resolve: {
-        options (Options) { return Options.get(); }
-      }
+      templateUrl: 'partials/buy-sell-select-partner.pug',
+      controller: 'BuySellSelectPartnerController'
     })
     .state('wallet.common.buy-sell.coinify', {
-      templateUrl: 'partials/buy-sell.jade',
-      controller: 'BuySellCtrl',
-      params: { countryCode: null },
+      templateUrl: 'partials/coinify/checkout.pug',
+      controller: 'CoinifyCheckoutController',
+      params: { countryCode: null, selectedTab: 'BUY_BITCOIN' },
       resolve: {
-        options (Options) { return Options.get(); }
+        _loadExchangeData ($q, MyWallet, Exchange) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user
+            ? Exchange.fetchExchangeData(exchange)
+            : Exchange.fetchProfile(exchange);
+        },
+        _loadKYCs ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getKYCs();
+        },
+        _loadSubscriptions ($q, MyWallet) {
+          let exchange = MyWallet.wallet.external.coinify;
+          return exchange.user && exchange.getSubscriptions();
+        }
+      }
+    })
+    .state('wallet.common.buy-sell.unocoin', {
+      templateUrl: 'partials/unocoin/checkout.pug',
+      controller: 'UnocoinCheckoutController',
+      params: { selectedTab: null },
+      resolve: {
+        _loadBcPhoneNumber ($ocLazyLoad) {
+          return $ocLazyLoad.load('bcPhoneNumber');
+        },
+        _loadExchangeData ($q, MyWallet, Exchange) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return exchange.user && !exchange.profile
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
+            : $q.resolve();
+        },
+        exchangeRate ($q, MyWallet, unocoin) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return $q.resolve(unocoin.fetchQuote(exchange, 1e8, 'BTC', 'INR'));
+        },
+        mediums ($q, MyWallet, exchangeRate, _loadExchangeData) {
+          let exchange = MyWallet.wallet.external.unocoin;
+          return exchange.profile && exchange.profile.level > 2
+                 ? $q.resolve(exchangeRate.getPaymentMediums())
+                 : $q.resolve();
+        },
+        showCheckout (Env, MyWallet) {
+          return Env.then(env => {
+            let email = MyWallet.wallet.accountInfo.email;
+            let fraction = env.partners.unocoin.showCheckoutFraction;
+
+            return Blockchain.Helpers.isStringHashInFraction(email, fraction);
+          });
+        }
+      },
+      onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {
+        let exchange = MyWallet.wallet.external.unocoin;
+
+        if (exchange.profile == null && !showCheckout) {
+          $state.transition = null; // hack to prevent transition
+          modals.openUnocoinSignup(exchange);
+        }
       }
     })
     .state('wallet.common.buy-sell.sfox', {
-      templateUrl: 'partials/sfox/checkout.jade',
+      templateUrl: 'partials/sfox/checkout.pug',
       controller: 'SfoxCheckoutController',
       params: { selectedTab: null },
       resolve: {
         _loadBcPhoneNumber ($ocLazyLoad) {
           return $ocLazyLoad.load('bcPhoneNumber');
         },
-        _loadExchangeData ($q, MyWallet, sfox) {
+        _loadExchangeData ($q, MyWallet, Exchange) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.user && !exchange.profile
-            ? sfox.fetchExchangeData(exchange)
+            ? $q.resolve().then(() => Exchange.fetchExchangeData(exchange))
             : $q.resolve();
         },
         accounts ($q, MyWallet) {
           let exchange = MyWallet.wallet.external.sfox;
           return exchange.hasAccount
-            ? exchange.getBuyMethods().then(methods => methods.ach.getAccounts())
+            ? $q.resolve([]).then(() => exchange.getBuyMethods()).then(methods => methods.ach.getAccounts())
             : $q.resolve([]);
-        },
-        options (Options) { return Options.get(); },
-        showCheckout (options, MyWallet) {
-          let email = MyWallet.wallet.accountInfo.email;
-          let fraction = options.partners.sfox.showCheckoutFraction;
-
-          return Blockchain.Helpers.isEmailInvited(email, fraction);
         }
       },
-      onEnter ($state, $stateParams, MyWallet, modals, showCheckout) {
+      onEnter ($state, $stateParams, MyWallet, modals) {
         let exchange = MyWallet.wallet.external.sfox;
 
-        if (exchange.profile == null && !showCheckout) {
+        if (exchange.profile == null) {
           $state.transition = null; // hack to prevent transition
           modals.openSfoxSignup(exchange);
         }
@@ -344,7 +530,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/info',
       views: {
         settings: {
-          templateUrl: 'partials/settings/info.jade',
+          templateUrl: 'partials/settings/info.pug',
           controller: 'SettingsInfoCtrl'
         }
       }
@@ -353,7 +539,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/preferences',
       views: {
         settings: {
-          templateUrl: 'partials/settings/preferences.jade',
+          templateUrl: 'partials/settings/preferences.pug',
           controller: 'SettingsPreferencesCtrl'
         }
       },
@@ -367,16 +553,17 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/security',
       views: {
         settings: {
-          templateUrl: 'partials/settings/security.jade',
+          templateUrl: 'partials/settings/security.pug',
           controller: 'SettingsSecurityCtrl'
         }
       }
     })
     .state('wallet.common.settings.accounts_index', {
       url: '/addresses',
+      params: { filter: null },
       views: {
         settings: {
-          templateUrl: 'partials/settings/accounts.jade',
+          templateUrl: 'partials/settings/accounts.pug',
           controller: 'SettingsAccountsController'
         }
       }
@@ -385,19 +572,8 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/:account/addresses',
       views: {
         settings: {
-          templateUrl: 'partials/settings/addresses.jade',
+          templateUrl: 'partials/settings/addresses.pug',
           controller: 'SettingsAddressesCtrl'
-        }
-      },
-      resolve: {
-        paymentRequests: ($stateParams, $q, $injector) => {
-          try {
-            let Wallet = $injector.get('Wallet');
-            let index = parseInt($stateParams.account, 10);
-            return Wallet.getPendingPayments(index).catch(() => $q.reject('LOAD_ADDR_ERR'));
-          } catch (e) {
-            return $q.resolve([]);
-          }
         }
       }
     })
@@ -405,7 +581,7 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       url: '/address-book',
       views: {
         settings: {
-          templateUrl: 'partials/settings/address-book.jade',
+          templateUrl: 'partials/settings/address-book.pug',
           controller: 'SettingsAddressBookCtrl'
         }
       }

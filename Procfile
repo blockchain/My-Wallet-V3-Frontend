@@ -1,1 +1,1 @@
-web: coffee server.coffee
+web: npm run heroku-start-parts

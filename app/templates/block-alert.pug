@@ -1,0 +1,37 @@
+.block-alert.flex-center.flex-column-mobile.ph-30.pv-15.pv-5-mobile(
+  ng-class="$ctrl.alert.type"
+  ng-show="$ctrl.alert && !$ctrl.dismissed")
+  span.dismiss-action(ng-show="$ctrl.dismissible" ng-click="$ctrl.dismiss()")
+    i.ti-close.f-14(ng-hide="$ctrl.collapsible")
+    i.ti-angle-up.f-14.hidden-xs(ng-show="$ctrl.collapsible")
+  i.alert-icon.icon-lg.mr-25.hidden-xs(
+    ng-show="$ctrl.showIcon"
+    ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
+  div
+    .mb-15.center-mobile
+      span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
+    .mb-15.f-12(ng-repeat="section in $ctrl.alert.sections")
+      span(ng-show="section.title") {{ section.title }}
+      p.em-200 {{ section.body }}
+    span.f-12(ng-show="$ctrl.alert.action")
+      a.text-color.underline(
+        ng-show="$ctrl.alert.action.link"
+        ng-href="{{ $ctrl.alert.action.link }}"
+        target="_blank" rel="noopener noreferrer")
+        | {{ $ctrl.alert.action.title }}
+      span.text-color.pointer.btn-sm.btn-default(
+        ng-hide="$ctrl.alert.action.link"
+        ng-click="$ctrl.onAction()")
+        | {{ $ctrl.alert.action.title }}
+  .visible-xs.mt-10
+    i.ti-angle-up.f-14(ng-show="$ctrl.collapsible" ng-click="$ctrl.dismiss()")
+.block-alert.flex-center.flex-between.flex-column-mobile.ph-30.pv-5(
+  ng-class="$ctrl.alert.type"
+  ng-show="$ctrl.alert && $ctrl.collapsible && $ctrl.dismissed")
+  .flex-center.flex-grow
+    i.alert-icon.f-18.mr-15.hidden-xs(
+      ng-show="$ctrl.showIcon"
+      ng-class="$ctrl.iconTypes[$ctrl.alert.type]")
+    .center-mobile.flex-grow
+      span.f-16.upper.em-200(ng-show="$ctrl.alert.header") {{ $ctrl.alert.header }}
+  i.ti-angle-down.mt-5.f-14.pointer(ng-click="$ctrl.dismissed = false")

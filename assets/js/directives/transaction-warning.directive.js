@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('transactionWarning', transactionWarning);
 
 function transactionWarning () {
@@ -10,7 +10,7 @@ function transactionWarning () {
     scope: {
       tx: '=transaction'
     },
-    templateUrl: 'templates/transaction-warning.jade',
+    templateUrl: 'templates/transaction-warning.pug',
     link: link
   };
   return directive;

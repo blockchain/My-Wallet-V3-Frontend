@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('uiLadda', uiLadda);
 
 function uiLadda () {
@@ -12,7 +12,7 @@ function uiLadda () {
       uiLadda: '=',
       disabled: '=ngDisabled'
     },
-    templateUrl: 'templates/ui-ladda.jade',
+    templateUrl: 'templates/ui-ladda.pug',
     link: link
   };
   return directive;
@@ -21,14 +21,13 @@ function uiLadda () {
     elem.addClass('ladda-button');
     elem.removeAttr('ng-click');
 
-    scope.$watch('uiLadda + disabled', (newVal) => {
-      if (scope.uiLadda) {
-        elem.attr('data-loading', true);
-        elem.attr('disabled', true);
-      } else {
-        elem.removeAttr('data-loading');
-        if (!scope.disabled) elem.removeAttr('disabled');
-      }
+    let setAttr = (attr, enabled) => {
+      enabled ? elem.attr(attr, true) : elem.removeAttr(attr);
+    };
+
+    scope.$watchGroup(['uiLadda', 'disabled'], () => {
+      setAttr('data-loading', scope.uiLadda);
+      setAttr('disabled', scope.uiLadda || scope.disabled);
     });
   }
 }
