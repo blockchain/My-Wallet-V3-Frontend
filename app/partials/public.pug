@@ -1,7 +1,9 @@
 .login-pg(ng-class="{'display-block': isUIOverflow}")
   include ./bc-logo-header
-  testnet-warning
-  maintenance-warning
+  .banners-container
+    testnet-warning
+    block-alert.public-block-alert-overrides.hidden-xs(ng-if="showPublicBanner" config="publicBannerConfig")
+    maintenance-warning
   .overflow-scroll.flex-justify.flex-center
     .flex-center.flex-justify.flex-column
       .flex.flex-justify

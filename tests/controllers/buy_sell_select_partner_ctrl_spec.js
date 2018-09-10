@@ -13,6 +13,8 @@ describe('BuySellSelectPartnerController', () => {
         webHardFork: {
           balanceMessage: { 'en': 'Balance message' }
         },
+        domains: {
+        },
         partners: {
           coinify: {
             countries: ['GB']

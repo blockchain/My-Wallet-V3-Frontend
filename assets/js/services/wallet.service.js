@@ -4,10 +4,12 @@ angular
   .module('walletApp')
   .factory('Wallet', Wallet);
 
-Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', 'localStorageService', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Env', 'BrowserHelper'];
+Wallet.$inject = ['$http', '$window', '$timeout', '$location', '$injector', 'Alerts', 'MyWallet', 'MyBlockchainApi', 'MyBlockchainRng', 'MyBlockchainSettings', 'MyWalletStore', 'MyWalletHelpers', '$rootScope', 'AngularHelper', 'ngAudio', 'localStorageService', '$translate', '$filter', '$state', '$q', 'languages', 'currency', 'theme', 'BlockchainConstants', 'Env', 'BrowserHelper', 'ComMigration'];
 
-function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, localStorageService, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Env, BrowserHelper) {
+function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWallet, MyBlockchainApi, MyBlockchainRng, MyBlockchainSettings, MyWalletStore, MyWalletHelpers, $rootScope, AngularHelper, ngAudio, localStorageService, $translate, $filter, $state, $q, languages, currency, theme, BlockchainConstants, Env, BrowserHelper, ComMigration) {
   BrowserHelper.migrateCookiesToLocalStorage();
+  ComMigration.transferCookiesFromDotInfo();
+
   const wallet = {
     goal: {
       auth: false,

@@ -98,23 +98,35 @@ function AppRouter ($stateProvider, $urlRouterProvider) {
       views: {
         body: {
           templateUrl: 'partials/public.pug',
-          controller: function ($scope, $state, languages, Env) {
+          controller: function ($scope, $state, $location, languages, Env, ComMigration) {
             Env.then(env => {
               $scope.network = env.network;
               $scope.rootURL = env.rootURL;
               $scope.versionMyWallet = env.versionMyWallet;
               $scope.versionFrontend = env.versionFrontend;
+
+              $scope.publicBannerConfig = env.web.serviceAlert.public
+              $scope.showPublicBanner = $scope.publicBannerConfig != null
             });
+
             let overflows = ['/reset-2fa'];
             $scope.state = $state;
             $scope.path = $state.current.url;
             $scope.languages = languages.languages;
+
             $scope.$watch(languages.get, (code) => {
               $scope.language = languages.mapCodeToName(code);
             });
+
             $scope.$watch('state.current.url', (newVal) => {
               $scope.isUIOverflow = overflows.indexOf(newVal) > -1;
             });
+
+            ComMigration.whenRedirectsEnabled((env) => {
+              let url = $location.url()
+              let langPath = languages.getLangUrlPath()
+              ComMigration.redirectFromDotInfoTo(`${env.domains.comWalletApp}${langPath}/#${url}`)
+            })
           }
         }
       },

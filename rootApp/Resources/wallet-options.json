@@ -1,4 +1,5 @@
 {
+  "enableDomainMigrationRedirects": false,
   "showBuySellTab": ["GB", "NL", "DE", "US"],
   "service_charge": {
     "US": {
@@ -69,6 +70,8 @@
   },
   "domains": {
     "root": "REPLACED_BY_DEV_SERVER",
+    "comRoot": "REPLACED_BY_DEV_SERVER",
+    "comWalletApp": "REPLACED_BY_DEV_SERVER",
     "webSocket": "REPLACED_BY_DEV_SERVER",
     "api": "REPLACED_BY_DEV_SERVER",
     "walletHelperUrl": "REPLACED_BY_DEV_SERVER"
@@ -94,6 +97,25 @@
   },
   "web": {
     "serviceAlert": {
+      "__public": {
+        "type": "info",
+        "header": {
+          "en": "We’re packing our bags and preparing to move…domains!"
+        },
+        "sections": [
+          {
+            "body": {
+              "en": "To make way for our new and exciting products coming this year, we’re saying hello to our new home. Your Blockchain Wallet will soon be changing URLs as it's combined with our company site, blockchain.com."
+            }
+          }
+        ],
+        "action": {
+          "title": {
+            "en": "Read more about what to expect here."
+          },
+          "link": "https://www.example.com/"
+        }
+      },
       "__global": {
         "type": "warning",
         "hideType": "collapse",
