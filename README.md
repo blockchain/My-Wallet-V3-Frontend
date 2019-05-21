@@ -1,3 +1,5 @@
+# Deprecated: use https://github.com/blockchain/blockchain-wallet-v4-frontend instead
+
 # Blockchain.info Wallet 
 [![Build Status](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend.svg?branch=master)](https://travis-ci.org/blockchain/My-Wallet-V3-Frontend) 
 [![Coverage Status](https://coveralls.io/repos/blockchain/My-Wallet-V3-Frontend/badge.svg?branch=master&service=github)](https://coveralls.io/github/blockchain/My-Wallet-V3-Frontend?branch=master)
