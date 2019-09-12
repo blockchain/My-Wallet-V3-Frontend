@@ -11,7 +11,8 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
   const wallet = {
     goal: {
       auth: false,
-      upgrade: false
+      upgrade: false,
+      upgradeV4: false
     },
     status: {
       isLoggedIn: false,
@@ -347,6 +348,31 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
       $translate('FIRST_ACCOUNT_NAME').then((translation) => {
         wallet.my.wallet.upgradeToV3(translation, password, success, error);
       });
+    };
+    wallet.askForSecondPasswordIfNeeded()
+      .then(proceed).catch(cancelSecondPasswordCallback);
+  };
+
+  wallet.upgradeV4 = (successCallback, cancelSecondPasswordCallback) => {
+    let success = () => {
+      wallet.status.didUpgradeToV4 = true;
+      wallet.my.wallet.getHistory().then(() => {
+        wallet.status.didLoadBalances = true;
+        // Montitored by e.g. acticity feed:
+        wallet.status.didLoadTransactions = true;
+      });
+      successCallback();
+      AngularHelper.$safeApply();
+    };
+
+    let error = (e) => {
+      wallet.store.enableLogout();
+      wallet.store.setIsSynchronizedWithServer(true);
+      $window.location.reload();
+    };
+
+    let proceed = (password) => {
+      wallet.my.wallet.upgradeToV4(password, success, error);
     };
     wallet.askForSecondPasswordIfNeeded()
       .then(proceed).catch(cancelSecondPasswordCallback);
@@ -855,6 +881,9 @@ function Wallet ($http, $window, $timeout, $location, $injector, Alerts, MyWalle
     } else if (event === 'hd_wallets_does_not_exist') {
       wallet.status.didUpgradeToHd = false;
       wallet.goal.upgrade = true;
+    } else if (event === 'perform_v4_payload_upgrade') {
+      wallet.status.didUpgradeToV4 = false;
+      wallet.goal.upgradeV4 = true;
     } else if (event === 'wallet not found') {
       Alerts.displayError('WALLET_NOT_FOUND');
     } else if (event === 'ticker_updated' || event === 'did_set_latest_block') {

@@ -1,0 +1,9 @@
+.alert-in-app
+  uib-alert(type="danger", close="insist = false", ng-show="insist")
+    span(translate="NEED_SECOND_PASSWORD_FOR_UPGRADE")
+.modal-header.flex-center.upgrade-header(data-preflight-tag="Upgrade")
+  h3(translate="Upgrade to V4")
+.modal-body
+  span(translate="Upgrade for segwitP2SH support 🏄‍")
+.modal-footer.pal.flex-end
+  button.button-primary(ui-ladda="busy", ng-click="upgradeV4()" ng-disabled="waiting", ladda-translate="CONTINUE", data-style="expand-left")
