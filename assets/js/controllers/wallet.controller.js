@@ -169,16 +169,6 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
 
   $scope.checkGoals = () => {
     if ($scope.status.isLoggedIn) {
-      if (Wallet.goal.upgrade) {
-        $uibModal.open({
-          templateUrl: 'partials/upgrade.pug',
-          controller: 'UpgradeCtrl',
-          backdrop: 'static',
-          windowClass: 'bc-modal',
-          keyboard: false
-        });
-        Wallet.goal.upgrade = void 0;
-      }
       if (Wallet.goal.upgradeV4) {
         $uibModal.open({
           templateUrl: 'partials/upgradeV4.pug',
@@ -188,6 +178,16 @@ function WalletCtrl ($scope, $rootScope, Wallet, $uibModal, $timeout, Alerts, $i
           keyboard: false
         });
         Wallet.goal.upgradeV4 = void 0;
+      }
+      if (Wallet.goal.upgrade) {
+        $uibModal.open({
+          templateUrl: 'partials/upgrade.pug',
+          controller: 'UpgradeCtrl',
+          backdrop: 'static',
+          windowClass: 'bc-modal',
+          keyboard: false
+        });
+        Wallet.goal.upgrade = void 0;
       }
       if (Wallet.goal.auth) {
         Alerts.clear();
