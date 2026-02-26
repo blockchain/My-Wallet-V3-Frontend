@@ -1,9 +1,9 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('onClickCopy', onClickCopy);
 
-function onClickCopy ($window, $document) {
+function onClickCopy ($window, $document, browser) {
   const directive = {
     restrict: 'A',
     scope: false,
@@ -35,7 +35,7 @@ function onClickCopy ($window, $document) {
       textElem.remove();
     };
 
-    if (scope.browserCanExecCommand) {
+    if (browser.canExecCommand) {
       elem.on('click', scope.copy);
       scope.$on('$destroy', () => elem.off('click', scope.copy));
     }

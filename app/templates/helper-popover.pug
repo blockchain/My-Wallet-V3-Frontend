@@ -1,0 +1,6 @@
+div
+  p.mbn.type-sm.black {{::content | translate:values}}
+    span(ng-show="linktext != undefined")
+      | &nbsp;
+      a(href="{{::link}}" target="_blank" rel="noopener noreferrer") {{::linktext | translate}}
+      | .

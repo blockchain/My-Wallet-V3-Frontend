@@ -1,0 +1,26 @@
+.flex-row.flex-between.mbs
+  .flex-center
+    i.flex-center.icon-recurring.primary.f-16.mr-5
+    span.primary.em-500 This is a Recurring Order
+    helper-button(content="RECURRING_HELPER")
+  a.em-300.text-danger.underline(ng-show="$ctrl.showRemove" ng-click="$ctrl.onRemove()") Remove Recurring Order
+.pam.bg-ultralight-blue.border-light-blue
+  .mv-5.phm(ng-hide="$ctrl.trade")
+    span.f-13(translate="RECURRING_REMINDER" translate-values="{time: $ctrl.frequency}")
+  .flex-row.phm.pv-5
+    span.flex-1.primary.colon(translate="AMOUNT")
+    span.flex-5.ph-5-mobile {{ format($ctrl.trade.fiatAmount, $ctrl.dollars, true) }} (+ {{ paymentFee | format }} {{ $ctrl.dollars.code }} Payment Fee)
+  .flex-row.phm.pv-5
+    span.flex-1.primary.colon(translate="FREQUENCY")
+    span.flex-5.ph-5-mobile(translate="FREQUENCY_INFO" translate-values="{timespan: timespan}")
+  .flex-row.phm.pv-5
+    span.flex-1.primary.colon(translate="DURATION")
+    span.flex-5.ph-5-mobile(ng-show="endTime" translate="DURATION_INFO" translate-values="{endTime: endTime}")
+    span.flex-5.ph-5-mobile(ng-show="!endTime") Until you cancel or reach your limit, whichever happens first.
+.flex-column.mtm(ng-if="$ctrl.trade.state === 'completed'")
+  .mb-10
+    span.f-12(translate="RECURRING_EMAIL_RECEIVE")
+    a(ng-click="$ctrl.onClose()") &nbsp;Orders&nbsp;
+    span.f-12(translate="TAB")
+  div
+    span.f-12(translate="AMOUNT_VARIATION_NOTE")

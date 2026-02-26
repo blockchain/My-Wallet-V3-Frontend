@@ -1,0 +1,18 @@
+.heavy.flex-column.flex-align-end.right-align.center-mobile.flex-center-mobile.main-balance(ng-show="status.didUpgradeToHd")
+  span.f-20(translate="{{ !activeAsset() ? 'BALANCES.TOTAL' : 'BALANCES.' + activeAsset() }}")
+  .pointer(uib-dropdown)
+    .flex-row.flex-center.f-20.em-200(uib-dropdown-toggle)
+      include ./context-balance
+    ul.dropdown-menu-right.pbn(uib-dropdown-menu)
+      li.flex-row.flex-center.flex-end.f-20.em-200
+        include ./context-balance
+      li.flex-row.flex-end.mb-5(ng-repeat="asset in assets" ui-sref="{{ 'wallet.common.' + asset.code + '.transactions' }}" ng-if="activeAsset() !== asset.code")
+        span.mr-10 {{ asset.total() | convert:asset.code:true }}
+        fiat.mid-grey(btc="asset.code === 'btc' && assets.btc.total()" eth="asset.code === 'eth' && assets.eth.total()" bch="asset.code === 'bch' && assets.bch.total()")
+      li.flex-row.flex-end.mb-5(ui-sref="wallet.common.home" ng-if="activeAsset()")
+        span.mr-10 Total Balance
+        fiat.mid-grey(btc="assets.btc.total()" eth="assets.eth.total()" bch="assets.bch.total()")
+.mvn.f-20.em-200.lh1(ng-show="balanceMessage" ng-class="{'security-red flex-end flex-center flex-justify-mobile': balanceMessage}")
+  .fork-warn.mr-10.flex-center.flex-end
+    span.f-10 {{ balanceMessage }}
+  fiat(btc="btc.total()" eth="eth.total() > 0 ? getEthTotal() : null" bch="bch.total()")

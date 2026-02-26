@@ -2,7 +2,7 @@ angular
   .module('walletApp')
   .controller('LostGuidCtrl', LostGuidCtrl);
 
-function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Alerts, $sce) {
+function LostGuidCtrl ($scope, AngularHelper, $http, $translate, WalletNetwork, Alerts, $sce, Wallet) {
   $scope.currentStep = 1;
   $scope.fields = {
     email: '',
@@ -16,7 +16,7 @@ function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Ale
       $scope.captchaSrc = url;
       $scope.sessionToken = data.sessionToken;
       $scope.fields.captcha = '';
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     });
   };
 
@@ -25,8 +25,8 @@ function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Ale
     let success = (message) => {
       $scope.working = false;
       $scope.currentStep = 2;
-      Alerts.displaySuccess(message);
-      $rootScope.$safeApply();
+      Alerts.displaySuccess('EMAIL_SENT');
+      AngularHelper.$safeApply();
     };
 
     let error = (error) => {
@@ -44,7 +44,7 @@ function LostGuidCtrl ($scope, $rootScope, $http, $translate, WalletNetwork, Ale
       }
 
       $scope.refreshCaptcha();
-      $rootScope.$safeApply();
+      AngularHelper.$safeApply();
     };
 
     $scope.form.$setPristine();

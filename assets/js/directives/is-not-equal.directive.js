@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('isNotEqual', isNotEqual);
 
 isNotEqual.$inject = ['Wallet'];

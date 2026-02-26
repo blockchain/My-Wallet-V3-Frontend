@@ -4,7 +4,7 @@ angular
 
 function RevealXpubCtrl ($scope, Wallet, $uibModalInstance, account) {
   $scope.accounts = Wallet.accounts;
-  $scope.xpub = account.extendedPublicKey;
+  $scope.xpub = account.extendedPublicKey || account.xpub;
   $scope.showXpub = false;
 
   $scope.continue = () => {

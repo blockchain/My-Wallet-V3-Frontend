@@ -30,6 +30,7 @@ build
 coverage
 coverage-lcov
 dist
+package-lock.json
 
 # External modules
 assets/js/bc-qr-reader.js

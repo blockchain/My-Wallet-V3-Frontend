@@ -1,25 +1,40 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('bcFileUpload', bcFileUpload);
 
-bcFileUpload.$inject = ['$rootScope', 'Alerts'];
+bcFileUpload.$inject = ['$rootScope', 'Alerts', 'AngularHelper'];
 
-function bcFileUpload ($rootScope, Alerts) {
+function bcFileUpload ($rootScope, Alerts, AngularHelper) {
   const directive = {
     restrict: 'E',
     scope: {
       file: '=',
+      base: '=',
+      locked: '=',
       idType: '=',
-      onUpload: '='
+      onUpload: '=',
+      uploadSteps: '=',
+      onUploadStep: '='
     },
-    templateUrl: 'templates/bc-file-upload.jade',
+    templateUrl: 'templates/bc-file-upload.pug',
     link: link
   };
   return directive;
 
   function link (scope, elem, attrs) {
+    scope.iosBrowser = ['ipod', 'ipad', 'iphone'].indexOf(browserDetection().os) > -1;
     scope.browserWithCamera = $rootScope.browserWithCamera;
-    scope.state = { webcam: {} };
+    scope.state = {
+      webcam: {
+        stream: false
+      }
+    };
+
+    scope.reset = () => {
+      scope.file = null;
+      scope.invalidFile = null;
+      scope.disableWebcam();
+    };
 
     scope.enableWebcam = () => {
       scope.state.webcam.active = true;
@@ -29,14 +44,17 @@ function bcFileUpload ($rootScope, Alerts) {
       scope.state.webcam = {};
     };
 
-    scope.upload = () => {
-      scope.disableWebcam();
-      scope.onUpload();
+    scope.webcamStream = () => {
+      scope.state.webcam.stream = true;
     };
 
     scope.webcamError = () => {
       scope.state.webcam.error = true;
-      Alerts.displayError('CAMERA_PERMISSION_DENIED');
+    };
+
+    scope.upload = () => {
+      scope.disableWebcam();
+      scope.onUpload();
     };
 
     scope.webcam = {

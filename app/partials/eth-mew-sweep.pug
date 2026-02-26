@@ -1,0 +1,35 @@
+form.bc-form(name="EthMewSweepForm" id="EthMewSweepForm" ng-submit="submit()")
+  .modal-header
+    .flex-center
+      h3.man.mrm(translate="MEW.import_from_mew")
+  .modal-body
+    div.em-500.f-14.mb-5(translate="MEW.select_keystore_file")
+    p.mb-10(translate="MEW.keystore_file_explained")
+    .group.inline.flex-center
+      button.btn.button-primary-inverse(type="button" ngf-select ng-model="file" ngf-model-invalid="invalidFile" ngf-pattern="")
+        i.mr-10.ti-upload
+        span(translate="MEW.select_wallet_file")
+      span(ng-show="fileError")
+        i.ml-10.f-24.icon-alert.state-danger-text
+      span(ng-show="keystore && !fileError")
+        i.ml-10.f-24.icon-success.security-green
+    .group.mt-5(ng-show="fileError")
+      span.state-danger-text(translate="File type unsupported. Please use your UTC / JSON file.")
+    .group.mt-20(ng-show="keystore && !fileError")
+      .item
+        label(translate="Enter your passphrase for the file")
+        input(
+          name="pw"
+          type="password"
+          ng-model="password"
+          focus-when="keystore && !fileError"
+          required)
+      div.small.well.em-300(translate="MEW.import_funds_warn")
+      div.f-12.mt-10.em-300(translate="MEW.by_clicking_import")
+  .modal-footer.pal.flex-end.flex-center
+    button.button-muted.mrm(
+      type="button"
+      translate="CLOSE"
+      ng-hide="status.busy"
+      ng-click="$dismiss()")
+    button.button-primary(type="submit" ui-ladda="locked" data-style="expand-left" form="EthMewSweepForm" ng-disabled="!password || !keystore || fileError || locked" ladda-translate="MEW.import_funds")

@@ -1,0 +1,16 @@
+div(ng-controller="UnocoinTradeDetailsController")
+  .border-bottom.pv-20.ph-10-mobile
+    span.f-16.em-500.pl-30.no-padding-mobile(translate="{{namespace + type + state + '.HEADER'}}" class="{{classHelper(trade)}}")
+  .ph-30.pt-20.ph-10-mobile.pv-20-mobile
+    .f-13.mb-10
+      span(translate="{{namespace + type + state + '.BODY'}}" translate-values="values")
+  .ph-30
+    ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-20
+      li.flex-between(ng-repeat="(row, field) in tradeDetails track by $index" ng-class="{'pb-10': $first, 'pt-10': $last, 'pv-10': !$first && !$last, 'border-bottom-light': !$last}")
+        span(translate="{{namespace + type + field.key}}")
+        span {{ field.val }}
+    .flex-row.flex-between.pb-20
+      .flex-start.flex-center
+        a(ng-show="tradeIsPending()" ng-click="editRef()" ng-class="{ 'link-disabled mid-grey': disableLink }" translate="EDIT_REF")
+      .flex-end
+        button.button-primary(translate="CLOSE" ng-click="$close()")

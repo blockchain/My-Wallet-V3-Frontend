@@ -2,9 +2,9 @@ angular
   .module('walletApp')
   .factory('Alerts', Alerts);
 
-Alerts.$inject = ['$timeout', '$rootScope', '$q', '$translate', '$uibModal'];
+Alerts.$inject = ['$timeout', '$rootScope', 'BrowserHelper', '$q', '$translate', '$uibModal', '$uibModalStack', 'localStorageService', 'languages'];
 
-function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
+function Alerts ($timeout, $rootScope, BrowserHelper, $q, $translate, $uibModal, $uibModalStack, localStorageService, languages) {
   const service = {
     alerts: [],
     close,
@@ -13,7 +13,9 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
     confirm,
     prompt,
     saving,
+    featureDisabled,
     isDuplicate,
+    surveyCloseConfirm,
     displayInfo: display.bind(null, 'info'),
     displaySuccess: display.bind(null, 'success'),
     displayWarning: display.bind(null, ''),
@@ -54,19 +56,45 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function displayResetTwoFactor (message) {
     $translate(['SUCCESS']).then(translations => {
-      $rootScope.$emit('showNotification', {
-        type: 'verified-email',
-        icon: 'ti-email',
-        heading: translations.SUCCESS,
-        msg: message
+      $uibModal.open({
+        templateUrl: 'partials/modal-notification.pug',
+        controller: 'ModalNotificationCtrl',
+        windowClass: 'notification-modal',
+        resolve: {
+          notification: () => ({
+            type: 'verified-email',
+            icon: 'ti-email',
+            heading: translations.SUCCESS,
+            msg: message
+          })
+        }
       });
     });
+  }
+
+  function surveyCloseConfirm (survey, links, index) {
+    let link = links[index];
+    let surveyOpened = localStorageService.get(survey);
+    let namespace = survey.split('-').join('_').toUpperCase();
+    let hasSeenPrompt = !links.length || index >= links.length || surveyOpened && surveyOpened.index >= index;
+
+    if (hasSeenPrompt) {
+      return service.confirm(namespace, { action: 'IM_DONE' }).then(() => $uibModalStack.dismissAll());
+    } else {
+      localStorageService.set(survey, {index: index});
+      let openSurvey = () => BrowserHelper.safeWindowOpen(link);
+      let surveyPrompt = namespace + '_PROMPT';
+
+      return service.confirm(surveyPrompt, {action: 'TAKE_SURVEY', friendly: true, cancel: 'NO_THANKS'})
+                    .then(openSurvey)
+                    .catch(() => $uibModalStack.dismissAll());
+    }
   }
 
   // options = { values, props, friendly, success, action, modalClass, iconClass }
   function confirm (namespace, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/modal-confirm.jade',
+      templateUrl: 'partials/modal-confirm.pug',
       windowClass: `bc-modal confirm ${options.modalClass || ''}`,
       controller: ($scope) => angular.extend($scope, options, { namespace })
     }).result;
@@ -74,7 +102,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function prompt (message, options = {}) {
     return $uibModal.open({
-      templateUrl: 'partials/modal-prompt.jade',
+      templateUrl: 'partials/modal-prompt.pug',
       windowClass: 'bc-modal medium',
       controller: ($scope) => angular.extend($scope, options, { message })
     }).result;
@@ -82,7 +110,7 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
 
   function saving () {
     return $uibModal.open({
-      templateUrl: 'partials/modal-saving.jade',
+      templateUrl: 'partials/modal-saving.pug',
       windowClass: 'bc-modal confirm top',
       backdrop: 'static',
       keyboard: false,
@@ -92,6 +120,15 @@ function Alerts ($timeout, $rootScope, $q, $translate, $uibModal) {
           .catch(() => sync());
         sync();
       }
+    }).result;
+  }
+
+  function featureDisabled (disabledReason) {
+    let reason = disabledReason && languages.localizeMessage(disabledReason);
+    return $uibModal.open({
+      templateUrl: 'partials/modal-feature-disabled.pug',
+      windowClass: 'bc-modal confirm top',
+      controller: ($scope) => angular.extend($scope, { reason })
     }).result;
   }
 

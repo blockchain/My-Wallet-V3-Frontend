@@ -1,0 +1,148 @@
+bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)" badge="pendingTrades().length")
+  .sfox-logo
+    span.mrs.type-sm Powered By
+    a(href="https://www.coinify.com/" target="_blank" rel="noopener noreferrer")
+      img(src="img/coinify-logo.svg")
+.buy-sell.mbvl.pv-10-mobile.ph-10-mobile
+  .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'BUY_BITCOIN'")
+    //- BUY
+    .width-60.border-desktop.pv-30.ph-30.no-padding-mobile.height-100
+      exchange-checkout(
+        type="'Buy'"
+        fiat="buyFiat"
+        conversion="100"
+        trading="buying"
+        limits="buyLimits"
+        provider="'Coinify'"
+        fiat-limits="true"
+        fiat-options="buyFiatOptions"
+        fiat-change="buyFiatHandler(currency)"
+        frequencies="frequencyOptions"
+        on-success="buyHandler(quote, null, frequency, endTime)"
+        recurring-buy-limit="recurringBuyLimit()"
+        show-recurring="showRecurringBuy"
+        disable-recurring="disableRecurring"
+        handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)")
+    .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile.hidden-xs
+      .mb-20.flex-column.pv-20.ph-20.bg-footer-blue(ng-show="nextRecurring().frequency && nextRecurring().amount")
+        .flex-center
+          i.flex-center.icon-recurring.f-16.mr-5
+          span.f-13(translate="RECURRING_NEXT_SCHEDULED")
+        .flex-row.pt-10
+          span.f-13 Amount:&nbsp;
+          span.f-13 {{ nextRecurring().amount }}
+          |&nbsp;
+          span.em-200.f-13 {{ nextRecurring().currency }} (+ {{ nextRecurring().fee }} {{ nextRecurring().currency }} Payment Fee)
+        .flex-row.pt-10
+          span.f-13 Frequency:&nbsp;
+          span.f-13.em-200(translate="RECURRING_NEXT_TRADE" translate-values="{timespan: nextRecurringTimespan()}")
+        .flex-row.pt-20.flex-end
+          a(translate="MANAGE_THIS_ORDER" ng-click="tabs.select('ORDER_HISTORY')")
+      .mb-20(ng-show="showRecurringBuy && !hasDismissedRecurringBuyIntro() && !disableRecurring")
+        .flex-between
+          span.f-24.blue.f-14-mobile
+            i.icon-buy-sell.h3.mrm
+            span(translate="RECURRING_INTRO_HEADER")
+          span
+            i.pointer.ti-close.f-14.mid-grey(ng-click="dismissRecurringBuyIntro()")
+        p.f-12.mt-10(translate="RECURRING_INTRO_1")
+        p.f-12(translate="RECURRING_INTRO_2")
+        div.mb-10
+          span.f-12(translate="RECURRING_INTRO_3")
+          | &nbsp;
+          a.f-12(translate="ORDERS" ng-click="tabs.select('ORDER_HISTORY')")
+        span.f-12(translate="RECURRING_INTRO_4")
+        | &nbsp;
+        a.f-12(translate="LEARN_MORE_HERE" ng-click="goToFaq()")
+      kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()" currency="buyFiat.code")
+  .flex-row.flex-column-tablet.flex-column-mobile(ng-show="tabs.selectedTab === 'SELL_BITCOIN'")
+    //- SELL
+    .width-60.border-desktop.pv-30.ph-30.no-padding-mobile.height-100
+      exchange-checkout(
+        type="'Sell'"
+        fiat="sellFiat"
+        conversion="100"
+        trading="selling"
+        limits="sellLimits"
+        provider="'Coinify'"
+        fiat-options="sellFiatOptions"
+        on-success="sellHandler(quote)"
+        fiat-change="sellFiatHandler(currency)"
+        handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)")
+    .flex-column.ml-60.col-md-5.col-sm-12.col-xs-12.pln.prn.pv-10-mobile.no-margin-mobile
+      kyc-status(ng-if="pendingKYC()" kyc="pendingKYC()" on-trigger="openKYC()")
+  .flex-column(ng-show="tabs.selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="trades.length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
+    div(ng-show="pendingTrades().length")
+      .flex-row.flex-between.flex-center
+        h4.type-h5 Pending Orders ({{pendingTrades().length}})
+        span.hidden-xs Coinify Account: {{ exchange.profile.email }}
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-10-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5.hidden-xs
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in pendingTrades() | orderBy:'createdAt':true"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
+            inspect-trade="trade.isBuy ? buyHandler : sellHandler"
+            namespace="'COINIFY'"
+            conversion="100"
+            trade="trade")
+    div(ng-show="recurringTrades().length")
+      .flex-row.flex-between.flex-center.mtl
+        .flex-row
+          i.flex-center.icon-recurring.f-16.mr-5
+          h4.type-h5 Recurring Orders
+        div(ng-hide="pendingTrades().length")
+          span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
+      .width-100
+        .recurring-buy-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-5-mobile Recurring Order
+          .pv-5
+            span.em-500(translate="FREQUENCY")
+          .pv-5.hidden-xs
+            span.em-500(translate="START")
+          .pv-5
+            span.em-500(translate="END")
+      exchange-recurring-trades(ng-repeat="subscription in subscriptions() | orderBy:'id':true"
+                                subscription="subscription"
+                                trades="recurringTrades"
+                                cancel-subscription="cancelSubscription(id)"
+                                namespace="'COINIFY'"
+                                partner-service="coinifyService"
+                                buy="buyHandler")
+    div(ng-show="completedTrades().length")
+      .flex-row.flex-between.flex-center.mtl
+        h4.type-h5 Completed Orders
+        div(ng-hide="pendingTrades().length || recurringTrades().length && subscriptions()")
+          span.hidden-xs(ng-show="exchange.profile.email") Coinify Account: {{ exchange.profile.email }}
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-25-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5.hidden-xs
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in completedTrades() | orderBy:'createdAt':true | limitTo:$render.limit"
+            inspect-trade="trade.isBuy ? buyHandler : sellHandler"
+            disabled="status.disabled"
+            namespace="'COINIFY'"
+            conversion="100"
+            trade="trade"
+            in-view="$last && !$root.size.xs && $render.next()")
+
+contact-support-footer(ng-hide="inMobileBuy")

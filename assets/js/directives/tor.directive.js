@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('tor', tor);
 
 function tor ($translate, Wallet) {
@@ -10,7 +10,7 @@ function tor ($translate, Wallet) {
     scope: {
       _buttonClass: '@buttonClass'
     },
-    templateUrl: 'templates/tor.jade',
+    templateUrl: 'templates/tor.pug',
     link: link
   };
   return directive;

@@ -3,9 +3,9 @@ angular
   .module('walletApp')
   .factory('languages', languages);
 
-languages.$inject = ['$translate'];
+languages.$inject = ['$translate', '$location'];
 
-function languages ($translate) {
+function languages ($translate, $location) {
   const languageCodes = {
     'de': 'German',
     // 'cs': 'Czech', // Pending backend support
@@ -42,10 +42,23 @@ function languages ($translate) {
     get: () => $translate.use(),
     set: (code) => $translate.use(code),
     mapCodeToName: (code) => languageCodes[code],
+    isLocalizedMessage,
+    localizeMessage,
     parseFromUrl
   };
 
+  let code = parseFromUrl($location.absUrl());
+  if (code) $translate.use(code);
+
   return service;
+
+  function isLocalizedMessage (msg) {
+    return angular.isString(msg) || (angular.isObject(msg) && msg['en'] != null);
+  }
+
+  function localizeMessage (msg) {
+    return angular.isString(msg) ? msg : (msg[service.get()] || msg['en']);
+  }
 
   function formatLanguages (langs) {
     let langFormat = code => ({

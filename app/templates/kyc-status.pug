@@ -1,0 +1,8 @@
+.flex-center.flex-justify.border-light-blue.pbl.ptl.phm(ng-show="$ctrl.getState() && $ctrl.level < 2")
+  div
+    h1.mbn.mtn
+      i.type-h4.primary(ng-class="$ctrl.getState().i")
+  .flex-column.flex-justify.ph-25
+    span.type-h5.em-400.mbs.mts(translate="{{$ctrl.getState().ns}}.TITLE")
+    span.type-sm(ng-show="$ctrl.currency" translate="{{$ctrl.getState().ns}}.BODY" translate-values="{ccmax: $ctrl.getCardMax()}")
+    a.underline.type-sm.ptm(translate="{{$ctrl.getState().ns}}.LINK" ng-click="$ctrl.onTrigger()")

@@ -1,23 +1,25 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('adverts', adverts);
 
-adverts.$inject = ['Adverts', '$rootScope'];
+adverts.$inject = ['Adverts', 'Env'];
 
-function adverts (Adverts, $rootScope) {
+function adverts (Adverts, Env) {
   const directive = {
     restrict: 'E',
     replace: 'true',
     scope: {},
-    templateUrl: 'templates/adverts.jade',
+    templateUrl: 'templates/adverts.pug',
     link: link
   };
   return directive;
 
   function link (scope, elem, attrs) {
+    Env.then(env => {
+      scope.baseUrl = env.apiDomain + 'ads/out?id=';
+    });
     scope.ads = Adverts.ads;
-    scope.baseUrl = $rootScope.apiDomain + 'ads/out?id=';
     Adverts.fetchOnce();
   }
 }

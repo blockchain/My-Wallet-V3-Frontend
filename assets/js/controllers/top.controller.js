@@ -2,20 +2,33 @@ angular
   .module('walletApp')
   .controller('TopCtrl', TopCtrl);
 
-function TopCtrl ($scope, Wallet, currency) {
+function TopCtrl ($scope, $filter, Wallet, currency, browser, Ethereum, BitcoinCash, assetContext, MyBlockchainApi, Env, languages) {
+  Env.then(env => {
+    if (env.webHardFork.balanceMessage) {
+      $scope.balanceMessage = languages.localizeMessage(env.webHardFork.balanceMessage);
+    }
+  });
+
+  $scope.copied = false;
+  $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.isBitCurrency = currency.isBitCurrency;
-  $scope.toggleDisplayCurrency = Wallet.toggleDisplayCurrency;
-  $scope.status = Wallet.status;
-  $scope.copied = false;
 
-  $scope.getTotal = () => Wallet.total();
-  $scope.resetCopy = () => $scope.copied = false;
+  $scope.browser = browser;
+  $scope.activeAsset = assetContext.activeAsset;
 
-  $scope.nextAddress = () => {
-    if ($scope.copied) return;
-    $scope.copied = true;
-    let defaultIdx = Wallet.my.wallet.hdwallet.defaultAccountIndex;
-    return Wallet.getReceivingAddressForAccount(defaultIdx);
+  $scope.assets = {
+    btc: {
+      code: 'btc',
+      total: () => Wallet.total('') || 0
+    },
+    eth: {
+      code: 'eth',
+      total: () => Ethereum.balance || 0
+    },
+    bch: {
+      code: 'bch',
+      total: () => BitcoinCash.balance || 0
+    }
   };
 }

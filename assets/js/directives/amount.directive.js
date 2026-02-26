@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('amount', amount);
 
 amount.$inject = ['Wallet', 'currency'];
@@ -12,7 +12,7 @@ function amount (Wallet, currency) {
     scope: {
       tx: '=transaction'
     },
-    templateUrl: 'templates/amount.jade',
+    templateUrl: 'templates/amount.pug',
     link: link
   };
   return directive;

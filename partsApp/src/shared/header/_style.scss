@@ -1,0 +1,47 @@
+
+.header {
+
+  margin-bottom: 50px;
+  .navbar {
+    background-color: $gray;
+
+    &.navbar-default {
+      border: none;
+    }
+
+    & .navbar-header {
+
+      & .navbar-brand {
+
+        & img {
+          height: 25px;
+          padding-left: 10px;
+          padding-bottom: 5px;
+        }
+      }
+    }
+
+    & .navbar-nav {
+
+      li {
+
+        & a {
+            cursor: pointer;
+            color: $white;
+
+            &.active {
+              font-weight: bold;
+              color: $gold;
+            }
+        }
+
+        &:hover {
+          & a {
+            background-color: $blue;
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}

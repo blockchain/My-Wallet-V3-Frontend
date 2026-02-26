@@ -1,0 +1,40 @@
+header(translate-namespace="MOBILE_LOGIN")
+  hgroup
+    .flex-between.flex-center.flex-wrap.mb-10
+      span.f-24.lh1(translate=".TITLE")
+      span
+        a(ui-sref="public.login-no-uid" translate="CANCEL")
+    p.alt-font.f-16(translate=".SUB_TEXT")
+.mobile-login.mv-60.flex-between(translate-namespace="MOBILE_LOGIN")
+  .flex-1
+    .scanner-container.flex(box-corners="{{ getBoxColor() }}")
+      div(ng-show="state.scannerOn")
+        bc-qr-reader.scanner(
+          on-error="onScanError"
+          on-result="onScanResult"
+          active="state.scannerOn"
+          camera-status="state.scannerOn")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="state.permissionDenied")
+        span.f-18(translate="ERROR")
+        p.f-12.width-80.text-center(translate="CAMERA_PERMISSION_DENIED" ng-click="retryScan()")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="state.scanComplete")
+        span.f-18(translate="SCAN_SUCCESS")
+        p.f-12(translate="LOGGING_IN_NOW")
+      .flex-column.flex-center.flex-justify.flex-1(ng-show="state.scanFailed")
+        span.f-18(translate="SCAN_FAILED")
+        a.f-12(translate="RETRY" ng-click="retryScan()")
+  .flex-1
+    span.f-18.em-500.blue(translate=".STEPS_TITLE")
+    ol.pl-15
+      li.pt-10(translate=".STEP_1")
+      li.pt-10(translate=".STEP_2")
+      li.pt-10(translate=".STEP_3")
+footer.flex-between.flex-center.pt-25
+  div.alt-font.f-16
+    p.mbn(translate="APP_CTA")
+    p.mbn(translate="DOWNLOAD_HERE")
+  div
+    a(href="https://itunes.apple.com/us/app/blockchain-bitcoin-wallet/id493253309" target="_blank" rel="noopener noreferrer")
+      img.app-store-badge(src="img/app-store-badge.svg")
+    a(href="https://play.google.com/store/apps/details?id=piuk.blockchain.android" target="_blank" rel="noopener noreferrer")
+      img.play-store-badge(src="img/google-play-badge.png")

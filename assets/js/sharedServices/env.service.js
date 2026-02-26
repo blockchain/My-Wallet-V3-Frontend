@@ -1,0 +1,73 @@
+angular
+  .module('shared')
+  .factory('Env', Env);
+
+Env.$inject = ['$rootScope', '$location', '$q', '$http'];
+
+function Env ($rootScope, $location, $q, $http) {
+  let env = {
+  };
+
+  // These are set by grunt dist:
+  env.versionFrontend = null;
+  env.versionMyWallet = null;
+
+  const absUrl = $location.absUrl();
+  const path = $location.path();
+  if (absUrl && path && path.length) {
+    // e.g. https://blockchain.info/wallet/#
+    env.rootPath = $location.absUrl().slice(0, -$location.path().length);
+  }
+
+  let defer = $q.defer();
+
+  let url = `/Resources/wallet-options.json`;
+
+  $http.get(url)
+    .success((res) => {
+      env.qaDebugger = $rootScope.qaDebugger;
+
+      env.partners = res.partners;
+      env.showBuySellTab = res.showBuySellTab;
+      env.service_charge = res.service_charge;
+
+      env.rootURL = res.domains.root + '/';
+
+      env.showMobileLogin = !!res.showMobileLogin;
+
+      env.isProduction = env.rootURL === 'https://blockchain.info/' || env.rootURL === '/';
+      env.qaDebugger = false;
+
+      console.info(
+        'Using My-Wallet-V3 Frontend %s and My-Wallet-V3 v%s, connecting to %s',
+        env.versionFrontend, env.versionMyWallet, env.rootURL
+      );
+
+      env.customWebSocketURL = res.domains.webSocket;
+
+      env.network = res.network;
+
+      env.apiDomain = res.domains.api + '/';
+
+      env.walletHelperDomain = res.domains.walletHelperUrl;
+
+      env.buySell = res.buySell;
+
+      env.ethereum = res.ethereum;
+
+      env.shapeshift = res.shapeshift;
+
+      env.bcash = res.bcash;
+
+      env.web = res.web || {};
+
+      env.webHardFork = res.webHardFork || {};
+
+      env.maintenance = res.maintenance;
+
+      defer.resolve(env);
+    }
+  );
+
+  return defer.promise;
+}

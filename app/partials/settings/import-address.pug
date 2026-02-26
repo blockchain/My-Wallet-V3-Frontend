@@ -1,0 +1,65 @@
+.modal-header(data-preflight-tag="ImportAddress")
+  h3(translate="IMPORT_BITCOIN_ADDRESS", ng-show="step < 2 || address.isWatchOnly || address.balance == 0 || address.balance == null")
+  h3(translate="IMPORT_BITCOIN_ADDRESS_SWEEP", ng-show="step >= 2 && !address.isWatchOnly && address.balance > 0")
+.modal-body
+  .alert-in-app
+    alerts(context="alerts")
+  div(ng-show="step==1")
+    form(role="form" name="importForm" novalidate)
+      p(translate="IMPORT_BITCOIN_ADDRESS_EXPLAIN")
+      .form-group(ng-class="{'has-error': importForm.privateKey.$invalid && fields.addressOrPrivateKey != '' }")
+        label.control-label(for="address")
+        .input-group
+          input.form-control(
+            ng-model="fields.addressOrPrivateKey"
+            ng-disabled="BIP38"
+            name="privateKey"
+            is-valid="isValidAddressOrPrivateKey(fields.addressOrPrivateKey)"
+            ng-change="importForm.privateKey.$setValidity('present', true); importForm.privateKey.$setValidity('check', true);"
+            on-enter="importForm.$valid && import()"
+            required
+            autocomplete="off"
+            autofocus)
+          .input-group-btn
+            qr-scan(on-scan="onAddressScan")
+        span.help-block
+          span(translate="INPUT_NOT_RECOGNIZED" ng-show="importForm.privateKey.$error.isValid && fields.addressOrPrivateKey != ''")
+          span(ng-show="importForm.privateKey.$error.check", translate="CHECK_PRIVATE_KEY")
+          span(ng-show="importForm.privateKey.$error.present")
+            span(translate="ALREADY_IN_WALLET")
+
+      .form-group(ng-class="{'has-error': importForm.bipPassphrase.$invalid && importForm.bipPassphrase.$dirty}" ng-show="BIP38")
+        label.control-label Password for private key
+        input.form-control(
+          type="password"
+          name="bipPassphrase"
+          ng-model="fields.bip38passphrase"
+          ng-required="BIP38"
+          ng-change="importForm.bipPassphrase.$setValidity('wrong', true)"
+          on-enter="importForm.$valid && import()"
+        )
+        div(ng-show="importForm.bipPassphrase.$dirty")
+          span.help-block(translate="INCORRECT_PASSWORD" ng-show="importForm.bipPassphrase.$error.wrong")
+
+      p(ng-show="BIP38 && status.busy", translate="TAKES_A_WHILE")
+
+  div(ng-show="step==2")
+    p(translate="PRIVATE_KEY_VALID", ng-hide="address.isWatchOnly")
+    p
+      span(translate="ADDRESS_VALID", ng-show="address.isWatchOnly")
+      span.colon(translate="ADDRESS_FOR_PRIVATE_KEY", ng-hide="address.isWatchOnly")
+      b &nbsp;{{::address.address}}
+    p
+      span.colon(translate="BALANCE_FOR_ADDRESS")
+      b(ng-show="address.balance != null") &nbsp;{{ address.balance | toBitCurrency:settings.btcCurrency }}
+      span.fiat.plm(ng-show="address.balance != null")
+        fiat(btc="address.balance")
+      img(ng-show="address.balance == null" src="img/spinner.gif")
+
+.modal-footer.pal.flex-end
+  button.button-muted.mrm(ng-click="close()", translate="CANCEL", ng-show="step == 1 && !status.busy")
+  button.btn.button-primary(ng-if="step == 1" ui-ladda="status.busy" ng-click="import()" ng-disabled="importForm.$invalid" ladda-translate="IMPORT" data-style="expand-left")
+  button.button-muted(ng-show="step == 2", ng-click="close()", translate="CLOSE")
+  button.btn.button-primary(ng-show="step == 2 && !address.isWatchOnly && address.balance > 0" ng-click="goToTransfer()" translate="TRANSFER")
+  span(ng-if="step == 3")
+    button.btn.button-primary(ui-ladda="status.sweeping", ng-click="transfer()", data-style="expand-left", ladda-translate="TRANSFER")

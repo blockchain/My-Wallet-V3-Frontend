@@ -1,0 +1,82 @@
+.filter-bar.flex-between.flex-center(data-preflight-tag="AccountsSearch")
+  a.flex-center.text.em-400.black(ng-click="back()")
+      i.ti-arrow-left.mrm
+  .filter-search.input-group
+    input.form-control(
+      type="text"
+      placeholder="{{::'SEARCH' | translate}}"
+      ng-model="searchText")
+    i.ti-search
+.settings-category.asdf
+  .row.account-settings(data-preflight-tag="AccountAddresses")
+    .col-xs-12.table-container
+      .flex-between.flex-center.mvl.pvm
+        span.type-md.em-500 {{account.label}}
+          span.label.label-primary.btn-xs.mlm(translate="DEFAULT", ng-show="!account.archived && isDefault(account)")
+          span.label.label-default.btn-xs.mlm(translate="ARCHIVED" ng-show="account.archived")
+        span(uib-dropdown on-toggle="toggled(open)")
+          a.pbl(href uib-dropdown-toggle id="more-dropdown" translate="More Options")
+          ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
+            li
+              a(translate="EDIT_NAME" ng-click="editAccount(account)")
+            li
+              a(translate="MAKE_DEFAULT" ng-click="makeDefault(account)" ng-hide="account.archived || isDefault(account)")
+            li
+              a(translate="ARCHIVE" ng-click="archive(account)" ng-hide="account.archived || isDefault(account)")
+            li
+              a(translate="UNARCHIVE" ng-click="unarchive(account)" ng-show="account.archived")
+            li
+              a(translate="REVEAL_XPUB" ng-click="revealXpub(account)" ng-hide="account.archived")
+      .type-lbl.em-500(translate="UNUSED_ADDRESSES")
+      p.alt-font.f-16.em-300.mvm.pbm(translate="UNUSED_ADDRESSES_COPY")
+      table.accounts-container.addresses.responsive.width-100
+        tr.width-100.pointer(ng-click="createAddress()" ng-disabled="createAddressInProgress")
+          td.col-md-6
+            i.ti-plus.blue.mrm
+            span(translate="ADD_NEXT_ADDRESS")
+          td.col-md-6
+            img(ng-show="createAddressInProgress" src="img/spinner.gif")
+        tr(
+          account="account"
+          ng-repeat="address in addresses | filter:presentFilter | filter:searchText | orderBy:'-index' track by address.index"
+          hd-address="address"
+          search-text="searchText"
+          on-remove-label="removeAddressLabel"
+          on-change-label="changeLabel"
+        )
+        img(ng-show="loading" src="img/spinner.gif")
+
+  .flex-between.flex-center.mvl.ptvl
+    .type-lbl.em-500(translate="PAST_ADDRESSES")
+    a(translate="{{showPast ? 'HIDE' : 'SHOW'}}" ng-click="toggleShowPast()" ng-class="{active:showPast}")
+  .flex-row.flex-between(ng-if="showPast")
+    p.alt-font.f-16.em-300.mvm.pbm(translate="PAST_ADDRESSES_COPY")
+    uib-pagination.pagination-sm(
+      ng-model="page"
+      ng-show="totalPast > pageLength"
+      ng-change="setPastAddressesPage(page)"
+      total-items="totalPast"
+      items-per-page="pageLength"
+      max-size="5"
+      boundary-links="true")
+
+  div(ng-if="showPast" ng-init="setPastAddressesPage(page)")
+    .row
+      .col-xs-12.table-container
+        table.accounts-container.addresses.responsive.width-100
+          tr.short.hidden-xs.hidden-sm
+            td.col-md-6.em-500(translate="ADDRESS")
+            td.col-md-6.em-500
+              .flex-between.flex-row
+                span(translate="LABEL")
+                div
+                  span(translate="CURRENT_BALANCE")
+                  helper-button.mrn(content="CURRENT_BALANCE_HELP" placement="left")
+          tr(
+            account="account"
+            ng-repeat="address in pastAddressesPage(page, pageLength) | orderBy:'-index' track by address.index"
+            hd-address="address"
+            on-remove-label="removeAddressLabel"
+            on-change-label="changeLabel"
+            past-address="true"
+          )

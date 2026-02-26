@@ -2,14 +2,23 @@ angular
   .module('walletApp')
   .controller('WalletNavigationCtrl', WalletNavigationCtrl);
 
-function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, buyStatus, cta) {
+function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $state, $uibModal, filterFilter, $location, tradeStatus, cta, Ethereum, ShapeShift, Env, MyWallet) {
   $scope.status = Wallet.status;
   $scope.settings = Wallet.settings;
   $scope.security = SecurityCenter.security;
-  $scope.userHasAccount = buyStatus.userHasAccount();
+  $scope.userHasAccount = tradeStatus.userHasAccount();
+  $scope.accountInfo = MyWallet.wallet.accountInfo;
+  $scope.showEthereum = () => Ethereum.userHasAccess;
+  $scope.showShift = () => ShapeShift.userHasAccess;
+
+  Env.then(env => {
+    let stateGuess = $scope.accountInfo.stateCodeGuess;
+    let whitelistedStates = env.shapeshift.statesWhitelist;
+    $scope.isInWhitelistedState = !stateGuess ? true : whitelistedStates.indexOf(stateGuess) > -1;
+  });
 
   $scope.shouldShowBuyCta = cta.shouldShowBuyCta;
-  $scope.setBuyCtaDismissed = cta.setBuyCtaDissmissed;
+  $scope.setBuyCtaDismissed = cta.setBuyCtaDismissed;
   $scope.shouldShowSecurityWarning = cta.shouldShowSecurityWarning;
   $scope.setSecurityWarningDismissed = cta.setSecurityWarningDismissed;
   $scope.getSecurityWarningMessage = cta.getSecurityWarningMessage;
@@ -18,12 +27,12 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
     if ($scope.shouldShowBuyCta()) $scope.setBuyCtaDismissed();
   };
 
-  buyStatus.canBuy().then((res) => $scope.canBuy = res);
-  buyStatus.shouldShowInviteForm().then((res) => $scope.shouldShowInviteForm = res);
+  tradeStatus.canTrade().then((res) => $scope.canTrade = res);
+  tradeStatus.shouldShowInviteForm().then((res) => $scope.shouldShowInviteForm = res);
 
   $scope.showInviteForm = () => {
     $uibModal.open({
-      templateUrl: 'partials/buy-subscribe-modal.jade',
+      templateUrl: 'partials/buy-subscribe-modal.pug',
       windowClass: 'bc-modal xs',
       controller: 'SubscribeCtrl'
     });
@@ -49,10 +58,12 @@ function WalletNavigationCtrl ($rootScope, $scope, Wallet, SecurityCenter, $stat
     'wallet.common.settings.imported_addresses'
   ].indexOf($state.current.name) > -1;
 
+  tradeStatus.tradeLink().then(res => $scope.tradeLink = res);
+
   $scope.showOrHide = (path) => $location.url().indexOf(path) !== -1;
 
   $rootScope.supportModal = () => $uibModal.open({
-    templateUrl: 'partials/support.jade',
+    templateUrl: 'partials/support.pug',
     windowClass: 'bc-modal auto'
   });
 }

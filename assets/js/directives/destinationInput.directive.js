@@ -1,8 +1,6 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('destinationInput', destinationInput);
-
-destinationInput.$inject = ['$rootScope', '$timeout', 'Wallet', 'format'];
 
 function destinationInput ($rootScope, $timeout, Wallet, format) {
   const directive = {
@@ -10,20 +8,26 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     require: '^ngModel',
     scope: {
       model: '=ngModel',
+      accounts: '=',
+      coinCode: '=',
+      addresses: '=',
+      addressBook: '=',
+      isValidAddress: '=',
       change: '&ngChange',
       onPaymentRequest: '&onPaymentRequest',
       ignore: '=',
       setInputMetric: '&'
     },
-    templateUrl: 'templates/destination-input.jade',
+    templateUrl: 'templates/destination-input.pug',
     link: link
   };
   return directive;
 
   function link (scope, elem, attrs, ctrl) {
-    let accounts = Wallet.accounts().filter(a => !a.archived);
-    let addresses = Wallet.legacyAddresses().filter(a => !a.archived);
-    let addressBook = Wallet.addressBook().map(format.addressBook);
+    let coinCode = scope.coinCode || 'btc';
+    let accounts = scope.accounts || [];
+    let addresses = scope.addresses || [];
+    let addressBook = scope.addressBook || [];
 
     scope.selectOpen = false;
     scope.limit = 50;
@@ -34,11 +38,15 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
     scope.browserWithCamera = $rootScope.browserWithCamera;
 
     scope.onAddressScan = (result) => {
-      let address = Wallet.parsePaymentRequest(result);
-      scope.model = format.destination(address, 'External');
-      scope.onPaymentRequest({request: address});
-      scope.setInputMetric({metric: 'qr'});
-      $timeout(scope.change);
+      let address = Wallet.parsePaymentRequest(result, coinCode);
+      if (scope.isValidAddress(address.address)) {
+        scope.model = format.destination(address, 'External');
+        scope.onPaymentRequest({request: address});
+        scope.setInputMetric({metric: 'qr'});
+        $timeout(scope.change);
+      } else {
+        throw new Error(coinCode + '.ADDRESS_INVALID');
+      }
     };
 
     scope.setModel = (a) => {
@@ -75,7 +83,7 @@ function destinationInput ($rootScope, $timeout, Wallet, format) {
       if (ignore && typeof ignore === 'object') {
         let filterSame = (dest) => ignore.index != null
           ? dest.index !== ignore.index
-          : dest.address !== ignore.address;
+          : ignore.address ? dest.address !== ignore.address : true;
         scope.destinations = scope.destinations.filter(filterSame);
       }
     });

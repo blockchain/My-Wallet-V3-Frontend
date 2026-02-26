@@ -1,0 +1,3 @@
+div(ng-if="vm.onTab('btc')" ng-include="'partials/request/request-bitcoin.pug'" ng-controller="RequestBitcoinController")
+div(ng-if="vm.onTab('eth')" ng-include="'partials/request/request-ethereum.pug'" ng-controller="RequestEthereumController")
+div(ng-if="vm.onTab('bch')" ng-include="'partials/request/request-bitcoin-cash.pug'" ng-controller="RequestBitcoinCashController")

@@ -1,7 +1,9 @@
 describe('Alerts Directive', () => {
   var element, isoScope;
 
-  beforeEach(angular.mock.module('walletApp'));
+  beforeEach(module('walletDirectives'));
+
+  beforeEach(module('walletApp'));
 
   beforeEach(() => {
     inject(($compile, $rootScope) => {

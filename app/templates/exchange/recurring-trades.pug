@@ -1,0 +1,41 @@
+.recurring-trade.border-right.border-left(ng-class="{'border-bottom': !state.toggled}")
+  .exchange-status.pv-15.pos-rel
+    span.pl-25.ph-10-mobile.flex-row.flex-center.pointer(ng-click="state.toggled = !state.toggled")
+      i.icon-down_arrow.f-8.mr-5(ng-class="{rotated: !state.toggled}")
+      span(class="{{$ctrl.subscription.isActive ? 'transfer' : 'state-danger-text'}}") {{ $ctrl.subscription.isActive ? 'Active' : 'Inactive' }}
+    a.em-400(translate="MANAGE_THIS_ORDER" ng-click="state.toggled = !state.toggled" ng-class="{'opacity-5': state.toggled}")
+  .exchange-date.pv-15
+    span.capitalize {{ $ctrl.subscription.frequency }}
+  .exchange-exchanged.pv-15
+    span {{ trades[0].createdAt | date:recurringDateFormat }}
+  .exchange-received.pv-15
+    span(ng-if="$ctrl.subscription.endTime") {{ $ctrl.subscription.endTime | date:recurringDateFormat }}
+    span(ng-if="!$ctrl.subscription.endTime") Until you cancel
+.border-right.border-left.border-bottom(ng-show="state.toggled")
+  .child-trades
+    .exchange-trade.border.bg-grey
+      .pvs
+        span.em-500.pl-25.ph-5-mobile(translate="STATUS")
+      .pvs
+        span.em-500(translate="DATE")
+      .pvs.hidden-xs
+        span.em-500(translate="BTC")
+      .pvs.pr-50
+        span.em-500(translate="TOTAL")
+    .exchange-trade(ng-repeat="trade in trades" ng-click="$root.size.xs && buyHandler(trade)")
+      .exchange-status.pv-15
+        span.state.pl-25.mrl(class="{{classHelper(trade)}}" translate="{{displayHelper(trade)}}")
+        a.hidden-xs(ng-hide="trade.state === 'awaiting_transfer_in'" translate="VIEW_DETAILS" ng-click="buyHandler(trade)")
+        a.hidden-xs(ng-show="trade.state === 'awaiting_transfer_in'" translate="FINISH_PAYMENT" ng-click="buyHandler(trade)")
+      .exchange-date.pv-15
+        span {{ trade.createdAt | date:dateFormat }}
+      .exchange-exchanged.pv-15.hidden-xs
+        span {{ trade.receiveAmount }}
+        | &nbsp;
+        span.hidden-xs BTC
+      .exchange-received.pv-15.flex-between
+        span {{ trade.sendAmount / 100 }} {{ trade.inCurrency }}
+        span(ng-if="canCancel(trade)")
+          i.ti-trash.mls.pointer.state-danger-text(ng-click="cancelTrade(trade); $event.stopPropagation();" ng-show="canCancel" uib-tooltip="{{'CLICK_TO_CANCEL' | translate}}")
+    .width-100.flex-end.mv-20(ng-show="state.toggled")
+      .button-danger.f-13(ng-show="$ctrl.subscription.isActive" ng-click="cancel()" translate="CANCEL_RECURRING_ORDER")

@@ -1,0 +1,19 @@
+.filter-bar.flex-between.flex-center
+  a.flex-center.text.em-400.black(ng-click="back()")
+    i.ti-arrow-left.mrm
+  .filter-search.input-group
+    input.form-control(type="text" placeholder="{{::'SEARCH' | translate}}" ng-model="searchText")
+    i.ti-search
+.settings-category
+  h2(translate="ADDRESS_BOOK")
+  .row
+    .col-xs-12
+      table.responsive.width-100.account-container
+        tr
+          th(translate="ADDRESS")
+          th(translate="LABEL")
+          th
+        tr(
+          address-book-entry="address",
+          search-text="searchText",
+          ng-repeat="address in addressBook() | addressOrNameMatch:searchText")

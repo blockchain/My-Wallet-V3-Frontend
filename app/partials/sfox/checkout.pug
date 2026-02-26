@@ -1,0 +1,134 @@
+bc-tabs(tab="tabs.selectedTab" tab-options="tabs.options" on-select="tabs.select($tab)")
+  .sfox-logo
+    span.mrs.type-sm.hidden-xs(translate="POWERED_BY")
+    a(href="https://www.sfox.com/" target="_blank" rel="noopener noreferrer")
+      img.mbs(src="img/sfox-logo-trans.png")
+.buy-sell.overflow-scroll.flex-1
+  .flex-row.pbvl(ng-show="tabs.selectedTab === 'BUY_BITCOIN' && checkout.onStep('create')")
+    .width-50.pv-30.ph-30.border-desktop.flex-center.flex-justify(ng-if="!showBuy()")
+      .flex-column
+        span.f-24.center.blue.pb-15(translate="Stay Tuned!")
+        span.f-18.center(translate="SFOX.buy.COMING_SOON")
+        .mt-30.center(ng-show="hasSignedUpForSfoxBuyAccess()")
+          span(translate="Thanks for submitting your email. We'll let you know when it's ready 📬")
+        form.bc-form.mt-50(ng-submit="signupForBuyAccess()" ng-hide="hasSignedUpForSfoxBuyAccess()")
+          .mt-20
+            .group
+              .item
+                input(type="email" ng-model="email" placeholder="Add your email here" required)
+            button.btn.button-primary.full-width.mt-20(translate="EXCHANGE.NOTIFY_ME_WHEN_AVAIL" type="submit")
+    .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxBuyCheckoutController" ng-if="showBuy()")
+      exchange-checkout(
+        type="'Buy'"
+        fiat="checkout.dollars"
+        user-id="checkout.userId"
+        conversion="100"
+        trading="buying"
+        fiat-limits="true"
+        limits="buyLimits"
+        provider="'sfox'"
+        buy-level="checkout.state.buyLevel"
+        trade-account="checkout.state.account"
+        handle-quote="buyQuoteHandler(amount, baseCurr, quoteCurr)"
+        on-success="buying().verificationRequired ? checkout.openSfoxSignup() : prepareBuy(quote)")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && showBuy() && !checkout.hasDismissedBuyIntro() && !pendingBuyTrades().length")
+      .mb-20
+        .flex-between
+          span.f-24.blue.f-14-mobile
+            i.icon-buy-sell.h3.mrm
+            span(translate="SFOX.buy.INTRODUCING_HEADER")
+          span
+            i.pointer.ti-close.f-14.mid-grey(ng-click="checkout.dismissBuyIntro()")
+        p.f-12.mt-10(translate="SFOX.buy.INTRODUCING_BODY")
+    .width-50.pl-30.prn.pv-10-mobile.no-margin-mobile(ng-if="pendingBuyTrades().length")
+      span You have {{ pendingBuyTrades().length }} pending buy {{ pendingBuyTrades().length === 1 ? 'transaction' : 'transactions' }} for a total of {{ pendingBuyTradesTotal() }} BTC. You can see more details in your
+      | &nbsp;
+      a(ng-click="tabs.select('ORDER_HISTORY')") Order History.
+  .flex-row.pbvl(ng-show="tabs.selectedTab === 'SELL_BITCOIN' && checkout.onStep('create')")
+    .border-desktop.ph-30.pv-30.width-50.no-padding-mobile(ng-controller="SfoxSellCheckoutController")
+      exchange-checkout(
+        type="'Sell'"
+        fiat="checkout.dollars"
+        user-id="checkout.userId"
+        conversion="100"
+        trading="selling"
+        limits="sellLimits"
+        provider="'sfox'"
+        buy-level="checkout.state.buyLevel"
+        trade-account="checkout.state.account"
+        handle-quote="sellQuoteHandler(amount, baseCurr, quoteCurr)"
+        on-success="selling().verificationRequired ? checkout.openSfoxSignup() : buildPayment(quote)")
+    .flex-column.width-50.pl-30.prn.pv-10-mobile.no-margin-mobile.hidden-xs(ng-if="checkout.onStep('create') && !checkout.hasDismissedSellIntro() && !pendingSellTrades().length")
+      .flex-between
+        span.f-24.blue.f-14-mobile
+          i.icon-buy-sell.h3.mrm
+          span(translate="SFOX.sell.INTRODUCING_HEADER")
+        span
+          i.pointer.ti-close.f-14.mid-grey(ng-click="checkout.dismissSellIntro()")
+      p.f-12.mt-10(translate="SFOX.sell.INTRODUCING_BODY")
+    .width-50.pl-30.prn.pv-10-mobile.no-margin-mobile(ng-if="pendingSellTrades().length")
+      span You have {{ pendingSellTrades().length }} pending sell {{ pendingSellTrades().length === 1 ? 'transaction' : 'transactions' }} for a total of {{ pendingSellTradesTotal() }} USD. You can see more details in your
+      | &nbsp;
+      a(ng-click="tabs.select('ORDER_HISTORY')") Order History.
+  .flex-row.pbvl(ng-if="checkout.onStep('confirm')")
+    exchange-confirm.width-55.border-desktop(
+      type="checkout.type"
+      quote="checkout.quote"
+      namespace="'SFOX'"
+      details="checkout.tradeDetails"
+      trade-account="checkout.state.account"
+      fiat="checkout.dollars"
+      on-cancel="checkout.type === 'buy' ? checkout.handleCancel(null, checkout.type, 0) : checkout.handleCancel(null, checkout.type)"
+      on-success="checkout.goTo('receipt')"
+      on-expiration="checkout.type === 'sell' ? checkout.sellRefresh() : checkout.buyRefresh()"
+      handle-trade="checkout.type === 'sell' ? checkout.sellHandler(checkout.quote) : checkout.buyHandler(checkout.quote)")
+  div.width-50.border-desktop(
+    ng-if="checkout.onStep('receipt')"
+    ng-include="'partials/sfox/details.pug'")
+  .flex-column.pbvl(ng-if="tabs.selectedTab === 'ORDER_HISTORY'")
+    .flex-center.flex-justify.flex-column.mtvl(ng-hide="completedTrades().length || pendingTrades().length")
+      .flex-column.mbl.border-bottom.black
+        .flex-center.flex-justify
+          i.ti-direction-alt.h3.mrm
+          h3.em-100(translate="NO_TRADES")
+        p.em-400.pointer(translate="NO_TRADES_EXPLAIN" ng-click="tabs.select('BUY_BITCOIN')")
+    div(ng-show="pendingTrades().length")
+      .flex-row.flex-between.flex-center
+        h4.type-h5 Pending Orders
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-20-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5.hidden-xs
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in pendingTrades() | orderBy:'createdAt':true track by $index"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
+            inspect-trade="inspectTrade"
+            namespace="'SFOX'"
+            conversion="100000000"
+            trade="trade")
+    div(ng-show="completedTrades().length")
+      .flex-row.flex-between.flex-center.mtl
+        h4.type-h5 Completed Orders
+      .width-100
+        .exchange-trade-header.border.bg-footer-blue
+          .pv-5
+            span.em-500.pl-25.ph-20-mobile(translate="STATUS")
+          .pv-5
+            span.em-500(translate="DATE")
+          .pv-5.hidden-xs
+            span.em-500(translate="BTC")
+          .pv-5
+            span.em-500(translate="TOTAL")
+        div(ng-repeat="trade in completedTrades() | orderBy:'createdAt':true track by $index"
+            user-action-required="trade.state === 'awaiting_transfer_in'"
+            inspect-trade="inspectTrade"
+            namespace="'SFOX'"
+            conversion="100000000"
+            trade="trade")
+contact-support-footer(ng-hide="inMobileBuy")
+sift-science(ng-if='siftScienceEnabled' user-id='userId' trade-id='trade.id')

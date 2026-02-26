@@ -2,19 +2,29 @@ angular
   .module('walletApp')
   .controller('faqCtrl', faqCtrl);
 
-function faqCtrl ($scope, faq, buyStatus, $uibModal) {
-  $scope.questions = faq.questions.map(q => angular.merge({ displayed: false }, q));
-  $scope.toggle = (q) => { q.displayed = !q.displayed; };
+function faqCtrl ($scope, $timeout, faq, env, canTrade, tradeStatus, languages, $uibModal, Ethereum, ShapeShift) {
+  let showEthereum = Ethereum.userHasAccess || void 0;
+  let showShapeShift = ShapeShift.userHasAccess || void 0;
 
-  $scope.subscribe = () => {
-    $uibModal.open({
-      templateUrl: 'partials/subscribe-modal.jade',
-      windowClass: 'bc-modal initial',
-      controller: 'SubscribeCtrl'
+  $scope.questions = faq.getQuestions(env, canTrade)
+    .filter(q => !q.eth || showEthereum)
+    .filter(q => !q.shapeshift || showShapeShift)
+    .map(q => angular.merge({ displayed: false, values: { showEthereum } }, q));
+
+  if (env.webHardFork.faqMessage) {
+    let a = languages.localizeMessage(env.webHardFork.faqMessage.answer);
+    let q = languages.localizeMessage(env.webHardFork.faqMessage.question);
+    let actions = env.webHardFork.faqMessage.actions;
+    $scope.questions.unshift({
+      translated: true,
+      actions: actions.map(a => ({
+        link: a.link,
+        title: a.title && languages.localizeMessage(a.title)
+      })),
+      question: q,
+      answer: a
     });
-  };
+  }
 
-  buyStatus.canBuy().then((canBuy) => {
-    !buyStatus.userHasAccount() && !canBuy && ($scope.questions[0] = {name: 'CAN_I_BUY_UNINVITED', values: {click: $scope.subscribe}});
-  });
+  $scope.toggle = (q) => { q.displayed = !q.displayed; };
 }

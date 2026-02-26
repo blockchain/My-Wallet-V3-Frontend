@@ -1,0 +1,18 @@
+.pv-25.ph-25
+  .flex-column
+    .f-18.mb-15.em-400
+      span.f-18.mb-15.em-400(translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'HEADER' }}")
+    div(ng-if="$ctrl.state === 'PROCEED'")
+      span.f-14.em-300(translate="RECURRING_CONFIRM.TERMS")
+    .f-14.em-300(ng-if="$ctrl.state !== 'PROCEED'")
+      span.f-14.em-300(ng-if="!$ctrl.endTime" translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BODY' }}" translate-values="{timing: $ctrl.recurringTiming()}")
+      span.f-14.em-300(ng-if="$ctrl.endTime" translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BODY_WITH_ENDTIME' }}" translate-values="{timing: $ctrl.recurringTiming(), end: $ctrl.endTime.toDateString()}")  
+    .flex-row.flex-align-start.mt-20(ng-if="$ctrl.state === 'PROCEED'")
+      div
+        input(type="checkbox" id="$ctrl.recurringCheck" name="$ctrl.recurringCheck" ng-model="$ctrl.recurringCheck")
+      label.pl-5.em-400(translate="ACCEPT_COINIFY_TOS" for="$ctrl.recurringCheck")
+.modal-footer.flex-end.flex-row
+  .flex-1.flex-end
+    button.button-muted.mrm(ng-if="$ctrl.state !== 'NEEDS_TRADES'" ng-click="$ctrl.onCancel()" translate="GO_BACK")
+    button.button-primary(ng-if="$ctrl.state !== 'NEEDS_TRADES'" translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BUTTON' }}" ng-disabled="$ctrl.state === 'PROCEED' ? !$ctrl.recurringCheck : false" ng-click="$ctrl.onProceed()")
+    button.button-primary(ng-if="$ctrl.state === 'NEEDS_TRADES'" translate="{{ 'RECURRING_CONFIRM' + '.' + $ctrl.state + '.' + 'BUTTON' }}" ng-click="$ctrl.onCancel()")

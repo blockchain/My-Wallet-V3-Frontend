@@ -1,0 +1,17 @@
+.faq-question(translate-namespace="FAQ_QUESTIONS.{{q.name}}")
+  .question.pointer.flex-between.em-500(ng-click="onToggle()")
+    span(ng-hide="q.translated" translate=".Q" translate-values="{{q.values}}")
+    span(ng-show="q.translated") {{ q.question }}
+    i(ng-class="q.displayed ? 'blue ti-angle-up' : 'ti-angle-down'")
+  .answer.text.em-300.mts.flex(ng-if="q.displayed")
+    p.alt-font.f-16.em-300.mbn.flex-2
+      span(ng-hide="q.translated" translate=".A" translate-values="{{q.values}}" ui-sref="{{q.values.link}}" ng-click="q.values.click()")
+      span(ng-show="q.translated") {{ q.answer }}
+      | &nbsp;
+      a(ng-show="q.link && !q.translated" translate="{{q.link[0]}}" ui-sref="{{q.link[1]}}")
+      a(ng-show="q.function && !q.translated" translate="{{q.function.text}}" ng-click="q.function.click()")
+      span(ng-show="q.actions" ng-repeat="action in q.actions")
+        a(href="{{ action.link }}" target="_blank" rel="noopener noreferrer") {{ action.title }}
+        span.mhs(ng-hide="$last" translate="OR")
+        span(ng-show="$last") .
+    .flex-1

@@ -1,0 +1,10 @@
+div.amountTotal.em-400.amount.flex-center.flex-justify(
+  ng-class="{\
+    'button-transferred': $ctrl.tx.txType === 'transfer',\
+    'button-received'    : $ctrl.tx.txType === 'received',\
+    'button-sent'       : $ctrl.tx.txType === 'sent',\
+    'unconfirmed' : $ctrl.tx.confirmations < 3 \
+  }" ng-click="$ctrl.toggle()")
+  span(ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)")
+  fiat(bch="$ctrl.absolute($ctrl.tx.amount)" ng-hide="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)" abs)
+  span.no-wrap(ng-show="$ctrl.isBitCurrency($ctrl.settings.displayCurrency)") {{ $ctrl.absolute($ctrl.tx.amount) | convert:'bch':true }}

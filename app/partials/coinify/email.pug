@@ -1,0 +1,20 @@
+form.modal-body.fade.clearfix(name="emailForm" ng-submit="$ctrl.onComplete()")
+  i.ti-close.close-modal.alt(ng-click="$ctrl.onClose()")
+  div(ng-hide="$ctrl.state.editing || !$ctrl.validEmail")
+    span.type-h5.em-500.flex-start.pts(translate="VERIFY_EMAIL")
+    p.mtl.mbm
+      span(translate="SENT_VERIFICATION" translate-values="{email: $ctrl.email}")
+    .mtm
+      span.flex-center.pointer(translate="CHANGE_EMAIL" ng-click="$ctrl.toggleEditing()")
+  bc-async-input(
+    type="email"
+    is-required
+    ng-model="$ctrl.email"
+    on-cancel="$ctrl.toggleEditing"
+    on-save="$ctrl.changeEmail"
+    on-change="$ctrl.onEmailChange()"
+    ng-show="$ctrl.state.editing || !$ctrl.validEmail"
+    action-title="'CHANGE' | translate"
+    inline
+    editing="true")
+  .pt-20

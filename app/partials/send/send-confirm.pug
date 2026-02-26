@@ -1,0 +1,43 @@
+.flex-column.f-16
+  .flex-row
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20 ' : 'width-30'" translate="FROM")
+    .width-70.width-70-mobile.f-12-mobile {{ $ctrl.tx.from.label || $ctrl.tx.from.address || $ctrl.tx.label }}
+  .flex-row.mt-10
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="TO")
+    .width-70.width-70-mobile.f-12-mobile
+      span(translate="no") {{ $ctrl.tx.destination.label || $ctrl.tx.destination.address || $ctrl.tx.destination || $ctrl.tx.to }}
+  .flex-row.mt-10(ng-show="$ctrl.tx.note.length")
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="{{$ctrl.size.xs ? 'NOTE' : 'DESCRIPTION'}}")
+    .width-70.width-70-mobile.f-12-mobile {{ $ctrl.tx.note }}
+  .flex-row.mt-10
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="PAYMENT")
+    .width-70.width-70-mobile.f-12-mobile
+      span {{$ctrl.tx.amount | convert:$ctrl.asset:true}}
+      | &nbsp;
+      fiat(btc="$ctrl.tx.amount" ng-if="$ctrl.asset === 'btc'" parens="true")
+      fiat(eth="$ctrl.tx.amount" ng-if="$ctrl.asset === 'eth'" parens="true")
+      fiat(bch="$ctrl.tx.amount" ng-if="$ctrl.asset === 'bch'" parens="true")
+  .flex-row.mt-10
+    label.colon.f-12-mobile.width-20-mobile(ng-class="$ctrl.asset === 'eth' ? 'width-20' : 'width-30'" translate="FEE")
+    .width-70.width-70-mobile.f-12-mobile
+      span {{ $ctrl.tx.fee | convert:$ctrl.asset:true }}
+      | &nbsp;
+      fiat(btc="$ctrl.tx.fee" ng-if="$ctrl.asset === 'btc'" parens="true")
+      fiat(eth="$ctrl.tx.fee" ng-if="$ctrl.asset === 'eth'" parens="true")
+      fiat(bch="$ctrl.tx.fee" ng-if="$ctrl.asset === 'bch'" parens="true")
+  .bg-grey.pv-20.ph-60.flex-column.mt-10.center(ng-class="($ctrl.tx.destination.type && $ctrl.tx.destination.type != 'External') ? 'transfer' : 'sent'")
+    span.mb-10(translate="TOTAL")
+    span.f-28.mb-10.em-600 {{$ctrl.getTransactionTotal(true) | convert:$ctrl.asset:true}}
+    fiat.f-20(btc="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'btc'")
+    fiat.f-20(eth="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'eth'")
+    fiat.f-20(bch="$ctrl.getTransactionTotal(true)" ng-if="$ctrl.asset === 'bch'")
+  div.well.em-400.type-h5.hidden-xs(translate="BITCOIN_CASH.VERIFY_ADDRESS" ng-if="$ctrl.warning")
+  .mt-30
+    button.full.button-primary.upper(
+      ladda-translate="{{$ctrl.getButtonContent()}}"
+      ui-ladda="sending"
+      ng-click="$ctrl.onSend()"
+      ng-disabled="$ctrl.locked"
+      data-style="expand-left")
+    div.width-100.center.mt-10
+      a.f-14(ng-click="$ctrl.onGoBack()" translate="GO_BACK")

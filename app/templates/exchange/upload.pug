@@ -1,0 +1,27 @@
+.flex-row.flex-start.flex-column-tablet
+  .width-40
+    .width-90
+      .flex-column.mb-10
+        span.f-20.em-500.mb-20(translate="Upload Documents")
+        .flex-row.mv-5
+          h4.f-16.em-500.mvn(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.TITLE")
+          button.helper(ng-click="$ctrl.openHelper($ctrl.base + '.HELPER.' + $ctrl.idType)" type="button" tabindex="-1")
+            span ?
+      .mbl
+        span.f-16(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.COPY")
+      .mbl(ng-show="qaDebugger")
+        div.type-h4.mbs.underline
+          i.mrs.ti-search
+          span QA
+        ul.pll
+          li.type-lbl.mbm.pointer.blue(ng-click="$ctrl.autoFill()") Autofill Photos and Verify
+      .flex-column.mbl.f-16
+        span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION1")
+        span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION2")
+        span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION3")
+        span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.OPTION4")
+      .flex-column.mbm.f-16.em-600
+        span(translate="{{$ctrl.base + '.UPLOAD.' + $ctrl.idType}}.WARNING")
+
+  .width-60
+    bc-file-upload(file="$ctrl.file" id-type="$ctrl.idType" base="$ctrl.base" on-upload="$ctrl.onUpload" locked="$ctrl.locked" upload-steps="$ctrl.uploadSteps" on-upload-step="$ctrl.onUploadStep")

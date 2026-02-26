@@ -1,0 +1,5 @@
+.left-nav(ui-view="left" ng-class="{toggled: menu.isCollapsed}" ng-hide="inMobileBuy" data-preflight-tag="WalletNavigation")
+.main-container
+  .top-view(ui-view="top" ng-hide="inMobileBuy" data-preflight-tag="Top")
+  service-alert
+  .right-container.flex.flex-column(ui-view="right" scroll-to-top in-view-container ng-click="hideMenu()")

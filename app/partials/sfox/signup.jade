@@ -1,8 +1,0 @@
-.sfox-signup
-  .signup-steps.border-bottom-light
-    div(ng-include="'partials/sfox/signup-steps.jade'")
-  div.pl-40.pr-40.pt-40.pb-25
-    div(ng-if="vm.onStep('create')" ng-include="'partials/sfox/create.jade'" ng-controller="SfoxCreateAccountController")
-    div(ng-if="vm.onStep('verify')" ng-include="'partials/sfox/verify.jade'" ng-controller="SfoxVerifyController")
-    div(ng-if="vm.onStep('link')" ng-include="'partials/sfox/link.jade'" ng-controller="SfoxLinkController")
-    div(ng-if="vm.onStep('buy')" ng-include="'partials/sfox/buy.jade'" ng-controller="SfoxBuyController")

@@ -2,37 +2,26 @@ angular
   .module('walletApp')
   .component('kycStatus', {
     bindings: {
-      state: '<',
-      limits: '<',
+      kyc: '<',
+      currency: '<',
       onTrigger: '&'
     },
-    templateUrl: 'templates/kyc-status.jade',
-    controller: function (buySell) {
+    templateUrl: 'templates/kyc-status.pug',
+    controller: function (coinify) {
       this.stateMap = {
-        'expired': { ns: 'KYC_EXPIRED', i: 'ti-na' },
-
         'pending': { ns: 'KYC_PENDING', i: 'ti-alert' },
-
-        'manualHold': { ns: 'KYC_IN_HOLD', i: 'ti-alert' },
-
+        'updateRequested': { ns: 'KYC_UPDATES_REQUESTED', i: 'ti-alert' },
         'reviewing': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-        'manual_review': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-        'manualReviewing': { ns: 'KYC_IN_REVIEW', i: 'ti-alert' },
-
-        'failed': { ns: 'KYC_DENIED', i: 'ti-na' },
-        'declined': { ns: 'KYC_DENIED', i: 'ti-na' },
-        'rejected': { ns: 'KYC_DENIED', i: 'ti-na' },
-        'manualRejected': { ns: 'KYC_DENIED', i: 'ti-na' }
+        'rejected': { ns: 'KYC_REJECTED', i: 'ti-na' }
       };
-      this.getState = () => this.stateMap[this.state];
 
-      this.profile = buySell.getExchange().profile;
+      this.getState = () => this.stateMap[this.kyc.state];
+
+      this.profile = coinify.exchange.profile;
       this.level = this.profile ? +this.profile.level.name : null;
 
       this.getCardMax = () => {
-        let symbol = this.limits.currency && this.limits.currency.symbol;
-        let amt = this.limits.card && this.limits.card.max;
-        return (symbol || '€') + (amt || '300.00');
+        if (coinify.limits.card.inRemaining) return this.currency && coinify.limits.card.inRemaining[this.currency] + ' ' + this.currency;
       };
     }
   });

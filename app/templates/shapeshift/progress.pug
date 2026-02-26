@@ -1,0 +1,17 @@
+div(translate-namespace="SHIFT")
+  .shift-progress
+    .flex-column.flex-center.center(ng-class="{active: $ctrl.onStep('no_deposits'), complete: $ctrl.afterStep('no_deposits')}")
+      span.flex-justify.flex-center
+        i.icon-paper-airplane
+        i.icon-paper-airplane
+      span.em-500.mt-10(translate="{{ $ctrl.onStep('no_deposits') ? '.SENDING_FUNDS' : '.FUNDS_SENT' }}")
+    .flex-column.flex-center.center(ng-class="{active: $ctrl.onStep('received'), complete: $ctrl.afterStep('received')}")
+      span.flex-justify.flex-center
+        i.icon-ExchangeTab
+        img(ng-src="img/exchange-processing.gif")
+      span.em-500.mt-10(translate=".EXCHANGE_IN_PROGRESS" ng-class="{ 'opacity-5': $ctrl.onStep('no_deposits') }")
+    .flex-column.flex-center.center(ng-class="{complete: $ctrl.onStep('complete'), failed: $ctrl.onStep('failed') || $ctrl.onStep('resolved')}")
+      span.flex-justify.flex-center
+        i(ng-class="$ctrl.onStep('failed') || $ctrl.onStep('resolved') ? 'icon-alert' : 'icon-completed-check'")
+      span.em-500.mt-10(ng-hide="$ctrl.onStep('resolved')" translate="{{ $ctrl.onStep('failed') ? 'SHIFT.TRADE.' + trade.status + '.HEADER' : 'TRADE_COMPLETE' }}" ng-class="{ 'opacity-5': $ctrl.onStep('no_deposits') || $ctrl.onStep('received') }")
+      span.em-500.mt-10(ng-show="$ctrl.onStep('resolved')" translate="SHIFT.TRADE.resolved.HEADER")

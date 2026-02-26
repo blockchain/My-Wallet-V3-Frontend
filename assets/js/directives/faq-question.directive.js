@@ -1,6 +1,6 @@
 
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('faqQuestion', faqQuestion);
 
 function faqQuestion () {
@@ -10,7 +10,7 @@ function faqQuestion () {
       q: '=question',
       onToggle: '&'
     },
-    templateUrl: 'templates/faq-question.jade'
+    templateUrl: 'templates/faq-question.pug'
   };
   return directive;
 }

@@ -1,0 +1,12 @@
+.modal-body.flex-column(data-preflight-tag="FirstLoginBuy")
+  i.ti-close.close-modal(ng-click="$close()")
+  img.width-15.margin-0-auto.width-20-mobile.width-20-tablet(src="img/blue-rocket.svg")
+  .flex-column.flex-between.pt-20
+    .flex-column.flex-center
+      h3.black.f-28.em-300.center.mb-15.upper.center(translate="BUY_FIRST_LOGIN_HEADER")
+      p.mbl.f-18.width-80.em-300.mb-15.center
+        span(translate="BUY_FIRST_LOGIN_BODY")
+    .flex-justify
+      button.button.button-primary.width-80.width-100-mobile.mtl(ui-sref="wallet.common.buy-sell" translate="BUY_BITCOIN")
+    .flex-justify
+      a.flex-row.flex-center.mtl(ng-click="$close()" href="https://www.blockchain.com/learning-portal/index.html" target="_blank" rel="noopener noreferrer" translate="LEARN_MORE_WALLET")

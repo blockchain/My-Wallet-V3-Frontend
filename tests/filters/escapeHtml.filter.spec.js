@@ -1,5 +1,4 @@
 describe('escapeHtmlFilter', () => {
-
   beforeEach(module('walletApp'));
   beforeEach(module('walletFilters'));
 
@@ -9,5 +8,4 @@ describe('escapeHtmlFilter', () => {
     let escaped = '&lt;a href=&quot;http://evil.com&quot;&gt;Click me &gt;:&amp;&lt;/a&gt;';
     expect(convert(html)).toBe(escaped);
   }));
-
 });

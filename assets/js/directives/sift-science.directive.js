@@ -1,8 +1,8 @@
 angular
-  .module('walletApp')
+  .module('walletDirectives')
   .directive('siftScience', siftScience);
 
-function siftScience ($sce, $rootScope, Options) {
+function siftScience ($sce, Env, AngularHelper, $window) {
   const directive = {
     restrict: 'E',
     scope: {
@@ -29,47 +29,42 @@ function siftScience ($sce, $rootScope, Options) {
       console.error('sift-science(user-id) missing');
       return;
     }
-    if (!scope.tradeId) {
-      console.error('sift-science(trade-id) missing');
-      return;
-    }
 
-    let processOptions = (options) => {
-      let url = `http://localhost:8081/wallet-helper/sift-science/#/key/${$rootScope.sfoxSiftScienceKey || options.partners.sfox.siftScience}/user/${ scope.userId }/trade/${ scope.tradeId }`;
+    let processEnv = (env) => {
+      let url = `${env.walletHelperDomain}/wallet-helper/sift-science/#/key/${env.sfoxSiftScienceKey || env.partners.sfox.siftScience}/user/${scope.userId}`;
+      url += scope.tradeId ? `/trade/${scope.tradeId}` : '';
       scope.url = $sce.trustAsResourceUrl(url);
 
-      if ($rootScope.buySellDebug) {
+      if (env.qaDebugger) {
         console.info(url);
       }
     };
 
-    if (Options.didFetch) {
-      processOptions(Options.options);
-    } else {
-      Options.get().then(processOptions);
-    }
+    Env.then().then(processEnv);
 
-    let receiveMessage = (e) => {
-      if (!e.data.command) return;
-      if (e.data.from !== 'sift-science') return;
-      if (e.data.to !== 'exchange') return;
-      if (e.origin !== 'http://localhost:8081') return;
-      switch (e.data.command) {
-        case 'done':
-          // Remove Sift Science iframe:
-          if ($rootScope.buySellDebug) {
-            console.info('Dismiss Sift Science iframe');
-          }
-          scope.enabled = false;
-          break;
-        default:
-          console.error('Unknown command');
-          return;
-      }
+    Env.then(env => {
+      let receiveMessage = (e) => {
+        if (!e.data.command) return;
+        if (e.data.from !== 'sift-science') return;
+        if (e.data.to !== 'exchange') return;
+        if (e.origin !== env.walletHelperDomain) return;
+        switch (e.data.command) {
+          case 'done':
+            // Remove Sift Science iframe:
+            if (env.qaDebugger) {
+              console.info('Dismiss Sift Science iframe');
+            }
+            scope.enabled = false;
+            break;
+          default:
+            console.error('Unknown command');
+            return;
+        }
 
-      $rootScope.$safeApply();
-    };
+        AngularHelper.$safeApply();
+      };
 
-    window.addEventListener('message', receiveMessage, false);
+      $window.addEventListener('message', receiveMessage, false);
+    });
   }
 }

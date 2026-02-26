@@ -1,0 +1,112 @@
+form.bc-form(
+  name="checkoutForm"
+  ng-submit="trade()"
+  novalidate
+  autocomplete="off"
+  ng-class="{busy: busy}")
+  .group
+    .item
+      .flex-between.flex-baseline.mbs
+        .flex-row
+           span.f-16.em-500.colon Enter Amount
+        span
+          div.flex-row.flex-center(ng-show="state.rate && !state.loadFailed && !checkoutForm.$error.min")
+            span 1 {{ bitcoin.code }} = {{ format(state.rate, fiat, false) }} {{fiat.code}}
+            helper-button(content="EXCHANGE_RATE_HELPER")
+          .state-danger-text(ng-show="state.loadFailed")
+            i.ti-alert
+            span.mls(translate="{{state.error || 'Failed to load exchange data'}}")
+          .state-danger-text.f-12(ng-show="!state.loadFailed && checkoutForm.$error.min")
+            i.ti-alert
+            span.mls Please enter an amount greater than {{ format(min.fiat.toFixed(2), fiat, false) }} {{ fiat.code }}
+  fieldset(ng-disabled="locked || trading().isDisabled")
+    .group
+      .item
+        .flex-center
+          .flex-1.flex-center.border
+            input.form-control.no-border(
+              type="number"
+              name="fiat"
+              ng-model="state.fiat"
+              ng-max="max.fiat.toFixed(2)"
+              ng-min="min.fiat.toFixed(2)"
+              ng-change="state.baseCurr = fiat"
+              step="1"
+              prevent-event="mousewheel"
+              focus-when="true"
+              ng-model-options="{debounce: 250}"
+              ng-disabled="max.fiat <= 0"
+              required)
+            .input-dropdown(uib-dropdown)
+              span.ph-10(uib-dropdown-toggle ng-class="{'arrow': fiatOptions.length}") {{fiat.code}}
+              ul.uib-dropdown-menu.dropdown-menu-right(uib-dropdown-menu ng-if="fiatOptions.length")
+                li(ng-repeat="currency in fiatOptions" ng-if="currency.code !== fiat.code")
+                  a(ng-click="$ctrl.fiatChange({currency});") {{ currency.code }}
+          i.ti-arrows-horizontal.h4.border-grey.phm.hidden-xs
+          .flex-1.flex-center.border
+            input.form-control.no-border(
+              type="number"
+              name="btc"
+              ng-model="state.btc"
+              ng-max="max.btc.toFixed(8)"
+              ng-min="min.btc.toFixed(8)"
+              ng-change="state.baseCurr = bitcoin"
+              step="0.01"
+              prevent-event="mousewheel"
+              ng-model-options="{debounce: 250}"
+              ng-disabled="max.fiat <= 0"
+              required)
+            span.ph-10 {{bitcoin.code}}
+        .f-12.mts
+          span(translate-values="{max: $ctrl.fiatLimits ? max.fiat.toFixed(2) : max.btc.toFixed(8), min: $ctrl.fiatLimits ? min.fiat.toFixed(2) : min.btc.toFixed(8), curr: $ctrl.fiatLimits ? fiat.code : bitcoin.code}"
+               translate="{{ provider + '.' + trading().reason + (checkoutForm.$error.max ? '.ERROR_MAX' : '.EXPLAIN') }}"
+               ng-class="{'state-danger-text': checkoutForm.$error.max || trading().isDisabled}"
+               ng-click="!trading().isDisabled && setMax()")
+          | &nbsp;
+          span(ng-repeat="(option, action) in trading().launchOptions")
+            a(ng-click="action()" translate="{{ provider + '.' + trading().reason + '.' + option }}")
+            | 
+            span(ng-if="!$last") or 
+          helper-button(ng-if="$ctrl.type === 'Sell' && trading().reason && !trading().verificationRequired" content="The total you can sell is your balance minus the transaction fee used to send your coins.")
+    .group.mt-5.border-top(ng-if="trading().verificationRequired")
+      .item.mt-15(translate="{{provider + '.' + trading().reason + '.REQUIRED'}}")
+    .group.mt-20(ng-show="$ctrl.tradeAccount && !locked")
+      .item
+        .mbm
+          span.f-14.em-300.colon Synced Bank Account
+        .border.flex-row.pv-5.ph-10.em-500
+          .flex-center.f-20.mr-10
+            i.icon-bank
+          .flex-column
+            span.capitalize {{ $ctrl.tradeAccount.accountType }} ({{ $ctrl.tradeAccount.accountNumber }})
+            span.f-12.capitalize Account Holder: {{ $ctrl.tradeAccount.name }}
+        .flex-row.mt-10
+          span.f-12 *To change your Synced Bank Account email
+          | &nbsp;
+          a(href='mailto:support@sfox.com').f-12 support@sfox.com
+    .group.inline.mt-10(ng-if="$ctrl.frequencies && !trading().isDisabled && $ctrl.showRecurringBuy")
+      .item.inline.check
+        input(type="checkbox" id="frequencyCheck" name="frequencyCheck" ng-model="state.frequencyCheck" ng-disabled="checkoutForm.fiat.$viewValue > $ctrl.recurringBuyLimit() || $ctrl.recurringBuyLimit() < min.fiat || $ctrl.disableRecurring")
+        label(for="frequencyCheck" translate="MAKE_RECURRING_ORDER" uib-tooltip="{{'RECURRING_DISABLED_TOOLTIP'|translate}}" tooltip-enable="$ctrl.disableRecurring" tooltip-placement="top")
+    .group.mt-10.recurring-buy(ng-if="state.frequencyCheck && !trading().isDisabled && checkoutForm.fiat.$viewValue <= $ctrl.recurringBuyLimit()")
+      .group
+        span.colon.f-13.em-500(translate="FREQUENCY")
+        .flex-row.mt-5
+          .flex-column.width-50.width-50-mobile.mr-15
+            select(ng-model="state.frequency" name="state" ng-options="frequency as frequency for frequency in $ctrl.frequencies" ng-change="state.frequencyCheck = true" ng-init="state.frequency = $ctrl.frequencies.length === 3 ? $ctrl.frequencies[1] : $ctrl.frequencies[0]")
+          .flex-column.width-50.width-50-mobile.flex-justify
+            span.ml-10-mobile(ng-hide="state.frequency === 'hourly'" translate="FREQUENCY_INFO" translate-values="{timespan: recurringTimespan()}")
+            span.ml-10-mobile(ng-show="state.frequency === 'hourly'" translate="FREQUENCY_INFO_HOURLY" translate-values="{timespan: recurringTimespan()}")
+      .group.mtl
+        span.colon.f-13.em-500(translate="DURATION")
+        .flex-row.mt-5
+          .flex-column.width-50.width-50-mobile.mr-15
+            span.fake-select(uib-datepicker-popup datepicker-options="{showWeeks: false, minDate: minDate}" is-open="state.datepickerIsOpen" ng-click="state.datepickerIsOpen = !state.datepickerIsOpen" ng-model="state.endTime" clear-text="Until I Cancel" readonly)
+              p.pts.mbn {{ (state.endTime | date:dateFormat) || 'Until I Cancel' }}
+          .flex-column.width-50.width-50-mobile.flex-justify
+            span.ml-10-mobile(ng-show="state.endTime" translate="DURATION_INFO" translate-values="{endTime: state.endTime.toDateString()}")
+            span.ml-10-mobile(ng-show="!state.endTime") You can cancel anytime.
+    .group.mtl(ng-if="!trading().verificationRequired")
+      button.btn.button-primary.full(type="submit" ng-disabled="locked || checkoutForm.$invalid || !quote || state.loadFailed") {{ $ctrl.type }} Bitcoin
+  .group.mtl(ng-if="trading().verificationRequired")
+    button.btn.button-primary.full(type="submit" ng-disabled="locked" translate="{{provider + '.' + trading().reason + '.CONTINUE'}}")

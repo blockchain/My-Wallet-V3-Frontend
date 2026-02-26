@@ -1,0 +1,31 @@
+tr.width-100
+  td.col-md-3
+    a(ng-bind-html="address.address | escapeHtml | highlight:searchText" ng-click="showAddress(address)" translate="no")
+    span.label.label-default.btn-xs(translate="WATCH_ONLY" ng-show="address.isWatchOnly")
+    .flex-row
+      span.pointer.border-grey(ng-hide="address.label || status.edit" translate="ADD_A_LABEL" ng-click="status.edit=1")
+      span(ng-bind-html="address.label | escapeHtml | highlight:searchText", ng-hide="status.edit || !address.label").prm.oflow
+      .form-group.mbn(ng-class="{'has-error': errors.label}", ng-show="status.edit")
+        .col-sm-12
+          bc-async-input(inline ng-model="address.label" on-save="changeLabel" on-cancel="cancelEdit" editing="true" on-focus="status.edit")
+            span.help-block(ng-show="errors.label") {{::errors.label}}
+      a(ng-click="status.edit=1" ng-hide="status.edit || !address.label")
+        i.ti-pencil.prm
+  td.col-md-3.center
+    span.display-inline-block.right-align(ng-show="address.balance != null")
+      fiat-or-btc(btc="address.balance")
+    img(ng-show="address.balance == null" src="img/spinner.gif")
+  td.col-md-3.right-align
+    span(uib-dropdown on-toggle="toggled(open)")
+      a(href uib-dropdown-toggle id="more-dropdown" translate="More Options")
+      ul.dropdown-menu.dropdown-menu-right(uib-dropdown-menu aria-labelledby="more-dropdown")
+        li
+          a(translate="ARCHIVE", ng-click="archive(address)")
+        li
+          a(translate="YOUR_PRIVATE_KEY", ng-hide="address.isWatchOnly", ng-click="showPrivKey()")
+        li
+          a(ng-hide="address.balance == 0" translate="TRANSFER" ng-click="transfer()")
+        li
+          a(translate="SIGN_MESSAGE" ng-hide="address.isWatchOnly" ng-click="signMessage()")
+        li
+          a(ng-hide="address.balance == 0" translate="SPEND_IMPORTED_ADDRESS" ng-click="spend()")

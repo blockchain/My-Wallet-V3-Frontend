@@ -1,0 +1,6 @@
+span {{ assets[activeAsset()].total() | convert:activeAsset():true }}
+span.mh-10(ng-if="activeAsset()") ·
+fiat(btc="(!activeAsset() || activeAsset() === 'btc') && assets.btc.total()"
+     eth="(!activeAsset() || activeAsset() === 'eth') && assets.eth.total()"
+     bch="(!activeAsset() || activeAsset() === 'bch') && assets.bch.total()")
+img.ml-5.arrow(src="img/select-arrow.png")

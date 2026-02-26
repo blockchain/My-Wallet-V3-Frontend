@@ -1,0 +1,41 @@
+form.bc-form.pv-20(
+  novalidate
+  ng-submit="trade()"
+  name="forms.confirmForm"
+  translate-namespace="{{namespace + type + tradeState}}"
+  autocomplete="off")
+  fieldset
+    .border-bottom.pb-20.pv-20-mobile.ph-30.ph-10-mobile.flex-between.flex-center
+      span.f-16.em-500(translate=".HEADER")
+      countdown(ng-if="$ctrl.quote" time-to-expiration="getTimeToExpiration" on-expiration="onExpiration()" debug="qaDebugger" message="QUOTE_REFRESHES_IN")
+    .ph-30.pt-20.ph-10-mobile.pv-20-mobile
+      .f-13.mb-10
+        span(translate=".BODY")
+      div(ng-if="$ctrl.tradeAccount")
+        .flex-end.flex-row.mb-5.mt-5
+          span.mid-grey.f-12 1 {{ bitcoin.code }} = {{ format(rate, $ctrl.fiat, false) }} {{$ctrl.fiat.code}}
+        .mv-10.pv-10.ph-10.border.flex-row.flex-center
+          i.f-18.mr-10.icon-bank
+          span.em-500(ng-show="type === '.sell'") Linked Account for Deposit: {{$ctrl.tradeAccount.accountType}} ending in {{$ctrl.tradeAccount.accountNumber}}
+          span.em-500(ng-show="type === '.buy'") Linked Account for Spending: {{$ctrl.tradeAccount.accountType}} ending in {{$ctrl.tradeAccount.accountNumber}}
+      ul.f-13.em-300.bg-grey.border.pv-10.ph-10.mb-5
+        li.flex-between(ng-repeat="(row, field) in $ctrl.details track by $index" ng-class="{'pb-10': $first, 'pt-10': $last, 'pv-10': !$first && !$last, 'border-bottom-light': !$last}")
+          div
+            span(translate="{{namespace + type + field.key}}") {{field.key}}
+            helper-button(ng-show="field.key === '.TX_FEE'" content="{{namespace + type + '.TRANSACTION_FEE_HELPER'}}")
+            helper-button(ng-show="field.key === '.TRADING_FEE'" content="{{namespace + '.TRADING_FEE_HELPER'}}")
+          span {{ field.val }}
+      .flex-row.flex-align-start
+        .pts
+          input(type="checkbox" id="terms" name="terms" ng-model="terms" required)
+        label.mbn.f-13.em-300(ng-if="!$ctrl.tradeAccount" for="terms" translate=".ACCEPT_TERMS")
+        label.mt-15.mb-20.ml-5.f-11.em-300(ng-if="$ctrl.tradeAccount && type === '.buy'" for="terms" translate=".ACCEPT_TERMS_EXTENDED" translate-values="{account: $ctrl.tradeAccount.accountNumber}")
+        label.mt-15.mb-20.ml-5.f-11.em-300(ng-if="$ctrl.tradeAccount && type === '.sell'" for="terms" translate=".ACCEPT_TERMS_EXTENDED" translate-values="{account: $ctrl.tradeAccount.accountNumber}")
+      .flex-row.flex-end
+        button.button-muted(type="button" translate="CANCEL" ng-click="$ctrl.onCancel()")
+        button.button-primary.ml-20(
+          type="submit"
+          ng-disabled="locked || forms.confirmForm.$invalid"
+          ladda-translate="CONFIRM"
+          ui-ladda="locked"
+          data-style="expand-left")

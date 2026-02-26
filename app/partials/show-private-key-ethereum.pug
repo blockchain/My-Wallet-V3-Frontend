@@ -1,0 +1,22 @@
+.modal-header
+  h3(translate="YOUR_PRIVATE_KEY")
+.modal-body
+  div(ng-hide="$ctrl.accessAllowed")
+    p(translate="PRIVATE_KEY_WARNING_ETH")
+  div(ng-if="$ctrl.accessAllowed")
+    .row
+      .col-sm-4.col-md-3
+        qr(text="$ctrl.key" size="120" correction-level="'M'" image="true")
+      .col-sm-12.col-md-8
+        p
+          label(translate="ADDRESS")
+          span(translate="no") : {{ $ctrl.address }}
+        p
+          label(translate="BALANCE")
+          span(translate="no") : {{ $ctrl.balance }} ETH
+        p
+          label(translate="YOUR_PRIVATE_KEY")
+          span(translate="no") : {{ $ctrl.key }}
+.modal-footer
+  button.button-default.mrm(ng-click="$close()" translate="CLOSE")
+  button.button-primary(ng-hide="$ctrl.accessAllowed" ng-click="$ctrl.requestAccess()" translate="CONTINUE")

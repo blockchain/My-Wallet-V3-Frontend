@@ -1,4 +1,4 @@
-angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $uibModal) => {
+angular.module('walletDirectives').directive('importedAddress', (Wallet, $translate, $uibModal, modals) => {
   return {
     restrict: 'A',
     replace: true,
@@ -6,22 +6,14 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
       address: '=importedAddress',
       searchText: '='
     },
-    templateUrl: (elem, attrs) => 'templates/imported-address.jade',
+    templateUrl: (elem, attrs) => 'templates/imported-address.pug',
     link: (scope, elem, attrs, ctrl) => {
       scope.errors = {label: null};
       scope.status = {edit: false};
       scope.settings = Wallet.settings;
 
       scope.showAddress = () => {
-        $uibModal.open({
-          templateUrl: 'partials/request.jade',
-          controller: 'RequestCtrl',
-          resolve: {
-            destination: () => scope.address,
-            focus: () => true
-          },
-          windowClass: 'bc-modal auto'
-        });
+        modals.openRequest(scope.address);
       };
 
       scope.archive = () => {
@@ -52,21 +44,21 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
       };
 
       scope.transfer = () => $uibModal.open({
-        templateUrl: 'partials/settings/transfer.jade',
+        templateUrl: 'partials/settings/transfer.pug',
         controller: 'TransferController',
         windowClass: 'bc-modal',
         resolve: { address: () => scope.address }
       });
 
       scope.showPrivKey = () => $uibModal.open({
-        templateUrl: 'partials/settings/show-private-key.jade',
+        templateUrl: 'partials/settings/show-private-key.pug',
         controller: 'ShowPrivateKeyCtrl',
         windowClass: 'bc-modal',
         resolve: { addressObj: () => scope.address }
       });
 
       scope.signMessage = () => $uibModal.open({
-        templateUrl: 'partials/settings/sign-message.jade',
+        templateUrl: 'partials/settings/sign-message.pug',
         controller: 'SignMessageController',
         windowClass: 'bc-modal initial',
         resolve: {
@@ -74,14 +66,7 @@ angular.module('walletApp').directive('importedAddress', (Wallet, $translate, $u
         }
       });
 
-      scope.spend = () => $uibModal.open({
-        templateUrl: 'partials/send.jade',
-        controller: 'SendCtrl',
-        windowClass: 'bc-modal auto',
-        resolve: {
-          paymentRequest: () => ({fromAccount: scope.address})
-        }
-      });
+      scope.spend = () => modals.openSend({ fromAccount: scope.address });
     }
   };
 });

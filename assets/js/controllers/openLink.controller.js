@@ -3,7 +3,7 @@ angular
   .controller('OpenLinkController', OpenLinkController);
 
 function OpenLinkController ($scope, Wallet, $translate, $stateParams, $state, Alerts) {
-  const paymentRequest = Wallet.parsePaymentRequest($stateParams.uri);
+  const paymentRequest = Wallet.parsePaymentRequest($stateParams.uri, 'btc');
   Wallet.goal.send = paymentRequest;
   if (!Wallet.status.isLoggedIn) {
     Alerts.displayInfo('PLEASE_LOGIN_FIRST', true);
